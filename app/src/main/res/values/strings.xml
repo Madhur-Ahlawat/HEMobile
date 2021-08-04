@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">HEMobile</string>
+    <string name="txt_dart_charge">DART CHARGE</string>
+    <string name="txt_gov_uk">GOV UK</string>
+    <string name="txt_sign_in">Sign In</string>
+    <string name="txt_user_name">Username</string>
+    <string name="txt_enter_password">Enter password</string>
+    <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
+    <string name="txt_create_new_account">Do not have account? <b><u>Create account</u></b>></string>
+    <string name="txt_error_username">Username can not be empty</string>
+    <string name="txt_error_password">Password can not be empty</string>
+    <string name="txt_pre_pay_scheme">Pre pay scheme</string>
+    <string name="txt_pre_pay_account">Pre Pay Account</string>
+    <string name="txt_available_balance">Available Balance</string>
+    <string name="txt_manual_topup">Manual Top-Up</string>
+    <string name="txt_vehicles">VEHICLES</string>
+    <string name="txt_view_vehicle_list"><u>View Vehicle List</u></string>
+    <string name="txt_monthly_usage">MONTHLY USAGE</string>
+    <string name="txt_view_crossing_history"><u>View crossing history</u></string>
+    <string name="txt_paymnt">PAYMENT</string>
+    <string name="txt_view_payment_history"><u>View payment history</u></string>
 </resources>
