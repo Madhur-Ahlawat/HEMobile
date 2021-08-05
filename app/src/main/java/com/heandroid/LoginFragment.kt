@@ -45,14 +45,15 @@ class LoginFragment: Fragment() {
 
             userName = tfUserName.text.toString().trim()
             password = tfPassword.text.toString().trim()
-            Log.d("passwod", password)
+            Log.d("password", password)
             if(validate())
             {
                 // do login
                 requireActivity().supportFragmentManager.commit {
                         val bundle = bundleOf("some_int" to 0)
                         setReorderingAllowed(true)
-                        add<DashboardFragment>(R.id.fragment_container_view, args = bundle)
+
+                        //replace((R.id.fragment_container_view, DashboardFragment.newInstance(),args = bundle)
 
                 }
             }
