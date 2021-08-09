@@ -26,8 +26,8 @@ class ApiClient {
             val retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(getUnsafeOkHttpClient()?.build())
-                //.client(okhttpClient(context))
+                //.client(getUnsafeOkHttpClient()?.build())
+                .client(okhttpClient(context))
                 .build()
 
             apiService = retrofit.create(ApiService::class.java)
