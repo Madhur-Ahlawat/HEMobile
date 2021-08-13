@@ -8,13 +8,13 @@ data class LoginResponse(
     var statusCode: Int,
 
     @SerializedName("access_token")
-    private var accessToken: String,
+    var accessToken: String,
 
     @SerializedName("token_type")
     private var tokenType: String,
 
     @SerializedName("refresh_token")
-    private var refreshToken: String,
+    var refreshToken: String,
 
     @SerializedName("expires_in")
     private var expiresIn: Int,
