@@ -1,10 +1,9 @@
 package com.heandroid
 
+import com.heandroid.data.AccountResponse
 import com.heandroid.data.LoginResponse
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -19,5 +18,8 @@ interface ApiService {
         @Field("password") password: String,
         @Field("validatePasswordCompliance") validatePasswordCompliance: String,
     ): Call<LoginResponse>
+
+    @GET("https://maas-test.services.conduent.com/bosuser/api/account/overview")
+    fun getAccountOverview(@Header("Authorization") token:String): Call<AccountResponse>
 
 }

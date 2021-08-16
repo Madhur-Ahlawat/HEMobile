@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     var userName: String = ""
     var password: String = ""
     var LOGIN_TAG: String = "Login Screen::"
+    var accessToken:String =""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +65,7 @@ class MainActivity : AppCompatActivity() {
             "user data$username--$password",
             Toast.LENGTH_LONG
         ).show()
-        val intent = Intent(this@MainActivity, DashboardPage::class.java)
-        startActivity(intent)
+
         if (isNetworkConnected()) {
             Log.d(LOGIN_TAG, "network connected")
 
@@ -112,8 +112,15 @@ class MainActivity : AppCompatActivity() {
                         ) {
                              sessionManager.saveAuthToken(loginResponse.accessToken)
                              sessionManager.saveRefrehToken(loginResponse.refreshToken)
+                            accessToken = loginResponse.accessToken
+                            val intent = Intent(this@MainActivity, DashboardPage::class.java)
+                            var bundle = Bundle()
+                            bundle.putString("access_token", accessToken)
+                            intent.putExtra("data",bundle)
+                            startActivity(intent)
                         } else {
                             // Error logging in
+                            Toast.makeText(this@MainActivity, "Please check your login credentials.",Toast.LENGTH_LONG).show()
                         }
                     }
                 })
