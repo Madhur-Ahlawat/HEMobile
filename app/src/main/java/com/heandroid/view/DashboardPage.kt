@@ -1,39 +1,58 @@
-package com.heandroid
+package com.heandroid.view
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.heandroid.data.AccountResponse
-import com.heandroid.data.LoginResponse
+import android.widget.TextView
+import com.heandroid.network.ApiClient
+import com.heandroid.R
+import com.heandroid.model.AccountResponse
 import com.heandroid.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DashboardFragment : AppCompatActivity() {
-
+class DashboardPage : Activity() {
+    lateinit var tokenString: String
     private  var ACCOUNT_TAG="Account Screen"
     private lateinit var apiClient: ApiClient
-    private lateinit var sessionManager:SessionManager
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    private lateinit var sessionManager: SessionManager
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_dashboard)
         apiClient = ApiClient()
-        sessionManager = SessionManager(this)
-       // callApiForAccountOverview()
+        tokenString = findViewById<TextView>(R.id.token_id).toString()
+        val token: String = SessionManager.USER_TOKEN
+        tokenString = token
+        Log.d("DashBoard Page ::token", token)
+        Log.d("DashBoard Page ::", tokenString)
+        sessionManager=SessionManager(this)
+//        sessionManager.fetchAuthToken()?.let {
+//            //requestBuilder.addHeader("Authorization", "Bearer $it")
+//            Log.d("DashBoard Page ::fetchAuthToken", it)
+//            callApiForAccountOverview("Bearer $it")
+//        }
+        var bundle = intent.getBundleExtra("data")
+        bundle?.let {
+            var accessToken = it.getString("access_token")
+            if (accessToken != null) {
+                Log.d("DashBoard Page ::fetchAuthToken", accessToken)
+                callApiForAccountOverview("Bearer $accessToken")
+            }
+
+        }
+        //callApiForAccountOverview()
     }
 
-   /* private fun callApiForAccountOverview() {
+    private fun callApiForAccountOverview(tokenString:String) {
         if (isNetworkConnected()) {
             Log.d(ACCOUNT_TAG, "network connected")
             apiClient.getApiService(applicationContext)
-                .getAccountOverview()
+                .getAccountOverview(tokenString)
                 .enqueue(object : Callback<AccountResponse> {
                     override fun onFailure(call: Call<AccountResponse>, t: Throwable) {
                         // Error logging in
@@ -67,7 +86,7 @@ class DashboardFragment : AppCompatActivity() {
         }
 
     }
-*/
+
 
     /*companion object {
 

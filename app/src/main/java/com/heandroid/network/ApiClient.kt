@@ -1,4 +1,4 @@
-package com.heandroid
+package com.heandroid.network
 
 import android.content.Context
 import com.heandroid.utils.Constants
@@ -7,9 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import java.lang.Exception
 import java.lang.RuntimeException
-import java.security.SecureRandom
 import java.security.cert.CertificateException
-import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 
