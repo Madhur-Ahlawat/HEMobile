@@ -1,8 +1,10 @@
-package com.heandroid
+package com.heandroid.network
 
-import com.heandroid.data.AccountResponse
-import com.heandroid.data.LoginResponse
+import com.heandroid.model.AccountResponse
+import com.heandroid.model.LoginResponse
+import com.heandroid.model.VehicleResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -19,7 +21,14 @@ interface ApiService {
         @Field("validatePasswordCompliance") validatePasswordCompliance: String,
     ): Call<LoginResponse>
 
+    @GET("https://maas-test.services.conduent.com/bosuser/api/account/vehicle")
+    fun getVehicleData(@Header("Authorization") token: String): Call<List<VehicleResponse>>
+
     @GET("https://maas-test.services.conduent.com/bosuser/api/account/overview")
-    fun getAccountOverview(@Header("Authorization") token:String): Call<AccountResponse>
+    fun getAccountOverview(@Header("Authorization") token: String): Call<AccountResponse>
+
+    @FormUrlEncoded
+    @POST("https://maas-test.services.conduent.com/oauth/token")
+    suspend fun loginUser(@FieldMap body: HashMap<String, String>): Response<LoginResponse>
 
 }

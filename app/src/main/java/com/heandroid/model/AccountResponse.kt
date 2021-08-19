@@ -1,4 +1,4 @@
-package com.heandroid.data
+package com.heandroid.model
 
 import com.google.gson.annotations.SerializedName
 

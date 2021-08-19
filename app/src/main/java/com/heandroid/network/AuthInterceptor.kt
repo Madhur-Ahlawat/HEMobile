@@ -1,4 +1,4 @@
-package com.heandroid
+package com.heandroid.network
 
 import android.content.Context
 import android.util.Log

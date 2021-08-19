@@ -1,4 +1,7 @@
 <resources>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="network_failure">Network Failure</string>
+    <string name="conversion_error">Conversion Error</string>
     <string name="app_name">HE-MAPP-ANDROID</string>
     <string name="txt_dart_charge">DART CHARGE</string>
     <string name="txt_gov_uk">GOV UK</string>
