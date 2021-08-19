@@ -18,5 +18,6 @@
     <string name="txt_monthly_usage">MONTHLY USAGE</string>
     <string name="txt_view_crossing_history"><u>View crossing history</u></string>
     <string name="txt_paymnt">PAYMENT</string>
+    <string name="txt_euro">"\u20ac"</string>
     <string name="txt_view_payment_history"><u>View payment history</u></string>
 </resources>
