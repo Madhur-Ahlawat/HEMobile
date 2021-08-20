@@ -18,7 +18,6 @@ import com.heandroid.R
 import com.heandroid.model.LoginResponse
 import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiClient
-import com.heandroid.network.LoginRequestFieldData
 import com.heandroid.utils.AppRepository
 import com.heandroid.utils.Resource
 import com.heandroid.utils.SessionManager
@@ -82,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
     private fun init() {
         val repository = AppRepository()
         val factory = ViewModelProviderFactory(application, repository)
-        loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
     }
 
     fun onLoginClick(view: View) {
@@ -102,28 +101,49 @@ class LoginActivity : AppCompatActivity() {
         map.put("grantType", "password");
         map.put("agecyId", "12");
         map.put("clientSecret", "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7");
-        map.put("value", "johnsmith32");
+        map.put("value", "johnsmith");
         map.put("password", "Welcome1!");
         map.put("validatePasswordCompliance", "true");
 
-        /*val body = LoginRequestFieldData.LoginBody(
-            clientID, grantType, agecyId, clientSecret, value, password, validatePasswordCompliance
-        )*/
+
         loginViewModel.loginUser(
             clientID, grantType, agecyId, clientSecret, value, password, validatePasswordCompliance)
+
         loginViewModel.loginResponse.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let { response ->
                 when (response) {
                     is Resource.Success -> {
-                        Log.d("Req Success", "")
+                        Log.d("Req Success", ""+response)
+                        launchDashboardScreen(response.data as LoginResponse)
                     }
 
                     is Resource.Error -> {
                         Log.d("Req Success", "")
+                        // Error logging in
+                        Toast.makeText(this@LoginActivity,
+                            "Please check your login credentials.",
+                            Toast.LENGTH_LONG).show()
+                    }
+
+                    else ->
+                    {
+                        // do nothing
                     }
                 }
             }
         })
+    }
+
+    private fun launchDashboardScreen(loginResponse: LoginResponse) {
+        sessionManager.saveAuthToken(loginResponse.accessToken)
+        sessionManager.saveRefrehToken(loginResponse.refreshToken)
+        accessToken = loginResponse.accessToken
+        val intent = Intent(this@LoginActivity, DashboardPage::class.java)
+        var bundle = Bundle()
+        bundle.putString("access_token", accessToken)
+        intent.putExtra("data", bundle)
+        startActivity(intent)
+
     }
 
     private fun getVehicleInfo(accessToken: String) {
@@ -175,51 +195,51 @@ class LoginActivity : AppCompatActivity() {
 
             apiClient.getApiService(applicationContext)
 
-                .loginWithField(
-                    //clientID, grantType, agecyId, clientSecret, "johnsmith32", "Welcome1!", validatePasswordCompliance
-                    clientID,
-                    grantType,
-                    agecyId,
-                    clientSecret,
-                    username,
-                    password,
-                    validatePasswordCompliance
-
-                )
-
-                .enqueue(object : Callback<LoginResponse> {
-                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                        // Error logging in
-                        Log.d(LOGIN_TAG, "onFailure::")
-
-                    }
-
-                    override fun onResponse(
-                        call: Call<LoginResponse>,
-                        response: Response<LoginResponse>,
-                    ) {
-                        val loginResponse = response.body()
-                        Log.d(LOGIN_TAG, "Response ::" + "\n" + loginResponse)
-
-                        if (loginResponse?.statusCode == 0
-                            && loginResponse.accessToken != null
-                        ) {
-                            sessionManager.saveAuthToken(loginResponse.accessToken)
-                            sessionManager.saveRefrehToken(loginResponse.refreshToken)
-                            accessToken = loginResponse.accessToken
-                            val intent = Intent(this@LoginActivity, DashboardPage::class.java)
-                            var bundle = Bundle()
-                            bundle.putString("access_token", accessToken)
-                            intent.putExtra("data", bundle)
-                            startActivity(intent)
-                        } else {
-                            // Error logging in
-                            Toast.makeText(this@LoginActivity,
-                                "Please check your login credentials.",
-                                Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
+//                .loginWithField(
+//                    //clientID, grantType, agecyId, clientSecret, "johnsmith32", "Welcome1!", validatePasswordCompliance
+//                    clientID,
+//                    grantType,
+//                    agecyId,
+//                    clientSecret,
+//                    username,
+//                    password,
+//                    validatePasswordCompliance
+//
+//                )
+//
+//                .enqueue(object : Callback<LoginResponse> {
+//                    override fun onFailure(call: Response<LoginResponse>, t: Throwable) {
+//                        // Error logging in
+//                        Log.d(LOGIN_TAG, "onFailure::")
+//
+//                    }
+//
+//                    override fun onResponse(
+//                        call: Call<LoginResponse>,
+//                        response: Response<LoginResponse>,
+//                    ) {
+//                        val loginResponse = response.body()
+//                        Log.d(LOGIN_TAG, "Response ::" + "\n" + loginResponse)
+//
+//                        if (loginResponse?.statusCode == 0
+//                            && loginResponse.accessToken != null
+//                        ) {
+//                            sessionManager.saveAuthToken(loginResponse.accessToken)
+//                            sessionManager.saveRefrehToken(loginResponse.refreshToken)
+//                            accessToken = loginResponse.accessToken
+//                            val intent = Intent(this@LoginActivity, DashboardPage::class.java)
+//                            var bundle = Bundle()
+//                            bundle.putString("access_token", accessToken)
+//                            intent.putExtra("data", bundle)
+//                            startActivity(intent)
+//                        } else {
+//                            // Error logging in
+//                            Toast.makeText(this@LoginActivity,
+//                                "Please check your login credentials.",
+//                                Toast.LENGTH_LONG).show()
+//                        }
+//                    }
+//                })
 
         } else {
             AlertDialog.Builder(this).setTitle("No Internet Connection")

@@ -16,20 +16,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardPage : Activity() {
     lateinit var tokenString: String
     private  var ACCOUNT_TAG="Account Screen"
     private lateinit var apiClient: ApiClient
     private lateinit var sessionManager: SessionManager
-
-    private var euro:String = Currency.getInstance(Locale.GERMANY).currencyCode;
-
-    lateinit var tvAvailableAmount:TextView
-    lateinit var tvRemainingAmount:TextView
-//    lateinit var tvAvailableAmount:TextView
-//    lateinit var tvAvailableAmount:TextView
-//    lateinit var tvAvailableAmount:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +35,14 @@ class DashboardPage : Activity() {
         Log.d("DashBoard Page ::", tokenString)
         sessionManager=SessionManager(this)
 
-        tvAvailableAmount = findViewById(R.id.tv_available_balance)
-        tvRemainingAmount = findViewById(R.id.tv_remaining_amount)
+//        tvAvailableAmount = findViewById(R.id.tv_available_balance)
+//        tvRemainingAmount = findViewById(R.id.tv_remaining_amount)
 
-//        sessionManager.fetchAuthToken()?.let {
-//            //requestBuilder.addHeader("Authorization", "Bearer $it")
-//            Log.d("DashBoard Page ::fetchAuthToken", it)
-//            callApiForAccountOverview("Bearer $it")
-//        }
+        sessionManager.fetchAuthToken()?.let {
+            //requestBuilder.addHeader("Authorization", "Bearer $it")
+            Log.d("DashBoard Page ::fetchAuthToken", it)
+            //callApiForAccountOverview("Bearer $it")
+        }
 
         var bundle = intent.getBundleExtra("data")
         bundle?.let {
@@ -80,7 +73,7 @@ class DashboardPage : Activity() {
                         response: Response<AccountResponse>,
                     ) {
                         val accountResponse = response.body()
-                        Log.d(ACCOUNT_TAG, "Response ::" + "\n" + accountResponse)
+                        Log.d(ACCOUNT_TAG, "Response ::\n$accountResponse")
                         setView(accountResponse)
 
 //                        if (loginResponse?.statusCode == 0
@@ -105,8 +98,8 @@ class DashboardPage : Activity() {
 
     private fun setView(accountResponse: AccountResponse?) {
         if (accountResponse != null) {
-            tvAvailableAmount.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
-            tvRemainingAmount.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
+            tv_available_balance.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
+            tv_remaining_amount.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
         }
     }
 

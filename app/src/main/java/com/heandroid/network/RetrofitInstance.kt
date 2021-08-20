@@ -43,11 +43,11 @@ class RetrofitInstance {
         }
 
 
-        val loginApi by lazy {
+        val loginApi: ApiService by lazy {
             retrofitLogin.create(ApiService::class.java)
         }
 
-        fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
+        private fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
             try {
                 // Create a trust manager that does not validate certificate chains
                 val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {

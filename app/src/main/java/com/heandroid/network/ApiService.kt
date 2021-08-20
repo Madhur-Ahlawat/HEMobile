@@ -3,6 +3,7 @@ package com.heandroid.network
 import com.heandroid.model.AccountResponse
 import com.heandroid.model.LoginResponse
 import com.heandroid.model.VehicleResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -11,7 +12,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("https://maas-test.services.conduent.com/oauth/token")
-    fun loginWithField(
+    suspend fun loginWithField(
         @Field("client_id") clientId: String,
         @Field("grant_type") grant_type: String,
         @Field("agencyID") agencyID: String,
@@ -19,7 +20,7 @@ interface ApiService {
         @Field("value") value: String,
         @Field("password") password: String,
         @Field("validatePasswordCompliance") validatePasswordCompliance: String,
-    ): Call<LoginResponse>
+    ): Response<LoginResponse>
 
     @GET("https://maas-test.services.conduent.com/bosuser/api/account/vehicle")
     fun getVehicleData(@Header("Authorization") token: String): Call<List<VehicleResponse>>
