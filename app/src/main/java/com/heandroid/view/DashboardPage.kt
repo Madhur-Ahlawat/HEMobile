@@ -1,28 +1,34 @@
 package com.heandroid.view
 
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiClient
 import com.heandroid.R
 import com.heandroid.model.AccountResponse
+import com.heandroid.model.VehicleResponse
+import com.heandroid.network.ApiHelper
+import com.heandroid.network.RetrofitInstance
+import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
+import com.heandroid.viewmodel.DashboardViewModel
+import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
-class DashboardPage : Activity() {
+
+class DashboardPage : AppCompatActivity() {
+    private var accessToken: String? =  null
     lateinit var tokenString: String
-    private  var ACCOUNT_TAG="Account Screen"
+    private var ACCOUNT_TAG = "Account Screen"
     private lateinit var apiClient: ApiClient
     private lateinit var sessionManager: SessionManager
+    private lateinit var viewModel: DashboardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +39,7 @@ class DashboardPage : Activity() {
         tokenString = token
         Log.d("DashBoard Page ::token", token)
         Log.d("DashBoard Page ::", tokenString)
-        sessionManager=SessionManager(this)
+        sessionManager = SessionManager(this)
 
 //        tvAvailableAmount = findViewById(R.id.tv_available_balance)
 //        tvRemainingAmount = findViewById(R.id.tv_remaining_amount)
@@ -44,84 +50,100 @@ class DashboardPage : Activity() {
             //callApiForAccountOverview("Bearer $it")
         }
 
+        setupViewModel()
+        setupUI()
+        setupObservers()
+
+    }
+
+    private fun setupObservers() {
         var bundle = intent.getBundleExtra("data")
         bundle?.let {
-            var accessToken = it.getString("access_token")
+             accessToken = it.getString("access_token")
             if (accessToken != null) {
-                Log.d("DashBoard Page ::fetchAuthToken", accessToken)
-                callApiForAccountOverview("Bearer $accessToken")
+                Log.d("DashBoard Page ::fetchAuthToken", accessToken!!)
+                //callApiForAccountOverview("Bearer $accessToken")
+               getAccountOverViewApi(accessToken!!)
+                getVehicleListApiCall(accessToken!!)
             }
 
         }
-        //callApiForAccountOverview()
+
     }
 
-    private fun callApiForAccountOverview(tokenString:String) {
-        if (isNetworkConnected()) {
-            Log.d(ACCOUNT_TAG, "network connected")
-            apiClient.getApiService(applicationContext)
-                .getAccountOverview(tokenString)
-                .enqueue(object : Callback<AccountResponse> {
-                    override fun onFailure(call: Call<AccountResponse>, t: Throwable) {
-                        // Error logging in
-                        Log.d(ACCOUNT_TAG, "onFailure::")
+    private fun getVehicleListApiCall(accessToken: String) {
+        viewModel.getVehicleInformationApi("Bearer $accessToken")
+            .observe(this, androidx.lifecycle.Observer {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            var vehicleList = resource.data!!.body()
+                            if (vehicleList != null) {
+                                Log.d("apiResp: ", vehicleList.size.toString())
+                                setupVehicleData(vehicleList)
+                            }
+
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
+
+                        }
+                        Status.LOADING -> {
+                            // show/hide loader
+                        }
 
                     }
+                }
+            })
+    }
 
-                    override fun onResponse(
-                        call: Call<AccountResponse>,
-                        response: Response<AccountResponse>,
-                    ) {
-                        val accountResponse = response.body()
-                        Log.d(ACCOUNT_TAG, "Response ::\n$accountResponse")
-                        setView(accountResponse)
+    private fun setupVehicleData(vehicleList: List<VehicleResponse>) {
+        tv_vehicle_count.text = vehicleList.size.toString()
 
-//                        if (loginResponse?.statusCode == 0
-//                            && loginResponse.accessToken != null
-//                        ) {
-//                            sessionManager.saveAuthToken(loginResponse.accessToken)
-//                            sessionManager.saveRefrehToken(loginResponse.refreshToken)
-//                        } else {
-//                            // Error logging in
-//                        }
+    }
+
+    private fun getAccountOverViewApi(accessToken:String)
+    {
+        viewModel.getAccountOverViewApi("Bearer $accessToken")
+            .observe(this, androidx.lifecycle.Observer {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            var accountResponse = resource.data!!.body() as AccountResponse
+                            setView(accountResponse)
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
+
+                        }
+                        Status.LOADING -> {
+                            // show/hide loader
+                        }
+
                     }
-                })
+                }
+            })
+    }
+    private fun setupUI() {
 
-        } else {
-            AlertDialog.Builder(this).setTitle("No Internet Connection")
-                .setMessage("Please check your internet connection and try again")
-                .setPositiveButton(android.R.string.ok) { _, _ -> }
-                .setIcon(android.R.drawable.ic_dialog_alert).show()
-        }
+    }
 
+    private fun setupViewModel() {
+        Log.d("DummyLogin", "set up view model")
+        val factory = ViewModelFactory(ApiHelper(RetrofitInstance.loginApi))
+        viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
     }
 
     private fun setView(accountResponse: AccountResponse?) {
         if (accountResponse != null) {
-            tv_available_balance.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
-            tv_remaining_amount.text = "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
+            tv_available_balance.text =
+                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
+            tv_remaining_amount.text =
+                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
         }
     }
 
 
-    /*companion object {
-
-        fun newInstance(): DashboardFragment {
-            return DashboardFragment()
-        }
-    }*/
-
-    /* override fun onCreateView(
-         inflater: LayoutInflater,
-         container: ViewGroup?,
-         savedInstanceState: Bundle?,
-     ): View? {
-         return inflater.inflate(R.layout.fragment_dashboard, container, false)
-     }*/
-
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }*/
 
 
     private fun isNetworkConnected(): Boolean {

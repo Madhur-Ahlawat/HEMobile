@@ -28,7 +28,8 @@ class LoginViewModel(
     val loginResponse: LiveData<Event<Resource<LoginResponse>>> = _loginResponse
 
     fun loginUser(clientID :String, grantType:String, agecyId:String,
-                  clientSecret:String, value:String, password:String, validatePasswordCompliance:String) = viewModelScope.launch {
+                  clientSecret:String, value:String, password:String, validatePasswordCompliance:String) =
+        viewModelScope.launch {
         login(clientID, grantType, agecyId, clientSecret, value, password, validatePasswordCompliance)
     }
 

@@ -23,10 +23,10 @@ interface ApiService {
     ): Response<LoginResponse>
 
     @GET("https://maas-test.services.conduent.com/bosuser/api/account/vehicle")
-    fun getVehicleData(@Header("Authorization") token: String): Call<List<VehicleResponse>>
+    suspend fun getVehicleData(@Header("Authorization") token: String): Response<List<VehicleResponse>>
 
     @GET("https://maas-test.services.conduent.com/bosuser/api/account/overview")
-    fun getAccountOverview(@Header("Authorization") token: String): Call<AccountResponse>
+    suspend fun getAccountOverview(@Header("Authorization") token: String): Response<AccountResponse>
 
     @FormUrlEncoded
     @POST("https://maas-test.services.conduent.com/oauth/token")

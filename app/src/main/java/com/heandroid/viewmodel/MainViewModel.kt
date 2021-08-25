@@ -10,14 +10,14 @@ class MainViewModel(private val mainRepository: MainRepository):ViewModel() {
 
     fun loginUser(clientID:String,
                   grantType:String,
-                  agecyId:String,
+                  agencyId:String,
                   clientSecret:String,
                   value:String,
                   password:String,
                   validatePasswordCompliance:String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = mainRepository.loginUser(clientID, grantType, agecyId, clientSecret, value, password, validatePasswordCompliance)))
+            emit(Resource.success(data = mainRepository.loginUser(clientID, grantType, agencyId, clientSecret, value, password, validatePasswordCompliance)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }

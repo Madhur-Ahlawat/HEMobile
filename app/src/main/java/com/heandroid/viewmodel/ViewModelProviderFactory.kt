@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.heandroid.utils.AppRepository
 
 class ViewModelProviderFactory(
-    val app: Application,
-    val appRepository: AppRepository,
+    private val app: Application,
+    private val appRepository: AppRepository,
 ) : ViewModelProvider.Factory {
 
 

@@ -115,8 +115,7 @@
             android:textColor="@color/black"
             android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/btn_signin"
+        <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -127,15 +126,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="175dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:onClick="onLoginClick"
-            android:text="LOGIN" />
+            android:textStyle="bold"
+            android:onClick="onLoginClick"/>
 
         <TextView
             android:id="@+id/tv_create_account"
