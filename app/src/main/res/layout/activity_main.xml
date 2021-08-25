@@ -116,6 +116,7 @@
             android:textSize="17sp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -126,8 +127,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:onClick="onLoginClick"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_create_account"

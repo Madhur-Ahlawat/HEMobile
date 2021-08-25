@@ -14,13 +14,14 @@ import com.heandroid.network.ApiHelper
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
-import com.heandroid.viewmodel.MainViewModel
+import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +29,17 @@ class LoginActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         setupViewModel()
         setupUI()
+        //setupObservers()
+        btn_login.setOnClickListener {
+            setupObservers()
+        }
 
     }
 
-   fun onLoginClick(view:View)
-   {
-       setupObservers()
-   }
+//   fun onLoginClick(view:View)
+//   {
+//       setupObservers()
+//   }
 
     private fun setupObservers() {
         var clientID = "NY_EZ_Pass_iOS_QA"
@@ -53,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     run {
                         when (resource.status) {
                             Status.SUCCESS -> {
-                                var loginResponse = resource.data as LoginResponse
+                                var loginResponse = resource.data!!.body() as LoginResponse
                                 launchDashboardScreen(loginResponse)
                             }
                             Status.ERROR->{
@@ -86,13 +91,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
     private fun setupUI() {
-        Toast.makeText(this, "I am launmched after api call", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "I am launched after api call", Toast.LENGTH_LONG).show()
     }
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
         val factory = ViewModelFactory(ApiHelper(RetrofitInstance.loginApi))
-        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
     }
 

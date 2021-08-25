@@ -2,7 +2,7 @@ package com.heandroid.repo
 
 import com.heandroid.network.ApiHelper
 
-class MainRepository(private val apiHelper: ApiHelper) {
+class AppRepository(private val apiHelper: ApiHelper) {
 
     suspend fun loginUser(clientID:String,
                           grantType:String,
