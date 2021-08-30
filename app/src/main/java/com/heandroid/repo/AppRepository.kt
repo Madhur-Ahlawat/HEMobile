@@ -15,4 +15,6 @@ class AppRepository(private val apiHelper: ApiHelper) {
     suspend fun getAccountOverviewApiCall(authToken:String) = apiHelper.getAccountOverviewApiCall(authToken)
 
     suspend fun getVehicleListInformationApiCall(authToken: String) = apiHelper.getVehicleListApiCall(authToken)
+    suspend fun getRenewalAccessToken(clientId:String , grantType:String, agencyId:String, clientSecret:String, refreshToken:String, validatePasswordCompliance: String) =
+            apiHelper.getRenewalAccessToken(clientId , grantType, agencyId, clientSecret, refreshToken, validatePasswordCompliance)
 }

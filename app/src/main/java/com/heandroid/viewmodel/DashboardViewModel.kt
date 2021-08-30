@@ -25,4 +25,19 @@ class DashboardViewModel(private val appRepository: AppRepository): ViewModel() 
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
+
+
+    fun getRenewalAccessToken(clientId:String,
+                              grantType:String,
+                              agencyId:String,
+                              clientSecret:String,
+                              refreshToken:String,
+                              validatePasswordCompliance:String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = appRepository.getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,refreshToken , validatePasswordCompliance)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
 }

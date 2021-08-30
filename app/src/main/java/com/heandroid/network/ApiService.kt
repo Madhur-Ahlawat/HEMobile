@@ -32,4 +32,14 @@ interface ApiService {
     @POST("https://maas-test.services.conduent.com/oauth/token")
     suspend fun loginUser(@FieldMap body: HashMap<String, String>): Response<LoginResponse>
 
+    @FormUrlEncoded
+    @POST("https://maas-test.services.conduent.com/oauth/token")
+    suspend fun getRenewalAccessToken(
+            @Field("client_id") clientId: String,
+            @Field("grant_type") grantType: String,
+            @Field("agencyID") agencyId:String,
+            @Field("client_secret") clientSecret: String,
+            @Field("refresh_token") refreshToken: String,
+            @Field("validatePasswordCompliance")validatePasswordCompliance: String): Response<LoginResponse>
+
 }

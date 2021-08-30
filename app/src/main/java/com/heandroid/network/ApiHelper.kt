@@ -12,4 +12,7 @@ class ApiHelper(private val apiService: ApiService) {
 
     suspend fun getAccountOverviewApiCall(authToken:String) = apiService.getAccountOverview(authToken)
     suspend fun getVehicleListApiCall(authToken:String) = apiService.getVehicleData(authToken)
+    suspend fun getRenewalAccessToken(clientId:String , grantType:String, agencyId:String, clientSecret:String,
+                                      refreshToken:String, validatePasswordCompliance: String)=
+            apiService.getRenewalAccessToken(clientId , grantType, agencyId, clientSecret, refreshToken, validatePasswordCompliance)
 }

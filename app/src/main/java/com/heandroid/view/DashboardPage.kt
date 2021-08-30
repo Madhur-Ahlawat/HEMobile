@@ -8,27 +8,32 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiClient
 import com.heandroid.R
 import com.heandroid.model.AccountResponse
+import com.heandroid.model.LoginResponse
 import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiHelper
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.DashboardViewModel
+import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 
 class DashboardPage : AppCompatActivity() {
+    private var refreshToken: String?=null
     private var accessToken: String? =  null
     lateinit var tokenString: String
     private var ACCOUNT_TAG = "Account Screen"
     private lateinit var apiClient: ApiClient
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: DashboardViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,6 @@ class DashboardPage : AppCompatActivity() {
         Log.d("DashBoard Page ::token", token)
         Log.d("DashBoard Page ::", tokenString)
         sessionManager = SessionManager(this)
-
 //        tvAvailableAmount = findViewById(R.id.tv_available_balance)
 //        tvRemainingAmount = findViewById(R.id.tv_remaining_amount)
 
@@ -63,8 +67,14 @@ class DashboardPage : AppCompatActivity() {
             if (accessToken != null) {
                 Log.d("DashBoard Page ::fetchAuthToken", accessToken!!)
                 //callApiForAccountOverview("Bearer $accessToken")
-               getAccountOverViewApi(accessToken!!)
+                getAccountOverViewApi(accessToken!!)
                 getVehicleListApiCall(accessToken!!)
+
+            }
+             refreshToken = it.getString("refresh_token")
+            if(refreshToken!=null)
+            {
+                getRenewalAccessToken()
             }
 
         }
@@ -132,6 +142,8 @@ class DashboardPage : AppCompatActivity() {
         Log.d("DummyLogin", "set up view model")
         val factory = ViewModelFactory(ApiHelper(RetrofitInstance.loginApi))
         viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
+        Log.d("ViewModelSetUp: ", "Setup")
     }
 
     private fun setView(accountResponse: AccountResponse?) {
@@ -154,4 +166,54 @@ class DashboardPage : AppCompatActivity() {
         return networkCapabilities != null &&
                 networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
+
+
+    private fun getRenewalAccessToken()
+    {
+
+
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken1 = sessionManager.fetchRefreshToken()
+        Log.d("RefreshToken", refreshToken!!)
+        var validatePasswordCompliance =  "true"
+        Log.d("RenewalAccessToken", "Before api call")
+        if (refreshToken1 != null) {
+            loginViewModel.getRenewalAccessToken(clientId , grantType, agencyId, clientSecret,
+                refreshToken1!!, validatePasswordCompliance).
+            observe(this, Observer {
+                Log.d("RenewalAccessToken", "after api call")
+                it.let {
+                    resource ->
+                    run {
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                Log.d("FinalResp: ", resource.data.toString())
+                                var loginResponse = resource.data!!.body() as LoginResponse
+                                Log.d("renewalResp: ", loginResponse.statusCode.toString())
+
+                            }
+                            Status.ERROR->{
+                                showToast(resource.message)}
+
+                            Status.LOADING->{
+                                // show/hide loader
+                            }
+
+                        }
+                    }
+                }
+            })
+        }
+
+
+    }
+
+    private fun showToast(message: String?) {
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
 }
