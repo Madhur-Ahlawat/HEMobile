@@ -1,8 +1,6 @@
 package com.heandroid.network
 
-import com.heandroid.model.AccountResponse
-import com.heandroid.model.LoginResponse
-import com.heandroid.model.VehicleResponse
+import com.heandroid.model.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -42,4 +40,9 @@ interface ApiService {
             @Field("refresh_token") refreshToken: String,
             @Field("validatePasswordCompliance")validatePasswordCompliance: String): Response<LoginResponse>
 
+    @POST("https://maas-test.services.conduent.com/payments/api/account/retrievepaymentslist")
+    suspend fun retrievePaymentListApi(@Header("Authorization") token: String ,  @Body requestParam : RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
+
+    @POST("https://maas-test.services.conduent.com/trips/api/transactions")
+    suspend fun getMonthlyUsageApi(@Header("Authorization") token: String , @Body requestParam: RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
 }
