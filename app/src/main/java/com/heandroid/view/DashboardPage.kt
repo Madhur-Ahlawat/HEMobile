@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 class DashboardPage : AppCompatActivity() {
     private var refreshToken: String?=null
     private var accessToken: String? =  null
-    lateinit var tokenString: String
     private var ACCOUNT_TAG = "Account Screen"
     private lateinit var apiClient: ApiClient
     private lateinit var sessionManager: SessionManager
@@ -37,11 +36,8 @@ class DashboardPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_dashboard)
         apiClient = ApiClient()
-        tokenString = findViewById<TextView>(R.id.token_id).toString()
         val token: String = SessionManager.USER_TOKEN
-        tokenString = token
         Log.d("DashBoard Page ::token", token)
-        Log.d("DashBoard Page ::", tokenString)
         sessionManager = SessionManager(this)
 //        tvAvailableAmount = findViewById(R.id.tv_available_balance)
 //        tvRemainingAmount = findViewById(R.id.tv_remaining_amount)
@@ -194,6 +190,7 @@ class DashboardPage : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             var accountResponse = resource.data!!.body() as AccountResponse
+                            Log.d("Dash Board Page:: Account Response ::",accountResponse.toString())
                             setView(accountResponse)
                         }
                         Status.ERROR -> {
@@ -225,7 +222,17 @@ class DashboardPage : AppCompatActivity() {
             tv_available_balance.text =
                 "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
             tv_remaining_amount.text =
-                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
+                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.tollBalance}"
+            account_number_id.text =
+                "${"Account Number :"}${accountResponse.accountInformation.number}"
+            tv_account_number.text=
+                "${accountResponse.accountInformation.number}"
+            accountStatus_id.text =
+                "${"Account Status :"}${accountResponse.accountInformation.status}"
+            accountType_id.text =
+                "${"Account Type :"}${accountResponse.accountInformation.type}"
+            topUp_id.text =
+                "${"Topup Balance :"}${accountResponse.accountInformation.openViolationCount}"
         }
     }
 

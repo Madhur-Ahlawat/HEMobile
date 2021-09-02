@@ -139,6 +139,32 @@ class SingleNetworkCallViewModelTest {
         }
     }
 
+
+   /* @Test
+    fun renewalToken200_whenFetch_shouldReturnSuccess() {
+
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken = sessionManager.fetchRefreshToken()
+        var validatePasswordCompliance = "true"
+        testCoroutineRule.runBlockingTest {
+            doReturn(emptyList<LoginResponse>())
+                .`when`(apiHelper)
+                .getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
+                    refreshToken, validatePasswordCompliance)
+            val viewModel = LoginViewModel(apiHelper)
+            viewModel.getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
+                refreshToken, validatePasswordCompliance).observeForever(apiUsersObserver)
+            verify(apiHelper).getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
+                refreshToken, validatePasswordCompliance)
+            verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
+            viewModel.getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
+                refreshToken, validatePasswordCompliance).removeObserver(apiUsersObserver)
+        }
+    }*/
+
     @After
     fun tearDown() {
         // do something if required
