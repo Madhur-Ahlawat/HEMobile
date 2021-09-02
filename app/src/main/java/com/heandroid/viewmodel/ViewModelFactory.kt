@@ -9,7 +9,7 @@ class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Fac
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(AppRepository(apiHelper)) as T
+            return LoginViewModel(apiHelper) as T
         }
         else if (modelClass.isAssignableFrom(DashboardViewModel::class.java))
         {
