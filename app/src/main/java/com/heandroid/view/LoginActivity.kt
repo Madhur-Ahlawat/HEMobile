@@ -3,7 +3,6 @@ package com.heandroid.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         setupUI()
         //setupObservers()
         btn_login.setOnClickListener {
-           setupObservers()
-           // getRenewalAccessToken()
+            setupObservers()
+            // getRenewalAccessToken()
         }
 
     }
@@ -47,21 +46,27 @@ class LoginActivity : AppCompatActivity() {
         var password = "Welcome1!"
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
-        viewModel.loginUser( clientID, grantType, agecyId, clientSecret, value, password, validatePasswordCompliance)
-            .observe(this , Observer {
+        viewModel.loginUser(clientID,
+            grantType,
+            agecyId,
+            clientSecret,
+            value,
+            password,
+            validatePasswordCompliance)
+            .observe(this, Observer {
                 Log.d("DummyLogin", "after api call")
-                it.let {
-                        resource ->
+                it.let { resource ->
                     run {
                         when (resource.status) {
                             Status.SUCCESS -> {
                                 var loginResponse = resource.data!!.body() as LoginResponse
                                 launchDashboardScreen(loginResponse)
                             }
-                            Status.ERROR->{
-                                showToast(resource.message)}
+                            Status.ERROR -> {
+                                showToast(resource.message)
+                            }
 
-                            Status.LOADING->{
+                            Status.LOADING -> {
                                 // show/hide loader
                             }
 
@@ -114,31 +119,35 @@ class LoginActivity : AppCompatActivity() {
         var agencyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
         var refreshToken = sessionManager.fetchRefreshToken()
-        var validatePasswordCompliance =  "true"
+        var validatePasswordCompliance = "true"
         Log.d("RenewalAccessToken", "Before api call")
         if (refreshToken != null) {
-            viewModel.getRenewalAccessToken(clientId , grantType, agencyId, clientSecret, refreshToken, validatePasswordCompliance).
-                    observe(this, Observer {
-                        Log.d("RenewalAccessToken", "after api call")
-                        it.let {
-                            resource ->
-                            run {
-                                when (resource.status) {
-                                    Status.SUCCESS -> {
-                                        var loginResponse = resource.data!!.body() as LoginResponse
-                                         //launchDashboardScreen(loginResponse)
-                                    }
-                                    Status.ERROR->{
-                                        showToast(resource.message)}
-
-                                    Status.LOADING->{
-                                        // show/hide loader
-                                    }
-
-                                }
+            viewModel.getRenewalAccessToken(clientId,
+                grantType,
+                agencyId,
+                clientSecret,
+                refreshToken,
+                validatePasswordCompliance).observe(this, Observer {
+                Log.d("RenewalAccessToken", "after api call")
+                it.let { resource ->
+                    run {
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                var loginResponse = resource.data!!.body() as LoginResponse
+                                //launchDashboardScreen(loginResponse)
                             }
+                            Status.ERROR -> {
+                                showToast(resource.message)
+                            }
+
+                            Status.LOADING -> {
+                                // show/hide loader
+                            }
+
                         }
-                    })
+                    }
+                }
+            })
         }
 
 
