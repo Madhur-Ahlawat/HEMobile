@@ -12,9 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiClient
 import com.heandroid.R
-import com.heandroid.model.AccountResponse
-import com.heandroid.model.LoginResponse
-import com.heandroid.model.VehicleResponse
+import com.heandroid.model.*
 import com.heandroid.network.ApiHelper
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
@@ -69,6 +67,8 @@ class DashboardPage : AppCompatActivity() {
                 //callApiForAccountOverview("Bearer $accessToken")
                 getAccountOverViewApi(accessToken!!)
                 getVehicleListApiCall(accessToken!!)
+                getRetrievePaymentListApiCall(accessToken!!)
+                getMonthlyUsageApiCall(accessToken!!)
 
             }
              refreshToken = it.getString("refresh_token")
@@ -79,6 +79,80 @@ class DashboardPage : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun getMonthlyUsageApiCall(accessToken: String) {
+
+        var requestParam = RetrievePaymentListRequest(
+            "Posted Date" ,
+            "12/03/2021",
+            "01/09/2021",
+            "PREPAID",
+            "TX_DATE",
+            0,10,"123456789",
+            "ABC123QW"
+        )
+        viewModel.getMonthlyUsage("Bearer $accessToken" , requestParam)
+            .observe(this, androidx.lifecycle.Observer {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            var monthlyUsageApiResp = resource.data!!.body()
+                            Log.d("resp: " , monthlyUsageApiResp.toString())
+                            setupMonthlyUsageView(monthlyUsageApiResp)
+
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
+
+                        }
+                        Status.LOADING -> {
+                            // show/hide loader
+                        }
+
+                    }
+                }
+            })
+
+    }
+    private fun getRetrievePaymentListApiCall(accessToken: String) {
+
+        var requestParam = RetrievePaymentListRequest(
+            "Posted Date" ,
+            "12/03/2021",
+            "01/09/2021",
+            "PREPAID",
+            "TX_DATE",
+            0,10,"123456789",
+            "string"
+        )
+        viewModel.retrievePaymentListApi("Bearer $accessToken" , requestParam)
+            .observe(this, androidx.lifecycle.Observer {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            var paymentListApiResponse = resource.data!!.body()
+                            Log.d("resp: " , paymentListApiResponse.toString())
+
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
+
+                        }
+                        Status.LOADING -> {
+                            // show/hide loader
+                        }
+
+                    }
+                }
+            })
+
+    }
+
+    private fun setupMonthlyUsageView(crossingListResp: RetrievePaymentListApiResponse?) {
+        if (crossingListResp != null) {
+            tv_crossing_count.text = crossingListResp.count.toString()
+        }
     }
 
     private fun getVehicleListApiCall(accessToken: String) {
@@ -170,8 +244,6 @@ class DashboardPage : AppCompatActivity() {
 
     private fun getRenewalAccessToken()
     {
-
-
         var clientId = "NY_EZ_Pass_iOS_QA"
         var grantType = "refresh_token"
         var agencyId = "12"
