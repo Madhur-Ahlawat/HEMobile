@@ -2,7 +2,7 @@ package com.heandroid.network
 
 import com.heandroid.model.RetrievePaymentListRequest
 
-class ApiHelper(private val apiService: ApiService) {
+open class ApiHelper(private val apiService: ApiService) {
 
     suspend fun loginApiCall(clientID:String,
                              grantType:String,

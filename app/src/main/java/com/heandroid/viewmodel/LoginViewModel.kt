@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 
 class LoginViewModel(private val apiHelper: ApiHelper):ViewModel() {
 
-
     fun loginUser(clientID:String,
                   grantType:String,
                   agencyId:String,

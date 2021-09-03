@@ -3,7 +3,7 @@ package com.heandroid.repo
 import com.heandroid.model.RetrievePaymentListRequest
 import com.heandroid.network.ApiHelper
 
-class AppRepository(private val apiHelper: ApiHelper) {
+open class AppRepository(private val apiHelper: ApiHelper) {
 
     suspend fun loginUser(clientID:String,
                           grantType:String,
