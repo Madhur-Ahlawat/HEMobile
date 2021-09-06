@@ -129,6 +129,7 @@ class DashboardPage : AppCompatActivity() {
                         Status.SUCCESS -> {
                             var paymentListApiResponse = resource.data!!.body()
                             Log.d("resp: " , paymentListApiResponse.toString())
+                            Log.d("added for pipeline", "true")
 
                         }
                         Status.ERROR -> {
