@@ -42,8 +42,10 @@ class LoginActivity : AppCompatActivity() {
         var grantType = "password"
         var agecyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = "johnsmith32"
-        var password = "Welcome1!"
+        var value = edt_username.text.toString()
+        //var value = "459144698"
+        //var password = "Welcome1!"
+        var password = edt_password.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
         viewModel.loginUser(clientID,
@@ -152,7 +154,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
 
 
 
