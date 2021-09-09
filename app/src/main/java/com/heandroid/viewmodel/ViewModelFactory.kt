@@ -3,7 +3,6 @@ package com.heandroid.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiHelper
-import com.heandroid.repo.AppRepository
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
 
@@ -13,7 +12,7 @@ class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Fac
         }
         else if (modelClass.isAssignableFrom(DashboardViewModel::class.java))
         {
-            return DashboardViewModel(AppRepository(apiHelper)) as T
+            return DashboardViewModel(apiHelper) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

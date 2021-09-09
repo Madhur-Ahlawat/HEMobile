@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.heandroid.model.AccountResponse
 import com.heandroid.network.ApiHelper
-import com.heandroid.repo.AppRepository
 import com.heandroid.repo.Resource
 import com.heandroid.viewmodel.DashboardViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +27,7 @@ class DashboardNetworkCallViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var appRepository: AppRepository
+    private lateinit var appRepository: ApiHelper
 
     @Mock
     private lateinit var apiUsersObserver: Observer<Resource<Response<AccountResponse>>>
@@ -68,7 +67,8 @@ class DashboardNetworkCallViewModelTest {
             viewModel.getAccountOverViewApi(accessToken).observeForever(apiUsersObserver)
             Mockito.verify(appRepository).getAccountOverviewApiCall(accessToken)
             Mockito.verify(apiUsersObserver).onChanged(
-                Resource.error(null,
+                Resource.error(
+                    null,
                     RuntimeException(errorMessage).toString()
                 )
             )
