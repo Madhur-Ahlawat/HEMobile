@@ -14,6 +14,7 @@ import com.heandroid.network.ApiClient
 import com.heandroid.R
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelper
+import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
@@ -70,7 +71,7 @@ class DashboardPage : AppCompatActivity() {
              refreshToken = it.getString("refresh_token")
             if(refreshToken!=null)
             {
-                getRenewalAccessToken()
+                //getRenewalAccessToken()
             }
 
         }
@@ -81,12 +82,14 @@ class DashboardPage : AppCompatActivity() {
 
         var requestParam = RetrievePaymentListRequest(
             "Posted Date" ,
-            "12/03/2021",
-            "01/09/2021",
+            "06/30/2021",
+            "08/31/2021",
             "PREPAID",
             "TX_DATE",
-            0,10,"123456789",
-            "ABC123QW"
+            0,
+            10,
+            "",
+            ""
         )
         viewModel.getMonthlyUsage("Bearer $accessToken" , requestParam)
             .observe(this, androidx.lifecycle.Observer {
@@ -94,7 +97,7 @@ class DashboardPage : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             var monthlyUsageApiResp = resource.data!!.body()
-                            Log.d("resp: " , monthlyUsageApiResp.toString())
+                            Log.d("MonthlyUsageApiresp: " , monthlyUsageApiResp.toString())
                             setupMonthlyUsageView(monthlyUsageApiResp)
 
                         }
@@ -115,12 +118,12 @@ class DashboardPage : AppCompatActivity() {
 
         var requestParam = RetrievePaymentListRequest(
             "Posted Date" ,
-            "12/03/2021",
-            "01/09/2021",
+            "06/30/2021",
+            "08/31/2021",
             "PREPAID",
             "TX_DATE",
-            0,10,"123456789",
-            "string"
+            0,10,"",
+            ""
         )
         viewModel.retrievePaymentListApi("Bearer $accessToken" , requestParam)
             .observe(this, androidx.lifecycle.Observer {
@@ -128,7 +131,7 @@ class DashboardPage : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             var paymentListApiResponse = resource.data!!.body()
-                            Log.d("resp: " , paymentListApiResponse.toString())
+                            Log.d("paymentResp: " , paymentListApiResponse.toString())
                             Log.d("added for pipeline", "true")
 
                         }
@@ -212,7 +215,7 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelper(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
         viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
@@ -234,6 +237,7 @@ class DashboardPage : AppCompatActivity() {
                 "${"Account Type :"}${accountResponse.accountInformation.type}"
             topUp_id.text =
                 "${"Topup Balance :"}${accountResponse.accountInformation.openViolationCount}"
+            tv_manual_top_up.text = accountResponse.financialInformation.financialStatus
         }
     }
 

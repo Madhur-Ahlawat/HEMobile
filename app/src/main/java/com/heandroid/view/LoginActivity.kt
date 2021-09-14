@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.heandroid.R
 import com.heandroid.model.LoginResponse
 import com.heandroid.network.ApiHelper
+import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
@@ -48,34 +49,64 @@ class LoginActivity : AppCompatActivity() {
         var password = edt_password.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
-        viewModel.loginUser(clientID,
+
+        viewModel.loginUser(
+            clientID,
             grantType,
             agecyId,
             clientSecret,
             value,
             password,
-            validatePasswordCompliance)
-            .observe(this, Observer {
-                Log.d("DummyLogin", "after api call")
-                it.let { resource ->
-                    run {
-                        when (resource.status) {
-                            Status.SUCCESS -> {
-                                var loginResponse = resource.data!!.body() as LoginResponse
-                                launchDashboardScreen(loginResponse)
-                            }
-                            Status.ERROR -> {
-                                showToast(resource.message)
-                            }
+            validatePasswordCompliance
+        )
+        viewModel.loginUserVal.observe(this,
+            {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        var loginResponse = it.data!!.body() as LoginResponse
+                        launchDashboardScreen(loginResponse)
+                    }
 
-                            Status.LOADING -> {
-                                // show/hide loader
-                            }
+                    Status.ERROR->{
+                        showToast(it.message)
+                    }
 
-                        }
+                    Status.LOADING->{
+                        // show/hide loader
                     }
                 }
             })
+
+//
+//        viewModel.loginUser(clientID,
+//            grantType,
+//            agecyId,
+//            clientSecret,
+//            value,
+//            password,
+//            validatePasswordCompliance)
+
+//            .observe(this, Observer {
+//                Log.d("DummyLogin", "after api call")
+//                it.let { resource ->
+//                    run {
+//                        when (resource.status) {
+//                            Status.SUCCESS -> {
+//                                var loginResponse = resource.data!!.body() as LoginResponse
+//                                launchDashboardScreen(loginResponse)
+//                            }
+//                            Status.ERROR -> {
+//                                showToast(resource.message)
+//                            }
+//
+//                            Status.LOADING -> {
+//                                // show/hide loader
+//                            }
+//
+//                        }
+//                    }
+//                }
+//            })
     }
 
     private fun showToast(message: String?) {
@@ -96,19 +127,19 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
+
     private fun setupUI() {
         Toast.makeText(this, "I am launched after api call", Toast.LENGTH_LONG).show()
     }
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelper(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
         viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
-    private fun getRenewalAccessToken()
-    {
+    private fun getRenewalAccessToken() {
 //        formData.append("client_id", environment.clientId);
 //        formData.append("grant_type", "refresh_token");
 //        formData.append("agencyID", environment.agencyId);
@@ -124,12 +155,14 @@ class LoginActivity : AppCompatActivity() {
         var validatePasswordCompliance = "true"
         Log.d("RenewalAccessToken", "Before api call")
         if (refreshToken != null) {
-            viewModel.getRenewalAccessToken(clientId,
+            viewModel.getRenewalAccessToken(
+                clientId,
                 grantType,
                 agencyId,
                 clientSecret,
                 refreshToken,
-                validatePasswordCompliance).observe(this, Observer {
+                validatePasswordCompliance
+            ).observe(this, Observer {
                 Log.d("RenewalAccessToken", "after api call")
                 it.let { resource ->
                     run {
@@ -154,9 +187,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
-
-
 
 
 }

@@ -8,6 +8,7 @@ import com.heandroid.model.LoginResponse
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
 import com.heandroid.viewmodel.LoginViewModel
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Before
@@ -39,9 +40,12 @@ class LoginNetworkCallViewModelTest {
     @Mock
     private lateinit var apiloginresponse: Response<LoginResponse>
 
+    private lateinit var viewModel: LoginViewModel
+
     @Before
     fun setUp() {
         // do something if required
+         viewModel = LoginViewModel(apiHelper)
     }
 
     @Test
@@ -63,29 +67,17 @@ class LoginNetworkCallViewModelTest {
                     value,
                     password,
                     validatePasswordCompliance)
-            val viewModel = LoginViewModel(apiHelper)
-            viewModel.loginUser(clientID,
-                grantType,
-                agecyId,
-                clientSecret,
-                value,
-                password,
-                validatePasswordCompliance).observeForever(apiUsersObserver)
-            verify(apiHelper).loginApiCall(clientID,
+
+                viewModel.loginUserVal.observeForever(apiUsersObserver)
+                verify(apiHelper).loginApiCall(clientID,
                 grantType,
                 agecyId,
                 clientSecret,
                 value,
                 password,
                 validatePasswordCompliance)
-            verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
-            viewModel.loginUser(clientID,
-                grantType,
-                agecyId,
-                clientSecret,
-                value,
-                password,
-                validatePasswordCompliance).removeObserver(apiUsersObserver)
+              verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
+                viewModel.loginUserVal.removeObserver(apiUsersObserver)
         }
     }
 
@@ -109,14 +101,8 @@ class LoginNetworkCallViewModelTest {
                     value,
                     password,
                     validatePasswordCompliance)
-            val viewModel = LoginViewModel(apiHelper)
-            viewModel.loginUser(clientID,
-                grantType,
-                agecyId,
-                clientSecret,
-                value,
-                password,
-                validatePasswordCompliance).observeForever(apiUsersObserver)
+
+            viewModel.loginUserVal.observeForever(apiUsersObserver)
             verify(apiHelper).loginApiCall(clientID,
                 grantType,
                 agecyId,
@@ -129,13 +115,7 @@ class LoginNetworkCallViewModelTest {
                     RuntimeException(errorMessage).toString()
                 )
             )
-            viewModel.loginUser(clientID,
-                grantType,
-                agecyId,
-                clientSecret,
-                value,
-                password,
-                validatePasswordCompliance).removeObserver(apiUsersObserver)
+            viewModel.loginUserVal.removeObserver(apiUsersObserver)
         }
     }
 

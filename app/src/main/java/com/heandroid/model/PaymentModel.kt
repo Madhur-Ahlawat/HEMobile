@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class PaymentModel(
     @SerializedName("activity") val activity : String,
     @SerializedName("agencyName") val agencyName : String,
-    @SerializedName("amount") val amount : Int,
-    @SerializedName("balance") val balance : Int,
+    @SerializedName("amount") val amount : Double,
+    @SerializedName("balance") val balance : Double,
     @SerializedName("entryDate") val entryDate : String,
     @SerializedName("entryLaneName") val entryLaneName : String,
     @SerializedName("entryPlazaName") val entryPlazaName : String,
