@@ -79,18 +79,18 @@
                     android:textColor="@color/black"
                     android:textSize="19sp"
                     android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/tv_manual_top_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    app:layout_constraintStart_toEndOf="@+id/tv_available_balance"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_available_balance_heading"
-                    android:text="@string/txt_manual_topup"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="15sp"
-                    android:textStyle="bold"/>
-
+            <TextView
+                android:id="@+id/tv_manual_top_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/txt_manual_topup"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tv_available_balance"
+                app:layout_constraintTop_toBottomOf="@+id/tv_available_balance_heading" />
 
             <ImageView
                 android:id="@+id/imv_balance_setting"
@@ -296,6 +296,52 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            android:text="Logout" />
+
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:foregroundGravity="center">
+
+        <!--progress bar implementation-->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circular_shape"
+            android:indeterminate="false"
+            android:foregroundGravity="center"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            />
+
+        <!--Text implementation in center of the progress bar-->
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Loading..."
+            android:layout_below="@+id/progress_bar"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

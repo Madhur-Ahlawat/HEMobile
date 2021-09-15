@@ -2,7 +2,9 @@ package com.heandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -21,6 +23,8 @@ import android.app.Activity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.activity_main.progress_layout
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -36,6 +40,14 @@ class LoginActivity : AppCompatActivity() {
         //setupObservers()
         btn_login.setOnClickListener {
             setupObservers()
+            progress_layout.visibility= View.VISIBLE
+            val handler = Handler()
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    handler.postDelayed(this, 200)
+
+                }
+            }, 200)
             // getRenewalAccessToken()
         }
 
@@ -68,19 +80,20 @@ class LoginActivity : AppCompatActivity() {
             {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        progress_bar.visibility= GONE
+
+                        progress_layout.visibility= View.GONE
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
 
                     Status.ERROR->{
-                        progress_bar.visibility=GONE
+                        progress_layout.visibility=GONE
                         showToast(it.message)
                     }
 
                     Status.LOADING->{
                         // show/hide loader
-                        progress_bar.visibility = VISIBLE
+                        progress_layout.visibility = VISIBLE
                     }
                 }
             })
@@ -201,6 +214,11 @@ class LoginActivity : AppCompatActivity() {
     {
         val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModelStore.clear()
     }
 }
 

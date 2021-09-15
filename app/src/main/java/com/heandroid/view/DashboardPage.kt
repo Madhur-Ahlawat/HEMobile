@@ -1,10 +1,13 @@
 package com.heandroid.view
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,6 +57,19 @@ class DashboardPage : AppCompatActivity() {
         setupViewModel()
         setupUI()
         setupObservers()
+        progress_layout.visibility= View.VISIBLE
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                handler.postDelayed(this, 200)
+
+            }
+        }, 200)
+
+        logoutBtn.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
@@ -120,8 +136,8 @@ class DashboardPage : AppCompatActivity() {
 
         var requestParam = RetrievePaymentListRequest(
             "Posted Date" ,
-            "06/30/2021",
-            "08/31/2021",
+            "",
+            "",
             "PREPAID",
             "TX_DATE",
             0,10,"",
@@ -133,7 +149,7 @@ class DashboardPage : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             var paymentListApiResponse = resource.data!!.body()
-                            Log.d("paymentResp: " , paymentListApiResponse.toString())
+                            Log.d("paymentResp:retrievePaymentListApi:: " , paymentListApiResponse.toString())
                             Log.d("added for pipeline", "true")
 
                         }
@@ -165,7 +181,7 @@ class DashboardPage : AppCompatActivity() {
                         Status.SUCCESS -> {
                             var vehicleList = resource.data!!.body()
                             if (vehicleList != null) {
-                                Log.d("apiResp: ", vehicleList.size.toString())
+                                Log.d("apiResp:getVehicleListApiCall ", vehicleList.size.toString())
                                 setupVehicleData(vehicleList)
                             }
 
@@ -185,6 +201,8 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setupVehicleData(vehicleList: List<VehicleResponse>) {
         tv_vehicle_count.text = vehicleList.size.toString()
+        tv_remaining_amount.text = vehicleList.size.toString()
+
 
     }
 
@@ -250,11 +268,13 @@ class DashboardPage : AppCompatActivity() {
     private fun setView(accountResponse: AccountResponse?) {
         if (accountResponse != null) {
             tv_available_balance.text =
-                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.currentBalance}"
-            tv_remaining_amount.text =
-                "${getString(R.string.txt_euro)}${accountResponse.financialInformation.tollBalance}"
+                "${getString(R.string.txt_pound)}${accountResponse.financialInformation.currentBalance}"
+            //tv_remaining_amount.text =
+             //   "${getString(R.string.txt_pound)}${accountResponse.financialInformation.tollBalance}"
             account_number_id.text =
                 "${"Account Number :"}${accountResponse.accountInformation.number}"
+            tv_pre_pay_account_heading.text=
+                "${accountResponse.accountInformation.type}"
             tv_account_number.text=
                 "${accountResponse.accountInformation.number}"
             accountStatus_id.text =
@@ -262,9 +282,10 @@ class DashboardPage : AppCompatActivity() {
             accountType_id.text =
                 "${"Account Type :"}${accountResponse.accountInformation.type}"
             topUp_id.text =
-                "${"Topup Balance :"}${accountResponse.accountInformation.openViolationCount}"
+                "${"Top up Type :"}${accountResponse.financialInformation.financialStatus}"
             tv_manual_top_up.text = accountResponse.financialInformation.financialStatus
         }
+        progress_layout.visibility= View.GONE
     }
 
 
