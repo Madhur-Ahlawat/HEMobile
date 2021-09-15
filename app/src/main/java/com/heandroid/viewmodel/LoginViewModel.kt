@@ -35,10 +35,28 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                     value,
                     password,
                     validatePasswordCompliance)
-                loginUserVal.postValue(Resource.success(usersFromApi))
+                //loginUserVal.postValue(Resource.success(usersFromApi))
+                loginUserVal.postValue(setLoginUserResponse(usersFromApi))
             } catch (e: Exception) {
                 loginUserVal.postValue(Resource.error(null , e.toString()))
             }
+        }
+    }
+
+    private fun setLoginUserResponse(usersFromApi: Response<LoginResponse>): Resource<Response<LoginResponse>>? {
+        if(usersFromApi.isSuccessful)
+        {
+            return Resource.success(usersFromApi)
+        }
+        else
+        {
+            var errorCode = usersFromApi.code()
+            return if(errorCode==401) {
+                Resource.error(null, "Invalid login credentials")
+            } else {
+                Resource.error(null, "Unknown error ")
+            }
+
         }
     }
 //        liveData(Dispatchers.IO) {

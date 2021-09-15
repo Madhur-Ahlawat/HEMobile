@@ -17,6 +17,10 @@ import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.Activity
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.inputmethod.InputMethodManager
 
 
 class LoginActivity : AppCompatActivity() {
@@ -39,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun setupObservers() {
+        hideSoftKeyboard()
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
         var agecyId = "12"
@@ -63,16 +68,19 @@ class LoginActivity : AppCompatActivity() {
             {
                 when (it.status) {
                     Status.SUCCESS -> {
+                        progress_bar.visibility= GONE
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
 
                     Status.ERROR->{
+                        progress_bar.visibility=GONE
                         showToast(it.message)
                     }
 
                     Status.LOADING->{
                         // show/hide loader
+                        progress_bar.visibility = VISIBLE
                     }
                 }
             })
@@ -189,6 +197,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    private fun hideSoftKeyboard()
+    {
+        val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    }
 }
 
 
