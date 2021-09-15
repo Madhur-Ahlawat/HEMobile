@@ -150,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        Toast.makeText(this, "I am launched after api call", Toast.LENGTH_LONG).show()
+       // Toast.makeText(this, "I am launched after api call", Toast.LENGTH_LONG).show()
     }
 
     private fun setupViewModel() {
