@@ -2,7 +2,9 @@ package com.heandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,6 +19,8 @@ import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.progress_layout
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -32,6 +36,14 @@ class LoginActivity : AppCompatActivity() {
         //setupObservers()
         btn_login.setOnClickListener {
             setupObservers()
+            progress_layout.visibility= View.VISIBLE
+            val handler = Handler()
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    handler.postDelayed(this, 200)
+
+                }
+            }, 200)
             // getRenewalAccessToken()
         }
 
@@ -63,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
             {
                 when (it.status) {
                     Status.SUCCESS -> {
+                        progress_layout.visibility= View.GONE
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
