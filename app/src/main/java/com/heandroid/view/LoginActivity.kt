@@ -20,6 +20,7 @@ import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import android.app.Activity
+import android.text.TextUtils
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
@@ -39,23 +40,50 @@ class LoginActivity : AppCompatActivity() {
         setupUI()
         //setupObservers()
         btn_login.setOnClickListener {
-            setupObservers()
-            progress_layout.visibility= View.VISIBLE
-            val handler = Handler()
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-                    handler.postDelayed(this, 200)
 
-                }
-            }, 200)
+            hideSoftKeyboard()
+            if(validate())
+            {
+                setupObservers()
+                progress_layout.visibility= View.VISIBLE
+            }
+
+//            val handler = Handler()
+//            handler.postDelayed(object : Runnable {
+//                override fun run() {
+//                    handler.postDelayed(this, 200)
+//
+//                }
+//            }, 200)
             // getRenewalAccessToken()
+        }
+
+    }
+
+    private fun validate(): Boolean {
+
+        val username = edt_username.text.toString()
+        val pwd = edt_password.text.toString()
+        if(TextUtils.isEmpty(username))
+        {
+            showToast(getString(R.string.txt_error_username))
+            return false
+        }
+           else if(TextUtils.isEmpty(pwd))
+        {
+               showToast(getString(R.string.txt_error_password))
+                return false
+        }
+
+        else {
+            return true
         }
 
     }
 
 
     private fun setupObservers() {
-        hideSoftKeyboard()
+
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
         var agecyId = "12"
@@ -146,6 +174,7 @@ class LoginActivity : AppCompatActivity() {
         bundle.putString("refresh_token", loginResponse.refreshToken)
         intent.putExtra("data", bundle)
         startActivity(intent)
+        finish()
 
     }
 
@@ -216,8 +245,8 @@ class LoginActivity : AppCompatActivity() {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         viewModelStore.clear()
     }
 }

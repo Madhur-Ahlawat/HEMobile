@@ -347,4 +347,9 @@ class DashboardPage : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModelStore.clear()
+    }
+
 }
