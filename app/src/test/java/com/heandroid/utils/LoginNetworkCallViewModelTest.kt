@@ -1,12 +1,15 @@
 package com.heandroid.utils
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.Observer
+import androidx.test.core.app.ApplicationProvider
 import com.heandroid.model.LoginResponse
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
+import com.heandroid.view.LoginActivity
 import com.heandroid.viewmodel.LoginViewModel
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,6 +21,9 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
+import org.junit.Rule
+import org.mockito.MockitoAnnotations
+
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -40,10 +46,16 @@ class LoginNetworkCallViewModelTest {
 
     private lateinit var viewModel: LoginViewModel
 
+    @Mock
+    private lateinit var mockContext: Context
+
     @Before
     fun setUp() {
         // do something if required
+        MockitoAnnotations.initMocks(this)
          viewModel = LoginViewModel(apiHelper)
+
+
     }
 
     @Test
@@ -67,65 +79,65 @@ class LoginNetworkCallViewModelTest {
                     validatePasswordCompliance)
 
                 viewModel.loginUserVal.observeForever(apiUsersObserver)
-                val result = apiHelper.loginApiCall(clientID,
+                apiHelper.loginApiCall(clientID,
             grantType,
             agecyId,
             clientSecret,
             value,
             password,
-            validatePasswordCompliance).body() as LoginResponse
-                 assertEquals("0",result.statusCode )
-//                verify(apiHelper).loginApiCall(clientID,
-//                grantType,
-//                agecyId,
-//                clientSecret,
-//                value,
-//                password,
-//                validatePasswordCompliance)
-//              verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
+            validatePasswordCompliance)
+
+                verify(apiHelper).loginApiCall(clientID,
+                grantType,
+                agecyId,
+                clientSecret,
+                value,
+                password,
+                validatePasswordCompliance)
+                verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
 //                viewModel.loginUserVal.removeObserver(apiUsersObserver)
         }
     }
 
 
 
-//    @Test
-//    fun givenServerResponseError_whenFetch_shouldReturnError() {
-//        var clientID = "NY_EZ_Pass_iOS_QA"
-//        var grantType = "password"
-//        var agecyId = "12"
-//        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-//        var value = "WrongUsername"
-//        var password = "Wrong Password"
-//        var validatePasswordCompliance = "true"
-//        testCoroutineRule.runBlockingTest {
-//            val errorMessage = "Error Message For You"
-//            doThrow(RuntimeException(errorMessage))
-//                .`when`(apiHelper)
-//                .loginApiCall(clientID,
-//                    grantType,
-//                    agecyId,
-//                    clientSecret,
-//                    value,
-//                    password,
-//                    validatePasswordCompliance)
-//
-//            viewModel.loginUserVal.observeForever(apiUsersObserver)
-//            verify(apiHelper).loginApiCall(clientID,
-//                grantType,
-//                agecyId,
-//                clientSecret,
-//                value,
-//                password,
-//                validatePasswordCompliance)
-//            verify(apiUsersObserver).onChanged(
+    @Test
+    fun givenServerResponseError_whenFetch_shouldReturnError() {
+        var clientID = "NY_EZ_Pass_iOS_QA"
+        var grantType = "password"
+        var agecyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var value = "WrongUsername"
+        var password = "Wrong Password"
+        var validatePasswordCompliance = "true"
+        testCoroutineRule.runBlockingTest {
+            val errorMessage = "Error Message For You"
+            doThrow(RuntimeException(errorMessage))
+                .`when`(apiHelper)
+                .loginApiCall(clientID,
+                    grantType,
+                    agecyId,
+                    clientSecret,
+                    value,
+                    password,
+                    validatePasswordCompliance)
+
+            viewModel.loginUserVal.observeForever(apiUsersObserver)
+            verify(apiHelper).loginApiCall(clientID,
+                grantType,
+                agecyId,
+                clientSecret,
+                value,
+                password,
+                validatePasswordCompliance)
+//                verify(apiUsersObserver).onChanged(
 //                Resource.error(null,
 //                    RuntimeException(errorMessage).toString()
 //                )
 //            )
 //            viewModel.loginUserVal.removeObserver(apiUsersObserver)
-//        }
-//    }
+        }
+    }
 
 
    /* @Test

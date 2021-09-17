@@ -2,7 +2,6 @@ package com.heandroid.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -11,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.R
 import com.heandroid.model.LoginResponse
-import com.heandroid.network.ApiHelper
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
@@ -19,7 +17,6 @@ import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import android.app.Activity
 import android.text.TextUtils
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -42,7 +39,9 @@ class LoginActivity : AppCompatActivity() {
         btn_login.setOnClickListener {
 
             hideSoftKeyboard()
-            if(validate())
+            val username = edt_username.text.toString()
+            val pwd = edt_password.text.toString()
+            if(validate(username, pwd))
             {
                 setupObservers()
                 progress_layout.visibility= View.VISIBLE
@@ -60,23 +59,16 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun validate(): Boolean {
+     fun validate(username: String, pwd: String): Boolean {
 
-        val username = edt_username.text.toString()
-        val pwd = edt_password.text.toString()
-        if(TextUtils.isEmpty(username))
-        {
+        return if(username.isEmpty()) {
             showToast(getString(R.string.txt_error_username))
-            return false
-        }
-           else if(TextUtils.isEmpty(pwd))
-        {
-               showToast(getString(R.string.txt_error_password))
-                return false
-        }
-
-        else {
-            return true
+            false
+        } else if(pwd.isEmpty()) {
+            showToast(getString(R.string.txt_error_password))
+            false
+        } else {
+            true
         }
 
     }
