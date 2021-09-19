@@ -1,6 +1,7 @@
 package com.heandroid.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class VehicleResponse(
     @SerializedName("plateInfo")
@@ -9,5 +10,5 @@ data class VehicleResponse(
     @SerializedName("vehicleInfo")
     var vehicleInfo: VehicleInfoResponse,
 
-    )
+    ):Serializable
 

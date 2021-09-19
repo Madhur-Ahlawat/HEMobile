@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
-                 android:src="@drawable/ic_more"/>
+                 android:src="@drawable/ic_setting"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -55,18 +55,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_available_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="£ 15"
-                android:layout_marginHorizontal="10dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+
 
                 <TextView
                     android:id="@+id/tv_available_balance_heading"
@@ -74,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_available_balance"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/txt_available_balance"
                     android:textColor="@color/black"
                     android:textSize="19sp"
@@ -89,19 +78,20 @@
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/tv_available_balance"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_available_balance_heading" />
-
-            <ImageView
-                android:id="@+id/imv_balance_setting"
+            <TextView
+                android:id="@+id/tv_available_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                android:backgroundTint="@color/black"
-                android:src="@drawable/ic_more"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="£ 15"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -122,8 +112,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/txt_vehicles"
+                android:gravity="center_vertical"
+                android:backgroundTint="@color/black"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableLeft="@drawable/ic_car"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_view_vehicle_list"
@@ -134,7 +128,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_heading"
                 android:text="@string/txt_view_vehicle_list"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_vehicle_count"
@@ -171,8 +165,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/txt_monthly_usage"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_calender"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_view_crossing_history"
@@ -182,7 +179,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_monthly_usage_heading"
                 android:text="@string/txt_view_crossing_history"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_crossing_count"
@@ -218,8 +215,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/txt_paymnt"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_payment"
+                android:drawablePadding="@dimen/_10sdp"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_view_payment_history"
@@ -229,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_payment_heading"
                 android:text="@string/txt_view_payment_history"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"/>
 
             <TextView

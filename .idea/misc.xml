@@ -3,10 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_serach.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_vehicle_item.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_history.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_icon_crown.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_payment.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_vehicle.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_dashborad.xml" value="0.13541666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_login.xml" value="0.1308876811594203" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_main.xml" value="0.1838768115942029" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_vehicle_mgmt.xml" value="0.1308876811594203" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
-        <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/circular_progress_bar.xml" value="0.19270833333333334" />
-        <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/circular_shape.xml" value="0.19270833333333334" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/layout_vehicle_item.xml" value="0.1308876811594203" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/search_layout.xml" value="0.1308876811594203" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/ic_more.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />

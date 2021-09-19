@@ -4,7 +4,7 @@
     <string name="conversion_error">Conversion Error</string>
     <string name="app_name">HE-MAPP-ANDROID</string>
     <string name="txt_dart_charge">DART CHARGE</string>
-    <string name="txt_gov_uk">GOV UK</string>
+    <string name="txt_gov_uk">GOV.UK</string>
     <string name="txt_sign_in">Sign In</string>
     <string name="txt_user_name">Username</string>
     <string name="txt_enter_password">Enter password</string>
@@ -14,7 +14,7 @@
     <string name="txt_error_password">Password can not be empty</string>
     <string name="txt_pre_pay_scheme">Pre pay scheme</string>
     <string name="txt_pre_pay_account">Pre Pay Account</string>
-    <string name="txt_available_balance">Available Balance</string>
+    <string name="txt_available_balance">AVAILABLE BALANCE</string>
     <string name="txt_manual_topup">Manual Top-Up</string>
     <string name="txt_vehicles">VEHICLES</string>
     <string name="txt_view_vehicle_list"><u>View Vehicle List</u></string>
@@ -28,5 +28,9 @@
     <string name="account_status">Account status</string>
     <string name="account_type">Account type</string>
     <string name="top_up_method">Top up Type</string>
+    <string name="txt_dashboard">Dashboard</string>
+    <string name="txt_vehicle_class"><b>Class</b> : %1$s</string>
+    <string name="txt_vehicle_model"><b>Model</b> : %1$s</string>
+    <string name="txt_vehicle_date_added"><b>Date Added</b> : %1$s</string>
 
 </resources>

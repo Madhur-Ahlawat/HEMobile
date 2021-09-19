@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,19 +15,20 @@ import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiClient
 import com.heandroid.R
 import com.heandroid.model.*
-import com.heandroid.network.ApiHelper
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
+import com.heandroid.utils.Constants
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.DashboardViewModel
 import com.heandroid.viewmodel.DummyTestViewModel
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.activity_dashborad.*
 
 
 class DashboardPage : AppCompatActivity() {
+    private var vehicleList: List<VehicleResponse> = mutableListOf()
     private lateinit var dummyViewModel: DummyTestViewModel
     private var refreshToken: String?=null
     private var accessToken: String? =  null
@@ -40,7 +40,7 @@ class DashboardPage : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_dashboard)
+        setContentView(R.layout.activity_dashborad)
         apiClient = ApiClient()
         val token: String = SessionManager.USER_TOKEN
         Log.d("DashBoard Page ::token", token)
@@ -199,7 +199,8 @@ class DashboardPage : AppCompatActivity() {
             })
     }
 
-    private fun setupVehicleData(vehicleList: List<VehicleResponse>) {
+    private fun setupVehicleData(list: List<VehicleResponse>) {
+        vehicleList =  list
         tv_vehicle_count.text = vehicleList.size.toString()
         tv_remaining_amount.text = vehicleList.size.toString()
 
@@ -253,7 +254,19 @@ class DashboardPage : AppCompatActivity() {
         })
     }
     private fun setupUI() {
+        tv_vehicle_heading.setOnClickListener {
+            startVehicleMgmtActivity()
+        }
+    }
 
+    private fun startVehicleMgmtActivity() {
+        var vehicleApiResp = VehicleApiResp(vehicleList)
+        var bundle = Bundle()
+        bundle.putSerializable(Constants.VEHICLE_RESPONSE , vehicleApiResp )
+
+        var intent = Intent(this, VehicleMgmtActivity::class.java)
+        intent.putExtra(Constants.VEHICLE_DATA, bundle)
+        startActivity(intent)
     }
 
     private fun setupViewModel() {

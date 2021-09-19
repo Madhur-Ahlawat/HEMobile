@@ -16,14 +16,10 @@ import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_main.*
-import android.text.TextUtils
+import kotlinx.android.synthetic.main.activity_login.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.activity_main.progress_layout
-
-
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
@@ -31,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
         sessionManager = SessionManager(this)
         setupViewModel()
         setupUI()
