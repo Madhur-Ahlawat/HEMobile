@@ -32,5 +32,10 @@
     <string name="txt_vehicle_class"><b>Class</b> : %1$s</string>
     <string name="txt_vehicle_model"><b>Model</b> : %1$s</string>
     <string name="txt_vehicle_date_added"><b>Date Added</b> : %1$s</string>
+    <string name="txt_search">Search</string>
+    <string name="txt_payments">PAYMENTS</string>
+    <string name="txt_date">DATE</string>
+    <string name="txt_transaction_id">Transaction ID</string>
+    <string name="txt_amount">Amount</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.heandroid.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PaymentModel(
     @SerializedName("activity") val activity : String,
@@ -22,4 +23,4 @@ data class PaymentModel(
     @SerializedName("transactionDate") val transactionDate : String,
     @SerializedName("transponderNumber") val transponderNumber : String,
     @SerializedName("vehicleTypeId") val vehicleTypeId : String
-)
+):Serializable

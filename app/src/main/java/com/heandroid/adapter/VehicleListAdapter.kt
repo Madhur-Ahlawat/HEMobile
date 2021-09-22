@@ -10,7 +10,7 @@ import com.heandroid.R
 
 import com.heandroid.model.VehicleResponse
 
-class VehicleListAdapter(val mContext: Context) : RecyclerView.Adapter<VehicleListAdapter.VehicleViewHolder>() {
+class VehicleListAdapter(private val mContext: Context) : RecyclerView.Adapter<VehicleListAdapter.VehicleViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()
 

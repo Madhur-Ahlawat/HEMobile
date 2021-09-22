@@ -13,4 +13,5 @@
     <color name="fill_grey">#7676801F</color>
     <color name="grey_one">#333333</color>
     <color name="grey_two">#474747</color>
+    <color name="color_search_grey">#3C3C43</color>
 </resources>

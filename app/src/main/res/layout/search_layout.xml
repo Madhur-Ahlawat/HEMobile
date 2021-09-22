@@ -5,8 +5,7 @@
     android:layout_marginHorizontal="@dimen/_5sdp"
     android:layout_marginVertical="@dimen/_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/fill_grey"
-    android:backgroundTint="@color/fill_grey">
+    android:background="@drawable/bg_search">
 
 <ImageView
     android:id="@+id/iv_search"
@@ -31,6 +30,11 @@
     <EditText
         android:id="@+id/edt_search"
         android:background="@null"
+        android:hint="@string/txt_search"
+        android:textColor="@color/color_search_grey"
+        android:textColorHint="@color/color_search_grey"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/_30sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_search"

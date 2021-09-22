@@ -2,6 +2,8 @@ package com.heandroid.utils
 
 object Constants {
 
+    val PAYMENT_RESPONSE = "payment_resp"
+    val PAYMENT_DATA="payment_data"
     val VEHICLE_DATA= "vehicle_data"
     val VEHICLE_RESPONSE="vehicle_api_resp"
     const val BASE_URL = "https://maas-test.services.conduent.com"

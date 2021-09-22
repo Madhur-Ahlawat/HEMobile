@@ -28,6 +28,8 @@ import kotlinx.android.synthetic.main.activity_dashborad.*
 
 
 class DashboardPage : AppCompatActivity() {
+    private var monthlyUsageApiResp: RetrievePaymentListApiResponse?=null
+    private var paymentListApiResponse: RetrievePaymentListApiResponse? = null
     private var vehicleList: List<VehicleResponse> = mutableListOf()
     private lateinit var dummyViewModel: DummyTestViewModel
     private var refreshToken: String?=null
@@ -114,7 +116,7 @@ class DashboardPage : AppCompatActivity() {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            var monthlyUsageApiResp = resource.data!!.body()
+                            monthlyUsageApiResp = resource.data!!.body()
                             Log.d("MonthlyUsageApiresp: " , monthlyUsageApiResp.toString())
                             setupMonthlyUsageView(monthlyUsageApiResp)
 
@@ -148,7 +150,7 @@ class DashboardPage : AppCompatActivity() {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            var paymentListApiResponse = resource.data!!.body()
+                            paymentListApiResponse = resource.data!!.body()
                             Log.d("paymentResp:retrievePaymentListApi:: " , paymentListApiResponse.toString())
                             Log.d("added for pipeline", "true")
 
@@ -257,13 +259,39 @@ class DashboardPage : AppCompatActivity() {
         tv_vehicle_heading.setOnClickListener {
             startVehicleMgmtActivity()
         }
+
+        tv_monthly_usage_heading.setOnClickListener {
+            startMonthlyUsageActivity()
+        }
+
+        tv_payment_heading.setOnClickListener {
+            startPaymentHistoryActivity()
+        }
+    }
+
+    private fun startMonthlyUsageActivity() {
+        var bundle = Bundle()
+        bundle.putSerializable(Constants.PAYMENT_RESPONSE , monthlyUsageApiResp )
+        var intent = Intent(this, ActivityPaymentHistory::class.java)
+        intent.putExtra(Constants.PAYMENT_DATA, bundle)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun startPaymentHistoryActivity() {
+        var bundle = Bundle()
+        bundle.putSerializable(Constants.PAYMENT_RESPONSE , paymentListApiResponse )
+        var intent = Intent(this, ActivityPaymentHistory::class.java)
+        intent.putExtra(Constants.PAYMENT_DATA, bundle)
+        startActivity(intent)
+        finish()
+
     }
 
     private fun startVehicleMgmtActivity() {
         var vehicleApiResp = VehicleApiResp(vehicleList)
         var bundle = Bundle()
         bundle.putSerializable(Constants.VEHICLE_RESPONSE , vehicleApiResp )
-
         var intent = Intent(this, VehicleMgmtActivity::class.java)
         intent.putExtra(Constants.VEHICLE_DATA, bundle)
         startActivity(intent)
