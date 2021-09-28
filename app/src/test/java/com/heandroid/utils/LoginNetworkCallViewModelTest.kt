@@ -12,8 +12,15 @@ import com.heandroid.repo.Resource
 import com.heandroid.view.LoginActivity
 import com.heandroid.viewmodel.LoginViewModel
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import net.bytebuddy.matcher.ElementMatchers.`is`
+import okhttp3.MediaType
+import okhttp3.ResponseBody
+import okio.BufferedSource
 import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
@@ -22,7 +29,10 @@ import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 import org.junit.Rule
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import java.util.*
 
 
 @ExperimentalCoroutinesApi
@@ -49,6 +59,17 @@ class LoginNetworkCallViewModelTest {
     @Mock
     private lateinit var mockContext: Context
 
+//    //Annotation for marking a field as Mock and here we mocked the Response class
+//    @Mock
+//    private lateinit var loginModel : Response<LoginResponse>
+
+
+    //Creating mock for the observer
+    private val mockObserverForStates = mock<Observer<Response<LoginResponse>>>()
+
+    //A helper function to mock classes with types (generics)
+    private inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
+
     @Before
     fun setUp() {
         // do something if required
@@ -59,111 +80,112 @@ class LoginNetworkCallViewModelTest {
     }
 
     @Test
-    fun givenServerResponse200_whenFetch_shouldReturnSuccess() {
+    fun `test login for success`() {
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
-        var agecyId = "12"
+        var agencyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
         var value = "johnsmith32"
         var password = "Welcome1!"
         var validatePasswordCompliance = "true"
+        val loginModel1 = Mockito.mock(Response::class.java)
+        //`when`(loginModel.code()).thenReturn(200)
         testCoroutineRule.runBlockingTest {
-            doReturn(emptyList<LoginResponse>())
+            doReturn(loginModel1)
                 .`when`(apiHelper)
                 .loginApiCall(clientID,
                     grantType,
-                    agecyId,
+                    agencyId,
                     clientSecret,
                     value,
                     password,
                     validatePasswordCompliance)
-
-                viewModel.loginUserVal.observeForever(apiUsersObserver)
-                apiHelper.loginApiCall(clientID,
-            grantType,
-            agecyId,
-            clientSecret,
-            value,
-            password,
-            validatePasswordCompliance)
-
-                verify(apiHelper).loginApiCall(clientID,
+            viewModel.loginUser(clientID,
                 grantType,
-                agecyId,
+                agencyId,
                 clientSecret,
                 value,
                 password,
                 validatePasswordCompliance)
-                verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
-//                viewModel.loginUserVal.removeObserver(apiUsersObserver)
+            delay(2000)
+            assertTrue(viewModel.loginUserVal.value is Resource)
+           // assertTrue(viewModel.loginUserVal.value!!.data is Response<LoginResponse>)
+            assertEquals(201 , viewModel.loginUserVal.value!!.data)
+
         }
     }
-
-
 
     @Test
-    fun givenServerResponseError_whenFetch_shouldReturnError() {
+    fun `test login for error for invalid credentials`() {
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
-        var agecyId = "12"
+        var agencyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = "WrongUsername"
-        var password = "Wrong Password"
+        var value = "johnsmith32"
+        var password = "Welcome1!"
         var validatePasswordCompliance = "true"
+
+        val loginModel = Mockito.mock(Response::class.java)
+        `when`(loginModel.isSuccessful()).thenReturn(false)
+        `when`(loginModel.code()).thenReturn(401)
         testCoroutineRule.runBlockingTest {
-            val errorMessage = "Error Message For You"
-            doThrow(RuntimeException(errorMessage))
+            doReturn(loginModel)
                 .`when`(apiHelper)
                 .loginApiCall(clientID,
                     grantType,
-                    agecyId,
+                    agencyId,
                     clientSecret,
                     value,
                     password,
                     validatePasswordCompliance)
-
-            viewModel.loginUserVal.observeForever(apiUsersObserver)
-            verify(apiHelper).loginApiCall(clientID,
+            viewModel.loginUser(clientID,
                 grantType,
-                agecyId,
+                agencyId,
                 clientSecret,
                 value,
                 password,
                 validatePasswordCompliance)
-//                verify(apiUsersObserver).onChanged(
-//                Resource.error(null,
-//                    RuntimeException(errorMessage).toString()
-//                )
-//            )
-//            viewModel.loginUserVal.removeObserver(apiUsersObserver)
+            delay(2000)
+            assertTrue(viewModel.loginUserVal.value is Resource)
+            assertEquals(null , viewModel.loginUserVal.value!!.data)
+            assertEquals("Invalid login credentials" , viewModel.loginUserVal.value!!.message)
         }
     }
-
-
-   /* @Test
-    fun renewalToken200_whenFetch_shouldReturnSuccess() {
-
-        var clientId = "NY_EZ_Pass_iOS_QA"
-        var grantType = "refresh_token"
+    @Test
+    fun `test login for unknow  error`() {
+        var clientID = "NY_EZ_Pass_iOS_QA"
+        var grantType = "password"
         var agencyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var refreshToken = sessionManager.fetchRefreshToken()
+        var value = "johnsmith32"
+        var password = "Welcome1!"
         var validatePasswordCompliance = "true"
+        val loginModel = Mockito.mock(Response::class.java)
+        `when`(loginModel.isSuccessful()).thenReturn(false)
+        `when`(loginModel.code()).thenReturn(1234)
         testCoroutineRule.runBlockingTest {
-            doReturn(emptyList<LoginResponse>())
+            doReturn(loginModel)
                 .`when`(apiHelper)
-                .getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
-                    refreshToken, validatePasswordCompliance)
-            val viewModel = LoginViewModel(apiHelper)
-            viewModel.getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
-                refreshToken, validatePasswordCompliance).observeForever(apiUsersObserver)
-            verify(apiHelper).getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
-                refreshToken, validatePasswordCompliance)
-            verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
-            viewModel.getRenewalAccessToken(clientId, grantType, agencyId, clientSecret,
-                refreshToken, validatePasswordCompliance).removeObserver(apiUsersObserver)
+                .loginApiCall(clientID,
+                    grantType,
+                    agencyId,
+                    clientSecret,
+                    value,
+                    password,
+                    validatePasswordCompliance)
+            viewModel.loginUser(clientID,
+                grantType,
+                agencyId,
+                clientSecret,
+                value,
+                password,
+                validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.loginUserVal.value is Resource)
+            assertEquals(null , viewModel.loginUserVal.value!!.data)
+            assertEquals("Unknown error " , viewModel.loginUserVal.value!!.message)
         }
-    }*/
+    }
 
     @After
     fun tearDown() {

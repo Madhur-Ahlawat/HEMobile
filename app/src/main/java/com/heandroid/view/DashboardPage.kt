@@ -211,49 +211,49 @@ class DashboardPage : AppCompatActivity() {
 
     private fun getAccountOverViewApi(accessToken:String)
     {
-//        viewModel.getAccountOverViewApi("Bearer $accessToken")
-//            .observe(this, androidx.lifecycle.Observer {
-//                it.let { resource ->
-//                    when (resource.status) {
-//                        Status.SUCCESS -> {
-//                            var accountResponse = resource.data!!.body() as AccountResponse
-//                            Log.d("Dash Board Page:: Account Response ::",accountResponse.toString())
-//                            setView(accountResponse)
-//                        }
-//                        Status.ERROR -> {
-//                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
-//
-//                        }
-//                        Status.LOADING -> {
-//                            // show/hide loader
-//                        }
-//
-//                    }
-//                }
-//            })
+        viewModel.getAccountOverViewApi("Bearer $accessToken")
+            .observe(this, androidx.lifecycle.Observer {
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            var accountResponse = resource.data!!.body() as AccountResponse
+                            Log.d("Dash Board Page:: Account Response ::",accountResponse.toString())
+                            setView(accountResponse)
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
 
-        dummyViewModel.fetchAccountOverview("Bearer $accessToken")
-        dummyViewModel.getAccountOverView().observe(this , Observer {
-            when(it.status)
-            {
-                Status.SUCCESS->{
-                    var accountResponse = it.data?.body()
-                    accountResponse?.accountInformation?.type?.let { it1 ->
-                        Log.d("AccountApiResp: " ,
-                            it1
-                        )
+                        }
+                        Status.LOADING -> {
+                            // show/hide loader
+                        }
+
                     }
-                    setView(accountResponse)
+                }
+            })
 
-                }
-                Status.ERROR->{
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                }
-                Status.LOADING->{
-                    // show/hide progress bar
-                }
-            }
-        })
+//        dummyViewModel.fetchAccountOverview("Bearer $accessToken")
+//        dummyViewModel.getAccountOverView().observe(this , Observer {
+//            when(it.status)
+//            {
+//                Status.SUCCESS->{
+//                    var accountResponse = it.data?.body()
+//                    accountResponse?.accountInformation?.type?.let { it1 ->
+//                        Log.d("AccountApiResp: " ,
+//                            it1
+//                        )
+//                    }
+//                    setView(accountResponse)
+//
+//                }
+//                Status.ERROR->{
+//                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+//                }
+//                Status.LOADING->{
+//                    // show/hide progress bar
+//                }
+//            }
+//        })
     }
     private fun setupUI() {
         tv_vehicle_heading.setOnClickListener {

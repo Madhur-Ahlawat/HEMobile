@@ -7,7 +7,7 @@ interface ApiHelper {
 
     suspend fun loginApiCall(clientID:String,
                              grantType:String,
-                             agecyId:String,
+                             agencyId:String,
                              clientSecret:String,
                              value:String,
                              password:String,
