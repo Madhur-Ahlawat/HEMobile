@@ -59,27 +59,7 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
         }
     }
-//        liveData(Dispatchers.IO) {
-//        emit(Resource.loading(data = null))
-//        try {
-//            emit(
-//                Resource.success(
-//                    data = apiHelper.loginApiCall(
-//                        clientID,
-//                        grantType,
-//                        agencyId,
-//                        clientSecret,
-//                        value,
-//                        password,
-//                        validatePasswordCompliance
-//                    )
-//                )
-//            )
-//
-//        } catch (exception: Exception) {
-//            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-//        }
-//    }
+
 
     fun getRenewalAccessToken(
         clientId: String, grantType: String, agencyId: String, clientSecret: String,

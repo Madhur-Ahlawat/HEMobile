@@ -212,7 +212,7 @@ class DashboardPage : AppCompatActivity() {
     private fun getAccountOverViewApi(accessToken:String)
     {
         viewModel.getAccountOverViewApi("Bearer $accessToken")
-            .observe(this, androidx.lifecycle.Observer {
+        viewModel.accountOverviewVal.observe(this, androidx.lifecycle.Observer {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {

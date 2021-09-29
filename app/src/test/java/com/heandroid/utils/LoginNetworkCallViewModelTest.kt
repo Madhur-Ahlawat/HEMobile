@@ -32,7 +32,9 @@ import org.junit.Rule
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import java.lang.RuntimeException
 import java.util.*
+import kotlin.math.log
 
 
 @ExperimentalCoroutinesApi
@@ -81,15 +83,19 @@ class LoginNetworkCallViewModelTest {
 
     @Test
     fun `test login for success`() {
-        var clientID = "NY_EZ_Pass_iOS_QA"
-        var grantType = "password"
-        var agencyId = "12"
-        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = "johnsmith32"
-        var password = "Welcome1!"
-        var validatePasswordCompliance = "true"
+        val clientID = "NY_EZ_Pass_iOS_QA"
+        val grantType = "password"
+        val agencyId = "12"
+        val clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        val value = "johnsmith32"
+        val password = "Welcome1!"
+        val validatePasswordCompliance = "true"
         val loginModel1 = Mockito.mock(Response::class.java)
-        //`when`(loginModel.code()).thenReturn(200)
+        val loginResponse = Mockito.mock(LoginResponse::class.java)
+        `when`(loginModel1.isSuccessful()).thenReturn(true)
+        `when`(loginModel1.code()).thenReturn(200)
+        `when`(loginModel1.body()).thenReturn(loginResponse)
+
         testCoroutineRule.runBlockingTest {
             doReturn(loginModel1)
                 .`when`(apiHelper)
@@ -110,7 +116,10 @@ class LoginNetworkCallViewModelTest {
             delay(2000)
             assertTrue(viewModel.loginUserVal.value is Resource)
            // assertTrue(viewModel.loginUserVal.value!!.data is Response<LoginResponse>)
-            assertEquals(201 , viewModel.loginUserVal.value!!.data)
+            assertEquals(200 , viewModel.loginUserVal.value!!.data!!.code())
+            assertEquals(true , viewModel.loginUserVal.value!!.data!!.isSuccessful)
+            assertEquals(loginResponse , viewModel.loginUserVal.value!!.data!!.body())
+
 
         }
     }
@@ -121,8 +130,8 @@ class LoginNetworkCallViewModelTest {
         var grantType = "password"
         var agencyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = "johnsmith32"
-        var password = "Welcome1!"
+        var value = ""
+        var password = ""
         var validatePasswordCompliance = "true"
 
         val loginModel = Mockito.mock(Response::class.java)
@@ -152,7 +161,7 @@ class LoginNetworkCallViewModelTest {
         }
     }
     @Test
-    fun `test login for unknow  error`() {
+    fun `test login for unknown  error`() {
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
         var agencyId = "12"
@@ -184,6 +193,46 @@ class LoginNetworkCallViewModelTest {
             assertTrue(viewModel.loginUserVal.value is Resource)
             assertEquals(null , viewModel.loginUserVal.value!!.data)
             assertEquals("Unknown error " , viewModel.loginUserVal.value!!.message)
+        }
+    }
+
+    @Test
+    fun `test login for error for Exception`() {
+        var clientID = "NY_EZ_Pass_iOS_QA"
+        var grantType = "password"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var value = "johnsmith32"
+        var password = "Welcome1!"
+        var validatePasswordCompliance = "true"
+
+
+        val errorMessage = "Error Message For You"
+       //`when`(loginModel.isSuccessful()).thenReturn(false)
+       // `when`(loginModel.code()).thenReturn(401)
+        testCoroutineRule.runBlockingTest {
+            doThrow(NullPointerException::class.java)
+           // doThrow(RuntimeException(errorMessage))
+                .`when`(apiHelper)
+                .loginApiCall(clientID,
+                    grantType,
+                    agencyId,
+                    clientSecret,
+                    value,
+                    password,
+                    validatePasswordCompliance)
+            viewModel.loginUser(clientID,
+                grantType,
+                agencyId,
+                clientSecret,
+                value,
+                password,
+                validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.loginUserVal.value is Resource)
+            assertEquals(null , viewModel.loginUserVal.value!!.data)
+            assertEquals("java.lang.NullPointerException" , viewModel.loginUserVal.value!!.message)
+            verify(apiHelper).loginApiCall(clientID, grantType, agencyId, clientSecret, value, password,validatePasswordCompliance )
         }
     }
 

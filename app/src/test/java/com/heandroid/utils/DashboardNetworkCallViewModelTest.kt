@@ -6,7 +6,9 @@ import com.heandroid.model.AccountResponse
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
 import com.heandroid.viewmodel.DashboardViewModel
+import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +29,7 @@ class DashboardNetworkCallViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var appRepository: ApiHelper
+    private lateinit var apiHelper: ApiHelper
 
     @Mock
     private lateinit var apiUsersObserver: Observer<Resource<Response<AccountResponse>>>
@@ -42,37 +44,68 @@ class DashboardNetworkCallViewModelTest {
 
     @Test
     fun givenServerResponse200_whenAccountOverViewFetch_shouldReturnSuccess() {
-        var accessToken = "hgdcgdhc"
+        val viewModel = DashboardViewModel(apiHelper)
+        val accessToken = "shgfjsgfhdgj"
+        val resp = Mockito.mock(Response::class.java)
+        val accountOverviewResp = Mockito.mock(AccountResponse::class.java)
+        Mockito.`when`(resp.isSuccessful()).thenReturn(true)
+        Mockito.`when`(resp.code()).thenReturn(200)
+        Mockito.`when`(resp.body()).thenReturn(accountOverviewResp)
         testCoroutineRule.runBlockingTest {
-            Mockito.doReturn(emptyList<AccountResponse>())
-                .`when`(appRepository)
-                .getAccountOverviewApiCall(accessToken)
-            val viewModel = DashboardViewModel(appRepository)
-            viewModel.getAccountOverViewApi(accessToken).observeForever(apiUsersObserver)
-            Mockito.verify(appRepository).getAccountOverviewApiCall(accessToken)
+            Mockito.doReturn(resp).`when`(apiHelper).getAccountOverviewApiCall(accessToken)
+            viewModel.getAccountOverViewApi(accessToken)
+            viewModel.accountOverviewVal.observeForever(apiUsersObserver)
+            delay(2000)
+            TestCase.assertTrue(viewModel.accountOverviewVal.value is Resource)
+            // assertTrue(viewModel.loginUserVal.value!!.data is Response<LoginResponse>)
+            TestCase.assertEquals(200, viewModel.accountOverviewVal.value!!.data!!.code())
+            TestCase.assertEquals(true, viewModel.accountOverviewVal.value!!.data!!.isSuccessful)
+            TestCase.assertEquals(
+                accountOverviewResp,
+                viewModel.accountOverviewVal.value!!.data!!.body()
+            )
+
+//            Mockito.verify(apiHelper).getAccountOverviewApiCall(accessToken)
 //            Mockito.verify(apiUsersObserver).onChanged(Resource.success(apiloginresponse))
-//            viewModel.getAccountOverViewApi(accessToken).removeObserver(apiUsersObserver)
+//            viewModel.accountOverviewVal.removeObserver(apiUsersObserver)
         }
     }
 
     @Test
     fun givenServerResponseError_whenAccountOverViewFetch_shouldReturnError() {
-        var accessToken = "gchegcjhedgcjh"
+        val viewModel = DashboardViewModel(apiHelper)
+        val accessToken = "shgfjsgfhdgj"
+        val resp = Mockito.mock(Response::class.java)
+        val accountOverviewResp = Mockito.mock(AccountResponse::class.java)
+        Mockito.`when`(resp.isSuccessful()).thenReturn(false)
+        Mockito.`when`(resp.code()).thenReturn(401)
+        Mockito.`when`(resp.body()).thenReturn(null)
         testCoroutineRule.runBlockingTest {
-            val errorMessage = "Error Message For You"
-            Mockito.doThrow(RuntimeException(errorMessage))
-                .`when`(appRepository)
-                .getAccountOverviewApiCall(accessToken)
-            val viewModel = DashboardViewModel(appRepository)
-            viewModel.getAccountOverViewApi(accessToken).observeForever(apiUsersObserver)
-            Mockito.verify(appRepository).getAccountOverviewApiCall(accessToken)
-            Mockito.verify(apiUsersObserver).onChanged(
-                Resource.error(
-                    null,
-                    RuntimeException(errorMessage).toString()
-                )
-            )
-            viewModel.getAccountOverViewApi(accessToken).removeObserver(apiUsersObserver)
+            Mockito.doReturn(resp).`when`(apiHelper).getAccountOverviewApiCall(accessToken)
+            viewModel.getAccountOverViewApi(accessToken)
+            viewModel.accountOverviewVal.observeForever(apiUsersObserver)
+            delay(2000)
+            TestCase.assertTrue(viewModel.accountOverviewVal.value is Resource)
+            // assertTrue(viewModel.loginUserVal.value!!.data is Response<LoginResponse>)
+            TestCase.assertEquals(null, viewModel.accountOverviewVal.value!!.data)
+            TestCase.assertEquals("Invalid token", viewModel.accountOverviewVal.value!!.message)
+
+//        testCoroutineRule.runBlockingTest {
+//            val errorMessage = "Error Message For You"
+//            Mockito.doThrow(RuntimeException(errorMessage))
+//                .`when`(appRepository)
+//                .getAccountOverviewApiCall(accessToken)
+//            val viewModel = DashboardViewModel(appRepository)
+//            viewModel.getAccountOverViewApi(accessToken).observeForever(apiUsersObserver)
+//            Mockito.verify(appRepository).getAccountOverviewApiCall(accessToken)
+//            Mockito.verify(apiUsersObserver).onChanged(
+//                Resource.error(
+//                    null,
+//                    RuntimeException(errorMessage).toString()
+//                )
+//            )
+//            viewModel.getAccountOverViewApi(accessToken).removeObserver(apiUsersObserver)
+//        }
         }
     }
 }
