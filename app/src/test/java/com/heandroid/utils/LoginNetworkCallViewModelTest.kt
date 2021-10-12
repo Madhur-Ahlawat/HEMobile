@@ -236,6 +236,133 @@ class LoginNetworkCallViewModelTest {
         }
     }
 
+    @Test
+    fun `test RenewalAccessToken for success`() {
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken = "ggdfhhfgjh"
+        var validatePasswordCompliance =  "true"
+        val loginModel1 = Mockito.mock(Response::class.java)
+        val loginResponse = Mockito.mock(LoginResponse::class.java)
+        `when`(loginModel1.isSuccessful()).thenReturn(true)
+        `when`(loginModel1.code()).thenReturn(200)
+        `when`(loginModel1.body()).thenReturn(loginResponse)
+
+        testCoroutineRule.runBlockingTest {
+            doReturn(loginModel1)
+                .`when`(apiHelper)
+                .getRenewalAccessToken(
+                    clientId,
+                    grantType,
+                    agencyId,
+                    clientSecret,
+                    refreshToken,
+                    validatePasswordCompliance)
+            viewModel.getRenewalAccessToken( clientId,
+                grantType,
+                agencyId,
+                clientSecret,
+                refreshToken,
+                validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.renewalUserLoginVal.value is Resource)
+            // assertTrue(viewModel.loginUserVal.value!!.data is Response<LoginResponse>)
+            assertEquals(200 , viewModel.renewalUserLoginVal.value!!.data!!.code())
+            assertEquals(true , viewModel.renewalUserLoginVal.value!!.data!!.isSuccessful)
+            assertEquals(loginResponse , viewModel.renewalUserLoginVal.value!!.data!!.body())
+
+
+        }
+    }
+
+    @Test
+    fun `test RenewalAccessToken for invalid credentials`() {
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken = "ggdfhhfgjh"
+        var validatePasswordCompliance =  "true"
+
+        val loginModel = Mockito.mock(Response::class.java)
+        `when`(loginModel.isSuccessful()).thenReturn(false)
+        `when`(loginModel.code()).thenReturn(401)
+        testCoroutineRule.runBlockingTest {
+            doReturn(loginModel)
+                .`when`(apiHelper)
+                .getRenewalAccessToken(
+                    clientId ,grantType,agencyId,clientSecret,
+            refreshToken, validatePasswordCompliance)
+            viewModel.getRenewalAccessToken(clientId ,grantType,agencyId,clientSecret,
+                refreshToken, validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.renewalUserLoginVal.value is Resource)
+            assertEquals(null , viewModel.renewalUserLoginVal.value!!.data)
+            assertEquals("Invalid login credentials" , viewModel.renewalUserLoginVal.value!!.message)
+        }
+    }
+    @Test
+    fun `test RenewalAccessToken for unknown  error`() {
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken = "ggdfhhfgjh"
+        var validatePasswordCompliance =  "true"
+        val loginModel = Mockito.mock(Response::class.java)
+        `when`(loginModel.isSuccessful()).thenReturn(false)
+        `when`(loginModel.code()).thenReturn(1234)
+        testCoroutineRule.runBlockingTest {
+            doReturn(loginModel)
+                .`when`(apiHelper)
+                .getRenewalAccessToken(clientId ,grantType,agencyId,clientSecret,
+                    refreshToken, validatePasswordCompliance)
+            viewModel.getRenewalAccessToken(clientId ,grantType,agencyId,clientSecret,
+                refreshToken, validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.renewalUserLoginVal.value is Resource)
+            assertEquals(null , viewModel.renewalUserLoginVal.value!!.data)
+            assertEquals("Unknown error " , viewModel.renewalUserLoginVal.value!!.message)
+        }
+    }
+
+    @Test
+    fun `test RenewalAccessToken for Exception`() {
+        var clientId = "NY_EZ_Pass_iOS_QA"
+        var grantType = "refresh_token"
+        var agencyId = "12"
+        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var refreshToken = "ggdfhhfgjh"
+        var validatePasswordCompliance =  "true"
+
+
+        val errorMessage = "Error Message For You"
+        //`when`(loginModel.isSuccessful()).thenReturn(false)
+        // `when`(loginModel.code()).thenReturn(401)
+        testCoroutineRule.runBlockingTest {
+            doThrow(NullPointerException::class.java)
+                // doThrow(RuntimeException(errorMessage))
+                .`when`(apiHelper)
+                .getRenewalAccessToken(clientId,
+                    grantType,
+                    agencyId,
+                    clientSecret,
+                    refreshToken,validatePasswordCompliance)
+            viewModel.getRenewalAccessToken(clientId,
+                grantType,
+                agencyId,
+                clientSecret,
+                refreshToken,validatePasswordCompliance)
+            delay(2000)
+            assertTrue(viewModel.renewalUserLoginVal.value is Resource)
+            assertEquals(null , viewModel.renewalUserLoginVal.value!!.data)
+            assertEquals("java.lang.NullPointerException" , viewModel.renewalUserLoginVal.value!!.message)
+            verify(apiHelper).getRenewalAccessToken(clientId, grantType, agencyId, clientSecret, refreshToken,validatePasswordCompliance )
+        }
+    }
+
     @After
     fun tearDown() {
         // do something if required

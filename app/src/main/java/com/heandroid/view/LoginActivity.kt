@@ -180,56 +180,6 @@ class LoginActivity : AppCompatActivity() {
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
-    private fun getRenewalAccessToken() {
-//        formData.append("client_id", environment.clientId);
-//        formData.append("grant_type", "refresh_token");
-//        formData.append("agencyID", environment.agencyId);
-//        formData.append("client_secret", environment.clientSecret);
-//        formData.append("refresh_token", refreshToken);
-//        formData.append("validatePasswordCompliance", "true");
-
-        var clientId = "NY_EZ_Pass_iOS_QA"
-        var grantType = "refresh_token"
-        var agencyId = "12"
-        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var refreshToken = sessionManager.fetchRefreshToken()
-        var validatePasswordCompliance = "true"
-        Log.d("RenewalAccessToken", "Before api call")
-        if (refreshToken != null) {
-            viewModel.getRenewalAccessToken(
-                clientId,
-                grantType,
-                agencyId,
-                clientSecret,
-                refreshToken,
-                validatePasswordCompliance
-            ).observe(this, Observer {
-                Log.d("RenewalAccessToken", "after api call")
-                it.let { resource ->
-                    run {
-                        when (resource.status) {
-                            Status.SUCCESS -> {
-                                var loginResponse = resource.data!!.body() as LoginResponse
-                                //launchDashboardScreen(loginResponse)
-                            }
-                            Status.ERROR -> {
-                                showToast(resource.message)
-                            }
-
-                            Status.LOADING -> {
-                                // show/hide loader
-                            }
-
-                        }
-                    }
-                }
-            })
-        }
-
-
-    }
-
-
     private fun hideSoftKeyboard()
     {
         val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
