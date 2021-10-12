@@ -24,10 +24,10 @@
     <string name="txt_euro">"\u20ac"</string>
     <string name="txt_pound">"£"</string>
     <string name="txt_view_payment_history"><u>View payment history</u></string>
-    <string name="account_number">Account number</string>
-    <string name="account_status">Account status</string>
-    <string name="account_type">Account type</string>
-    <string name="top_up_method">Top up Type</string>
+    <string name="account_number">Account number:</string>
+    <string name="account_status">Account status:</string>
+    <string name="account_type">Account type:</string>
+    <string name="top_up_method">Top up Type:</string>
     <string name="txt_dashboard">Dashboard</string>
     <string name="txt_vehicle_class"><b>Class</b> : %1$s</string>
     <string name="txt_vehicle_model"><b>Model</b> : %1$s</string>
@@ -37,5 +37,6 @@
     <string name="txt_date">DATE</string>
     <string name="txt_transaction_id">Transaction ID</string>
     <string name="txt_amount">Amount</string>
+    <string name="txt_add_vehicle">Add Vehicle</string>
 
 </resources>

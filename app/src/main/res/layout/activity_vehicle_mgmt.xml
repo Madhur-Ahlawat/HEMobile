@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="dashboardviewmodel"
+            type="com.heandroid.viewmodel.DashboardViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,19 +54,57 @@
         app:layout_constraintTop_toBottomOf="@+id/cl_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingHorizontal="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:background="@color/light_grey"
         android:layout_height="0dp"
         app:layout_constraintHeight_percent="0.92">
-        <include
-            layout="@layout/search_layout"
-            />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_vehicle"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:gravity="center_vertical"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_vehicle_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:drawableLeft="@drawable/ic_car"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textColor="@color/grey_one"
+                android:textSize="@dimen/_17ssp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_add_vehicle"
+                android:padding="@dimen/_10sdp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_10ssp"
+                android:text="@string/txt_add_vehicle"
+                android:textColor="@color/blue"/>
+        </RelativeLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            android:orientation="vertical"
+            android:background="@color/light_grey"
+            android:paddingHorizontal="@dimen/_10sdp">
+            <include
+                layout="@layout/search_layout"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_vehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

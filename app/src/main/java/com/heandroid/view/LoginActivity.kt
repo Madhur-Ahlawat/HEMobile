@@ -16,31 +16,34 @@ import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_login.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
+import androidx.databinding.DataBindingUtil
+import com.heandroid.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: LoginViewModel
+    private lateinit var databinding : ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        databinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
         sessionManager = SessionManager(this)
         setupViewModel()
+        databinding.lifecycleOwner = this
         setupUI()
         //setupObservers()
-        btn_login.setOnClickListener {
+        databinding.btnLogin.setOnClickListener {
 
             hideSoftKeyboard()
-            val username = edt_username.text.toString()
-            val pwd = edt_password.text.toString()
+            val username = databinding.edtUsername.text.toString()
+            val pwd = databinding.edtUsername.text.toString()
             if(validate(username, pwd))
             {
                 setupObservers()
-                progress_layout.visibility= View.VISIBLE
+                databinding.progressLayout.visibility= View.VISIBLE
             }
 
 //            val handler = Handler()
@@ -71,15 +74,14 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun setupObservers() {
-
         var clientID = "NY_EZ_Pass_iOS_QA"
         var grantType = "password"
         var agecyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = edt_username.text.toString()
+        var value = databinding.edtUsername.text.toString()
         //var value = "459144698"
         //var password = "Welcome1!"
-        var password = edt_password.text.toString()
+        var password = databinding.edtPassword.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
 
@@ -97,19 +99,19 @@ class LoginActivity : AppCompatActivity() {
                 when (it.status) {
                     Status.SUCCESS -> {
 
-                        progress_layout.visibility= View.GONE
+                        databinding.progressLayout.visibility= GONE
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
 
                     Status.ERROR->{
-                        progress_layout.visibility=GONE
+                        databinding.progressLayout.visibility=GONE
                         showToast(it.message)
                     }
 
                     Status.LOADING->{
                         // show/hide loader
-                        progress_layout.visibility = VISIBLE
+                        databinding.progressLayout.visibility = VISIBLE
                     }
                 }
             })
@@ -174,6 +176,7 @@ class LoginActivity : AppCompatActivity() {
         Log.d("DummyLogin", "set up view model")
         val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
         viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
+        databinding.loginViewModel = viewModel
         Log.d("ViewModelSetUp: ", "Setup")
     }
 

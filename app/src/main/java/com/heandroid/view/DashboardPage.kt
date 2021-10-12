@@ -10,10 +10,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.network.ApiClient
 import com.heandroid.R
+import com.heandroid.databinding.ActivityDashboradBinding
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
@@ -24,7 +26,7 @@ import com.heandroid.viewmodel.DashboardViewModel
 import com.heandroid.viewmodel.DummyTestViewModel
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_dashborad.*
+
 
 
 class DashboardPage : AppCompatActivity() {
@@ -39,10 +41,10 @@ class DashboardPage : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: DashboardViewModel
     private lateinit var loginViewModel: LoginViewModel
-
+    private lateinit var dataBinding:ActivityDashboradBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashborad)
+        dataBinding = DataBindingUtil.setContentView(this,R.layout.activity_dashborad)
         apiClient = ApiClient()
         val token: String = SessionManager.USER_TOKEN
         Log.d("DashBoard Page ::token", token)
@@ -59,7 +61,7 @@ class DashboardPage : AppCompatActivity() {
         setupViewModel()
         setupUI()
         setupObservers()
-        progress_layout.visibility= View.VISIBLE
+        dataBinding.progressLayout.visibility= View.VISIBLE
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
@@ -68,7 +70,7 @@ class DashboardPage : AppCompatActivity() {
             }
         }, 200)
 
-        logoutBtn.setOnClickListener {
+        dataBinding.logoutBtn.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
@@ -112,7 +114,7 @@ class DashboardPage : AppCompatActivity() {
             ""
         )
         viewModel.getMonthlyUsage("Bearer $accessToken" , requestParam)
-            .observe(this, androidx.lifecycle.Observer {
+            viewModel.monthlyUsageVal.observe(this, androidx.lifecycle.Observer {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -135,24 +137,46 @@ class DashboardPage : AppCompatActivity() {
 
     }
     private fun getRetrievePaymentListApiCall(accessToken: String) {
+//        {
+//
+//            "searchDateType": "Posted Date",
+//
+//            "startDate": "06/30/2021",
+//
+//            "endDate": "08/31/2021",
+//
+//            "transactionType": "PREPAID",
+//
+//            "sortColumn": "TX_DATE",
+//
+//            "startIndex": 0,
+//
+//            "numberOfResults": 10,
+//
+//            "tagNumber": "",
+//
+//            "licenseNumber": ""
+//
+//        }
 
         var requestParam = RetrievePaymentListRequest(
             "Posted Date" ,
-            "",
-            "",
+            "06/30/2021",
+            "08/31/2021",
             "PREPAID",
             "TX_DATE",
             0,10,"",
             ""
         )
         viewModel.retrievePaymentListApi("Bearer $accessToken" , requestParam)
-            .observe(this, androidx.lifecycle.Observer {
+           viewModel.paymentListVal.observe(this, androidx.lifecycle.Observer {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
                             paymentListApiResponse = resource.data!!.body()
                             Log.d("paymentResp:retrievePaymentListApi:: " , paymentListApiResponse.toString())
                             Log.d("added for pipeline", "true")
+                            setPaymentHistoryView()
 
                         }
                         Status.ERROR -> {
@@ -169,15 +193,20 @@ class DashboardPage : AppCompatActivity() {
 
     }
 
+    private fun setPaymentHistoryView() {
+
+        dataBinding.tvRemainingAmount.text = paymentListApiResponse?.count.toString()
+    }
+
     private fun setupMonthlyUsageView(crossingListResp: RetrievePaymentListApiResponse?) {
         if (crossingListResp != null) {
-            tv_crossing_count.text = crossingListResp.count.toString()
+            dataBinding.tvCrossingCount.text = crossingListResp.count.toString()
         }
     }
 
     private fun getVehicleListApiCall(accessToken: String) {
         viewModel.getVehicleInformationApi("Bearer $accessToken")
-            .observe(this, androidx.lifecycle.Observer {
+        viewModel.vehicleListVal.observe(this, androidx.lifecycle.Observer {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -203,8 +232,8 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setupVehicleData(list: List<VehicleResponse>) {
         vehicleList =  list
-        tv_vehicle_count.text = vehicleList.size.toString()
-        tv_remaining_amount.text = vehicleList.size.toString()
+        dataBinding.tvVehicleCount.text = vehicleList.size.toString()
+        dataBinding.tvRemainingAmount.text = vehicleList.size.toString()
 
 
     }
@@ -217,7 +246,7 @@ class DashboardPage : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
                             var accountResponse = resource.data!!.body() as AccountResponse
-                            Log.d("Dash Board Page:: Account Response ::",accountResponse.toString())
+                            Log.d("Dashboard Page:: Account Response ::",accountResponse.toString())
                             setView(accountResponse)
                         }
                         Status.ERROR -> {
@@ -232,39 +261,18 @@ class DashboardPage : AppCompatActivity() {
                 }
             })
 
-//        dummyViewModel.fetchAccountOverview("Bearer $accessToken")
-//        dummyViewModel.getAccountOverView().observe(this , Observer {
-//            when(it.status)
-//            {
-//                Status.SUCCESS->{
-//                    var accountResponse = it.data?.body()
-//                    accountResponse?.accountInformation?.type?.let { it1 ->
-//                        Log.d("AccountApiResp: " ,
-//                            it1
-//                        )
-//                    }
-//                    setView(accountResponse)
-//
-//                }
-//                Status.ERROR->{
-//                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-//                }
-//                Status.LOADING->{
-//                    // show/hide progress bar
-//                }
-//            }
-//        })
     }
+
     private fun setupUI() {
-        tv_vehicle_heading.setOnClickListener {
+        dataBinding.tvVehicleHeading.setOnClickListener {
             startVehicleMgmtActivity()
         }
 
-        tv_monthly_usage_heading.setOnClickListener {
+        dataBinding.tvMonthlyUsageHeading.setOnClickListener {
             startMonthlyUsageActivity()
         }
 
-        tv_payment_heading.setOnClickListener {
+        dataBinding.tvPaymentHeading.setOnClickListener {
             startPaymentHistoryActivity()
         }
     }
@@ -275,16 +283,19 @@ class DashboardPage : AppCompatActivity() {
         var intent = Intent(this, ActivityPaymentHistory::class.java)
         intent.putExtra(Constants.PAYMENT_DATA, bundle)
         startActivity(intent)
-        finish()
+        //finish()
     }
 
     private fun startPaymentHistoryActivity() {
-        var bundle = Bundle()
-        bundle.putSerializable(Constants.PAYMENT_RESPONSE , paymentListApiResponse )
-        var intent = Intent(this, ActivityPaymentHistory::class.java)
-        intent.putExtra(Constants.PAYMENT_DATA, bundle)
-        startActivity(intent)
-        finish()
+
+            var bundle = Bundle()
+            bundle.putSerializable(Constants.PAYMENT_RESPONSE , paymentListApiResponse )
+            var intent = Intent(this, ActivityPaymentHistory::class.java)
+            intent.putExtra(Constants.PAYMENT_DATA, bundle)
+            startActivity(intent)
+            // finish()
+
+
 
     }
 
@@ -308,25 +319,25 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setView(accountResponse: AccountResponse?) {
         if (accountResponse != null) {
-            tv_available_balance.text =
+            dataBinding.tvAvailableBalance.text =
                 "${getString(R.string.txt_pound)}${accountResponse.financialInformation.currentBalance}"
             //tv_remaining_amount.text =
              //   "${getString(R.string.txt_pound)}${accountResponse.financialInformation.tollBalance}"
-            account_number_id.text =
-                "${"Account Number :"}${accountResponse.accountInformation.number}"
-            tv_pre_pay_account_heading.text=
+            dataBinding.accountNumberId.text =
+                "${"Account Number: "}${accountResponse.accountInformation.number}"
+            dataBinding.tvPrePayAccountHeading.text=
                 "${accountResponse.accountInformation.type}"
-            tv_account_number.text=
+            dataBinding.tvAccountNumber.text=
                 "${accountResponse.accountInformation.number}"
-            accountStatus_id.text =
-                "${"Account Status :"}${accountResponse.accountInformation.status}"
-            accountType_id.text =
-                "${"Account Type :"}${accountResponse.accountInformation.type}"
-            topUp_id.text =
-                "${"Top up Type :"}${accountResponse.financialInformation.financialStatus}"
-            tv_manual_top_up.text = accountResponse.financialInformation.financialStatus
+            dataBinding.accountStatusId.text =
+                "${"Account Status: "}${accountResponse.accountInformation.status}"
+            dataBinding.accountTypeId.text =
+                "${"Account Type: "}${accountResponse.accountInformation.type}"
+            dataBinding.topUpId.text =
+                "${"Top up Type: "}${accountResponse.financialInformation.financialStatus}"
+            dataBinding.tvManualTopUp.text = accountResponse.financialInformation.financialStatus
         }
-        progress_layout.visibility= View.GONE
+        dataBinding.progressLayout.visibility= View.GONE
     }
 
 
@@ -354,8 +365,8 @@ class DashboardPage : AppCompatActivity() {
         Log.d("RenewalAccessToken", "Before api call")
         if (refreshToken1 != null) {
             loginViewModel.getRenewalAccessToken(clientId , grantType, agencyId, clientSecret,
-                refreshToken1!!, validatePasswordCompliance).
-            observe(this, Observer {
+                refreshToken1!!, validatePasswordCompliance)
+            loginViewModel.renewalUserLoginVal.observe(this, Observer {
                 Log.d("RenewalAccessToken", "after api call")
                 it.let {
                     resource ->

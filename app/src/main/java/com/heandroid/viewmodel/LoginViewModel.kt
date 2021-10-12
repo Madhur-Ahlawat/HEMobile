@@ -1,5 +1,7 @@
 package com.heandroid.viewmodel
 
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -11,9 +13,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel() {
+class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel(), Observable {
 
     val loginUserVal = MutableLiveData<Resource<Response<LoginResponse>>>()
+    val renewalUserLoginVal = MutableLiveData<Resource<Response<LoginResponse>>>()
+
+
+    // changes for data binding
+    val isStringEmpty = MutableLiveData<Boolean>()
+
+    @Bindable
+    val inputUserName = MutableLiveData<String>()
+    @Bindable
+    val inputPassword = MutableLiveData<String>()
+
+    init {
+        isStringEmpty.value = false
+    }
 
     fun loginUser(
         clientID: String,
@@ -64,24 +80,51 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     fun getRenewalAccessToken(
         clientId: String, grantType: String, agencyId: String, clientSecret: String,
         refreshToken: String, validatePasswordCompliance: String
-    ) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            emit(
-                Resource.success(
-                    data = apiHelper.getRenewalAccessToken(
-                        clientId,
-                        grantType,
-                        agencyId,
-                        clientSecret,
-                        refreshToken!!,
-                        validatePasswordCompliance
-                    )
-                )
-            )
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+    ) {
+//        = liveData(Dispatchers.IO) {
+//            emit(Resource.loading(data = null))
+//            try {
+//                emit(
+//                    Resource.success(
+//                        data = apiHelper.getRenewalAccessToken(
+//                            clientId,
+//                            grantType,
+//                            agencyId,
+//                            clientSecret,
+//                            refreshToken!!,
+//                            validatePasswordCompliance
+//                        )
+//                    )
+//                )
+//            } catch (exception: Exception) {
+//                emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+//            }
+//        }
+
+        viewModelScope.launch {
+            renewalUserLoginVal.postValue(Resource.loading(null))
+            try {
+                val usersFromApi = apiHelper.getRenewalAccessToken(
+                    clientId,
+                          grantType,
+                            agencyId,
+                            clientSecret,
+                    refreshToken!!, validatePasswordCompliance)
+                //loginUserVal.postValue(Resource.success(usersFromApi))
+                renewalUserLoginVal.postValue(setLoginUserResponse(usersFromApi))
+            } catch (e: Exception) {
+                renewalUserLoginVal.postValue(Resource.error(null , e.toString()))
+            }
         }
+    }
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+
+
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+
     }
 
 

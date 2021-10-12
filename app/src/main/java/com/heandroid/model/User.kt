@@ -1,5 +1,3 @@
 package com.heandroid.model
 
-class User {
-    lateinit var userName: String
-}
+data class User (val username: String="" , val password:String="")

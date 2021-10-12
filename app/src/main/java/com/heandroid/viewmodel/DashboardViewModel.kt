@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.heandroid.model.AccountResponse
-import com.heandroid.model.LoginResponse
-import com.heandroid.model.RetrievePaymentListRequest
+import com.heandroid.model.*
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +14,9 @@ import retrofit2.Response
 class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
     val accountOverviewVal = MutableLiveData<Resource<Response<AccountResponse>>>()
-    val monthlyUsageVal = MutableLiveData<Resource<Response<RetrievePaymentListRequest>>>()
-    val paymentListVal = MutableLiveData<Resource<Response<RetrievePaymentListRequest>>>()
+    val monthlyUsageVal = MutableLiveData<Resource<Response<RetrievePaymentListApiResponse>>>()
+    val paymentListVal = MutableLiveData<Resource<Response<RetrievePaymentListApiResponse>>>()
+    val vehicleListVal = MutableLiveData<Resource<Response<List<VehicleResponse>>>>()
 
     fun getAccountOverViewApi(
       authToken: String
@@ -36,65 +35,104 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
 
     private fun setAccountOverviewApiResponse(usersFromApi: Response<AccountResponse>): Resource<Response<AccountResponse>>? {
-        if(usersFromApi.isSuccessful)
-        {
-            return Resource.success(usersFromApi)
-        }
-        else
-        {
+        return if(usersFromApi.isSuccessful) {
+            Resource.success(usersFromApi)
+        } else {
             var errorCode = usersFromApi.code()
-            return if(errorCode==401) {
+            if(errorCode==401) {
                 Resource.error(null, "Invalid token")
             } else {
-                Resource.error(null, "Unknown error ")
+                Resource.error(null, "Unknown error")
             }
 
         }
     }
 
 
-    fun getVehicleInformationApi(authToken: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
+    fun getVehicleInformationApi(authToken: String)
+    {
+        viewModelScope.launch {
+        vehicleListVal.postValue(Resource.loading(null))
         try {
-            emit(Resource.success(data = apiHelper.getVehicleListApiCall(authToken)))
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+            val respFromApi = apiHelper.getVehicleListApiCall(authToken)
+            //loginUserVal.postValue(Resource.success(usersFromApi))
+            vehicleListVal.postValue(setVehicleListApiResponse(respFromApi))
+        } catch (e: Exception) {
+            vehicleListVal.postValue(Resource.error(null , e.toString()))
         }
     }
 
+    }
 
-    fun retrievePaymentListApi(header: String, requestParam: RetrievePaymentListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading(data = null))
+    private fun setVehicleListApiResponse(respFromApi: Response<List<VehicleResponse>>): Resource<Response<List<VehicleResponse>>>? {
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
+
+    fun retrievePaymentListApi(authToken: String, requestParam: RetrievePaymentListRequest)
+    {
+        viewModelScope.launch {
+            paymentListVal.postValue(Resource.loading(null))
             try {
-                emit(
-                    Resource.success(
-                        data = apiHelper.retrievePaymentList(
-                            header,
-                            requestParam
-                        )
-                    )
-                )
-            } catch (exception: Exception) {
-                emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+                val respFromApi = apiHelper.retrievePaymentList(authToken , requestParam)
+                //loginUserVal.postValue(Resource.success(usersFromApi))
+                paymentListVal.postValue(setPaymentListApiResponse(respFromApi))
+            } catch (e: Exception) {
+                paymentListVal.postValue(Resource.error(null , e.toString()))
             }
         }
+    }
 
-    fun getMonthlyUsage(header: String, requestParam: RetrievePaymentListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading(data = null))
+    private fun setPaymentListApiResponse(respFromApi: Response<RetrievePaymentListApiResponse>): Resource<Response<RetrievePaymentListApiResponse>>? {
+
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
+
+    fun getMonthlyUsage(authToken: String, requestParam: RetrievePaymentListRequest)
+    {
+        viewModelScope.launch {
+            monthlyUsageVal.postValue(Resource.loading(null))
             try {
-                emit(
-                    Resource.success(
-                        data = apiHelper.getMonthlyUsageApiCall(
-                            header,
-                            requestParam
-                        )
-                    )
-                )
-            } catch (exception: Exception) {
-                emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+                val respFromApi = apiHelper.getMonthlyUsageApiCall(authToken , requestParam)
+                monthlyUsageVal.postValue(setMonthlyUsageApiResponse(respFromApi))
+            } catch (e: Exception) {
+                monthlyUsageVal.postValue(Resource.error(null , e.toString()))
             }
         }
+    }
+    private fun setMonthlyUsageApiResponse(respFromApi: Response<RetrievePaymentListApiResponse>): Resource<Response<RetrievePaymentListApiResponse>>? {
+
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
+
 
 }
