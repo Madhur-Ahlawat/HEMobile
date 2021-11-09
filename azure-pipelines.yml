@@ -12,7 +12,6 @@ pool:
 steps:
   - task: Gradle@2
     inputs:
-      workingDirectory: 'https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'
       gradleWrapperFile: 'gradlew'
       gradleOptions: '-Xmx3072m'
       publishJUnitResults: false
