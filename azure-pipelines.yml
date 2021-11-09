@@ -18,15 +18,13 @@ steps:
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
       tasks: 'assembleDebug'
-      - bash: 'C:\Users\abhilasha.chauhan\bash_script'
-          workingDirectory: 'https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'
-          displayName: 'HE-MAPP'
-          failOnStderr: #
-          env:  # mapping of environment variables to add
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+      workingDirectory: '''https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'''
 
 
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      echo Add other tasks to build, test, and deploy your project.
+      echo See https://aka.ms/yaml
+      displayName: 'Run a multi-line script'
