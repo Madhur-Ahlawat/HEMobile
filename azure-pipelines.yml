@@ -21,7 +21,7 @@ steps:
   - task: Bash@3
     inputs:
       filePath: 'bash_script'
-      workingDirectory: '''https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'''
+     
 
 
   - script: |
