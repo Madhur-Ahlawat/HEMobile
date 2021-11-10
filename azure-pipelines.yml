@@ -13,13 +13,13 @@ steps:
   - task: Gradle@2
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: 'assembleDebug'
       publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
       jdkVersionOption: '1.11'
       gradleOptions: '-Xmx3072m'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
+      tasks: 'assembleDebug'
   - task: Bash@3
     inputs:
       filePath: 'bash_script'
