@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- development
+- master
 
 pool:
   vmImage: 'macOS-latest'
@@ -12,21 +12,22 @@ pool:
 steps:
   - task: Gradle@2
     inputs:
-      workingDirectory: 'https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'
       gradleWrapperFile: 'gradlew'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
       gradleOptions: '-Xmx3072m'
-      publishJUnitResults: false
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+      publishJunitResults: false
       testResultsFiles: '**/TEST-*.xml'
       tasks: 'assembleDebug'
-      - bash: 'C:\Users\abhilasha.chauhan\bash_script'
-          workingDirectory: 'https://conduenttolling.visualstudio.com/Highways%20England/_git/HE-MAPP-Android?path=%2Fgradlew'
-          displayName: 'HE-MAPP'
-          failOnStderr: #
-          env:  # mapping of environment variables to add
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+     
 
 
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+ 
