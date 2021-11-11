@@ -18,9 +18,14 @@ steps:
       gradleOptions: '-Xmx3072m'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
-      publishJunitResults: false
+      publishJunitResults: true
       testResultsFiles: '**/TEST-*.xml'
       tasks: 'assembleDebug'
+  - task: PublishTestResults@2
+    inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml'
+
   - task: Bash@3
     inputs:
       filePath: 'bash_script'
