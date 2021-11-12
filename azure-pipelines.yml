@@ -19,7 +19,7 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
       publishJunitResults: true
-      testResultsFiles: '**/TEST-*.xml'
+      testResultsFiles: '**/test-*.xml'
       tasks: 'assembleDebug'
   - task: PublishTestResults@2
     inputs:
