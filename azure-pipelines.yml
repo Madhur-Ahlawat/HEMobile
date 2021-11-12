@@ -19,12 +19,11 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
       publishJunitResults: true
-      testResultsFiles: '**/test-*.xml'
       tasks: 'assembleDebug'
   - task: PublishTestResults@2
     inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test-*.xml'
+        testResultsFiles: '**/test/TEST-*.xml'
         searchFolder: $(System.DefaultWorkingDirectory)
   - task: CopyFiles@2
     inputs:
