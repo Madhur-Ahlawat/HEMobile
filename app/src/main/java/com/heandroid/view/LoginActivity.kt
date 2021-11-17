@@ -56,6 +56,11 @@ class LoginActivity : AppCompatActivity() {
             // getRenewalAccessToken()
         }
 
+        databinding.tvForgotUsername.setOnClickListener {
+            var intent = Intent(this, RecoveryUsernamePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
      fun validate(username: String, pwd: String): Boolean {

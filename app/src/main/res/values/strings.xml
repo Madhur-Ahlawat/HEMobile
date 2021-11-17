@@ -38,5 +38,14 @@
     <string name="txt_transaction_id">Transaction ID</string>
     <string name="txt_amount">Amount</string>
     <string name="txt_add_vehicle">Add Vehicle</string>
+    <string name="txt_forgot_username"><b><u>Forgot username</u></b></string>
+    <string name="txt_forgot_username_heading">Forgot username</string>
+    <string name="txt_enter_your_details">Enter your details</string>
+    <string name="txt_account_number">Account number</string>
+    <string name="txt_postcode">Postcode</string>
+    <string name="txt_next">Next</string>
+    <string name="txt_login">Log in</string>
+    <string name="txt_your_username"><b>Your username</b></string>
+    <string name="txt_username_string">Please find your username based on your account number and postcode : %1$s</string>
 
 </resources>
