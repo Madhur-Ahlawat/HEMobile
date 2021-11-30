@@ -6,10 +6,10 @@
     <string name="txt_dart_charge">DART CHARGE</string>
     <string name="txt_gov_uk">GOV.UK</string>
     <string name="txt_sign_in">Sign In</string>
-    <string name="txt_user_name">Username</string>
+    <string name="txt_user_name">Username : </string>
     <string name="txt_enter_password">Enter password</string>
     <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
-    <string name="txt_create_new_account">Do not have account? <b><u>Create account</u></b>></string>
+    <string name="txt_create_new_account">Do not have account? <b><u>Create account</u></b></string>
     <string name="txt_error_username">Username can not be empty</string>
     <string name="txt_error_password">Password can not be empty</string>
     <string name="txt_pre_pay_scheme">Pre pay scheme</string>
@@ -38,7 +38,7 @@
     <string name="txt_transaction_id">Transaction ID</string>
     <string name="txt_amount">Amount</string>
     <string name="txt_add_vehicle">Add Vehicle</string>
-    <string name="txt_forgot_username"><b><u>Forgot username</u></b></string>
+    <string name="txt_forgot_username"><u>Forgot username</u></string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -46,6 +46,30 @@
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
-    <string name="txt_username_string">Please find your username based on your account number and postcode : %1$s</string>
-
+    <string name="txt_find_username_string"><b>Please find your username based on your account number and postcode</b></string>
+    <string name="txt_username_string">UserName : %1$s</string>
+    <string name="str_enter_email_id">Enter email ID</string>
+    <string name="str_usr_name">Username</string>
+    <string name="str_usr_passwd">Enter password</string>
+    <string name="str_forgot_password">Forgot Password</string>
+    <string name="str_back">Back</string>
+    <string name="str_enter_ur_details">Enter your details</string>
+    <string name="str_account_number">Account number</string>
+    <string name="str_post_cde">Postcode</string>
+    <string name="str_next">Next</string>
+    <string name="str_choose_method_to_get_ur_link">Choose the method to get your link</string>
+    <string name="str_continue">Continue</string>
+    <string name="str_check_your_mail">Check your mail</string>
+    <string name="str_resend">Resend</string>
+    <string name="str_check_inbox">"Please check your inbox, spam, bulk or junk email folder it may have been mistakenly blocked by your email system "</string>
+    <string name="str_not_received_resend">If you have not received the email please click resend</string>
+    <string name="str_check_text_message">Check your text message in your mobile</string>
+    <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
+    <string name="str_check_post">Check your post</string>
+    <string name="str_letter_posted_txt">"A letter will be posted to your address with a temporary password. The password will be active for seven days. Please use the password to login to your account "</string>
+    <string name="str_letter_not_received">If you do not receive the letter within 5 days, please contact</string>
+    <string name="str_dart_change_contact">Dart Change contact centre</string>
+    <string name="str_contact_address">Telephone: 03003000120\nTextPhone: 1800 1 0300 300 0120\nEveryday, 8am to 8pm</string>
+    <string name="str_accept">Accept</string>
+    <string name="txt_email_address">Email address</string>
 </resources>

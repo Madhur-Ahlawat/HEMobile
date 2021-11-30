@@ -1,6 +1,7 @@
 package com.heandroid.network
 
 import com.heandroid.model.*
+import com.heandroid.utils.Constants
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -43,4 +44,7 @@ interface ApiService {
 
     @POST("https://maas-test.services.conduent.com/trips/api/transactions")
     suspend fun getMonthlyUsageApi(@Header("Authorization") token: String , @Body requestParam: RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
+
+    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12")
+    suspend fun recoveruserNameApi(@Body requestParam: ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
 }

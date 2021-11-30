@@ -17,6 +17,7 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val monthlyUsageVal = MutableLiveData<Resource<Response<RetrievePaymentListApiResponse>>>()
     val paymentListVal = MutableLiveData<Resource<Response<RetrievePaymentListApiResponse>>>()
     val vehicleListVal = MutableLiveData<Resource<Response<List<VehicleResponse>>>>()
+    val forgotUsernameVal = MutableLiveData<Resource<Response<ForgotUsernameApiResponse>>>()
 
     fun getAccountOverViewApi(
       authToken: String
@@ -133,6 +134,38 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
         }
     }
+
+
+    fun recoverUsernameApi(
+        requestParam: ForgotUsernameRequest
+    ) {
+
+        viewModelScope.launch {
+            forgotUsernameVal.postValue(Resource.loading(null))
+            try {
+                val respFromApi = apiHelper.getForgotUserNameApiCall(requestParam)
+                //loginUserVal.postValue(Resource.success(usersFromApi))
+                forgotUsernameVal.postValue(recoverUsernameApiResponse(respFromApi))
+            } catch (e: Exception) {
+                forgotUsernameVal.postValue(Resource.error(null , e.toString()))
+            }
+        }
+    }
+
+    private fun recoverUsernameApiResponse(respFromApi: Response<ForgotUsernameApiResponse>): Resource<Response<ForgotUsernameApiResponse>>? {
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
+
 
 
 }

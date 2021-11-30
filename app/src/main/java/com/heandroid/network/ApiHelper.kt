@@ -21,6 +21,7 @@ interface ApiHelper {
 
     suspend fun retrievePaymentList(authToken: String , requestParam:RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
     suspend fun getMonthlyUsageApiCall(authToken: String , requestParam:RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
+    suspend fun getForgotUserNameApiCall( requestParam:ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
 
 
 }

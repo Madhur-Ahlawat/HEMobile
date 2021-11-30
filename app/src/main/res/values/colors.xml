@@ -14,4 +14,8 @@
     <color name="grey_one">#333333</color>
     <color name="grey_two">#474747</color>
     <color name="color_search_grey">#3C3C43</color>
+    <color name="login_blue_border">#1D70B8</color>
+    <color name="hint_color">#B1B4B6</color>
+    <color name="btn_color">#00703C</color>
+    <color name="btn_shade">#002D18</color>
 </resources>

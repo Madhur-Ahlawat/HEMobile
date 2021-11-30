@@ -61,6 +61,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        databinding.tvForgotPassword.setOnClickListener {
+            var intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
      fun validate(username: String, pwd: String): Boolean {

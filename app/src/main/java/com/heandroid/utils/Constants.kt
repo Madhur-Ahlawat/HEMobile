@@ -2,6 +2,12 @@ package com.heandroid.utils
 
 object Constants {
 
+    const val POST_CODE = "post_code"
+    const val DATA = "data"
+    const val POST_MAIL = "post"
+    const val MESSAGE = "message"
+    const val EMAIL = "email"
+    const val MODE = "mode"
     val PAYMENT_RESPONSE = "payment_resp"
     val PAYMENT_DATA="payment_data"
     val VEHICLE_DATA= "vehicle_data"
@@ -17,4 +23,6 @@ object Constants {
     paymentList: `${PAYMENTS}account/retrievepaymentslist`,
     vehicleInfo: `${BOSUSER}account/vehicle`,
     TransationHistory: `${TRIPS}transactions`,*/
+
+    const val FORGOT_USERNAME_URL = "https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12"
 }

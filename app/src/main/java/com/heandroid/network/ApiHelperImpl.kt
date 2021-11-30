@@ -1,6 +1,9 @@
 package com.heandroid.network
 
+import com.heandroid.model.ForgotUsernameApiResponse
+import com.heandroid.model.ForgotUsernameRequest
 import com.heandroid.model.RetrievePaymentListRequest
+import retrofit2.Response
 
 class ApiHelperImpl(private val apiService: ApiService):ApiHelper {
 
@@ -20,6 +23,8 @@ override suspend fun getRenewalAccessToken(clientId:String, grantType:String, ag
 
 override suspend fun retrievePaymentList(authToken: String, requestParam: RetrievePaymentListRequest) = apiService.retrievePaymentListApi(authToken,requestParam)
 override suspend fun getMonthlyUsageApiCall(authToken: String, requestParam: RetrievePaymentListRequest) = apiService.getMonthlyUsageApi(authToken,requestParam)
+    override suspend fun getForgotUserNameApiCall(requestParam: ForgotUsernameRequest)= apiService.recoveruserNameApi(requestParam)
+
 
 
 }
