@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.R
 import com.heandroid.model.LoginResponse
@@ -165,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun launchDashboardScreen(loginResponse: LoginResponse) {
         sessionManager.saveAuthToken(loginResponse.accessToken)
-        sessionManager.saveRefrehToken(loginResponse.refreshToken)
+        sessionManager.saveRefreshToken(loginResponse.refreshToken)
         Log.d("RefreshTokenFromLOgin", loginResponse.refreshToken)
         var accessToken = loginResponse.accessToken
         val intent = Intent(this, DashboardPage::class.java)

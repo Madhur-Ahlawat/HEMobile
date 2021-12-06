@@ -137,13 +137,13 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
 
     fun recoverUsernameApi(
-        requestParam: ForgotUsernameRequest
+      agencyId : String ,  requestParam: ForgotUsernameRequest
     ) {
 
         viewModelScope.launch {
             forgotUsernameVal.postValue(Resource.loading(null))
             try {
-                val respFromApi = apiHelper.getForgotUserNameApiCall(requestParam)
+                val respFromApi = apiHelper.getForgotUserNameApiCall(agencyId , requestParam)
                 //loginUserVal.postValue(Resource.success(usersFromApi))
                 forgotUsernameVal.postValue(recoverUsernameApiResponse(respFromApi))
             } catch (e: Exception) {

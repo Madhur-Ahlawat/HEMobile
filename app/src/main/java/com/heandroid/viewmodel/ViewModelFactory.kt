@@ -18,6 +18,11 @@ class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Fac
         {
             return DummyTestViewModel(apiHelper) as T
         }
+
+        else if (modelClass.isAssignableFrom(RecoveryUsernamePasswordViewModel::class.java))
+        {
+            return RecoveryUsernamePasswordViewModel(apiHelper) as T
+        }
         throw IllegalArgumentException("Unknown class name")
     }
 

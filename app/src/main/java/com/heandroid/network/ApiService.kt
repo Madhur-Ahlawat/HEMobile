@@ -45,6 +45,18 @@ interface ApiService {
     @POST("https://maas-test.services.conduent.com/trips/api/transactions")
     suspend fun getMonthlyUsageApi(@Header("Authorization") token: String , @Body requestParam: RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
 
-    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12")
-    suspend fun recoveruserNameApi(@Body requestParam: ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
+    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails")
+    suspend fun recoveruserNameApi(@Query("agencyId") agencyId:String , @Body requestParam: ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
+
+    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotPassword/confirmationOptions")
+    suspend fun forgotPasswordConfirmationOptionsApi(@Query("agencyId") agencyId:String ,@Body requestParam: ConfirmationOptionRequestModel): Response<ConfirmationOptionsResponseModel>
+
+    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotPassword/requestReset")
+    suspend fun getSecurityCodeFromOptionApi(@Query("agencyId") agencyId:String,@Body requestPram : GetSecurityCodeRequestModel): Response<GetSecurityCodeResponseModel>
+
+    @POST("https://maas-test.services.conduent.com/bosuser/api/v1/account/forgotPassword/verifyOTP")
+    suspend fun verifySecurityCodeApi(@Body requestParam : VerifySecurityCodeRequestModel): Response<VerifySecurityCodeResponseModel>
+
+    @POST("https://maas-test.services.conduent.com/bosuser/api/v2/account/forgotPassword/setNewPassword")
+    suspend fun setNewPasswordApi(@Body requestParam: SetNewPasswordRequest): Response<VerifySecurityCodeResponseModel>
 }

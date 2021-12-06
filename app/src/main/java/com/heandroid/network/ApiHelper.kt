@@ -21,7 +21,11 @@ interface ApiHelper {
 
     suspend fun retrievePaymentList(authToken: String , requestParam:RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
     suspend fun getMonthlyUsageApiCall(authToken: String , requestParam:RetrievePaymentListRequest):Response<RetrievePaymentListApiResponse>
-    suspend fun getForgotUserNameApiCall( requestParam:ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
+    suspend fun getForgotUserNameApiCall(agencyId : String ,  requestParam:ForgotUsernameRequest):Response<ForgotUsernameApiResponse>
+    suspend fun getConfirmationOptionsApiCall( agencyId : String , requestParam:ConfirmationOptionRequestModel):Response<ConfirmationOptionsResponseModel>
+    suspend fun getSecurityCodeApiCall( agencyId : String , requestParam:GetSecurityCodeRequestModel):Response<GetSecurityCodeResponseModel>
+    suspend fun verifySecurityCodeApiCall(requestParam:VerifySecurityCodeRequestModel):Response<VerifySecurityCodeResponseModel>
+    suspend fun setNewPasswordApiCall(requestParam:SetNewPasswordRequest):Response<VerifySecurityCodeResponseModel>
 
 
 }

@@ -26,6 +26,7 @@
         <activity android:name=".view.ForgotPasswordActivity"/>
         <activity android:name=".view.ForgotPasswordRecoverActivity"/>
         <activity android:name=".view.ForgotPasswordSentActivity"/>
+        <activity android:name=".view.PasswordResetActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

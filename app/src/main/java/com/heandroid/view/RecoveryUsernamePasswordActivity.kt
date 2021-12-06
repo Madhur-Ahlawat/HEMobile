@@ -81,7 +81,8 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
     databinding.progressLayout.visibility = VISIBLE
      //   val request = ForgotUsernameRequest(databinding.edtAccountNumber.text.toString().trim() , databinding.edtPostcode.text.toString().trim())
         val request = ForgotUsernameRequest("118489252" , "10002")
-        viewModel.recoverUsernameApi(request)
+        val agencyId = "12"
+        viewModel.recoverUsernameApi(agencyId , request)
         viewModel.forgotUsernameVal.observe(this, androidx.lifecycle.Observer {
             it.let { resource ->
                 when (resource.status) {
