@@ -2,16 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.heandroid">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
     <application
-        android:name="com.heandroid.config.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.HEMobile">
-        <activity android:name=".view.LoginActivity">
+        <activity
+            android:name=".view.HomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobileDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,15 +24,38 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.DashboardPage"/>
-        <activity android:name=".view.VehicleMgmtActivity"/>
-        <activity android:name=".view.ActivityPaymentHistory"/>
-        <activity android:name=".view.RecoveryUsernamePasswordActivity"/>
-        <activity android:name=".view.ForgotPasswordActivity"/>
-        <activity android:name=".view.ForgotPasswordRecoverActivity"/>
-        <activity android:name=".view.ForgotPasswordSentActivity"/>
-        <activity android:name=".view.PasswordResetActivity"/>
+        <activity
+            android:name=".view.DashboardPage"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.VehicleMgmtActivity"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ActivityPaymentHistory"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.RecoveryUsernamePasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ActivitySingleOrMultipleVrms"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ActivityPaymentStartPage"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobileLight" />
+        <activity
+            android:name=".view.ActivityOneOfPayment"
+            android:exported="true"
+            android:theme="@style/Theme.HEMobileLight" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 </manifest>

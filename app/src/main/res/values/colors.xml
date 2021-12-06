@@ -6,6 +6,8 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="tool_bar_clr">#0f0f0f</color>
+    <color name="light_cyan">#e0ffff</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#00703C</color>
     <color name="blue">#5A97F8</color>
