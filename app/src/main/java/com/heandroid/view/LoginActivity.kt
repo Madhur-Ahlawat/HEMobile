@@ -61,8 +61,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         databinding.tvForgotPassword.setOnClickListener {
-//            var intent = Intent(this, ForgotPasswordActivity::class.java)
-//            startActivity(intent)
+            var intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -88,10 +88,9 @@ class LoginActivity : AppCompatActivity() {
         var agecyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
         var value = databinding.edtUsername.text.toString()
+        //var value = "459144698"
+        //var password = "Welcome1!"
         var password = databinding.edtPassword.text.toString()
-//        var value = "459144698"
-//        var password = "Welcome1!"
-
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
 

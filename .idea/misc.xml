@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< Updated upstream
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_serach.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_vehicle_item.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back.xml" value="0.2203125" />
@@ -30,30 +29,10 @@
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/ic_more.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
-=======
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/button_normal.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/button_shadow.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/edit_txt_bg.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_back_arrow.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_back_arrow_black.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_create_acnt.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_gov_uk.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_sign_in.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/ic_signin_button.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/drawable/login_bg.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/layout/activity_one_of_payment.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/layout/activity_payment_start_page.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/layout/tool_bar_title_back_btn.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidApp/app/src/main/res/layout/toolbar_lyt.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidNew/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/HEAndroidNew/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
->>>>>>> Stashed changes
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
