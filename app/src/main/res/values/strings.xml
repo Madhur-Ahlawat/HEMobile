@@ -85,4 +85,24 @@
     <string name="err_pwd_empty">Please enter password</string>
     <string name="err_c_pwd_empty">Please enter confirm password</string>
     <string name="err_pwd_and_c_pwd_not_same">Password and confirm password are not same</string>
+    <string name="str_resend">Resend</string>
+    <string name="str_check_inbox">"Please check your inbox, spam, bulk or junk email folder it may have been mistakenly blocked by your email system "</string>
+    <string name="str_not_received_resend">If you have not received the email please click resend</string>
+    <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
+    <string name="str_make_one_of_payment">Make a one off payment</string>
+    <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
+    <string name="str_charges_for_crossing">The charges for crossings</string>
+    <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
+    <string name="str_twelve_months_txt">\u2022  You are planning to make for next 12 months are valid for same time period</string>
+    <string name="str_single_vehicle">Single Vehicle</string>
+    <string name="str_multiple_vehicle">Multiple Vehicles</string>
+    <string name="str_login">LOG  IN</string>
+    <string name="str_pay_dart_ford_crossing">Pay the Dartford Crossing charge (Dart Charge)</string>
+    <string name="str_what_would_you_like_to_do">What would you like to do?</string>
+    <string name="str_create_account">Create an Account</string>
+    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice(PCN)</string>
+    <string name="str_check_for_paid_crossing">Check for paid crossing</string>
+    <string name="str_view_charges">View charges (6AM - 10AM)</string>
+    <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
+    <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
 </resources>
