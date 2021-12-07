@@ -85,4 +85,6 @@
     <string name="err_pwd_empty">Please enter password</string>
     <string name="err_c_pwd_empty">Please enter confirm password</string>
     <string name="err_pwd_and_c_pwd_not_same">Password and confirm password are not same</string>
+    <string name="txt_make_one_off_payment">Make a one off payment</string>
+    <string name="txt_whr_do_you_want_rcpt_to_send">Where do you want your receipt to be sent?</string>
 </resources>
