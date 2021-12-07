@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.HEMobile">
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.ActivityHome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +20,7 @@
         </activity>
 
         <activity android:name=".view.DashboardPage"/>
+        <activity android:name=".view.LoginActivity"/>
         <activity android:name=".view.VehicleMgmtActivity"/>
         <activity android:name=".view.ActivityPaymentHistory"/>
         <activity android:name=".view.RecoveryUsernamePasswordActivity"/>
