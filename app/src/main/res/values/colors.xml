@@ -18,4 +18,7 @@
     <color name="hint_color">#B1B4B6</color>
     <color name="btn_color">#00703C</color>
     <color name="btn_shade">#002D18</color>
+    <color name="tool_bar_clr">#0f0f0f</color>
+    <color name="light_cyan">#e0ffff</color>
+
 </resources>
