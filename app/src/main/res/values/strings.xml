@@ -131,4 +131,6 @@
     <string name="txt_what_would_you_like_to_do_next">What would you like to do next?</string>
     <string name="str_create_account_with_details_already_provided">Create an account with the details already provided</string>
     <string name="str_make_another_payment">Make another payment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
