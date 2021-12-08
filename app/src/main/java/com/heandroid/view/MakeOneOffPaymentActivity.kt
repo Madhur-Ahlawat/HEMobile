@@ -13,6 +13,6 @@ class MakeOneOffPaymentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_make_one_off_payment)
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.fragment_make_one_off_payment)
     }
 }

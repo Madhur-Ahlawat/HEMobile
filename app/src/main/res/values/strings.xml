@@ -85,10 +85,8 @@
     <string name="err_pwd_empty">Please enter password</string>
     <string name="err_c_pwd_empty">Please enter confirm password</string>
     <string name="err_pwd_and_c_pwd_not_same">Password and confirm password are not same</string>
-<<<<<<< HEAD
     <string name="txt_make_one_off_payment">Make a one off payment</string>
     <string name="txt_whr_do_you_want_rcpt_to_send">Where do you want your receipt to be sent?</string>
-=======
     <string name="str_resend">Resend</string>
     <string name="str_check_inbox">"Please check your inbox, spam, bulk or junk email folder it may have been mistakenly blocked by your email system "</string>
     <string name="str_not_received_resend">If you have not received the email please click resend</string>
@@ -109,5 +107,28 @@
     <string name="str_view_charges">View charges (6AM - 10AM)</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
->>>>>>> e416051e58d49c6c12e7df0bf2e9eaa43b956c7c
+    <string name="str_email">Email</string>
+    <string name="str_confirm_email">Confirm Email</string>
+    <string name="str_declare_info">I declare that the information given above is correct</string>
+    <string name="txt_select_preferred_payment_method">Please select the preferred payment method</string>
+    <string name="txt_quick_payment">Quick payment</string>
+    <string name="txt_credit_debit_card">Credit/Debit card</string>
+    <string name="txt_bank_transfer">Bank transfer</string>
+    <string name="txt_apple_pay">Apple Pay</string>
+    <string name="txt_pay_pal">PayPal</string>
+    <string name="txt_google_pay">Google Pay</string>
+    <string name="txt_confirm_payment_amount">Confirm payment amount</string>
+    <string name="txt_vehicle_list">Vehicle list</string>
+    <string name="txt_payment_method">Payment method</string>
+    <string name="txt_change">Change</string>
+    <string name="str_pay_now">Pay now</string>
+    <string name="txt_payment_successful">Payment successful</string>
+    <string name="txt_receipt_number">Receipt number</string>
+    <string name="txt_download_rcpt"><u>Download receipt</u></string>
+    <string name="txt_confirmation_email_sent">Confirmation Email sent</string>
+    <string name="txt_vehicle">Vehicle</string>
+    <string name="txt_view_vehicle"><u>View Vehicles</u></string>
+    <string name="txt_what_would_you_like_to_do_next">What would you like to do next?</string>
+    <string name="str_create_account_with_details_already_provided">Create an account with the details already provided</string>
+    <string name="str_make_another_payment">Make another payment</string>
 </resources>
