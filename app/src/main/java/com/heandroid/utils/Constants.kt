@@ -2,6 +2,12 @@ package com.heandroid.utils
 
 object Constants {
 
+    const val APPLE_PAY = "apple_pay"
+    const val GOOGLE_PAY = "google_pay"
+    const val PAY_PAL = "pay_pal"
+    const val QUICK_PAYMENT = "quick_payment"
+    const val BANK_TRANSFER = "bank_transfer"
+    const val CARD_PAYMENT = "card_payment"
     const val OPTIONS = "options"
     const val EMAIL_MODE = 1
     const val MESSAGE_MODE = 2

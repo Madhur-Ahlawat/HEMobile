@@ -32,6 +32,11 @@
         <activity android:name=".view.ForgotPasswordSentActivity" />
         <activity android:name=".view.PasswordResetActivity" />
         <activity android:name=".view.MakeOneOffPaymentActivity" />
+        <activity android:name=".view.ConfirmPaymentActivity"/>
+        <activity android:name=".view.PaymentMethodSelectionActivity"/>
+        <activity android:name=".view.QuickPaymentMethodSelectionActivity"/>
+        <activity android:name=".view.PayNowActivity"/>
+        <activity android:name=".view.PaymentConfirmationActivity"/>
 
         <activity
             android:name=".view.OneOfPayment"
@@ -39,7 +44,16 @@
         <activity
             android:name=".view.PaymentStartPage"
             android:theme="@style/Theme.HEMobileLight" />
+        <activity
+            android:name=".view.VehicleDetailActivity"
+            android:theme="@style/Theme.HEMobileLight" />
+        <activity android:name=".view.PaymentReceiptSelectionActivity"/>
+        <activity
+            android:name=".view.ActivityFutureCrossing"
+            android:theme="@style/Theme.HEMobileLight" >
 
+
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

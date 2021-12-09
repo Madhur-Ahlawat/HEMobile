@@ -1,16 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.HEMobile" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.HEMobileDark" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/btn_color</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlNormal">@color/tool_bar_clr</item>
+    </style>
+    <style name="Theme.HEMobileLight" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/btn_color</item>
+        <item name="colorPrimaryDark">@color/add_stroke_clr</item>
+        <item name="colorOnPrimary">@color/btn_color</item>
+        <item name="colorOnSurface">@color/btn_color</item>
+        <item name="colorAccent">@color/btn_color</item>
+        <item name="colorControlNormal">@color/btn_color</item>
+        <item name="colorControlActivated">@color/add_stroke_clr</item>
+        <item name="colorControlHighlight">@color/add_stroke_clr</item>
+    </style>
+    <style name="Theme.ToolBar" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+    <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="background">@drawable/button_shadow</item>
     </style>
 </resources>

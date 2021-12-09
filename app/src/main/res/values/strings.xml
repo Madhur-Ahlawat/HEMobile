@@ -133,4 +133,33 @@
     <string name="str_make_another_payment">Make another payment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_add_vehicle">Add vehicle</string>
+    <string name="str_add_upto_five_vehicles">Yoc can add upto five vehicles</string>
+    <string name="str_vehicle_details">Vehicle details</string>
+    <string name="str_country_of_registraion">Country of registration UK</string>
+    <string name="str_find_vehicle">Find your vehicle</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_vrm">VRM</string>
+    <string name="str_vrm_ful">Vehicle registration number</string>
+    <string name="str_title">Vehicle details</string>
+    <string name="str_sub_title">Sub Title</string>
+    <string name="str_confirm">Confirm</string>
+    <string name="str_ur_vehicles">Your vehicles</string>
+    <string name="str_payment_amount">Payment amount</string>
+    <string name="str_amount">£ 5.00</string>
+    <string name="str_payable_crossings">Payable crossings</string>
+    <string name="str_count">1</string>
+    <string name="str_amount_title">Amount</string>
+    <string name="str_future_crossings">Future Crossings</string>
+    <string name="str_plus_symbol">+</string>
+    <string name="str_minus_symbol">-</string>
+    <string name="str_future_crossings_full_content">Future crossings are valid for 12 months from the date you make them</string>
+    <string name="str_phone">Phone</string>
+    <string name="str_confirm_phone">Confirm phone</string>
+    <string name="plz_enter_email">Please enter your email</string>
+    <string name="plz_enter_confirm_email">Please enter your confirm email</string>
+    <string name="email_and_confirm_email_not_same">Email and confirm email are not same</string>
+    <string name="plz_enter_phone">Please enter phone number</string>
+    <string name="plz_enter_confirm_phone">Please enter confirm phone number</string>
+    <string name="phone_and_confirm_phone_not_same">Phone number and confirm phone number are not same</string>
 </resources>

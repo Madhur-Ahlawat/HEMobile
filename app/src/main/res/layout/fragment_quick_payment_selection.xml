@@ -64,6 +64,7 @@
 
 
             <RadioGroup
+                android:id="@+id/rg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
@@ -88,19 +89,19 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_btn"
-            style="@style/Theme.Button"
-            android:backgroundTint="@color/btn_color"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="center"
+            android:id="@+id/continue_btn"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/str_continue"
+            android:theme="@style/Theme.Button"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:cornerRadius="@dimen/_5sdp"
+            app:cornerRadius="@dimen/_6sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
