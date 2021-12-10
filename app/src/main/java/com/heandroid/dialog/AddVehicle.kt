@@ -63,18 +63,18 @@ class AddVehicle : DialogFragment() {
 
         dataBinding.addVehicleBtn.setOnClickListener {
             var country = "UK"
-            if (dataBinding.addVrmInput.text.toString().length > 0) {
+            if (dataBinding.addVrmInput.text.toString().isNotEmpty()) {
 
-                if (dataBinding.switchView.isChecked) {
-                    country = "Non UK"
+                country = if (!dataBinding.switchView.isChecked) {
+                    "Non UK"
                 } else {
-                    country = "UK"
+                    "UK"
 
                 }
                 val mModel = VehicleDetailsModel(
                     dataBinding.addVrmInput.text.toString(),
                     country,
-                    "TTSI",
+                    "TT FSI",
                     "Audi",
                     "Black"
                 )

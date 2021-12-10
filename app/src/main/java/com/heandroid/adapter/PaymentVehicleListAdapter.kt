@@ -13,8 +13,8 @@ import com.heandroid.model.VehicleDetailsModel
 
 import kotlinx.android.synthetic.main.adapter_vehicles_row.view.*
 
-class AddedVehicleListAdapter(private val mContext: Context, var mListener: ItemClickListener) :
-    RecyclerView.Adapter<AddedVehicleListAdapter.VehicleViewHolder>() {
+class PaymentVehicleListAdapter(private val mContext: Context, var mListener: ItemClickListener) :
+    RecyclerView.Adapter<PaymentVehicleListAdapter.VehicleViewHolder>() {
 
     var vehicleList: List<VehicleDetailsModel> = mutableListOf()
 
@@ -28,20 +28,21 @@ class AddedVehicleListAdapter(private val mContext: Context, var mListener: Item
     class VehicleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val vrmNoTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_title)
-        private val vrmCountryTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_country)
-        private val deleteImg: AppCompatImageView = itemView.findViewById(R.id.delete_img)
+        private val vrmAmount: AppCompatTextView = itemView.findViewById(R.id.vrm_amount)
+
 
         fun setView(context: Context, vehicleItem: VehicleDetailsModel) {
 
             vrmNoTxt.text = vehicleItem.vrmNo
-            vrmCountryTxt.text = vehicleItem.vrmCountry
+            vrmAmount.text = context.getString(R.string.str_amount)
+
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.adapter_vehicles_row, parent, false)
+            .inflate(R.layout.payment_vehicle_item, parent, false)
         return VehicleViewHolder(view)
     }
 
@@ -49,10 +50,7 @@ class AddedVehicleListAdapter(private val mContext: Context, var mListener: Item
 
         val vehicleItem = vehicleList[position]
         holder.setView(mContext, vehicleItem)
-        holder.itemView.delete_img.setOnClickListener {
-            mListener?.onItemDeleteClick(vehicleItem, position)
-        }
-        holder.itemView.setOnClickListener {
+        holder.itemView.vrm_title.setOnClickListener {
             mListener?.onItemClick(vehicleItem,position)
         }
     }

@@ -100,7 +100,9 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
             mVehicleList.remove(details)
             if (::mAdapter.isInitialized) {
                 mAdapter.setList(mVehicleList)
-                mAdapter.notifyItemChanged(pos)
+                //mAdapter.notifyDataSetChanged()
+               // mAdapter.notifyItemChanged(pos)
+                mAdapter.notifyItemRemoved(pos)
             }
         }
         if (mVehicleList.size == 0) {

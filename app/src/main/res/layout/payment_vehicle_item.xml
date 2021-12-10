@@ -33,28 +33,16 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/vrm_country"
+            android:id="@+id/vrm_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UK"
+            android:text="@string/str_amount"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_img"
-            app:layout_constraintStart_toEndOf="@+id/vrm_title"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/delete_img"
-            android:layout_width="@dimen/_26sdp"
-            android:layout_height="@dimen/_26sdp"
-            android:tint="@color/black"
-            android:padding="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_close_24" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

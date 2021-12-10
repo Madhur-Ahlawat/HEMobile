@@ -1,5 +1,6 @@
 package com.heandroid.view
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -50,6 +51,8 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 
         dataBinding.btnContinue.setOnClickListener {
             Log.d(TAG , "btn clicked")
+            var intent = Intent(this, ActivityHome::class.java)
+            startActivity(intent)
         }
 
         dataBinding.backArrow.setOnClickListener {
