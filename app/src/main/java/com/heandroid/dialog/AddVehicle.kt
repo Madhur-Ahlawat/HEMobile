@@ -1,4 +1,4 @@
-package com.heandroid.view.dialog
+package com.heandroid.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

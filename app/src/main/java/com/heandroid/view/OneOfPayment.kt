@@ -15,7 +15,7 @@ import com.heandroid.databinding.OneOfPaymentActivityBinding
 import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.utils.Logg
-import com.heandroid.view.dialog.AddVehicle
+import com.heandroid.dialog.AddVehicle
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener {
