@@ -50,10 +50,10 @@
         <activity android:name=".view.PaymentReceiptSelectionActivity"/>
         <activity
             android:name=".view.ActivityFutureCrossing"
-            android:theme="@style/Theme.HEMobileLight" >
-
-
-        </activity>
+            android:theme="@style/Theme.HEMobileLight" />
+        <activity
+            android:name=".view.ActivityPaypalPage"
+            android:theme="@style/Theme.HEMobileLight" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

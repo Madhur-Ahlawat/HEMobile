@@ -162,4 +162,20 @@
     <string name="plz_enter_phone">Please enter phone number</string>
     <string name="plz_enter_confirm_phone">Please enter confirm phone number</string>
     <string name="phone_and_confirm_phone_not_same">Phone number and confirm phone number are not same</string>
+    <string name="str_send_to">Send to</string>
+    <string name="str_send_highway_englands">Highways England</string>
+    <string name="str_paywith">Pay with</string>
+    <string name="str_paypal_balance">Paypal balance</string>
+    <string name="str_paypal_amount">£ 240</string>
+    <string name="str_change">Change</string>
+    <string name="str_payment_succesfull">Payment successful</string>
+    <string name="str_receipt_no">Receipt number</string>
+    <string name="str_download_receipt"> <u>Download receipt</u> </string>
+    <string name="str_receipt_number">HDJ2123F</string>
+    <string name="str_confirmation_email_sent">Confirmation Email sent</string>
+    <string name="str_email_id">janedoe@gmail.com</string>
+    <string name="str_vehicle">Vehicle</string>
+    <string name="str_view_vehicle"><u> View vehicle </u></string>
+    <string name="str_what_next">What would you like to do next?</string>
+    <string name="str_create_account_with_existing">Create an account with the details already provided</string>
 </resources>

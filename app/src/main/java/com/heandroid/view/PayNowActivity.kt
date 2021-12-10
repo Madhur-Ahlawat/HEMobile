@@ -19,7 +19,7 @@ class PayNowActivity : AppCompatActivity() {
 
     private fun setView() {
         dataBinding.btnPayNow.setOnClickListener {
-            var intent = Intent(this, ConfirmPaymentActivity::class.java)
+            var intent = Intent(this, ActivityPaypalPage::class.java)
             startActivity(intent)
         }
 

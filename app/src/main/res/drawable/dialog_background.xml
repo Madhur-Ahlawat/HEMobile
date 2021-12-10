@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="@dimen/_14sdp"
+    android:insetTop="@dimen/_14sdp"
+    android:insetRight="@dimen/_14sdp"
+    android:insetBottom="@dimen/_14sdp">
+
+
+    <shape android:shape="rectangle">
+
+        <corners android:radius="@dimen/_10sdp" />
+        <solid android:color="@color/white" />
+        <stroke
+            android:width="@dimen/_1sdp"
+            android:color="@color/add_stroke_clr" />
+    </shape>
+
+</inset>
