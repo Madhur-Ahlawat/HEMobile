@@ -41,8 +41,10 @@
 
     <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
         <item name="background">@drawable/button_shadow</item>
+        <item name="backgroundTint">@color/color_C9C9C9</item>
 
     </style>
+
 
 
 

@@ -18,6 +18,8 @@ import com.heandroid.viewmodel.ViewModelFactory
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import com.heandroid.databinding.ActivityLoginBinding
 
@@ -34,11 +36,17 @@ class LoginActivity : AppCompatActivity() {
         databinding.lifecycleOwner = this
         setupUI()
         //setupObservers()
+        databinding.btnLogin.isEnabled= false
+        setBtnNormal()
+        databinding.edtEmail.doOnTextChanged { text, start, before, count ->
+            setBtnActivated()
+        }
+
         databinding.btnLogin.setOnClickListener {
 
             hideSoftKeyboard()
-            val username = databinding.edtUsername.text.toString()
-            val pwd = databinding.edtUsername.text.toString()
+            val username = databinding.edtEmail.text.toString()
+            val pwd = databinding.edtPwd.text.toString()
             if(validate(username, pwd))
             {
                 setupObservers()
@@ -87,10 +95,10 @@ class LoginActivity : AppCompatActivity() {
         var grantType = "password"
         var agecyId = "12"
         var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
-        var value = databinding.edtUsername.text.toString()
+        var value = databinding.edtEmail.text.toString()
         //var value = "459144698"
         //var password = "Welcome1!"
-        var password = databinding.edtPassword.text.toString()
+        var password = databinding.edtEmail.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
 
@@ -198,6 +206,20 @@ class LoginActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewModelStore.clear()
+    }
+    private fun setBtnActivated() {
+        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
+
+        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.white))
+        databinding.btnLogin.isEnabled = true
+    }
+
+    private fun setBtnNormal() {
+        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        databinding.btnLogin.isEnabled = false
+
     }
 }
 

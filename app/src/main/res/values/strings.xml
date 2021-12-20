@@ -38,7 +38,8 @@
     <string name="txt_transaction_id">Transaction ID</string>
     <string name="txt_amount">Amount</string>
     <string name="txt_add_vehicle">Add Vehicle</string>
-    <string name="txt_forgot_username"><u>Forgot username</u></string>
+    <string name="txt_forgot_your_username"><u>Forgot your username?</u></string>
+    <string name="txt_forgot_your_password"><u>Forgot your password?</u></string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -178,4 +179,8 @@
     <string name="str_view_vehicle"><u> View vehicle </u></string>
     <string name="str_what_next">What would you like to do next?</string>
     <string name="str_create_account_with_existing">Create an account with the details already provided</string>
+    <string name="str_log_in_dart_system">Log in to Dart Charge</string>
+    <string name="str_sign_in_email">Sign In email</string>
+    <string name="str_password">Password</string>
+    <string name="str_forgot_your_password"><u>Forgot your password?</u></string>
 </resources>

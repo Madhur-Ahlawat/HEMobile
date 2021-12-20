@@ -3,7 +3,7 @@
     <!-- Gray shadow. -->
     <item android:left="@dimen/_1sdp" android:top="@dimen/_1sdp">
         <shape>
-            <solid android:color="@color/btn_shade" />
+            <solid android:color="@color/color_C9C9C9" />
             <corners android:radius="@dimen/_1sdp" />
         </shape>
     </item>

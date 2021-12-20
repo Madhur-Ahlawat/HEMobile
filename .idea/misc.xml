@@ -7,8 +7,11 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_serach.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_vehicle_item.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/border.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/button_shadow.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back_arrow.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back_arrow_white.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_back_grey.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_forgot_password.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_history.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_icon_crown.xml" value="0.2203125" />
@@ -37,6 +40,7 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_one_off_payment.xml" value="0.25" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_one_off_payment_start.xml" value="0.1947463768115942" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_selction_payment_rcpt_method.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_pament_method_selection.xml" value="0.1983695652173913" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_payment_selection.xml" value="0.1947463768115942" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_payment_success.xml" value="0.1983695652173913" />
@@ -49,6 +53,7 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/one_of_payment_activity.xml" value="0.1983695652173913" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/payment_start_page_activity.xml" value="0.1983695652173913" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/payment_vehicle_item.xml" value="0.1911231884057971" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/recover_username_password_activity.xml" value="0.18297101449275363" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/search_layout.xml" value="0.1308876811594203" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/tool_bar_with_title_back.xml" value="0.1947463768115942" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/ic_more.xml" value="0.20833333333333334" />
