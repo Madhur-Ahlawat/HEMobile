@@ -72,10 +72,13 @@ class ForgotPasswordFragment : BaseFragment() {
         dataBinding.btnNext.setOnClickListener {
 
             hideSoftKeyboard()
-            if(validate())
-            {
+            if (validate()) {
                 sessionManager.saveAccountNumber(email)
-                val response = ConfirmationOptionsResponseModel("4294274","christoper@gmail.com","9823233232")
+                val response = ConfirmationOptionsResponseModel(
+                    "4294274",
+                    "christoper@gmail.com",
+                    "9823233232"
+                )
                 startPasswordRecoveryOptionSelectionScreen(response)
 //                callApiForGettingConfirmationOptions()
             }
@@ -92,28 +95,18 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     private fun setBtnActivated() {
-        dataBinding.btnNext.setBackgroundColor(
-            ContextCompat.getColor(
-                requireActivity(),
-                R.color.btn_color
-            )
-        )
-
-        dataBinding.btnNext.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
         dataBinding.btnNext.isEnabled = true
+        dataBinding.btnNext.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
     }
 
     private fun setBtnNormal() {
-        dataBinding.btnNext.setBackgroundColor(
+        dataBinding.btnNext.isEnabled = false
+        dataBinding.btnNext.setTextColor(
             ContextCompat.getColor(
                 requireActivity(),
-                R.color.light_cyan
+                R.color.color_7D7D7D
             )
         )
-        dataBinding.btnNext.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
-
-        dataBinding.btnNext.isEnabled = false
-
     }
 
 
@@ -131,7 +124,8 @@ class ForgotPasswordFragment : BaseFragment() {
                         startPasswordRecoveryOptionSelectionScreen(response)
                     }
                     Status.ERROR -> {
-                        Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG)
+                            .show()
 
                     }
                     Status.LOADING -> {
@@ -150,7 +144,7 @@ class ForgotPasswordFragment : BaseFragment() {
         bundle.putSerializable(Constants.OPTIONS, response)
 
         Navigation.findNavController(dataBinding.root)
-            .navigate(R.id.action_forgotPasswordFragment_to_forgotPasswordSecondFragment,bundle)
+            .navigate(R.id.action_forgotPasswordFragment_to_forgotPasswordSecondFragment, bundle)
 
 
     }

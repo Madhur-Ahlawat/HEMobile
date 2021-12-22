@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,11 +29,6 @@ import com.heandroid.utils.SessionManager
 import com.heandroid.view.ForgotPasswordSentActivity
 import com.heandroid.viewmodel.RecoveryUsernamePasswordViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -78,6 +74,7 @@ class ForgotPasswordSecondFragment : BaseFragment() {
             resp = it.getSerializable(Constants.OPTIONS) as ConfirmationOptionsResponseModel
         }
         setupViewModel()
+        setBtnNormal()
         sessionManager = SessionManager(requireActivity())
         accountNumber = sessionManager.fetchAccountNumber() ?: ""
 
@@ -85,6 +82,7 @@ class ForgotPasswordSecondFragment : BaseFragment() {
             if (isChecked) {
                 selectedOpt = Constants.EMAIL
                 optionVal = resp!!.email
+                setBtnActivated()
             }
         }
 
@@ -92,6 +90,7 @@ class ForgotPasswordSecondFragment : BaseFragment() {
             if (isChecked) {
                 selectedOpt = Constants.MESSAGE
                 optionVal = resp!!.phone
+                setBtnActivated()
             }
         }
 
@@ -99,6 +98,7 @@ class ForgotPasswordSecondFragment : BaseFragment() {
             if (isChecked) {
                 selectedOpt = Constants.POST_MAIL
                 optionVal = ""
+                setBtnActivated()
             }
         }
 
@@ -123,10 +123,28 @@ class ForgotPasswordSecondFragment : BaseFragment() {
 
         setView(resp!!)
 
-
-
         Logg.logging(TAG, " response  $resp")
 
+    }
+
+    private fun setBtnActivated() {
+        dataBinding.continueBtn.isEnabled = true
+        dataBinding.continueBtn.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                R.color.white
+            )
+        )
+    }
+
+    private fun setBtnNormal() {
+        dataBinding.continueBtn.isEnabled = false
+        dataBinding.continueBtn.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                R.color.color_7D7D7D
+            )
+        )
     }
 
     private fun getSecurityCodeApiCall() {
@@ -161,7 +179,6 @@ class ForgotPasswordSecondFragment : BaseFragment() {
     }
 
     private fun startVerifySecurityCodeScreen(response: GetSecurityCodeResponseModel?) {
-//        var intent = Intent(this, ForgotPasswordSentActivity::class.java)
         if (selectedOpt == Constants.POST_MAIL) {
 
             val bundle = Bundle()
@@ -183,8 +200,6 @@ class ForgotPasswordSecondFragment : BaseFragment() {
 
         }
 
-//        intent.putExtra(Constants.DATA, bundle)
-//        startActivity(intent)
     }
 
     private fun setupViewModel() {
@@ -204,29 +219,4 @@ class ForgotPasswordSecondFragment : BaseFragment() {
         dataBinding.textMessageRadioBtn.text = "Text message - (xxxx) xxxx -$maskPhone"
         dataBinding.postMailRadioBtn.text = "Post mail - 3113********,Ap***NC,***02"
     }
-
-
-/*
-    companion object {
-        */
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ForgotPasswordSecondFragment.
-     *//*
-
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ForgotPasswordSecondFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-*/
 }

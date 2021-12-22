@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.FragmentForgotPasswordFifthBinding
 
-// TODO: Rename parameter arguments, choose names that match
 
 /**
  * A simple [Fragment] subclass.
@@ -19,7 +19,7 @@ import com.heandroid.databinding.FragmentForgotPasswordFifthBinding
 
 class ForgotPasswordFifthFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
-    private lateinit var dataBinding:FragmentForgotPasswordFifthBinding
+    private lateinit var dataBinding: FragmentForgotPasswordFifthBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -31,8 +31,23 @@ class ForgotPasswordFifthFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_forgot_password_fifth, container, false)
+        dataBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_forgot_password_fifth,
+            container,
+            false
+        )
         return dataBinding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataBinding.btnSubmit.setOnClickListener {
+
+            requireActivity().finish()
+
+        }
+    }
+
 
 }
