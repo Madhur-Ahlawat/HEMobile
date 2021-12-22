@@ -47,7 +47,7 @@
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
-    <string name="txt_find_username_string"><b>Please find your username based on your account number and postcode</b></string>
+    <string name="txt_find_username_string">Please find your username based on your account number and postcode</string>
     <string name="txt_username_string">UserName : %1$s</string>
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
@@ -56,7 +56,7 @@
     <string name="str_back">Back</string>
     <string name="str_enter_ur_details">Enter your details</string>
     <string name="str_account_number">Account number</string>
-    <string name="str_post_cde">Postcode</string>
+    <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
     <string name="str_choose_method_to_get_ur_link">Choose the method to get your link</string>
     <string name="str_continue">Continue</string>
@@ -183,4 +183,5 @@
     <string name="str_sign_in_email">Sign In email</string>
     <string name="str_password">Password</string>
     <string name="str_forgot_your_password"><u>Forgot your password?</u></string>
+    <string name="txt_recovery_username">"Username recovery "</string>
 </resources>

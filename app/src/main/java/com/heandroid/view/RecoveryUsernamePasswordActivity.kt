@@ -10,6 +10,8 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.R
@@ -36,6 +38,11 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         setupViewModel()
         databinding.lifecycleOwner = this
+        setBtnNormal()
+       // databinding.btnNext.isEnabled = false
+        databinding.edtAccountNumber.doOnTextChanged { text, start, before, count ->
+            setBtnActivated()
+        }
         databinding.btnNext.setOnClickListener {
             hideSoftKeyboard()
             databinding.llEnterDetails.visibility = GONE
@@ -54,12 +61,16 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
 
         }
 
+        databinding.backArrow.setOnClickListener {
+            finish()
+        }
+
 
     }
 
     private fun validation(): Boolean {
         val accountNum = databinding.edtAccountNumber.text.toString().trim()
-        val postalCode = databinding.edtPostcode.text.toString().trim()
+        val postalCode = databinding.edtPostCode.text.toString().trim()
         if(TextUtils.isEmpty(accountNum) || accountNum.length<3)
         {
             Toast.makeText(this , "Please enter account number" ,Toast.LENGTH_SHORT).show()
@@ -139,5 +150,19 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
     {
         val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    }
+
+    private fun setBtnActivated() {
+        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
+        databinding.btnLogin.backgroundTintList= ContextCompat.getColorStateList(this,R.color.btn_color )
+        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.white))
+        databinding.btnLogin.isEnabled = true
+    }
+
+    private fun setBtnNormal() {
+        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.color_C9C9C9))
+        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.color_7D7D7D))
+        databinding.btnLogin.isEnabled = false
+
     }
 }

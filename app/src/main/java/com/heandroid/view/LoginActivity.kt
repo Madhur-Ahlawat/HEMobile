@@ -215,8 +215,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setBtnNormal() {
-        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.black))
+        databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.color_C9C9C9))
+        databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.color_7D7D7D))
 
         databinding.btnLogin.isEnabled = false
 
