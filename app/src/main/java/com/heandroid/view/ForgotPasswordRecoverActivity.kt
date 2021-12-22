@@ -44,13 +44,6 @@ class ForgotPasswordRecoverActivity:AppCompatActivity() {
         getDataFromIntent()
         sessionManager = SessionManager(this)
         accountNumber = sessionManager.fetchAccountNumber()?:""
-        val mail_id = "cherukuri13@gmail.com"
-
-        val maskMail = Common.maskString(mail_id, 2, 10, '*')
-
-//        dataBinding.emailRadioBtn.text ="Email - $maskMail"
-//        dataBinding.textMessageRadioBtn.text = "Text message - (xxxx) xxxx -1678"
-//        dataBinding.postMailRadioBtn.text = "Post mail - 3113********,Ap***NC,***02"
 
         dataBinding.emailRadioBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked)

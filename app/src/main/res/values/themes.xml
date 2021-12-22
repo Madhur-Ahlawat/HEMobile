@@ -39,13 +39,22 @@
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
-        <item name="background">@drawable/button_shadow</item>
-        <item name="backgroundTint">@color/color_C9C9C9</item>
+    <style name="Theme.MaterialButton" parent="Widget.MaterialComponents.Button">
+
+        <item name="backgroundTint">@color/btn_selector</item>
+    </style>
+
+    <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
+        </item>
+        <item name="hintTextColor">@color/grey_two</item>
+        <item name="boxStrokeColor">@color/grey_two</item>
 
     </style>
 
-
+    <style name="TextAppearance.HeMobile.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
 
 </resources>

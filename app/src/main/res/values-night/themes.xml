@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Theme.HEMobileDark" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/btn_color</item>
@@ -7,6 +8,7 @@
         <item name="colorControlActivated">@color/black</item>
         <item name="colorControlNormal">@color/tool_bar_clr</item>
     </style>
+
     <style name="Theme.HEMobileLight" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
@@ -19,12 +21,47 @@
         <item name="colorControlActivated">@color/add_stroke_clr</item>
         <item name="colorControlHighlight">@color/add_stroke_clr</item>
     </style>
+
     <style name="Theme.ToolBar" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
+
     <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
         <item name="background">@drawable/button_shadow</item>
+        <item name="colorButtonNormal">@color/grey_two</item>
+        <item name="colorControlActivated">@color/btn_color</item>
+        <item name="backgroundTint">@color/color_C9C9C9</item>
+        <item name="android:height">@dimen/_40sdp</item>
     </style>
+
+    <style name="Theme.HEMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/grey_two</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
+        </item>
+        <item name="hintTextColor">@color/grey_two</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="boxStrokeColor">@color/grey_two</item>
+
+    </style>
+
+    <style name="TextAppearance.HeMobile.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
 </resources>

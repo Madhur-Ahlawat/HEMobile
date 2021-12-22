@@ -40,7 +40,6 @@ class PasswordResetActivity : AppCompatActivity() {
             }
         }
 
-
     }
 
     private fun callApiToSetNewPassword() {
