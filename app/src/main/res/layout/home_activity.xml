@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_cyan">
+        android:background="@color/color_EFEFEF">
 
         <include
             android:id="@+id/id_tool_bar_lyt"
@@ -28,7 +28,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="start"
             android:text="@string/str_pay_dart_ford_crossing"
-            android:textColor="@color/purple_200"
+            android:textColor="@color/color_D8000000"
             android:textSize="@dimen/_11ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -175,22 +175,22 @@
 
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_18sdp"
-            android:layout_marginEnd="@dimen/_18sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:enabled="false"
+            android:backgroundTint="@color/btn_selector"
             android:gravity="center"
-            android:id="@+id/btn_continue"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:padding="@dimen/_7sdp"
             android:text="@string/str_continue"
-            android:theme="@style/Theme.Button"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/color_7D7D7D"
             android:textSize="@dimen/_14ssp"
-            app:cornerRadius="@dimen/_6sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radio_group" />/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

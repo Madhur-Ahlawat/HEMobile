@@ -1,6 +1,5 @@
 package com.heandroid.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -14,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavAction
 import androidx.navigation.Navigation
 import com.heandroid.R
 import com.heandroid.databinding.FragmentForgotPasswordBinding
@@ -25,7 +23,6 @@ import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.SessionManager
-import com.heandroid.view.ForgotPasswordRecoverActivity
 import com.heandroid.viewmodel.RecoveryUsernamePasswordViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
