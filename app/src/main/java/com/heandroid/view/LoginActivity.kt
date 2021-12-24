@@ -73,6 +73,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        databinding.btnBack.setOnClickListener {
+            finish();
+        }
+
     }
 
      fun validate(username: String, pwd: String): Boolean {

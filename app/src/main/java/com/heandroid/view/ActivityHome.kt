@@ -98,7 +98,7 @@ class ActivityHome : AppCompatActivity() {
             startActivity(intent)
         }
 
-        dataBinding.idToolBarLyt.btn_login.setOnClickListener {
+        dataBinding.idToolBarLyt.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
