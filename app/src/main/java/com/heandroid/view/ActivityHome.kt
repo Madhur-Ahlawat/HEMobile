@@ -12,12 +12,14 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.HomeActivityBinding
+import com.heandroid.utils.Constants
 import kotlinx.android.synthetic.main.toolbar_with_logo.view.*
 
 class ActivityHome : AppCompatActivity() {
 
     private lateinit var dataBinding: HomeActivityBinding
     private var TAG = "HomeActivity"
+    private var selOption = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,7 @@ class ActivityHome : AppCompatActivity() {
                 R.id.id_create_account -> {
                     Log.v(TAG, "checked id_create_account id called")
                     dataBinding.idOneOfPayment.text = getString(R.string.str_make_one_of_payment)
+                    selOption = Constants.CREATE_ACCOUNT
 
                 }
 
@@ -61,6 +64,7 @@ class ActivityHome : AppCompatActivity() {
                     val ss = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                     val boldSpan = StyleSpan(Typeface.BOLD)
                     ss.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    selOption = Constants.ONE_OF_PAYMENT
 
                     dataBinding.idOneOfPayment.text = ss
 
@@ -69,18 +73,21 @@ class ActivityHome : AppCompatActivity() {
                 }
                 R.id.id_resolve_penalty -> {
                     dataBinding.idOneOfPayment.text = getString(R.string.str_make_one_of_payment)
+                    selOption = Constants.RESOLVE_PENALTY
 
                     Log.v(TAG, "checked id_resolve_penalty id called")
 
                 }
                 R.id.id_check_for_paid -> {
                     dataBinding.idOneOfPayment.text = getString(R.string.str_make_one_of_payment)
+                    selOption = Constants.CHECK_FOR_PAID
 
                     Log.v(TAG, "checked id_check_for_paid id called")
 
                 }
                 R.id.id_view_charges -> {
                     dataBinding.idOneOfPayment.text = getString(R.string.str_make_one_of_payment)
+                    selOption = Constants.VIEW_CHARGES
 
                     Log.v(TAG, "checked id_view_charges id called")
 
@@ -94,8 +101,29 @@ class ActivityHome : AppCompatActivity() {
 
         dataBinding.btnContinue.setOnClickListener {
 
-            val intent = Intent(this, PaymentStartPage::class.java)
-            startActivity(intent)
+            when (selOption) {
+                Constants.VIEW_CHARGES -> {
+                    val intent = Intent(this, ActivityViewCharges::class.java)
+                    startActivity(intent)
+
+                }
+                Constants.CHECK_FOR_PAID -> {
+
+                }
+                Constants.RESOLVE_PENALTY -> {
+
+                }
+                Constants.ONE_OF_PAYMENT -> {
+                    val intent = Intent(this, PaymentStartPage::class.java)
+                    startActivity(intent)
+
+                }
+                Constants.CREATE_ACCOUNT -> {
+
+                }
+
+
+            }
         }
 
         dataBinding.idToolBarLyt.btnLogin.setOnClickListener {

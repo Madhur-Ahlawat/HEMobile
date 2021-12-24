@@ -34,6 +34,9 @@
         <activity
             android:name=".view.ForgotPasswordActivity"
             android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ActivityViewCharges"
+            android:theme="@style/Theme.HEMobile" />
         <activity android:name=".view.ForgotPasswordRecoverActivity" />
         <activity android:name=".view.ForgotPasswordSentActivity" />
         <activity android:name=".view.PasswordResetActivity" />

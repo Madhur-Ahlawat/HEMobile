@@ -211,7 +211,7 @@
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
-<string name="str_timing">Timings : Every day, 8am to 8pm</string>
+    <string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
     <string name="str_active">ACTIVE</string>
     <string name="str_southbound">Southbound</string>
@@ -223,5 +223,15 @@
     <string name="str_clearance">The event is expected to clear between 11:15 and 11:30 on 15 December 2021</string>
     <string name="str_outside_uk">From outside the UK</string>
     <string name="str_contact_dart_charge_online"><u>Contact Dart Charge online</u></string>
-
+    <string name="str_charge_and_fines">Charges  and fines</string>
+    <string name="str_charges_6am_10pm">Charges (6am - 10pm)</string>
+    <string name="str_type_of_vehicle">Type of \nvehicle</string>
+    <string name="str_one_of_payment">One of \npayment</string>
+    <string name="str_pay_g_service">PayG \nservice</string>
+    <string name="str_pre_pay_service">"Pre-pay \nservice "</string>
+    <string name="str_motor_cycles">Motorcycle, \nmopeds, \nquad bikes</string>
+    <string name="str_cars_motor_homes">Cars, \nmotorhomes,\nminibuses</string>
+    <string name="str_vehicles_with_axles">Vehicles with \n2 axles</string>
+    <string name="str_vehicle_with_more_axles">Vehicles with \nmore than 2 \n axles</string>
 </resources>
+

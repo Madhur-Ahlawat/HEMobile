@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_active.xml" value="0.215625" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/bg_inactive.xml" value="0.215625" />
@@ -70,6 +71,26 @@
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/drawable/ic_more.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/pasapulas/AndroidStudioProjects/HEMobile/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+=======
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/btn_selector.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/button_shadow.xml" value="0.1015625" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_back_grey.xml" value="0.10833333333333334" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_forgot_password.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_forgot_password_recover.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_forgot_password_sent.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_password_reset.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_view_charges.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/adapter_view_charges.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_fifth.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_fourth.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_postal.xml" value="0.1716485507246377" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_second.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_third.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/tool_bar_white.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/tool_bar_with_title_back.xml" value="0.17617753623188406" />
+>>>>>>> 29b0ec9a8dcce770a7b80a5867571ef4d170d85f
       </map>
     </option>
   </component>
