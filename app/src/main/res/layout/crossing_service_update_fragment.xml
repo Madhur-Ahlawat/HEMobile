@@ -10,10 +10,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_location"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_24sdp"
+            android:layout_height="@dimen/_28sdp"
             android:gravity="center_vertical"
             android:textColor="@color/color_D8000000"
             android:text="@string/str_locations"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="@dimen/_8sdp"/>
@@ -36,7 +37,7 @@
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_southbound"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_8ssp" />
+                android:textSize="@dimen/_10ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_southbound_status"
@@ -50,7 +51,7 @@
                 android:paddingVertical="@dimen/_2sdp"
                 android:text="@string/str_active"
                 android:textColor="@color/color_10403C"
-                android:textSize="@dimen/_7ssp" />
+                android:textSize="@dimen/_8ssp" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl_northbound"
@@ -69,9 +70,9 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
-                android:textSize="@dimen/_8ssp"
+                android:text="@string/str_northbound"
                 android:textColor="@color/black"
-                android:text="@string/str_northbound" />
+                android:textSize="@dimen/_10ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_northbound_status"
@@ -85,13 +86,13 @@
                 android:paddingVertical="@dimen/_2sdp"
                 android:text="@string/str_not_active"
                 android:textColor="@color/color_10403C"
-                android:textSize="@dimen/_7ssp" />
+                android:textSize="@dimen/_9ssp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_reason"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_height="@dimen/_28sdp"
             android:layout_marginTop="@dimen/_2sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +107,7 @@
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_reason"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_8ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_reason_cause"
@@ -125,7 +126,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_time_to_clr"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_height="@dimen/_28sdp"
             android:gravity="center_vertical"
             android:layout_marginTop="@dimen/_2sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +146,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="@dimen/_8ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_clearance_timing"
@@ -163,7 +164,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="@dimen/_7ssp" />
+                android:textSize="@dimen/_10ssp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

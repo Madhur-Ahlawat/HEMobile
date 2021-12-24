@@ -11,7 +11,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_timing"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_24sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:textSize="@dimen/_12ssp"
             android:gravity="center_vertical"
             android:textColor="@color/color_D8000000"
             android:text="@string/str_timing"
@@ -41,7 +42,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_phone"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -54,7 +55,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_phone"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_9ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tv_phone"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -94,7 +95,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_outside_uk"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -107,7 +108,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_phone"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_9ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tv_outside_uk"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -148,7 +149,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_outside_uk"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -161,7 +162,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_phone"
-                android:textSize="@dimen/_8ssp"
+                android:textSize="@dimen/_9ssp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tv_text_phone"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -185,7 +186,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textStyle="normal"
-            android:textSize="@dimen/_9ssp"
+            android:textSize="@dimen/_12ssp"
             android:textColor="@color/login_blue_border"
             android:layout_marginVertical="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_7sdp"

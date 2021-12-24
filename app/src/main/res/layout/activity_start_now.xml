@@ -47,7 +47,7 @@
             android:gravity="start"
             android:text="@string/str_pay_dart_ford_crossing_free_flow_crossing"
             android:textColor="@color/black"
-            android:textSize="@dimen/_9ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +70,8 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
                 android:text="@string/str_about_this_service" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -98,6 +100,8 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
                 android:text="@string/str_crossing_service_update" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -127,6 +131,8 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
                 android:text="@string/str_contact_dart_charge" />
 
             <androidx.appcompat.widget.AppCompatImageView
