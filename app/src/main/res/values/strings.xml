@@ -211,7 +211,7 @@
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
-    <string name="str_timing">Timings : Every day, 8am to 8pm</string>
+    us<string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
     <string name="str_active">ACTIVE</string>
     <string name="str_southbound">Southbound</string>
