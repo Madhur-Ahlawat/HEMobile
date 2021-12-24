@@ -153,7 +153,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:backgroundTint="@color/btn_color"
-            android:enabled="false"
+            android:enabled="true"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_start_now"
@@ -162,7 +162,7 @@
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />/>
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

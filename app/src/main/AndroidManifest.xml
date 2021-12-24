@@ -14,7 +14,10 @@
         <activity
             android:name=".view.ActivityHome"
             android:theme="@style/Theme.HEMobile">
-
+        </activity>
+        <activity
+            android:name=".view.ActivityCreateAccount"
+            android:theme="@style/Theme.HEMobile">
         </activity>
         <activity
             android:name=".view.StartNowActivity"

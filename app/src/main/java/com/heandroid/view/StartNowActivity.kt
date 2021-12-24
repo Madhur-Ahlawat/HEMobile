@@ -28,7 +28,6 @@ class StartNowActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
-
         binding.rlAboutService.setOnClickListener {
             //
             var intent = Intent(this, StartNowBaseActivity::class.java)
