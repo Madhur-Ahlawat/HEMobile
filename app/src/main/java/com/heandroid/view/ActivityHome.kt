@@ -120,6 +120,9 @@ class ActivityHome : AppCompatActivity() {
                 }
                 Constants.CREATE_ACCOUNT -> {
 
+                    val intent = Intent(this, ActivityCreateAccount::class.java)
+                    startActivity(intent)
+
                 }
 
 

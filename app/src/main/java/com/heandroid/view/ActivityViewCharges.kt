@@ -49,6 +49,9 @@ class ActivityViewCharges : AppCompatActivity() {
         dataBinding.recyclerView.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerView.setHasFixedSize(true)
         dataBinding.recyclerView.adapter = vehicleListAdapter
+        dataBinding.toolBarLyt.btn_back.setOnClickListener {
+            finish()
+        }
 
     }
 }
