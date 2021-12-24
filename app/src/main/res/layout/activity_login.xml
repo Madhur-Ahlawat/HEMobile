@@ -230,8 +230,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_back"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             app:layout_constraintBottom_toBottomOf="@+id/header"
             android:layout_marginHorizontal="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
@@ -241,11 +241,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_header"
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_13ssp"
             android:textColor="@color/color_D8000000"
             android:text="@string/str_log_in_dart_system"
             app:layout_constraintBottom_toBottomOf="@+id/header"
@@ -267,7 +268,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_email"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_11ssp"
                 android:textColor="@color/color_000000"
                 android:textColorHint="@color/color_CBCBCB"
                 android:layout_width="match_parent"
@@ -301,7 +302,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_pwd"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_11ssp"
                 android:textColor="@color/color_000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -37,4 +37,8 @@ object Constants {
 
     const val FORGOT_USERNAME_URL =
         "https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12"
+    const val SHOW_SCREEN = "show_screen"
+    const val ABOUT_SERVICE="about_service"
+    const val CONTACT_DART_CHARGES="contact_dart_charges"
+    const val CROSSING_SERVICE_UPDATE="crossing_service_update"
 }

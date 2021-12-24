@@ -14,13 +14,17 @@
         <activity
             android:name=".view.ActivityHome"
             android:theme="@style/Theme.HEMobile">
+
+        </activity>
+        <activity
+            android:name=".view.StartNowActivity"
+            android:theme="@style/Theme.HEMobile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <activity android:name=".view.DashboardPage" />
         <activity android:name=".view.LoginActivity" />
@@ -56,6 +60,8 @@
         <activity
             android:name=".view.ActivityPaypalPage"
             android:theme="@style/Theme.HEMobileLight" />
+        <activity android:name=".view.StartNowBaseActivity"
+            android:theme="@style/Theme.HEMobileLight"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

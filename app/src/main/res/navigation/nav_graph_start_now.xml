@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_start_now.xml"
+    app:startDestination="@id/aboutService">
+<fragment
+    android:id="@+id/aboutService"
+    android:name="com.heandroid.fragments.AboutServiceFragment"
+    android:label="@string/str_about_this_service"
+    tools:layout="@layout/about_service_fragment">
+<action
+    android:id="@+id/about_service_to_crossing_dart_charge"
+    app:destination="@+id/crossingUpdate"/>
+
+    <action
+        android:id="@+id/about_service_to_contact_dart_charge"
+        app:destination="@+id/contactDartCharge"/>
+
+</fragment>
+
+    <fragment
+        android:id="@+id/contactDartCharge"
+        android:name="com.heandroid.fragments.ContactDartChargeFragment"
+        android:label="@string/str_contact_dart_charge"
+        tools:layout="@layout/contact_dart_charge_fragment">
+        <action
+            android:id="@+id/crossing_dart_charge_to_about_service"
+            app:destination="@+id/aboutService"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/crossingUpdate"
+        android:name="com.heandroid.fragments.CrossingServiceUpdateFragment"
+        android:label="@string/str_crossing_service_update"
+        tools:layout="@layout/crossing_service_update_fragment">
+        <action
+            android:id="@+id/crossing_service_update_to_about_service"
+            app:destination="@+id/aboutService"/>
+    </fragment>
+</navigation>
