@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/button_normal.xml" value="0.2203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_menu.xml" value="0.14" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_dashboard.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_dashborad.xml" value="0.15489130434782608" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_dashbnoard.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/tool_bar_white.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/tool_bar_with_title_back.xml" value="0.15896739130434784" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/toolbar_with_logo.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/btn_selector.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/button_shadow.xml" value="0.1015625" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_back_grey.xml" value="0.10833333333333334" />

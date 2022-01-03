@@ -39,7 +39,7 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
         setupViewModel()
         databinding.lifecycleOwner = this
         setBtnNormal()
-       // databinding.btnNext.isEnabled = false
+        databinding.btnNext.isEnabled = false
         databinding.edtAccountNumber.doOnTextChanged { text, start, before, count ->
             setBtnActivated()
         }

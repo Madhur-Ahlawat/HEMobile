@@ -233,5 +233,19 @@
     <string name="str_cars_motor_homes">Cars, \nmotorhomes,\nminibuses</string>
     <string name="str_vehicles_with_axles">Vehicles with \n2 axles</string>
     <string name="str_vehicle_with_more_axles">Vehicles with \nmore than 2 \n axles</string>
+    <string name="str_account_summary">Account summary</string>
+    <string name="txt_your_balance">Your balance</string>
+    <string name="txt_top_up">Top-up</string>
+    <string name="str_open_account">Open</string>
+    <string name="txt_account_status">Account status</string>
+    <string name="str_notification_count">2 Notifications</string>
+    <string name="str_notifications">Notification</string>
+    <string name="txt_view_notification">View all (2)></string>
+    <string name="str_two_crossing">2 Crossings</string>
+    <string name="txt_your_crossing">Your crossing</string>
+    <string name="str_two_vehicle">2 Vehicles</string>
+    <string name="txt_your_vehicle">Your vehicle</string>
+    <string name="txt_view_vehicles">View vehicles</string>
+    <string name="txt_your_saving">Your saving</string>
 </resources>
 

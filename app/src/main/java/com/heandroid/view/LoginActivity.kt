@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
 
                         databinding.progressLayout.visibility= GONE
                         var loginResponse = it.data!!.body() as LoginResponse
-                        launchDashboardScreen(loginResponse)
+                                                                                                                                                                                                                                                                                                                                                 launchDashboardScreen(loginResponse)
                     }
 
                     Status.ERROR->{

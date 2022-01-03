@@ -60,7 +60,7 @@ class DashboardPage : AppCompatActivity() {
 
         setupViewModel()
         setupUI()
-        setupObservers()
+        //setupObservers()
         dataBinding.progressLayout.visibility= View.VISIBLE
         val handler = Handler()
         handler.postDelayed(object : Runnable {
@@ -69,11 +69,6 @@ class DashboardPage : AppCompatActivity() {
 
             }
         }, 200)
-
-        dataBinding.logoutBtn.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
 
     }
 
@@ -195,7 +190,7 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setPaymentHistoryView() {
 
-        dataBinding.tvRemainingAmount.text = paymentListApiResponse?.count.toString()
+        dataBinding.tvAvailableBalance.text = paymentListApiResponse?.count.toString()
     }
 
     private fun setupMonthlyUsageView(crossingListResp: RetrievePaymentListApiResponse?) {
@@ -233,7 +228,7 @@ class DashboardPage : AppCompatActivity() {
     private fun setupVehicleData(list: List<VehicleResponse>) {
         vehicleList =  list
         dataBinding.tvVehicleCount.text = vehicleList.size.toString()
-        dataBinding.tvRemainingAmount.text = vehicleList.size.toString()
+        dataBinding.tvAvailableBalance.text = vehicleList.size.toString()
 
 
     }
@@ -268,13 +263,6 @@ class DashboardPage : AppCompatActivity() {
             startVehicleMgmtActivity()
         }
 
-        dataBinding.tvMonthlyUsageHeading.setOnClickListener {
-            startMonthlyUsageActivity()
-        }
-
-        dataBinding.tvPaymentHeading.setOnClickListener {
-            startPaymentHistoryActivity()
-        }
     }
 
     private fun startMonthlyUsageActivity() {
@@ -321,21 +309,8 @@ class DashboardPage : AppCompatActivity() {
         if (accountResponse != null) {
             dataBinding.tvAvailableBalance.text =
                 "${getString(R.string.txt_pound)}${accountResponse.financialInformation.currentBalance}"
-            //tv_remaining_amount.text =
-             //   "${getString(R.string.txt_pound)}${accountResponse.financialInformation.tollBalance}"
-            dataBinding.accountNumberId.text =
-                "${"Account Number: "}${accountResponse.accountInformation.number}"
-            dataBinding.tvPrePayAccountHeading.text=
-                "${accountResponse.accountInformation.type}"
-            dataBinding.tvAccountNumber.text=
-                "${accountResponse.accountInformation.number}"
-            dataBinding.accountStatusId.text =
+            dataBinding.tvAccountStatus.text =
                 "${"Account Status: "}${accountResponse.accountInformation.status}"
-            dataBinding.accountTypeId.text =
-                "${"Account Type: "}${accountResponse.accountInformation.type}"
-            dataBinding.topUpId.text =
-                "${"Top up Type: "}${accountResponse.financialInformation.financialStatus}"
-            dataBinding.tvManualTopUp.text = accountResponse.financialInformation.financialStatus
         }
         dataBinding.progressLayout.visibility= View.GONE
     }
