@@ -34,5 +34,9 @@
     <color name="color_CCE2D8">#CCE2D8</color>
     <color name="color_FCD6C3">#FCD6C3</color>
     <color name="color_666666">#666666</color>
+    <color name="bottomActiveColor">#00703C</color>
+    <color name="bottomPassiveColor">#000000</color>
+    <color name="bottomPressedColor">#00703C</color>
+
 
 </resources>

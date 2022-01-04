@@ -29,7 +29,6 @@ class ActivityHome : AppCompatActivity() {
 
     }
 
-
     private fun setBtnActivated() {
         dataBinding.btnContinue.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
 
@@ -46,7 +45,6 @@ class ActivityHome : AppCompatActivity() {
     }
 
     private fun setUpViews() {
-
         dataBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             setBtnActivated()
             Log.v(TAG, "checked called checkedId $checkedId")
@@ -92,11 +90,7 @@ class ActivityHome : AppCompatActivity() {
                     Log.v(TAG, "checked id_view_charges id called")
 
                 }
-
-
             }
-
-
         }
 
         dataBinding.btnContinue.setOnClickListener {

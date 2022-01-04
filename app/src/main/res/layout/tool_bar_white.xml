@@ -25,6 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_toEndOf="@+id/btn_back"
+            android:textStyle="bold"
             android:text="@string/str_password_recovery"
             android:textColor="@color/color_D8000000"
             android:textSize="@dimen/_15ssp" />

@@ -135,6 +135,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_add_vehicle">Add vehicle</string>
+    <string name="str_add_vehicles">Add vehicles</string>
     <string name="str_add_upto_five_vehicles">Yoc can add upto five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
     <string name="str_country_of_registraion">Country of registration UK</string>
@@ -247,5 +248,23 @@
     <string name="txt_your_vehicle">Your vehicle</string>
     <string name="txt_view_vehicles">View vehicles</string>
     <string name="txt_your_saving">Your saving</string>
+    <string name="txt_account">Account</string>
+    <string name="str_profile">Profile</string>
+    <string name="str_account_management">Account management</string>
+    <string name="str_payments">Payments</string>
+    <string name="str_nominated_contacts">Nominated contact</string>
+    <string name="str_communication">Communication</string>
+    <string name="str_activity_log">Activity log</string>
+    <string name="str_close_account">Close account</string>
+    <string name="str_vehicle_list">Vehicle list</string>
+    <string name="str_full_name">Full name</string>
+    <string name="str_email_txt">Email ID</string>
+    <string name="str_mobile_number">Mobile number</string>
+    <string name="str_evening_number">Evening number</string>
+    <string name="str_address">Address</string>
+    <string name="str_dart_charge_pin">Dart Charge pin</string>
+    <string name="str_vehicle_management">Vehicle management</string>
+    <string name="str_vehicle_history">Vehicle history</string>
+    <string name="str_crossing_history">Crossing history</string>
 </resources>
 

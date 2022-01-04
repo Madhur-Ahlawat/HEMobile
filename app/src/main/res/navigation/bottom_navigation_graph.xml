@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_graph"
+    app:startDestination="@id/dashBoardFragment">
+
+    <fragment
+        android:id="@+id/dashBoardFragment"
+        android:name="com.heandroid.fragments.DashboardFragment"
+        android:label="Account Summary"
+        tools:layout="@layout/fragment_dashboard" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/vehicleFragment"
+        android:name="com.heandroid.fragments.VehicleFragment"
+        android:label="Vehicle Management"
+        tools:layout="@layout/activity_profile" >
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.heandroid.fragments.AccountFragment"
+        android:label="Account Management"
+        tools:layout="@layout/fragment_account" >
+
+    </fragment>
+
+
+</navigation>

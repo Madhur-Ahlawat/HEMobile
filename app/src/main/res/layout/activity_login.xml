@@ -257,24 +257,25 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.HeMobile.TextInputLayout"
+            app:errorEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_25sdp"
+            android:textColorHint="@color/color_CBCBCB"
             android:layout_marginHorizontal="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/str_sign_in_email"
             app:layout_constraintTop_toBottomOf="@+id/tv_header">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_email"
                 android:textSize="@dimen/_11ssp"
                 android:textColor="@color/color_000000"
-                android:textColorHint="@color/color_CBCBCB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/str_sign_in_email" />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -293,10 +294,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_pwd"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.HeMobile.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
+            app:errorEnabled="true"
+            android:hint="@string/str_password"
+            android:textColorHint="@color/color_CBCBCB"
             android:layout_marginHorizontal="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@+id/tv_forgot_username">
 
@@ -307,8 +311,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textColorHint="@color/color_CBCBCB"
-                android:hint="@string/str_password" />
+
+                 />
         </com.google.android.material.textfield.TextInputLayout>
 
 

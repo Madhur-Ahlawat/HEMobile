@@ -173,7 +173,6 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-
     private fun launchDashboardScreen(loginResponse: LoginResponse) {
         sessionManager.saveAuthToken(loginResponse.accessToken)
         sessionManager.saveRefreshToken(loginResponse.refreshToken)
@@ -213,7 +212,6 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun setBtnActivated() {
         databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
-
         databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.white))
         databinding.btnLogin.isEnabled = true
     }
@@ -221,7 +219,6 @@ class LoginActivity : AppCompatActivity() {
     private fun setBtnNormal() {
         databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.color_C9C9C9))
         databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.color_7D7D7D))
-
         databinding.btnLogin.isEnabled = false
 
     }

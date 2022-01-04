@@ -4,30 +4,35 @@
 
     <application
         android:name="com.heandroid.config.MyApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
+        <!--
+                    android:name=".view.StartNowActivity"
+        -->
+
         <activity
-            android:name=".view.ActivityHome"
-            android:theme="@style/Theme.HEMobile">
-        </activity>
-        <activity
-            android:name=".view.ActivityCreateAccount"
-            android:theme="@style/Theme.HEMobile">
-        </activity>
-        <activity
-            android:name=".view.StartNowActivity"
-            android:theme="@style/Theme.HEMobile">
+            android:name=".view.HomeActivityMain"
+            android:theme="@style/Theme.HEMobileDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.ActivityHome"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ActivityCreateAccount"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.ProfileActivity"
+            android:theme="@style/Theme.HEMobile" />
 
         <activity android:name=".view.DashboardPage" />
         <activity android:name=".view.LoginActivity" />
@@ -66,8 +71,16 @@
         <activity
             android:name=".view.ActivityPaypalPage"
             android:theme="@style/Theme.HEMobileLight" />
-        <activity android:name=".view.StartNowBaseActivity"
-            android:theme="@style/Theme.HEMobileLight"/>
+
+        <activity
+            android:name=".view.StartNowBaseActivity"
+            android:theme="@style/Theme.HEMobileLight" />
+
+        <!--
+                <activity
+                    android:name=".view.HomeActivityMain"
+                    android:theme="@style/Theme.HEMobileDark" />
+        -->
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
