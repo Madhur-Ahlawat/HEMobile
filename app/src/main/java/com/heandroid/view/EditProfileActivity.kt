@@ -1,20 +1,20 @@
 package com.heandroid.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
+import com.heandroid.databinding.ActivityEditProfileBinding
 import com.heandroid.databinding.ActivityProfileBinding
 import kotlinx.android.synthetic.main.tool_bar_white.view.*
 
-class ProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
-    private lateinit var dataBinding: ActivityProfileBinding
+    private lateinit var dataBinding: ActivityEditProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
         setUpViews()
 
     }
@@ -23,10 +23,7 @@ class ProfileActivity : AppCompatActivity() {
 
         dataBinding.toolBarLyt.tv_header.text = getString(R.string.str_account_management)
 
-        dataBinding.editDetailsBtn.setOnClickListener {
-
-            val intent = Intent(this, EditProfileActivity::class.java)
-            startActivity(intent)
+        dataBinding.saveBtn.setOnClickListener {
 
         }
 

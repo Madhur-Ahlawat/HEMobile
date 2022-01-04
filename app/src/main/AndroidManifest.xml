@@ -34,6 +34,10 @@
             android:name=".view.ProfileActivity"
             android:theme="@style/Theme.HEMobile" />
 
+        <activity
+            android:name=".view.EditProfileActivity"
+            android:theme="@style/Theme.HEMobile" />
+
         <activity android:name=".view.DashboardPage" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.VehicleMgmtActivity" />

@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
-import com.heandroid.databinding.FragmentAccountBinding
 import com.heandroid.databinding.FragmentVehicleBinding
-import com.heandroid.view.ProfileActivity
 
 class VehicleFragment : BaseFragment() {
 

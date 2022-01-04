@@ -266,5 +266,8 @@
     <string name="str_vehicle_management">Vehicle management</string>
     <string name="str_vehicle_history">Vehicle history</string>
     <string name="str_crossing_history">Crossing history</string>
+    <string name="str_change_password">Change Password</string>
+    <string name="str_edit_details">Edit details</string>
+    <string name="str_save">Save</string>
 </resources>
 

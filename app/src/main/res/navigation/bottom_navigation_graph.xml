@@ -17,11 +17,9 @@
         android:id="@+id/vehicleFragment"
         android:name="com.heandroid.fragments.VehicleFragment"
         android:label="Vehicle Management"
-        tools:layout="@layout/activity_profile" >
-
+        tools:layout="@layout/fragment_vehicle" >
 
     </fragment>
-
 
     <fragment
         android:id="@+id/accountFragment"
