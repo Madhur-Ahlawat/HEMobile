@@ -23,13 +23,6 @@ class ProfileActivity : AppCompatActivity() {
 
         dataBinding.toolBarLyt.tv_header.text = getString(R.string.str_account_management)
 
-        dataBinding.editDetailsBtn.setOnClickListener {
-
-            val intent = Intent(this, EditProfileActivity::class.java)
-            startActivity(intent)
-
-        }
-
         dataBinding.toolBarLyt.btn_back.setOnClickListener {
             onBackPressed()
         }
@@ -37,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+//        finish()
     }
 
 }

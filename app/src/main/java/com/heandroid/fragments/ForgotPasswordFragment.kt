@@ -143,7 +143,6 @@ class ForgotPasswordFragment : BaseFragment() {
         Navigation.findNavController(dataBinding.root)
             .navigate(R.id.action_forgotPasswordFragment_to_forgotPasswordSecondFragment, bundle)
 
-
     }
 
 
