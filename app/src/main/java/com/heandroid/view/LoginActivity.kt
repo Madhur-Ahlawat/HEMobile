@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
 
                         databinding.progressLayout.visibility= GONE
                         var loginResponse = it.data!!.body() as LoginResponse
-                                                                                                                                                                                                                                                                                                                                                 launchDashboardScreen(loginResponse)
+                        launchDashboardScreen(loginResponse)
                     }
 
                     Status.ERROR->{
@@ -178,7 +178,8 @@ class LoginActivity : AppCompatActivity() {
         sessionManager.saveRefreshToken(loginResponse.refreshToken)
         Log.d("RefreshTokenFromLOgin", loginResponse.refreshToken)
         var accessToken = loginResponse.accessToken
-        val intent = Intent(this, DashboardPage::class.java)
+        val intent = Intent(this, HomeActivityMain::class.java)
+//        val intent = Intent(this, DashboardPage::class.java)
         var bundle = Bundle()
         bundle.putString("access_token", accessToken)
         bundle.putString("refresh_token", loginResponse.refreshToken)

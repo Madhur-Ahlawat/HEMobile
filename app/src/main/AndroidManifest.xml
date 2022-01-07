@@ -10,12 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
-        <!--
-                    android:name=".view.StartNowActivity"
-        -->
 
         <activity
-            android:name=".view.HomeActivityMain"
+            android:name=".view.StartNowActivity"
             android:theme="@style/Theme.HEMobileDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.HomeActivityMain"
+            android:theme="@style/Theme.HEMobileDark"/>
 
         <activity
             android:name=".view.ActivityHome"
