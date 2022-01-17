@@ -37,6 +37,8 @@
     <color name="bottomActiveColor">#00703C</color>
     <color name="bottomPassiveColor">#000000</color>
     <color name="bottomPressedColor">#00703C</color>
+    <color name="color_E30000">#E30000</color>
+    <color name="color_FFE8E8">#FFE8E8</color>
 
 
 </resources>

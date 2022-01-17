@@ -2,15 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.heandroid">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-        android:name="com.heandroid.config.MyApplication"
+        android:name=".config.MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".view.CommunicationActivity"
+            android:exported="false" />
         <activity
             android:name=".view.StartNowActivity"
             android:theme="@style/Theme.HEMobileDark">
@@ -20,10 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.HomeActivityMain"
-            android:theme="@style/Theme.HEMobileDark"/>
-
+        <activity
+            android:name=".view.HomeActivityMain"
+            android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name=".view.ActivityHome"
             android:theme="@style/Theme.HEMobile" />
@@ -33,7 +37,6 @@
         <activity
             android:name=".view.ProfileActivity"
             android:theme="@style/Theme.HEMobile" />
-
         <activity android:name=".view.DashboardPage" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.VehicleMgmtActivity" />
@@ -54,7 +57,6 @@
         <activity android:name=".view.QuickPaymentMethodSelectionActivity" />
         <activity android:name=".view.PayNowActivity" />
         <activity android:name=".view.PaymentConfirmationActivity" />
-
         <activity
             android:name=".view.OneOfPayment"
             android:theme="@style/Theme.HEMobileLight" />
@@ -71,18 +73,10 @@
         <activity
             android:name=".view.ActivityPaypalPage"
             android:theme="@style/Theme.HEMobileLight" />
-
         <activity
             android:name=".view.StartNowBaseActivity"
             android:theme="@style/Theme.HEMobileLight" />
 
-        <!--
-                <activity
-                    android:name=".view.HomeActivityMain"
-                    android:theme="@style/Theme.HEMobileDark" />
-        -->
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

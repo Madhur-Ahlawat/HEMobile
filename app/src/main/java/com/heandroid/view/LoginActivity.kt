@@ -23,10 +23,12 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import com.heandroid.databinding.ActivityLoginBinding
 
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: LoginViewModel
-    private lateinit var databinding : ActivityLoginBinding
+    private lateinit var databinding: ActivityLoginBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +51,9 @@ class LoginActivity : AppCompatActivity() {
             val pwd = databinding.edtPwd.text.toString()
             if(validate(username, pwd))
             {
-                setupObservers()
+               // setupObservers()
                 databinding.progressLayout.visibility= View.VISIBLE
+                byPassToDashboard()
             }
 
 //            val handler = Handler()
@@ -79,7 +82,19 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-     fun validate(username: String, pwd: String): Boolean {
+    private fun byPassToDashboard() {
+        val intent = Intent(this, HomeActivityMain::class.java)
+//        val intent = Intent(this, DashboardPage::class.java)
+        var bundle = Bundle()
+        bundle.putString("access_token", "fbkjbfjk")
+        bundle.putString("refresh_token", "jkdhgdf")
+        intent.putExtra("data", bundle)
+        startActivity(intent)
+        finish()
+
+    }
+
+    fun validate(username: String, pwd: String): Boolean {
 
         return if(username.isEmpty()) {
             showToast(getString(R.string.txt_error_username))

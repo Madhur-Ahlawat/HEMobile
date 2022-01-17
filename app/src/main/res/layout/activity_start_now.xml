@@ -70,9 +70,9 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
-                android:textSize="@dimen/_11ssp"
+                android:text="@string/str_about_this_service"
                 android:textColor="@color/black"
-                android:text="@string/str_about_this_service" />
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -100,9 +100,9 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
-                android:textSize="@dimen/_12ssp"
+                android:text="@string/str_crossing_service_update"
                 android:textColor="@color/black"
-                android:text="@string/str_crossing_service_update" />
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -131,9 +131,9 @@
                 android:layout_alignParentLeft="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
-                android:textSize="@dimen/_11ssp"
+                android:text="@string/str_contact_dart_charge"
                 android:textColor="@color/black"
-                android:text="@string/str_contact_dart_charge" />
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"

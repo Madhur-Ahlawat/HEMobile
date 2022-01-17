@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.FragmentAccountBinding
+import com.heandroid.view.CommunicationActivity
 import com.heandroid.view.ProfileActivity
 
 class AccountFragment : BaseFragment() {
@@ -33,6 +34,12 @@ class AccountFragment : BaseFragment() {
         dataBinding.profile.setOnClickListener {
 
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        dataBinding.rlAccount.setOnClickListener {
+
+            val intent = Intent(requireActivity(), CommunicationActivity::class.java)
             startActivity(intent)
         }
     }

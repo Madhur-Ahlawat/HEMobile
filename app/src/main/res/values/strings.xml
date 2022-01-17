@@ -212,7 +212,8 @@
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
-    us<string name="str_timing">Timings : Every day, 8am to 8pm</string>
+    us
+    <string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
     <string name="str_active">ACTIVE</string>
     <string name="str_southbound">Southbound</string>
@@ -269,5 +270,21 @@
     <string name="str_change_password">Change Password</string>
     <string name="str_edit_details">Edit details</string>
     <string name="str_save">Save</string>
+    <string name="txt_notrification">Notification</string>
+    <string name="str_communication_preferences">Communication preferences</string>
+    <string name="str_set_preferences">Set preference</string>
+    <string name="str_accnt_related_pref">Account related communication preference</string>
+    <string name="str_post">Post</string>
+    <string name="str_printed_statmnt">Printed statements by post will be chargeable. If you require your statements by post, please contact Dart Charge Customer Services.</string>
+    <string name="str_would_like_advice">Would you also like us to advise you by text?</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
+    <string name="str_previous">Previous</string>
+    <string name="str_you_opted_to_rcv_txt_msg">You opted to receive text message. please supply your mobile phone number.</string>
+    <string name="str_update_now">Update now</string>
+    <string name="str_update_mobile_number">Update mobile number</string>
+    <string name="str_mobile_phone_number">Mobile phone number</string>
+    <string name="str_txt_msg_will_sent_to_mobile">Text messages will be sent to the mobile number mentioned below</string>
+    <string name="str_txt_will_send_to_email">We will send you an email to advise you that your statement is ready for you to view and download from your Dart Charge Account. Would you also like to be advised by Text? </string>
 </resources>
 

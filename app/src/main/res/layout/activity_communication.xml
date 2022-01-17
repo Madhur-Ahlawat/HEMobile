@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.CommunicationActivity">
+        <include
+            android:id="@+id/tool_bar_lyt"
+            layout="@layout/activity_toolbar"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.9"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="visible"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/communication_preferences_nav_graph"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

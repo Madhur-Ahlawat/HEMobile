@@ -30,4 +30,12 @@
     </fragment>
 
 
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.heandroid.fragments.NotificationFragment"
+        android:label="Notification Screen"
+        tools:layout="@layout/fragment_notification" >
+
+    </fragment>
+
 </navigation>

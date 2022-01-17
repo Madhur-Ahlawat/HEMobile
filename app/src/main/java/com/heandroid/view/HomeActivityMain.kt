@@ -41,6 +41,9 @@ class HomeActivityMain : AppCompatActivity() {
                         dataBinding.fragmentContainerView.findNavController().navigate(R.id.vehicleFragment)
                     }
                     2->{
+                        dataBinding.fragmentContainerView.findNavController().navigate(R.id.notificationFragment)
+                    }
+                    3->{
                         dataBinding.fragmentContainerView.findNavController().navigate(R.id.accountFragment)
 
                     }
