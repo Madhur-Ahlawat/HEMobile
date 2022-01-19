@@ -1,10 +1,12 @@
 package com.heandroid.dialog
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -14,6 +16,7 @@ import com.heandroid.listener.UpdatePhoneNumberClickListener
 
 class UpdatePhoneNumberDialog : DialogFragment() {
     private lateinit var dataBinding: DialogUpdatePhoneNumberBinding
+    private var phoneNumber: String = ""
 
 
     companion object {
@@ -55,10 +58,26 @@ class UpdatePhoneNumberDialog : DialogFragment() {
 
     private fun setupClickListeners(view: View) {
 
+        dataBinding.btnCancel.setOnClickListener {
+            dismiss()
+            mListener!!.onCancelClickedListener(this)
+        }
+        dataBinding.imvCancel.setOnClickListener {
+            dismiss()
+            mListener!!.onCrossImageClickedListener(this)
+        }
+        dataBinding.btnSave.setOnClickListener {
+            phoneNumber = dataBinding.edtPhone.text.toString()
+            if(TextUtils.isEmpty(phoneNumber))
+            {
+                Toast.makeText(activity , getString(R.string.please_enter_phone_number), Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                mListener!!.onSaveClickedListener(phoneNumber , this)
+            }
 
-//        dataBinding.cancelBtn.setOnClickListener {
-//            dismiss()
-//        }
+        }
     }
 
     private fun setupView(view: View) {

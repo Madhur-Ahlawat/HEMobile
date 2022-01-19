@@ -36,6 +36,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"/>
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imv_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp"
@@ -60,7 +61,8 @@
                         android:textColor="@color/color_000000"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPhonetic" />
+                        android:maxLength="10"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -76,7 +78,7 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_next_two"
+                        android:id="@+id/btn_save"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="@dimen/_10sdp"
@@ -84,13 +86,13 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/btn_color"
                         android:padding="@dimen/_10sdp"
-                        android:text="@string/str_next"
+                        android:text="@string/str_save"
                         android:textAllCaps="false"
                         android:textSize="@dimen/_16ssp"
                         app:cornerRadius="@dimen/_5sdp" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_prev_two"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_cancel"
                         style="@style/Widget.App.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -99,7 +101,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/color_EFEFEF"
                         android:padding="@dimen/_10sdp"
-                        android:text="@string/str_previous"
+                        android:text="@string/str_cancel"
                         android:textAllCaps="false"
                         android:textColor="@color/btn_color"
                         android:textSize="@dimen/_16ssp"

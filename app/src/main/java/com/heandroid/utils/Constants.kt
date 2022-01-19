@@ -2,6 +2,8 @@ package com.heandroid.utils
 
 object Constants {
 
+    const val NO = "no"
+    const val YES = "yes"
     const val APPLE_PAY = "apple_pay"
     const val GOOGLE_PAY = "google_pay"
     const val PAY_PAL = "pay_pal"

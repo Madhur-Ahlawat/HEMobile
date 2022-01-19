@@ -13,5 +13,10 @@ class CommunicationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_communication)
+
+        dataBinding.toolBarLyt.tvHeader.text = getString(R.string.str_communications)
+        dataBinding.toolBarLyt.btnBack.setOnClickListener {
+            finish()
+        }
     }
 }

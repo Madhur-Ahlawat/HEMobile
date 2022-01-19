@@ -242,7 +242,7 @@
     <string name="txt_account_status">Account status</string>
     <string name="str_notification_count">2 Notifications</string>
     <string name="str_notifications">Notification</string>
-    <string name="txt_view_notification">View all (2)></string>
+    <string name="txt_view_notification">View all (2)</string>
     <string name="str_two_crossing">2 Crossings</string>
     <string name="txt_your_crossing">Your crossing</string>
     <string name="str_two_vehicle">2 Vehicles</string>
@@ -255,6 +255,7 @@
     <string name="str_payments">Payments</string>
     <string name="str_nominated_contacts">Nominated contact</string>
     <string name="str_communication">Communication</string>
+    <string name="str_communications">Communications</string>
     <string name="str_activity_log">Activity log</string>
     <string name="str_close_account">Close account</string>
     <string name="str_vehicle_list">Vehicle list</string>
@@ -286,5 +287,6 @@
     <string name="str_mobile_phone_number">Mobile phone number</string>
     <string name="str_txt_msg_will_sent_to_mobile">Text messages will be sent to the mobile number mentioned below</string>
     <string name="str_txt_will_send_to_email">We will send you an email to advise you that your statement is ready for you to view and download from your Dart Charge Account. Would you also like to be advised by Text? </string>
+    <string name="please_enter_phone_number">Please enter phone number</string>
 </resources>
 
