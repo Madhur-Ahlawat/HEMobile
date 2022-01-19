@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         setupViewModel()
         databinding.lifecycleOwner = this
         setupUI()
-        //setupObservers()
+       // setupObservers()
         databinding.btnLogin.isEnabled= false
         setBtnNormal()
         databinding.edtEmail.doOnTextChanged { text, start, before, count ->
@@ -51,9 +51,9 @@ class LoginActivity : AppCompatActivity() {
             val pwd = databinding.edtPwd.text.toString()
             if(validate(username, pwd))
             {
-               // setupObservers()
-                databinding.progressLayout.visibility= View.VISIBLE
-                byPassToDashboard()
+                setupObservers()
+//                databinding.progressLayout.visibility= View.VISIBLE
+//                byPassToDashboard()
             }
 
 //            val handler = Handler()
@@ -110,13 +110,11 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun setupObservers() {
-        var clientID = "NY_EZ_Pass_iOS_QA"
+        var clientID = "HE_MAPP_NP"
         var grantType = "password"
-        var agecyId = "12"
-        var clientSecret = "N4pBHuCUgw8D2BdZtSMX2jexxw3tp7"
+        var agecyId = "18"
+        var clientSecret = "hAvvxMfc25rjkCjJA8sCL4T4yQkfTe"
         var value = databinding.edtEmail.text.toString()
-        //var value = "459144698"
-        //var password = "Welcome1!"
         var password = databinding.edtEmail.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")

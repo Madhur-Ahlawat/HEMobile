@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("https://maas-test.services.conduent.com/oauth/token")
+    @POST("http://10.190.176.7:8080/oauth/token")
     suspend fun loginWithField(
         @Field("client_id") clientId: String,
         @Field("grant_type") grant_type: String,

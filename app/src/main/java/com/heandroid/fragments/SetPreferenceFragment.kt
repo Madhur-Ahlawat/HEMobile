@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.FragmentSelectCommunicationPreferenceBinding
+import com.heandroid.dialog.AddVehicle
+import com.heandroid.dialog.UpdatePhoneNumberDialog
+import com.heandroid.listener.UpdatePhoneNumberClickListener
 
-class SetPreferenceFragment : BaseFragment() {
+
+class SetPreferenceFragment : BaseFragment() , UpdatePhoneNumberClickListener{
 
     private lateinit var dataBinding: FragmentSelectCommunicationPreferenceBinding
 
@@ -58,6 +62,33 @@ class SetPreferenceFragment : BaseFragment() {
             dataBinding.clLikeAdvice.visibility = VISIBLE
             dataBinding.clEmailAdvice.visibility = GONE
         }
+
+        dataBinding.btnUpdateNow.setOnClickListener {
+            showAlertDialog()
+        }
+    }
+
+
+    private fun showAlertDialog()
+    {
+        UpdatePhoneNumberDialog.newInstance(
+            getString(R.string.str_title),
+
+            this
+        )
+            .show(requireActivity().supportFragmentManager, UpdatePhoneNumberDialog.TAG)
+    }
+
+    override fun onSaveClickedListener(number: String, d: UpdatePhoneNumberDialog) {
+
+    }
+
+    override fun onCancelClickedListener(d: UpdatePhoneNumberDialog) {
+
+    }
+
+    override fun onCrossImageClickedListener(d: UpdatePhoneNumberDialog) {
+
     }
 
 }
