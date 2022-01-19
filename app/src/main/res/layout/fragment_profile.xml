@@ -40,11 +40,13 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
+                    android:background="@color/color_EFEFEF"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/color_EFEFEF"
                         android:orientation="vertical">
 
 
@@ -343,6 +345,7 @@
 
                         <View
                             android:layout_width="match_parent"
+                            android:background="@color/color_EFEFEF"
                             android:layout_height="@dimen/_60sdp"/>
 
 
@@ -351,6 +354,7 @@
 
             </LinearLayout>
 
+<!--
             <RelativeLayout
                 android:id="@+id/progress_layout"
                 android:layout_width="match_parent"
@@ -359,7 +363,7 @@
                 android:gravity="center"
                 android:visibility="gone">
 
-                <!--progress bar implementation-->
+                &lt;!&ndash;progress bar implementation&ndash;&gt;
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     style="?android:attr/progressBarStyleHorizontal"
@@ -372,7 +376,7 @@
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_bar" />
 
-                <!--Text implementation in center of the progress bar-->
+                &lt;!&ndash;Text implementation in center of the progress bar&ndash;&gt;
                 <TextView
                     android:id="@+id/progress_text"
                     android:layout_width="wrap_content"
@@ -387,6 +391,7 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
             </RelativeLayout>
+-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

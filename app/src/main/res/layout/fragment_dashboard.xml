@@ -175,7 +175,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_notifications"
+                    android:text="@string/str_notification"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"

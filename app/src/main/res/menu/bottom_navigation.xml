@@ -10,8 +10,8 @@
         android:title="@string/txt_vehicle"/>
     <item
         android:id="@+id/navigation_notification"
-        android:icon="@drawable/account_menu_selector"
-        android:title="@string/txt_notrification"/>
+        android:icon="@drawable/notification_menu_selector"
+        android:title="@string/txt_notification"/>
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/account_menu_selector"

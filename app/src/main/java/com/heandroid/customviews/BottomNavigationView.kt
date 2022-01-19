@@ -15,13 +15,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import com.heandroid.R
 import com.heandroid.listener.OnNavigationItemChangeListener
 import com.heandroid.utils.BottomNavParams
 
-class BottomNavigationView @JvmOverloads constructor(context: Context,
-                                                     attrs: AttributeSet? = null,
-                                                     defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
+class BottomNavigationView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     /**
      * Bottomify params knows about how the item will render
@@ -61,7 +64,12 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
     /**
      * A data class for navigation item
      */
-    data class NavigationItem(val position: Int, val view: View, val textView: TextView, val imageView: ImageView)
+    data class NavigationItem(
+        val position: Int,
+        val view: View,
+        val textView: TextView,
+        val imageView: ImageView
+    )
 
     /**
      * Initialize Bottomify by getting the values from xml
@@ -72,7 +80,10 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
         if (a.hasValue(R.styleable.BottomNavigationView_menu)) {
             val popupMenu = PopupMenu(context, null)
             val menu = popupMenu.menu
-            MenuInflater(context).inflate(a.getResourceId(R.styleable.BottomNavigationView_menu, 0), menu)
+            MenuInflater(context).inflate(
+                a.getResourceId(R.styleable.BottomNavigationView_menu, 0),
+                menu
+            )
             params.menu = menu
         }
 
@@ -137,13 +148,21 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
 
             // Prepare navigation item to display and get items view references
             val navigationItem = menu.getItem(index)
-            val navigationItemView = LayoutInflater.from(context).inflate(R.layout.item_bottom_nav, this, false)
+            val navigationItemView =
+                LayoutInflater.from(context).inflate(R.layout.item_bottom_nav, this, false)
             val imageView = navigationItemView.findViewById<ImageView>(R.id.navigation_item_image)
             val textView = navigationItemView.findViewById<TextView>(R.id.navigation_item_text)
-
+            val badgeCountBtn = navigationItemView.findViewById<AppCompatButton>(R.id.badge_btn)
             // Set navigation item's icon and title
             imageView.setImageDrawable(navigationItem.icon)
             textView.text = navigationItem.title
+
+            if (index == 2) {
+                badgeCountBtn.visibility = View.VISIBLE
+            } else {
+                badgeCountBtn.visibility = View.GONE
+
+            }
 
             // Set navigation item's color. If it's pressed then color it with active color
             var navigationItemColor: Int
@@ -188,7 +207,12 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
 
             // If user touched to item and then moved finger to outside of the item, make view how it looks was before touching
             // This method will fire lots of times. So if you scale the view to how it looks was before once, then no need to scale anymore.
-            if (isTouchingOutsideOfItem(navigationItem.view, event.rawX.toInt(), event.rawY.toInt()) && needsToScale) {
+            if (isTouchingOutsideOfItem(
+                    navigationItem.view,
+                    event.rawX.toInt(),
+                    event.rawY.toInt()
+                ) && needsToScale
+            ) {
                 scaleNavigationItem(navigationItem, params.endScale, params.startScale)
                 colorAnim(navigationItem, false)
                 needsToScale = false
@@ -264,13 +288,18 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
     /**
      * The click and release scale animation
      */
-    private fun scaleNavigationItem(navigationItem: NavigationItem, startScale: Float, endScale: Float) {
+    private fun scaleNavigationItem(
+        navigationItem: NavigationItem,
+        startScale: Float,
+        endScale: Float
+    ) {
 
         val animation = ScaleAnimation(
-                startScale, endScale,
-                startScale, endScale,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_PARENT, 0.5f)
+            startScale, endScale,
+            startScale, endScale,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_PARENT, 0.5f
+        )
         animation.fillAfter = true
         animation.duration = params.animationDuration.toLong()
         navigationItem.view.startAnimation(animation)
@@ -282,7 +311,8 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
     private fun colorAnim(navigationItem: NavigationItem, activeToPassive: Boolean) {
 
         // If view is selected then color it with active color, if it is not, color view it with passive color
-        val colorActive = if (navigationItem.view == navigationItems[selectedPosition].view) params.activeColor else params.passiveColor
+        val colorActive =
+            if (navigationItem.view == navigationItems[selectedPosition].view) params.activeColor else params.passiveColor
         val colorPassive = params.pressedColor
 
         // If the transition between activeToPassive or passiveToActive
@@ -305,7 +335,7 @@ class BottomNavigationView @JvmOverloads constructor(context: Context,
 
         colorAnimation.start()
     }
-  
+
     /**
      * Clears the current selection
      */

@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:clickable = "true"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:id="@+id/navigation_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/notification_menu_selector"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:background="@drawable/ic_badge_round"
+        android:gravity="center"
+        android:id="@+id/badge_btn"
+        android:text="2"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_7ssp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/navigation_item_image"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="@id/navigation_item_image"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_item_image" />
 
     <TextView
         android:id="@+id/navigation_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/txt_dashboard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/navigation_item_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>
