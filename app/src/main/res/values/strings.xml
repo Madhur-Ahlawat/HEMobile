@@ -212,7 +212,6 @@
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
-    us
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
     <string name="str_active">ACTIVE</string>
@@ -241,8 +240,9 @@
     <string name="str_open_account">Open</string>
     <string name="txt_account_status">Account status</string>
     <string name="str_notification_count">2 Notifications</string>
-    <string name="str_notifications">Notification</string>
-    <string name="txt_view_notification">View all (2)</string>
+    <string name="str_notifications">Notifications</string>
+    <string name="str_notification">Notification</string>
+    <string name="txt_view_notification">View all (2)></string>
     <string name="str_two_crossing">2 Crossings</string>
     <string name="txt_your_crossing">Your crossing</string>
     <string name="str_two_vehicle">2 Vehicles</string>
@@ -271,7 +271,7 @@
     <string name="str_change_password">Change Password</string>
     <string name="str_edit_details">Edit details</string>
     <string name="str_save">Save</string>
-    <string name="txt_notrification">Notification</string>
+    <string name="txt_notification">Notification</string>
     <string name="str_communication_preferences">Communication preferences</string>
     <string name="str_set_preferences">Set preference</string>
     <string name="str_accnt_related_pref">Account related communication preference</string>
@@ -288,5 +288,14 @@
     <string name="str_txt_msg_will_sent_to_mobile">Text messages will be sent to the mobile number mentioned below</string>
     <string name="str_txt_will_send_to_email">We will send you an email to advise you that your statement is ready for you to view and download from your Dart Charge Account. Would you also like to be advised by Text? </string>
     <string name="please_enter_phone_number">Please enter phone number</string>
+    <string name="str_top_up">Top up</string>
+    <string name="str_clear_all">Clear all</string>
+    <string name="str_take_action">Take action</string>
+    <string name="str_in_order">In order</string>
+    <string name="str_others">Others</string>
+    <string name="str_high_priority">HIGH PRIORITY</string>
+    <string name="str_view_all">View all</string>
+    <string name="str_high_priority_small">High priority</string>
+
 </resources>
 
