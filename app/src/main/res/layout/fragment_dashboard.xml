@@ -33,6 +33,55 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@color/color_FFE8E8"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_10sdp">
+
+                <View
+                    android:id="@+id/side_view"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_E30000"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_activate_msg_now"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/black"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/side_view"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_update_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:backgroundTint="@color/btn_color"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:text="@string/str_click_here"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_12ssp"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:layout_constraintLeft_toRightOf="@+id/side_view"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/_10sdp">

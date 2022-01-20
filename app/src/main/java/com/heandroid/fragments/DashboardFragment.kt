@@ -1,5 +1,7 @@
 package com.heandroid.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,5 +26,14 @@ class DashboardFragment : BaseFragment() {
             false
         )
         return dataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var urlString = "https://mobileapp.sunpass.com/vector/account/home/ftAccountSettings.do?name=sms"
+        dataBinding.btnUpdateNow.setOnClickListener {
+            val url = "http://www.amazon.com"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlString)))
+        }
     }
 }

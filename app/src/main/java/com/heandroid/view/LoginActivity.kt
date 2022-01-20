@@ -51,9 +51,9 @@ class LoginActivity : AppCompatActivity() {
             val pwd = databinding.edtPwd.text.toString()
             if(validate(username, pwd))
             {
-//                setupObservers()
+                setupObservers()
 //                databinding.progressLayout.visibility= View.VISIBLE
-                byPassToDashboard()
+              // byPassToDashboard()
             }
 
 //            val handler = Handler()
@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
         var agecyId = "18"
         var clientSecret = "hAvvxMfc25rjkCjJA8sCL4T4yQkfTe"
         var value = databinding.edtEmail.text.toString()
-        var password = databinding.edtEmail.text.toString()
+        var password = databinding.edtPwd.text.toString()
         var validatePasswordCompliance = "true"
         Log.d("DummyLogin", "Before api call")
 

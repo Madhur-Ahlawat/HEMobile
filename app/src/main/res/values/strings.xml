@@ -242,7 +242,7 @@
     <string name="str_notification_count">2 Notifications</string>
     <string name="str_notifications">Notifications</string>
     <string name="str_notification">Notification</string>
-    <string name="txt_view_notification">View all (2)></string>
+    <string name="txt_view_notification">View all (2)</string>
     <string name="str_two_crossing">2 Crossings</string>
     <string name="txt_your_crossing">Your crossing</string>
     <string name="str_two_vehicle">2 Vehicles</string>
@@ -296,6 +296,8 @@
     <string name="str_high_priority">HIGH PRIORITY</string>
     <string name="str_view_all">View all</string>
     <string name="str_high_priority_small">High priority</string>
+    <string name="str_activate_msg_now">Activate text messaging now,</string>
+    <string name="str_click_here">Click here</string>
 
 </resources>
 
