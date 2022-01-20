@@ -298,6 +298,14 @@
     <string name="str_high_priority_small">High priority</string>
     <string name="str_activate_msg_now">Activate text messaging now,</string>
     <string name="str_click_here">Click here</string>
+    <string name="str_sort">Sort</string>
+    <string name="str_by_time">By time</string>
+    <string name="str_by_category">By category</string>
+    <string name="str_clear">Clear</string>
+    <string name="str_apply">Apply</string>
+    <string name="str_filter">Filter</string>
+    <string name="str_clear_selected">Clear selected</string>
+    <string name="str_unselect_all">Unselect all</string>
 
 </resources>
 

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/color_EFEFEF">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.heandroid.customviews.CustomTextView
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,13 +29,14 @@
         app:srcCompat="@drawable/ic_priority_icon" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.heandroid.customviews.CustomTextView
         android:id="@+id/view_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:padding="@dimen/_8sdp"
         android:text="@string/str_view_all"
+        android:visibility="gone"
         android:textColor="@color/green"
         android:textSize="@dimen/_15ssp"
         android:textStyle="normal"

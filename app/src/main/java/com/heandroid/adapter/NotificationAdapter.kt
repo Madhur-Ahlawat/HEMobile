@@ -1,6 +1,7 @@
 package com.heandroid.adapter
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,10 +41,16 @@ class NotificationAdapter(private val mContext: Context) :
             dateTxt.text = notificationModel.date
             msgTxt.text = notificationModel.message
             btnTxt.text = notificationModel.high_priority_btn
+
+            if (notificationModel.isRead) {
+                msgTxt.setTypeface(msgTxt.typeface, Typeface.NORMAL)
+            } else {
+                msgTxt.setTypeface(msgTxt.typeface, Typeface.BOLD)
+
+            }
         }
 
     }
-
 
     class GeneralNotificationHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -54,6 +61,13 @@ class NotificationAdapter(private val mContext: Context) :
 
             dateTxt.text = notificationModel.date
             msgTxt.text = notificationModel.message
+
+            if (notificationModel.isRead) {
+                msgTxt.setTypeface(msgTxt.typeface, Typeface.NORMAL)
+            } else {
+                msgTxt.setTypeface(msgTxt.typeface, Typeface.BOLD)
+
+            }
         }
 
     }
@@ -68,6 +82,13 @@ class NotificationAdapter(private val mContext: Context) :
 
             categoryTxt.text = notificationModel.category
             viewAllTxt.text = notificationModel.headerViewAll
+
+            if (notificationModel.category == "High Priority") {
+                priorityImg.visibility = View.VISIBLE
+            } else {
+                priorityImg.visibility = View.GONE
+            }
+
         }
 
     }
@@ -132,17 +153,17 @@ class NotificationAdapter(private val mContext: Context) :
         when (notificationList[position].viewType) {
             VIEW_TYPE_HIGH_PRIORITY -> {
 
-                (holder as HighPriorityViewHolder).setView(mContext,model)
+                (holder as HighPriorityViewHolder).setView(mContext, model)
 
             }
 
             VIEW_TYPE_GENERAL_NOTIFICATION -> {
-                (holder as GeneralNotificationHolder).setView(mContext,model)
+                (holder as GeneralNotificationHolder).setView(mContext, model)
 
             }
 
             VIEW_TYPE_HEADER -> {
-                (holder as NotificationHeaderViewHolder).setView(mContext,model)
+                (holder as NotificationHeaderViewHolder).setView(mContext, model)
 
             }
 

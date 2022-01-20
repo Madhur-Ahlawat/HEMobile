@@ -22,7 +22,7 @@ class AddVehicle : DialogFragment() {
 
     companion object {
 
-        const val TAG = "SimpleDialog"
+        const val TAG = "AddVehicle"
 
         private const val KEY_TITLE = "KEY_TITLE"
         private const val KEY_SUBTITLE = "KEY_SUBTITLE"
