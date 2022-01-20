@@ -26,5 +26,6 @@ interface ApiHelper {
     suspend fun getSecurityCodeApiCall( agencyId : String , requestParam:GetSecurityCodeRequestModel):Response<GetSecurityCodeResponseModel>
     suspend fun verifySecurityCodeApiCall(requestParam:VerifySecurityCodeRequestModel):Response<VerifySecurityCodeResponseModel>
     suspend fun setNewPasswordApiCall(requestParam:SetNewPasswordRequest):Response<VerifySecurityCodeResponseModel>
+    suspend fun getAlertMessageApiCAll(token: String, requestParam:String):Response<AlertMessageApiResponse>
 
 }

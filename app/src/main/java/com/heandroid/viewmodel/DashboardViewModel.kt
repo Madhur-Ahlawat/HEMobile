@@ -2,12 +2,10 @@ package com.heandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -18,6 +16,7 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val paymentListVal = MutableLiveData<Resource<Response<RetrievePaymentListApiResponse>>>()
     val vehicleListVal = MutableLiveData<Resource<Response<List<VehicleResponse>>>>()
     val forgotUsernameVal = MutableLiveData<Resource<Response<ForgotUsernameApiResponse>>>()
+    val getAlertsVal = MutableLiveData<Resource<Response<AlertMessageApiResponse>>>()
 
     fun getAccountOverViewApi(
       authToken: String
@@ -167,5 +166,35 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
 
 
+    fun getAlertsApi(
+        token: String,
+        lng: String
+    ) {
+
+        viewModelScope.launch {
+            getAlertsVal.postValue(Resource.loading(null))
+            try {
+                val respFromApi = apiHelper.getAlertMessageApiCAll(token , lng)
+                //loginUserVal.postValue(Resource.success(usersFromApi))
+                getAlertsVal.postValue(setAlertApiResponse(respFromApi))
+            } catch (e: Exception) {
+                accountOverviewVal.postValue(Resource.error(null , e.toString()))
+            }
+        }
+    }
+
+    private fun setAlertApiResponse(respFromApi: Response<AlertMessageApiResponse>): Resource<Response<AlertMessageApiResponse>>? {
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
 
 }

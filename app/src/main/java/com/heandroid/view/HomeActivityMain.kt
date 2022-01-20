@@ -15,11 +15,16 @@ import com.heandroid.listener.OnNavigationItemChangeListener
 
 class HomeActivityMain : AppCompatActivity() {
 
+    private var accessToken: String? = null
     private lateinit var dataBinding: ActivityHomeMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_main)
+        var bundle = intent.getBundleExtra("data")
+        bundle?.let {
+            accessToken = it.getString("access_token")
+        }
         setView()
     }
 
@@ -54,4 +59,6 @@ class HomeActivityMain : AppCompatActivity() {
 
 
     }
+
+    public fun getAccessToken(): String? = accessToken
 }

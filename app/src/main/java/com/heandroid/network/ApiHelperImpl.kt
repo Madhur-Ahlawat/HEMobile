@@ -73,4 +73,8 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun setNewPasswordApiCall(requestParam:SetNewPasswordRequest):Response<VerifySecurityCodeResponseModel>
             = apiService.setNewPasswordApi(requestParam)
 
+    override suspend fun getAlertMessageApiCAll(token : String , language: String): Response<AlertMessageApiResponse> {
+     return apiService.getAlertMessages(token, language)
+    }
+
 }
