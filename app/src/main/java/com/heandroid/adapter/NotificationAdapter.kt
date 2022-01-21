@@ -10,18 +10,25 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
+import com.heandroid.listener.FilterDialogListener
+import com.heandroid.listener.NotificationItemClick
 import com.heandroid.model.NotificationModel
 
 class NotificationAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var notificationList: List<NotificationModel> = mutableListOf()
+    var mListener: NotificationItemClick? = null
 
     companion object {
 
         const val VIEW_TYPE_HEADER = 0
         const val VIEW_TYPE_HIGH_PRIORITY = 1
         const val VIEW_TYPE_GENERAL_NOTIFICATION = 2
+    }
+
+    fun setListener(listener: NotificationItemClick) {
+        mListener = listener
     }
 
     fun setList(list: List<NotificationModel>?) {
@@ -36,7 +43,11 @@ class NotificationAdapter(private val mContext: Context) :
         private val msgTxt: TextView = itemView.findViewById(R.id.message_txt)
         private val btnTxt: TextView = itemView.findViewById(R.id.btn_txt)
 
-        fun setView(context: Context, notificationModel: NotificationModel) {
+        fun setView(
+            listener: NotificationItemClick,
+            context: Context,
+            notificationModel: NotificationModel, position: Int
+        ) {
 
             dateTxt.text = notificationModel.date
             msgTxt.text = notificationModel.message
@@ -56,11 +67,22 @@ class NotificationAdapter(private val mContext: Context) :
 
         private val dateTxt: TextView = itemView.findViewById(R.id.date_txt)
         private val msgTxt: TextView = itemView.findViewById(R.id.message_txt)
+        private val greenView: View = itemView.findViewById(R.id.green_view)
 
-        fun setView(context: Context, notificationModel: NotificationModel) {
+        fun setView(
+            listener: NotificationItemClick,
+            context: Context,
+            notificationModel: NotificationModel, position: Int
+        ) {
 
             dateTxt.text = notificationModel.date
             msgTxt.text = notificationModel.message
+
+            itemView.setOnLongClickListener {
+
+                listener.onLongClick(notificationModel, position)
+                true
+            }
 
             if (notificationModel.isRead) {
                 msgTxt.setTypeface(msgTxt.typeface, Typeface.NORMAL)
@@ -68,6 +90,14 @@ class NotificationAdapter(private val mContext: Context) :
                 msgTxt.setTypeface(msgTxt.typeface, Typeface.BOLD)
 
             }
+
+            if (notificationModel.iSel) {
+                greenView.visibility = View.VISIBLE
+            } else {
+                greenView.visibility = View.GONE
+
+            }
+
         }
 
     }
@@ -78,7 +108,11 @@ class NotificationAdapter(private val mContext: Context) :
         private val viewAllTxt: AppCompatTextView = itemView.findViewById(R.id.view_all)
         private val priorityImg: AppCompatImageView = itemView.findViewById(R.id.priority_img)
 
-        fun setView(context: Context, notificationModel: NotificationModel) {
+        fun setView(
+            listener: NotificationItemClick,
+            context: Context,
+            notificationModel: NotificationModel, position: Int
+        ) {
 
             categoryTxt.text = notificationModel.category
             viewAllTxt.text = notificationModel.headerViewAll
@@ -92,7 +126,6 @@ class NotificationAdapter(private val mContext: Context) :
         }
 
     }
-
 
     override fun getItemViewType(position: Int): Int {
         return notificationList[position].viewType
@@ -128,14 +161,11 @@ class NotificationAdapter(private val mContext: Context) :
                     .inflate(R.layout.adapter_high_priority_notifications, parent, false)
                 return HighPriorityViewHolder(view)
 
-
             }
-
 
         }
 
     }
-
 
     override fun getItemCount(): Int {
         return if (notificationList == null) {
@@ -148,22 +178,31 @@ class NotificationAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-
         val model = notificationList[position]
         when (notificationList[position].viewType) {
             VIEW_TYPE_HIGH_PRIORITY -> {
 
-                (holder as HighPriorityViewHolder).setView(mContext, model)
+                (holder as HighPriorityViewHolder).setView(mListener!!, mContext, model, position)
 
             }
 
             VIEW_TYPE_GENERAL_NOTIFICATION -> {
-                (holder as GeneralNotificationHolder).setView(mContext, model)
+                (holder as GeneralNotificationHolder).setView(
+                    mListener!!,
+                    mContext,
+                    model,
+                    position
+                )
 
             }
 
             VIEW_TYPE_HEADER -> {
-                (holder as NotificationHeaderViewHolder).setView(mContext, model)
+                (holder as NotificationHeaderViewHolder).setView(
+                    mListener!!,
+                    mContext,
+                    model,
+                    position
+                )
 
             }
 

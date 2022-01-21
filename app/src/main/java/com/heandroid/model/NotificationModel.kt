@@ -7,5 +7,5 @@ data class NotificationModel(
     val date: String,
     val high_priority_btn: String,
     val headerViewAll: String = "View all",
-    val isRead: Boolean = false
+    var isRead: Boolean = false, var iSel: Boolean = false
 )
