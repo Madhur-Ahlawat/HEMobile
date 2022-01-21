@@ -12,9 +12,10 @@ import com.heandroid.adapter.NotificationAdapter
 import com.heandroid.databinding.FragmentNotificationBinding
 import com.heandroid.dialog.FilterDialog
 import com.heandroid.listener.FilterDialogListener
+import com.heandroid.listener.NotificationItemClick
 import com.heandroid.model.NotificationModel
 
-class NotificationFragment : BaseFragment(), FilterDialogListener {
+class NotificationFragment : BaseFragment(), FilterDialogListener, NotificationItemClick {
     private lateinit var dataBinding: FragmentNotificationBinding
 
     override fun onCreateView(
@@ -37,12 +38,12 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
 
     }
 
-
     private fun setUpViews() {
 
         setActionAdapter()
 
         dataBinding.takeAction.setOnClickListener {
+            dataBinding.clearLlyt.visibility = View.GONE
 
             setActionAdapter()
 
@@ -70,6 +71,8 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
         }
 
         dataBinding.inOrder.setOnClickListener {
+            dataBinding.clearLlyt.visibility = View.GONE
+
             dataBinding.takeAction.background =
                 ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
             dataBinding.inOrder.background =
@@ -96,6 +99,8 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
 
         dataBinding.others.setOnClickListener {
 
+            dataBinding.clearLlyt.visibility = View.GONE
+
             dataBinding.takeAction.background =
                 ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
             dataBinding.inOrder.background =
@@ -120,6 +125,7 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
             setOthersAdapter()
         }
         dataBinding.filterTxt.setOnClickListener {
+
             FilterDialog.newInstance(
                 getString(R.string.str_sort),
                 this
@@ -166,10 +172,21 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
         notificationList.add(mModel1)
         notificationList.add(mModel2)
         notificationList.add(mModel3)
-        val mNotificationAdapter = NotificationAdapter(requireActivity())
-        mNotificationAdapter.setList(notificationList)
+
+
+//        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM HH:mm")
+
+//        val result = notificationList.sortedByDescending {
+//
+//           // LocalDate.parse(it.date, dateTimeFormatter)
+//        }
+
+        mNotificationAdapter = NotificationAdapter(requireActivity())
+        mNotificationAdapter?.setList(notificationList)
+        mNotificationAdapter?.setListener(this)
         dataBinding.notificationsRecyclerview.layoutManager = LinearLayoutManager(requireActivity())
-        dataBinding.notificationsRecyclerview.setHasFixedSize(true)
+
+
         dataBinding.notificationsRecyclerview.adapter = mNotificationAdapter
 
 
@@ -253,8 +270,12 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
         notificationList.add(mModel6)
         notificationList.add(mModel7)
         notificationList.add(mModel8)
-        val mNotificationAdapter = NotificationAdapter(requireActivity())
-        mNotificationAdapter.setList(notificationList)
+        mTotalList.clear()
+        mTotalList = notificationList
+
+        mNotificationAdapter = NotificationAdapter(requireActivity())
+        mNotificationAdapter?.setList(mTotalList)
+        mNotificationAdapter?.setListener(this)
         dataBinding.notificationsRecyclerview.layoutManager = LinearLayoutManager(requireActivity())
         dataBinding.notificationsRecyclerview.setHasFixedSize(true)
         dataBinding.notificationsRecyclerview.adapter = mNotificationAdapter
@@ -439,15 +460,17 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
         notificationList.add(mModel16)
         notificationList.add(mModel17)
 
-        val mNotificationAdapter = NotificationAdapter(requireActivity())
-        mNotificationAdapter.setList(notificationList)
+        mTotalList.clear()
+        mTotalList = notificationList
+
+        mNotificationAdapter = NotificationAdapter(requireActivity())
+        mNotificationAdapter?.setList(mTotalList)
+        mNotificationAdapter?.setListener(this)
         dataBinding.notificationsRecyclerview.layoutManager = LinearLayoutManager(requireActivity())
         dataBinding.notificationsRecyclerview.setHasFixedSize(true)
         dataBinding.notificationsRecyclerview.adapter = mNotificationAdapter
 
-
     }
-
 
     private fun setInOrderAdapter() {
 
@@ -472,8 +495,14 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
 
         notificationList.add(mModel1)
         notificationList.add(mModel2)
-        val mNotificationAdapter = NotificationAdapter(requireActivity())
-        mNotificationAdapter.setList(notificationList)
+
+        mTotalList.clear()
+        mTotalList = notificationList
+
+        mNotificationAdapter = NotificationAdapter(requireActivity())
+        mNotificationAdapter?.setList(mTotalList)
+        mNotificationAdapter?.setListener(this)
+
         dataBinding.notificationsRecyclerview.layoutManager = LinearLayoutManager(requireActivity())
         dataBinding.notificationsRecyclerview.setHasFixedSize(true)
         dataBinding.notificationsRecyclerview.adapter = mNotificationAdapter
@@ -481,7 +510,9 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
 
     }
 
+    var mTotalList = ArrayList<NotificationModel>()
 
+    var mNotificationAdapter: NotificationAdapter? = null
     private fun setHeaderAdapter() {
 
 
@@ -506,8 +537,11 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
 
         notificationList.add(mModel1)
         notificationList.add(mModel2)
-        val mNotificationAdapter = NotificationAdapter(requireActivity())
-        mNotificationAdapter.setList(notificationList)
+        mTotalList.clear()
+        mTotalList = notificationList
+        mNotificationAdapter = NotificationAdapter(requireActivity())
+        mNotificationAdapter?.setList(mTotalList)
+        mNotificationAdapter?.setListener(this)
         dataBinding.notificationsRecyclerview.layoutManager = LinearLayoutManager(requireActivity())
         dataBinding.notificationsRecyclerview.setHasFixedSize(true)
         dataBinding.notificationsRecyclerview.adapter = mNotificationAdapter
@@ -515,12 +549,30 @@ class NotificationFragment : BaseFragment(), FilterDialogListener {
     }
 
     override fun onApplyCLickListener(cat: String) {
+        dataBinding.clearLlyt.visibility = View.GONE
+
         dataBinding.subTitle.text = "All Notifications"
 
         setMultiPleViewsAdapter()
     }
 
     override fun onCancelClickedListener() {
+    }
+
+    override fun onLongClick(notificationModel: NotificationModel, pos: Int) {
+
+        dataBinding.clearLlyt.visibility = View.VISIBLE
+
+        notificationModel.iSel = true
+        mTotalList[pos] = notificationModel
+
+        mNotificationAdapter?.notifyItemChanged(pos)
+
+
+    }
+
+    override fun onClick(notificationModel: NotificationModel, pos: Int) {
+
     }
 
 

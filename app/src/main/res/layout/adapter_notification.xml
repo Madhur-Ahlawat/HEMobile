@@ -14,11 +14,12 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_6sdp"
         android:text="14 Dec 12:34"
         android:textColor="@color/black"
         android:textSize="@dimen/_10ssp"
         android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/green_view"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -30,10 +31,24 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:text="Phasellas id urna frimgella, imperdlet ex at please do topup."
         android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/green_view"
         android:textSize="@dimen/_16ssp"
+        android:paddingEnd="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_txt" />
+
+
+    <View
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="0dp"
+        android:id="@+id/green_view"
+        android:background="@color/green"
+        android:layout_marginEnd="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/message_txt"
+        app:layout_constraintTop_toTopOf="@+id/date_txt"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
