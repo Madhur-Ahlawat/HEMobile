@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("oauth/token")
+    @POST("http://10.190.176.7:8080/oauth/token")
     suspend fun loginWithField(
         @Field("client_id") clientId: String,
         @Field("grant_type") grant_type: String,
@@ -60,7 +60,7 @@ interface ApiService {
     @POST("https://maas-test.services.conduent.com/bosuser/api/v2/account/forgotPassword/setNewPassword")
     suspend fun setNewPasswordApi(@Body requestParam: SetNewPasswordRequest): Response<VerifySecurityCodeResponseModel>
 
-    @POST("bosuser/api/account/getAlertMessages")
+    @POST("http://10.190.176.7:8080/bosuser/api/account/getAlertMessages")
     suspend fun getAlertMessages(@Header("Authorization") token: String , @Query("language") language : String): Response<AlertMessageApiResponse>
 
 }

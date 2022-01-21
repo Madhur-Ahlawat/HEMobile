@@ -33,7 +33,7 @@ class DashboardFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View                  ? {
         dataBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_dashboard,
