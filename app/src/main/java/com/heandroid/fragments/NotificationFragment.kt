@@ -35,7 +35,6 @@ class NotificationFragment : BaseFragment(), FilterDialogListener, NotificationI
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
-
     }
 
     private fun setUpViews() {

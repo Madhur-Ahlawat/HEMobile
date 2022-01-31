@@ -25,7 +25,6 @@ class VehicleMgmtActivity: AppCompatActivity() {
 
         databinding.tvBack.setOnClickListener {
             finish()
-            //startActivity(Intent(this, DashboardPage::class.java))
         }
 
 

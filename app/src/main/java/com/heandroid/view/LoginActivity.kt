@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
             if(validate(username, pwd))
             {
              setupObservers()
+
 //                databinding.progressLayout.visibility= View.VISIBLE
               // byPassToDashboard()
             }
