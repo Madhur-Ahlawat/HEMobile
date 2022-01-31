@@ -12,4 +12,8 @@ data class PlateInfoResponse(
     var state: String,
     @SerializedName("type")
     var type: String,
+    val vehicleGroup: String,
+    val vehicleComments: String, val planName: String
 ):Serializable
+
+

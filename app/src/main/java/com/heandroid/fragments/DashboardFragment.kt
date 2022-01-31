@@ -52,8 +52,10 @@ class DashboardFragment : BaseFragment() {
         dataBinding.btnUpdateNow.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlString)))
         }
+
         setupViewModel()
         setupObservers()
+        getVehicleListApiCall()
 
     }
 
@@ -66,7 +68,6 @@ class DashboardFragment : BaseFragment() {
 
     private fun setupObservers() {
 
-
         var stringBuilder = StringBuilder()
         stringBuilder.append("Bearer ")
         stringBuilder.append(accessToken)
@@ -77,7 +78,6 @@ class DashboardFragment : BaseFragment() {
         if (token != null) {
             var lng = "ENU"
             dashboardViewModel.getAlertsApi(token, lng)
-
 
             dashboardViewModel.getAlertsVal.observe(requireActivity(),
                 {
@@ -110,13 +110,48 @@ class DashboardFragment : BaseFragment() {
             var urlString = msgArr[1].split(">")[0].subSequence(7, msgArr[1].split(">")[0].length)
             Log.d("msgArr", msgArr[0])
             Log.d("urlString", urlString.toString())
-            dataBinding.btnUpdateNow.text = msgArr[1].split(">")[1]
-            dataBinding.tvTitle.text = msgArr[0]
+//            dataBinding.btnUpdateNow.text = msgArr[1].split(">")[1]
+//            dataBinding.tvTitle.text = msgArr[0]
         }
         else {
             // do nothing
         }
     }
+
+    private fun getVehicleListApiCall() {
+
+        var stringBuilder = StringBuilder()
+        stringBuilder.append("Bearer ")
+        stringBuilder.append(accessToken)
+        //var  token = "Bearer $accessToken"
+        var  token = stringBuilder.toString()
+        Log.d("token==", token)
+        dashboardViewModel.getVehicleInformationApi(token)
+        dashboardViewModel.vehicleListVal.observe(requireActivity(), androidx.lifecycle.Observer {
+            it.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        var vehicleList = resource.data!!.body()
+                        if (vehicleList != null) {
+                            Log.d("apiResp:getVehicleListApiCall ", vehicleList.size.toString())
+                            Log.d("apiResp:getVehicleListApiCall vehicleList.toString() ", vehicleList.toString())
+//                            setupVehicleData(vehicleList)
+                        }
+
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG).show()
+
+                    }
+                    Status.LOADING -> {
+                        // show/hide loader
+                    }
+
+                }
+            }
+        })
+    }
+
 
     private fun showToast(message: String?) {
 

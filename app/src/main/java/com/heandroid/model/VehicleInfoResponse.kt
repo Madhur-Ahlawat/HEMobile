@@ -1,15 +1,16 @@
 package com.heandroid.model
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class VehicleInfoResponse(
-    @SerializedName("number")
-    var number: String,
-    @SerializedName("country")
-    var country: String,
-    @SerializedName("state")
-    var state: String,
-    @SerializedName("type")
-    var type: String,
-): Serializable
+    val make: String,
+    val model: String,
+    val year: String,
+    val typeId: String? = null,
+    val rowId: String,
+    val typeDescription: String,
+    val color: String,
+    val vehicleClassDesc: String,
+    val effectiveStartDate: String
+) : Serializable
+
