@@ -1,7 +1,6 @@
 package com.heandroid.network
 
 import com.heandroid.model.*
-import com.heandroid.utils.Constants
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -63,4 +62,6 @@ interface ApiService {
     @POST("http://10.190.176.7:8080/bosuser/api/account/getAlertMessages")
     suspend fun getAlertMessages(@Header("Authorization") token: String , @Query("language") language : String): Response<AlertMessageApiResponse>
 
+    @POST("/bosuser/api/account/vehicle")
+    suspend fun addVehicleApi(@Header("Authorization") token: String , )
 }

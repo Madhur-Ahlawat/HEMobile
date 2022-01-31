@@ -51,9 +51,9 @@ class LoginActivity : AppCompatActivity() {
             val pwd = databinding.edtPwd.text.toString()
             if(validate(username, pwd))
             {
-//                setupObservers()
+             setupObservers()
 //                databinding.progressLayout.visibility= View.VISIBLE
-               byPassToDashboard()
+              // byPassToDashboard()
             }
 
 //            val handler = Handler()
