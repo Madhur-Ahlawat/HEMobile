@@ -1,6 +1,5 @@
 package com.heandroid.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -25,7 +23,6 @@ import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.SessionManager
-import com.heandroid.view.PasswordResetActivity
 import com.heandroid.viewmodel.RecoveryUsernamePasswordViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_forgot_password_sent.*
@@ -178,7 +175,7 @@ class ForgotPasswordThirdFragment : BaseFragment() {
 
     private fun setViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[RecoveryUsernamePasswordViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }

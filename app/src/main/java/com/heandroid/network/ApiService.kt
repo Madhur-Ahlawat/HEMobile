@@ -63,5 +63,5 @@ interface ApiService {
     suspend fun getAlertMessages(@Header("Authorization") token: String , @Query("language") language : String): Response<AlertMessageApiResponse>
 
     @POST("/bosuser/api/account/vehicle")
-    suspend fun addVehicleApi(@Header("Authorization") token: String , )
+    suspend fun addVehicleApi(@Header("Authorization") token: String ,@Body requestParam: VehicleResponse ) : Response<AddVehicleApiResponse>
 }

@@ -77,4 +77,10 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
      return apiService.getAlertMessages(token, language)
     }
 
+    override suspend fun addVehicleApiCall(
+        token: String,
+        requestParam: VehicleResponse
+    ) = apiService.addVehicleApi(token, requestParam)
+
+
 }

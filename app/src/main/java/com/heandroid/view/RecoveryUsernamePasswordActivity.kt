@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.TextureView
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
@@ -142,7 +141,7 @@ class RecoveryUsernamePasswordActivity : AppCompatActivity() {
     private fun setupViewModel() {
         // to do call view model setup
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
     }
 

@@ -1,6 +1,5 @@
 package com.heandroid.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -26,7 +25,6 @@ import com.heandroid.utils.Common
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.utils.SessionManager
-import com.heandroid.view.ForgotPasswordSentActivity
 import com.heandroid.viewmodel.RecoveryUsernamePasswordViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
@@ -204,7 +202,7 @@ class ForgotPasswordSecondFragment : BaseFragment() {
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[RecoveryUsernamePasswordViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }

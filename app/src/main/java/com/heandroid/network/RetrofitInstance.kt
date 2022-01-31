@@ -43,7 +43,7 @@ class RetrofitInstance {
         }
 
 
-        val loginApi: ApiService by lazy {
+        val apiService: ApiService by lazy {
             retrofitLogin.create(ApiService::class.java)
         }
 

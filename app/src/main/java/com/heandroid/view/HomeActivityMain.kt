@@ -30,7 +30,6 @@ class HomeActivityMain : AppCompatActivity() {
 
     private fun setView(){
         dataBinding.idToolBarLyt.btnLogin.visibility= View.GONE
-
         dataBinding.bottomNavigationView.setActiveNavigationIndex(0)
         dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(object :
             OnNavigationItemChangeListener {
@@ -40,7 +39,6 @@ class HomeActivityMain : AppCompatActivity() {
 
                     0->{
                         dataBinding.fragmentContainerView.findNavController().navigate(R.id.dashBoardFragment)
-
                     }
                     1->{
                         dataBinding.fragmentContainerView.findNavController().navigate(R.id.vehicleFragment)
@@ -50,7 +48,6 @@ class HomeActivityMain : AppCompatActivity() {
                     }
                     3->{
                         dataBinding.fragmentContainerView.findNavController().navigate(R.id.accountFragment)
-
                     }
 
                 }

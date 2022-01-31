@@ -27,5 +27,6 @@ interface ApiHelper {
     suspend fun verifySecurityCodeApiCall(requestParam:VerifySecurityCodeRequestModel):Response<VerifySecurityCodeResponseModel>
     suspend fun setNewPasswordApiCall(requestParam:SetNewPasswordRequest):Response<VerifySecurityCodeResponseModel>
     suspend fun getAlertMessageApiCAll(token: String, requestParam:String):Response<AlertMessageApiResponse>
+    suspend fun addVehicleApiCall(token: String, requestParam:VehicleResponse):Response<AddVehicleApiResponse>
 
 }

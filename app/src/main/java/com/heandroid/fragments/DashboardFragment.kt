@@ -17,7 +17,6 @@ import com.heandroid.model.AlertMessageApiResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
-import com.heandroid.utils.SessionManager
 import com.heandroid.view.HomeActivityMain
 import com.heandroid.viewmodel.DashboardViewModel
 import com.heandroid.viewmodel.ViewModelFactory
@@ -59,7 +58,7 @@ class DashboardFragment : BaseFragment() {
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }
@@ -73,7 +72,6 @@ class DashboardFragment : BaseFragment() {
         //var  token = "Bearer $accessToken"
         var  token = stringBuilder.toString()
         Log.d("token==", token)
-        //var token = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJBZ2VuY3lJZCI6MTgsIkJyb2tlcklkIjozMTk3LCJ1c2VyX25hbWUiOjMxOTcsIkZpcnN0TmFtZSI6bnVsbCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9DTElFTlQiXSwiY2xpZW50X2lkIjoiSEVfTUFQUF9OUCIsImlzUGFzc3dvcmRDb21wbGlhbnQiOmZhbHNlLCJJbnRlcm5hbEFnZW5jeUlkIjowLCJzY29wZSI6WyJ2ZWN0b3JBUEkiLCJmZWF0dXJlSGl0Il0sIlBlcm1pc3Npb24iOm51bGwsIkxhc3ROYW1lIjpudWxsLCJpc1Bhc3N3b3JkRXhwaXJlZCI6ZmFsc2UsImV4cCI6MTY0MjY5MTEwNSwicmVxdWlyZTJGQSI6ZmFsc2UsImp0aSI6ImQ0YTRlNzhiLTAxNDItNDZiZC1iYWQ3LTMwYmQyOGRlYmMyNiJ9.w7ErXODCNXYRqHep4jXr6vtDfbe59ouNFxnhCKMRD7Gch26ZYj8N-ifB3YywpETDxoMgCjnbeIaMn46LkfOy2hb2Yrcaf-CwnOti0k1PJnvsIYi6EQZyC8z11j6yJppmzpsTS7LpInceGH-QmfSNiGtSSYfMrjHWSo9fFPOBV6N00DWq8hxyC-k3HspyNeWOY2NiqF1VOm8TILbidpsPx3UnofRBaDVs_nnhEKuD_TvXU5bKh5cL2XnmHJLEFXKU9k0rNdDdbJupkdvhbu4w1MscUm2C-ryBuZYVSmbJzCQNcmA9yMLIjLgYIt0s39cH0RE9rSPQBiwK_TIJqFatMw"
         if (token != null) {
             var lng = "ENU"
             dashboardViewModel.getAlertsApi(token, lng)

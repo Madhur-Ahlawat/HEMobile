@@ -3,7 +3,6 @@ package com.heandroid.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -133,54 +132,24 @@ class LoginActivity : AppCompatActivity() {
                 when (it.status) {
                     Status.SUCCESS -> {
 
-                        databinding.progressLayout.visibility= GONE
+                        databinding.progressLayout.visibility = GONE
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
 
-                    Status.ERROR->{
-                        databinding.progressLayout.visibility=GONE
+                    Status.ERROR -> {
+                        databinding.progressLayout.visibility = GONE
                         showToast(it.message)
                     }
 
-                    Status.LOADING->{
+                    Status.LOADING -> {
                         // show/hide loader
                         databinding.progressLayout.visibility = VISIBLE
                     }
                 }
             })
-
-//
-//        viewModel.loginUser(clientID,
-//            grantType,
-//            agecyId,
-//            clientSecret,
-//            value,
-//            password,
-//            validatePasswordCompliance)
-
-//            .observe(this, Observer {
-//                Log.d("DummyLogin", "after api call")
-//                it.let { resource ->
-//                    run {
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                var loginResponse = resource.data!!.body() as LoginResponse
-//                                launchDashboardScreen(loginResponse)
-//                            }
-//                            Status.ERROR -> {
-//                                showToast(resource.message)
-//                            }
-//
-//                            Status.LOADING -> {
-//                                // show/hide loader
-//                            }
-//
-//                        }
-//                    }
-//                }
-//            })
     }
+
 
     private fun showToast(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -208,7 +177,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         databinding.loginViewModel = viewModel
         Log.d("ViewModelSetUp: ", "Setup")

@@ -23,7 +23,6 @@ import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.DashboardViewModel
-import com.heandroid.viewmodel.DummyTestViewModel
 import com.heandroid.viewmodel.LoginViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
@@ -33,7 +32,6 @@ class DashboardPage : AppCompatActivity() {
     private var monthlyUsageApiResp: RetrievePaymentListApiResponse?=null
     private var paymentListApiResponse: RetrievePaymentListApiResponse? = null
     private var vehicleList: List<VehicleResponse> = mutableListOf()
-    private lateinit var dummyViewModel: DummyTestViewModel
     private var refreshToken: String?=null
     private var accessToken: String? =  null
     private var ACCOUNT_TAG = "Account Screen"
@@ -298,10 +296,9 @@ class DashboardPage : AppCompatActivity() {
 
     private fun setupViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
-        dummyViewModel = ViewModelProvider(this,factory)[DummyTestViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }
 

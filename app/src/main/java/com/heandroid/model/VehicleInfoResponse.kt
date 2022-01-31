@@ -5,11 +5,11 @@ import java.io.Serializable
 
 data class VehicleInfoResponse(
     @SerializedName("number")
-    var number: String,
+    var number: String="",
     @SerializedName("country")
-    var country: String,
+    var country: String="",
     @SerializedName("state")
-    var state: String,
+    var state: String="",
     @SerializedName("type")
-    var type: String,
+    var type: String="",
 ): Serializable

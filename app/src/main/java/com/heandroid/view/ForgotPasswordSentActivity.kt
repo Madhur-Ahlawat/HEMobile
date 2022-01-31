@@ -137,7 +137,7 @@ class ForgotPasswordSentActivity : AppCompatActivity() {
 
     private fun setViewModel() {
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[RecoveryUsernamePasswordViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }

@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.heandroid.R
 import com.heandroid.databinding.ActivityPasswordResetBinding
-import com.heandroid.model.ConfirmationOptionsResponseModel
 import com.heandroid.model.SetNewPasswordRequest
 import com.heandroid.model.VerifySecurityCodeResponseModel
 import com.heandroid.network.ApiHelperImpl
@@ -83,7 +82,7 @@ class PasswordResetActivity : AppCompatActivity() {
     private fun setupViewModel() {
 
         Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[RecoveryUsernamePasswordViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }
