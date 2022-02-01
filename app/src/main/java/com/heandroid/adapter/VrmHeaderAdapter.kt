@@ -80,8 +80,8 @@ class VrmHeaderAdapter(private val mContext: Context) :
                         mList.add(mem2)
 
                     }
-                    4->{
-                        val mem2 = VehicleTitleAndSub("Class", vehicleItem.vehicleInfo.effectiveStartDate)
+                    5->{
+                        val mem2 = VehicleTitleAndSub("DateAdded", vehicleItem.vehicleInfo.effectiveStartDate)
                         mList.add(mem2)
 
                     }
@@ -97,7 +97,6 @@ class VrmHeaderAdapter(private val mContext: Context) :
             mRecyclerView.layoutManager = LinearLayoutManager(context)
             mRecyclerView.setHasFixedSize(true)
             mRecyclerView.adapter = mAdapter
-
 
         }
 

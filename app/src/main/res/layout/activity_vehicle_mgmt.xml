@@ -1,110 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey">
+
+        <include
+            android:id="@+id/id_tool_bar_lyt"
+            layout="@layout/tool_bar_with_title_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/add_vehicles_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:gravity="start"
+            android:text="@string/str_ur_vehicles"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_tool_bar_lyt" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_header"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/conform_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_vehicles_txt" />
+
+        <!--
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardview_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/add_vehicles_txt"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:elevation="@dimen/_2sdp"
+                    android:fadingEdgeLength="@dimen/_2sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:background="@color/white">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/vrm_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4sdp"
+                            android:text="LO6NRO"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/arrow_img"
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
+                            app:tint="@color/black" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/add_stroke_clr"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+        -->
+
+        <!--
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_view_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recycler_view_header"
+                    android:layout_above="@+id/conform_btn"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_70sdp"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:elevation="@dimen/_2sdp"
+                    android:fadingEdgeLength="@dimen/_2sdp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.card.MaterialCardView>
+        -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/conform_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:text="@string/str_add_another_vehicle"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout><!--
+<layout>
+
     <data>
+
         <variable
             name="dashboardviewmodel"
             type="com.heandroid.viewmodel.DashboardViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/cl_header"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintHeight_percent="0.08"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    android:paddingHorizontal="@dimen/_5sdp"
-    app:layout_constraintEnd_toEndOf="parent">
-    <TextView
-        android:id="@+id/tv_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:drawableLeft="@drawable/ic_back"
-        android:textColor="@color/blue"
-        android:drawablePadding="@dimen/_10sdp"
-        android:text="@string/txt_dashboard"
-        android:textSize="@dimen/_10ssp"/>
-    <ImageView
-        android:id="@+id/iv_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_setting"
-        android:layout_marginLeft="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <TextView
-        android:id="@+id/tv_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_vehicles"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/cl_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@color/light_grey"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.92">
-        <RelativeLayout
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_header"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:gravity="center_vertical"
-            android:layout_height="@dimen/_35sdp"
-            android:background="@color/white">
+            android:layout_height="0dp"
+            android:paddingHorizontal="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_vehicle_count"
+                android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:drawableLeft="@drawable/ic_car"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textColor="@color/grey_one"
-                android:textSize="@dimen/_17ssp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tv_add_vehicle"
-                android:padding="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_back"
+                android:drawablePadding="@dimen/_10sdp"
+                android:text="@string/txt_dashboard"
+                android:textColor="@color/blue"
                 android:textSize="@dimen/_10ssp"
-                android:text="@string/txt_add_vehicle"
-                android:textColor="@color/blue"/>
-        </RelativeLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:src="@drawable/ic_setting"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_vehicles"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="0dp"
             android:background="@color/light_grey"
-            android:paddingHorizontal="@dimen/_10sdp">
-            <include
-                layout="@layout/search_layout"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_vehicle"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.92"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_vehicle_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:drawableLeft="@drawable/ic_car"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textColor="@color/grey_one"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_add_vehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/txt_add_vehicle"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_10ssp" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:background="@color/light_grey"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <include layout="@layout/search_layout" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_vehicle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+
         </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</layout>-->

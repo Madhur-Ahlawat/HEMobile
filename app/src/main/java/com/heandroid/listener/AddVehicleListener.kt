@@ -1,9 +1,9 @@
 package com.heandroid.listener
 
-import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleResponse
 
 interface AddVehicleListener {
 
 
-    public fun onAddClick(details: VehicleDetailsModel)
+    public fun onAddClick(details: VehicleResponse)
 }

@@ -13,7 +13,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.heandroid.listener.AddVehicleListener
 import com.heandroid.R
 import com.heandroid.databinding.AddVehicleBinding
+import com.heandroid.model.PlateInfoResponse
 import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleInfoResponse
+import com.heandroid.model.VehicleResponse
 
 class AddVehicle : DialogFragment() {
 
@@ -71,14 +74,12 @@ class AddVehicle : DialogFragment() {
                     "UK"
 
                 }
-                val mModel = VehicleDetailsModel(
-                    dataBinding.addVrmInput.text.toString(),
-                    country,
-                    "TT FSI",
-                    "Audi",
-                    "Black"
-                )
-                mListener?.onAddClick(mModel)
+
+                val plateInfoResp = PlateInfoResponse(dataBinding.addVrmInput.text.toString(),country,"HE","-","","","")
+                val vehicleInfoResp = VehicleInfoResponse("Audi","TT FSI","2019","","1_GVVKGV","","Black","B","23 Aug 2022")
+
+                val mVehicleResponse = VehicleResponse(plateInfoResp, vehicleInfoResp)
+                mListener?.onAddClick(mVehicleResponse)
                 dismiss()
 
             } else {

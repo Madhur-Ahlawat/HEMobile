@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.ActivityFutureCrossingsEnterBinding
 import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
@@ -16,7 +17,7 @@ class ActivityFutureCrossing : AppCompatActivity() {
 
     private lateinit var dataBinding: ActivityFutureCrossingsEnterBinding
 
-    private lateinit var mVehicleDetails: VehicleDetailsModel
+    private lateinit var mVehicleDetails: VehicleResponse
 
     private var TAG = "ActivityFutureCrossing"
 
@@ -26,14 +27,13 @@ class ActivityFutureCrossing : AppCompatActivity() {
         setUpView()
     }
 
-
     private fun setUpView() {
 
         mVehicleDetails =
-            intent?.getParcelableExtra<VehicleDetailsModel>("list") as VehicleDetailsModel
+            intent?.getSerializableExtra("list") as VehicleResponse
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         setBtnActivated()
-        dataBinding.vrmTitle.text = "${mVehicleDetails.vrmNo}"
+        dataBinding.vrmTitle.text = "${mVehicleDetails.plateInfo.number}"
         dataBinding.futureCrossingCount.text = "$mCount"
 
         dataBinding.addFutureCrossings.setOnClickListener {

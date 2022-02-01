@@ -16,6 +16,7 @@ import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.utils.Logg
 import com.heandroid.dialog.AddVehicle
+import com.heandroid.model.VehicleResponse
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener {
@@ -45,8 +46,7 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
                 getString(R.string.str_title),
                 getString(R.string.str_sub_title),
                 this
-            )
-                .show(supportFragmentManager, AddVehicle.TAG)
+            ).show(supportFragmentManager, AddVehicle.TAG)
 
         }
 
@@ -67,8 +67,8 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
 
     }
 
-    private val mVehicleList = ArrayList<VehicleDetailsModel>()
-    override fun onAddClick(details: VehicleDetailsModel) {
+    private val mVehicleList = ArrayList<VehicleResponse>()
+    override fun onAddClick(details: VehicleResponse) {
         mVehicleList.add(details)
         Logg.logging(TAG, "onAddClick called $mVehicleList")
         setAdapter()
@@ -95,7 +95,7 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
 
     }
 
-    override fun onItemDeleteClick(details: VehicleDetailsModel, pos: Int) {
+    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
         if (mVehicleList.size > 0) {
             mVehicleList.remove(details)
             if (::mAdapter.isInitialized) {
@@ -114,7 +114,7 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
 
     }
 
-    override fun onItemClick(details: VehicleDetailsModel, pos: Int) {
+    override fun onItemClick(details: VehicleResponse, pos: Int) {
         val intent = Intent(this, VehicleDetailActivity::class.java)
         intent.putExtra("list",details)
         startActivity(intent)

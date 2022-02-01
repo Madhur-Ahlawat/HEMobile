@@ -195,7 +195,7 @@ class DashboardPage : AppCompatActivity() {
     }
 
     private fun getVehicleListApiCall(accessToken: String) {
-        viewModel.getVehicleInformationApi("Bearer $accessToken")
+        viewModel.getVehicleInformationApi()
         viewModel.vehicleListVal.observe(this, androidx.lifecycle.Observer {
                 it.let { resource ->
                     when (resource.status) {

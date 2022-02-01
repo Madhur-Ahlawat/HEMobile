@@ -54,8 +54,8 @@ class DashboardFragment : BaseFragment() {
         }
 
         setupViewModel()
-        setup1Observers()
         getVehicleListApiCall()
+        setupObservers()
 
     }
 
@@ -76,7 +76,7 @@ class DashboardFragment : BaseFragment() {
         Log.d("token==", token)
         if (token != null) {
             var lng = "ENU"
-            dashboardViewModel.getAlertsApi(token, lng)
+            dashboardViewModel.getAlertsApi(lng)
 
             dashboardViewModel.getAlertsVal.observe(requireActivity(),
                 {
@@ -120,11 +120,7 @@ class DashboardFragment : BaseFragment() {
 
         var stringBuilder = StringBuilder()
         stringBuilder.append("Bearer ")
-        stringBuilder.append(accessToken)
-        //var  token = "Bearer $accessToken"
-        var token = stringBuilder.toString()
-        Log.d("token==", token)
-        dashboardViewModel.getVehicleInformationApi(token)
+        dashboardViewModel.getVehicleInformationApi()
         dashboardViewModel.vehicleListVal.observe(requireActivity(), androidx.lifecycle.Observer {
             it.let { resource ->
                 when (resource.status) {
@@ -154,9 +150,7 @@ class DashboardFragment : BaseFragment() {
         })
     }
 
-
     private fun showToast(message: String?) {
-
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 

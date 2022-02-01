@@ -54,7 +54,6 @@ class HomeActivityMain : AppCompatActivity() {
             }
         })
 
-
     }
 
     public fun getAccessToken(): String? = accessToken

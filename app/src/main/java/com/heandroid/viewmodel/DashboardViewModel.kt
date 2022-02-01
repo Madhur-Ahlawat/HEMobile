@@ -49,7 +49,7 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
 
 
-    fun getVehicleInformationApi(authToken: String)
+    fun getVehicleInformationApi()
     {
         viewModelScope.launch {
         vehicleListVal.postValue(Resource.loading(null))
@@ -167,7 +167,6 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
 
     fun getAlertsApi(
-        token: String,
         lng: String
     ) {
 
