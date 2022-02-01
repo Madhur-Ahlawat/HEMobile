@@ -37,7 +37,7 @@ class VrmHeaderAdapter(private val mContext: Context) :
         fun setView(context: Context, vehicleItem: VehicleResponse) {
 
 
-            vrmNoTxt.text = "${vehicleItem.plateInfo.number}"
+            vrmNoTxt.text = "${vehicleItem.plateInfo.planName}"
             arrowImg.animate().rotation(180f).start()
             cardviewTop.setOnClickListener {
 

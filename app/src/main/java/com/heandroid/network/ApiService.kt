@@ -19,7 +19,7 @@ interface ApiService {
     ): Response<LoginResponse>
 
     @GET("bosuser/api/account/vehicle")
-    suspend fun getVehicleData(@Header("Authorization") token: String): Response<List<VehicleResponse>>
+    suspend fun getVehicleData(): Response<List<VehicleResponse>>
 
     @GET("https://maas-test.services.conduent.com/bosuser/api/account/overview")
     suspend fun getAccountOverview(@Header("Authorization") token: String): Response<AccountResponse>
@@ -76,8 +76,12 @@ interface ApiService {
     suspend fun setNewPasswordApi(@Body requestParam: SetNewPasswordRequest): Response<VerifySecurityCodeResponseModel>
 
     @POST("http://10.190.176.7:8080/bosuser/api/account/getAlertMessages")
-    suspend fun getAlertMessages(@Header("Authorization") token: String , @Query("language") language : String): Response<AlertMessageApiResponse>
+    suspend fun getAlertMessages(@Query("language") language : String): Response<AlertMessageApiResponse>
 
     @POST("/bosuser/api/account/vehicle")
-    suspend fun addVehicleApi(@Header("Authorization") token: String ,@Body requestParam: VehicleResponse ) : Response<AddVehicleApiResponse>
+    suspend fun addVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
+
+    @PUT("/bosuser/api/account/vehicle")
+    suspend fun updateVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
 }
+

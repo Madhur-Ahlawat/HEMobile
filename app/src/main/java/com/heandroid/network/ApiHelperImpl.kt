@@ -26,8 +26,8 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getAccountOverviewApiCall(authToken: String) =
         apiService.getAccountOverview(authToken)
 
-    override suspend fun getVehicleListApiCall(authToken: String) =
-        apiService.getVehicleData(authToken)
+    override suspend fun getVehicleListApiCall() =
+        apiService.getVehicleData()
 
     override suspend fun getRenewalAccessToken(
         clientId: String, grantType: String, agencyId: String, clientSecret: String,
@@ -73,13 +73,11 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun setNewPasswordApiCall(requestParam:SetNewPasswordRequest):Response<VerifySecurityCodeResponseModel>
             = apiService.setNewPasswordApi(requestParam)
 
-    override suspend fun getAlertMessageApiCAll(token : String , language: String): Response<AlertMessageApiResponse> {
-     return apiService.getAlertMessages(token, language)
+    override suspend fun getAlertMessageApiCAll( language: String): Response<AlertMessageApiResponse> {
+     return apiService.getAlertMessages(language)
     }
-    override suspend fun addVehicleApiCall(
-        token: String,
-        requestParam: VehicleResponse
-    ) = apiService.addVehicleApi(token, requestParam)
+    override suspend fun addVehicleApiCall(requestParam: VehicleResponse) = apiService.addVehicleApi( requestParam)
+    override suspend fun updateVehicleApiCall(requestParam: VehicleResponse) = apiService.updateVehicleApi( requestParam)
 
 
 

@@ -54,7 +54,7 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         viewModelScope.launch {
         vehicleListVal.postValue(Resource.loading(null))
         try {
-            val respFromApi = apiHelper.getVehicleListApiCall(authToken)
+            val respFromApi = apiHelper.getVehicleListApiCall()
             //loginUserVal.postValue(Resource.success(usersFromApi))
             vehicleListVal.postValue(setVehicleListApiResponse(respFromApi))
         } catch (e: Exception) {
@@ -174,7 +174,7 @@ class DashboardViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         viewModelScope.launch {
             getAlertsVal.postValue(Resource.loading(null))
             try {
-                val respFromApi = apiHelper.getAlertMessageApiCAll(token , lng)
+                val respFromApi = apiHelper.getAlertMessageApiCAll(lng)
                 //loginUserVal.postValue(Resource.success(usersFromApi))
                 getAlertsVal.postValue(setAlertApiResponse(respFromApi))
             } catch (e: Exception) {

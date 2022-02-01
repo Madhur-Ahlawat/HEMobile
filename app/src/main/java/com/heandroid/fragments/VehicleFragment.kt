@@ -1,7 +1,5 @@
 package com.heandroid.fragments
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -67,13 +65,13 @@ class VehicleFragment : BaseFragment() {
         Log.d("token==", token)
         if (token != null) {
             var request  = VehicleResponse(PlateInfoResponse(), VehicleInfoResponse())
-            vehicleMgmtViewModel.addVehicleApi(token, request);
+            vehicleMgmtViewModel.addVehicleApi(request);
             vehicleMgmtViewModel.addVehicleApiVal.observe(requireActivity(),
                 {
                     when (it.status) {
                         Status.SUCCESS -> {
 
-                            var apiResponse = it.data!!.body() as AddVehicleApiResponse
+                            var apiResponse = it.data!!.body() as EmptyApiResponse
                             Log.d("ApiSuccess : ", apiResponse!!.status.toString())
                         }
 

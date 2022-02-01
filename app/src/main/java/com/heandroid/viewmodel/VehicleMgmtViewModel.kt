@@ -11,24 +11,24 @@ import retrofit2.Response
 
 class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
-    val addVehicleApiVal = MutableLiveData<Resource<Response<AddVehicleApiResponse>>>()
+    val addVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
+    val updateVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
 
-    fun addVehicleApi(
-        authToken: String , request: VehicleResponse
+    fun addVehicleApi(request: VehicleResponse
     ) {
 
         viewModelScope.launch {
             addVehicleApiVal.postValue(Resource.loading(null))
             try {
-                val respFromApi = apiHelper.addVehicleApiCall(authToken , request)
-                addVehicleApiVal.postValue(setAddVehicleApiResponse(respFromApi))
+                val respFromApi = apiHelper.addVehicleApiCall( request)
+                addVehicleApiVal.postValue(setAddUpdateVehicleApiResponse(respFromApi))
             } catch (e: Exception) {
                 addVehicleApiVal.postValue(Resource.error(null , e.toString()))
             }
         }
     }
 
-    private fun setAddVehicleApiResponse(usersFromApi: Response<AddVehicleApiResponse>): Resource<Response<AddVehicleApiResponse>>? {
+    private fun setAddUpdateVehicleApiResponse(usersFromApi: Response<EmptyApiResponse>): Resource<Response<EmptyApiResponse>>? {
         return if(usersFromApi.isSuccessful) {
             Resource.success(usersFromApi)
         } else {
@@ -41,5 +41,21 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
         }
     }
+
+    fun updateVehicleApi(request: VehicleResponse
+    ) {
+
+        viewModelScope.launch {
+            addVehicleApiVal.postValue(Resource.loading(null))
+            try {
+                val respFromApi = apiHelper.updateVehicleApiCall( request)
+                addVehicleApiVal.postValue(setAddUpdateVehicleApiResponse(respFromApi))
+            } catch (e: Exception) {
+                addVehicleApiVal.postValue(Resource.error(null , e.toString()))
+            }
+        }
+    }
+
+
 
 }

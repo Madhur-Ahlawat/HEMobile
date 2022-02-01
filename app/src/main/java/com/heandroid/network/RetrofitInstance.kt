@@ -2,11 +2,14 @@ package com.heandroid.network
 
 import com.heandroid.utils.Constants
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 import java.lang.RuntimeException
+import java.lang.reflect.Type
 import java.security.cert.CertificateException
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
@@ -16,16 +19,29 @@ import javax.net.ssl.X509TrustManager
 class RetrofitInstance {
     companion object {
 
+        private val nullOnEmptyConverterFactory = object : Converter.Factory() {
+            fun converterFactory() = this
+            override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object :
+
+                Converter<ResponseBody, Any?> {
+                val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+                override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) nextResponseBodyConverter.convert(value) else null
+            }
+        }
         private val retrofitLogin by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
+                .addInterceptor(HeaderInterceptor())
                 .build()
+
             Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(getUnsafeOkHttpClient()?.build())
+                //.client(getUnsafeOkHttpClient()?.build())
+                .client(client)
                 .build()
         }
 

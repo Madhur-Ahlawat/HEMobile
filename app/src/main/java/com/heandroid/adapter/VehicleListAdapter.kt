@@ -31,7 +31,7 @@ class VehicleListAdapter(private val mContext: Context) : RecyclerView.Adapter<V
         fun setView(context : Context ,vehicleItem: VehicleResponse) {
 
             tvOne.text = vehicleItem.plateInfo.number
-            tvTwo.text = vehicleItem.plateInfo.number
+            tvTwo.text = vehicleItem.plateInfo.country
             tvClass.text = context.getString(R.string.txt_vehicle_class, "B")
             tvModel.text = context.getString(R.string.txt_vehicle_model, "2008 FELINE MISTRAL BLU HDI SS")
             tvDateAdded.text = context.getString(R.string.txt_vehicle_date_added, "11/06/2021")

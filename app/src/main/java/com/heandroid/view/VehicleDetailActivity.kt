@@ -3,17 +3,18 @@ package com.heandroid.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.adapter.VehicleDetailsAdapter
 import com.heandroid.adapter.VrmHeaderAdapter
 import com.heandroid.databinding.FragmentVehicleDetailBinding
-import com.heandroid.model.*
+import com.heandroid.model.PlateInfoResponse
+import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleInfoResponse
+import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.utils.Logg
@@ -39,8 +40,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        Log.d("DummyLogin", "set up view model")
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.loginApi))
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }

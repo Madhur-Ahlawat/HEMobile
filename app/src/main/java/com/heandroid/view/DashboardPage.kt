@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.heandroid.network.ApiClient
 import com.heandroid.R
 import com.heandroid.databinding.ActivityDashboradBinding
 import com.heandroid.model.*
@@ -35,7 +34,6 @@ class DashboardPage : AppCompatActivity() {
     private var refreshToken: String?=null
     private var accessToken: String? =  null
     private var ACCOUNT_TAG = "Account Screen"
-    private lateinit var apiClient: ApiClient
     private lateinit var sessionManager: SessionManager
     private lateinit var viewModel: DashboardViewModel
     private lateinit var loginViewModel: LoginViewModel
@@ -43,7 +41,6 @@ class DashboardPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this,R.layout.activity_dashborad)
-        apiClient = ApiClient()
         val token: String = SessionManager.USER_TOKEN
         Log.d("DashBoard Page ::token", token)
         sessionManager = SessionManager(this)

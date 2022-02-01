@@ -6,9 +6,6 @@ import android.util.Log
 import com.heandroid.model.GetSecurityCodeResponseModel
 import com.google.gson.Gson
 
-
-
-
 /**
  * Session manager to save and fetch data from SharedPreferences
  */
@@ -17,7 +14,7 @@ class SessionManager (context: Context) {
 
     companion object {
         const val USER_TOKEN = "user_token"
-        const val Refresh_TOKEN = "user_token"
+        const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER="account_number"
         const val SECURITY_CODE="security_code"
         const val SECURITY_CODE_OBJ="security_code_obj"
