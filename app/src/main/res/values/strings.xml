@@ -310,6 +310,17 @@
     <string name="str_make">Make</string>
     <string name="str_model">Model</string>
     <string name="str_color">Color</string>
+    <string name="str_do_you_want_the_below">Do you want to add below vehicle to the vehicle list?</string>
+    <string name="str_class_a">Class A</string>
+    <string name="str_motorcycles_quadcycles">Motorcycles and quadcycles</string>
+    <string name="str_class_b">Class B</string>
+    <string name="str_goods_vans_car_based_vans">Goods Van / Car-based vans</string>
+    <string name="str_cars_with_or_without">• Cars with or without trailers / caravans</string>
+    <string name="str_Motorhomes_passengers_vans">• Motorhomes / Passsengers vans and buses with no more than 8 seats in addition to driver\'s seat</string>
+    <string name="str_class_c">Class C</string>
+    <string name="str_axles_vehicles">Axle vehicles</string>
+    <string name="str_class_d">Class D</string>
+    <string name="str_2_plus_axles">"2+ Axle vehicles "</string>
 
 </resources>
 

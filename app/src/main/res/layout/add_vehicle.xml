@@ -68,7 +68,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_vehicle_btn"
-            android:layout_width="@dimen/_130sdp"
+            android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -82,7 +82,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btn"
-            android:layout_width="@dimen/_100sdp"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
             app:strokeWidth="@dimen/_1sdp"

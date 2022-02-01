@@ -28,11 +28,49 @@
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:id="@+id/llyt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_tool_bar_lyt"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/in_order"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/text_unselected_bg"
+                android:gravity="center"
+                android:text="@string/str_in_order"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/others"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/text_unselected_bg"
+                android:gravity="center"
+                android:text="@string/str_others"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_header"
             android:layout_width="match_parent"
-            android:layout_below="@+id/add_vehicles_txt"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_vehicles_txt" />
 
         <!--
                 <com.google.android.material.card.MaterialCardView
@@ -98,8 +136,8 @@
             android:id="@+id/card_view_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recycler_view_header"
             android:layout_above="@+id/conform_btn"
+            android:layout_below="@+id/recycler_view_header"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_70sdp"
