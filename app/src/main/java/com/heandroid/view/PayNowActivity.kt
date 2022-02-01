@@ -10,27 +10,46 @@ import com.heandroid.adapter.AddedVehicleListAdapter
 import com.heandroid.adapter.PaymentVehicleListAdapter
 import com.heandroid.databinding.FragmentConfirmPaymentBinding
 import com.heandroid.listener.ItemClickListener
+import com.heandroid.model.PlateInfoResponse
 import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleInfoResponse
+import com.heandroid.model.VehicleResponse
 
 class PayNowActivity : AppCompatActivity(), ItemClickListener {
 
-    private lateinit var mModel: VehicleDetailsModel
+    private lateinit var mModel: VehicleResponse
     private lateinit var dataBinding: FragmentConfirmPaymentBinding
     private var mAdapter: PaymentVehicleListAdapter? = null
-    private val mVehicleList = ArrayList<VehicleDetailsModel>()
-
+    private val mVehicleList = ArrayList<VehicleResponse>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.fragment_confirm_payment)
         setView()
-        mModel = VehicleDetailsModel(
+
+        val plateInfoResp = PlateInfoResponse(
             "LK62 NSO",
             "UK",
-            "TT FSI",
-            "Audi",
-            "Black"
+            "HE",
+            "-",
+            "",
+            "",
+            ""
         )
+        val vehicleInfoResp = VehicleInfoResponse(
+            "Audi",
+            "TT FSI",
+            "2019",
+            "",
+            "1_GVVKGV",
+            "",
+            "Black",
+            "B",
+            "23 Aug 2022"
+        )
+
+        mModel = VehicleResponse(plateInfoResp, vehicleInfoResp)
+
         mVehicleList.add(mModel)
         if (mVehicleList.size == 1) {
             mAdapter = PaymentVehicleListAdapter(this, this)
@@ -57,11 +76,11 @@ class PayNowActivity : AppCompatActivity(), ItemClickListener {
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleDetailsModel, pos: Int) {
+    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
 
     }
 
-    override fun onItemClick(details: VehicleDetailsModel, pos: Int) {
+    override fun onItemClick(details: VehicleResponse, pos: Int) {
 
     }
 }

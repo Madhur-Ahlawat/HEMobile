@@ -40,6 +40,7 @@
                     android:layout_height="@dimen/_48sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
+                    android:id="@+id/vehicle_list_lyt"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
                     android:padding="@dimen/_10sdp">
@@ -69,6 +70,7 @@
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
+                    android:id="@+id/add_vehicle_lyt"
                     android:layout_marginBottom="@dimen/_1sdp"
                     android:padding="@dimen/_10sdp">
 
@@ -96,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
+                    android:id="@+id/vehicle_history_lyt"
                     android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
@@ -126,6 +129,7 @@
                     android:layout_height="@dimen/_48sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
+                    android:id="@+id/vehicle_crossing_history_lyt"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
                     android:padding="@dimen/_10sdp">

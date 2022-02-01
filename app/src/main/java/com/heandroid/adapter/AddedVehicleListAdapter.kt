@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleDetailsModel
+import com.heandroid.model.VehicleResponse
 
 import kotlinx.android.synthetic.main.adapter_vehicles_row.view.*
 
 class AddedVehicleListAdapter(private val mContext: Context, var mListener: ItemClickListener) :
     RecyclerView.Adapter<AddedVehicleListAdapter.VehicleViewHolder>() {
 
-    var vehicleList: List<VehicleDetailsModel> = mutableListOf()
+    var vehicleList: List<VehicleResponse> = mutableListOf()
 
-    fun setList(list: List<VehicleDetailsModel>?) {
+    fun setList(list: List<VehicleResponse>?) {
         if (list != null) {
 
             vehicleList = list
@@ -31,10 +32,10 @@ class AddedVehicleListAdapter(private val mContext: Context, var mListener: Item
         private val vrmCountryTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_country)
         private val deleteImg: AppCompatImageView = itemView.findViewById(R.id.delete_img)
 
-        fun setView(context: Context, vehicleItem: VehicleDetailsModel) {
+        fun setView(context: Context, vehicleItem: VehicleResponse) {
 
-            vrmNoTxt.text = vehicleItem.vrmNo
-            vrmCountryTxt.text = vehicleItem.vrmCountry
+            vrmNoTxt.text = vehicleItem.plateInfo.number
+            vrmCountryTxt.text = vehicleItem.plateInfo.country
         }
 
     }

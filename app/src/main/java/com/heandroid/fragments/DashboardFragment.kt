@@ -55,7 +55,7 @@ class DashboardFragment : BaseFragment() {
 
         setupViewModel()
         setupObservers()
-        getVehicleListApiCall()
+//        getVehicleListApiCall()
 
     }
 
@@ -152,9 +152,7 @@ class DashboardFragment : BaseFragment() {
         })
     }
 
-
     private fun showToast(message: String?) {
-
         Toast.makeText(requireActivity() , message , Toast.LENGTH_SHORT).show()
     }
 

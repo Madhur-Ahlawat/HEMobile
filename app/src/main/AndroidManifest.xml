@@ -30,7 +30,7 @@
             android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name=".view.ActivityHome"
-            android:theme="@style/Theme.HEMobile" />
+            android:theme="@style/Theme.HEMobile" />=
         <activity
             android:name=".view.ActivityCreateAccount"
             android:theme="@style/Theme.HEMobile" />
@@ -39,7 +39,16 @@
             android:theme="@style/Theme.HEMobile" />
         <activity android:name=".view.DashboardPage" />
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.VehicleMgmtActivity" />
+        <activity
+            android:name=".view.VehicleMgmtActivity"
+            android:theme="@style/Theme.HEMobileLight" />
+        <activity
+            android:name=".view.VrmEditClassesActivity"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".view.VrmEditMakeModelColorActivity"
+            android:theme="@style/Theme.HEMobileLight" />
+
         <activity android:name=".view.ActivityPaymentHistory" />
         <activity android:name=".view.RecoveryUsernamePasswordActivity" />
         <activity

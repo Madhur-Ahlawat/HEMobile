@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
-import com.heandroid.listener.ItemClickListener
-import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleResponse
+import com.heandroid.model.VehicleTitleAndSub
+import com.heandroid.utils.Logg
 
-import kotlinx.android.synthetic.main.adapter_vehicles_row.view.*
-
-class PaymentVehicleListAdapter(private val mContext: Context, var mListener: ItemClickListener) :
-    RecyclerView.Adapter<PaymentVehicleListAdapter.VehicleViewHolder>() {
+class VrmHistoryAdapter(private val mContext: Context) :
+    RecyclerView.Adapter<VrmHistoryAdapter.VrmHeaderViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()
 
@@ -26,34 +26,33 @@ class PaymentVehicleListAdapter(private val mContext: Context, var mListener: It
         }
     }
 
-    class VehicleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class VrmHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val TAG = "VrmHeaderAdapter"
 
         private val vrmNoTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_title)
-        private val vrmAmount: AppCompatTextView = itemView.findViewById(R.id.vrm_amount)
-
+        private val vrmCountry: AppCompatTextView = itemView.findViewById(R.id.vrm_country)
 
         fun setView(context: Context, vehicleItem: VehicleResponse) {
 
-            vrmNoTxt.text = vehicleItem.plateInfo.number
-            vrmAmount.text = context.getString(R.string.str_amount)
+            vrmNoTxt.text = "${vehicleItem.plateInfo.number}"
+            vrmCountry.text = "${vehicleItem.plateInfo.country}"
+
 
         }
 
+
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VrmHeaderViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.payment_vehicle_item, parent, false)
-        return VehicleViewHolder(view)
+            .inflate(R.layout.vrm_history_lyt, parent, false)
+        return VrmHeaderViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VrmHeaderViewHolder, position: Int) {
 
         val vehicleItem = vehicleList[position]
         holder.setView(mContext, vehicleItem)
-        holder.itemView.vrm_title.setOnClickListener {
-            mListener?.onItemClick(vehicleItem,position)
-        }
     }
 
     override fun getItemCount(): Int {

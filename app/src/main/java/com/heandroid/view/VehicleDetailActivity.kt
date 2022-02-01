@@ -27,7 +27,7 @@ class VehicleDetailActivity : AppCompatActivity() {
 
     private lateinit var dataBinding: FragmentVehicleDetailBinding
 
-    private lateinit var mVehicleDetails: VehicleDetailsModel
+    private lateinit var mVehicleDetails: VehicleResponse
     private lateinit var dashboardViewModel: DashboardViewModel
 
 
@@ -47,7 +47,7 @@ class VehicleDetailActivity : AppCompatActivity() {
 
     private fun setUp() {
         mVehicleDetails =
-            intent?.getParcelableExtra<VehicleDetailsModel>("list") as VehicleDetailsModel
+            intent?.getSerializableExtra("list") as VehicleResponse
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         setBtnActivated()
         setAdapter()
@@ -63,8 +63,8 @@ class VehicleDetailActivity : AppCompatActivity() {
             intent.putExtra("list", mVehicleDetails)
             startActivity(intent)
 
-
         }
+
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
             onBackPressed()
         }
@@ -83,17 +83,32 @@ class VehicleDetailActivity : AppCompatActivity() {
 
         Logg.logging(TAG, " mList  $mList ")
 
-        val plateInfoResp = PlateInfoResponse(mVehicleDetails!!.vrmNo!!,mVehicleDetails.vrmCountry!!,"HE","-","","","")
-        val vehicleInfoResp = VehicleInfoResponse(mVehicleDetails.vrmMake!!,mVehicleDetails.vrmModel!!,"2019","","1_GVVKGV","",mVehicleDetails.vrmColor!!,"B","23 Aug 2022")
+        val plateInfoResp = PlateInfoResponse(
+            mVehicleDetails!!.plateInfo.number!!,
+            mVehicleDetails.plateInfo.country!!,
+            "HE",
+            "-",
+            "",
+            "",
+            ""
+        )
+        val vehicleInfoResp = VehicleInfoResponse(
+            mVehicleDetails.vehicleInfo.make,
+            mVehicleDetails.vehicleInfo.model,
+            "2019",
+            "",
+            "1_GVVKGV",
+            "",
+            mVehicleDetails.vehicleInfo.color,
+            "B",
+            "23 Aug 2022"
+        )
 
         val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp)
-        val mVehicleResponse2 = VehicleResponse(plateInfoResp, vehicleInfoResp)
-        val mVehicleResponse3 = VehicleResponse(plateInfoResp, vehicleInfoResp)
-        val mVehicleResponse4 = VehicleResponse(plateInfoResp, vehicleInfoResp)
         mList.add(mVehicleResponse1)
-        mList.add(mVehicleResponse2)
-        mList.add(mVehicleResponse3)
-        mList.add(mVehicleResponse4)
+//        mList.add(mVehicleResponse2)
+//        mList.add(mVehicleResponse3)
+//        mList.add(mVehicleResponse4)
 
         mAdapter = VrmHeaderAdapter(this)
         mAdapter.setList(mList)
