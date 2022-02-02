@@ -109,15 +109,19 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        val intent = Intent(this, VehicleDetailActivity::class.java)
-        intent.putExtra("list", details)
-        intent.putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
-        intent.putExtra(
-            Constants.VEHICLE_SCREEN_KEY,
-            Constants.VEHICLE_SCREEN_TYPE_ADD
-        )
 
-        startActivity(intent)
+         Intent(this, VehicleDetailActivity::class.java).apply {
+
+             putExtra("list", details)
+             putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
+             putExtra(
+                 Constants.VEHICLE_SCREEN_KEY,
+                 Constants.VEHICLE_SCREEN_TYPE_ADD
+             )
+
+             startActivity(this)
+
+         }
 
     }
 
