@@ -25,11 +25,11 @@ object Constants {
     const val CHECK_FOR_PAID = "CHECK FOR PAID CROSSINGS"
     const val RESOLVE_PENALTY = "RESOLVE PENALTY"
     const val ONE_OF_PAYMENT = "ONE OF PAYMENT"
-    val PAYMENT_RESPONSE = "payment_resp"
-    val PAYMENT_DATA = "payment_data"
-    val VEHICLE_DATA = "vehicle_data"
-    val VEHICLE_SCREEN_TYPE_LIST = 0
-    val VEHICLE_SCREEN_TYPE_ADD = 1
+    const val PAYMENT_RESPONSE = "payment_resp"
+    const val PAYMENT_DATA = "payment_data"
+    const val VEHICLE_DATA = "vehicle_data"
+    const val VEHICLE_SCREEN_TYPE_LIST = 0
+    const val VEHICLE_SCREEN_TYPE_ADD = 1
     val VEHICLE_SCREEN_TYPE_HISTORY = 2
     val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
     val VEHICLE_RESPONSE = "vehicle_api_resp"

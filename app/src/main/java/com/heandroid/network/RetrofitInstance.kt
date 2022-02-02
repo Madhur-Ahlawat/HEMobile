@@ -19,15 +19,7 @@ import javax.net.ssl.X509TrustManager
 class RetrofitInstance {
     companion object {
 
-        private val nullOnEmptyConverterFactory = object : Converter.Factory() {
-            fun converterFactory() = this
-            override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object :
 
-                Converter<ResponseBody, Any?> {
-                val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
-                override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) nextResponseBodyConverter.convert(value) else null
-            }
-        }
         private val retrofitLogin by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)

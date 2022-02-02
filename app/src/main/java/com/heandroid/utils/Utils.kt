@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.heandroid.config.MyApplication
+import com.heandroid.MyApplication
 import java.util.regex.Pattern
 
 object Utils {

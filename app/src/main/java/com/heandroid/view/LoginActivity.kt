@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         databinding.btnBack.setOnClickListener {
-            finish();
+            finish()
         }
 
     }
@@ -109,7 +109,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+
+    // todo to check network connection
     private fun setupObservers() {
+        //todo move to constants file
+
         var clientID = "HE_MAPP_NP"
         var grantType = "password"
         var agecyId = "18"
@@ -130,10 +134,14 @@ class LoginActivity : AppCompatActivity() {
         )
         viewModel.loginUserVal.observe(this,
             {
+                //todo add null check
+                //todo sealed class change
                 when (it.status) {
                     Status.SUCCESS -> {
 
                         databinding.progressLayout.visibility = GONE
+                        // todo use scope function
+
                         var loginResponse = it.data!!.body() as LoginResponse
                         launchDashboardScreen(loginResponse)
                     }
@@ -153,6 +161,8 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun showToast(message: String?) {
+        //todo handle null message
+
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
@@ -163,6 +173,7 @@ class LoginActivity : AppCompatActivity() {
         var accessToken = loginResponse.accessToken
         val intent = Intent(this, HomeActivityMain::class.java)
 //        val intent = Intent(this, DashboardPage::class.java)
+        //todo use scope function
         var bundle = Bundle()
         bundle.putString("access_token", accessToken)
         bundle.putString("refresh_token", loginResponse.refreshToken)
@@ -194,6 +205,9 @@ class LoginActivity : AppCompatActivity() {
         super.onDestroy()
         viewModelStore.clear()
     }
+
+    //todo use databinding to set property
+
     private fun setBtnActivated() {
         databinding.btnLogin.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
         databinding.btnLogin.setTextColor(ContextCompat.getColor(this, R.color.white))

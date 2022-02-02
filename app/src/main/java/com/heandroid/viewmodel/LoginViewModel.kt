@@ -15,6 +15,7 @@ import retrofit2.Response
 
 class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel(), Observable {
 
+    // todo getter setter method
     val loginUserVal = MutableLiveData<Resource<Response<LoginResponse>>>()
     val renewalUserLoginVal = MutableLiveData<Resource<Response<LoginResponse>>>()
 
@@ -44,6 +45,7 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel(), Observable
         viewModelScope.launch {
             loginUserVal.postValue(Resource.loading(null))
             try {
+                //todo reduce parameter
                 val usersFromApi = apiHelper.loginApiCall(clientID,
                     grantType,
                     agencyId,
@@ -118,6 +120,7 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel(), Observable
         }
     }
 
+    // todo remove these extensions
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
 
 

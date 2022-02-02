@@ -1,4 +1,4 @@
-package com.heandroid.config
+package com.heandroid
 
 import android.app.Application
 import android.content.Context

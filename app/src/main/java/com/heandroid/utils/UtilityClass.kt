@@ -10,7 +10,7 @@ class UtilityClass {
         "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
         Pattern.CASE_INSENSITIVE
     )
-    private val MIN_PASSWORD_LENGTH = 6
+    private const val MIN_PASSWORD_LENGTH = 6
 
     fun isEmailValid(email: String): Boolean {
         return if (email.isEmpty()) {

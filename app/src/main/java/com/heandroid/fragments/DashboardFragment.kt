@@ -164,38 +164,5 @@ class DashboardFragment : BaseFragment() {
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
-    private fun setup1Observers() {
-
-        var request = VehicleResponse(
-            PlateInfoResponse(
-                number = "HRS112022",
-                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
-            ),
-            VehicleInfoResponse("AUDI", "Q5", "2021", "", "REGULAR", "", "BLACK", "Class B", "")
-        )
-        vehicleMgmtViewModel.updateVehicleApi(request);
-        vehicleMgmtViewModel.updateVehicleApiVal.observe(requireActivity(),
-            {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        if (it.data!!.body() == null) {
-                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
-                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
-                        }
-
-                    }
-
-                    Status.ERROR -> {
-                        showToast(it.message)
-                    }
-
-                    Status.LOADING -> {
-                        // show/hide loader
-                        Log.d("GetAlert: ", "Data loading")
-                    }
-                }
-            })
-
-    }
-
+    
 }

@@ -47,7 +47,6 @@ class VehicleFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         setupObservers()
-
     }
 
 
@@ -85,6 +84,7 @@ class VehicleFragment : BaseFragment() {
             intent.putExtra(Constants.VEHICLE_SCREEN_KEY, type)
             startActivity(intent)
         }
+
     }
 
     private fun setupViewModel() {

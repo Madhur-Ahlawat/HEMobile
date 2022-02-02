@@ -25,6 +25,7 @@ class SessionManager (context: Context) {
      */
     fun saveAuthToken(token: String) {
         Log.d("Session Manager::",token)
+        // todo use scope variablde
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
         editor.apply()

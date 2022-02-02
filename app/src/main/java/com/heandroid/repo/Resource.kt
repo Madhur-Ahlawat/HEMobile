@@ -1,5 +1,6 @@
 package com.heandroid.repo
 
+//todo resource as sealed class
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {
         fun <T> success(data: T): Resource<T> = Resource(status = Status.SUCCESS, data = data, message = null)

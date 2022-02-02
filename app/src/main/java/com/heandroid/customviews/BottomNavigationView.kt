@@ -20,6 +20,7 @@ import com.heandroid.R
 import com.heandroid.listener.OnNavigationItemChangeListener
 import com.heandroid.utils.BottomNavParams
 
+//ui/customview
 class BottomNavigationView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

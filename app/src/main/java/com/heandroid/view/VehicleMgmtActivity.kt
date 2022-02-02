@@ -4,12 +4,15 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.heandroid.R
@@ -19,14 +22,19 @@ import com.heandroid.adapter.VrmHistoryAdapter
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.listener.AddVehicleListener
-import com.heandroid.model.VehicleApiResp
-import com.heandroid.model.VehicleDetailsModel
-import com.heandroid.model.VehicleResponse
+import com.heandroid.model.*
+import com.heandroid.network.ApiHelperImpl
+import com.heandroid.network.RetrofitInstance
+import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
+import com.heandroid.viewmodel.DashboardViewModel
+import com.heandroid.viewmodel.VehicleMgmtViewModel
+import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
 
+    private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var vehicleListAdapter: VehicleListAdapter
     private lateinit var databinding: ActivityVehicleMgmtBinding
     private lateinit var mAdapter: VrmHeaderAdapter
@@ -36,6 +44,15 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
         super.onCreate(savedInstanceState)
         databinding = DataBindingUtil.setContentView(this, R.layout.activity_vehicle_mgmt)
         setView()
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
+        Log.d("ViewModelSetUp: ", "Setup")
+        vehicleMgmtViewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
+        Log.d("ViewModelSetUp: ", "Setup")
+
     }
 
     private var mType: Int? = null
@@ -125,4 +142,82 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
         startActivity(intent)
 
     }
+
+    // todo add listener in inside the class
+
+
+    private fun addVehicleApiCall() {
+
+        var request = VehicleResponse(
+            PlateInfoResponse(
+                number = "HRS112022",
+                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
+            ),
+            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
+        )
+        vehicleMgmtViewModel.addVehicleApi(request);
+        vehicleMgmtViewModel.addVehicleApiVal.observe(this,
+            {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        if (it.data!!.body() == null) {
+                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
+                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
+                        }
+
+                    }
+
+                    Status.ERROR -> {
+                        showToast(it.message)
+                    }
+
+                    Status.LOADING -> {
+                        // show/hide loader
+                        Log.d("GetAlert: ", "Data loading")
+                    }
+                }
+            })
+
+    }
+
+    private fun updateVehicleApiCall() {
+
+        var request = VehicleResponse(
+            PlateInfoResponse(
+                number = "HRS112022",
+                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
+            ),
+            VehicleInfoResponse("AUDI", "Q5", "2021", "", "REGULAR", "", "BLACK", "Class B", "")
+        )
+        vehicleMgmtViewModel.updateVehicleApi(request);
+        vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
+            {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        if (it.data!!.body() == null) {
+                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
+                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
+                        }
+
+                    }
+
+                    Status.ERROR -> {
+                        showToast(it.message)
+                    }
+
+                    Status.LOADING -> {
+                        // show/hide loader
+                        Log.d("GetAlert: ", "Data loading")
+                    }
+                }
+            })
+
+    }
+    private fun showToast(message: String?) {
+        message?.let {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.heandroid.utils
 
+//todo remove this class
+
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false
