@@ -59,13 +59,6 @@ class DashboardFragment : BaseFragment() {
 
     }
 
-//    private fun setupViewModel() {
-//        Log.d("DummyLogin", "set up view model")
-//        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
-//        dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
-//        Log.d("ViewModelSetUp: ", "Setup")
-//    }
-
     private fun setupObservers() {
 
         var stringBuilder = StringBuilder()
@@ -164,5 +157,5 @@ class DashboardFragment : BaseFragment() {
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
-    
+
 }

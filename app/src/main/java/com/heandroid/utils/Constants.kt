@@ -43,11 +43,6 @@ object Constants {
     // const val LOGIN_URL = "https://maas-test.services.conduent.com/oauth/token/"
     // const val POSTS_URL = ""
 
-    /*accountOverview: `${BOSUSER}account/overview`,
-    paymentList: `${PAYMENTS}account/retrievepaymentslist`,
-    vehicleInfo: `${BOSUSER}account/vehicle`,
-    TransationHistory: `${TRIPS}transactions`,*/
-
     const val FORGOT_USERNAME_URL =
         "https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12"
     const val SHOW_SCREEN = "show_screen"

@@ -2,21 +2,32 @@ package com.heandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.databinding.FragmentVrmClassDetailsBinding
 import com.heandroid.dialog.VehicleAddConfirm
 import com.heandroid.listener.AddVehicleListener
+import com.heandroid.model.EmptyApiResponse
+import com.heandroid.model.PlateInfoResponse
+import com.heandroid.model.VehicleInfoResponse
 import com.heandroid.model.VehicleResponse
+import com.heandroid.network.ApiHelperImpl
+import com.heandroid.network.RetrofitInstance
+import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
+import com.heandroid.viewmodel.VehicleMgmtViewModel
+import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
+    private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var dataBinding: FragmentVrmClassDetailsBinding
     private lateinit var mVehicleDetails: VehicleResponse
     val TAG = "VrmEditClassesActivity"
@@ -26,6 +37,15 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.fragment_vrm_class_details)
         setUpView()
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
+
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
+        Log.d("ViewModelSetUp: ", "Setup")
+        vehicleMgmtViewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
+        Log.d("ViewModelSetUp: ", "Setup")
     }
 
     private var mClassType = ""
@@ -110,20 +130,66 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
     override fun onAddClick(details: VehicleResponse) {
 
-         Intent(this, VehicleDetailActivity::class.java).apply {
-
-             putExtra("list", details)
-             putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
-             putExtra(
-                 Constants.VEHICLE_SCREEN_KEY,
-                 Constants.VEHICLE_SCREEN_TYPE_ADD
-             )
-
-             startActivity(this)
-
-         }
+        addVehicleApiCall()
 
     }
 
+    fun showVehicleDetails()
+    {
+        Intent(this, VehicleDetailActivity::class.java).apply {
+
+            putExtra(Constants.DATA, mVehicleDetails)
+            putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
+            putExtra(
+                Constants.VEHICLE_SCREEN_KEY,
+                Constants.VEHICLE_SCREEN_TYPE_ADD
+            )
+
+            startActivity(this)
+        }
+    }
+
+    private fun addVehicleApiCall() {
+
+//        var request = VehicleResponse(
+//            PlateInfoResponse(
+//                number = "HRS112022",
+//                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
+//            ),
+//            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
+//        )
+       // vehicleMgmtViewModel.addVehicleApi(request);
+        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails);
+        vehicleMgmtViewModel.addVehicleApiVal.observe(this,
+            {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        if (it.data!!.body() == null) {
+                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
+                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
+                            showVehicleDetails()
+                        }
+
+                    }
+
+                    Status.ERROR -> {
+                        showToast(it.message)
+                    }
+
+                    Status.LOADING -> {
+                        // show/hide loader
+                        Log.d("GetAlert: ", "Data loading")
+                    }
+                }
+            })
+
+    }
+
+    private fun showToast(message: String?) {
+
+        message?.let {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
 }

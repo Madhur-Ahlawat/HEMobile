@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -13,21 +14,22 @@ import com.heandroid.R
 import com.heandroid.adapter.VrmHeaderAdapter
 import com.heandroid.databinding.FragmentVehicleDetailBinding
 import com.heandroid.model.PlateInfoResponse
-import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleInfoResponse
 import com.heandroid.model.VehicleResponse
 import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
+import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
-import com.heandroid.viewmodel.DashboardViewModel
+import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
+    private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var mAdapter: VrmHeaderAdapter
 
     private lateinit var dataBinding: FragmentVehicleDetailBinding
@@ -42,17 +44,12 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         dataBinding =
             DataBindingUtil.setContentView(this, R.layout.fragment_vehicle_detail)
         setUp()
-    }
-
-    private fun setupViewModel() {
-        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
-       // dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
-        Log.d("ViewModelSetUp: ", "Setup")
+        setupViewModel()
     }
 
     private fun setUp() {
         mVehicleDetails =
-            intent?.getSerializableExtra("list") as VehicleResponse
+            intent?.getSerializableExtra(Constants.DATA) as VehicleResponse
         mScreeType = intent?.getIntExtra(Constants.VEHICLE_SCREEN_KEY, 0)!!
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         Logg.logging(TAG, " mScreeType  $mScreeType ")
@@ -102,10 +99,17 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
     }
 
+    private fun setupViewModel() {
+        Log.d("DummyLogin", "set up view model")
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
+        Log.d("ViewModelSetUp: ", "Setup")
+        vehicleMgmtViewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
+        Log.d("ViewModelSetUp: ", "Setup")
+    }
+
     private fun setClickEvents() {
 
         dataBinding.conformBtn.setOnClickListener {
-
             val intent = Intent(this, ActivityFutureCrossing::class.java)
             intent.putExtra("list", mVehicleDetails)
             startActivity(intent)
@@ -172,6 +176,49 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
     }
 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
+        updateVehicleApiCall(details)
+    }
+
+
+    private fun updateVehicleApiCall(details: VehicleResponse) {
+
+//        var request = VehicleResponse(
+//            PlateInfoResponse(
+//                number = "HRS112022",
+//                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
+//            ),
+//            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
+//        )
+        // vehicleMgmtViewModel.addVehicleApi(request);
+        vehicleMgmtViewModel.updateVehicleApi(mVehicleDetails);
+        vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
+            {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        if (it.data!!.body() == null) {
+                            var apiResponse = EmptyApiResponse(200, "Updated successfully.")
+                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
+                        }
+
+                    }
+
+                    Status.ERROR -> {
+                        showToast(it.message)
+                    }
+
+                    Status.LOADING -> {
+                        // show/hide loader
+                        Log.d("UpdateApi: ", "Data loading")
+                    }
+                }
+            })
+
+    }
+
+    private fun showToast(message: String?) {
+        message?.let{
+            Toast.makeText(this, message , Toast.LENGTH_SHORT).show()
+        }
     }
 
 
