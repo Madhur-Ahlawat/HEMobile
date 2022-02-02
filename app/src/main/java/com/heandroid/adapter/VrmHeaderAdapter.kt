@@ -16,7 +16,7 @@ import com.heandroid.model.VehicleTitleAndSub
 import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.vrm_header_lyt.view.*
 
-class VrmHeaderAdapter(private val mContext: Context, private val onItemClick: ItemClickListener) :
+class VrmHeaderAdapter(private val mContext: Context, private val onItemClick: ItemClickListener?=null) :
     RecyclerView.Adapter<VrmHeaderAdapter.VrmHeaderViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()
@@ -117,15 +117,12 @@ class VrmHeaderAdapter(private val mContext: Context, private val onItemClick: I
         holder.setView(mContext, vehicleItem)
 
         holder.itemView.cardview_top.setOnClickListener {
-            onItemClick.onItemClick(vehicleItem, position)
+            onItemClick?.onItemClick(vehicleItem, position)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (vehicleList == null) {
-            0
-        } else {
-            vehicleList?.size
-        }
+        return vehicleList.size
+
     }
 }

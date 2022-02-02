@@ -61,7 +61,6 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_HISTORY) {
 
             dataBinding.llyt.visibility = View.VISIBLE
-            dataBinding.vehicleDetailsTxt.callOnClick()
             dataBinding.addVehiclesTxt.visibility = View.GONE
             dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_vehicle_history)
             dataBinding.conformBtn.text = getString(R.string.str_save)
@@ -121,7 +120,6 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
     private val mList = ArrayList<VehicleResponse>()
     private fun setAdapter() {
 
-
         val plateInfoResp = PlateInfoResponse(
             mVehicleDetails!!.plateInfo.number!!,
             mVehicleDetails.plateInfo.country!!,
@@ -131,6 +129,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
             "",
             ""
         )
+
         val vehicleInfoResp = VehicleInfoResponse(
             mVehicleDetails.vehicleInfo.make,
             mVehicleDetails.vehicleInfo.model,
@@ -143,7 +142,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
             "23 Aug 2022"
         )
 
-        val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp)
+        val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp,true)
         mList.add(mVehicleResponse1)
         Logg.logging(TAG, " mList  $mList ")
 
@@ -152,7 +151,6 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerViewHeader.setHasFixedSize(true)
         dataBinding.recyclerViewHeader.adapter = mAdapter
-
 
     }
 

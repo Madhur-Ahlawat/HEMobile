@@ -88,13 +88,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
-                    android:background="@drawable/text_unselected_bg"
+                    android:background="@drawable/text_selected_bg"
                     android:gravity="center"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_4sdp"
-
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:text="@string/str_vehicle_details"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
@@ -106,8 +105,8 @@
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:background="@drawable/text_unselected_bg"
                     android:gravity="center"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:text="@string/str_crossing_history"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
@@ -119,69 +118,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_header"
             android:layout_width="match_parent"
+            android:layout_above="@+id/conform_btn"
             android:layout_height="wrap_content"
             android:layout_below="@+id/top_layout" />
 
-        <!--
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardview_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/add_vehicles_txt"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@color/white"
-                    android:backgroundTint="@color/white"
-                    android:elevation="@dimen/_2sdp"
-                    android:fadingEdgeLength="@dimen/_2sdp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_4sdp"
-                        android:layout_marginEnd="@dimen/_4sdp"
-                        android:background="@color/white">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/vrm_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:text="LO6NRO"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp"
-                            android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/arrow_img"
-                            android:layout_width="@dimen/_26sdp"
-                            android:layout_height="@dimen/_26sdp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
-                            app:tint="@color/black" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:background="@color/add_stroke_clr"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-        -->
-
+<!--
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_bottom"
             android:layout_width="match_parent"
@@ -198,10 +139,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
+                android:background="@color/green"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.card.MaterialCardView>
+-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/conform_btn"
