@@ -12,9 +12,11 @@
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_class_c_second.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_class_d.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_priority_icon.xml" value="0.1078125" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/ic_tick_mark.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/notification_menu_selector.xml" value="0.1361111111111111" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/text_selected_bg.xml" value="0.1078125" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/text_unselected_bg.xml" value="0.1078125" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/drawable/tick_mark.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_edit_profile.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_forgot_password.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/activity_forgot_password_recover.xml" value="0.1" />
@@ -38,6 +40,7 @@
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_second.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_forgot_password_third.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
+        <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_payment_success.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_vehicle.xml" value="0.1" />
         <entry key="..\:/Users/cherukuri.pench/AndroidStudioProjects/HE/He10122021GitClone/app/src/main/res/layout/fragment_vehicle_detail.xml" value="0.1" />

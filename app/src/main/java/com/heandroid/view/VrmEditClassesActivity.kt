@@ -2,13 +2,16 @@ package com.heandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.databinding.FragmentVrmClassDetailsBinding
 import com.heandroid.dialog.VehicleAddConfirm
 import com.heandroid.listener.AddVehicleListener
 import com.heandroid.model.VehicleResponse
+import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
@@ -95,7 +98,11 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
 
             } else {
-
+                Snackbar.make(
+                    dataBinding.classAView,
+                    "Please select the class and checkbox",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -104,6 +111,12 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     override fun onAddClick(details: VehicleResponse) {
         val intent = Intent(this, VehicleDetailActivity::class.java)
         intent.putExtra("list", details)
+        intent.putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
+        intent.putExtra(
+            Constants.VEHICLE_SCREEN_KEY,
+            Constants.VEHICLE_SCREEN_TYPE_ADD
+        )
+
         startActivity(intent)
 
     }

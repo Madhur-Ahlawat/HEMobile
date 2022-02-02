@@ -28,10 +28,10 @@ object Constants {
     val PAYMENT_RESPONSE = "payment_resp"
     val PAYMENT_DATA = "payment_data"
     val VEHICLE_DATA = "vehicle_data"
-    val VEHICLE_SCREEN_TYPE_LIST = 0
-    val VEHICLE_SCREEN_TYPE_ADD = 1
-    val VEHICLE_SCREEN_TYPE_HISTORY = 2
-    val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val VEHICLE_SCREEN_TYPE_LIST = 0
+    const val VEHICLE_SCREEN_TYPE_ADD = 1
+    const val VEHICLE_SCREEN_TYPE_HISTORY = 2
+    const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
     val VEHICLE_RESPONSE = "vehicle_api_resp"
 
     //const val BASE_URL = "https://maas-test.services.conduent.com"

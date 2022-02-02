@@ -19,18 +19,18 @@ import com.heandroid.adapter.VrmHistoryAdapter
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.listener.AddVehicleListener
+import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleApiResp
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Constants
+import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
-class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
+class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickListener {
 
-    private lateinit var vehicleListAdapter: VehicleListAdapter
     private lateinit var databinding: ActivityVehicleMgmtBinding
     private lateinit var mAdapter: VrmHeaderAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,14 +62,12 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
                     )
                     databinding.conformBtn.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
                     databinding.conformBtn.iconTint = ColorStateList.valueOf(Color.WHITE)
-
                 }
 
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
                     databinding.idToolBarLyt.title_txt.text = "Vehicles History"
                     databinding.conformBtn.visibility = View.GONE
                     setHistoryAdapter()
-
                 }
 
             }
@@ -93,12 +91,16 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
 
     }
 
+    private val mVehicleList = ArrayList<VehicleResponse>()
+
     private fun setHistoryAdapter() {
         var bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
         var vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
-        val mAdapter = VrmHistoryAdapter(this)
-        mAdapter.setList(vehicleResp.vehicleList)
+        val mAdapter = VrmHistoryAdapter(this, this)
+        mVehicleList.clear()
+        mVehicleList.addAll(vehicleResp.vehicleList)
+        mAdapter.setList(mVehicleList)
         databinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         databinding.recyclerViewHeader.setHasFixedSize(true)
         databinding.recyclerViewHeader.adapter = mAdapter
@@ -110,8 +112,11 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
         var bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
         var vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
-        mAdapter = VrmHeaderAdapter(this)
-        mAdapter.setList(vehicleResp.vehicleList)
+        mVehicleList.clear()
+        mVehicleList.addAll(vehicleResp.vehicleList)
+
+        mAdapter = VrmHeaderAdapter(this, this)
+        mAdapter.setList(mVehicleList)
         databinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         databinding.recyclerViewHeader.setHasFixedSize(true)
         databinding.recyclerViewHeader.adapter = mAdapter
@@ -123,6 +128,48 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener {
         val intent = Intent(this, VrmEditMakeModelColorActivity::class.java)
         intent.putExtra("list", details)
         startActivity(intent)
+
+    }
+
+    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
+    }
+
+    override fun onItemClick(details: VehicleResponse, pos: Int) {
+
+        mType?.apply {
+            when (this) {
+
+                Constants.VEHICLE_SCREEN_TYPE_LIST -> {
+
+                    details.isExpanded = !details.isExpanded
+                    Logg.logging("VehcileMgm","  details.isExpanded  ${details.isExpanded}")
+                    mVehicleList[pos].isExpanded = details.isExpanded
+
+                    mAdapter.notifyItemChanged(pos)
+
+                }
+
+                Constants.VEHICLE_SCREEN_TYPE_ADD -> {
+                }
+
+                Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
+
+                    Intent(this@VehicleMgmtActivity, VehicleDetailActivity::class.java).apply {
+                        putExtra("list", details)
+                        putExtra(
+                            Constants.VEHICLE_SCREEN_KEY,
+                            Constants.VEHICLE_SCREEN_TYPE_HISTORY
+                        )
+                        startActivity(this)
+
+                    }
+
+                }
+
+            }
+
+        }
+
 
     }
 }

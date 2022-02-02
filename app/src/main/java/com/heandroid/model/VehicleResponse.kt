@@ -8,7 +8,7 @@ data class VehicleResponse(
     var plateInfo: PlateInfoResponse,
 
     @SerializedName("vehicleInfo")
-    var vehicleInfo: VehicleInfoResponse,
+    var vehicleInfo: VehicleInfoResponse, var isExpanded: Boolean = false
 
-    ):Serializable
+) : Serializable
 

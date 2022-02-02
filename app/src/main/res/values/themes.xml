@@ -72,4 +72,8 @@
         <item name="strokeWidth">@dimen/_1sdp</item>
     </style>
 
+
+    <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
+        <item name="colorPrimary">#9E9E9E</item>
+    </style>
 </resources>
