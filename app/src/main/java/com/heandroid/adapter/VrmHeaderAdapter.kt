@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
+import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleResponse
 import com.heandroid.model.VehicleTitleAndSub
 import com.heandroid.utils.Logg
+import kotlinx.android.synthetic.main.vrm_header_lyt.view.*
 
-class VrmHeaderAdapter(private val mContext: Context) :
+class VrmHeaderAdapter(private val mContext: Context, private val onItemClick: ItemClickListener) :
     RecyclerView.Adapter<VrmHeaderAdapter.VrmHeaderViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()
@@ -27,7 +29,7 @@ class VrmHeaderAdapter(private val mContext: Context) :
     }
 
     class VrmHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val TAG= "VrmHeaderAdapter"
+        private val TAG = "VrmHeaderAdapter"
 
         private val vrmNoTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_title)
         private val arrowImg: AppCompatImageView = itemView.findViewById(R.id.arrow_img)
@@ -38,21 +40,18 @@ class VrmHeaderAdapter(private val mContext: Context) :
 
 
             vrmNoTxt.text = "${vehicleItem.plateInfo.number}"
-            arrowImg.animate().rotation(180f).start()
-            cardviewTop.setOnClickListener {
+//            arrowImg.animate().rotation(180f).start()
 
-                /*  if (isOpen) {
-                      isOpen = false
-                      dataBinding.cardViewBottom.visibility = View.VISIBLE
-                      dataBinding.arrowImg.animate().rotation(180f).start()
-                  } else {
-                      isOpen = true
-                      dataBinding.cardViewBottom.visibility = View.GONE
-                      dataBinding.arrowImg.animate().rotation(0f).start()
+            if (vehicleItem.isExpanded) {
+                mRecyclerView.visibility = View.VISIBLE
+                arrowImg.animate().rotation(180f).start()
+            } else {
+                mRecyclerView.visibility = View.GONE
+                arrowImg.animate().rotation(0f).start()
 
-                  }
-  */
             }
+            val mList = ArrayList<VehicleTitleAndSub>()
+            mList.clear()
 
             for (i in 0..5) {
                 when (i) {
@@ -75,13 +74,17 @@ class VrmHeaderAdapter(private val mContext: Context) :
                         val mem2 = VehicleTitleAndSub("Colour", vehicleItem.vehicleInfo.color)
                         mList.add(mem2)
                     }
-                    4->{
-                        val mem2 = VehicleTitleAndSub("Class", vehicleItem.vehicleInfo.vehicleClassDesc)
+                    4 -> {
+                        val mem2 =
+                            VehicleTitleAndSub("Class", vehicleItem.vehicleInfo.vehicleClassDesc)
                         mList.add(mem2)
 
                     }
-                    5->{
-                        val mem2 = VehicleTitleAndSub("DateAdded", vehicleItem.vehicleInfo.effectiveStartDate)
+                    5 -> {
+                        val mem2 = VehicleTitleAndSub(
+                            "DateAdded",
+                            vehicleItem.vehicleInfo.effectiveStartDate
+                        )
                         mList.add(mem2)
 
                     }
@@ -100,8 +103,6 @@ class VrmHeaderAdapter(private val mContext: Context) :
 
         }
 
-        private val mList = ArrayList<VehicleTitleAndSub>()
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VrmHeaderViewHolder {
@@ -114,6 +115,10 @@ class VrmHeaderAdapter(private val mContext: Context) :
 
         val vehicleItem = vehicleList[position]
         holder.setView(mContext, vehicleItem)
+
+        holder.itemView.cardview_top.setOnClickListener {
+            onItemClick.onItemClick(vehicleItem, position)
+        }
     }
 
     override fun getItemCount(): Int {

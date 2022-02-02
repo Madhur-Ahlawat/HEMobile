@@ -19,7 +19,7 @@ data class VehicleInfoResponse(
     @SerializedName("color")
     var color: String="",
     @SerializedName("vehicleClassDesc")
-    val vehicleClassDesc: String="",
+    var vehicleClassDesc: String="",
     @SerializedName("effectiveStartDate")
     val effectiveStartDate: String=""
 ) : Serializable

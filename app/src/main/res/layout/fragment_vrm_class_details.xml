@@ -14,7 +14,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -29,7 +28,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/classVehicleCheckbox"
             android:layout_width="match_parent"
@@ -38,9 +36,8 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
             android:gravity="start"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
             android:text="I declare that the information given above is correct"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,22 +69,23 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:includeFontPadding="true"
             android:text="@string/str_cancel"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/continue_button"
-            app:strokeColor="@color/design_default_color_primary" />
+            app:strokeColor="@color/green" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/classAView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/_6sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title">
@@ -95,17 +93,21 @@
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/classA_RadioButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvclassB"
+                android:id="@+id/tvclassA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class A"
+                android:text="@string/str_class_a"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/_16ssp"
+                android:fontFamily="@font/roboto_bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintStart_toEndOf="@+id/classA_RadioButton"
                 app:layout_constraintTop_toTopOf="@+id/classA_RadioButton"
@@ -115,20 +117,23 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motorcycles and quadcycles"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/grey_two"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/str_motorcycles_quadcycles"
                 app:layout_constraintBottom_toBottomOf="@+id/classA_RadioButton"
-                app:layout_constraintStart_toStartOf="@+id/tvclassB" />
+                app:layout_constraintStart_toStartOf="@+id/tvclassA" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/tvclassB"
+                app:layout_constraintTop_toTopOf="@+id/tvclassA"
                 app:srcCompat="@drawable/ic_class_a" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/_6sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +152,7 @@
                 android:id="@+id/classB_RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,9 +161,10 @@
                 android:id="@+id/tvClassB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class B"
+                android:text="@string/str_class_b"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintBottom_toTopOf="@+id/classBSub"
                 app:layout_constraintStart_toEndOf="@+id/classB_RadioButton"
                 app:layout_constraintTop_toTopOf="@+id/classB_RadioButton"
@@ -167,7 +174,10 @@
                 android:id="@+id/classBSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motorcycles and quadcycles"
+                android:text="@string/str_goods_vans_car_based_vans"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/grey_two"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/classB_RadioButton"
                 app:layout_constraintStart_toStartOf="@+id/tvClassB" />
 
@@ -175,7 +185,7 @@
                 android:id="@+id/classBType1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintBottom_toTopOf="@+id/classBType2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
@@ -187,8 +197,8 @@
                 android:id="@+id/classBType2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
@@ -213,8 +223,11 @@
                 android:id="@+id/classBDesc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:text="\u2022 first a;slkfjalsjflasdjf;asjdflassjflaksdjf"
+                android:padding="@dimen/_3sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/str_cars_with_or_without"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -222,8 +235,11 @@
                 android:id="@+id/classBDesc2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:text="\u2022 asjfasdjf;alskdjfas"
+                android:padding="@dimen/_3sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/str_Motorhomes_passengers_vans"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/classBDesc1" />
 
@@ -235,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/_6sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/classBDesc">
@@ -244,6 +260,9 @@
                 android:id="@+id/classC_RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -251,9 +270,10 @@
                 android:id="@+id/tvClassC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class C"
+                android:text="@string/str_class_c"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintBottom_toTopOf="@+id/classCSub"
                 app:layout_constraintStart_toEndOf="@+id/classC_RadioButton"
                 app:layout_constraintTop_toTopOf="@+id/classC_RadioButton"
@@ -263,7 +283,10 @@
                 android:id="@+id/classCSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motorcycles and quadcycles"
+                android:textColor="@color/grey_two"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="@dimen/_14ssp"
+                android:text="@string/str_axles_vehicles"
                 app:layout_constraintBottom_toBottomOf="@+id/classC_RadioButton"
                 app:layout_constraintStart_toStartOf="@+id/tvClassC" />
 
@@ -271,7 +294,7 @@
                 android:id="@+id/classCType1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvClassC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -286,7 +309,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="@dimen/_6sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/classCView">
@@ -295,6 +318,8 @@
                 android:id="@+id/classD_RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -302,9 +327,10 @@
                 android:id="@+id/tvClassD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class D"
+                android:text="@string/str_class_d"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintBottom_toTopOf="@+id/classDSub"
                 app:layout_constraintStart_toEndOf="@+id/classD_RadioButton"
                 app:layout_constraintTop_toTopOf="@+id/classD_RadioButton"
@@ -314,7 +340,10 @@
                 android:id="@+id/classDSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Motorcycles and quadcycles"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/grey_two"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/str_2_plus_axles"
                 app:layout_constraintBottom_toBottomOf="@+id/classD_RadioButton"
                 app:layout_constraintStart_toStartOf="@+id/tvClassD" />
 
@@ -322,7 +351,7 @@
                 android:id="@+id/classDType1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvClassD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -330,7 +359,6 @@
                 app:layout_constraintTop_toTopOf="@+id/tvClassD"
                 app:srcCompat="@drawable/ic_class_d" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

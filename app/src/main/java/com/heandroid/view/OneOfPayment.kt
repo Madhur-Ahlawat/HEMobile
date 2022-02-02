@@ -17,6 +17,7 @@ import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.utils.Logg
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.model.VehicleResponse
+import com.heandroid.utils.Constants
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener {
@@ -117,6 +118,11 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
         val intent = Intent(this, VehicleDetailActivity::class.java)
         intent.putExtra("list",details)
+        intent.putExtra(
+            Constants.VEHICLE_SCREEN_KEY,
+            Constants.VEHICLE_SCREEN_TYPE_ADD
+        )
+
         startActivity(intent)
 /*
         val mFrag = VehicleDetailFragment.newInstance(details)

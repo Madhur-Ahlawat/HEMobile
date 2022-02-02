@@ -3,6 +3,7 @@ package com.heandroid.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -15,21 +16,25 @@ import com.heandroid.model.PlateInfoResponse
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleInfoResponse
 import com.heandroid.model.VehicleResponse
+import com.heandroid.listener.ItemClickListener
+import com.heandroid.model.*
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
+import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.DashboardViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
-class VehicleDetailActivity : AppCompatActivity() {
+class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
     private lateinit var mAdapter: VrmHeaderAdapter
 
     private lateinit var dataBinding: FragmentVehicleDetailBinding
 
     private lateinit var mVehicleDetails: VehicleResponse
-    private lateinit var dashboardViewModel: DashboardViewModel
+
+    private var mScreeType = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,14 +46,57 @@ class VehicleDetailActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
-        dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
+       // dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
     private fun setUp() {
         mVehicleDetails =
             intent?.getSerializableExtra("list") as VehicleResponse
+        mScreeType = intent?.getIntExtra(Constants.VEHICLE_SCREEN_KEY, 0)!!
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
+        Logg.logging(TAG, " mScreeType  $mScreeType ")
+
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+
+            dataBinding.tickLayout.visibility = View.VISIBLE
+            dataBinding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
+            dataBinding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
+            dataBinding.addVehiclesTxt.visibility = View.GONE
+
+        }
+
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_HISTORY) {
+
+            dataBinding.llyt.visibility = View.VISIBLE
+            dataBinding.vehicleDetailsTxt.callOnClick()
+            dataBinding.addVehiclesTxt.visibility = View.GONE
+            dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_vehicle_history)
+            dataBinding.conformBtn.text = getString(R.string.str_save)
+
+        }
+
+        dataBinding.vehicleDetailsTxt.setOnClickListener {
+
+            dataBinding.vehicleDetailsTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+            dataBinding.crossingHistoryTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+            dataBinding.vehicleDetailsTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.white
+                )
+            )
+            dataBinding.crossingHistoryTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.black
+                )
+            )
+
+        }
+
         setBtnActivated()
         setAdapter()
         setClickEvents()
@@ -66,7 +114,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         }
 
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
-            onBackPressed()
+//            onBackPressed()
         }
 
     }
@@ -81,7 +129,6 @@ class VehicleDetailActivity : AppCompatActivity() {
     private val mList = ArrayList<VehicleResponse>()
     private fun setAdapter() {
 
-        Logg.logging(TAG, " mList  $mList ")
 
         val plateInfoResp = PlateInfoResponse(
             mVehicleDetails!!.plateInfo.number!!,
@@ -106,11 +153,9 @@ class VehicleDetailActivity : AppCompatActivity() {
 
         val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp)
         mList.add(mVehicleResponse1)
-//        mList.add(mVehicleResponse2)
-//        mList.add(mVehicleResponse3)
-//        mList.add(mVehicleResponse4)
+        Logg.logging(TAG, " mList  $mList ")
 
-        mAdapter = VrmHeaderAdapter(this)
+        mAdapter = VrmHeaderAdapter(this, this)
         mAdapter.setList(mList)
         dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerViewHeader.setHasFixedSize(true)
@@ -123,6 +168,12 @@ class VehicleDetailActivity : AppCompatActivity() {
         dataBinding.conformBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_color))
 
         dataBinding.conformBtn.setTextColor(ContextCompat.getColor(this, R.color.white))
+    }
+
+    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
+    }
+
+    override fun onItemClick(details: VehicleResponse, pos: Int) {
     }
 
 

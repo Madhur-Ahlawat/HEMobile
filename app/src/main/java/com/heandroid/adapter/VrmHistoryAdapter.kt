@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
+import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleResponse
 import com.heandroid.model.VehicleTitleAndSub
 import com.heandroid.utils.Logg
 
-class VrmHistoryAdapter(private val mContext: Context) :
+class VrmHistoryAdapter(private val mContext: Context, private val onItemClick: ItemClickListener) :
     RecyclerView.Adapter<VrmHistoryAdapter.VrmHeaderViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()
@@ -53,6 +54,10 @@ class VrmHistoryAdapter(private val mContext: Context) :
 
         val vehicleItem = vehicleList[position]
         holder.setView(mContext, vehicleItem)
+
+        holder.itemView.setOnClickListener {
+            onItemClick.onItemClick(vehicleItem, position)
+        }
     }
 
     override fun getItemCount(): Int {

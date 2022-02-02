@@ -44,7 +44,7 @@
             android:theme="@style/Theme.HEMobileLight" />
         <activity
             android:name=".view.VrmEditClassesActivity"
-            android:theme="@style/Theme.HEMobile" />
+            android:theme="@style/Theme.HEMobileLight" />
         <activity
             android:name=".view.VrmEditMakeModelColorActivity"
             android:theme="@style/Theme.HEMobileLight" />
