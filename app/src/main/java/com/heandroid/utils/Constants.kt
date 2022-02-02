@@ -15,7 +15,7 @@ object Constants {
     const val MESSAGE_MODE = 2
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
-    const val DATA = "data"
+    const val DATA = "list"
     const val POST_MAIL = "post"
     const val MESSAGE = "phone"
     const val EMAIL = "email"
@@ -28,11 +28,12 @@ object Constants {
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
     const val VEHICLE_DATA = "vehicle_data"
-    const val VEHICLE_SCREEN_TYPE_LIST = 0
-    const val VEHICLE_SCREEN_TYPE_ADD = 1
-    val VEHICLE_SCREEN_TYPE_HISTORY = 2
-    val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
-    val VEHICLE_RESPONSE = "vehicle_api_resp"
+    const val VEHICLE_SCREEN_TYPE_LIST = 1
+    const val VEHICLE_SCREEN_TYPE_ADD = 2
+    const val VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT = 3
+    const val VEHICLE_SCREEN_TYPE_HISTORY = 4
+    const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val VEHICLE_RESPONSE = "vehicle_api_resp"
 
     //const val BASE_URL = "https://maas-test.services.conduent.com"
     const val BASE_URL = "http://10.190.176.7:8080/"

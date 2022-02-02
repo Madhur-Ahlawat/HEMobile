@@ -72,6 +72,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 }
 
                 Constants.VEHICLE_SCREEN_TYPE_ADD -> {
+
                     databinding.idToolBarLyt.title_txt.text = "Add vehicles"
                     databinding.addVehiclesTxt.text = "Add vehicles to your account"
                     databinding.conformBtn.text = "Add Vehicle"
@@ -113,8 +114,8 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
     private val mVehicleList = ArrayList<VehicleResponse>()
 
     private fun setHistoryAdapter() {
-        var bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
-        var vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
+        val bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
+        val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
         val mAdapter = VrmHistoryAdapter(this, this)
         mVehicleList.clear()
@@ -146,86 +147,11 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
         val intent = Intent(this, VrmEditMakeModelColorActivity::class.java)
         intent.putExtra("list", details)
+        intent.putExtra(Constants.VEHICLE_SCREEN_KEY, mType)
         startActivity(intent)
 
     }
 
-    // todo add listener in inside the class
-
-
-    private fun addVehicleApiCall() {
-
-        var request = VehicleResponse(
-            PlateInfoResponse(
-                number = "HRS112022",
-                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
-            ),
-            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
-        )
-        vehicleMgmtViewModel.addVehicleApi(request);
-        vehicleMgmtViewModel.addVehicleApiVal.observe(this,
-            {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        if (it.data!!.body() == null) {
-                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
-                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
-                        }
-
-                    }
-
-                    Status.ERROR -> {
-                        showToast(it.message)
-                    }
-
-                    Status.LOADING -> {
-                        // show/hide loader
-                        Log.d("GetAlert: ", "Data loading")
-                    }
-                }
-            })
-
-    }
-
-    private fun updateVehicleApiCall() {
-
-        var request = VehicleResponse(
-            PlateInfoResponse(
-                number = "HRS112022",
-                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
-            ),
-            VehicleInfoResponse("AUDI", "Q5", "2021", "", "REGULAR", "", "BLACK", "Class B", "")
-        )
-        vehicleMgmtViewModel.updateVehicleApi(request);
-        vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
-            {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        if (it.data!!.body() == null) {
-                            var apiResponse = EmptyApiResponse(200, "Added successfully.")
-                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
-                        }
-
-                    }
-
-                    Status.ERROR -> {
-                        showToast(it.message)
-                    }
-
-                    Status.LOADING -> {
-                        // show/hide loader
-                        Log.d("GetAlert: ", "Data loading")
-                    }
-                }
-            })
-
-    }
-    private fun showToast(message: String?) {
-        message?.let {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        }
-
-    }
 
     override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
     }
@@ -238,7 +164,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
 
                     details.isExpanded = !details.isExpanded
-                    Logg.logging("VehcileMgm","  details.isExpanded  ${details.isExpanded}")
+                    Logg.logging("VehcileMgm", "  details.isExpanded  ${details.isExpanded}")
                     mVehicleList[pos].isExpanded = details.isExpanded
 
                     mAdapter.notifyItemChanged(pos)
@@ -250,12 +176,8 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
 
-                    Intent(this@VehicleMgmtActivity, VehicleDetailActivity::class.java).apply {
+                    Intent(this@VehicleMgmtActivity, ActivityVehicleHistory::class.java).apply {
                         putExtra("list", details)
-                        putExtra(
-                            Constants.VEHICLE_SCREEN_KEY,
-                            Constants.VEHICLE_SCREEN_TYPE_HISTORY
-                        )
                         startActivity(this)
 
                     }

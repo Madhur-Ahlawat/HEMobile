@@ -69,50 +69,6 @@
 
             </RelativeLayout>
 
-
-            <LinearLayout
-                android:id="@+id/llyt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/vehicle_details_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:background="@drawable/text_selected_bg"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:text="@string/str_vehicle_details"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/crossing_history_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:background="@drawable/text_unselected_bg"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:text="@string/str_crossing_history"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -55,41 +55,11 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         Logg.logging(TAG, " mScreeType  $mScreeType ")
 
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-
+            dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_add_vehicle)
             dataBinding.tickLayout.visibility = View.VISIBLE
             dataBinding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
             dataBinding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
             dataBinding.addVehiclesTxt.visibility = View.GONE
-
-        }
-
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_HISTORY) {
-
-            dataBinding.llyt.visibility = View.VISIBLE
-            dataBinding.addVehiclesTxt.visibility = View.GONE
-            dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_vehicle_history)
-            dataBinding.conformBtn.text = getString(R.string.str_save)
-
-        }
-
-        dataBinding.vehicleDetailsTxt.setOnClickListener {
-
-            dataBinding.vehicleDetailsTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-            dataBinding.crossingHistoryTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-            dataBinding.vehicleDetailsTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.white
-                )
-            )
-            dataBinding.crossingHistoryTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.black
-                )
-            )
 
         }
 
@@ -110,14 +80,16 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
     private fun setClickEvents() {
 
         dataBinding.conformBtn.setOnClickListener {
-            val intent = Intent(this, ActivityFutureCrossing::class.java)
-            intent.putExtra("list", mVehicleDetails)
-            startActivity(intent)
+            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
+                val intent = Intent(this, ActivityFutureCrossing::class.java)
+                intent.putExtra("list", mVehicleDetails)
+                startActivity(intent)
+            }
 
         }
 
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
-//            onBackPressed()
+
         }
 
     }
@@ -132,37 +104,72 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
     private val mList = ArrayList<VehicleResponse>()
     private fun setAdapter() {
 
-        val plateInfoResp = PlateInfoResponse(
-            mVehicleDetails!!.plateInfo.number!!,
-            mVehicleDetails.plateInfo.country!!,
-            "HE",
-            "-",
-            "",
-            "",
-            ""
-        )
+        mList.clear()
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
 
-        val vehicleInfoResp = VehicleInfoResponse(
-            mVehicleDetails.vehicleInfo.make,
-            mVehicleDetails.vehicleInfo.model,
-            "2019",
-            "",
-            "1_GVVKGV",
-            "",
-            mVehicleDetails.vehicleInfo.color,
-            "B",
-            "23 Aug 2022"
-        )
+            val plateInfoResp = PlateInfoResponse(
+                mVehicleDetails.plateInfo.number,
+                mVehicleDetails.plateInfo.country,
+                "HE",
+                "-",
+                "",
+                "",
+                ""
+            )
 
-        val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp,true)
-        mList.add(mVehicleResponse1)
+            val vehicleInfoResp = VehicleInfoResponse(
+                mVehicleDetails.vehicleInfo.make,
+                mVehicleDetails.vehicleInfo.model,
+                "",
+                "",
+                "",
+                "",
+                mVehicleDetails.vehicleInfo.color,
+                "",
+                ""
+            )
+
+            val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp, true)
+            mList.add(mVehicleResponse1)
+        } else {
+
+
+            val plateInfoResp = PlateInfoResponse(
+                mVehicleDetails.plateInfo.number,
+                mVehicleDetails.plateInfo.country,
+                "HE",
+                "-",
+                "",
+                "",
+                ""
+            )
+
+            val vehicleInfoResp = VehicleInfoResponse(
+                mVehicleDetails.vehicleInfo.make,
+                mVehicleDetails.vehicleInfo.model,
+                "",
+                "",
+                "",
+                "",
+                mVehicleDetails.vehicleInfo.color,
+                mVehicleDetails.vehicleInfo.vehicleClassDesc,
+                mVehicleDetails.vehicleInfo.effectiveStartDate
+            )
+
+            val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp, true)
+            mList.add(mVehicleResponse1)
+
+        }
+
         Logg.logging(TAG, " mList  $mList ")
 
-        mAdapter = VrmHeaderAdapter(this, this)
-        mAdapter.setList(mList)
-        dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
-        dataBinding.recyclerViewHeader.setHasFixedSize(true)
-        dataBinding.recyclerViewHeader.adapter = mAdapter
+        if (mList.size > 0) {
+            mAdapter = VrmHeaderAdapter(this, this)
+            mAdapter.setList(mList)
+            dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
+            dataBinding.recyclerViewHeader.setHasFixedSize(true)
+            dataBinding.recyclerViewHeader.adapter = mAdapter
+        }
 
     }
 
@@ -176,49 +183,6 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
     }
 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
-        updateVehicleApiCall(details)
-    }
-
-
-    private fun updateVehicleApiCall(details: VehicleResponse) {
-
-//        var request = VehicleResponse(
-//            PlateInfoResponse(
-//                number = "HRS112022",
-//                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
-//            ),
-//            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
-//        )
-        // vehicleMgmtViewModel.addVehicleApi(request);
-        vehicleMgmtViewModel.updateVehicleApi(mVehicleDetails);
-        vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
-            {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        if (it.data!!.body() == null) {
-                            var apiResponse = EmptyApiResponse(200, "Updated successfully.")
-                            Log.d("ApiSuccess : ", apiResponse!!.status.toString())
-                        }
-
-                    }
-
-                    Status.ERROR -> {
-                        showToast(it.message)
-                    }
-
-                    Status.LOADING -> {
-                        // show/hide loader
-                        Log.d("UpdateApi: ", "Data loading")
-                    }
-                }
-            })
-
-    }
-
-    private fun showToast(message: String?) {
-        message?.let{
-            Toast.makeText(this, message , Toast.LENGTH_SHORT).show()
-        }
     }
 
 

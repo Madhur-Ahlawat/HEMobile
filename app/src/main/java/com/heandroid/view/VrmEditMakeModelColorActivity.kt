@@ -17,6 +17,7 @@ class VrmEditMakeModelColorActivity : AppCompatActivity() {
     private lateinit var mVehicleDetails: VehicleResponse
 
     val TAG = "VrmEditMakeModelColorActivity"
+    private var mScreeType = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

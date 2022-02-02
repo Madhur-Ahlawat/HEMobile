@@ -120,7 +120,7 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
         intent.putExtra("list",details)
         intent.putExtra(
             Constants.VEHICLE_SCREEN_KEY,
-            Constants.VEHICLE_SCREEN_TYPE_ADD
+            Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
         )
 
         startActivity(intent)

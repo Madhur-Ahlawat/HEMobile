@@ -75,6 +75,10 @@
         <activity
             android:name=".view.VehicleDetailActivity"
             android:theme="@style/Theme.HEMobileLight" />
+        <activity
+            android:name=".view.ActivityVehicleHistory"
+            android:theme="@style/Theme.HEMobileLight" />
+
         <activity android:name=".view.PaymentReceiptSelectionActivity" />
         <activity
             android:name=".view.ActivityFutureCrossing"

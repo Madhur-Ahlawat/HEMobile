@@ -17,6 +17,8 @@ import com.heandroid.model.PlateInfoResponse
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleInfoResponse
 import com.heandroid.model.VehicleResponse
+import com.heandroid.utils.Logg
+import com.heandroid.utils.Utils
 
 class AddVehicle : DialogFragment() {
 
@@ -75,9 +77,10 @@ class AddVehicle : DialogFragment() {
 
                 }
 
-                val plateInfoResp = PlateInfoResponse(dataBinding.addVrmInput.text.toString(),country,"HE","-","","","")
-                val vehicleInfoResp = VehicleInfoResponse("Audi","TT FSI","2019","","1_GVVKGV","","Black","B","23 Aug 2022")
+                val plateInfoResp = PlateInfoResponse(dataBinding.addVrmInput.text.toString(),country,"","","","","")
+                val vehicleInfoResp = VehicleInfoResponse("","","","","","","","",Utils.currentDateAndTime())
 
+                Logg.logging("AddVehicle"," date and time ${Utils.currentDateAndTime()}")
                 val mVehicleResponse = VehicleResponse(plateInfoResp, vehicleInfoResp)
                 mListener?.onAddClick(mVehicleResponse)
                 dismiss()

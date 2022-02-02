@@ -5,6 +5,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import com.heandroid.MyApplication
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 
 object Utils {
@@ -56,5 +58,11 @@ object Utils {
         } else {
             password.trim { it <= ' ' }.length >= MIN_PASSWORD_LENGTH
         }
+    }
+
+    fun currentDateAndTime(): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault())
+        return sdf.format(Date())
+
     }
 }

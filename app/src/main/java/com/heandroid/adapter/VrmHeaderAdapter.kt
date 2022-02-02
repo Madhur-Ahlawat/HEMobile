@@ -16,7 +16,10 @@ import com.heandroid.model.VehicleTitleAndSub
 import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.vrm_header_lyt.view.*
 
-class VrmHeaderAdapter(private val mContext: Context, private val onItemClick: ItemClickListener?=null) :
+class VrmHeaderAdapter(
+    private val mContext: Context,
+    private val onItemClick: ItemClickListener? = null
+) :
     RecyclerView.Adapter<VrmHeaderAdapter.VrmHeaderViewHolder>() {
 
     var vehicleList: List<VehicleResponse> = mutableListOf()

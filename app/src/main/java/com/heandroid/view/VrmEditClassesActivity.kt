@@ -32,7 +32,6 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     private lateinit var mVehicleDetails: VehicleResponse
     val TAG = "VrmEditClassesActivity"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.fragment_vrm_class_details)
@@ -131,10 +130,11 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     override fun onAddClick(details: VehicleResponse) {
 
         addVehicleApiCall()
+//        showVehicleDetails()
 
     }
 
-    fun showVehicleDetails()
+   private fun showVehicleDetails()
     {
         Intent(this, VehicleDetailActivity::class.java).apply {
 
@@ -151,14 +151,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
     private fun addVehicleApiCall() {
 
-//        var request = VehicleResponse(
-//            PlateInfoResponse(
-//                number = "HRS112022",
-//                "UK", "HE", type = "STANDARD", "", "New vehicle", ""
-//            ),
-//            VehicleInfoResponse("AUDI", "Q5", "2021", "", "", "", "BLACK", "Class B", "")
-//        )
-       // vehicleMgmtViewModel.addVehicleApi(request);
+
         vehicleMgmtViewModel.addVehicleApi(mVehicleDetails);
         vehicleMgmtViewModel.addVehicleApiVal.observe(this,
             {
