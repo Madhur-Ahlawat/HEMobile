@@ -46,12 +46,12 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     ) {
 
         viewModelScope.launch {
-            addVehicleApiVal.postValue(Resource.loading(null))
+            updateVehicleApiVal.postValue(Resource.loading(null))
             try {
                 val respFromApi = apiHelper.updateVehicleApiCall( request)
-                addVehicleApiVal.postValue(setAddUpdateVehicleApiResponse(respFromApi))
+                updateVehicleApiVal.postValue(setAddUpdateVehicleApiResponse(respFromApi))
             } catch (e: Exception) {
-                addVehicleApiVal.postValue(Resource.error(null , e.toString()))
+                updateVehicleApiVal.postValue(Resource.error(null , e.toString()))
             }
         }
     }
