@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
@@ -84,7 +85,6 @@ class VrmHistoryHeaderAdapter(
             editNotes.imeOptions = EditorInfo.IME_ACTION_DONE
 
             editNotes.setRawInputType(InputType.TYPE_CLASS_TEXT)
-
 
 
         }
@@ -166,25 +166,32 @@ class VrmHistoryHeaderAdapter(
                     }
 
                 })
-                holder.itemView.edt_note.setOnKeyListener { v, keyCode, event ->
 
-                    if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                holder.itemView.edt_note.setOnEditorActionListener(TextView.OnEditorActionListener{ _, actionId, _ ->
+
+                    Logg.logging(
+                        TAG,
+                        " viewType  onBindViewHolder setOnEditorActionListener called  "
+                    )
+
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+
                         Logg.logging(
                             TAG,
-                            " viewType  onBindViewHolder setOnKeyListener  $position "
+                            " viewType  onBindViewHolder setOnEditorActionListener total Text  ${holder.itemView.edt_note.text.toString()} "
                         )
 
                         Logg.logging(
                             TAG,
-                            " viewType  onBindViewHolder setOnKeyListener  ${holder.itemView.edt_note.text.toString()} "
+                            " viewType  onBindViewHolder setOnEditorActionListener called IME_ACTION_DONE "
                         )
+                        // Do something of your interest.
+                        // We in this examples created the following Toasts
 
-
+                        return@OnEditorActionListener true
                     }
-
-                    true
-
-                }
+                    false
+                })
 
             }
 

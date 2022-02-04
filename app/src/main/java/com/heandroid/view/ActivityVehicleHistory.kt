@@ -83,6 +83,8 @@ class ActivityVehicleHistory : AppCompatActivity() {
     private fun setClickEvents() {
 
         dataBinding.saveBtn.setOnClickListener {
+
+
             updateVehicleApiCall(mVehicleDetails)
         }
 
