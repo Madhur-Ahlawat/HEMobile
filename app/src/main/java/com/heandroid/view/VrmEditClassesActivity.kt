@@ -130,12 +130,10 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     override fun onAddClick(details: VehicleResponse) {
 
         addVehicleApiCall()
-//        showVehicleDetails()
 
     }
 
-   private fun showVehicleDetails()
-    {
+    private fun showVehicleDetails() {
         Intent(this, VehicleDetailActivity::class.java).apply {
 
             putExtra(Constants.DATA, mVehicleDetails)
@@ -152,7 +150,61 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
     private fun addVehicleApiCall() {
 
 
-        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails);
+        /** {
+
+        "plateInfo": {
+
+        "number": "HRS112022",
+
+        "country": "UK",
+
+        "state": "HE",
+
+        "type": "STANDARD",
+
+        "vehicleGroup": "",
+
+        "vehicleComments": "new Vehicle",
+
+        "planName": ""
+
+        },
+
+        "vehicleInfo": {
+
+        "make": "AUDI",
+
+        "model": "Q5",
+
+        "year": 2021,
+
+        "typeId": null,
+
+        "typeDescription": "REGULAR",
+
+        "color": "",
+
+        "vehicleClassDesc": "Class B",
+
+        "effectiveStartDate": ""
+
+        }
+
+        }**/
+
+
+        var request = mVehicleDetails.apply {
+            plateInfo.state = "HE"
+            plateInfo.type = "STANDARD"
+            plateInfo.vehicleGroup = "STANDARD"
+            plateInfo.vehicleComments = "new Vehicle"
+            plateInfo.planName = "Normal plan"
+            vehicleInfo.year = "2022"
+            vehicleInfo.typeId=null
+            vehicleInfo.typeDescription="REGULAR"
+        }
+
+        vehicleMgmtViewModel.addVehicleApi(request);
         vehicleMgmtViewModel.addVehicleApiVal.observe(this,
             {
                 when (it.status) {

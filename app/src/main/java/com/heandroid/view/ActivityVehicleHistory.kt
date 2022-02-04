@@ -88,6 +88,7 @@ class ActivityVehicleHistory : AppCompatActivity() {
 
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
 //            onBackPressed()
+            finish()
         }
 
     }
@@ -104,7 +105,7 @@ class ActivityVehicleHistory : AppCompatActivity() {
         val mList = ArrayList<VehicleTitleAndSub>()
         mList.clear()
 
-        for (i in 0..6) {
+        for (i in 0..7) {
             when (i) {
 
                 0 -> {
@@ -144,6 +145,12 @@ class ActivityVehicleHistory : AppCompatActivity() {
                         "DateAdded",
                         mVehicleDetails.vehicleInfo.effectiveStartDate
                     )
+                    mList.add(mem2)
+
+                }
+
+                7->{
+                    val mem2 = VehicleTitleAndSub("Notes" , mVehicleDetails.plateInfo.vehicleComments)
                     mList.add(mem2)
 
                 }

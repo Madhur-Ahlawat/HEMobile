@@ -97,6 +97,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/black"
+                app:buttonTint="@color/bottomActiveColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,6 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
+                app:buttonTint="@color/bottomActiveColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -263,6 +265,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                app:buttonTint="@color/bottomActiveColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -319,6 +322,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                app:buttonTint="@color/bottomActiveColor"
                 android:fontFamily="@font/roboto_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

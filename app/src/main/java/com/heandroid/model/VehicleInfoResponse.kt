@@ -15,7 +15,7 @@ data class VehicleInfoResponse(
     @SerializedName("rowId")
     val rowId: String="",
     @SerializedName("typeDescription")
-    val typeDescription: String="",
+    var typeDescription: String="",
     @SerializedName("color")
     var color: String="",
     @SerializedName("vehicleClassDesc")

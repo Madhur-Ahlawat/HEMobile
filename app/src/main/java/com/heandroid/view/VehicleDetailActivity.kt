@@ -89,7 +89,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         }
 
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
-
+            finish()
         }
 
     }
