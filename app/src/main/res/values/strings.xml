@@ -324,6 +324,7 @@
     <string name="str_back_to_vehicles_list">Back to vehicles list</string>
     <string name="str_new_vehicles_added_success">New vehicle added successfully</string>
     <string name="str_note">Vehicle description</string>
+    <string name="str_notes">Notes</string>
 
 </resources>
 

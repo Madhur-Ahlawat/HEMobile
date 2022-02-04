@@ -65,6 +65,7 @@
             </LinearLayout>
         </RelativeLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_header"
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
             android:layout_above="@+id/save_btn"
             android:layout_below="@+id/top_layout"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_6sdp" />
+            android:layout_marginBottom="@dimen/_16sdp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save_btn"
@@ -97,7 +98,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:includeFontPadding="true"
             android:text="@string/str_back_to_vehicles_list"
             android:textAllCaps="false"
