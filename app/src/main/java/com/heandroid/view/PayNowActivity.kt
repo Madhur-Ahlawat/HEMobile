@@ -48,7 +48,7 @@ class PayNowActivity : AppCompatActivity(), ItemClickListener {
             "23 Aug 2022"
         )
 
-        mModel = VehicleResponse(plateInfoResp, vehicleInfoResp)
+        mModel = VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp)
 
         mVehicleList.add(mModel)
         if (mVehicleList.size == 1) {

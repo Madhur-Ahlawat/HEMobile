@@ -1,7 +1,10 @@
 package com.heandroid.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,23 +14,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.adapter.VrmHistoryHeaderAdapter
 import com.heandroid.databinding.ActivityVehicleHistoryBinding
+import com.heandroid.hideKeyboard
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
+import com.heandroid.view.ActivityVehicleHistory.*
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
-class ActivityVehicleHistory : AppCompatActivity() {
+class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClickedListener {
 
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
 
     private lateinit var dataBinding: ActivityVehicleHistoryBinding
 
     private lateinit var mVehicleDetails: VehicleResponse
+
+    private var textChanged:Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +73,9 @@ class ActivityVehicleHistory : AppCompatActivity() {
 
         }
 
+        dataBinding.backToVehiclesBtn.setOnClickListener {
+            finish()
+        }
         setBtnActivated()
         setAdapter()
         setClickEvents()
@@ -84,8 +94,10 @@ class ActivityVehicleHistory : AppCompatActivity() {
 
         dataBinding.saveBtn.setOnClickListener {
 
+            if(textChanged) {
 
-            updateVehicleApiCall(mVehicleDetails)
+                updateVehicleApiCall(mVehicleDetails)
+            }
         }
 
         dataBinding.idToolBarLyt.back_button.setOnClickListener {
@@ -151,8 +163,9 @@ class ActivityVehicleHistory : AppCompatActivity() {
 
                 }
 
-                7->{
-                    val mem2 = VehicleTitleAndSub("Notes" , mVehicleDetails.plateInfo.vehicleComments)
+                7 -> {
+                    val mem2 =
+                        VehicleTitleAndSub("Notes", mVehicleDetails.plateInfo.vehicleComments)
                     mList.add(mem2)
 
                 }
@@ -164,7 +177,7 @@ class ActivityVehicleHistory : AppCompatActivity() {
         Logg.logging(TAG, " mList  $mList ")
         Logg.logging(TAG, " mList size ${mList.size} ")
 
-        val mAdapter = VrmHistoryHeaderAdapter(this)
+        val mAdapter = VrmHistoryHeaderAdapter(this , this)
         mAdapter.setList(mList)
         dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerViewHeader.setHasFixedSize(true)
@@ -182,24 +195,32 @@ class ActivityVehicleHistory : AppCompatActivity() {
 
     private fun updateVehicleApiCall(details: VehicleResponse) {
 
-        vehicleMgmtViewModel.updateVehicleApi(details);
+        var request = details.apply {
+            newPlateInfo = plateInfo
+        }
+        vehicleMgmtViewModel.updateVehicleApi(request);
         vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
             {
                 when (it.status) {
                     Status.SUCCESS -> {
+                        dataBinding.progressLayout.visibility = GONE
                         if (it.data!!.body() == null) {
                             var apiResponse = EmptyApiResponse(200, "Updated successfully.")
                             Log.d("ApiSuccess : ", apiResponse!!.status.toString())
+
+                            showToast("Vehicle is updated successfully")
                         }
 
                     }
 
                     Status.ERROR -> {
+                        dataBinding.progressLayout.visibility = GONE
                         showToast(it.message)
                     }
 
                     Status.LOADING -> {
                         // show/hide loader
+                        dataBinding.progressLayout.visibility = VISIBLE
                         Log.d("UpdateApi: ", "Data loading")
                     }
                 }
@@ -212,4 +233,23 @@ class ActivityVehicleHistory : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun OnEditTextValueChanged(value: String) {
+
+        if(!TextUtils.isEmpty(value))
+        {
+            hideKeyboard()
+            textChanged= true
+            mVehicleDetails.plateInfo.vehicleComments = value
+        }
+
+    }
+
+
+}
+
+interface OnEditTextValueChangedClickedListener {
+
+    fun OnEditTextValueChanged(value:String)
+
 }

@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -33,19 +35,22 @@ import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleApiResp
 import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Logg
+import com.heandroid.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickListener {
 
+    private val mList = ArrayList<VehicleResponse>()
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var vehicleListAdapter: VehicleListAdapter
     private lateinit var databinding: ActivityVehicleMgmtBinding
     private lateinit var mAdapter: VrmHeaderAdapter
+    private lateinit var dashboardViewModel: DashboardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         databinding = DataBindingUtil.setContentView(this, R.layout.activity_vehicle_mgmt)
-        setView()
+
         setupViewModel()
     }
 
@@ -53,6 +58,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
         val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         Log.d("ViewModelSetUp: ", "Setup")
         vehicleMgmtViewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
+        dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         Log.d("ViewModelSetUp: ", "Setup")
 
     }
@@ -67,7 +73,8 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
                     databinding.idToolBarLyt.title_txt.text = "Vehicles list"
-                    setListAdapter()
+                    databinding.progressLayout.visibility  = VISIBLE
+                    getVehicleListApiCall()
 
                 }
 
@@ -87,7 +94,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
                     databinding.idToolBarLyt.title_txt.text = "Vehicles History"
                     databinding.conformBtn.visibility = View.GONE
-                    setHistoryAdapter()
+                    getVehicleListApiCall()
                 }
 
             }
@@ -111,16 +118,13 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
     }
 
-    private val mVehicleList = ArrayList<VehicleResponse>()
 
     private fun setHistoryAdapter() {
-        val bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
-        val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
+        //val bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
+       // val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
         val mAdapter = VrmHistoryAdapter(this, this)
-        mVehicleList.clear()
-        mVehicleList.addAll(vehicleResp.vehicleList)
-        mAdapter.setList(mVehicleList)
+        mAdapter.setList(mList)
         databinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         databinding.recyclerViewHeader.setHasFixedSize(true)
         databinding.recyclerViewHeader.adapter = mAdapter
@@ -129,14 +133,10 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
     private fun setListAdapter() {
 
-        var bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
-        var vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
-        mVehicleList.clear()
-        mVehicleList.addAll(vehicleResp.vehicleList)
 
         mAdapter = VrmHeaderAdapter(this, this)
-        mAdapter.setList(mVehicleList)
+        mAdapter.setList(mList)
         databinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         databinding.recyclerViewHeader.setHasFixedSize(true)
         databinding.recyclerViewHeader.adapter = mAdapter
@@ -165,8 +165,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
                     details.isExpanded = !details.isExpanded
                     Logg.logging("VehcileMgm", "  details.isExpanded  ${details.isExpanded}")
-                    mVehicleList[pos].isExpanded = details.isExpanded
-
+                    mList[pos].isExpanded = details.isExpanded
                     mAdapter.notifyItemChanged(pos)
 
                 }
@@ -189,5 +188,54 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        databinding.progressLayout.visibility=VISIBLE
+        setView()
+    }
+
+    private fun getVehicleListApiCall() {
+        dashboardViewModel.getVehicleInformationApi()
+        dashboardViewModel.vehicleListVal.observe(this, androidx.lifecycle.Observer {
+            it.let { resource ->
+                databinding.progressLayout.visibility  = GONE
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        var vehicleList = resource.data!!.body()
+                        if (vehicleList != null) {
+                            mList.clear()
+                            mList.addAll(vehicleList)
+                            if(mType==Constants.VEHICLE_SCREEN_TYPE_LIST) {
+                                setListAdapter()
+                            }
+                            else if(mType== Constants.VEHICLE_SCREEN_TYPE_HISTORY){
+                                setHistoryAdapter()
+                            }
+                            else{
+                                // do nothing
+                            }
+                            Log.d("apiResp:getVehicleListApiCall ", vehicleList.size.toString())
+                            Log.d(
+                                "apiResp:getVehicleListApiCall vehicleList.toString() ",
+                                vehicleList.toString()
+                            )
+//                            setupVehicleData(vehicleList)
+                        }
+
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, resource.message, Toast.LENGTH_LONG)
+                            .show()
+
+                    }
+                    Status.LOADING -> {
+                        // show/hide loader
+                    }
+
+                }
+            }
+        })
     }
 }

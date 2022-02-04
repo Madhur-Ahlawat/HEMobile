@@ -62,7 +62,9 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
             dataBinding.addVehiclesTxt.visibility = View.GONE
 
         }
-
+        dataBinding.idToolBarLyt.back_button.setOnClickListener {
+            finish()
+        }
         setBtnActivated()
         setAdapter()
         setClickEvents()
@@ -84,6 +86,9 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
                 val intent = Intent(this, ActivityFutureCrossing::class.java)
                 intent.putExtra("list", mVehicleDetails)
                 startActivity(intent)
+            }
+            else{
+                finish()
             }
 
         }
@@ -129,7 +134,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
                 ""
             )
 
-            val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp, true)
+            val mVehicleResponse1 = VehicleResponse(plateInfoResp , plateInfoResp, vehicleInfoResp, true)
             mList.add(mVehicleResponse1)
         } else {
 
@@ -156,7 +161,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
                 mVehicleDetails.vehicleInfo.effectiveStartDate
             )
 
-            val mVehicleResponse1 = VehicleResponse(plateInfoResp, vehicleInfoResp, true)
+            val mVehicleResponse1 = VehicleResponse(plateInfoResp ,plateInfoResp, vehicleInfoResp, true)
             mList.add(mVehicleResponse1)
 
         }

@@ -81,7 +81,8 @@ class AddVehicle : DialogFragment() {
                 val vehicleInfoResp = VehicleInfoResponse("","","","","","","","",Utils.currentDateAndTime())
 
                 Logg.logging("AddVehicle"," date and time ${Utils.currentDateAndTime()}")
-                val mVehicleResponse = VehicleResponse(plateInfoResp, vehicleInfoResp)
+                //todo we have to check for this
+                val mVehicleResponse = VehicleResponse(plateInfoResp , plateInfoResp, vehicleInfoResp)
                 mListener?.onAddClick(mVehicleResponse)
                 dismiss()
 

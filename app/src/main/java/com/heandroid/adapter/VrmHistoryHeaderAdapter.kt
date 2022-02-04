@@ -23,11 +23,14 @@ import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.VehicleResponse
 import com.heandroid.model.VehicleTitleAndSub
 import com.heandroid.utils.Logg
+import com.heandroid.view.ActivityVehicleHistory
+import com.heandroid.view.OnEditTextValueChangedClickedListener
 import kotlinx.android.synthetic.main.item_vrm_history_header_editable_adapter.view.*
 import kotlinx.android.synthetic.main.vrm_header_lyt.view.*
 
 class VrmHistoryHeaderAdapter(
-    private val mContext: Context
+    private val mContext: Context,
+    private val onEditTextListener: OnEditTextValueChangedClickedListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -181,6 +184,7 @@ class VrmHistoryHeaderAdapter(
                             " viewType  onBindViewHolder setOnEditorActionListener total Text  ${holder.itemView.edt_note.text.toString()} "
                         )
 
+                        onEditTextListener.OnEditTextValueChanged(holder.itemView.edt_note.text.toString())
                         Logg.logging(
                             TAG,
                             " viewType  onBindViewHolder setOnEditorActionListener called IME_ACTION_DONE "
@@ -204,4 +208,5 @@ class VrmHistoryHeaderAdapter(
         return vehicleList.size
 
     }
+
 }

@@ -3,6 +3,8 @@ package com.heandroid.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -129,6 +131,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
     override fun onAddClick(details: VehicleResponse) {
 
+        //dataBinding.progressLayout.visibility= VISIBLE
         addVehicleApiCall()
 
     }
@@ -144,6 +147,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
             )
 
             startActivity(this)
+            finish()
         }
     }
 
@@ -207,8 +211,10 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
         vehicleMgmtViewModel.addVehicleApi(request);
         vehicleMgmtViewModel.addVehicleApiVal.observe(this,
             {
+
                 when (it.status) {
                     Status.SUCCESS -> {
+                        dataBinding.progressLayout.visibility=GONE
                         if (it.data!!.body() == null) {
                             var apiResponse = EmptyApiResponse(200, "Added successfully.")
                             Log.d("ApiSuccess : ", apiResponse!!.status.toString())
@@ -218,11 +224,15 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
                     }
 
                     Status.ERROR -> {
-                        showToast(it.message)
+                        //todo we need to update this
+                        dataBinding.progressLayout.visibility=GONE
+                        //showToast(it.message)
+                        showVehicleDetails()
                     }
 
                     Status.LOADING -> {
                         // show/hide loader
+                        dataBinding.progressLayout.visibility= VISIBLE
                         Log.d("GetAlert: ", "Data loading")
                     }
                 }

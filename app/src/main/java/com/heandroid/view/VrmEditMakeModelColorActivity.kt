@@ -47,7 +47,7 @@ class VrmEditMakeModelColorActivity : AppCompatActivity() {
                 val intent = Intent(this, VrmEditClassesActivity::class.java)
                 intent.putExtra("list", mVehicleDetails)
                 startActivity(intent)
-
+                finish()
             }
 
 
