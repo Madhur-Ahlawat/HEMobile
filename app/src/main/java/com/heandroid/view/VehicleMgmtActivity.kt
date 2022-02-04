@@ -68,12 +68,15 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
         mType = intent?.getIntExtra(Constants.VEHICLE_SCREEN_KEY, 0)
 
+        Log.d("ViewModelSetUp: ", "mType  $mType")
+
         mType?.apply {
             when (this) {
 
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
                     databinding.idToolBarLyt.title_txt.text = "Vehicles list"
-                    databinding.progressLayout.visibility  = VISIBLE
+                    databinding.progressLayout.visibility = VISIBLE
+
                     getVehicleListApiCall()
 
                 }
@@ -83,6 +86,8 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                     databinding.idToolBarLyt.title_txt.text = "Add vehicles"
                     databinding.addVehiclesTxt.text = "Add vehicles to your account"
                     databinding.conformBtn.text = "Add Vehicle"
+                    databinding.progressLayout.visibility = GONE
+
                     databinding.conformBtn.icon = AppCompatResources.getDrawable(
                         this@VehicleMgmtActivity,
                         R.drawable.ic_baseline_add_24
@@ -94,6 +99,8 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
                     databinding.idToolBarLyt.title_txt.text = "Vehicles History"
                     databinding.conformBtn.visibility = View.GONE
+                    databinding.progressLayout.visibility = VISIBLE
+
                     getVehicleListApiCall()
                 }
 
@@ -121,7 +128,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
     private fun setHistoryAdapter() {
         //val bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
-       // val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
+        // val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
 
         val mAdapter = VrmHistoryAdapter(this, this)
         mAdapter.setList(mList)
@@ -132,7 +139,6 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
     }
 
     private fun setListAdapter() {
-
 
 
         mAdapter = VrmHeaderAdapter(this, this)
@@ -192,7 +198,6 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
     override fun onResume() {
         super.onResume()
-        databinding.progressLayout.visibility=VISIBLE
         setView()
     }
 
@@ -200,20 +205,19 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
         dashboardViewModel.getVehicleInformationApi()
         dashboardViewModel.vehicleListVal.observe(this, androidx.lifecycle.Observer {
             it.let { resource ->
-                databinding.progressLayout.visibility  = GONE
                 when (resource.status) {
                     Status.SUCCESS -> {
+                        databinding.progressLayout.visibility = GONE
+
                         var vehicleList = resource.data!!.body()
                         if (vehicleList != null) {
                             mList.clear()
                             mList.addAll(vehicleList)
-                            if(mType==Constants.VEHICLE_SCREEN_TYPE_LIST) {
+                            if (mType == Constants.VEHICLE_SCREEN_TYPE_LIST) {
                                 setListAdapter()
-                            }
-                            else if(mType== Constants.VEHICLE_SCREEN_TYPE_HISTORY){
+                            } else if (mType == Constants.VEHICLE_SCREEN_TYPE_HISTORY) {
                                 setHistoryAdapter()
-                            }
-                            else{
+                            } else {
                                 // do nothing
                             }
                             Log.d("apiResp:getVehicleListApiCall ", vehicleList.size.toString())
@@ -226,11 +230,15 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
                     }
                     Status.ERROR -> {
+                        databinding.progressLayout.visibility = GONE
+
                         Toast.makeText(this, resource.message, Toast.LENGTH_LONG)
                             .show()
 
                     }
                     Status.LOADING -> {
+                        databinding.progressLayout.visibility = VISIBLE
+
                         // show/hide loader
                     }
 
