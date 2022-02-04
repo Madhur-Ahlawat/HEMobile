@@ -8,7 +8,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/_1sdp"
         android:background="@color/white"
@@ -48,41 +48,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_note"
-                style="@style/Widget.HeMobile.TextInputLayout"
-                app:errorEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:textColorHint="@color/color_CBCBCB"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:hint="@string/str_note"
-                app:layout_constraintTop_toBottomOf="@+id/vrm_title">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_note"
-                    android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/color_000000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cardview_top"
-        android:layout_marginTop="@dimen/_4sdp" />
-
 
 </RelativeLayout>
 

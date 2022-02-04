@@ -160,7 +160,7 @@ class ActivityVehicleHistory : AppCompatActivity() {
         }
 
         Logg.logging(TAG, " mList  $mList ")
-
+        Logg.logging(TAG, " mList size ${mList.size} ")
 
         val mAdapter = VrmHistoryHeaderAdapter(this)
         mAdapter.setList(mList)
