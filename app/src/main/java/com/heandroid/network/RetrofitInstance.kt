@@ -11,6 +11,8 @@ import java.lang.Exception
 import java.lang.RuntimeException
 import java.lang.reflect.Type
 import java.security.cert.CertificateException
+import java.time.Duration
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -26,6 +28,10 @@ class RetrofitInstance {
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .addInterceptor(HeaderInterceptor())
+                .callTimeout(2, TimeUnit.MINUTES)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
             Retrofit.Builder()
