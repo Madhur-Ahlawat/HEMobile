@@ -199,6 +199,8 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
             newPlateInfo = plateInfo
         }
         vehicleMgmtViewModel.updateVehicleApi(request);
+        dataBinding.progressLayout.visibility = VISIBLE
+
         vehicleMgmtViewModel.updateVehicleApiVal.observe(this,
             {
                 when (it.status) {
