@@ -156,9 +156,11 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
         /** {
 
+        {
+
         "plateInfo": {
 
-        "number": "HRS112022",
+        "number": "HRS115022",
 
         "country": "UK",
 
@@ -186,7 +188,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
         "typeDescription": "REGULAR",
 
-        "color": "",
+        "color": "Black",
 
         "vehicleClassDesc": "Class B",
 
@@ -194,20 +196,23 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
         }
 
-        }**/
+        }
+
+*/
 
 
         var request = mVehicleDetails.apply {
             plateInfo.state = "HE"
             plateInfo.type = "STANDARD"
-            plateInfo.vehicleGroup = "STANDARD"
+            plateInfo.vehicleGroup = ""
             plateInfo.vehicleComments = "new Vehicle"
-            plateInfo.planName = "Normal plan"
+            plateInfo.planName = ""
             vehicleInfo.year = "2022"
             vehicleInfo.typeId=null
             vehicleInfo.typeDescription="REGULAR"
         }
 
+        mVehicleDetails = request;
         vehicleMgmtViewModel.addVehicleApi(request);
         vehicleMgmtViewModel.addVehicleApiVal.observe(this,
             {
@@ -226,7 +231,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
                     Status.ERROR -> {
                         //todo we need to update this
                         dataBinding.progressLayout.visibility=GONE
-                        //showToast(it.message)
+                        showToast(it.message)
                         showVehicleDetails()
                     }
 
