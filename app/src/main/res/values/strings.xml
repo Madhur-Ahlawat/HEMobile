@@ -256,6 +256,7 @@
     <string name="str_nominated_contacts">Nominated contact</string>
     <string name="str_communication">Communication</string>
     <string name="str_communications">Communications</string>
+    <string name="crossing_history">Crossing history</string>
     <string name="str_activity_log">Activity log</string>
     <string name="str_close_account">Close account</string>
     <string name="str_vehicle_list">Vehicle list</string>
@@ -325,6 +326,19 @@
     <string name="str_new_vehicles_added_success">New vehicle added successfully</string>
     <string name="str_note">Vehicle description</string>
     <string name="str_notes">Notes</string>
+    <string name="crossing_hours">Your crossings can take up to XY \n hours to appear on your account</string>
+    <string name="download">Download</string>
+    <string name="date_range">Date Range</string>
+    <string name="last_30_days">Last 30 days</string>
+    <string name="view_all">View all</string>
+    <string name="last_90_days">Last 90 days</string>
+    <string name="custom">Custom</string>
+    <string name="paid">PAID</string>
+    <string name="unpaid">UNPAID</string>
+    <string name="refund">REFUND</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
 
 </resources>
 

@@ -29,12 +29,7 @@ class SetPreferenceFragment : BaseFragment(), UpdatePhoneNumberClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dataBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_select_communication_preference,
-            container,
-            false
-        )
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_communication_preference, container, false)
         return dataBinding.root
     }
 
@@ -57,7 +52,6 @@ class SetPreferenceFragment : BaseFragment(), UpdatePhoneNumberClickListener {
                 }
 
                 R.id.rb_post -> {
-
                     communicationPref = Constants.EMAIL
                 }
             }
@@ -237,5 +231,4 @@ class SetPreferenceFragment : BaseFragment(), UpdatePhoneNumberClickListener {
         showUpdatePhoneView = true
         d.dismiss()
     }
-
 }

@@ -16,9 +16,12 @@
         <activity
             android:name=".view.CommunicationActivity"
             android:exported="false" />
+<!--        android:theme="@style/Theme.HEMobileDark"-->
         <activity
             android:name=".view.StartNowActivity"
-            android:theme="@style/Theme.HEMobileDark">
+            android:theme="@style/Theme.HEMobileDark"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,6 +92,13 @@
         <activity
             android:name=".view.StartNowBaseActivity"
             android:theme="@style/Theme.HEMobileLight" />
+
+
+        <activity
+            android:name=".view.CrossingHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileWhite"
+            />
 
     </application>
 

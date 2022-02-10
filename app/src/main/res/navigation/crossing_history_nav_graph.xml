@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/crossing_history_nav_graph"
+    app:startDestination="@id/crossingHistoryFragment">
+
+
+    <fragment
+        android:id="@+id/crossingHistoryFragment"
+        android:name="com.heandroid.fragments.CrossingHistoryFragment"
+        tools:layout="@layout/fragment_crossing_history"
+        android:label="CrossingHistoryFragment" />
+
+
+
+
+</navigation>
