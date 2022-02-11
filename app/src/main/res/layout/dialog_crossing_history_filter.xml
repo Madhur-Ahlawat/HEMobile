@@ -169,7 +169,7 @@
                             android:layout_marginTop="@dimen/_2sdp"
                             app:hintTextColor="@color/black"
                             android:paddingLeft="@dimen/_9sdp"
-                            android:background="@drawable/drawable_round_corner"
+
                             android:focusable="false"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13sdp"
@@ -207,7 +207,7 @@
                             app:hintTextColor="@color/black"
                             android:textColor="@color/black"
                             android:paddingLeft="@dimen/_9sdp"
-                            android:background="@drawable/drawable_round_corner"
+
                             android:focusable="false"
                             android:textSize="@dimen/_13sdp"
                             android:fontFamily="@font/roboto_regular"

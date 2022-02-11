@@ -85,7 +85,7 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:text="@string/str_save"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:backgroundTint="@color/green"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_4sdp" />
 

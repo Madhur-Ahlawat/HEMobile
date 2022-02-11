@@ -16,6 +16,7 @@ import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
+import com.heandroid.view.CrossingHistoryActivity
 import com.heandroid.view.VehicleMgmtActivity
 import com.heandroid.viewmodel.DashboardViewModel
 import com.heandroid.viewmodel.VehicleMgmtViewModel
@@ -67,6 +68,9 @@ class VehicleFragment : BaseFragment() {
         dataBinding.vehicleHistoryLyt.setOnClickListener {
             startVehicleMgmtActivity(Constants.VEHICLE_SCREEN_TYPE_HISTORY)
 
+        }
+        dataBinding.vehicleCrossingHistoryLyt.setOnClickListener {
+            startActivity(Intent(requireActivity(), CrossingHistoryActivity::class.java))
         }
 
     }
