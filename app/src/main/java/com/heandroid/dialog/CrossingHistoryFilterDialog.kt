@@ -76,6 +76,7 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             getString(R.string.view_all) ->{ loadRange("","") }
             getString(R.string.last_90_days) ->{ loadRange(lastPriorDate(-90),currentDate()) }
             getString(R.string.custom) ->{ loadRange(edFrom.text.toString(),edTo.text.toString()) }
+
         }
     }
 
@@ -84,7 +85,9 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
+
         var listOfDateRange = getRangeBetweenDate(start,end)
+
     }
 
     private fun clearSelection() {
