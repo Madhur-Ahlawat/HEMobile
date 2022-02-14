@@ -21,3 +21,21 @@ fun Fragment.hideKeyboard() {
 fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }
+
+fun View.visible(){
+    visibility=View.VISIBLE
+}
+
+
+fun View.gone(){
+    visibility=View.GONE
+}
+
+fun View.invisible(){
+    visibility=View.INVISIBLE
+}
+
+fun View.isVisible(isVisible: Boolean) {
+    visibility= if(isVisible) View.VISIBLE else View.GONE
+}
+

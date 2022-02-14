@@ -12,10 +12,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
+import com.heandroid.isVisible
 import com.heandroid.model.DateRangeModel
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.DateUtils.calculateDays
 import com.heandroid.utils.DateUtils.currentDate
+import com.heandroid.utils.DateUtils.getRangeBetweenDate
 import com.heandroid.utils.DateUtils.lastPriorDate
 import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.dialog_crossing_history_filter.*
@@ -63,7 +65,7 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             R.id.edFrom -> { DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager,"") }
             R.id.edTo -> { DatePicker(binding.edTo).show(requireActivity().supportFragmentManager,"") }
             R.id.btnApply -> { dismiss()
-                calculateRange() }
+                               calculateRange() }
             R.id.btnClear -> { clearSelection() }
         }
     }
@@ -75,8 +77,6 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             getString(R.string.last_90_days) ->{ loadRange(lastPriorDate(-90),currentDate()) }
             getString(R.string.custom) ->{ loadRange(edFrom.text.toString(),edTo.text.toString()) }
         }
-
-        Logg.logging("Date Range",dateRangeModel.toString())
     }
 
     private fun loadRange(start : String?,end: String?){
@@ -84,8 +84,7 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
-
-        calculateDays(start,end)
+        var listOfDateRange = getRangeBetweenDate(start,end)
     }
 
     private fun clearSelection() {
@@ -114,8 +113,8 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
     }
 
     private fun customSectionUI(isShow: Boolean) {
-//        binding.llCustom.isVisible(isShow)
-//        binding.vCustom.isVisible(!isShow)
+        binding.llCustom.isVisible(isShow)
+        binding.vCustom.isVisible(!isShow)
         binding.edFrom.text?.clear()
         binding.edTo.text?.clear()
     }
