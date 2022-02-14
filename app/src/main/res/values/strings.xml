@@ -346,6 +346,8 @@
     <string name="str_direction">Direction</string>
     <string name="str_status">Status</string>
     <string name="str_make_payment">Make payment</string>
+    <string name="str_log_out">Logout</string>
+    <string name="str_ok">Ok</string>
 
 </resources>
 

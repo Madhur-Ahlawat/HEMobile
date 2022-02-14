@@ -23,6 +23,8 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
         validatePasswordCompliance
     )
 
+    override suspend fun getLogOut()= apiService.logOut()
+
     override suspend fun getAccountOverviewApiCall(authToken: String) =
         apiService.getAccountOverview(authToken)
 

@@ -50,6 +50,13 @@
     <color name="color_594D00">#594D00</color>
     <color name="FCD6C3">#FCD6C3</color>
     <color name="FFF7BF">#FFF7BF</color>
+    <color name="ios_btn_normal">#FFE9E9E9</color>
+    <color name="ios_btn_press">#FFCDCDCD</color>
+    <color name="ios_grey">#FFC6C6C6</color>
+    <color name="ios_bg">#FFE9E9E9</color>
+
+    <color name="ios_blue">#FF037BFF</color>
+    <color name="ios_red">#FFFD4A2E</color>
 
 
 </resources>
