@@ -340,5 +340,12 @@
     <string name="to">To</string>
     <string name="dd_mm_yyyy">DD/MM/YYYY</string>
 
+    <string name="str_your_crossing">Your crossing</string>
+    <string name="str_crossing_date">Crossing date</string>
+    <string name="str_crossing_time">Crossing time</string>
+    <string name="str_direction">Direction</string>
+    <string name="str_status">Status</string>
+    <string name="str_make_payment">Make payment</string>
+
 </resources>
 

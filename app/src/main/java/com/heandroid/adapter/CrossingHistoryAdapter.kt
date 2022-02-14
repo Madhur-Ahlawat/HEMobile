@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
+import kotlinx.android.synthetic.main.activity_profile.*
 
-class CrossingHistoryAdapter(private val context: Context?,
+class CrossingHistoryAdapter(private val context: Context,
                              private val list: MutableList<Any?>?) : RecyclerView.Adapter<CrossingHistoryAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrossingHistoryAdapter.HistoryViewHolder =
@@ -19,7 +21,7 @@ class CrossingHistoryAdapter(private val context: Context?,
         holder.bind(list?.get(position))
     }
 
-    override fun getItemCount(): Int = /*list?.size?:0*/7
+    override fun getItemCount(): Int = 5
 
     inner class HistoryViewHolder(var binding: AdapterCrossingHistoryBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -27,13 +29,13 @@ class CrossingHistoryAdapter(private val context: Context?,
             binding.apply {
                 cvMain.setOnClickListener(this@HistoryViewHolder)
                 if(absoluteAdapterPosition==1){
-                    tvPaymentStatus.text=context?.getString(R.string.unpaid)
-                    tvPaymentStatus.setTextColor(ContextCompat.getColor(context!!, R.color.color_10403C))
+                    tvPaymentStatus.text=context.getString(R.string.unpaid)
+                    tvPaymentStatus.setTextColor(ContextCompat.getColor(context, R.color.color_10403C))
                     tvPaymentStatus.setBackgroundColor(ContextCompat.getColor(context,R.color.FCD6C3))
 
                 }else if(absoluteAdapterPosition==2) {
-                    tvPaymentStatus.text=context?.getString(R.string.refund)
-                    tvPaymentStatus.setTextColor(ContextCompat.getColor(context!!, R.color.color_594D00))
+                    tvPaymentStatus.text=context.getString(R.string.refund)
+                    tvPaymentStatus.setTextColor(ContextCompat.getColor(context, R.color.color_594D00))
                     tvPaymentStatus.setBackgroundColor(ContextCompat.getColor(context,R.color.FFF7BF))
                 }
             }
@@ -41,7 +43,9 @@ class CrossingHistoryAdapter(private val context: Context?,
 
         override fun onClick(v: View?) {
             when(v?.id){
-                R.id.cvMain ->{}
+                R.id.cvMain ->{
+                    v.findNavController().navigate(R.id.action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment)
+                }
             }
         }
     }

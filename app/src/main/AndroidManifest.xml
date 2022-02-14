@@ -93,12 +93,9 @@
             android:name=".view.StartNowBaseActivity"
             android:theme="@style/Theme.HEMobileLight" />
 
-
         <activity
             android:name=".view.CrossingHistoryActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite"
-            />
+            android:theme="@style/Theme.HEMobileWhite" />
 
     </application>
 
