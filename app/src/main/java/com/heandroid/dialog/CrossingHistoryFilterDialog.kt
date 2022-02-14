@@ -85,9 +85,6 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
-
-        var listOfDateRange = getRangeBetweenDate(start,end)
-
     }
 
     private fun clearSelection() {
