@@ -347,5 +347,16 @@
     <string name="str_status">Status</string>
     <string name="str_make_payment">Make payment</string>
 
+
+    <string name="no_internet">Please check your internet connection</string>
+    <string name="network_error">Network error, could get data,please try again!</string>
+    <string name="refresh">refresh</string>
+    <string name="title_activity_recipes">Recipes</string>
+    <string name="title_activity_recipe_details">Recipe Details</string>
+    <string name="invalid_username_and_password">The credentials that were entered are not correct</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="invalid_password">"Invalid username "</string>
+    <string name="invalid_username">Invalid password</string>
+
 </resources>
 

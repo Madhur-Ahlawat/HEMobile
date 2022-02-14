@@ -2,25 +2,15 @@ package com.heandroid.utils
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.Observer
-import androidx.test.core.app.ApplicationProvider
 import com.heandroid.model.LoginResponse
-import com.heandroid.network.ApiHelper
-import com.heandroid.repo.Resource
-import com.heandroid.view.LoginActivity
+import com.heandroid.oldStructure.network.ApiHelper
+import com.heandroid.oldStructure.repo.Resource
 import com.heandroid.viewmodel.LoginViewModel
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
-import net.bytebuddy.matcher.ElementMatchers.`is`
-import okhttp3.MediaType
-import okhttp3.ResponseBody
-import okio.BufferedSource
 import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
@@ -29,12 +19,8 @@ import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 import org.junit.Rule
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import java.lang.RuntimeException
-import java.util.*
-import kotlin.math.log
 
 
 @ExperimentalCoroutinesApi

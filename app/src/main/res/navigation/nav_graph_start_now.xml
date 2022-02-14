@@ -6,7 +6,7 @@
     app:startDestination="@id/aboutService">
 <fragment
     android:id="@+id/aboutService"
-    android:name="com.heandroid.fragments.AboutServiceFragment"
+    android:name="com.heandroid.oldStructure.fragments.AboutServiceFragment"
     android:label="@string/str_about_this_service"
     tools:layout="@layout/about_service_fragment">
 <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/contactDartCharge"
-        android:name="com.heandroid.fragments.ContactDartChargeFragment"
+        android:name="com.heandroid.oldStructure.fragments.ContactDartChargeFragment"
         android:label="@string/str_contact_dart_charge"
         tools:layout="@layout/contact_dart_charge_fragment">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/crossingUpdate"
-        android:name="com.heandroid.fragments.CrossingServiceUpdateFragment"
+        android:name="com.heandroid.oldStructure.fragments.CrossingServiceUpdateFragment"
         android:label="@string/str_crossing_service_update"
         tools:layout="@layout/crossing_service_update_fragment">
         <action

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/color_EFEFEF">
 
-    <com.heandroid.customviews.CustomTextView
+    <com.heandroid.oldStructure.customviews.CustomTextView
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:srcCompat="@drawable/ic_priority_icon" />
 
 
-    <com.heandroid.customviews.CustomTextView
+    <com.heandroid.oldStructure.customviews.CustomTextView
         android:id="@+id/view_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

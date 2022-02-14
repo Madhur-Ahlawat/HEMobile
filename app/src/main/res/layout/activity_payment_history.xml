@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <variable
-            name="paymenthistory"
-            type="com.heandroid.viewmodel.DashboardViewModel" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

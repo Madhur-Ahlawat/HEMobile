@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.heandroid.fragments.ProfileFragment"
+        android:name="com.heandroid.oldStructure.fragments.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.heandroid.fragments.EditProfileFragment"
+        android:name="com.heandroid.oldStructure.fragments.EditProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile" />
 

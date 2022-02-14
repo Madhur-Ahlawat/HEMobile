@@ -2,15 +2,11 @@ package com.heandroid.utils
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.heandroid.model.AccountResponse
 import com.heandroid.model.LoginResponse
-import com.heandroid.network.ApiHelper
-import com.heandroid.repo.Resource
+import com.heandroid.oldStructure.network.ApiHelper
 import com.heandroid.viewmodel.DummyTestViewModel
-import com.heandroid.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -21,7 +17,6 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import org.powermock.api.mockito.PowerMockito.mockStatic

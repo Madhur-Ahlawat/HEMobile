@@ -6,8 +6,8 @@ import com.heandroid.model.AccountResponse
 import com.heandroid.model.RetrievePaymentListApiResponse
 import com.heandroid.model.RetrievePaymentListRequest
 import com.heandroid.model.VehicleResponse
-import com.heandroid.network.ApiHelper
-import com.heandroid.repo.Resource
+import com.heandroid.oldStructure.network.ApiHelper
+import com.heandroid.oldStructure.repo.Resource
 import com.heandroid.viewmodel.DashboardViewModel
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import org.powermock.core.classloader.annotations.MockPolicy
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi

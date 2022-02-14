@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.heandroid.fragments.DashboardFragment"
+        android:name="com.heandroid.oldStructure.fragments.DashboardFragment"
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard" >
 
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/vehicleFragment"
-        android:name="com.heandroid.fragments.VehicleFragment"
+        android:name="com.heandroid.oldStructure.fragments.VehicleFragment"
         android:label="Vehicle Management"
         tools:layout="@layout/fragment_vehicle" >
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.heandroid.fragments.AccountFragment"
+        android:name="com.heandroid.oldStructure.fragments.AccountFragment"
         android:label="Account Management"
         tools:layout="@layout/fragment_account" >
 
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.heandroid.fragments.NotificationFragment"
+        android:name="com.heandroid.oldStructure.fragments.NotificationFragment"
         android:label="Notification Screen"
         tools:layout="@layout/fragment_notification" >
 

@@ -4,14 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.heandroid.model.LoginResponse
 import com.heandroid.model.VehicleResponse
-import com.heandroid.network.ApiHelper
-import com.heandroid.repo.Resource
+import com.heandroid.oldStructure.network.ApiHelper
+import com.heandroid.oldStructure.repo.Resource
 import com.heandroid.viewmodel.DashboardViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock

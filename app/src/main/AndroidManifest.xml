@@ -13,89 +13,96 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".view.CommunicationActivity"
-            android:exported="false" />
-<!--        android:theme="@style/Theme.HEMobileDark"-->
-        <activity
-            android:name=".view.StartNowActivity"
-            android:theme="@style/Theme.HEMobileDark"
-            >
+        <activity android:name=".ui.login.LoginActivity">
+        <intent-filter>
+                       <action android:name="android.intent.action.MAIN" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                     <category android:name="android.intent.category.LAUNCHER" />
+                  </intent-filter>
+                </activity>
+        <!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.CommunicationActivity"-->
+<!--            android:exported="false" />-->
+<!--&lt;!&ndash;        android:theme="@style/Theme.HEMobileDark"&ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.StartNowActivity"-->
+<!--            android:theme="@style/Theme.HEMobileDark"-->
+<!--            >-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.HomeActivityMain"
-            android:theme="@style/Theme.HEMobileDark" />
-        <activity
-            android:name=".view.ActivityHome"
-            android:theme="@style/Theme.HEMobile" />
-        <activity
-            android:name=".view.ActivityCreateAccount"
-            android:theme="@style/Theme.HEMobile" />
-        <activity
-            android:name=".view.ProfileActivity"
-            android:theme="@style/Theme.HEMobile" />
-        <activity android:name=".view.DashboardPage" />
-        <activity android:name=".view.LoginActivity" />
-        <activity
-            android:name=".view.VehicleMgmtActivity"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.VrmEditClassesActivity"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.VrmEditMakeModelColorActivity"
-            android:theme="@style/Theme.HEMobileLight" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <activity android:name=".view.ActivityPaymentHistory" />
-        <activity android:name=".view.RecoveryUsernamePasswordActivity" />
-        <activity
-            android:name=".view.ForgotPasswordActivity"
-            android:theme="@style/Theme.HEMobile" />
-        <activity
-            android:name=".view.ActivityViewCharges"
-            android:theme="@style/Theme.HEMobile" />
-        <activity android:name=".view.ForgotPasswordRecoverActivity" />
-        <activity android:name=".view.ForgotPasswordSentActivity" />
-        <activity android:name=".view.PasswordResetActivity" />
-        <activity android:name=".view.MakeOneOffPaymentActivity" />
-        <activity android:name=".view.ConfirmPaymentActivity" />
-        <activity android:name=".view.PaymentMethodSelectionActivity" />
-        <activity android:name=".view.QuickPaymentMethodSelectionActivity" />
-        <activity android:name=".view.PayNowActivity" />
-        <activity android:name=".view.PaymentConfirmationActivity" />
-        <activity
-            android:name=".view.OneOfPayment"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.PaymentStartPage"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.VehicleDetailActivity"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.ActivityVehicleHistory"
-            android:theme="@style/Theme.HEMobileLight" />
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.HomeActivityMain"-->
+<!--            android:theme="@style/Theme.HEMobileDark" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityHome"-->
+<!--            android:theme="@style/Theme.HEMobile" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityCreateAccount"-->
+<!--            android:theme="@style/Theme.HEMobile" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ProfileActivity"-->
+<!--            android:theme="@style/Theme.HEMobile" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.DashboardPage" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.LoginActivity" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.VehicleMgmtActivity"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.VrmEditClassesActivity"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.VrmEditMakeModelColorActivity"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
 
-        <activity android:name=".view.PaymentReceiptSelectionActivity" />
-        <activity
-            android:name=".view.ActivityFutureCrossing"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.ActivityPaypalPage"
-            android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.StartNowBaseActivity"
-            android:theme="@style/Theme.HEMobileLight" />
+<!--        <activity android:name="com.heandroid.oldStructure.view.ActivityPaymentHistory" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.RecoveryUsernamePasswordActivity" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ForgotPasswordActivity"-->
+<!--            android:theme="@style/Theme.HEMobile" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityViewCharges"-->
+<!--            android:theme="@style/Theme.HEMobile" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.ForgotPasswordRecoverActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.ForgotPasswordSentActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.PasswordResetActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.MakeOneOffPaymentActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.ConfirmPaymentActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.PaymentMethodSelectionActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.QuickPaymentMethodSelectionActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.PayNowActivity" />-->
+<!--        <activity android:name="com.heandroid.oldStructure.view.PaymentConfirmationActivity" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.OneOfPayment"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.PaymentStartPage"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.VehicleDetailActivity"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityVehicleHistory"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
 
-        <activity
-            android:name=".view.CrossingHistoryActivity"
-            android:theme="@style/Theme.HEMobileWhite" />
+<!--        <activity android:name="com.heandroid.oldStructure.view.PaymentReceiptSelectionActivity" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityFutureCrossing"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.ActivityPaypalPage"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.StartNowBaseActivity"-->
+<!--            android:theme="@style/Theme.HEMobileLight" />-->
+
+<!--        <activity-->
+<!--            android:name="com.heandroid.oldStructure.view.CrossingHistoryActivity"-->
+<!--            android:theme="@style/Theme.HEMobileWhite" />-->
 
     </application>
 

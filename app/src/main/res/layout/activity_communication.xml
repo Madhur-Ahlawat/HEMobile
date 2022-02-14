@@ -8,7 +8,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.CommunicationActivity">
+        tools:context="com.heandroid.oldStructure.view.CommunicationActivity">
         <include
             android:id="@+id/tool_bar_lyt"
             layout="@layout/activity_toolbar"/>

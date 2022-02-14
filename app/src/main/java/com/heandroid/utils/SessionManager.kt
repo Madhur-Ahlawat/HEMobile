@@ -3,13 +3,16 @@ package com.heandroid.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.heandroid.model.GetSecurityCodeResponseModel
-import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Session manager to save and fetch data from SharedPreferences
  */
-class SessionManager (context: Context) {
+
+@Singleton
+class SessionManager @Inject constructor (@ApplicationContext context: Context) {
        private var prefs: SharedPreferences = context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)
 
     companion object {
@@ -75,18 +78,18 @@ class SessionManager (context: Context) {
         return prefs.getString(SECURITY_CODE, null)
     }
 
-    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {
-        val editor = prefs.edit()
-        val gson = Gson()
-        val jsonString = gson.toJson(myObject)
-        editor.putString( SECURITY_CODE_OBJ, jsonString)
-        editor.commit()
-    }
-    fun fetchSecurityCodeObj(): GetSecurityCodeResponseModel? {
-        val gson = Gson()
-        val json: String? = prefs.getString(SECURITY_CODE_OBJ, "")
-        return gson.fromJson(json, GetSecurityCodeResponseModel::class.java)
-    }
+//    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {
+//        val editor = prefs.edit()
+//        val gson = Gson()
+//        val jsonString = gson.toJson(myObject)
+//        editor.putString( SECURITY_CODE_OBJ, jsonString)
+//        editor.commit()
+//    }
+//    fun fetchSecurityCodeObj(): GetSecurityCodeResponseModel? {
+//        val gson = Gson()
+//        val json: String? = prefs.getString(SECURITY_CODE_OBJ, "")
+//        return gson.fromJson(json, GetSecurityCodeResponseModel::class.java)
+//    }
 
 
 

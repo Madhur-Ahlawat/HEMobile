@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/crossingHistoryFragment"
-        android:name="com.heandroid.fragments.CrossingHistoryFragment"
+        android:name="com.heandroid.oldStructure.fragments.CrossingHistoryFragment"
         tools:layout="@layout/fragment_crossing_history"
         android:label="CrossingHistoryFragment" >
 
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/crossingHistoryMakePaymentFragment"
-        android:name="com.heandroid.fragments.CrossingHistoryMakePaymentFragment"
+        android:name="com.heandroid.oldStructure.fragments.CrossingHistoryMakePaymentFragment"
         tools:layout="@layout/fragment_crossing_history_make_payment"
         android:label="CrossingHistoryMakePaymentFragment" />
 
