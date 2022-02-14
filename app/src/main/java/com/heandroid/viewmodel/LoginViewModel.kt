@@ -19,7 +19,6 @@ class LoginViewModel(private val apiHelper: ApiHelper) : ViewModel(), Observable
     val loginUserVal = MutableLiveData<Resource<Response<LoginResponse>>>()
     val renewalUserLoginVal = MutableLiveData<Resource<Response<LoginResponse>>>()
 
-
     // changes for data binding
     val isStringEmpty = MutableLiveData<Boolean>()
 

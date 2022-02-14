@@ -93,7 +93,6 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
         binding.edTo.text?.clear()
     }
 
-
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when(group?.checkedRadioButtonId) {
 

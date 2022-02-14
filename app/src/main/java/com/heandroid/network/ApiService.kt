@@ -18,6 +18,9 @@ interface ApiService {
         @Field("validatePasswordCompliance") validatePasswordCompliance: String,
     ): Response<LoginResponse>
 
+    @DELETE("http://10.190.176.7:8080/oauth/token/revoke")
+    suspend fun logOut(): Response<LogOutResp>
+
     @GET("bosuser/api/account/vehicle")
     suspend fun getVehicleData(): Response<List<VehicleResponse>>
 

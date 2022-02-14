@@ -13,6 +13,7 @@ interface ApiHelper {
                              password:String,
                              validatePasswordCompliance:String)
             : Response<LoginResponse>
+    suspend fun getLogOut() : Response<LogOutResp>
     suspend fun getAccountOverviewApiCall(authToken:String) : Response<AccountResponse>
     suspend fun getVehicleListApiCall() : Response<List<VehicleResponse>>
     suspend fun getRenewalAccessToken(clientId:String , grantType:String, agencyId:String, clientSecret:String,
