@@ -33,6 +33,7 @@ class CrossingHistoryAdapter(private val context: Context) :
 
     fun setListData(itemList: List<CrossingHistoryItem>) {
         itemList?.let {
+            list.clear()
             list = itemList as MutableList<CrossingHistoryItem>
             notifyDataSetChanged()
         }

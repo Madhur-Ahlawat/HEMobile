@@ -28,6 +28,7 @@ import com.heandroid.viewmodel.ViewModelFactory
 class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
     CrossingHistoryFilterDialogListener {
 
+    private val startIndex: String = "1"
     private lateinit var request: CrossingHistoryRequest
     private lateinit var adapter: CrossingHistoryAdapter
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
@@ -55,6 +56,12 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
             adapter = CrossingHistoryAdapter(requireActivity())
             rvHistory.adapter = adapter
             rvHistory.hasFixedSize()
+
+            request = CrossingHistoryRequest().apply {
+                startIndex = "1"
+                count = "5"
+                transactionType = "ALL"
+            }
         }
     }
 
@@ -92,15 +99,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
 
     private fun setObservers() {
 
-        request = CrossingHistoryRequest().apply {
-            startIndex = "1"
-            count = "5"
-            transactionType = "Toll_Transaction"
-            searchDate = "Transaction Date"
-            startDate = "11/01/2021"
-            endDate = "11/30/2021"
 
-        }
         // date range
         /**
          * {
@@ -126,20 +125,31 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
                 Status.SUCCESS -> {
 
                     var apiResponse = it.data?.body() as CrossingHistoryApiResponse
-                    apiResponse?.let { it1 ->
-                        it1.transactionList?.let {
-                            var listData = it.transaction
-                            totalCount = it.count.toInt()
-                            adapter.setListData(listData)
-                            Log.d("ApiSuccess : ", listData?.size?.toString())
+                    if (apiResponse.statusCode == "0") {
+                        apiResponse?.let { it1 ->
+                            it1.transactionList?.let {
+                                var listData = it.transaction
+                                totalCount = it?.count?.toInt() ?: 0
+                                if (startIndex == "1") {
+
+                                    adapter.setListData(listData)
+                                } else {
+                                    adapter.addListData(listData)
+                                }
+                                Log.d("ApiSuccess : ", listData?.size?.toString())
+                            }
+
+
                         }
-
-
+                    } else {
+                        requireActivity()?.let { it.showToast(apiResponse.message) }
                     }
 
                 }
                 Status.LOADING -> {
-                    requireActivity()!!.showToast("Data is loading")
+                    requireActivity()?.let {
+                        it.showToast("Data is loading")
+                    }
                 }
                 Status.ERROR -> {
                     requireActivity()!!.showToast(it.message.toString())
@@ -151,9 +161,9 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
     override fun onApplyBtnClicked(dataModel: DateRangeModel) {
         Log.d("dataModel", dataModel.type.toString())
         when (dataModel.type) {
-            getString(R.string.last_30_days) ,
-                getString(R.string.last_90_days),
-                getString(R.string.custom)-> {
+            getString(R.string.last_30_days),
+            getString(R.string.last_90_days),
+            getString(R.string.custom) -> {
                 request.run {
                     startIndex = "1"
                     count = "5"
