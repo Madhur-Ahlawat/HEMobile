@@ -5,14 +5,12 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,19 +22,16 @@ import com.heandroid.adapter.VrmHistoryAdapter
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.listener.AddVehicleListener
+import com.heandroid.listener.ItemClickListener
 import com.heandroid.model.*
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
-import com.heandroid.viewmodel.VehicleMgmtViewModel
-import com.heandroid.viewmodel.ViewModelFactory
-import com.heandroid.listener.ItemClickListener
-import com.heandroid.model.VehicleApiResp
-import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.DashboardViewModel
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
+import com.heandroid.viewmodel.VehicleMgmtViewModel
+import com.heandroid.viewmodel.ViewModelFactory
 
 class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickListener {
 
@@ -74,7 +69,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
             when (this) {
 
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
-                    databinding.idToolBarLyt.title_txt.text = "Vehicles list"
+                    databinding.idToolBarLyt.tvHeader.text = "Vehicles list"
                     databinding.progressLayout.visibility = VISIBLE
 
                     getVehicleListApiCall()
@@ -83,7 +78,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
                 Constants.VEHICLE_SCREEN_TYPE_ADD -> {
 
-                    databinding.idToolBarLyt.title_txt.text = "Add vehicles"
+                    databinding.idToolBarLyt.tvHeader.text = "Add vehicles"
                     databinding.addVehiclesTxt.text = "Add vehicles to your account"
                     databinding.conformBtn.text = "Add Vehicle"
                     databinding.progressLayout.visibility = GONE
@@ -97,7 +92,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 }
 
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
-                    databinding.idToolBarLyt.title_txt.text = "Vehicles History"
+                    databinding.idToolBarLyt.tvHeader.text = "Vehicles History"
                     databinding.conformBtn.visibility = View.GONE
                     databinding.progressLayout.visibility = VISIBLE
 
@@ -108,7 +103,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
         }
 
-        databinding.idToolBarLyt.back_button.setOnClickListener {
+        databinding.idToolBarLyt.btnBack.setOnClickListener {
             finish()
         }
 

@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
 import com.heandroid.databinding.PaymentStartPageActivityBinding
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class PaymentStartPage : AppCompatActivity() {
 
@@ -22,7 +21,7 @@ class PaymentStartPage : AppCompatActivity() {
 
     private fun setUpViewAction() {
 
-        databinding.idToolBarLyt.back_button.setOnClickListener {
+        databinding.idToolBarLyt.backButton.setOnClickListener {
             onBackPressed()
         }
         databinding.continueBtn.setOnClickListener {

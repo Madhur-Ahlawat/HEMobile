@@ -10,7 +10,6 @@ import com.heandroid.databinding.ActivityFutureCrossingsEnterBinding
 import com.heandroid.model.VehicleDetailsModel
 import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Logg
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class ActivityFutureCrossing : AppCompatActivity() {
 
@@ -58,7 +57,7 @@ class ActivityFutureCrossing : AppCompatActivity() {
             dataBinding.futureCrossingCount.text = "$mCount"
 
         }
-        dataBinding.idToolBarLyt.back_button.setOnClickListener {
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
             onBackPressed()
         }
 

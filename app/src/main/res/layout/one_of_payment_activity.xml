@@ -8,7 +8,7 @@
 
         <include
             android:id="@+id/id_tool_bar_lyt"
-            layout="@layout/tool_bar_with_title_back"
+            layout="@layout/activity_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

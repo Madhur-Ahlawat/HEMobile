@@ -1,6 +1,8 @@
 package com.heandroid.network
 
+import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import com.heandroid.model.*
+import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -83,5 +85,8 @@ interface ApiService {
 
     @PUT("/bosuser/api/account/vehicle")
     suspend fun updateVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
+
+    @POST("http://10.190.176.7:8080/trips/api/transactionslist")
+    suspend fun getVehicleCrossingHistoryData(@Body crossingHistoryRequest: CrossingHistoryRequest): Response<CrossingHistoryApiResponse>
 }
 

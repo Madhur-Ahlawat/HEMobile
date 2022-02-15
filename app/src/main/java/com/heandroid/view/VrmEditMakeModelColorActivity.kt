@@ -8,7 +8,6 @@ import com.heandroid.R
 import com.heandroid.databinding.FragmentVrmMakeDetailsBinding
 import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Logg
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VrmEditMakeModelColorActivity : AppCompatActivity() {
 
@@ -31,7 +30,7 @@ class VrmEditMakeModelColorActivity : AppCompatActivity() {
             intent?.getSerializableExtra("list") as VehicleResponse
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
 
-        dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_add_vehicles)
+        dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_add_vehicles)
 
         dataBinding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
 

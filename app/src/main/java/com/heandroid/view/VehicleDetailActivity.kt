@@ -25,7 +25,6 @@ import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
@@ -55,14 +54,14 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
         Logg.logging(TAG, " mScreeType  $mScreeType ")
 
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-            dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_add_vehicle)
+            dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_add_vehicle)
             dataBinding.tickLayout.visibility = View.VISIBLE
             dataBinding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
             dataBinding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
             dataBinding.addVehiclesTxt.visibility = View.GONE
 
         }
-        dataBinding.idToolBarLyt.back_button.setOnClickListener {
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
             finish()
         }
         setBtnActivated()
@@ -93,7 +92,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
         }
 
-        dataBinding.idToolBarLyt.back_button.setOnClickListener {
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
             finish()
         }
 

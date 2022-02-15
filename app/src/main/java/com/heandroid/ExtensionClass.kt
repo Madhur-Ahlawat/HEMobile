@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 
@@ -20,4 +21,12 @@ fun Fragment.hideKeyboard() {
 
 fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
+}
+
+fun Context.showToast(s: String)
+{
+    s?.let {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+    }
+
 }

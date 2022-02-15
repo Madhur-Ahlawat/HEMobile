@@ -24,7 +24,6 @@ import com.heandroid.utils.Logg
 import com.heandroid.view.ActivityVehicleHistory.*
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClickedListener {
 
@@ -49,7 +48,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
         mVehicleDetails =
             intent?.getSerializableExtra(Constants.DATA) as VehicleResponse
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
-        dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_vehicle_history)
+        dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_vehicle_history)
 
         dataBinding.vehicleDetailsTxt.setOnClickListener {
 
@@ -100,7 +99,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
             }
         }
 
-        dataBinding.idToolBarLyt.back_button.setOnClickListener {
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
 //            onBackPressed()
             finish()
         }

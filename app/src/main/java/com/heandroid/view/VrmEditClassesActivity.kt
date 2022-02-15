@@ -15,8 +15,6 @@ import com.heandroid.databinding.FragmentVrmClassDetailsBinding
 import com.heandroid.dialog.VehicleAddConfirm
 import com.heandroid.listener.AddVehicleListener
 import com.heandroid.model.EmptyApiResponse
-import com.heandroid.model.PlateInfoResponse
-import com.heandroid.model.VehicleInfoResponse
 import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
@@ -25,7 +23,6 @@ import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
@@ -57,7 +54,7 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
             intent?.getSerializableExtra("list") as VehicleResponse
 
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
-        dataBinding.idToolBarLyt.title_txt.text = getString(R.string.str_add_vehicles)
+        dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_add_vehicles)
         dataBinding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
 
 

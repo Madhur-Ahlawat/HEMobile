@@ -18,7 +18,6 @@ import com.heandroid.utils.Logg
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.model.VehicleResponse
 import com.heandroid.utils.Constants
-import kotlinx.android.synthetic.main.tool_bar_with_title_back.view.*
 
 class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener {
 
@@ -37,7 +36,7 @@ class OneOfPayment : AppCompatActivity(), AddVehicleListener, ItemClickListener 
 
     private fun setUpViewAction() {
 
-        databinding.idToolBarLyt.back_button.setOnClickListener {
+        databinding.idToolBarLyt.btnBack.setOnClickListener {
             onBackPressed()
         }
         databinding.findVehicle.setOnClickListener {

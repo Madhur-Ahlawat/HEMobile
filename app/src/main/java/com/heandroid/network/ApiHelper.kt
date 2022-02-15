@@ -1,6 +1,8 @@
 package com.heandroid.network
 
 import com.heandroid.model.*
+import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
+import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import retrofit2.Response
 
 interface ApiHelper {
@@ -29,5 +31,6 @@ interface ApiHelper {
     suspend fun getAlertMessageApiCAll( requestParam:String):Response<AlertMessageApiResponse>
     suspend fun addVehicleApiCall(requestParam:VehicleResponse):Response<EmptyApiResponse>
     suspend fun updateVehicleApiCall(requestParam:VehicleResponse):Response<EmptyApiResponse>
+    suspend fun crossingHistoryApiCall(requestParam:CrossingHistoryRequest):Response<CrossingHistoryApiResponse>
 
 }
