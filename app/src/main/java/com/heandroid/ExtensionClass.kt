@@ -23,10 +23,28 @@ fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }
 
-fun Context.showToast(s: String)
-{
+fun Context.showToast(s: String) {
     s?.let {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
 }
+
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.isVisible(isVisible: Boolean) {
+    visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+

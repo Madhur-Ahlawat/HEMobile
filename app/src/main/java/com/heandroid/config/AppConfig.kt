@@ -4,7 +4,6 @@ import android.net.Uri
 import java.net.URL
 
 class AppConfig {
-
     val baseURL: Uri? = Uri.parse("https://maas-test.services.conduent.com")
     val oAuthURL: Uri? = Uri.parse("https://maas-test.services.conduent.com/oauth/token/")
     val agencyID: String = "12"

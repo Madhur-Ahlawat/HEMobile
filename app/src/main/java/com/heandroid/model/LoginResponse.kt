@@ -40,3 +40,5 @@ data class LoginResponse(
     @SerializedName("jti")
     private var jti: String
 )
+
+data class LogOutResp(val success: String)
