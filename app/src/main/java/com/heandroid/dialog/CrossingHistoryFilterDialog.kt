@@ -104,6 +104,7 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
+        dateRangeModel?.let { mListener.onApplyBtnClicked(it) }
     }
 
     private fun clearSelection() {

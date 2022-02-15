@@ -21,12 +21,14 @@ import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.showToast
 import com.heandroid.utils.Constants
+import com.heandroid.utils.DateUtils
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
 class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
     CrossingHistoryFilterDialogListener {
 
+    private lateinit var request: CrossingHistoryRequest
     private lateinit var adapter: CrossingHistoryAdapter
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var dataBinding: FragmentCrossingHistoryBinding
@@ -90,7 +92,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
 
     private fun setObservers() {
 
-        var request = CrossingHistoryRequest().apply {
+        request = CrossingHistoryRequest().apply {
             startIndex = "1"
             count = "5"
             transactionType = "Toll_Transaction"
@@ -127,6 +129,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
                     apiResponse?.let { it1 ->
                         it1.transactionList?.let {
                             var listData = it.transaction
+                            totalCount = it.count.toInt()
                             adapter.setListData(listData)
                             Log.d("ApiSuccess : ", listData?.size?.toString())
                         }
@@ -147,11 +150,36 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
 
     override fun onApplyBtnClicked(dataModel: DateRangeModel) {
         Log.d("dataModel", dataModel.type.toString())
-       setObservers()
+        when (dataModel.type) {
+            getString(R.string.last_30_days) ,
+                getString(R.string.last_90_days),
+                getString(R.string.custom)-> {
+                request.run {
+                    startIndex = "1"
+                    count = "5"
+                    transactionType = "Toll_Transaction"
+                    searchDate = "Transaction Date"
+                    startDate = "11/01/2021"
+                    endDate = "11/30/2021"
+
+                }
+
+            }
+            getString(R.string.view_all) -> {
+                request.run {
+                    startIndex = "1"
+                    count = totalCount.toString()
+                    transactionType = "ALL"
+
+                }
+            }
+
+        }
+        setObservers()
     }
 
     override fun onCancelBtnClicked() {
-        Log.d("dialog","Dismiss")
+        Log.d("dialog", "Dismiss")
     }
 
 
