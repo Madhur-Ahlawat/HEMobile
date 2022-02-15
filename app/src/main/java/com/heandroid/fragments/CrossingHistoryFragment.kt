@@ -12,20 +12,26 @@ import com.heandroid.R
 import com.heandroid.adapter.CrossingHistoryAdapter
 import com.heandroid.databinding.FragmentCrossingHistoryBinding
 import com.heandroid.dialog.CrossingHistoryFilterDialog
+import com.heandroid.listener.CrossingHistoryFilterDialogListener
+import com.heandroid.model.DateRangeModel
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.showToast
+import com.heandroid.utils.Constants
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
-class CrossingHistoryFragment : BaseFragment(), View.OnClickListener {
+class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
+    CrossingHistoryFilterDialogListener {
 
     private lateinit var adapter: CrossingHistoryAdapter
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var dataBinding: FragmentCrossingHistoryBinding
+    private var needDataType = Constants.VIEW_ALL
+    private var totalCount = 0;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +73,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tvFilter -> {
                 val dialog = CrossingHistoryFilterDialog()
+                dialog.setListener(this)
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 dialog.show(requireActivity().supportFragmentManager, "")
             }
@@ -85,9 +92,31 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener {
 
         var request = CrossingHistoryRequest().apply {
             startIndex = "1"
-            count = "2"
-            transactionType = "ALL"
+            count = "5"
+            transactionType = "Toll_Transaction"
+            searchDate = "Transaction Date"
+            startDate = "11/01/2021"
+            endDate = "11/30/2021"
+
         }
+        // date range
+        /**
+         * {
+
+        "searchDate": "Transaction Date",
+
+        "startDate": "11/01/2021",
+
+        "endDate": "11/30/2021",
+
+        "startIndex": "1",
+
+        "transactionType": "Toll_Transaction",
+
+        "count": "1"
+
+        }
+         */
         vehicleMgmtViewModel.crossingHistoryApiCall(request);
 
         vehicleMgmtViewModel.crossingHistoryVal.observe(requireActivity()!!, { it ->
@@ -95,14 +124,14 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener {
                 Status.SUCCESS -> {
 
                     var apiResponse = it.data?.body() as CrossingHistoryApiResponse
-                    apiResponse?.let {
-                        var listData = it.transactionList.transaction
+                    apiResponse?.let { it1 ->
+                        it1.transactionList?.let {
+                            var listData = it.transaction
+                            adapter.setListData(listData)
+                            Log.d("ApiSuccess : ", listData?.size?.toString())
+                        }
 
-                        adapter.setListData(listData)
-                        adapter.notifyDataSetChanged()
-                        Log.d("ApiSuccess : ", listData.size.toString())
 
-                        requireActivity()!!.showToast("Vehicle is updated successfully")
                     }
 
                 }
@@ -114,6 +143,15 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener {
                 }
             }
         })
+    }
+
+    override fun onApplyBtnClicked(dataModel: DateRangeModel) {
+        Log.d("dataModel", dataModel.type.toString())
+       setObservers()
+    }
+
+    override fun onCancelBtnClicked() {
+        Log.d("dialog","Dismiss")
     }
 
 

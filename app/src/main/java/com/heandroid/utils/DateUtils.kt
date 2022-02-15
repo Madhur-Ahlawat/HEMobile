@@ -1,16 +1,9 @@
 package com.heandroid.utils
 
-import android.content.Context
-import android.os.Build
-import android.util.Log
-import com.heandroid.R
+import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import java.util.concurrent.TimeUnit
-import android.provider.Settings.System.DATE_FORMAT
-import java.text.DateFormat
-import java.text.ParseException
 
 
 object DateUtils {

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
-import java.util.Collections.addAll
 
 class CrossingHistoryAdapter(private val context: Context) :
     RecyclerView.Adapter<CrossingHistoryAdapter.HistoryViewHolder>() {
@@ -39,6 +38,13 @@ class CrossingHistoryAdapter(private val context: Context) :
         }
     }
 
+    fun addListData(itemList: List<CrossingHistoryItem>) {
+        itemList?.let {
+            list.addAll(itemList) as MutableList<CrossingHistoryItem>
+            notifyDataSetChanged()
+        }
+    }
+
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }
@@ -46,39 +52,52 @@ class CrossingHistoryAdapter(private val context: Context) :
     inner class HistoryViewHolder(var binding: AdapterCrossingHistoryBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        fun bind(data: Any?) {
+        fun bind(data:CrossingHistoryItem) {
+
             binding.apply {
                 cvMain.setOnClickListener(this@HistoryViewHolder)
-                if (absoluteAdapterPosition == 1) {
-                    tvPaymentStatus.text = context.getString(R.string.unpaid)
-                    tvPaymentStatus.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.color_10403C
-                        )
-                    )
-                    tvPaymentStatus.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.FCD6C3
-                        )
-                    )
-
-                } else if (absoluteAdapterPosition == 2) {
-                    tvPaymentStatus.text = context.getString(R.string.refund)
-                    tvPaymentStatus.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.color_594D00
-                        )
-                    )
-                    tvPaymentStatus.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.FFF7BF
-                        )
-                    )
+                tvStatus.text=data.prepaid
+                tvDate.text = data.transactionDate + " " +data.exitTime
+                when(data.entryDirection)
+                {
+                    "N"->{
+                         tvDirection.text = "NORTHBOUND"}
+                    "s"->{
+                        tvDirection.text = "SOUTHBOUND"
+                    }
                 }
+
+                tvVrm.text = data.plateNumber
+//                if (absoluteAdapterPosition == 1) {
+//                    tvStatus.text = context.getString(R.string.unpaid)
+//                    tvStatus.setTextColor(
+//                        ContextCompat.getColor(
+//                            context,
+//                            R.color.color_10403C
+//                        )
+//                    )
+//                    tvStatus.setBackgroundColor(
+//                        ContextCompat.getColor(
+//                            context,
+//                            R.color.FCD6C3
+//                        )
+//                    )
+//
+//                } else if (absoluteAdapterPosition == 2) {
+//                    tvStatus.text = context.getString(R.string.refund)
+//                    tvStatus.setTextColor(
+//                        ContextCompat.getColor(
+//                            context,
+//                            R.color.color_594D00
+//                        )
+//                    )
+//                    tvStatus.setBackgroundColor(
+//                        ContextCompat.getColor(
+//                            context,
+//                            R.color.FFF7BF
+//                        )
+//                    )
+//                }
             }
         }
 

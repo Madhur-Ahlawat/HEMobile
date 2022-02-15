@@ -20,9 +20,9 @@ data class CrossingHistoryRequest (
      */
 
 
-    @SerializedName("searchDate") val searchDate:String="",
-    @SerializedName("startDate") val startDate:String="",
-    @SerializedName("endDate") val endDate:String="",
+    @SerializedName("searchDate") var searchDate:String="",
+    @SerializedName("startDate") var startDate:String="",
+    @SerializedName("endDate") var endDate:String="",
     @SerializedName("startIndex") var startIndex:String="",
     @SerializedName("transactionType") var transactionType:String="",
     @SerializedName("plateNumber") val plateNumber:String="",

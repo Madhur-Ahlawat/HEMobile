@@ -28,4 +28,5 @@ data class CrossingHistoryItem(
     @SerializedName("entryDirection") val entryDirection: String,
     @SerializedName("exitDirection") val exitDirection: String,
     @SerializedName("plateNumber") val plateNumber: String
+
 )

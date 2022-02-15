@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
 import com.heandroid.isVisible
+import com.heandroid.listener.CrossingHistoryFilterDialogListener
 import com.heandroid.model.DateRangeModel
 import com.heandroid.utils.DateUtils.currentDate
 import com.heandroid.utils.DateUtils.lastPriorDate
@@ -19,12 +20,17 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
 
     private lateinit var binding : DialogCrossingHistoryFilterBinding
     private var dateRangeModel : DateRangeModel?=null
+    private lateinit var mListener: CrossingHistoryFilterDialogListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding= DialogCrossingHistoryFilterBinding.inflate(inflater,container,false)
         return binding.root
     }
 
+    fun setListener(listener: CrossingHistoryFilterDialogListener)
+    {
+        mListener = listener
+    }
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
