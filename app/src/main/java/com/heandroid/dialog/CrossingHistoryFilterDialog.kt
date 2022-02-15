@@ -7,19 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RadioGroup
-import androidx.core.view.get
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
 import com.heandroid.isVisible
 import com.heandroid.model.DateRangeModel
-import com.heandroid.utils.DateUtils
-import com.heandroid.utils.DateUtils.calculateDays
 import com.heandroid.utils.DateUtils.currentDate
-import com.heandroid.utils.DateUtils.getRangeBetweenDate
 import com.heandroid.utils.DateUtils.lastPriorDate
-import com.heandroid.utils.Logg
 import kotlinx.android.synthetic.main.dialog_crossing_history_filter.*
 import java.util.*
 
@@ -48,7 +42,7 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
         dateRangeModel = DateRangeModel(type = "", from = "",to="")
     }
 
-    private fun initCtrl(){
+    private fun initCtrl() {
         binding.apply {
             ivClose.setOnClickListener(this@CrossingHistoryFilterDialog)
             rgFilterOption.setOnCheckedChangeListener(this@CrossingHistoryFilterDialog)
@@ -60,38 +54,18 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
+
             R.id.ivClose ->{ dismiss() }
             R.id.edFrom -> { DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager,"") }
             R.id.edTo -> { DatePicker(binding.edTo).show(requireActivity().supportFragmentManager,"") }
             R.id.btnApply -> { dismiss()
                                calculateRange() }
             R.id.btnClear -> { clearSelection() }
-        }
-    }
-
-    private fun calculateRange() {
-        when(dateRangeModel?.type){
-            getString(R.string.last_30_days) ->{ loadRange(lastPriorDate(-30),currentDate()) }
-            getString(R.string.view_all) ->{ loadRange("","") }
-            getString(R.string.last_90_days) ->{ loadRange(lastPriorDate(-90),currentDate()) }
-            getString(R.string.custom) ->{ loadRange(edFrom.text.toString(),edTo.text.toString()) }
 
         }
     }
 
-    private fun loadRange(start : String?,end: String?){
-        dateRangeModel?.run {
-            from=start
-            to=end
-        }
-    }
-
-    private fun clearSelection() {
-        binding.rgFilterOption.clearCheck()
-        binding.edFrom.text?.clear()
-        binding.edTo.text?.clear()
-    }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when(group?.checkedRadioButtonId) {
@@ -110,6 +84,31 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
 
         }
     }
+
+
+    private fun calculateRange() {
+        when(dateRangeModel?.type){
+            getString(R.string.last_30_days) ->{ loadRange(lastPriorDate(-30),currentDate()) }
+            getString(R.string.view_all) ->{ loadRange("","") }
+            getString(R.string.last_90_days) ->{ loadRange(lastPriorDate(-90),currentDate()) }
+            getString(R.string.custom) ->{ loadRange(binding.edFrom.text.toString(),binding.edTo.text.toString()) }
+        }
+    }
+
+    private fun loadRange(start : String?,end: String?){
+        dateRangeModel?.run {
+            from=start
+            to=end
+        }
+    }
+
+    private fun clearSelection() {
+        binding.rgFilterOption.clearCheck()
+        binding.edFrom.text?.clear()
+        binding.edTo.text?.clear()
+
+    }
+
 
     private fun customSectionUI(isShow: Boolean) {
         binding.llCustom.isVisible(isShow)
