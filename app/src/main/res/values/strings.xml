@@ -348,6 +348,9 @@
     <string name="str_make_payment">Make payment</string>
     <string name="str_log_out">Logout</string>
     <string name="str_ok">Ok</string>
+    <string name="select_type">Select format</string>
+    <string name="pdf">PDF</string>
+    <string name="spread_sheet">Spread sheet</string>
 
 </resources>
 
