@@ -35,7 +35,7 @@ class CrossingHistoryAdapter : PagingDataAdapter<CrossingHistoryItem,RecyclerVie
                 binding.apply {
                     tvDate.text = "$transactionDate $exitTime"
                     tvVrm.text = plateNumber
-                    tvDirection.text= getDirection(entryDirection)
+                    tvDirection.text= getDirection(exitDirection)
                     loadStatus(prepaid,tvStatus)
 
 

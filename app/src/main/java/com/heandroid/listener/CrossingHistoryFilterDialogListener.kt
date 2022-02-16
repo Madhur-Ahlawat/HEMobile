@@ -4,4 +4,5 @@ import com.heandroid.model.DateRangeModel
 
 interface CrossingHistoryFilterDialogListener {
    fun onRangedApplied(dataModel: DateRangeModel?)
+   fun onClearRange(dataModel: DateRangeModel?)
 }

@@ -144,7 +144,6 @@
 
 
 
-
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvLabelFrom"
                             android:layout_width="wrap_content"
@@ -154,9 +153,7 @@
                             android:layout_marginStart="@dimen/_15sdp"
                             android:textSize="@dimen/_13sdp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_regular"
-
-                            />
+                            android:fontFamily="@font/roboto_regular" />
 
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -168,6 +165,7 @@
                             android:layout_marginTop="@dimen/_2sdp"
                             app:hintTextColor="@color/black"
                             android:paddingLeft="@dimen/_9sdp"
+                            android:background="@drawable/drawable_round_corner"
 
                             android:focusable="false"
                             android:textColor="@color/black"
@@ -190,7 +188,6 @@
                             android:layout_marginStart="@dimen/_15sdp"
                             android:textSize="@dimen/_13sdp"
                             app:hintEnabled="false"
-
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_regular"
 
@@ -202,6 +199,8 @@
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
+                            android:background="@drawable/drawable_round_corner"
+
                             android:layout_marginTop="@dimen/_2sdp"
                             app:hintTextColor="@color/black"
                             android:textColor="@color/black"

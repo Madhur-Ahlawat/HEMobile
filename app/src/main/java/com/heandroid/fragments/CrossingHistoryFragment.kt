@@ -34,6 +34,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
 
     private lateinit var viewModel: VehicleMgmtViewModel
     private lateinit var binding: FragmentCrossingHistoryBinding
+    private var dateRangeModel : DateRangeModel?=DateRangeModel(type = "", from = "",to="", title = "")
 
     private val startIndex: Long=1
     private val count:Long=5
@@ -56,7 +57,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
 
         binding.rvHistory.layoutManager=LinearLayoutManager(requireActivity())
         binding.rvHistory.adapter=CrossingHistoryAdapter()
-
     }
 
     private fun initCtrl() {
@@ -114,7 +114,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
             }
             R.id.tvFilter -> {
                 val dialog = CrossingHistoryFilterDialog()
-                dialog.setListener(this)
+                dialog.setDateWithListener(dateRangeModel,this)
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 dialog.show(requireActivity().supportFragmentManager, "")
             }
@@ -122,7 +122,17 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     }
 
     override fun onRangedApplied(dataModel: DateRangeModel?) {
+        Log.e("here ",dateRangeModel?.toString()?:"")
+        reloadData(dataModel)
+    }
+
+    override fun onClearRange(dataModel: DateRangeModel?) {
+        reloadData(dataModel)
+    }
+
+    private fun reloadData(dataModel: DateRangeModel?){
         list?.clear()
+        dateRangeModel=dataModel
         val request = loadRequest(dataModel)
         lifecycleScope.launch {
             viewModel.getListData(request).collectLatest {
