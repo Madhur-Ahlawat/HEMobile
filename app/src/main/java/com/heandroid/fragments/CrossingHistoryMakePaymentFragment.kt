@@ -32,7 +32,7 @@ class CrossingHistoryMakePaymentFragment : BaseFragment(), View.OnClickListener 
             arguments?.getParcelable<CrossingHistoryItem?>("data")?.run {
                  crossingDate.text=transactionDate
                  crossingTime.text=exitTime
-                 direction.text=getDirection(entryDirection)
+                 direction.text=getDirection(exitDirection)
                  vehicle.text=plateNumber
                  transactionId.text=transactionNumber
                  loadStatus(prepaid,status)
