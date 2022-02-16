@@ -1,6 +1,7 @@
 package com.heandroid.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.heandroid.dialog.CrossingHistoryFilterDialog
 import com.heandroid.gone
 import com.heandroid.listener.CrossingHistoryFilterDialogListener
 import com.heandroid.model.DateRangeModel
+import com.heandroid.model.crossingHistory.request.CrossingHistoryDownloadRequest
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
@@ -62,6 +64,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
             tvDownload.setOnClickListener(this@CrossingHistoryFragment)
             tvFilter.setOnClickListener(this@CrossingHistoryFragment)
         }
+
     }
 
     private fun observer() {
@@ -71,13 +74,44 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                 ( binding.rvHistory.adapter as CrossingHistoryAdapter).submitData(it)
             }
         }
+
+
+
     }
 
 
+    private fun downloadCrossingHistory()
+    {
+        val downloadRequest = CrossingHistoryDownloadRequest().apply {
+            startIndex = "1"
+            transactionType="ALL"
+            downloadType="pdf"
+        }
+        viewModel.downloadCrossingHistoryApiCall(downloadRequest)
+        viewModel.crossingHistoryDownloadVal.observe(requireActivity(), {
+            when(it.status)
+            {
+                Status.SUCCESS->
+                {
+                    Log.d("Success", it.status.toString())
+                }
+
+                Status.ERROR->{
+                    Log.d("Success", it.status.toString())
+                }
+                Status.LOADING->{
+                    Log.d("Success", it.status.toString())
+
+                }
+            }
+        })
+    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.tvDownload -> {  }
+            R.id.tvDownload -> {
+                downloadCrossingHistory()
+            }
             R.id.tvFilter -> {
                 val dialog = CrossingHistoryFilterDialog()
                 dialog.setListener(this)

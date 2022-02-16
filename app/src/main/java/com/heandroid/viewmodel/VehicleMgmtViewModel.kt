@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.heandroid.CrossingPaging
 import com.heandroid.model.*
+import com.heandroid.model.crossingHistory.request.CrossingHistoryDownloadRequest
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
@@ -16,6 +17,7 @@ import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
@@ -23,6 +25,7 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     val addVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
     val updateVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
     val crossingHistoryVal = MutableLiveData<Resource<Response<CrossingHistoryApiResponse>>>()
+    val crossingHistoryDownloadVal = MutableLiveData<Resource<Response<ResponseBody>>>()
 
     fun addVehicleApi(request: VehicleResponse
     ) {
@@ -99,5 +102,33 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }
     }
 
+
+    fun downloadCrossingHistoryApiCall(request: CrossingHistoryDownloadRequest
+    ) {
+
+        viewModelScope.launch {
+            crossingHistoryDownloadVal.postValue(Resource.loading(null))
+            try {
+                val respFromApi = apiHelper.downloadCrossingHistoryAPiCall(request)
+                crossingHistoryDownloadVal.postValue(setDownloadCrossingHistoryApiResponse(respFromApi))
+            } catch (e: Exception) {
+                crossingHistoryDownloadVal.postValue(Resource.error(null , e.toString()))
+            }
+        }
+    }
+
+    private fun setDownloadCrossingHistoryApiResponse(respFromApi: Response<ResponseBody>): Resource<Response<ResponseBody>>? {
+        return if(respFromApi.isSuccessful) {
+            Resource.success(respFromApi)
+        } else {
+            var errorCode = respFromApi.code()
+            if(errorCode==401) {
+                Resource.error(null, "Invalid token")
+            } else {
+                Resource.error(null, "Unknown error")
+            }
+
+        }
+    }
 
 }
