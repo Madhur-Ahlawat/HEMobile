@@ -13,6 +13,9 @@ import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
 import com.heandroid.isVisible
 import com.heandroid.listener.CrossingHistoryFilterDialogListener
 import com.heandroid.model.DateRangeModel
+import com.heandroid.utils.Constants
+import com.heandroid.utils.Constants.ALL_TRANSACTION
+import com.heandroid.utils.Constants.TOLL_TRANSACTION
 import com.heandroid.utils.DateUtils.currentDate
 import com.heandroid.utils.DateUtils.lastPriorDate
 
@@ -20,20 +23,21 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
 
     private lateinit var binding : DialogCrossingHistoryFilterBinding
     private var dateRangeModel : DateRangeModel?=null
-    private lateinit var mListener: CrossingHistoryFilterDialogListener
+    private var listner: CrossingHistoryFilterDialogListener?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding= DialogCrossingHistoryFilterBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    fun setListener(listener: CrossingHistoryFilterDialogListener)
-    {
-        mListener = listener
-    }
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+    }
+
+    fun setListener(listener: CrossingHistoryFilterDialogListener?)
+    {
+        this.listner = listener
     }
 
 
@@ -74,28 +78,22 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when(group?.checkedRadioButtonId) {
 
-            R.id.rbLast30Days -> { dateRangeModel?.type=binding.rbLast30Days.text.toString()
-                                   customSectionUI(false) }
+            R.id.rbLast30Days, R.id.rbLast90Days,R.id.rbCustom -> { dateRangeModel?.type=TOLL_TRANSACTION
+                                                                    customSectionUI(false) }
 
-            R.id.rbViewAll -> { dateRangeModel?.type=binding.rbViewAll.text.toString()
+            R.id.rbViewAll -> { dateRangeModel?.type=ALL_TRANSACTION
                                 customSectionUI(false) }
-
-            R.id.rbLast90Days -> { dateRangeModel?.type=binding.rbLast90Days.text.toString()
-                                   customSectionUI(false) }
-
-            R.id.rbCustom -> { dateRangeModel?.type=binding.rbCustom.text.toString()
-                               customSectionUI(true) }
 
         }
     }
 
 
     private fun calculateRange() {
-        when(dateRangeModel?.type){
-            getString(R.string.last_30_days) ->{ loadRange(lastPriorDate(-30),currentDate()) }
-            getString(R.string.view_all) ->{ loadRange("","") }
-            getString(R.string.last_90_days) ->{ loadRange(lastPriorDate(-90),currentDate()) }
-            getString(R.string.custom) ->{ loadRange(binding.edFrom.text.toString(),binding.edTo.text.toString()) }
+        when(binding.rgFilterOption.checkedRadioButtonId){
+            R.id.rbLast30Days ->{ loadRange(lastPriorDate(-30),currentDate()) }
+            R.id.rbViewAll ->{ loadRange("","")  }
+            R.id.rbLast90Days ->{ loadRange(lastPriorDate(-90),currentDate()) }
+            R.id.custom ->{ loadRange(binding.edFrom.text.toString(),binding.edTo.text.toString()) }
         }
     }
 
@@ -104,14 +102,13 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
-        dateRangeModel?.let { mListener.onApplyBtnClicked(it) }
+        listner?.onRangedApplied(dateRangeModel)
     }
 
     private fun clearSelection() {
         binding.rgFilterOption.clearCheck()
         binding.edFrom.text?.clear()
         binding.edTo.text?.clear()
-
     }
 
 

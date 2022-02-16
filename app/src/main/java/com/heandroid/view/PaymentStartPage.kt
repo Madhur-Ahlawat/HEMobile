@@ -24,6 +24,7 @@ class PaymentStartPage : AppCompatActivity() {
         databinding.idToolBarLyt.backButton.setOnClickListener {
             onBackPressed()
         }
+
         databinding.continueBtn.setOnClickListener {
             val intent = Intent(this, OneOfPayment::class.java)
             startActivity(intent)

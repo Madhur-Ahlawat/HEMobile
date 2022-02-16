@@ -2,6 +2,8 @@ package com.heandroid.utils
 
 object Constants {
 
+    const val TOLL_TRANSACTION = "Toll_Transaction"
+    const val ALL_TRANSACTION = "ALL"
     const val VIEW_ALL ="view_all"
     const val DATE_FILTER ="date_filter"
     const val NO = "no"

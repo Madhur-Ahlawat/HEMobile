@@ -2,7 +2,9 @@ package com.heandroid.model.crossingHistory.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CrossingHistoryItem(
     @SerializedName("postingDate") val postingDate: String,
     @SerializedName("transactionDate") val transactionDate: String,
@@ -29,4 +31,4 @@ data class CrossingHistoryItem(
     @SerializedName("exitDirection") val exitDirection: String,
     @SerializedName("plateNumber") val plateNumber: String
 
-)
+) : Parcelable

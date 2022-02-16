@@ -4,6 +4,7 @@
 
     <data>
 
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -73,7 +74,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:text="02 Aug 2021"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_15ssp"
                                 android:textStyle="normal" />
@@ -105,7 +105,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:text="12:34"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_15ssp"
                                 android:textStyle="normal" />
@@ -137,7 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:text="Southbound"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_15ssp"
                                 android:textStyle="normal" />

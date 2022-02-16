@@ -32,6 +32,7 @@ interface ApiHelper {
     suspend fun getAlertMessageApiCAll( requestParam:String):Response<AlertMessageApiResponse>
     suspend fun addVehicleApiCall(requestParam:VehicleResponse):Response<EmptyApiResponse>
     suspend fun updateVehicleApiCall(requestParam:VehicleResponse):Response<EmptyApiResponse>
-    suspend fun crossingHistoryApiCall(requestParam:CrossingHistoryRequest):Response<CrossingHistoryApiResponse>
+    suspend fun crossingHistoryApiCall(requestParam:CrossingHistoryRequest?):Response<CrossingHistoryApiResponse>
+
 
 }

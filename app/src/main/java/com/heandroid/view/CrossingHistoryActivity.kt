@@ -36,7 +36,7 @@ class CrossingHistoryActivity : AppCompatActivity() {
         // Toolbar
         dataBinding.toolBarLyt.apply {
             tvHeader.text = getString(R.string.crossing_history)
-            btnBack.setOnClickListener { finish() }
+            btnBack.setOnClickListener { onBackPressed() }
         }
 
     }

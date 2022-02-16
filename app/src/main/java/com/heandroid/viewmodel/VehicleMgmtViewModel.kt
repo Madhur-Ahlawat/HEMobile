@@ -3,11 +3,18 @@ package com.heandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.heandroid.CrossingPaging
 import com.heandroid.model.*
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
+import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -57,6 +64,11 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
                 updateVehicleApiVal.postValue(Resource.error(null , e.toString()))
             }
         }
+    }
+
+    fun getListData(body: CrossingHistoryRequest?) : Flow<PagingData<CrossingHistoryItem>> {
+        return Pager(config = PagingConfig(pageSize = 5, maxSize = 100),
+                     pagingSourceFactory = {CrossingPaging(apiHelper,body)}).flow.cachedIn(viewModelScope)
     }
 
     fun crossingHistoryApiCall(request: CrossingHistoryRequest

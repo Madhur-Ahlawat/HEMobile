@@ -1,112 +1,49 @@
 package com.heandroid.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
+import com.heandroid.utils.Utils
+import com.heandroid.utils.Utils.getDirection
+import com.heandroid.utils.Utils.loadStatus
 
-class CrossingHistoryAdapter(private val context: Context) :
-    RecyclerView.Adapter<CrossingHistoryAdapter.HistoryViewHolder>() {
 
-    private var list = mutableListOf<CrossingHistoryItem>()
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CrossingHistoryAdapter.HistoryViewHolder =
-        HistoryViewHolder(
-            AdapterCrossingHistoryBinding.inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
-        )
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CrossingHistoryItem>() {
+    override fun areItemsTheSame(oldItem: CrossingHistoryItem, newItem: CrossingHistoryItem): Boolean =  oldItem.transactionNumber == newItem.transactionNumber
+    override fun areContentsTheSame(oldItem: CrossingHistoryItem, newItem: CrossingHistoryItem): Boolean = oldItem==newItem
+}
 
-    override fun onBindViewHolder(holder: CrossingHistoryAdapter.HistoryViewHolder, position: Int) {
-        holder.bind(list?.get(position))
+class CrossingHistoryAdapter : PagingDataAdapter<CrossingHistoryItem,RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =HistoryViewHolder(AdapterCrossingHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is HistoryViewHolder) holder.bind(getItem(position))
     }
 
-    fun setListData(itemList: List<CrossingHistoryItem>) {
-        itemList?.let {
-            list.clear()
-            list = itemList as MutableList<CrossingHistoryItem>
-            notifyDataSetChanged()
-        }
-    }
+    class HistoryViewHolder(var binding: AdapterCrossingHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun addListData(itemList: List<CrossingHistoryItem>) {
-        itemList?.let {
-            list.addAll(itemList) as MutableList<CrossingHistoryItem>
-            notifyDataSetChanged()
-        }
-    }
+        fun bind(data:CrossingHistoryItem?) {
+            data?.run {
+                binding.apply {
+                    tvDate.text = "$transactionDate $exitTime"
+                    tvVrm.text = plateNumber
+                    tvDirection.text= getDirection(entryDirection)
+                    loadStatus(prepaid,tvStatus)
 
-    override fun getItemCount(): Int {
-        return list?.size ?: 0
-    }
 
-    inner class HistoryViewHolder(var binding: AdapterCrossingHistoryBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-
-        fun bind(data:CrossingHistoryItem) {
-
-            binding.apply {
-                cvMain.setOnClickListener(this@HistoryViewHolder)
-                tvStatus.text=data.prepaid
-                tvDate.text = data.transactionDate + " " +data.exitTime
-                when(data.entryDirection)
-                {
-                    "N"->{
-                         tvDirection.text = "NORTHBOUND"}
-                    "s"->{
-                        tvDirection.text = "SOUTHBOUND"
+                    cvMain.setOnClickListener{
+                        val bundle = Bundle()
+                        bundle.putParcelable("data",data)
+                        it.findNavController().navigate(R.id.action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment,bundle)
                     }
-                }
-
-                tvVrm.text = data.plateNumber
-//                if (absoluteAdapterPosition == 1) {
-//                    tvStatus.text = context.getString(R.string.unpaid)
-//                    tvStatus.setTextColor(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.color_10403C
-//                        )
-//                    )
-//                    tvStatus.setBackgroundColor(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.FCD6C3
-//                        )
-//                    )
-//
-//                } else if (absoluteAdapterPosition == 2) {
-//                    tvStatus.text = context.getString(R.string.refund)
-//                    tvStatus.setTextColor(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.color_594D00
-//                        )
-//                    )
-//                    tvStatus.setBackgroundColor(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.FFF7BF
-//                        )
-//                    )
-//                }
-            }
-        }
-
-        override fun onClick(v: View?) {
-            when (v?.id) {
-                R.id.cvMain -> {
-                    v.findNavController()
-                        .navigate(R.id.action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment)
                 }
             }
         }

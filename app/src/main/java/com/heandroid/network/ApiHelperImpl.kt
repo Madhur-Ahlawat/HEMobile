@@ -82,7 +82,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     }
     override suspend fun addVehicleApiCall(requestParam: VehicleResponse) = apiService.addVehicleApi( requestParam)
     override suspend fun updateVehicleApiCall(requestParam: VehicleResponse) = apiService.updateVehicleApi( requestParam)
-    override suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest): Response<CrossingHistoryApiResponse> {
+    override suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest?): Response<CrossingHistoryApiResponse> {
         return apiService.getVehicleCrossingHistoryData(requestParam)
     }
 

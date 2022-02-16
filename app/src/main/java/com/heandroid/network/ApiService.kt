@@ -90,6 +90,6 @@ interface ApiService {
     suspend fun updateVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
 
     @POST("http://10.190.176.7:8080/trips/api/transactionslist")
-    suspend fun getVehicleCrossingHistoryData(@Body crossingHistoryRequest: CrossingHistoryRequest): Response<CrossingHistoryApiResponse>
+    suspend fun getVehicleCrossingHistoryData(@Body crossingHistoryRequest: CrossingHistoryRequest?): Response<CrossingHistoryApiResponse>
 }
 

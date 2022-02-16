@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 
@@ -28,6 +30,15 @@ fun Context.showToast(s: String) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
+}
+
+
+fun TextView.changeTextColor(id : Int){
+    setTextColor(ContextCompat.getColor(this.context, id))
+}
+
+fun TextView.changeBackgroundColor(id : Int){
+    setBackgroundColor(ContextCompat.getColor(this.context, id))
 }
 
 
