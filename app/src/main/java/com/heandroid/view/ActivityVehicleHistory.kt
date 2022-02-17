@@ -116,7 +116,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 //        }
 //        setBtnActivated()
 //        setAdapter()
-//        setClickEvents()
+        setClickEvents()
 
     }
 
@@ -128,22 +128,17 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
         Log.d("ViewModelSetUp: ", "Setup")
     }
 
-//    private fun setClickEvents() {
-
+    private fun setClickEvents() {
 //        dataBinding.saveBtn.setOnClickListener {
-//
 //            if(textChanged) {
-//
 //                updateVehicleApiCall(mVehicleDetails)
 //            }
 //        }
-//
 //        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
 ////            onBackPressed()
 //            finish()
 //        }
-
-//    }
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
