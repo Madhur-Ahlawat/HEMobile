@@ -33,7 +33,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 
     private lateinit var mVehicleDetails: VehicleResponse
 
-    private var textChanged:Boolean = false
+    private var textChanged: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +50,29 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_vehicle_history)
 
+
+        dataBinding.crossingHistoryTxt.setOnClickListener {
+
+
+            dataBinding.vehicleDetailsTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+            dataBinding.crossingHistoryTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+            dataBinding.vehicleDetailsTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.black
+                )
+            )
+
+            dataBinding.crossingHistoryTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.white
+                )
+            )
+
+        }
         dataBinding.vehicleDetailsTxt.setOnClickListener {
 
             dataBinding.vehicleDetailsTxt.background =
@@ -93,7 +116,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 
         dataBinding.saveBtn.setOnClickListener {
 
-            if(textChanged) {
+            if (textChanged) {
 
                 updateVehicleApiCall(mVehicleDetails)
             }
@@ -176,7 +199,7 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
         Logg.logging(TAG, " mList  $mList ")
         Logg.logging(TAG, " mList size ${mList.size} ")
 
-        val mAdapter = VrmHistoryHeaderAdapter(this , this)
+        val mAdapter = VrmHistoryHeaderAdapter(this, this)
         mAdapter.setList(mList)
         dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerViewHeader.setHasFixedSize(true)
@@ -237,10 +260,9 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 
     override fun OnEditTextValueChanged(value: String) {
 
-        if(!TextUtils.isEmpty(value))
-        {
+        if (!TextUtils.isEmpty(value)) {
             hideKeyboard()
-            textChanged= true
+            textChanged = true
             mVehicleDetails.plateInfo.vehicleComments = value
         }
 
@@ -251,6 +273,6 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 
 interface OnEditTextValueChangedClickedListener {
 
-    fun OnEditTextValueChanged(value:String)
+    fun OnEditTextValueChanged(value: String)
 
 }

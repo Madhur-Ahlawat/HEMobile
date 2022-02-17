@@ -2,7 +2,9 @@ package com.heandroid.network
 
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
 import com.heandroid.model.*
+import com.heandroid.model.crossingHistory.request.CrossingHistoryDownloadRequest
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -81,15 +83,18 @@ interface ApiService {
     suspend fun setNewPasswordApi(@Body requestParam: SetNewPasswordRequest): Response<VerifySecurityCodeResponseModel>
 
     @POST("http://10.190.176.7:8080/bosuser/api/account/getAlertMessages")
-    suspend fun getAlertMessages(@Query("language") language : String): Response<AlertMessageApiResponse>
+    suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse>
 
     @POST("/bosuser/api/account/vehicle")
-    suspend fun addVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
+    suspend fun addVehicleApi(@Body requestParam: VehicleResponse): Response<EmptyApiResponse>
 
     @PUT("/bosuser/api/account/vehicle")
-    suspend fun updateVehicleApi(@Body requestParam: VehicleResponse ) : Response<EmptyApiResponse>
+    suspend fun updateVehicleApi(@Body requestParam: VehicleResponse): Response<EmptyApiResponse>
 
     @POST("http://10.190.176.7:8080/trips/api/transactionslist")
     suspend fun getVehicleCrossingHistoryData(@Body crossingHistoryRequest: CrossingHistoryRequest?): Response<CrossingHistoryApiResponse>
+
+    @POST("http://10.190.176.7:8080/trips/api/downloadtransactionlist")
+    suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest): Response<ResponseBody>
 }
 
