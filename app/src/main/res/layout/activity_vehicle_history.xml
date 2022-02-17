@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -65,46 +65,71 @@
             </LinearLayout>
         </RelativeLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_header"
+        <RelativeLayout
+            android:id="@+id/vehicleCrossingView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/save_btn"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10ssp"
             android:layout_below="@+id/top_layout"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_16sdp" />
+            android:layout_alignParentBottom="true">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_above="@+id/back_to_vehicles_btn"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:text="@string/str_save"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/green"
-            android:textSize="@dimen/_14ssp"
-            app:cornerRadius="@dimen/_4sdp" />
+            <fragment
+                android:id="@+id/fragmentContainer"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                app:defaultNavHost="true" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/back_to_vehicles_btn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:includeFontPadding="true"
-            android:text="@string/str_back_to_vehicles_list"
-            android:textAllCaps="false"
-            android:textColor="@color/green"
-            android:textSize="@dimen/_16ssp"
-            app:strokeColor="@color/green" />
+        </RelativeLayout>
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/vehicleDetailsView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@+id/top_layout">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recycler_view_header"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_above="@+id/save_btn"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginTop="@dimen/_10ssp" />-->
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/save_btn"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
+<!--                android:layout_above="@+id/back_to_vehicles_btn"-->
+<!--                android:layout_marginStart="@dimen/_16sdp"-->
+<!--                android:layout_marginEnd="@dimen/_16sdp"-->
+<!--                android:layout_marginBottom="@dimen/_4sdp"-->
+<!--                android:layout_marginTop="@dimen/_10ssp"-->
+<!--                android:backgroundTint="@color/green"-->
+<!--                android:text="@string/str_save"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="@dimen/_14ssp"-->
+<!--                app:cornerRadius="@dimen/_4sdp" />-->
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/back_to_vehicles_btn"-->
+<!--                style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginStart="@dimen/_16sdp"-->
+<!--                android:layout_marginTop="@dimen/_4sdp"-->
+<!--                android:layout_marginEnd="@dimen/_16sdp"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:includeFontPadding="true"-->
+<!--                android:text="@string/str_back_to_vehicles_list"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="@color/green"-->
+<!--                android:textSize="@dimen/_16ssp"-->
+<!--                app:strokeColor="@color/green" />-->
+<!--        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/progress_layout"

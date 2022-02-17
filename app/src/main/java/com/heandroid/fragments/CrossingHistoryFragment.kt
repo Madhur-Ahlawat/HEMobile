@@ -57,7 +57,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         viewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
 
         binding.rvHistory.layoutManager=LinearLayoutManager(requireActivity())
-        binding.rvHistory.adapter=CrossingHistoryAdapter()
+        binding.rvHistory.adapter=CrossingHistoryAdapter(this)
     }
 
     private fun initCtrl() {
