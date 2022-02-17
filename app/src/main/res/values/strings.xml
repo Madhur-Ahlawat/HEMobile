@@ -353,6 +353,7 @@
     <string name="select_type">Select Type</string>
     <string name="pdf">PDF</string>
     <string name="spread_sheet">Spread Sheet</string>
+    <string name="no_crossings_have_been_made">No crossings have been made</string>
 
 </resources>
 

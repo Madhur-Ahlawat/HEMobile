@@ -9,9 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.adapter.CrossingHistoryAdapter
 import com.heandroid.databinding.FragmentCrossingHistoryBinding
@@ -25,12 +24,9 @@ import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
-import com.heandroid.showToast
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import com.heandroid.visible
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHistoryFilterDialogListener {
 
@@ -38,8 +34,13 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     private lateinit var binding: FragmentCrossingHistoryBinding
     private var dateRangeModel : DateRangeModel?=DateRangeModel(type = "", from = "",to="", title = "")
 
-    private val startIndex: Long=1
+    private var startIndex: Long=1
     private val count:Long=5
+    private var isLoading = false
+    private var list : MutableList<CrossingHistoryItem?>? = ArrayList()
+    private var totalCount: Int=0
+    private lateinit var request : CrossingHistoryRequest
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCrossingHistoryBinding.inflate(inflater, container, false)
@@ -53,30 +54,75 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     }
 
     private fun init() {
+
         val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
 
+
+        request = CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
+        viewModel.crossingHistoryApiCall(request)
+
         binding.rvHistory.layoutManager=LinearLayoutManager(requireActivity())
-        binding.rvHistory.adapter=CrossingHistoryAdapter()
+        binding.rvHistory.adapter=CrossingHistoryAdapter(requireActivity(),list)
     }
 
     private fun initCtrl() {
         binding.apply {
             tvDownload.setOnClickListener(this@CrossingHistoryFragment)
             tvFilter.setOnClickListener(this@CrossingHistoryFragment)
+            rvHistory.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if(recyclerView.layoutManager is LinearLayoutManager){
+                    val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                    if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == list?.size?:0 - 1 && list?.size?:0<totalCount) {
+                            startIndex += 5
+                            isLoading = true
+                            request.startIndex=startIndex
+                            binding.progressBar.visible()
+                            viewModel.crossingHistoryApiCall(request)
+                        }
+                    }
+                    }
+                }
+
+            })
         }
     }
 
     private fun observer() {
-        val request = CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
-        lifecycleScope.launch {
-            viewModel.getListData(request).collectLatest {
-                sectionVisibility()
-                ( binding.rvHistory.adapter as CrossingHistoryAdapter).submitData(it)
+        viewModel.crossingHistoryVal.observe(viewLifecycleOwner) {
+            when(it.status) {
+
+                Status.SUCCESS ->{
+
+                    val response = it.data?.body() as CrossingHistoryApiResponse
+                    totalCount=response.transactionList.count
+                    list?.addAll(response.transactionList.transaction)
+                    isLoading=false
+//                    isLoading = list?.size?:0 != totalCount
+                    Handler(Looper.myLooper()!!).postDelayed( {
+                        binding.rvHistory.adapter?.notifyDataSetChanged()
+                    },1000)
+
+                    if(list?.size==0){
+                        binding.rvHistory.gone()
+                        binding.tvNoCrossing.visible()
+                    }else{
+                        binding.rvHistory.visible()
+                        binding.progressBar.gone()
+                        binding.tvNoCrossing.gone()
+
+                    }
+                }
+
+                Status.ERROR ->{
+                    binding.rvHistory.visible()
+                    binding.progressBar.gone()
+                }
             }
         }
-
-
     }
 
 
@@ -100,24 +146,19 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         reloadData(dataModel)
     }
 
-    private fun reloadData(dataModel: DateRangeModel?){
-        binding.progressBar.visible()
+    private fun reloadData(dataModel: DateRangeModel?) {
         binding.rvHistory.gone()
+        binding.tvNoCrossing.gone()
+        binding.progressBar.visible()
+        startIndex=1
+        totalCount=0
+        isLoading=false
+        list?.clear()
+        binding.rvHistory.adapter?.notifyDataSetChanged()
         dateRangeModel=dataModel
-        val request = loadRequest(dataModel)
-        lifecycleScope.launch {
-            viewModel.getListData(request).collectLatest {
-                sectionVisibility()
-                ( binding.rvHistory.adapter as CrossingHistoryAdapter).submitData(it)
-            }
-        }
+        viewModel.crossingHistoryApiCall(loadRequest(dateRangeModel))
     }
 
-    private fun sectionVisibility() {
-        Handler(Looper.getMainLooper()).postDelayed( {
-            binding.rvHistory.visible()
-            binding.progressBar.gone() },1750)
-    }
 
 
     private fun loadRequest(dataModel: DateRangeModel?) : CrossingHistoryRequest{
