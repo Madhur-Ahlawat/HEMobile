@@ -40,7 +40,13 @@ class LoginActivity : AppCompatActivity() {
         databinding.btnLogin.isEnabled= false
         setBtnNormal()
         databinding.edtEmail.doOnTextChanged { text, start, before, count ->
-            setBtnActivated()
+            if(databinding.edtEmail.text.toString().isNotEmpty() && databinding.edtPwd.text.toString().isNotEmpty()) setBtnActivated()
+            else setBtnNormal()
+        }
+
+        databinding.edtPwd.doOnTextChanged { text, start, before, count ->
+            if(databinding.edtEmail.text.toString().isNotEmpty() && databinding.edtPwd.text.toString().isNotEmpty()) setBtnActivated()
+            else setBtnNormal()
         }
 
         databinding.btnLogin.setOnClickListener {
@@ -96,7 +102,12 @@ class LoginActivity : AppCompatActivity() {
 
     fun validate(username: String, pwd: String): Boolean {
 
-        return if(username.isEmpty()) {
+        return if(username.isEmpty() && pwd.isEmpty()){
+            showToast(getString(R.string.username_and_password))
+            false
+        }
+
+        else if(username.isEmpty()) {
             showToast(getString(R.string.txt_error_username))
             false
         } else if(pwd.isEmpty()) {

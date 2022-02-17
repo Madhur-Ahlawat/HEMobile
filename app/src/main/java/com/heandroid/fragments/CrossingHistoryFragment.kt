@@ -1,6 +1,8 @@
 package com.heandroid.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.adapter.CrossingHistoryAdapter
@@ -37,7 +40,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
 
     private val startIndex: Long=1
     private val count:Long=5
-    private var list: MutableList<CrossingHistoryItem?>? = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCrossingHistoryBinding.inflate(inflater, container, false)
@@ -69,11 +71,13 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         val request = CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
         lifecycleScope.launch {
             viewModel.getListData(request).collectLatest {
+                sectionVisibility()
                 ( binding.rvHistory.adapter as CrossingHistoryAdapter).submitData(it)
             }
         }
-    }
 
+
+    }
 
 
     override fun onClick(v: View?) {
@@ -89,7 +93,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     }
 
     override fun onRangedApplied(dataModel: DateRangeModel?) {
-        Log.e("here ",dateRangeModel?.toString()?:"")
         reloadData(dataModel)
     }
 
@@ -98,14 +101,22 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     }
 
     private fun reloadData(dataModel: DateRangeModel?){
-        list?.clear()
+        binding.progressBar.visible()
+        binding.rvHistory.gone()
         dateRangeModel=dataModel
         val request = loadRequest(dataModel)
         lifecycleScope.launch {
             viewModel.getListData(request).collectLatest {
+                sectionVisibility()
                 ( binding.rvHistory.adapter as CrossingHistoryAdapter).submitData(it)
             }
         }
+    }
+
+    private fun sectionVisibility() {
+        Handler(Looper.getMainLooper()).postDelayed( {
+            binding.rvHistory.visible()
+            binding.progressBar.gone() },1750)
     }
 
 

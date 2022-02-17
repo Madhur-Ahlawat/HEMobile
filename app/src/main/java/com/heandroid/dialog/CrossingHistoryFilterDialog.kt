@@ -130,7 +130,6 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
             from=start
             to=end
         }
-        Log.e("dateRange"," ---> "+dateRangeModel.toString())
         listner?.onRangedApplied(dateRangeModel)
     }
 
@@ -139,7 +138,6 @@ class CrossingHistoryFilterDialog : DialogFragment(), View.OnClickListener, Radi
         binding.edFrom.text?.clear()
         binding.edTo.text?.clear()
         dateRangeModel= DateRangeModel(type = ALL_TRANSACTION, from = "",to="", title = "")
-        Log.e("dateRange","-->"+dateRangeModel.toString())
         listner?.onClearRange(dateRangeModel)
     }
 
