@@ -1,28 +1,18 @@
 package com.heandroid.view
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.adapter.VrmHistoryHeaderAdapter
 import com.heandroid.databinding.ActivityVehicleHistoryBinding
-import com.heandroid.hideKeyboard
-import com.heandroid.model.*
+import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
-import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.VehicleMgmtViewModel
@@ -64,6 +54,10 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
 
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_vehicle_history)
+
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener{
+            finish()
+        }
 
         dataBinding.vehicleDetailsTxt.setOnClickListener {
 
