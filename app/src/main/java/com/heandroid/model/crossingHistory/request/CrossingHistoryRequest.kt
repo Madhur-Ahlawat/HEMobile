@@ -3,6 +3,7 @@ package com.heandroid.model.crossingHistory.request
 import com.google.gson.annotations.SerializedName
 
 data class CrossingHistoryRequest (
+
     /**
      * searchDate": "Transaction Date",
 
