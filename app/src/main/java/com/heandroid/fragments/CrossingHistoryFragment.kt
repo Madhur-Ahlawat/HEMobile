@@ -31,6 +31,9 @@ import com.heandroid.viewmodel.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
+import okhttp3.ResponseBody
+import java.io.*
+
 
 class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
     CrossingHistoryFilterDialogListener, DownloadFilterDialogListener {
@@ -189,7 +192,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
         return when (dateRangeModel?.type) {
             "Toll_Transaction" -> {
                 CrossingHistoryDownloadRequest().apply {
-                    // todo here we need the latest startIndex value
                     startIndex = "1"
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: ""
@@ -204,7 +206,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
 
             else -> {
                 CrossingHistoryDownloadRequest().apply {
-                    // todo here we need the latest startIndex value
                     startIndex = "1"
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: Constants.ALL_TRANSACTION

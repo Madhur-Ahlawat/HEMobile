@@ -94,6 +94,7 @@ interface ApiService {
     @POST("http://10.190.176.7:8080/trips/api/transactionslist")
     suspend fun getVehicleCrossingHistoryData(@Body crossingHistoryRequest: CrossingHistoryRequest?): Response<CrossingHistoryApiResponse>
 
+    @Streaming
     @POST("http://10.190.176.7:8080/trips/api/downloadtransactionlist")
     suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest): Response<ResponseBody>
 }
