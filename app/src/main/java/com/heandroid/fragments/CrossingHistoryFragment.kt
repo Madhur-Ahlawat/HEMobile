@@ -1,5 +1,6 @@
 package com.heandroid.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +32,8 @@ import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
 import com.heandroid.showToast
 import com.heandroid.utils.Constants
+import com.heandroid.utils.StorageHelper.checkStoragePermissions
+import com.heandroid.utils.StorageHelper.requestStoragePermission
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 import com.heandroid.visible
@@ -127,8 +132,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if (recyclerView.layoutManager is LinearLayoutManager) {
-                        val linearLayoutManager =
-                            recyclerView.layoutManager as LinearLayoutManager?
+                        val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
                         if (!isLoading) {
                             if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>4) {
                                 startIndex += 5
@@ -149,13 +153,14 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvDownload -> {
-                val dialog = DownloadFormatSelectionFilterDialog()
-
-                dialog.setListener(this)
-
-                dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-                dialog.show(requireActivity().supportFragmentManager, "")
+                if (!checkStoragePermissions(requireActivity())) {
+                    requestStoragePermission(requireActivity(), onScopeResultLaucher = onScopeResultLaucher, onPermissionlaucher = onPermissionlaucher)
+                }else{
+                    val dialog = DownloadFormatSelectionFilterDialog()
+                    dialog.setListener(this)
+                    dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                    dialog.show(requireActivity().supportFragmentManager, "")
+                }
             }
             R.id.tvFilter -> {
                 val dialog = CrossingHistoryFilterDialog()
@@ -241,17 +246,15 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     }
 
     override fun onOkClickedListener(type: String) {
-
         selectionType = type
         downloadCrossingHistory()
-
     }
 
     private fun downloadCrossingHistory() {
 
         val downloadRequest = loadDownloadRequest()
         viewModel.downloadCrossingHistoryApiCall(downloadRequest)
-        viewModel.crossingHistoryDownloadVal.observe(requireActivity(), {
+        viewModel.crossingHistoryDownloadVal.observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
                     Log.d("Success", it.status.toString())
@@ -268,11 +271,30 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
 
                 }
             }
-        })
+        }
     }
 
 
     override fun onCancelClicked() {
         Log.d("cancel", "close")
     }
+
+    private var onScopeResultLaucher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            binding.tvDownload.performClick()
+        }
+    }
+
+
+    private var onPermissionlaucher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        var permission=true
+        permissions.entries.forEach {
+            if(!it.value){ permission=it.value }
+        }
+        when(permission){
+            true -> { binding.tvDownload.performClick() }
+            else ->{ requireActivity().showToast("Please enable permission to download") }
+        }
+    }
+
 }
