@@ -37,6 +37,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     private var startIndex: Long=1
     private val count:Long=5
     private var isLoading = false
+    private var isFirstTime=true
     private var list : MutableList<CrossingHistoryItem?>? = ArrayList()
     private var totalCount: Int=0
     private lateinit var request : CrossingHistoryRequest
@@ -70,24 +71,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         binding.apply {
             tvDownload.setOnClickListener(this@CrossingHistoryFragment)
             tvFilter.setOnClickListener(this@CrossingHistoryFragment)
-            rvHistory.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if(recyclerView.layoutManager is LinearLayoutManager){
-                    val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
-                    if (!isLoading) {
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == list?.size?:0 - 1 && list?.size?:0<totalCount) {
-                            startIndex += 5
-                            isLoading = true
-                            request.startIndex=startIndex
-                            binding.progressBar.visible()
-                            viewModel.crossingHistoryApiCall(request)
-                        }
-                    }
-                    }
-                }
-
-            })
         }
     }
 
@@ -98,13 +81,16 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                 Status.SUCCESS ->{
 
                     val response = it.data?.body() as CrossingHistoryApiResponse
-                    totalCount=response.transactionList.count
-                    list?.addAll(response.transactionList.transaction)
+                    totalCount=response.transactionList?.transaction?.size?:0
+                    Log.e("totalCount",""+totalCount)
+                    if(response.transactionList!=null){
+                        list?.addAll(response.transactionList.transaction)
+                    }
                     isLoading=false
 //                    isLoading = list?.size?:0 != totalCount
                     Handler(Looper.myLooper()!!).postDelayed( {
                         binding.rvHistory.adapter?.notifyDataSetChanged()
-                    },1000)
+                    },2000)
 
                     if(list?.size==0){
                         binding.rvHistory.gone()
@@ -116,13 +102,41 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                         binding.tvNoCrossing.gone()
 
                     }
+                    endlessScroll()
+
                 }
 
-                Status.ERROR ->{
+                Status.ERROR -> {
                     binding.rvHistory.visible()
                     binding.progressBar.gone()
                 }
             }
+        }
+    }
+
+    private fun endlessScroll() {
+        if(isFirstTime) {
+            isFirstTime=false
+            binding.rvHistory.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.layoutManager is LinearLayoutManager) {
+                        val linearLayoutManager =
+                            recyclerView.layoutManager as LinearLayoutManager?
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>5) {
+                                startIndex += 5
+                                isLoading = true
+                                request.startIndex = startIndex
+                                binding.progressBar.visible()
+                                viewModel.crossingHistoryApiCall(request)
+                            }
+                        }
+                    }
+                }
+
+            })
         }
     }
 
@@ -158,7 +172,8 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         list?.clear()
         binding.rvHistory.adapter?.notifyDataSetChanged()
         dateRangeModel=dataModel
-        viewModel.crossingHistoryApiCall(loadRequest(dateRangeModel))
+        request=loadRequest(dateRangeModel)
+        viewModel.crossingHistoryApiCall(request)
     }
 
 
@@ -166,16 +181,16 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     private fun loadRequest(dataModel: DateRangeModel?) : CrossingHistoryRequest{
         return when (dataModel?.type) {
             "Toll_Transaction" -> { CrossingHistoryRequest(startIndex = startIndex,
-                                                           count = count,
-                                                           transactionType = dataModel.type?:"",
-                                                           searchDate = "Transaction Date",
-                                                           startDate="11/01/2021"/*dataModel.from?:""*/,
-                                                           endDate = "11/30/2021"/*dataModel.to?:""*/) }
+                count = count,
+                transactionType = dataModel.type?:"",
+                searchDate = "Transaction Date",
+                startDate="11/01/2021"/*dataModel.from?:""*/,
+                endDate = "11/30/2021"/*dataModel.to?:""*/) }
 
 
             else -> { CrossingHistoryRequest(startIndex = startIndex,
-                                             count = count,
-                                             transactionType = dataModel?.type?:"") }
+                count = count,
+                transactionType = dataModel?.type?:"") }
         }
     }
 
