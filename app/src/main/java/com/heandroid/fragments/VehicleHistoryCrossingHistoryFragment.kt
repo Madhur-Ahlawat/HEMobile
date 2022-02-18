@@ -1,14 +1,19 @@
 package com.heandroid.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.adapter.CrossingHistoryAdapter
 import com.heandroid.databinding.FragmentVehicleHistoryCrossingHistoryBinding
+import com.heandroid.gone
 import com.heandroid.model.VehicleResponse
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
@@ -19,6 +24,7 @@ import com.heandroid.repo.Status
 import com.heandroid.utils.Constants
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
+import com.heandroid.visible
 import kotlinx.android.synthetic.main.fragment_vehicle_history_crossing_history.*
 
 class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListener {
@@ -27,6 +33,12 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
     private lateinit var viewModel: VehicleMgmtViewModel
     private lateinit var mVehicleDetails: VehicleResponse
     private var list : MutableList<CrossingHistoryItem?>? = ArrayList()
+    private var isLoading = false
+    private var isFirstTime=true
+    private var totalCount: Int=0
+    private var startIndex: Long=1
+    private lateinit var request: CrossingHistoryRequest
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dataBinding = FragmentVehicleHistoryCrossingHistoryBinding.inflate(inflater, container, false)
@@ -41,11 +53,11 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
 
     private fun getVehicleCrossingHistoryData() {
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
-        val request = CrossingHistoryRequest(
-            startIndex = 1,
-            count = 10,
-            transactionType = Constants.ALL_TRANSACTION
-//            plateNumber = mVehicleDetails.newPlateInfo.number
+        request = CrossingHistoryRequest(
+            startIndex = startIndex,
+            count = 5,
+            transactionType = Constants.ALL_TRANSACTION,
+            plateNumber = mVehicleDetails.plateInfo.number
         )
         viewModel.crossingHistoryApiCall(request)
         observer()
@@ -72,14 +84,59 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
             when(it.status) {
                 Status.SUCCESS ->{
                     val response = it.data?.body() as CrossingHistoryApiResponse
-                    list?.addAll(response.transactionList.transaction)
-                    dataBinding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
+
+
+                        totalCount=response.transactionList?.transaction?.size?:0
+                        Log.e("totalCount",""+totalCount)
+                        if(response.transactionList!=null){
+                            list?.addAll(response.transactionList.transaction)
+                        }
+                        isLoading=false
+
+                        Handler(Looper.myLooper()!!).postDelayed( {
+                            dataBinding.progressBar.gone()
+                            dataBinding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
+                        },1000)
+
+
+                        if(list?.size==0) {
+                                dataBinding.tvNoCrossing.visible()
+                            }
+
+                        endlessScroll()
+
                 }
 
                 Status.ERROR ->{
 
                 }
             }
+        }
+    }
+
+    private fun endlessScroll() {
+        if(isFirstTime) {
+            isFirstTime=false
+            dataBinding.rvVehicleCrossingHistory.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.layoutManager is LinearLayoutManager) {
+                        val linearLayoutManager =
+                            recyclerView.layoutManager as LinearLayoutManager?
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>4) {
+                                startIndex += 5
+                                isLoading = true
+                                request.startIndex = startIndex
+                                dataBinding.progressBar.visible()
+                                viewModel.crossingHistoryApiCall(request)
+                            }
+                        }
+                    }
+                }
+
+            })
         }
     }
 
