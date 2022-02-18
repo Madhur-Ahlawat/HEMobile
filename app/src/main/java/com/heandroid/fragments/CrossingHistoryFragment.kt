@@ -63,7 +63,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         viewModel.crossingHistoryApiCall(request)
 
         binding.rvHistory.layoutManager=LinearLayoutManager(requireActivity())
-        binding.rvHistory.adapter=CrossingHistoryAdapter(requireActivity(),list)
+        binding.rvHistory.adapter=CrossingHistoryAdapter(this,list)
     }
 
     private fun initCtrl() {

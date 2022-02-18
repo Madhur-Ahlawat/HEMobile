@@ -65,6 +65,10 @@ class ActivityVehicleHistory : AppCompatActivity(), OnEditTextValueChangedClicke
         Logg.logging(TAG, " mVehicleDetails  $mVehicleDetails ")
         dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_vehicle_history)
 
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener{
+            finish()
+        }
+
         dataBinding.vehicleDetailsTxt.setOnClickListener {
 
             dataBinding.vehicleDetailsTxt.background =
