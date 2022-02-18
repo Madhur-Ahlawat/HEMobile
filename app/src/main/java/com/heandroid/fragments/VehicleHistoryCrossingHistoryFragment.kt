@@ -69,6 +69,9 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
             plateNumber = mVehicleDetails.plateInfo.number
         )
         viewModel.crossingHistoryApiCall(request)
+        dataBinding.tvNoCrossing.gone()
+        dataBinding.rvVehicleCrossingHistory.gone()
+        dataBinding.progressBar.visible()
         observer()
     }
 
@@ -103,10 +106,10 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
                         isLoading=false
 
                         Handler(Looper.myLooper()!!).postDelayed( {
-                            dataBinding.progressBar.gone()
                             dataBinding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
-                        },1000)
-
+                        },100)
+                        dataBinding.progressBar.gone()
+                        dataBinding.rvVehicleCrossingHistory.visible()
 
                         if(list?.size==0) {
                                 dataBinding.tvNoCrossing.visible()
