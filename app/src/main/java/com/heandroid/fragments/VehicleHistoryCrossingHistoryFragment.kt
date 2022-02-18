@@ -53,20 +53,20 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
             transactionType = Constants.ALL_TRANSACTION
 //            plateNumber = mVehicleDetails.
         )
-        lifecycleScope.launch {
-            viewModel.getListData(request).collectLatest {
-                (dataBinding.rvVehicleCrossingHistory.adapter as CrossingHistoryAdapter).submitData(it)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.getListData(request).collectLatest {
+//                (dataBinding.rvVehicleCrossingHistory.adapter as CrossingHistoryAdapter).submitData(it)
+//            }
+//        }
     }
 
     private fun init() {
             val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
             viewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
-            dataBinding.rvVehicleCrossingHistory.apply{
-                layoutManager = LinearLayoutManager(requireActivity())
-                adapter = CrossingHistoryAdapter(this@VehicleHistoryCrossingHistoryFragment)
-            }
+//            dataBinding.rvVehicleCrossingHistory.apply{
+//                layoutManager = LinearLayoutManager(requireActivity())
+//                adapter = CrossingHistoryAdapter(this@VehicleHistoryCrossingHistoryFragment)
+//            }
     }
 
     private fun initCtrl() {
