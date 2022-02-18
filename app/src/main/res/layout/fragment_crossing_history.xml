@@ -1,124 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/crossing_hours"
+        android:textColor="@color/color_626262"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintEnd_toStartOf="@+id/tvDownload"
+        app:layout_constraintStart_toStartOf="@+id/glStart"
+        app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_download"
+        android:drawablePadding="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/download"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_7sdp"
+        app:layout_constraintEnd_toStartOf="@+id/tvFilter"
+        app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_9sdp"
+        android:textAlignment="center"
+        android:drawableTop="@drawable/ic_filter"
+        android:drawablePadding="@dimen/_3sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/str_filter"
+        android:textColor="@color/color_00703C"
+        android:textSize="@dimen/_7sdp"
+        app:layout_constraintEnd_toStartOf="@+id/glEnd"
+        app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:theme="@style/Theme.HEMobileDark"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3" />
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glStart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/_12sdp"
+       />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/crossing_hours"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_10sdp"
-            app:layout_constraintEnd_toStartOf="@+id/tvDownload"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toTopOf="@+id/glTop" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDownload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:drawableTop="@drawable/ic_download"
-            android:drawablePadding="@dimen/_2sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/download"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_7sdp"
-            app:layout_constraintEnd_toStartOf="@+id/tvFilter"
-            app:layout_constraintTop_toTopOf="@+id/glTop" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glEnd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/_12sdp"
+        />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_9sdp"
-            android:drawableTop="@drawable/ic_filter"
-            android:drawablePadding="@dimen/_3sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/str_filter"
-            android:textAlignment="center"
-            android:textColor="@color/color_00703C"
-            android:textSize="@dimen/_7sdp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintTop_toTopOf="@+id/glTop" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:theme="@style/Theme.HEMobileDark"
-            app:layout_constraintBottom_toTopOf="@+id/glBottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvHistory" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/_12sdp"
+        />
 
 
-        <TextView
-            android:id="@+id/tvNoCrossing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_crossings_have_been_made"
-            android:textSize="@dimen/_14sdp"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glBottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/_12sdp"
+        />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvHistory"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/progressBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDownload" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glStart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glEnd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glTop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glBottom"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
