@@ -51,7 +51,6 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
 
     fun updateVehicleApi(request: VehicleResponse
     ) {
-
         viewModelScope.launch {
             updateVehicleApiVal.postValue(Resource.loading(null))
             try {
