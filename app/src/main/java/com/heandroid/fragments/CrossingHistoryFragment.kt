@@ -112,8 +112,15 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                 }
 
                 Status.ERROR -> {
-                    binding.rvHistory.visible()
+                    binding.rvHistory.gone()
                     binding.progressBar.gone()
+                    binding.tvNoCrossing.visible()
+                }
+
+                Status.LOADING->{
+                    binding.progressBar.visible()
+                    binding.rvHistory.gone()
+                    binding.tvNoCrossing.gone()
                 }
             }
         }
