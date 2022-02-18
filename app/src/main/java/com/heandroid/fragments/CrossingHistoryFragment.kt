@@ -41,7 +41,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
     private var totalCount: Int=0
     private lateinit var request : CrossingHistoryRequest
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCrossingHistoryBinding.inflate(inflater, container, false)
         return binding.root
@@ -71,7 +70,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
             tvDownload.setOnClickListener(this@CrossingHistoryFragment)
             tvFilter.setOnClickListener(this@CrossingHistoryFragment)
             rvHistory.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if(recyclerView.layoutManager is LinearLayoutManager){
                     val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
@@ -95,8 +93,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         viewModel.crossingHistoryVal.observe(viewLifecycleOwner) {
             when(it.status) {
 
-                Status.SUCCESS ->{
-
+                Status.SUCCESS -> {
                     val response = it.data?.body() as CrossingHistoryApiResponse
                     totalCount=response.transactionList.count
                     list?.addAll(response.transactionList.transaction)
@@ -110,15 +107,14 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                         binding.rvHistory.gone()
                         binding.progressBar.gone()
                         binding.tvNoCrossing.visible()
-                    }else{
+                    } else {
                         binding.rvHistory.visible()
                         binding.progressBar.gone()
                         binding.tvNoCrossing.gone()
-
                     }
                 }
 
-                Status.ERROR ->{
+                Status.ERROR -> {
                     binding.rvHistory.visible()
                     binding.progressBar.gone()
                 }
@@ -159,7 +155,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         dateRangeModel=dataModel
         viewModel.crossingHistoryApiCall(loadRequest(dateRangeModel))
     }
-
 
 
     private fun loadRequest(dataModel: DateRangeModel?) : CrossingHistoryRequest{
