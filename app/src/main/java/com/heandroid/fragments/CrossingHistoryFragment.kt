@@ -151,6 +151,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
         binding.rvHistory.gone()
         binding.tvNoCrossing.gone()
         binding.progressBar.visible()
+
         startIndex=1
         totalCount=0
         isLoading=false
