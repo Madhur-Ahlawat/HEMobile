@@ -125,7 +125,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                         val linearLayoutManager =
                             recyclerView.layoutManager as LinearLayoutManager?
                         if (!isLoading) {
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>5) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>4) {
                                 startIndex += 5
                                 isLoading = true
                                 request.startIndex = startIndex
