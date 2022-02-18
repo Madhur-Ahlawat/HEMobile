@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 import com.heandroid.R
 import com.heandroid.databinding.FragmentCrossingHistoryMakePaymentBinding
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
@@ -34,7 +35,7 @@ class CrossingHistoryMakePaymentFragment : BaseFragment(), View.OnClickListener 
                  vehicle.text=plateNumber
                  transactionId.text=transactionNumber
                  loadStatus(prepaid,status)
-
+                 loadMakePaymentStatus(prepaid, makePaymentBtn)
              }
         }
     }
@@ -55,4 +56,35 @@ class CrossingHistoryMakePaymentFragment : BaseFragment(), View.OnClickListener 
             R.id.back_btn -> { findNavController().popBackStack() }
         }
     }
+
+    private fun loadMakePaymentStatus(status: String, makePaymentBtn: MaterialButton?) {
+        when (status) {
+
+            "Y" -> {
+
+                makePaymentBtn?.let {
+                    it.text =
+                        makePaymentBtn.context.getString(R.string.str_download_payment_receipt)
+                }
+
+            }
+            "N" -> {
+
+                makePaymentBtn?.let {
+                    it.text = makePaymentBtn.context.getString(R.string.str_make_payment)
+                }
+            }
+
+            else -> {
+
+                makePaymentBtn?.let {
+                    it.text = makePaymentBtn.context.getString(R.string.str_make_payment)
+                }
+            }
+        }
+
+
+    }
+
+
 }

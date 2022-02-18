@@ -32,16 +32,21 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
     private lateinit var dataBinding: FragmentVehicleHistoryCrossingHistoryBinding
     private lateinit var viewModel: VehicleMgmtViewModel
     private lateinit var mVehicleDetails: VehicleResponse
-    private var list : MutableList<CrossingHistoryItem?>? = ArrayList()
+    private var list: MutableList<CrossingHistoryItem?>? = ArrayList()
     private var isLoading = false
-    private var isFirstTime=true
-    private var totalCount: Int=0
-    private var startIndex: Long=1
+    private var isFirstTime = true
+    private var totalCount: Int = 0
+    private var startIndex: Long = 1
     private lateinit var request: CrossingHistoryRequest
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        dataBinding = FragmentVehicleHistoryCrossingHistoryBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        dataBinding =
+            FragmentVehicleHistoryCrossingHistoryBinding.inflate(inflater, container, false)
         return dataBinding.root
     }
 
@@ -67,12 +72,12 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
     }
 
     private fun init() {
-            val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
-            viewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
-            dataBinding.rvVehicleCrossingHistory.apply{
-                layoutManager = LinearLayoutManager(requireActivity())
-                adapter = CrossingHistoryAdapter(this@VehicleHistoryCrossingHistoryFragment, list)
-            }
+        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
+        viewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
+        dataBinding.rvVehicleCrossingHistory.apply {
+            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = CrossingHistoryAdapter(this@VehicleHistoryCrossingHistoryFragment, list)
+        }
     }
 
     private fun initCtrl() {
@@ -84,42 +89,49 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
 
     private fun observer() {
         viewModel.crossingHistoryVal.observe(viewLifecycleOwner) {
-            when(it.status) {
-                Status.SUCCESS ->{
+            when (it.status) {
+                Status.SUCCESS -> {
                     val response = it.data?.body() as CrossingHistoryApiResponse
 
 
-                        totalCount=response.transactionList?.transaction?.size?:0
-                        Log.e("totalCount",""+totalCount)
-                        if(response.transactionList!=null){
-                            list?.addAll(response.transactionList.transaction)
-                        }
-                        isLoading=false
+                    totalCount = response.transactionList?.transaction?.size ?: 0
+                    Log.e("totalCount", "" + totalCount)
+                    if (response.transactionList != null) {
+                        list?.addAll(response.transactionList.transaction)
+                    }
+                    isLoading = false
 
-                        Handler(Looper.myLooper()!!).postDelayed( {
-                            dataBinding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
-                        },100)
-                        dataBinding.progressBar.gone()
-                        dataBinding.rvVehicleCrossingHistory.visible()
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        dataBinding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
+                    }, 100)
+                    dataBinding.progressBar.gone()
+                    dataBinding.rvVehicleCrossingHistory.visible()
 
-                        if(list?.size==0) {
-                                dataBinding.tvNoCrossing.visible()
-                            }
+                    if (list?.size == 0) {
+                        dataBinding.tvNoCrossing.visible()
+                        dataBinding.downloadCrossingHistoryBtn.gone()
+                    } else {
+                        dataBinding.downloadCrossingHistoryBtn.visible()
+                    }
 
-                        endlessScroll()
+                    endlessScroll()
+
 
                 }
 
-                Status.ERROR ->{
-
+                Status.ERROR -> {
+                    dataBinding.downloadCrossingHistoryBtn.gone()
+                }
+                Status.LOADING -> {
+                    dataBinding.downloadCrossingHistoryBtn.gone()
                 }
             }
         }
     }
 
     private fun endlessScroll() {
-        if(isFirstTime) {
-            isFirstTime=false
+        if (isFirstTime) {
+            isFirstTime = false
             dataBinding.rvVehicleCrossingHistory.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
 
@@ -128,7 +140,9 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
                         val linearLayoutManager =
                             recyclerView.layoutManager as LinearLayoutManager?
                         if (!isLoading) {
-                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size?:0)-1)  && totalCount>4) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size
+                                    ?: 0) - 1) && totalCount > 4
+                            ) {
                                 startIndex += 5
                                 isLoading = true
                                 request.startIndex = startIndex
@@ -146,7 +160,8 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.download_crossing_history_btn -> {   }
+            R.id.download_crossing_history_btn -> {
+            }
             R.id.back_to_vehicle_list_btn -> {
                 requireActivity().finish()
             }
