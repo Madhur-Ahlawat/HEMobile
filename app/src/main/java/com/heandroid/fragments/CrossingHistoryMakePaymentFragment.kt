@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.FragmentCrossingHistoryMakePaymentBinding
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.Utils
 import com.heandroid.utils.Utils.getDirection
 import com.heandroid.utils.Utils.loadStatus
