@@ -109,6 +109,7 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener, CrossingHi
                     if(list?.size==0){
                         binding.rvHistory.gone()
                         binding.tvNoCrossing.visible()
+                        binding.progressBar.gone()
                     }else{
                         binding.rvHistory.visible()
                         binding.progressBar.gone()
