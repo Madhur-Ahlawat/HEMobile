@@ -70,7 +70,7 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
     }
 
     fun getListData(body: CrossingHistoryRequest?) : Flow<PagingData<CrossingHistoryItem>> {
-        return Pager(config = PagingConfig(pageSize = 5, maxSize = 100),
+        return Pager(config = PagingConfig(pageSize = 1, maxSize = 5),
                      pagingSourceFactory = {CrossingPaging(apiHelper,body)}).flow.cachedIn(viewModelScope)
     }
 

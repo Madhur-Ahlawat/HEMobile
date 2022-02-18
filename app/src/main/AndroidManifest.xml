@@ -80,7 +80,7 @@
             android:theme="@style/Theme.HEMobileLight" />
         <activity
             android:name=".view.ActivityVehicleHistory"
-            android:theme="@style/Theme.HEMobileLight" />
+            android:theme="@style/Theme.HEMobileWhite" />
 
         <activity android:name=".view.PaymentReceiptSelectionActivity" />
         <activity
