@@ -12,6 +12,8 @@ import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 object StorageHelper {
 
@@ -48,14 +50,26 @@ object StorageHelper {
             )
         }
     }
-    fun createFile(context: Context) : String {
+/*
+    fun createFile(context: Context, format:String,) : File {
         var path=""
-        val capture_dir: String = context.externalCacheDir?.absolutePath + "/"+ FOLDER_NAME +"/"+ IMAGE_FOLDER_NAME +"/"
-        val file = File(capture_dir)
+        val capture_dir: String = context.getExternalFilesDir("")?.absolutePath + "/"+ FOLDER_NAME  +"/"
+        val file = File(capture_dir,System.currentTimeMillis() + format)
         if (!file.exists()) {
-            file.mkdirs()
+            file.mkdirs()}
+        val fos =  FileOutputStream(file);//Get OutputStream for NewFile Location
+        InputStream is = c.getInputStream();//Get InputStream for connection
+        byte[] buffer = new byte[1024];//Set buffer type
+        int len1 = 0;//init length
+        while ((len1 = is.read(buffer)) != -1) {
+            fos.write(buffer, 0, len1);//Write new file
         }
-        path = capture_dir + System.currentTimeMillis() + IMAGE_FORMAT
+        fos.close();
+        is.close
+
+
+
         return path
     }
+*/
 }
