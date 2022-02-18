@@ -56,7 +56,7 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
         request = CrossingHistoryRequest(
             startIndex = startIndex,
             count = 5,
-            transactionType = Constants.ALL_TRANSACTION,
+            transactionType = Constants.TOLL_TRANSACTION,
             plateNumber = mVehicleDetails.plateInfo.number
         )
         viewModel.crossingHistoryApiCall(request)
