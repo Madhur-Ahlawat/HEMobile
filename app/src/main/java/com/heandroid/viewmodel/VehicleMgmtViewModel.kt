@@ -3,19 +3,13 @@ package com.heandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.heandroid.CrossingPaging
-import com.heandroid.model.*
+import com.heandroid.model.EmptyApiResponse
+import com.heandroid.model.VehicleResponse
 import com.heandroid.model.crossingHistory.request.CrossingHistoryDownloadRequest
 import com.heandroid.model.crossingHistory.request.CrossingHistoryRequest
 import com.heandroid.model.crossingHistory.response.CrossingHistoryApiResponse
-import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
 import com.heandroid.network.ApiHelper
 import com.heandroid.repo.Resource
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -68,10 +62,10 @@ class VehicleMgmtViewModel(private val apiHelper: ApiHelper) : ViewModel() {
         }
     }
 
-    fun getListData(body: CrossingHistoryRequest?) : Flow<PagingData<CrossingHistoryItem>> {
-        return Pager(config = PagingConfig(pageSize = 1, maxSize = 5),
-                     pagingSourceFactory = {CrossingPaging(apiHelper,body)}).flow.cachedIn(viewModelScope)
-    }
+//    fun getListData(body: CrossingHistoryRequest?) : Flow<PagingData<CrossingHistoryItem>> {
+//        return Pager(config = PagingConfig(pageSize = 1, maxSize = 5),
+//                     pagingSourceFactory = {CrossingPaging(apiHelper,body)}).flow.cachedIn(viewModelScope)
+//    }
 
     fun crossingHistoryApiCall(request: CrossingHistoryRequest
     ) {

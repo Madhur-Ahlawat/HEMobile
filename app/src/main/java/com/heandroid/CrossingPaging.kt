@@ -22,18 +22,20 @@ class CrossingPaging(private val apiHelper: ApiHelper,private var body : Crossin
         body?.startIndex=position.toLong()
         body?.count=numberOfIndex?.toLong()
 
-        return try {
-             val crossingHistoryApi=apiHelper.crossingHistoryApiCall(body)
-             val response=crossingHistoryApi.body() as CrossingHistoryApiResponse
-             LoadResult.Page(data=response.transactionList.transaction.toList(),
-                            prevKey = if(position==1) null else position-numberOfIndex,
-                            nextKey = if(response.transactionList.transaction.isEmpty()) null else position+numberOfIndex)
+//        return try {
+////             val crossingHistoryApi=apiHelper.crossingHistoryApiCall(body)
+////             val response=crossingHistoryApi.body() as CrossingHistoryApiResponse
+////             LoadResult.Page(data=response.transactionList?.transaction?.toList(),
+////                            prevKey = if(position==1) null else position-numberOfIndex,
+////                            nextKey = if(response.transactionList.transaction.isEmpty()) null else position+numberOfIndex)
+////
+//
+//
+//        }catch (e: Exception){
+//            LoadResult.Error(e)
+//        }
+//
 
-
-
-        }catch (e: Exception){
-            LoadResult.Error(e)
-        }
-
+       return  LoadResult.Error(RuntimeException())
     }
 }
