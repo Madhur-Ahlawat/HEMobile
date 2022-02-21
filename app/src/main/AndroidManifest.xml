@@ -51,8 +51,7 @@
         <activity
             android:name=".view.VrmEditClassesActivity"
             android:theme="@style/Theme.HEMobileLight" />
-        <activity
-            android:name=".view.VrmEditMakeModelColorActivity"
+        <activity android:name=".view.VrmEditMakeModelColorActivity"
             android:theme="@style/Theme.HEMobileLight" />
 
         <activity android:name=".view.ActivityPaymentHistory" />

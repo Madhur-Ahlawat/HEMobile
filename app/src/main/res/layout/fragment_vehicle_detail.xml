@@ -74,8 +74,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_header"
             android:layout_width="match_parent"
-            android:layout_above="@+id/conform_btn"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/conform_btn"
             android:layout_below="@+id/top_layout" />
 
 <!--
