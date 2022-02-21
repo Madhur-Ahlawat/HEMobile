@@ -176,7 +176,6 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
         }
     }
 
-
     private fun endlessScroll() {
         if (isFirstTime) {
             isFirstTime = false
@@ -207,14 +206,12 @@ class CrossingHistoryFragment : BaseFragment(), View.OnClickListener,
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
 
         try {
-            var path:String=""
-            if (selectionType == "pdf") {
-                 path =
-                    ".pdf"
+            var path=""
+            path = if (selectionType == "pdf") {
+                ".pdf"
 
             }else{
-                path =
-                    ".txt"
+                ".txt"
             }
             val futurePdfFile =
                 File("${requireActivity().getExternalFilesDir(null)}${File.separator}${System.currentTimeMillis()}$path")

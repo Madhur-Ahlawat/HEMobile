@@ -10,6 +10,7 @@ import com.heandroid.R
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
 import com.heandroid.fragments.VehicleHistoryCrossingHistoryFragment
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.Utils.getDirection
 import com.heandroid.utils.Utils.loadStatus
 
@@ -54,7 +55,7 @@ class CrossingHistoryAdapter(
         fun bind(data: CrossingHistoryItem?) {
             data?.run {
                 binding.apply {
-                    tvDate.text = "$transactionDate $exitTime"
+                    tvDate.text = "${DateUtils.convertDateFormat(transactionDate,0)} ${DateUtils.convertTimeFormat(exitTime,0)}"
                     tvVrm.text = plateNumber
                     tvDirection.text = getDirection(exitDirection)
                     loadStatus(prepaid, tvStatus)

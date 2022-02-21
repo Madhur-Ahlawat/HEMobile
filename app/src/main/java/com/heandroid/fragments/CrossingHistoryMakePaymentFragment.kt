@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.heandroid.R
 import com.heandroid.databinding.FragmentCrossingHistoryMakePaymentBinding
 import com.heandroid.model.crossingHistory.response.CrossingHistoryItem
+import com.heandroid.utils.DateUtils
+import com.heandroid.utils.Utils
 import com.heandroid.utils.Utils.getDirection
 import com.heandroid.utils.Utils.loadStatus
 
@@ -29,14 +32,15 @@ class CrossingHistoryMakePaymentFragment : BaseFragment(), View.OnClickListener 
     private fun init() {
         dataBinding.apply {
             arguments?.getParcelable<CrossingHistoryItem?>("data")?.run {
-                 crossingDate.text=transactionDate
-                 crossingTime.text=exitTime
-                 direction.text=getDirection(exitDirection)
-                 vehicle.text=plateNumber
-                 transactionId.text=transactionNumber
-                 loadStatus(prepaid,status)
-                 loadMakePaymentStatus(prepaid, makePaymentBtn)
-             }
+
+                crossingDate.text = DateUtils.convertDateFormat(transactionDate, 0)
+                crossingTime.text = DateUtils.convertTimeFormat(exitTime, 0)
+                direction.text = getDirection(exitDirection)
+                vehicle.text = plateNumber
+                transactionId.text = transactionNumber
+                loadStatus(prepaid, status)
+            loadMakePaymentStatus(prepaid, makePaymentBtn)
+            }
         }
     }
 
@@ -50,9 +54,7 @@ class CrossingHistoryMakePaymentFragment : BaseFragment(), View.OnClickListener 
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.make_payment_btn -> {
-
-            }
+            R.id.make_payment_btn -> {   }
             R.id.back_btn -> { findNavController().popBackStack() }
         }
     }
