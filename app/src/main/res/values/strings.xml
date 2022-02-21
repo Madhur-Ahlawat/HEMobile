@@ -369,5 +369,11 @@
     <string name="no_crossings_have_been_made">No crossings have been made</string>
     <string name="str_download_payment_receipt">Download payment receipt</string>
 
+    <string name="str_reg_num">Registration number</string>
+    <string name="str_country_marker">Country marker</string>
+    <string name="str_class">Class</string>
+    <string name="str_added_date">Added date</string>
+
+
 </resources>
 

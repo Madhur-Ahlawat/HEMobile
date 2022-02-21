@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vehicle_history_nav_graph"
+    app:startDestination="@id/vehicleHistoryVehicleDetailsFragment">
+
+    <fragment
+        android:id="@+id/vehicleHistoryVehicleDetailsFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryVehicleDetailsFragment"
+        android:label="VehicleHistoryVehicleDetailsFragment"
+        tools:layout="@layout/fragment_vehicle_history_vehicle_details">
+        <action
+            android:id="@+id/action_vehicleHistoryVehicleDetailsFragment_to_vehicleHistoryCrossingHistoryFragment"
+            app:destination="@id/vehicleHistoryCrossingHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleHistoryCrossingHistoryFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment"
+        android:label="VehicleHistoryCrossingHistoryFragment"
+        tools:layout="@layout/fragment_vehicle_history_crossing_history">
+        <action
+            android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2"
+            app:destination="@id/crossingHistoryMakePaymentFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingHistoryMakePaymentFragment2"
+        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
+        android:label="CrossingHistoryMakePaymentFragment"
+        tools:layout="@layout/fragment_crossing_history_make_payment"/>
+</navigation>

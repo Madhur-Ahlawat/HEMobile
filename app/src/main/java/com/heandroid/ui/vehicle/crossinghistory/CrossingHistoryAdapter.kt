@@ -34,16 +34,16 @@ class CrossingHistoryAdapter(
         holder.binding.cvMain.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable("data", list?.get(position))
-//            if (myFragment is VehicleHistoryCrossingHistoryFragment)
-//                it.findNavController().navigate(
-//                    R.id.action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2,
-//                    bundle
-//                )
-//            else
-//                it.findNavController().navigate(
-//                    R.id.action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment,
-//                    bundle
-//                )
+            if (myFragment is VehicleHistoryCrossingHistoryFragment)
+                it.findNavController().navigate(
+                    R.id.action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2,
+                    bundle
+                )
+            else
+                it.findNavController().navigate(
+                    R.id.action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment,
+                    bundle
+                )
         }
     }
 

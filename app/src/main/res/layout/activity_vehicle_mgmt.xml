@@ -21,7 +21,7 @@
             android:gravity="start"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_vehicles_txt">
@@ -58,7 +58,7 @@
         </LinearLayout>
 
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainer"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"

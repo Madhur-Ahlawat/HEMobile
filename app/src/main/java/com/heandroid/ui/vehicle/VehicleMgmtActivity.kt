@@ -10,17 +10,22 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.heandroid.R
 import com.heandroid.data.model.response.vehicle.VehicleResponse
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
+import com.heandroid.gone
 import com.heandroid.ui.vehicle.vehiclehistory.VrmHistoryAdapter
 import com.heandroid.ui.vehicle.vehiclelist.VehicleListAdapter
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Logg
 import com.heandroid.utils.Resource
+import com.heandroid.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +36,9 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private lateinit var vehicleListAdapter: VehicleListAdapter
     private lateinit var databinding: ActivityVehicleMgmtBinding
+
+    private lateinit var navHost : NavController
+    private var vehicleHistoryItem : Bundle? = null
 //    private lateinit var mAdapter: VrmHeaderAdapter
 //    private lateinit var dashboardViewModel: DashboardViewModel
 
@@ -109,13 +117,58 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
         }
 
+        databinding.vehicleDetailsTxt.setOnClickListener {
+
+            databinding.vehicleDetailsTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+            databinding.crossingHistoryTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+            databinding.vehicleDetailsTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.white
+                )
+            )
+
+            databinding.crossingHistoryTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.black
+                )
+            )
+            vehicleHistoryItem?.let {
+                navHost.navigate(R.id.vehicleHistoryVehicleDetailsFragment, it)
+            }
+        }
+
+        databinding.crossingHistoryTxt.setOnClickListener {
+
+            databinding.crossingHistoryTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+            databinding.vehicleDetailsTxt.background =
+                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+            databinding.crossingHistoryTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.white
+                )
+            )
+
+            databinding.vehicleDetailsTxt.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.black
+                )
+            )
+            vehicleHistoryItem?.let {
+                navHost.navigate(R.id.vehicleHistoryCrossingHistoryFragment, it)
+            }
+        }
+
     }
 
 
     private fun setHistoryAdapter() {
-        //val bundle = intent.getBundleExtra(Constants.VEHICLE_DATA)
-        // val vehicleResp = bundle?.getSerializable(Constants.VEHICLE_RESPONSE) as VehicleApiResp
-
         val mAdapter = VrmHistoryAdapter(this)
         mAdapter.setList(mList)
         databinding.recyclerViewHeader.layoutManager = LinearLayoutManager(this)
@@ -152,7 +205,6 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
 
         mType?.apply {
             when (this) {
-
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
 
                     details.isExpanded = !details.isExpanded
@@ -164,15 +216,18 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
                 }
 
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
-//                    Intent(this@VehicleMgmtActivity, ActivityVehicleHistory::class.java).apply {
-//                        putExtra("list", details)
-//                        startActivity(this)
-//
-//                    }
+                    databinding.chipLayout.visible()
+                    databinding.fragmentContainer.visible()
+                    databinding.addVehiclesTxt.gone()
+                    databinding.recyclerViewHeader.gone()
+                    vehicleHistoryItem = Bundle().apply {
+                        putSerializable(Constants.DATA, details)
+                    }
+                    navHost = Navigation.findNavController(this@VehicleMgmtActivity, R.id.fragmentContainer)
+                    navHost.setGraph(R.navigation.vehicle_history_nav_graph, vehicleHistoryItem)
+                    navHost.navigate(R.id.vehicleHistoryVehicleDetailsFragment, vehicleHistoryItem)
                 }
-
             }
-
         }
     }
 

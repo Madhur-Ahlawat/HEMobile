@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +24,13 @@ import com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryAdapter
 import com.heandroid.utils.Constants
 import com.heandroid.utils.Resource
 import com.heandroid.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var dataBinding: FragmentVehicleHistoryCrossingHistoryBinding
-    private lateinit var viewModel: VehicleMgmtViewModel
+    private val viewModel: VehicleMgmtViewModel by viewModels()
     private lateinit var mVehicleDetails: VehicleResponse
     private var list : MutableList<CrossingHistoryItem?>? = ArrayList()
     private var isLoading = false
@@ -82,8 +85,6 @@ class VehicleHistoryCrossingHistoryFragment : BaseFragment(), View.OnClickListen
             when(resource) {
                  is Resource.Success -> {
                     val response = resource.data?.body() as CrossingHistoryApiResponse
-
-
                         totalCount=response.transactionList?.transaction?.size?:0
                         if(response.transactionList!=null){
                             list?.addAll(response.transactionList.transaction)

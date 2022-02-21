@@ -1,33 +1,30 @@
 package com.heandroid.ui.vehicle.vehiclehistory
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.response.EmptyApiResponse
 import com.heandroid.data.model.response.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryVehicleDetailsBinding
-import com.heandroid.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.Constants
-import com.heandroid.utils.Logg
 import com.heandroid.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VehicleHistoryVehicleDetailsFragment : BaseFragment(), View.OnClickListener{
 
     private lateinit var dataBinding: FragmentVehicleHistoryVehicleDetailsBinding
-    private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
-    private lateinit var mVehicleDetails: VehicleResponse
-    private var textChanged: Boolean = false
-    private val TAG = "VehicleDetailFragment"
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private var mVehicleDetails: VehicleResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,124 +38,87 @@ class VehicleHistoryVehicleDetailsFragment : BaseFragment(), View.OnClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initCtrl()
-        setupViewModel()
-        setBtnActivated()
-//        setAdapter()
-
+        setBtnDisabled()
     }
 
     private fun initCtrl() {
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
-        Log.i("teja1234", mVehicleDetails.toString())
-        dataBinding.apply {
-            saveBtn.setOnClickListener {
-                if (textChanged) {
-                    updateVehicleApiCall(mVehicleDetails)
+        mVehicleDetails?.let { response ->
+            dataBinding.apply {
+                regNum.text = response.plateInfo.number
+                countryMarker.text = response.plateInfo.country
+                vehicleClass.text = response.vehicleInfo.vehicleClassDesc
+                make.text = response.vehicleInfo.make
+                model.text = response.vehicleInfo.model
+                color.text = response.vehicleInfo.color
+                addedDate.text =  response.vehicleInfo.effectiveStartDate
+                edtNote.setText(response.plateInfo.vehicleComments)
+
+                saveBtn.setOnClickListener {
+                    updateVehicleApiCall(response)
                 }
-            }
-            backToVehiclesBtn.setOnClickListener {
-                requireActivity().finish()
+                backToVehiclesBtn.setOnClickListener {
+                    findNavController().popBackStack()
+                }
+
+                edtNote.addTextChangedListener( object : TextWatcher{
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) { }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        if (edtNote.text?.isEmpty() == true || edtNote.text?.equals(mVehicleDetails?.plateInfo?.vehicleComments)!!){
+                            setBtnDisabled()
+                        } else {
+                            setBtnActivated()
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) { }
+                })
             }
         }
     }
 
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.make_payment_btn -> {
-            }
-            R.id.back_btn -> {
-                findNavController().popBackStack()
-            }
-        }
-    }
-
-//    private fun setAdapter() {
-//
-//        val mList = ArrayList<VehicleTitleAndSub>()
-//        mList.clear()
-//
-//        for (i in 0..7) {
-//            when (i) {
-//
-//                0 -> {
-//                    val mem0 =
-//                        VehicleTitleAndSub("Registration Number", mVehicleDetails.plateInfo.number)
-//                    mList.add(mem0)
-//
-//                }
-//
-//                1 -> {
-//
-//                    val mem0 =
-//                        VehicleTitleAndSub("Country marker", mVehicleDetails.plateInfo.country)
-//                    mList.add(mem0)
-//                }
-//                2 -> {
-//                    val mem1 = VehicleTitleAndSub("Make", mVehicleDetails.vehicleInfo.make)
-//                    mList.add(mem1)
-//
-//                }
-//                3 -> {
-//                    val mem2 = VehicleTitleAndSub("Model", mVehicleDetails.vehicleInfo.model)
-//                    mList.add(mem2)
-//                }
-//                4 -> {
-//                    val mem2 = VehicleTitleAndSub("Colour", mVehicleDetails.vehicleInfo.color)
-//                    mList.add(mem2)
-//                }
-//                5 -> {
-//                    val mem2 =
-//                        VehicleTitleAndSub("Class", mVehicleDetails.vehicleInfo.vehicleClassDesc)
-//                    mList.add(mem2)
-//
-//                }
-//                6 -> {
-//                    val mem2 = VehicleTitleAndSub(
-//                        "DateAdded",
-//                        mVehicleDetails.vehicleInfo.effectiveStartDate
-//                    )
-//                    mList.add(mem2)
-//
-//                }
-//
-//                7 -> {
-//                    val mem2 =
-//                        VehicleTitleAndSub("Notes", mVehicleDetails.plateInfo.vehicleComments)
-//                    mList.add(mem2)
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//        Logg.logging(TAG, " mList  $mList ")
-//        Logg.logging(TAG, " mList size ${mList.size} ")
-//
-//        val mAdapter = VrmHistoryHeaderAdapter(requireContext(), this)
-//        mAdapter.setList(mList)
-//        dataBinding.recyclerViewHeader.layoutManager = LinearLayoutManager(requireContext())
-//        dataBinding.recyclerViewHeader.setHasFixedSize(true)
-//        dataBinding.recyclerViewHeader.adapter = mAdapter
-//
-//    }
+    override fun onClick(v: View?) { }
 
     private fun setBtnActivated() {
-
-        dataBinding.saveBtn.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.btn_color
+        dataBinding.saveBtn.apply {
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.btn_color
+                )
             )
-        )
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            isClickable = true
+        }
 
-        dataBinding.saveBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+    }
 
+    private fun setBtnDisabled() {
+        dataBinding.saveBtn.apply{
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_C9C9C9
+                )
+            )
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
+            isClickable = false
+        }
     }
 
     private fun updateVehicleApiCall(details: VehicleResponse) {
-
         val request = details.apply {
             newPlateInfo = plateInfo
         }
@@ -171,7 +131,6 @@ class VehicleHistoryVehicleDetailsFragment : BaseFragment(), View.OnClickListene
                     is Resource.Success -> {
                         dataBinding.progressLayout.visibility = View.GONE
                         resource.data!!.body()?.let {
-                            val apiResponse = EmptyApiResponse(200, "Updated successfully.")
                             showToast("Vehicle is updated successfully")
                         }
                     }
@@ -186,12 +145,6 @@ class VehicleHistoryVehicleDetailsFragment : BaseFragment(), View.OnClickListene
                     }
                 }
             })
-
-    }
-
-    private fun setupViewModel() {
-//        val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
-//        vehicleMgmtViewModel = ViewModelProvider(this, factory)[VehicleMgmtViewModel::class.java]
     }
 
     private fun showToast(message: String?) {
@@ -199,13 +152,4 @@ class VehicleHistoryVehicleDetailsFragment : BaseFragment(), View.OnClickListene
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
-
-
-//    override fun OnEditTextValueChanged(value: String) {
-//        if (!TextUtils.isEmpty(value)) {
-//            hideKeyboard()
-//            textChanged = true
-//            mVehicleDetails.plateInfo.vehicleComments = value
-//        }
-//    }
 }
