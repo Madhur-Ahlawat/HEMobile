@@ -25,7 +25,7 @@ class VehicleAddConfirm : DialogFragment() {
     private lateinit var dataBinding: VehicleAddConformBinding
     private lateinit var mVehicleDetails: VehicleResponse
 
-    companion object {
+    companion   object {
 
         const val TAG = "VehicleAddConfirm"
 
@@ -70,6 +70,7 @@ class VehicleAddConfirm : DialogFragment() {
 
         dataBinding.subTitle.text = mVehicleDetails.plateInfo.number
         dataBinding.yesBtn.setOnClickListener {
+//            dismiss()
             mListener?.onAddClick(mVehicleDetails)
         }
 

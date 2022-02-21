@@ -23,7 +23,7 @@ import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.dialog.AddVehicle
 import com.heandroid.listener.AddVehicleListener
 import com.heandroid.listener.ItemClickListener
-import com.heandroid.model.*
+import com.heandroid.model.VehicleResponse
 import com.heandroid.network.ApiHelperImpl
 import com.heandroid.network.RetrofitInstance
 import com.heandroid.repo.Status
@@ -147,6 +147,7 @@ class VehicleMgmtActivity : AppCompatActivity(), AddVehicleListener, ItemClickLi
     override fun onAddClick(details: VehicleResponse) {
 
         val intent = Intent(this, VrmEditMakeModelColorActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         intent.putExtra("list", details)
         intent.putExtra(Constants.VEHICLE_SCREEN_KEY, mType)
         startActivity(intent)

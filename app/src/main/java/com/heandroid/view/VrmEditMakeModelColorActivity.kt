@@ -44,12 +44,20 @@ class VrmEditMakeModelColorActivity : AppCompatActivity() {
                 mVehicleDetails.vehicleInfo.model = dataBinding.modelInputEditText.text.toString()
 
                 val intent = Intent(this, VrmEditClassesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.putExtra("list", mVehicleDetails)
                 startActivity(intent)
-                finish()
+              //  finish()
             }
 
+            dataBinding.idToolBarLyt.btnBack.setOnClickListener {
+                onBackPressed()
+            }
 
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }

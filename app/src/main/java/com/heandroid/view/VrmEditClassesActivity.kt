@@ -57,6 +57,8 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
         dataBinding.idToolBarLyt.tvHeader.text = getString(R.string.str_add_vehicles)
         dataBinding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
 
+        dataBinding.classBRadioButton.isChecked = true
+        mClassType = "Class B"
 
         dataBinding.classARadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
 
@@ -104,18 +106,34 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
             }
 
         }
-        dataBinding.continueButton.setOnClickListener {
 
+        dataBinding.cancelButton.setOnClickListener {
+              finish()
+        }
+
+        dataBinding.continueButton.setOnClickListener {
             if (dataBinding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 mVehicleDetails.vehicleInfo.vehicleClassDesc = mClassType
 
-                VehicleAddConfirm.newInstance(
+               var dialog = VehicleAddConfirm.newInstance(
                     mVehicleDetails,
                     this
                 ).show(supportFragmentManager, VehicleAddConfirm.TAG)
-
-
-            } else {
+            }
+            else if(!dataBinding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()){
+                Snackbar.make(
+                    dataBinding.classAView,
+                    "Please select the checkbox",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            else if(dataBinding.classVehicleCheckbox.isChecked && !mClassType.isNotEmpty()){
+                Snackbar.make(dataBinding.classAView,
+                    "Please select the class",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            else {
                 Snackbar.make(
                     dataBinding.classAView,
                     "Please select the class and checkbox",
@@ -124,10 +142,13 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
             }
         }
 
+        dataBinding.idToolBarLyt.btnBack.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onAddClick(details: VehicleResponse) {
-
         //dataBinding.progressLayout.visibility= VISIBLE
         addVehicleApiCall()
 
@@ -135,14 +156,13 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
 
     private fun showVehicleDetails() {
         Intent(this, VehicleDetailActivity::class.java).apply {
-
+           flags=Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra(Constants.DATA, mVehicleDetails)
             putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
             putExtra(
                 Constants.VEHICLE_SCREEN_KEY,
                 Constants.VEHICLE_SCREEN_TYPE_ADD
             )
-
             startActivity(this)
             finish()
         }
@@ -248,5 +268,11 @@ class VrmEditClassesActivity : AppCompatActivity(), AddVehicleListener {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
+
 
 }

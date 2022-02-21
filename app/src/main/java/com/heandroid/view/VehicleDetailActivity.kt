@@ -26,7 +26,7 @@ import com.heandroid.utils.Logg
 import com.heandroid.viewmodel.VehicleMgmtViewModel
 import com.heandroid.viewmodel.ViewModelFactory
 
-class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
+class   VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
     private lateinit var vehicleMgmtViewModel: VehicleMgmtViewModel
     private lateinit var mAdapter: VrmHeaderAdapter
@@ -62,7 +62,8 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
         }
         dataBinding.idToolBarLyt.btnBack.setOnClickListener {
-            finish()
+          onBackPressed()
+
         }
         setBtnActivated()
         setAdapter()
@@ -87,20 +88,25 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
                 startActivity(intent)
             }
             else{
-                finish()
+              onBackPressed()
             }
 
         }
 
         dataBinding.idToolBarLyt.btnBack.setOnClickListener {
-            finish()
+            onBackPressed()
         }
 
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        if(mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD)
+        {
+            finish()
+            val intent = Intent(this, VehicleMgmtActivity::class.java)
+            startActivity(intent)
+        }
+        else finish()
     }
 
     private val TAG = "VehicleDetailFragment"
@@ -188,6 +194,7 @@ class VehicleDetailActivity : AppCompatActivity(), ItemClickListener {
 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
     }
+
 
 
 }

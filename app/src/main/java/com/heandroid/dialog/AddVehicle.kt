@@ -42,7 +42,6 @@ class AddVehicle : DialogFragment() {
             fragment.arguments = args
             return fragment
         }
-
     }
 
     override fun onCreateView(
