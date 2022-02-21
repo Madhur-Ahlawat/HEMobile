@@ -1,6 +1,6 @@
 package com.heandroid.di
 
-import com.example.dummyapplication.data.remote.ApiService
+import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
 import com.heandroid.utils.Constants.BASE_URL

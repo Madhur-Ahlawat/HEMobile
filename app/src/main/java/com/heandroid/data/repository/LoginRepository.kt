@@ -1,6 +1,6 @@
 package com.heandroid.data.repository
 
-import com.example.dummyapplication.data.remote.ApiService
+import com.heandroid.data.remote.ApiService
 import javax.inject.Inject
 
 

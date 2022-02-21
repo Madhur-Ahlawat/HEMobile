@@ -1,4 +1,4 @@
-package com.example.dummyapplication.data.model.response
+package com.heandroid.data.model.response
 
 import com.google.gson.annotations.SerializedName
 

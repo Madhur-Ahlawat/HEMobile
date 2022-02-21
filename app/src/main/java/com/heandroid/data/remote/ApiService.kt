@@ -1,6 +1,6 @@
-package com.example.dummyapplication.data.remote
+package com.heandroid.data.remote
 
-import com.example.dummyapplication.data.model.response.LoginResponse
+import com.heandroid.data.model.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
