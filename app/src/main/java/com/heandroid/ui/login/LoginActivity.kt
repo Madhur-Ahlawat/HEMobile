@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
-import com.heandroid.data.model.response.LoginResponse
+import com.heandroid.data.model.response.login.LoginResponse
 import com.heandroid.databinding.ActivityLoginBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.utils.Resource

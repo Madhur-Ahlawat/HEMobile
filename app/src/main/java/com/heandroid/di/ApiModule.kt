@@ -1,14 +1,11 @@
 package com.heandroid.di
 
-import com.heandroid.data.remote.ApiService
-import com.heandroid.data.remote.HeaderInterceptor
-import com.heandroid.data.remote.NullOnEmptyConverterFactory
+import com.heandroid.data.remote.*
 import com.heandroid.utils.Constants.BASE_URL
 import com.heandroid.utils.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,11 +16,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {@Provides
-@Singleton
-fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-}
+object ApiModule {
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
 
     @Provides
     @Singleton
@@ -34,7 +33,10 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(logging: HttpLoggingInterceptor, headerInterceptor: HeaderInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        logging: HttpLoggingInterceptor,
+        headerInterceptor: HeaderInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
@@ -61,5 +63,11 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiHelperImpl(apiService: ApiService): ApiHelper {
+        return ApiHelperImpl(apiService)
     }
 }

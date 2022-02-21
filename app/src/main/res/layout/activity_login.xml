@@ -282,7 +282,7 @@
             android:layout_gravity="left"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/txt_forgot_your_username"
+            android:text="@string/txt_forgot_your_email"
             android:textColor="@color/color_1D70B8"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
