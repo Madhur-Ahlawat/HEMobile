@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
+<<<<<<< HEAD
     <targetSelectedWithDropDown>
       <Target>
         <type value="QUICK_BOOT_TARGET" />
@@ -23,15 +24,19 @@
           </Key>
         </deviceKey>
       </Target>
+=======
+    <runningDeviceTargetSelectedWithDropDown>
+>>>>>>> 12edff4542444ede71fcd32a92f3df4998d03ec6
       <Target>
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\abhilasha.chauhan\.android\avd\HEMapp.avd" />
+            <value value="C:\Users\abhilasha.chauhan\.android\avd\HEDummy.avd" />
           </Key>
         </deviceKey>
       </Target>
-    </runningDeviceTargetsSelectedWithDialog>
+    </runningDeviceTargetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2022-02-18T12:51:01.447777200Z" />
   </component>
 </project>

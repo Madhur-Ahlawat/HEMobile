@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import com.heandroid.MyApplication
 import com.heandroid.R
 import com.heandroid.changeBackgroundColor
@@ -72,7 +72,7 @@ object Utils {
     }
 
     fun getDirection(entry: String?): String? {
-        return when(entry){
+        return when (entry) {
             "N" -> "NORTHBOUND"
             "S" -> "SOUTHBOUND"
             else -> ""
@@ -80,17 +80,20 @@ object Utils {
     }
 
     fun loadStatus(status: String, tvTitle: AppCompatTextView) {
-        when(status){
+        when (status) {
 
-            "Y" ->{
+            "Y" -> {
                 tvTitle.text = tvTitle.context.getString(R.string.paid)
                 tvTitle.changeTextColor(R.color.color_10403C)
                 tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
+
+
             }
-            "N" ->{
+            "N" -> {
                 tvTitle.text = tvTitle.context.getString(R.string.unpaid)
                 tvTitle.changeTextColor(R.color.color_10403C)
                 tvTitle.changeBackgroundColor(R.color.FCD6C3)
+
             }
 
             else -> {
@@ -100,9 +103,34 @@ object Utils {
             }
         }
 
+        fun loadMakePaymentStatus(status: String, makePaymentBtn: MaterialButton?) {
+            when (status) {
+
+                "Y" -> {
+
+                    makePaymentBtn?.let {
+                        it.text =
+                            makePaymentBtn.context.getString(R.string.str_download_payment_receipt)
+                    }
+
+                }
+                "N" -> {
+
+                    makePaymentBtn?.let {
+                        it.text = makePaymentBtn.context.getString(R.string.str_make_payment)
+                    }
+                }
+
+                else -> {
+
+                    makePaymentBtn?.let {
+                        it.text = makePaymentBtn.context.getString(R.string.str_make_payment)
+                    }
+                }
+            }
+
+
+        }
+
     }
-
-
-
-
 }

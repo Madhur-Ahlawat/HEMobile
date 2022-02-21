@@ -39,7 +39,8 @@
             android:lineHeight="@dimen/_21sdp"
             android:text="01 Aug 2021, 12:37"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tv_vrm" />
