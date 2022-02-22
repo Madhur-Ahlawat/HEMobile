@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.response.EmptyApiResponse
 import com.heandroid.data.model.response.vehicle.CrossingHistoryApiResponse
 import com.heandroid.data.model.response.vehicle.VehicleResponse
-import com.heandroid.data.model.response.vehicle.CrossingHistoryDownloadRequest
-import com.heandroid.data.model.response.vehicle.CrossingHistoryRequest
+import com.heandroid.data.model.request.vehicle.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
 import com.heandroid.data.remote.ApiHelper
 import com.heandroid.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +19,10 @@ import javax.inject.Inject
 @HiltViewModel
 class VehicleMgmtViewModel @Inject constructor(private val apiHelper: ApiHelper) : ViewModel() {
 
-    val addVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
+    private val addVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
     val updateVehicleApiVal = MutableLiveData<Resource<Response<EmptyApiResponse>>>()
     val crossingHistoryVal = MutableLiveData<Resource<Response<CrossingHistoryApiResponse>>>()
-    val crossingHistoryDownloadVal = MutableLiveData<Resource<Response<ResponseBody>>>()
+    private val crossingHistoryDownloadVal = MutableLiveData<Resource<Response<ResponseBody>>>()
     val vehicleListVal = MutableLiveData<Resource<Response<List<VehicleResponse>>>>()
 
 

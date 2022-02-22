@@ -1,4 +1,4 @@
-package com.heandroid.data.model.response.vehicle
+package com.heandroid.data.model.request.vehicle
 
 import com.google.gson.annotations.SerializedName
 

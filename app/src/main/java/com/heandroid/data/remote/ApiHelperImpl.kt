@@ -1,8 +1,8 @@
 package com.heandroid.data.remote
 
 import com.heandroid.data.model.response.vehicle.CrossingHistoryApiResponse
-import com.heandroid.data.model.response.vehicle.CrossingHistoryDownloadRequest
-import com.heandroid.data.model.response.vehicle.CrossingHistoryRequest
+import com.heandroid.data.model.request.vehicle.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
 import com.heandroid.data.model.response.vehicle.VehicleResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -96,7 +96,8 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
     }
 
     override suspend fun downloadCrossingHistoryAPiCall(
-        requestParam: CrossingHistoryDownloadRequest): Response<ResponseBody> {
+        requestParam: CrossingHistoryDownloadRequest
+    ): Response<ResponseBody> {
         return requestParam.let { apiService.getDownloadTransactionListDataInFile(it) }
     }
 
