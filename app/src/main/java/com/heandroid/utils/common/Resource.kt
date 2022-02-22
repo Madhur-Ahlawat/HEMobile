@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 sealed class Resource <T>(val data:T? =null, val errorMsg: String="")
 {

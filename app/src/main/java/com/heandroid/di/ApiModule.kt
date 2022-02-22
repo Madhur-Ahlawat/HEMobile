@@ -4,12 +4,10 @@ import com.heandroid.BuildConfig
 import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
-import com.heandroid.utils.Constants.BASE_URL
-import com.heandroid.utils.SessionManager
+import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -51,7 +49,7 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.AUTHENTICATION_BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)

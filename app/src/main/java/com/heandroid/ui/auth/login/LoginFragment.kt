@@ -15,7 +15,10 @@ import com.heandroid.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.*
-import com.heandroid.utils.ErrorUtil.showError
+import com.heandroid.utils.common.ErrorUtil.showError
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

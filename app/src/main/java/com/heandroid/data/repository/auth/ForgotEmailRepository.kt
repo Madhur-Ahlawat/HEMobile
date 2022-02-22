@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class ForgotEmailRepository @Inject constructor(private val apiService: ApiService)  {
 
-    suspend fun forgotEmail(model: ForgotEmailModel?) = apiService.forgotEmail(BuildConfig.FORGOT_AGENCY_ID,model)
+    suspend fun forgotEmail(model: ForgotEmailModel?) = apiService.forgotEmail(BuildConfig.AGENCY_ID,model)
 
 
 }

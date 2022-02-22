@@ -63,6 +63,14 @@ android {
             versionCode envConfig.VERSION_CODE.replace("\"","").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"","")
         }
+
+
+        tstg {
+            envConfig = getProps("/config/test.properties")
+            applicationId envConfig.APPLICATION_ID.replace("\"","")
+            versionCode envConfig.VERSION_CODE.replace("\"","").toInteger()
+            versionName envConfig.VERSION_NAME.replace("\"","")
+        }
     }
 
     compileOptions {

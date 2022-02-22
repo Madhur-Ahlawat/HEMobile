@@ -9,10 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import com.heandroid.R
 import com.heandroid.data.model.response.auth.AuthResponseModel
 import com.heandroid.databinding.DialogLogoutBinding
-import com.heandroid.ui.auth.login.LoginViewModel
 import com.heandroid.ui.base.BaseDialog
-import com.heandroid.utils.Resource
-import com.heandroid.utils.observe
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import kotlinx.coroutines.launch
 
 class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {

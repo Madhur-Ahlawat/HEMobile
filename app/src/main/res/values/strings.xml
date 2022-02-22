@@ -198,6 +198,7 @@
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
 
     <string name="str_not_received_otp_txt">If you haven\'t received the one time code, please re-check your email address and click resend one time code</string>
+    <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify one time code</string>
     <string name="str_create_password">Create your password</string>
     <string name="str_new_password">New password</string>
@@ -369,6 +370,11 @@
     <string name="logout">Logout</string>
     <string name="forgot_email"><u>Forgot email?</u></string>
     <string name="please_select_one_mode_for_password">Please select one mode for password recovery</string>
+    <string name="error_email">Please enter email address</string>
+    <string name="error_password_not_match">Confirm password does not match</string>
+    <string name="error_postal_code">Please enter post code</string>
+    <string name="check_sms">Check your SMS</string>
+    <string name="enter_otp">Please enter correct otp</string>
 
 </resources>
 

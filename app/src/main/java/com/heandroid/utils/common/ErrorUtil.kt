@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 import android.content.ContextWrapper
 import android.os.Bundle

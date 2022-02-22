@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 object LoginValidateUtils {
 

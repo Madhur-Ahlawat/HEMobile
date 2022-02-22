@@ -1,7 +1,7 @@
 package com.heandroid.data.repository
 
 import com.heandroid.data.remote.NoConnectivityException
-import com.heandroid.utils.Resource
+import com.heandroid.utils.common.Resource
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException

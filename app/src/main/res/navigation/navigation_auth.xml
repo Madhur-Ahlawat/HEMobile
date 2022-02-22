@@ -93,7 +93,12 @@
         android:id="@+id/resetFragment"
         android:name="com.heandroid.ui.auth.forgot.password.ResetForgotPassword"
         tools:layout="@layout/fragment_forgot_reset"
-        android:label="ResetFragment" />
+        android:label="ResetFragment" >
+        <action
+            android:id="@+id/action_resetFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
+    </fragment>
 
 
 </navigation>

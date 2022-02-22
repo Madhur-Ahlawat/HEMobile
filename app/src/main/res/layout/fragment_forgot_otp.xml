@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+       <variable
+           name="isEnable"
+           type="Boolean" /> 
+        
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -51,6 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:maxLength="6"
                 android:textColor="@color/color_000000"
                 android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp" />
@@ -79,6 +90,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_resend_one_time_code"
             android:textColor="@color/black"
+            android:visibility="visible"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,11 +103,12 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:backgroundTint="@color/btn_selector"
+            android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
+            android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{isEnable}"
             android:gravity="center"
             android:text="@string/str_verify_one_time_code"
             android:textAllCaps="false"
-            android:textColor="@color/color_7D7D7D"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

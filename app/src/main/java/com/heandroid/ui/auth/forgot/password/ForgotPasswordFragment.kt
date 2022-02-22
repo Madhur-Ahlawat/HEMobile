@@ -10,12 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
+import com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotPasswordBinding
 import com.heandroid.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.*
-import com.heandroid.utils.ErrorUtil.showError
+import com.heandroid.utils.common.ErrorUtil.showError
+import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,7 +37,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
 
     override fun init() {
         requireActivity().toolbar(getString(R.string.str_password_recovery))
-        binding.model= ConfirmOptionModel(accountNumber = "", email = "", phone = "",enable = false)
+        binding.model= ConfirmOptionModel(identifier = "", zipCode = "",enable = false)
         loader= LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -47,12 +52,14 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         observe(viewModel.confirmOption,::handleConfirmOptionResponse)
     }
 
-    private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionModel?>?) {
+    private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
         loader?.dismiss()
         when (status) {
-            is Resource.Success -> { val bundle = Bundle()
-                                     bundle.putParcelable(Constants.OPTIONS, binding.model)
-                                     findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle) }
+            is Resource.Success -> {
+                binding?.root?.post {
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.OPTIONS, status.data)
+                    findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle) } }
 
             is Resource.DataError -> { showError(binding.root,status.errorMsg) }
         }
@@ -65,12 +72,6 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager,"")
                     sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
-                    // This is for api request
-                    binding.model?.apply {
-                        accountNumber="4294274"
-                        email="christoper@gmail.com"
-                        phone="9823233232"
-                    }
                     viewModel.confirmOptionForForgot(binding.model)
                 }else{
                     showError(binding.root,validation.second)
@@ -80,7 +81,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     private fun isEnable(){
-        if(binding.edtEmail.length()>0 && binding.edtPostcode.length()>0) binding.model = ConfirmOptionModel(enable = true, accountNumber = "", email = binding.edtEmail.text.toString(), phone = binding.edtPostcode.text.toString())
-        else binding.model = ConfirmOptionModel(enable = false, accountNumber = "", email = binding.edtEmail.text.toString(), phone = binding.edtPostcode.text.toString())
+        if(binding.edtEmail.length()>0 && binding.edtPostcode.length()>0) binding.model = ConfirmOptionModel(enable = true, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
+        else binding.model = ConfirmOptionModel(enable = false, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
     }
 }

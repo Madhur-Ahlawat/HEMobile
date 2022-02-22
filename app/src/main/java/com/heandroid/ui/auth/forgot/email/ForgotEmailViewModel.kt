@@ -10,11 +10,10 @@ import com.heandroid.data.model.response.auth.forgot.email.ForgotEmailResponseMo
 import com.heandroid.data.repository.auth.ForgotEmailRepository
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.base.BaseViewModel
-import com.heandroid.utils.Resource
-import com.heandroid.utils.ResponseHandler
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel

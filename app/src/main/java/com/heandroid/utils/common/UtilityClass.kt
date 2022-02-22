@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 import java.util.regex.Pattern
 

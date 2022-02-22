@@ -2,7 +2,7 @@ package com.heandroid.di
 
 import android.app.Application
 import android.content.Context
-import com.heandroid.utils.SessionManager
+import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

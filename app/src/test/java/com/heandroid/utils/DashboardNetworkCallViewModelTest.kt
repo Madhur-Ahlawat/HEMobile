@@ -7,7 +7,7 @@ import com.heandroid.model.RetrievePaymentListApiResponse
 import com.heandroid.model.RetrievePaymentListRequest
 import com.heandroid.model.VehicleResponse
 import com.heandroid.oldStructure.network.ApiHelper
-import com.heandroid.oldStructure.repo.Resource
+import com.heandroid.utils.common.Resource
 import com.heandroid.viewmodel.DashboardViewModel
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi

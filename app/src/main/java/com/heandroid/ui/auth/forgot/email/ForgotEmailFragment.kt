@@ -15,9 +15,9 @@ import com.heandroid.databinding.FragmentForgotEmailBinding
 import com.heandroid.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.ErrorUtil.showError
-import com.heandroid.utils.Resource
-import com.heandroid.utils.observe
+import com.heandroid.utils.common.ErrorUtil.showError
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import com.heandroid.utils.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 

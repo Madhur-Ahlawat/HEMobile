@@ -1,8 +1,7 @@
 package com.heandroid.data.remote
 
 import android.util.Log
-import com.heandroid.utils.SessionManager
-import dagger.hilt.EntryPoint
+import com.heandroid.utils.common.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

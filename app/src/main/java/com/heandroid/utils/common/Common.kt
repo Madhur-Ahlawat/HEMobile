@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 import java.lang.Exception
 import java.lang.StringBuilder

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.heandroid.model.LoginResponse
 import com.heandroid.oldStructure.network.ApiHelper
+import com.heandroid.utils.common.UtilityClass
 import com.heandroid.viewmodel.DummyTestViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

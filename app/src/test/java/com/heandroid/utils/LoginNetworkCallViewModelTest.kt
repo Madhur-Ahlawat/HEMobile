@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.heandroid.model.LoginResponse
 import com.heandroid.oldStructure.network.ApiHelper
-import com.heandroid.oldStructure.repo.Resource
+import com.heandroid.utils.common.Resource
 import com.heandroid.viewmodel.LoginViewModel
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue

@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 open class SingleEvent<out T>(private val content: T) {
 

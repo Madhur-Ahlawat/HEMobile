@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 object Constants {
 
@@ -17,7 +17,7 @@ object Constants {
     const val POST_CODE = "post_code"
     const val DATA = "list"
     const val POST_MAIL = "post"
-    const val MESSAGE = "phone"
+    const val SMS = "SMS"
     const val EMAIL = "email"
     const val MODE = "mode"
     const val CREATE_ACCOUNT = "CREATE ACCOUNT"

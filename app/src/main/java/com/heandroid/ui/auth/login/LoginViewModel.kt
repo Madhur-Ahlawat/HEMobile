@@ -7,13 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.dummyapplication.data.model.response.LoginResponse
 import com.heandroid.R
 import com.heandroid.data.model.request.auth.login.LoginModel
-import com.heandroid.data.model.response.auth.AuthResponseModel
 import com.heandroid.data.repository.auth.LoginRepository
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.base.BaseViewModel
-import com.heandroid.utils.Resource
-import com.heandroid.utils.ResponseHandler.failure
-import com.heandroid.utils.ResponseHandler.success
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.ResponseHandler.failure
+import com.heandroid.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

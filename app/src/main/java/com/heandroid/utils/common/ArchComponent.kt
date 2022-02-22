@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

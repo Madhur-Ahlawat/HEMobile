@@ -1,4 +1,4 @@
-package com.heandroid.utils
+package com.heandroid.utils.common
 
 import android.view.Menu
 import androidx.annotation.ColorRes
