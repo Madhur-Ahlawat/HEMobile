@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_auth"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.heandroid.ui.auth.login.LoginFragment"
+        tools:layout="@layout/fragment_login"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_forgotEmailFragment"
+            app:destination="@id/forgotEmailFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/forgotEmailFragment"
+        android:name="com.heandroid.ui.auth.forgot.email.ForgotEmailFragment"
+        tools:layout="@layout/fragment_forgot_email"
+        android:label="ForgotEmailFragment" />
+
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password"
+        android:label="ForgotPasswordFragment" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_chooseOptionFragment"
+            app:destination="@id/chooseOptionFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/chooseOptionFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.ChooseOptionForgotFragment"
+        tools:layout="@layout/fragment_forgot_choose_option"
+        android:label="ChooseOptionFragment" >
+        <action
+            android:id="@+id/action_chooseOptionFragment_to_postalEmailFragment"
+            app:destination="@id/postalEmailFragment" />
+        <action
+            android:id="@+id/action_chooseOptionFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/postalEmailFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.PostEmailForgotFragment"
+        tools:layout="@layout/fragment_forgot_password_postal_email"
+        android:label="PostatEmailFragment" />
+
+
+
+
+
+
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.OTPForgotPassword"
+        tools:layout="@layout/fragment_forgot_otp"
+        android:label="OTPFragment" >
+        <action
+            android:id="@+id/action_otpFragment_to_createPasswordFragment"
+            app:destination="@id/createPasswordFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/createPasswordFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.CreateNewPasswordFragment"
+        tools:layout="@layout/fragment_forgot_create_new_password"
+        android:label="PostatEmailFragment" >
+        <action
+            android:id="@+id/action_createPasswordFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+    </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.heandroid.ui.auth.forgot.password.ResetForgotPassword"
+        tools:layout="@layout/fragment_forgot_reset"
+        android:label="ResetFragment" />
+
+
+</navigation>

@@ -25,7 +25,6 @@ open class BaseRepository {
             if (exception is NoConnectivityException) return Resource.DataError(exception.message)
             return Resource.DataError(exception.message.toString())
         }
-
     }
 
     private fun <T : Any> setErrorMessage(response: Response<T>): String {

@@ -1,6 +1,7 @@
 package com.heandroid.di
 
-import com.example.dummyapplication.data.remote.ApiService
+import com.heandroid.BuildConfig
+import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
 import com.heandroid.utils.Constants.BASE_URL
@@ -50,7 +51,7 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.AUTHENTICATION_BASE_URL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)

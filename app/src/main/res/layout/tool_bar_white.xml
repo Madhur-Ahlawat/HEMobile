@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
+    app:contentInsetStart="0dp"
     android:background="@color/white">
 
     <RelativeLayout
@@ -14,7 +15,7 @@
             android:layout_width="@dimen/_32sdp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:srcCompat="@drawable/ic_back_grey" />
 
 
@@ -23,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
             android:layout_toEndOf="@+id/btn_back"
-            android:textStyle="bold"
             android:text="@string/str_password_recovery"
             android:textColor="@color/color_D8000000"
-            android:textSize="@dimen/_15ssp" />
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

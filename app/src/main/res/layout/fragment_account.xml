@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:background="@color/color_EFEFEF">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,8 +21,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:background="@color/color_EFEFEF"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -36,14 +38,14 @@
                     android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:id="@+id/profile"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
-                    android:id="@+id/profile"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -64,14 +66,15 @@
                         app:srcCompat="@drawable/ic_right" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -96,11 +99,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -126,11 +129,11 @@
                     android:id="@+id/rl_account"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account"
@@ -157,11 +160,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -186,11 +189,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:background="@color/white"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -212,13 +215,47 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_48sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginBottom="@dimen/_1sdp"
+                    android:background="@color/white"
+                    android:id="@+id/log_out_lyt"
+                    android:padding="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/str_log_out"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.5"
+                        app:srcCompat="@drawable/ic_right" />
+
+                </RelativeLayout>
+
+
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/progress_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:foregroundGravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:gravity="center"
                 android:visibility="gone">
 
@@ -241,8 +278,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/progress_bar"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:text="Loading..."
@@ -251,6 +288,8 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </layout>

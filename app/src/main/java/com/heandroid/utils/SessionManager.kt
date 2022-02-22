@@ -3,6 +3,8 @@ package com.heandroid.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
+import com.heandroid.data.model.response.auth.forgot.password.SecurityCodeResponseModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -76,6 +78,14 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
     }
     fun fetchCode(): String? {
         return prefs.getString(SECURITY_CODE, null)
+    }
+
+    fun saveSecurityCodeObject(myObject: SecurityCodeResponseModel?) {
+        val editor = prefs.edit()
+        val gson = Gson()
+        val jsonString = gson.toJson(myObject)
+        editor.putString( SECURITY_CODE_OBJ, jsonString)
+        editor.commit()
     }
 
 //    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {

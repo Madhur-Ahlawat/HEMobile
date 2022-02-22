@@ -4,13 +4,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.heandroid.MyApplication
+import com.heandroid.ui.base.BaseApplication
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
 object Utils {
-    fun hasInternetConnection(application: MyApplication): Boolean {
+    fun hasInternetConnection(application: BaseApplication): Boolean {
         val connectivityManager = application.getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager

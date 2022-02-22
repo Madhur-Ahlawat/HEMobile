@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<T> : AppCompatActivity() {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
@@ -21,5 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }
