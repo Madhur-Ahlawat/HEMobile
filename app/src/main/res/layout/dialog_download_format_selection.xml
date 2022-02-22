@@ -33,7 +33,7 @@
                     android:layout_marginStart="@dimen/_12sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center|start"
-                    android:text="@string/date_range"
+                    android:text="@string/select_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/appCompatTextView5">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rbLast30Days"
+                        android:id="@+id/rb_pdf"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_gravity="center"
@@ -68,7 +68,7 @@
                         android:button="@drawable/drawable_selector_radio_button"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingLeft="@dimen/_21sdp"
-                        android:text="@string/last_30_days"
+                        android:text="@string/pdf"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -78,7 +78,7 @@
                         android:background="@color/color_BFBFBF" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rbViewAll"
+                        android:id="@+id/rb_spread_sheet"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_gravity="center"
@@ -86,7 +86,7 @@
                         android:button="@drawable/drawable_selector_radio_button"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingLeft="@dimen/_21sdp"
-                        android:text="@string/view_all"
+                        android:text="@string/spread_sheet"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
@@ -94,132 +94,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/color_BFBFBF" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rbLast90Days"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_33sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_14sdp"
-                        android:button="@drawable/drawable_selector_radio_button"
-                        android:fontFamily="@font/roboto_regular"
-                        android:paddingLeft="@dimen/_21sdp"
-                        android:text="@string/last_90_days"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_BFBFBF" />
-
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/rbCustom"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_33sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_14sdp"
-                        android:button="@drawable/drawable_selector_radio_button"
-                        android:fontFamily="@font/roboto_regular"
-                        android:paddingLeft="@dimen/_21sdp"
-                        android:text="@string/custom"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
-
-
-                    <View
-                        android:id="@+id/vCustom"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_BFBFBF" />
-
-
-                    <LinearLayout
-                        android:id="@+id/llCustom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLabelFrom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/from"
-                            android:layout_marginTop="@dimen/_9sdp"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:textSize="@dimen/_13sdp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_regular" />
-
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/edFrom"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginStart="@dimen/_14sdp"
-                            android:layout_marginEnd="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            app:hintTextColor="@color/black"
-                            android:paddingLeft="@dimen/_9sdp"
-                            android:background="@drawable/drawable_round_corner"
-
-                            android:focusable="false"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_13sdp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColorHint="@color/black"
-                            android:focusableInTouchMode="false"
-                            android:hint="@string/dd_mm_yyyy"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLabelTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/to"
-                            android:layout_marginTop="@dimen/_9sdp"
-                            android:layout_marginStart="@dimen/_15sdp"
-                            android:textSize="@dimen/_13sdp"
-                            app:hintEnabled="false"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_regular"
-
-                            />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/edTo"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginStart="@dimen/_14sdp"
-                            android:layout_marginEnd="@dimen/_12sdp"
-                            android:background="@drawable/drawable_round_corner"
-
-                            android:layout_marginTop="@dimen/_2sdp"
-                            app:hintTextColor="@color/black"
-                            android:textColor="@color/black"
-                            android:paddingLeft="@dimen/_9sdp"
-
-                            android:focusable="false"
-                            android:textSize="@dimen/_13sdp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColorHint="@color/black"
-                            android:focusableInTouchMode="false"
-                            android:hint="@string/dd_mm_yyyy"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
-                    </LinearLayout>
-
-
-
 
                 </RadioGroup>
 
@@ -235,7 +109,7 @@
                     android:backgroundTint="@color/btn_color"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_6sdp"
-                    android:text="@string/str_apply"
+                    android:text="@string/str_ok"
                     android:textAllCaps="false"
                     android:textSize="@dimen/_13ssp"
                     app:cornerRadius="@dimen/_4sdp"
@@ -255,7 +129,7 @@
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_6sdp"
-                    android:text="@string/str_clear"
+                    android:text="@string/str_cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/btn_color"
                     android:textSize="@dimen/_13ssp"
