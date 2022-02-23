@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vehicle_history_nav_graph"
+    app:startDestination="@id/vehicleHistoryListFragment">
+
+    <fragment
+        android:id="@+id/vehicleHistoryVehicleDetailsFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryVehicleDetailsFragment"
+        android:label="VehicleHistoryVehicleDetailsFragment"
+        tools:layout="@layout/fragment_vehicle_history_vehicle_details">
+        <action
+            android:id="@+id/action_vehicleHistoryVehicleDetailsFragment_to_vehicleHistoryListFragment"
+            app:destination="@id/vehicleHistoryListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleHistoryCrossingHistoryFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment"
+        android:label="VehicleHistoryCrossingHistoryFragment"
+        tools:layout="@layout/fragment_vehicle_history_crossing_history">
+        <action
+            android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2"
+            app:destination="@id/crossingHistoryMakePaymentFragment2" />
+        <action
+            android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_vehicleHistoryListFragment"
+            app:destination="@id/vehicleHistoryListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingHistoryMakePaymentFragment2"
+        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
+        android:label="CrossingHistoryMakePaymentFragment"
+        tools:layout="@layout/fragment_crossing_history_make_payment">
+        <action
+            android:id="@+id/action_crossingHistoryMakePaymentFragment2_to_vehicleHistoryCrossingHistoryFragment"
+            app:destination="@id/vehicleHistoryCrossingHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleHistoryListFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryListFragment"
+        android:label="VehicleHistoryListFragment"
+        tools:layout="@layout/fragment_vehicle_history_list">
+        <action
+            android:id="@+id/action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment"
+            app:destination="@id/vehicleHistoryVehicleDetailsFragment" />
+    </fragment>
+</navigation>

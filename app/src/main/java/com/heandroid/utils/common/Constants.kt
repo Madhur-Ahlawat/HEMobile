@@ -2,6 +2,12 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val TOLL_TRANSACTION = "Toll_Transaction"
+    const val ALL_TRANSACTION = "ALL"
+    const val SPREAD_SHEET = "spreadsheet"
+    const val PDF = "pdf"
+    const val VIEW_ALL ="view_all"
+    const val DATE_FILTER ="date_filter"
     const val NO = "no"
     const val YES = "yes"
     const val APPLE_PAY = "apple_pay"
@@ -32,6 +38,7 @@ object Constants {
     const val VEHICLE_SCREEN_TYPE_ADD = 2
     const val VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT = 3
     const val VEHICLE_SCREEN_TYPE_HISTORY = 4
+    const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
 
