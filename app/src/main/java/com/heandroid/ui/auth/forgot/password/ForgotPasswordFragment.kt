@@ -12,7 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
 import com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotPasswordBinding
-import com.heandroid.hideKeyboard
+import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.*
@@ -56,11 +56,16 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
-                binding?.root?.post {
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.OPTIONS, status.data)
-                    findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle) } }
-
+                if (status.data?.statusCode?.equals("1054")==true) {
+                    showError(binding.root,status.data?.message)
+                } else {
+                    binding?.root?.post {
+                        val bundle = Bundle()
+                        bundle.putParcelable(Constants.OPTIONS, status.data)
+                        findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle)
+                    }
+                }
+            }
             is Resource.DataError -> { showError(binding.root,status.errorMsg) }
         }
     }

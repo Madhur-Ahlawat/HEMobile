@@ -12,7 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.request.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.response.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.databinding.FragmentForgotEmailBinding
-import com.heandroid.hideKeyboard
+import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError

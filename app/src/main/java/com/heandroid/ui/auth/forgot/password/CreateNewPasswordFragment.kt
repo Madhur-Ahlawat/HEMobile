@@ -12,7 +12,7 @@ import com.heandroid.data.model.request.auth.forgot.password.ResetPasswordModel
 import com.heandroid.data.model.response.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.response.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.databinding.FragmentForgotCreateNewPasswordBinding
-import com.heandroid.hideKeyboard
+import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError

@@ -21,7 +21,6 @@ class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding
 
     @Inject
     lateinit var sessionManager : SessionManager
-    private var type : String?=""
     private var model : RequestOTPModel?=null
     private var data: ConfirmOptionResponseModel?=null
 

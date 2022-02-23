@@ -11,7 +11,7 @@ import com.example.dummyapplication.data.model.response.LoginResponse
 import com.heandroid.R
 import com.heandroid.data.model.request.auth.login.LoginModel
 import com.heandroid.databinding.FragmentLoginBinding
-import com.heandroid.hideKeyboard
+import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.*
