@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,19 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"
-            app:navGraph="@navigation/profile_navigation_graph" />
+            app:navGraph="@navigation/navigation_profile" />
 
-<!--
-        <androidx.constraintlayout.widget.Guideline
-            android:layout_width="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_begin="@dimen/_5sdp"
-            android:id="@+id/guide_line1"
-            android:orientation="horizontal"
-            android:layout_height="@dimen/_5sdp"/>
--->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

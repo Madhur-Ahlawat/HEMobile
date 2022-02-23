@@ -2,6 +2,7 @@ package com.heandroid.utils
 
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
+import com.heandroid.utils.common.LoginValidateUtils
 
 class LoginFieldValidationTest
 {

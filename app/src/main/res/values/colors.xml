@@ -47,10 +47,11 @@
     <color name="color_F5F5F5">#F5F5F5</color>
     <color name="color_BFBFBF">#BFBFBF</color>
     <color name="black_trans">#B3767676</color>
+    <color name="black_trans_dailog">#6E343434</color>
     <color name="color_594D00">#594D00</color>
     <color name="FCD6C3">#FCD6C3</color>
     <color name="FFF7BF">#FFF7BF</color>
-    <color name="dialogBackground">#C4C4C4</color>
+    <color name="hyperlink_blue">#427AF7</color>
 
 
 </resources>

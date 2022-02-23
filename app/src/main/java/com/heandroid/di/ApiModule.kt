@@ -1,8 +1,10 @@
 package com.heandroid.di
 
-import com.heandroid.data.remote.*
-import com.heandroid.utils.Constants.BASE_URL
-import com.heandroid.utils.SessionManager
+import com.heandroid.BuildConfig
+import com.heandroid.data.remote.ApiService
+import com.heandroid.data.remote.HeaderInterceptor
+import com.heandroid.data.remote.NullOnEmptyConverterFactory
+import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,13 +18,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
-
-    @Provides
-    @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
+object ApiModule {@Provides
+@Singleton
+fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+}
 
     @Provides
     @Singleton
@@ -33,10 +33,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        logging: HttpLoggingInterceptor,
-        headerInterceptor: HeaderInterceptor
-    ): OkHttpClient {
+    fun provideOkHttpClient(logging: HttpLoggingInterceptor, headerInterceptor: HeaderInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
@@ -52,7 +49,7 @@ object ApiModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
@@ -63,11 +60,5 @@ object ApiModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideApiHelperImpl(apiService: ApiService): ApiHelper {
-        return ApiHelperImpl(apiService)
     }
 }

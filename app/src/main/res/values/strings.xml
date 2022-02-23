@@ -11,6 +11,8 @@
     <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
     <string name="txt_create_new_account">Do not have account? <b><u>Create account</u></b></string>
     <string name="txt_error_username">Username can not be empty</string>
+    <string name="txt_error_username_password">Please enter email and password</string>
+    <string name="txt_error_account_zip">Please enter account number and zip code</string>
     <string name="txt_error_password">Password can not be empty</string>
     <string name="txt_pre_pay_scheme">Pre pay scheme</string>
     <string name="txt_pre_pay_account">Pre Pay Account</string>
@@ -43,6 +45,8 @@
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
+    <string name="txt_error_account_number">Please enter account number</string>
+    <string name="txt_error_zip_code">Please enter postal code</string>
     <string name="txt_postcode">Postcode</string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
@@ -186,6 +190,7 @@
     <string name="str_forgot_your_password"><u>Forgot your password?</u></string>
 
     <string name="txt_recovery_username">"Username recovery "</string>
+    <string name="txt_recovery_emai">Email recovery</string>
 
     <string name="str_email_address">Email Address</string>
     <string name="str_password_recovery">Password recovery</string>
@@ -193,6 +198,7 @@
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
 
     <string name="str_not_received_otp_txt">If you haven\'t received the one time code, please re-check your email address and click resend one time code</string>
+    <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify one time code</string>
     <string name="str_create_password">Create your password</string>
     <string name="str_new_password">New password</string>
@@ -357,6 +363,17 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="invalid_password">"Invalid username "</string>
     <string name="invalid_username">Invalid password</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="sure_wants_logout">Are you sure wants to logout?</string>
+    <string name="logout">Logout</string>
+    <string name="forgot_email"><u>Forgot email?</u></string>
+    <string name="please_select_one_mode_for_password">Please select one mode for password recovery</string>
+    <string name="error_email">Please enter email address</string>
+    <string name="error_password_not_match">Confirm password does not match</string>
+    <string name="error_postal_code">Please enter post code</string>
+    <string name="check_sms">Check your SMS</string>
+    <string name="enter_otp">Please enter correct otp</string>
 
     <string name="str_log_out">Logout</string>
     <string name="str_ok">Ok</string>

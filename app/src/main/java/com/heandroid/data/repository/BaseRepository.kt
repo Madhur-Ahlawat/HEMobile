@@ -1,7 +1,7 @@
 package com.heandroid.data.repository
 
 import com.heandroid.data.remote.NoConnectivityException
-import com.heandroid.utils.Resource
+import com.heandroid.utils.common.Resource
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException
@@ -25,7 +25,6 @@ open class BaseRepository {
             if (exception is NoConnectivityException) return Resource.DataError(exception.message)
             return Resource.DataError(exception.message.toString())
         }
-
     }
 
     private fun <T : Any> setErrorMessage(response: Response<T>): String {
