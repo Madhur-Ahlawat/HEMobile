@@ -329,7 +329,7 @@
             android:id="@+id/btn_login"
             style="@style/Theme.Button"
             android:textColor="@color/color_7D7D7D"
-            android:text="@string/str_next"
+            android:text="@string/str_login"
             android:textSize="@dimen/_16ssp"
             android:textAllCaps="false"
             android:layout_width="match_parent"

@@ -104,6 +104,10 @@ class LoginActivity : BaseActivity() {
 
         // set values in shared preference
         Log.d("data: ", response.accessToken)
+
+        sessionManager.saveAuthToken(response.accessToken)
+        sessionManager.saveRefreshToken(response.refreshToken)
+
     }
 
     private fun showLoadingView() {
