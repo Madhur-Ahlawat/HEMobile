@@ -1,8 +1,7 @@
-package com.heandroid.utils
+package com.heandroid.utils.extn
 
 import android.app.Activity
 import android.content.Intent
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.heandroid.R

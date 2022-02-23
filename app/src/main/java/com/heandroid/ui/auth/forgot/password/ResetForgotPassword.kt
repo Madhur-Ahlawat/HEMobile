@@ -8,7 +8,7 @@ import com.heandroid.ui.base.BaseFragment
 
 import com.heandroid.databinding.FragmentForgotResetBinding
 import com.heandroid.ui.auth.controller.AuthActivity
-import com.heandroid.utils.startNormalActivity
+import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 

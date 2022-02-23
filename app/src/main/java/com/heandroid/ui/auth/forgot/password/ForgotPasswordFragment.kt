@@ -15,12 +15,12 @@ import com.heandroid.databinding.FragmentForgotPasswordBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.*
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
