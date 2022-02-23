@@ -1,6 +1,7 @@
 package com.heandroid.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
     private var data: RequestOTPModel?=null
     private var response: SecurityCodeResponseModel?=null
     private var loader: LoaderDialog?=null
+    private var timer : CountDownTimer?=null
+    private var timeFinish: Boolean=false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotOtpBinding = FragmentForgotOtpBinding.inflate(inflater,container,false)
@@ -61,13 +64,13 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
         when(v?.id){
             R.id.btn_verify -> {
                 if(response?.code?.equals(binding.edtOtp.text.toString())==true) {
+                    if(!timeFinish){
                     val bundle = Bundle()
                     bundle.putParcelable("data",response)
-                    findNavController().navigate(R.id.action_otpFragment_to_createPasswordFragment,bundle)
+                    findNavController().navigate(R.id.action_otpFragment_to_createPasswordFragment,bundle) }
+                    else { showError(binding.root,getString(R.string.error_otp_time_expire)) }
                 }
-                else {
-                    showError(binding.root,getString(R.string.enter_otp))
-                }
+                else { showError(binding.root,getString(R.string.enter_otp)) }
             }
 
             R.id.resend_txt -> {
@@ -92,7 +95,14 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?){
         loader?.dismiss()
         when(status){
-            is Resource.Success -> { response=status.data }
+            is Resource.Success -> {
+                response=status.data
+                timer= object : CountDownTimer(response?.otpExpiryInSeconds?:0L,1000){
+                    override fun onTick(millisUntilFinished: Long) { timeFinish=true }
+                    override fun onFinish() { timeFinish=true }
+                }
+
+            }
             is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
         }
     }
