@@ -51,7 +51,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             tvForgotPassword.setOnClickListener(this@LoginFragment)
             btnLogin.setOnClickListener(this@LoginFragment)
         }
-
     }
 
     override fun observer() {
