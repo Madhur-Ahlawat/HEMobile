@@ -7,7 +7,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.dummyapplication.data.model.response.LoginResponse
+import com.heandroid.data.model.response.auth.LoginResponse
 import com.heandroid.R
 import com.heandroid.data.model.request.auth.login.LoginModel
 import com.heandroid.databinding.FragmentLoginBinding
@@ -19,6 +19,7 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

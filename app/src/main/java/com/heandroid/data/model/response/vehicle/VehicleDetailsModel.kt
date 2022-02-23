@@ -1,7 +1,7 @@
 package com.heandroid.data.model.response.vehicle
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class VehicleDetailsModel(
