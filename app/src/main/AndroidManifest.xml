@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.heandroid">
+    package="com.heandroid" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.HEMobile"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".view.SignOutActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sign_out"
+            android:theme="@style/Theme.HEMobile.NoActionBar" />
         <activity
             android:name=".view.CommunicationActivity"
-            android:exported="false" />
-<!--        android:theme="@style/Theme.HEMobileDark"-->
+            android:exported="false" /> <!-- android:theme="@style/Theme.HEMobileDark" -->
         <activity
             android:name=".view.StartNowActivity"
-            android:theme="@style/Theme.HEMobileDark">
-
+            android:theme="@style/Theme.HEMobileDark" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,9 +54,9 @@
         <activity
             android:name=".view.VrmEditClassesActivity"
             android:theme="@style/Theme.HEMobileLight" />
-        <activity android:name=".view.VrmEditMakeModelColorActivity"
+        <activity
+            android:name=".view.VrmEditMakeModelColorActivity"
             android:theme="@style/Theme.HEMobileLight" />
-
         <activity android:name=".view.ActivityPaymentHistory" />
         <activity android:name=".view.RecoveryUsernamePasswordActivity" />
         <activity
@@ -83,7 +86,6 @@
         <activity
             android:name=".view.ActivityVehicleHistory"
             android:theme="@style/Theme.HEMobileWhite" />
-
         <activity android:name=".view.PaymentReceiptSelectionActivity" />
         <activity
             android:name=".view.ActivityFutureCrossing"
@@ -94,7 +96,6 @@
         <activity
             android:name=".view.StartNowBaseActivity"
             android:theme="@style/Theme.HEMobileLight" />
-
         <activity
             android:name=".view.CrossingHistoryActivity"
             android:theme="@style/Theme.HEMobileWhite" />
@@ -103,12 +104,11 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>

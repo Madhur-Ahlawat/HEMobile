@@ -21,9 +21,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setUpViews() {
 
-        dataBinding.toolBarLyt.tv_header.text = getString(R.string.str_account_management)
+        dataBinding.toolBarLyt.tvHeader.text = getString(R.string.str_account_management)
 
-        dataBinding.toolBarLyt.btn_back.setOnClickListener {
+        dataBinding.toolBarLyt.btnBack.setOnClickListener {
             onBackPressed()
         }
     }

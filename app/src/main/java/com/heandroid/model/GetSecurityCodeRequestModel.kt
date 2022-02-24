@@ -1,14 +1,14 @@
 package com.heandroid.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class GetSecurityCodeRequestModel(
-
-    @SerializedName("accountNumber") val accountNumber : String,
-    @SerializedName("optionType") val optionType : String,
-    @SerializedName("optionValue") val optionValue : String
-
-) :Serializable{
+    val optionType : String,
+    val optionValue : String
+) :Parcelable{
 
 }

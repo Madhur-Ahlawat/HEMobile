@@ -88,7 +88,7 @@ class ForgotPasswordRecoverActivity:AppCompatActivity() {
 
         var agencyId = "12"
 
-        var requestParam = GetSecurityCodeRequestModel(accountNumber, selectedOpt , optionVal)
+        var requestParam = GetSecurityCodeRequestModel(selectedOpt , optionVal?:"")
         viewModel.getSecurityCodeApi(agencyId ,requestParam)
         viewModel.getSecurityCodeVal.observe(this, Observer {
             it.let { resource ->
@@ -97,7 +97,7 @@ class ForgotPasswordRecoverActivity:AppCompatActivity() {
                         var response = resource.data!!.body() as GetSecurityCodeResponseModel
                         Log.d("GetSecurityCode Page:  Response ::",response.toString())
                         startVerifySecurityCodeScreen(response)
-                        sessionManager.saveCode(response.code)
+                        sessionManager.saveCode(response.code.toString()?:"")
                         sessionManager.saveSecurityCodeObject(response)
                     }
                     Status.ERROR -> {

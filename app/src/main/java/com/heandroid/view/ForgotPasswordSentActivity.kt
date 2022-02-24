@@ -83,42 +83,38 @@ class ForgotPasswordSentActivity : AppCompatActivity() {
     }
 
     private fun callApiToVerifyCode() {
-        if(!TextUtils.isEmpty(edt_code.text.toString()))
-        {
+        if(!TextUtils.isEmpty(edt_code.text.toString())) {
             var securityCodeObj = sessionManager.fetchSecurityCodeObj()
-            if(securityCodeObj!=null)
-            {
+            if (securityCodeObj != null) {
 
-                var requestParam =  VerifySecurityCodeRequestModel(edt_code.text.toString() , securityCodeObj.otpExpiryInSeconds,securityCodeObj.referenceId, true)
-                if (requestParam != null) {
-                    viewModel.verifySecurityCodeApi(requestParam)
-
-                    viewModel.getSecurityCodeVal.observe(this, Observer {
-                        it.let { resource ->
-                            when (resource.status) {
-                                Status.SUCCESS -> {
-                                    var response = resource.data!!.body() as GetSecurityCodeResponseModel
-                                    Log.d("VerifySecurityCode Page:  Response ::", response.toString())
-                                    var intent = Intent(this, PasswordResetActivity::class.java)
-                                    startActivity(intent)
-                                }
-                                Status.ERROR -> {
-                                    Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
-
-                                }
-                                Status.LOADING -> {
-                                    // show/hide loader
-                                }
-
-                            }
-                        }
-                    })
-                }
+                // var requestParam =  VerifySecurityCodeRequestModel(edt_code.text.toString() , securityCodeObj?.otpExpiryInSeconds,securityCodeObj.referenceId, true)
+//                if (requestParam != null) {
+//                    viewModel.verifySecurityCodeApi(requestParam)
+//
+//                    viewModel.getSecurityCodeVal.observe(this, Observer {
+//                        it.let { resource ->
+//                            when (resource.status) {
+//                                Status.SUCCESS -> {
+//                                    var response = resource.data!!.body() as GetSecurityCodeResponseModel
+//                                    Log.d("VerifySecurityCode Page:  Response ::", response.toString())
+//                                    var intent = Intent(this, PasswordResetActivity::class.java)
+//                                    startActivity(intent)
+//                                }
+//                                Status.ERROR -> {
+//                                    Toast.makeText(this, resource.message, Toast.LENGTH_LONG).show()
+//
+//                                }
+//                                Status.LOADING -> {
+//                                    // show/hide loader
+//                                }
+//
+//                            }
+//                        }
+//                    })
+//                }
 
             }
-                    }
-
-
+        }
     }
 
     private fun getDataFromIntent() {

@@ -57,6 +57,8 @@
 
     <color name="ios_blue">#FF037BFF</color>
     <color name="ios_red">#FFFD4A2E</color>
+    <color name="color_D3D3D4">#D3D3D4</color>
+    <color name="color_3C3C4399">#993C3C43</color>
 
 
 </resources>

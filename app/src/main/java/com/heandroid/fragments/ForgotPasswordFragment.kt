@@ -70,14 +70,17 @@ class ForgotPasswordFragment : BaseFragment() {
 
             hideSoftKeyboard()
             if (validate()) {
-                sessionManager.saveAccountNumber(email)
-                val response = ConfirmationOptionsResponseModel(
-                    "4294274",
-                    "christoper@gmail.com",
-                    "9823233232"
-                )
-                startPasswordRecoveryOptionSelectionScreen(response)
-//                callApiForGettingConfirmationOptions()
+//                sessionManager.saveAccountNumber(email)
+//                val response = ConfirmationOptionsResponseModel(
+//                    "4294274",
+//                    "christoper@gmail.com",
+//                    "9823233232"
+//                )
+
+
+
+//                startPasswordRecoveryOptionSelectionScreen()
+                callApiForGettingConfirmationOptions()
             }
 
         }
@@ -98,31 +101,23 @@ class ForgotPasswordFragment : BaseFragment() {
 
     private fun setBtnNormal() {
         dataBinding.btnNext.isEnabled = false
-        dataBinding.btnNext.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(),
-                R.color.color_7D7D7D
-            )
-        )
+        dataBinding.btnNext.setTextColor(ContextCompat.getColor(requireActivity(), R.color.color_7D7D7D))
     }
 
 
     private fun callApiForGettingConfirmationOptions() {
 
-        var agencyId = "12"
-        var requestParam = ConfirmationOptionRequestModel(email, postcode)
+        var agencyId = "18"
+        var requestParam = ConfirmationOptionRequestModel(dataBinding.edtEmail.text.toString().trim(), dataBinding.edtPostcode.text.toString().trim())
         viewModel.getConfirmationOptionsApi(agencyId, requestParam)
         viewModel.confirmationOptionVal.observe(requireActivity(), androidx.lifecycle.Observer {
             it.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        var response = resource.data!!.body() as ConfirmationOptionsResponseModel
-                        Log.d("ForgotPassword Page:  Response ::", response.toString())
-                        startPasswordRecoveryOptionSelectionScreen(response)
+                        startPasswordRecoveryOptionSelectionScreen(resource.data?.body())
                     }
                     Status.ERROR -> {
-                        Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG).show()
 
                     }
                     Status.LOADING -> {
@@ -135,14 +130,14 @@ class ForgotPasswordFragment : BaseFragment() {
 
     }
 
-    private fun startPasswordRecoveryOptionSelectionScreen(response: ConfirmationOptionsResponseModel) {
-        val bundle = Bundle()
-
-        bundle.putSerializable(Constants.OPTIONS, response)
-
-        Navigation.findNavController(dataBinding.root)
-            .navigate(R.id.action_forgotPasswordFragment_to_forgotPasswordSecondFragment, bundle)
-
+    private fun startPasswordRecoveryOptionSelectionScreen(response: ConfirmationOptionsResponseModel?) {
+        if(response?.statusCode?.equals("1054")==true){
+            Toast.makeText(requireActivity(),"Invalid credentials",Toast.LENGTH_LONG).show()
+        }else{
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.OPTIONS, response)
+            Navigation.findNavController(dataBinding.root).navigate(R.id.action_forgotPasswordFragment_to_forgotPasswordSecondFragment, bundle)
+        }
     }
 
 
@@ -165,8 +160,7 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     private fun hideSoftKeyboard() {
-        val imm: InputMethodManager =
-            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 

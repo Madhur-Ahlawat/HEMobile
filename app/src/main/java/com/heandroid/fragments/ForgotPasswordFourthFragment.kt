@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.heandroid.R
 import com.heandroid.databinding.FragmentForgotPasswordFourthBinding
+import com.heandroid.gone
+import com.heandroid.model.GetSecurityCodeResponseModel
 import com.heandroid.model.SetNewPasswordRequest
 import com.heandroid.model.VerifySecurityCodeResponseModel
 import com.heandroid.network.ApiHelperImpl
@@ -24,6 +26,7 @@ import com.heandroid.repo.Status
 import com.heandroid.utils.SessionManager
 import com.heandroid.viewmodel.RecoveryUsernamePasswordViewModel
 import com.heandroid.viewmodel.ViewModelFactory
+import com.heandroid.visible
 
 /**
  * A simple [Fragment] subclass.
@@ -66,27 +69,20 @@ class ForgotPasswordFourthFragment : BaseFragment() {
         dataBinding.btnSubmit.setOnClickListener {
 
             if (validate()) {
-                Navigation.findNavController(dataBinding.root)
-                    .navigate(
-                        R.id.action_forgotPasswordFourthFragment_to_forgotPasswordFifthFragment
-                    )
+                dataBinding.btnSubmit.isEnabled=false
+                dataBinding.progressBar.visible()
+                callApiToSetNewPassword()
             }
         }
 
-        dataBinding.edtNewPassword.doOnTextChanged { _, _, _, count ->
-            if (dataBinding.edtConformPassword.text!!.isNotEmpty() && count > 0)
-                setBtnActivated()
-            else
-                setBtnNormal()
-
+        dataBinding.edtNewPassword.doOnTextChanged { char, _, _, count ->
+            if (dataBinding.edtConformPassword.text!!.isNotEmpty() && char?.length?:0 > 0) setBtnActivated()
+            else setBtnNormal()
         }
 
-        dataBinding.edtConformPassword.doOnTextChanged { _, _, _, count ->
-
-            if (dataBinding.edtNewPassword.text!!.isNotEmpty() && count > 0)
-                setBtnActivated()
-            else
-                setBtnNormal()
+        dataBinding.edtConformPassword.doOnTextChanged { char, _, _, count ->
+            if (dataBinding.edtNewPassword.text!!.isNotEmpty() && char?.length?:0 > 0) setBtnActivated()
+            else setBtnNormal()
         }
     }
 
@@ -111,44 +107,26 @@ class ForgotPasswordFourthFragment : BaseFragment() {
     }
 
     private fun callApiToSetNewPassword() {
-        var accountNumber = sessionManager.fetchAccountNumber() ?: ""
-        var code = sessionManager.fetchCode() ?: ""
-        var requestParam = accountNumber?.let {
-            SetNewPasswordRequest(accountNumber, code, pwd)
-        }
-        if (requestParam != null) {
-            viewModel.setNewPasswordApi(requestParam)
-            viewModel.setNewPasswordVal.observe(requireActivity(), Observer {
-                it.let { resource ->
-                    when (resource.status) {
-                        Status.SUCCESS -> {
-                            var response = resource.data!!.body() as VerifySecurityCodeResponseModel
-                            Log.d("SetNewPassword Page:  Response ::", response.toString())
-                            Toast.makeText(
-                                requireActivity(),
-                                "Password has been changed successfully.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+        val data=arguments?.getParcelable<GetSecurityCodeResponseModel?>("data")
+        val requestParam=SetNewPasswordRequest(data?.code, data?.referenceId, dataBinding.edtNewPassword.text.toString())
+        viewModel.setNewPasswordApi(requestParam)
+        viewModel.setNewPasswordVal.observe(requireActivity()) {
+            dataBinding.btnSubmit.isEnabled=true
+            dataBinding.progressBar.gone()
 
-                        }
-                        Status.ERROR -> {
-                            Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG)
-                                .show()
-
-                        }
-                        Status.LOADING -> {
-                            // show/hide loader
-                        }
-
+            it.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        Navigation.findNavController(dataBinding.root).navigate(R.id.action_forgotPasswordFourthFragment_to_forgotPasswordFifthFragment)
+                        Toast.makeText(requireActivity(), "Password has been changed successfully.", Toast.LENGTH_SHORT).show()
                     }
+                    Status.ERROR -> { Toast.makeText(requireActivity(), resource.message, Toast.LENGTH_LONG).show() }
+                    Status.LOADING -> { // show/hide loader }
                 }
-            })
         }
-
-    }
+    }}}
 
     private fun setupViewModel() {
-
         Log.d("DummyLogin", "set up view model")
         val factory = ViewModelFactory(ApiHelperImpl(RetrofitInstance.apiService))
         viewModel = ViewModelProvider(this, factory)[RecoveryUsernamePasswordViewModel::class.java]
@@ -184,5 +162,9 @@ class ForgotPasswordFourthFragment : BaseFragment() {
         }
 
     }
+
+
+
+
 
 }

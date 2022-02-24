@@ -83,8 +83,8 @@
     <string name="txt_enter_pwd">Enter Password</string>
     <string name="str_enter_confirm_pwd">Enter confirm password</string>
     <string name="str_submit">Submit</string>
-    <string name="err_pwd_empty">Please enter password</string>
-    <string name="err_c_pwd_empty">Please enter confirm password</string>
+    <string name="err_pwd_empty">Please enter 8 digit password</string>
+    <string name="err_c_pwd_empty">Please enter 8 digit confirm password</string>
     <string name="err_pwd_and_c_pwd_not_same">Password and confirm password are not same</string>
     <string name="txt_make_one_off_payment">Make a one off payment</string>
     <string name="txt_whr_do_you_want_rcpt_to_send">Where do you want your receipt to be sent?</string>
@@ -356,6 +356,20 @@
     <string name="str_download_crossing_history">Download crossing history</string>
     <string name="no_crossings_have_been_made">No crossings have been made</string>
     <string name="str_download_payment_receipt">Download payment receipt</string>
+    <string name="title_activity_sign_out">SignOutActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="start_again">Start again</string>
+    <string name="you_have_sucessfully_sign_out_of_your_account">You have sucessfully sign out of your account</string>
+    <string name="your_session_has_expired">Your session has expired</string>
+    <string name="select_the_start_now_button_to_restart_your_session">Select the start now button to restart your session</string>
+    <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
 
 </resources>
 

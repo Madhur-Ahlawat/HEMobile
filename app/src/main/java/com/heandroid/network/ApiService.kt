@@ -64,7 +64,7 @@ interface ApiService {
         @Body requestParam: ForgotUsernameRequest
     ): Response<ForgotUsernameApiResponse>
 
-    @POST("https://maas-test.services.conduent.com/bosuser/api/account/forgotPassword/confirmationOptions")
+    @POST("http://10.190.176.7:8080/bosuser/api/v1/account/forgotPassword/confirmationOptions")
     suspend fun forgotPasswordConfirmationOptionsApi(
         @Query("agencyId") agencyId: String,
         @Body requestParam: ConfirmationOptionRequestModel
@@ -79,7 +79,7 @@ interface ApiService {
     @POST("https://maas-test.services.conduent.com/bosuser/api/v1/account/forgotPassword/verifyOTP")
     suspend fun verifySecurityCodeApi(@Body requestParam: VerifySecurityCodeRequestModel): Response<VerifySecurityCodeResponseModel>
 
-    @POST("https://maas-test.services.conduent.com/bosuser/api/v2/account/forgotPassword/setNewPassword")
+    @POST("http://10.190.176.7:8080/bosuser/api/v2/account/forgotPassword/setNewPassword")
     suspend fun setNewPasswordApi(@Body requestParam: SetNewPasswordRequest): Response<VerifySecurityCodeResponseModel>
 
     @POST("http://10.190.176.7:8080/bosuser/api/account/getAlertMessages")

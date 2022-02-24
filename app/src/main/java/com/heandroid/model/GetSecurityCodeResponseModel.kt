@@ -1,15 +1,16 @@
 package com.heandroid.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@Parcelize
 data class GetSecurityCodeResponseModel(
 
-    @SerializedName("code") val code : String,
-    @SerializedName("otpExpiryInSeconds") val otpExpiryInSeconds : Int,
-    @SerializedName("referenceId") val referenceId : String,
-    @SerializedName("successful") val successful : Boolean
+    val code : String?,
+    val otpExpiryInSeconds : Long?,
+    val referenceId : String?,
+    val successful : Boolean
 
-):Serializable {
-
-}
+) : Parcelable

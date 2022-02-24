@@ -123,6 +123,12 @@
         <item name="android:windowBackground">@drawable/ios_type_dialog_bg</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+    <style name="Theme.HEMobile.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.HEMobile.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.HEMobile.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
