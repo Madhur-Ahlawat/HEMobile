@@ -61,12 +61,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
         loader?.dismiss()
         when (status) {
-            is Resource.Success -> { lauchIntent(status) }
+            is Resource.Success -> { launchIntent(status) }
             is Resource.DataError -> { showError(binding.root,status.errorMsg) }
+            else -> {
+               // do nothing
+             }
         }
     }
 
-    private fun lauchIntent(response: Resource.Success<LoginResponse?>) {
+    private fun launchIntent(response: Resource.Success<LoginResponse?>) {
         sessionManager.run {
             saveAuthToken(response.data?.accessToken?:"")
             saveRefreshToken(response.data?.refreshToken?:"")
@@ -93,7 +96,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun isEnable() {
-        if(binding.edtEmail.length()>0 && binding.edtPwd.length()>0) binding.model = LoginModel(enable = true, value = binding.edtEmail.text.toString(), password = binding.edtPwd.text.toString())
+        if(binding.edtEmail.length()>0 && binding.edtPwd.length()>0) binding.model = LoginModel(enable = false, value = binding.edtEmail.text.toString(), password = binding.edtPwd.text.toString())
         else binding.model = LoginModel(enable = false, value = binding.edtEmail.text.toString(), password = binding.edtPwd.text.toString())
     }
 }

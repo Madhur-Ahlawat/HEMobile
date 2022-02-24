@@ -21,7 +21,7 @@
             android:gravity="center_vertical"
             android:text="@string/str_use_this_service_to"
             android:textStyle="bold"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="normal"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_14ssp"
             android:textColor="@color/black"
             android:layout_marginHorizontal="@dimen/_7sdp"
             android:text="@string/str_use_service_guideline"
@@ -39,11 +39,12 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_use_this_service" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textStyle="normal"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             android:textColor="@color/login_blue_border"
             android:layout_marginVertical="@dimen/_8sdp"
             android:layout_marginHorizontal="@dimen/_7sdp"

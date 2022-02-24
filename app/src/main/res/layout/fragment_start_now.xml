@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_EFEFEF">
-
-        <include
-            android:id="@+id/id_tool_bar_lyt"
-            layout="@layout/toolbar_with_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -31,9 +20,9 @@
             android:textColor="@color/color_D8000000"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_tool_bar_lyt" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
 
         <androidx.appcompat.widget.AppCompatTextView

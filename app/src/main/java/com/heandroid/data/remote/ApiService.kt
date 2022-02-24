@@ -22,7 +22,7 @@ interface ApiService {
     suspend fun login(@Field("client_id") clientId: String?= BuildConfig.CLIENT_ID,
                       @Field("grant_type") grant_type: String?=BuildConfig.GRANT_TYPE,
                       @Field("agencyID") agencyID: String?=BuildConfig.AGENCY_ID,
-                      @Field("client_secret") client_secret: String?=BuildConfig.CLIENT_SECRET,
+                      @Field("client_secret") client_secret: String?= BuildConfig.CLIENT_SECRET,
                       @Field("value") value: String?,
                       @Field("password") password: String?,
                       @Field("validatePasswordCompliance") validatePasswordCompliance: String?): Response<LoginResponse?>?

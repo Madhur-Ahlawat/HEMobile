@@ -30,7 +30,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
      */
     fun saveAuthToken(token: String) {
         Log.d("Session Manager::",token)
-        // todo use scope variablde
+        // todo use scope variable
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
         editor.apply()

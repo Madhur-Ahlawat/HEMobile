@@ -4,38 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_start_now.xml"
     app:startDestination="@id/aboutService">
-<fragment
-    android:id="@+id/aboutService"
-    android:name="com.heandroid.oldStructure.fragments.AboutServiceFragment"
-    android:label="@string/str_about_this_service"
-    tools:layout="@layout/about_service_fragment">
-<action
-    android:id="@+id/about_service_to_crossing_dart_charge"
-    app:destination="@+id/crossingUpdate"/>
+    <fragment
+        android:id="@+id/aboutService"
+        android:name="com.heandroid.ui.startNow.AboutServiceFragment"
+        android:label="@string/str_about_this_service"
+        tools:layout="@layout/fragment_about_service">
 
-    <action
-        android:id="@+id/about_service_to_contact_dart_charge"
-        app:destination="@+id/contactDartCharge"/>
-
-</fragment>
+    </fragment>
 
     <fragment
         android:id="@+id/contactDartCharge"
-        android:name="com.heandroid.oldStructure.fragments.ContactDartChargeFragment"
+        android:name="com.heandroid.ui.startNow.ContactDartChargeFragment"
         android:label="@string/str_contact_dart_charge"
-        tools:layout="@layout/contact_dart_charge_fragment">
-        <action
-            android:id="@+id/crossing_dart_charge_to_about_service"
-            app:destination="@+id/aboutService"/>
+        tools:layout="@layout/fragment_contact_dart_charge">
+
     </fragment>
 
     <fragment
         android:id="@+id/crossingUpdate"
-        android:name="com.heandroid.oldStructure.fragments.CrossingServiceUpdateFragment"
+        android:name="com.heandroid.ui.startNow.CrossingServiceUpdatesFragment"
         android:label="@string/str_crossing_service_update"
-        tools:layout="@layout/crossing_service_update_fragment">
-        <action
-            android:id="@+id/crossing_service_update_to_about_service"
-            app:destination="@+id/aboutService"/>
+        tools:layout="@layout/fragment_crosssing_service_update">
+
     </fragment>
 </navigation>

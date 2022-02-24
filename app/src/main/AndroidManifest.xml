@@ -13,8 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.startNow.StartNowBaseActivity"
+            android:screenOrientation="portrait">
 
-        <activity android:name=".ui.auth.controller.AuthActivity">
+        </activity>
+        <activity
+            android:name=".ui.auth.controller.AuthActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".ui.landing.LandingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

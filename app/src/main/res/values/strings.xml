@@ -390,6 +390,7 @@
     <string name="str_country_marker">Country marker</string>
     <string name="str_class">Class</string>
     <string name="str_added_date">Added date</string>
+    <string name="str_landing_screen">Landing Screen</string>
 
 
 </resources>

@@ -17,18 +17,18 @@
 
             <include
                 android:id="@+id/id_tool_bar_lyt"
-                layout="@layout/tool_bar_white" />
+                layout="@layout/toolbar_with_logo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <fragment
-            android:id="@+id/fragment_container"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:id="@+id/nav_host_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintHeight_percent="0.9"
             app:layout_constraintTop_toBottomOf="@+id/cl_header"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph_start_now"/>
+            app:navGraph="@navigation/nav_graph_landing"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
