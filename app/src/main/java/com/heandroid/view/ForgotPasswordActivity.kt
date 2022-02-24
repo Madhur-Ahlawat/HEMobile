@@ -34,7 +34,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         dataBinding = DataBindingUtil.setContentView(this , R.layout.activity_forgot_password)
         sessionManager = SessionManager((this))
 
-        dataBinding.toolBarLyt.btn_back.setOnClickListener {
+        dataBinding.toolBarLyt.btnBack.setOnClickListener {
             Logg.logging("Forgot","  back button called  ${dataBinding.fragmentContainerView.childCount}")
 
             onBackPressed()

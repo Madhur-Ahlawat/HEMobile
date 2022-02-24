@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.heandroid.R
-import com.heandroid.databinding.ActivityStartNowBaseBinding
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.heandroid.databinding.ActivityStartNowBaseBinding
 import com.heandroid.fragments.AboutServiceFragment
 import com.heandroid.fragments.BaseFragment
 import com.heandroid.fragments.ContactDartChargeFragment

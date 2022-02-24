@@ -39,7 +39,7 @@ class ActivityViewCharges : AppCompatActivity() {
             "£6.00",
             "£5.69"
         )
-        dataBinding.toolBarLyt.tv_header.text = getString(R.string.str_charges_6am_10pm)
+        dataBinding.toolBarLyt.tvHeader.text = getString(R.string.str_charges_6am_10pm)
         mList.add(mData1)
         mList.add(mData2)
         mList.add(mData3)
@@ -49,7 +49,7 @@ class ActivityViewCharges : AppCompatActivity() {
         dataBinding.recyclerView.layoutManager = LinearLayoutManager(this)
         dataBinding.recyclerView.setHasFixedSize(true)
         dataBinding.recyclerView.adapter = vehicleListAdapter
-        dataBinding.toolBarLyt.btn_back.setOnClickListener {
+        dataBinding.toolBarLyt.btnBack.setOnClickListener {
             finish()
         }
 

@@ -24,9 +24,11 @@ class SignOutActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnSignin.setOnClickListener(this)
         binding.btnStart.setOnClickListener(this)
     }
-    private fun initCtrl(){}
+
+    private fun initCtrl(){ }
+
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
             R.id.tvContactUs -> { /*startActivity(Intent(this,Contact))*/ }
             R.id.btnSignin ->{ startActivity(Intent(this,LoginActivity::class.java)) }
             R.id.btnStart ->{ startActivity(Intent(this,StartNowActivity::class.java)) }
