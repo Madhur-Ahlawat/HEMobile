@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener{
+class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
 
     private lateinit var navController: NavController
     private var screenType: String = ""
@@ -27,8 +27,13 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener{
         binding = ActivityStartNowBaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = findNavController(R.id.fragment_container)
+        intent?.let {
+            screenType = it.getStringExtra(Constants.SHOW_SCREEN).toString()
+            setFragmentInView()
+        }
+
         binding.apply {
-            idToolBarLyt.btnBack.setOnClickListener{
+            idToolBarLyt.btnBack.setOnClickListener {
                 finish()
             }
         }
@@ -36,32 +41,36 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener{
     }
 
     override fun observeViewModel() {
-        intent?.let {
-            screenType = it.getStringExtra(Constants.SHOW_SCREEN).toString()
-            setFragmentInView()
-        }
+//        intent?.let {
+//            screenType = it.getStringExtra(Constants.SHOW_SCREEN).toString()
+//            setFragmentInView()
+//        }
     }
 
     private fun setFragmentInView() {
+        var oldGraph = navController.graph
         when (screenType) {
             Constants.ABOUT_SERVICE -> {
-                navController.navigate(R.id.aboutService)
+                //navController.navigate(R.id.aboutService)
+                oldGraph.startDestination = R.id.aboutService
             }
 
             Constants.CROSSING_SERVICE_UPDATE -> {
-                navController.navigate(R.id.crossingUpdate)
+                //navController.navigate(R.id.crossingUpdate)
+                oldGraph.startDestination = R.id.crossingUpdate
             }
             Constants.CONTACT_DART_CHARGES -> {
-                navController.navigate(R.id.contactDartCharge)
+                // navController.navigate(R.id.contactDartCharge)
+                oldGraph.startDestination = R.id.contactDartCharge
             }
         }
+        navController.graph = oldGraph
     }
 
     override fun onClick(v: View?) {
 
         v?.let {
-            when(v.id)
-            {
+            when (v.id) {
 
 
             }

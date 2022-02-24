@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.heandroid.R
 import com.heandroid.databinding.FragmentAboutServiceBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.toolbar
+import com.heandroid.utils.extn.toolbar
 
 class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.OnClickListener {
 

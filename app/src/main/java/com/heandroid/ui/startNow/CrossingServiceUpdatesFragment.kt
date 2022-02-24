@@ -6,7 +6,7 @@ import com.heandroid.R
 import com.heandroid.databinding.FragmentAboutServiceBinding
 import com.heandroid.databinding.FragmentCrosssingServiceUpdateBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.toolbar
+import com.heandroid.utils.extn.toolbar
 
 class CrossingServiceUpdatesFragment : BaseFragment<FragmentCrosssingServiceUpdateBinding>() {
 
