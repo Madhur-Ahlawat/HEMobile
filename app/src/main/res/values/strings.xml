@@ -391,6 +391,7 @@
     <string name="str_class">Class</string>
     <string name="str_added_date">Added date</string>
     <string name="str_landing_screen">Landing Screen</string>
+    <string name="error_otp_time_expire">Time Expired!, Please try sending otp again</string>
 
 
 </resources>

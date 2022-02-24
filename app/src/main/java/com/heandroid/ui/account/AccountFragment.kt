@@ -11,7 +11,7 @@ import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.startNewActivity
+import com.heandroid.utils.extn.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

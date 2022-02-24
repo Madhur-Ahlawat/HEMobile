@@ -1,6 +1,6 @@
 package com.heandroid.data.remote
 
-import com.example.dummyapplication.data.model.response.LoginResponse
+import com.heandroid.data.model.response.auth.LoginResponse
 import com.heandroid.BuildConfig
 import com.heandroid.data.model.request.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
