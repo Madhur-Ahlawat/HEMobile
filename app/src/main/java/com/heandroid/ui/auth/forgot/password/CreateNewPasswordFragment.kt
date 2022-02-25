@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.request.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.response.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.response.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
+import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.databinding.FragmentForgotCreateNewPasswordBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment

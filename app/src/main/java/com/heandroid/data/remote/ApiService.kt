@@ -1,16 +1,23 @@
 package com.heandroid.data.remote
 
-import com.heandroid.data.model.response.auth.LoginResponse
 import com.heandroid.BuildConfig
-import com.heandroid.data.model.request.auth.forgot.email.ForgotEmailModel
-import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.request.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.request.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.response.auth.AuthResponseModel
-import com.heandroid.data.model.response.auth.forgot.email.ForgotEmailResponseModel
-import com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel
-import com.heandroid.data.model.response.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.response.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
+import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
+import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
+import com.heandroid.data.model.auth.login.AuthResponseModel
+import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
+import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -49,7 +56,36 @@ interface ApiService {
 
 
     @POST(BuildConfig.RESET_PASSWORD)
-    suspend fun resetPassword(@Query("agencyId") agencyId: String?,
-                             @Body model: ResetPasswordModel?): Response<ForgotPasswordResponseModel?>?
+    suspend fun resetPassword(
+        @Query("agencyId") agencyId: String?,
+        @Body model: ResetPasswordModel?
+    ): Response<ForgotPasswordResponseModel?>?
+
+    @GET(BuildConfig.VEHICLE)
+    suspend fun getVehicleData(): Response<List<VehicleResponse?>?>?
+
+    @POST(BuildConfig.VEHICLE)
+    suspend fun addVehicleApi(
+        @Body requestParam: VehicleResponse?
+    ): Response<EmptyApiResponse?>?
+
+    @PUT(BuildConfig.VEHICLE)
+    suspend fun updateVehicleApi(
+        @Body requestParam: VehicleResponse?
+    ): Response<EmptyApiResponse?>?
+
+    @POST(BuildConfig.GET_VEHICLE_CROSSING_HISTORY)
+    suspend fun getVehicleCrossingHistoryData(
+        @Body crossingHistoryRequest: CrossingHistoryRequest?
+    ): Response<CrossingHistoryApiResponse?>?
+
+    @Streaming
+    @POST(BuildConfig.DOWNLOAD_TRANSACTION_LIST_FILE)
+    suspend fun getDownloadTransactionListDataInFile(
+        @Body request: CrossingHistoryDownloadRequest?
+    ): Response<ResponseBody?>?
+
+    @POST(BuildConfig.GET_ALERT_MESSAGES)
+    suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse>
 
 }

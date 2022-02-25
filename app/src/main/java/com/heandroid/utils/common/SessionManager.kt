@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
-import com.heandroid.data.model.response.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +30,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
      */
     fun saveAuthToken(token: String) {
         Log.d("Session Manager::",token)
-        // todo use scope variablde
+        // todo use scope variable
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
         editor.apply()

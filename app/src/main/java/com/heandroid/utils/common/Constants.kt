@@ -30,7 +30,7 @@ object Constants {
     const val VIEW_CHARGES = "VIEW CHARGES"
     const val CHECK_FOR_PAID = "CHECK FOR PAID CROSSINGS"
     const val RESOLVE_PENALTY = "RESOLVE PENALTY"
-    const val ONE_OF_PAYMENT = "ONE OF PAYMENT"
+    const val ONE_OFF_PAYMENT = "ONE OFF PAYMENT"
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
     const val VEHICLE_DATA = "vehicle_data"
@@ -41,19 +41,10 @@ object Constants {
     const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
-
-    //const val BASE_URL = "https://maas-test.services.conduent.com"
-    const val BASE_URL = "http://10.190.176.7:8080/"
-
-    //const val LOGIN_URL = "/oauth/token/"
-    const val LOGIN_URL = "https://maas-test.services.conduent.com/oauth/token/"
-    const val VEHICLE_URL = "https://maas-test.services.conduent.com/oauth/token/"
-    // const val LOGIN_URL = "https://maas-test.services.conduent.com/oauth/token/"
-    // const val POSTS_URL = ""
-
-    const val FORGOT_USERNAME_URL = "https://maas-test.services.conduent.com/bosuser/api/account/forgotUserDetails?agencyId=12"
     const val SHOW_SCREEN = "show_screen"
     const val ABOUT_SERVICE = "about_service"
     const val CONTACT_DART_CHARGES = "contact_dart_charges"
     const val CROSSING_SERVICE_UPDATE = "crossing_service_update"
+
+    const val LANGUAGE = "ENU"
 }

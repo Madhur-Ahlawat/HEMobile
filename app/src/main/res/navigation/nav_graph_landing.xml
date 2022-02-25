@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_start_now.xml"
+    app:startDestination="@id/startNow">
+    <fragment
+        android:id="@+id/startNow"
+        android:name="com.heandroid.ui.landing.StartNowFragment"
+        android:label="@string/str_start_now"
+        tools:layout="@layout/fragment_start_now">
+        <action
+            android:id="@+id/action_landing_screen"
+            app:destination="@+id/landingFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.heandroid.ui.landing.LandingFragment"
+        android:label="@string/str_landing_screen"
+        tools:layout="@layout/fragment_landing">
+    </fragment>
+
+</navigation>

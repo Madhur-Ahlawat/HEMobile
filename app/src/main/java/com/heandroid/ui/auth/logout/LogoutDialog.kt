@@ -7,13 +7,15 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.heandroid.R
-import com.heandroid.data.model.response.auth.AuthResponseModel
+import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.databinding.DialogLogoutBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
 
     private val viewModel: LogoutViewModel by viewModels()

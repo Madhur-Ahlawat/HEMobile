@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.heandroid.data.model.response.auth.AuthResponseModel
+import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.repository.auth.LogoutRepository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource

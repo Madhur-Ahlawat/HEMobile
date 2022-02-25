@@ -9,8 +9,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.heandroid.R
-import com.heandroid.data.model.request.auth.forgot.email.ForgotEmailModel
-import com.heandroid.data.model.response.auth.forgot.email.ForgotEmailResponseModel
+import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
+import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.databinding.FragmentForgotEmailBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog?=null
+
     private val viewModel : ForgotEmailViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater,container,false)
@@ -50,25 +51,28 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_next -> {
-                hideKeyboard()
+        v?.let {
+            when(v.id){
+                R.id.btn_next -> {
+                    hideKeyboard()
 //              Use this param to check with api
 //              binding.model?.accountNumber="118489252"
 //              binding.model?.zipCode="10002"
-                val validation=viewModel.validation(binding.model)
-                if(validation.first){
-                    binding.llEnterDetails.visibility = GONE
-                    binding.llUsername.visibility = VISIBLE
-                    loader?.show(requireActivity().supportFragmentManager,"")
-                    viewModel.forgotEmail(binding.model)
-                }else {
-                    showError(binding.root,validation.second)
+                    val validation=viewModel.validation(binding.model)
+                    if(validation.first){
+                        binding.llEnterDetails.visibility = GONE
+                        binding.llUsername.visibility = VISIBLE
+                        loader?.show(requireActivity().supportFragmentManager,"")
+                        viewModel.forgotEmail(binding.model)
+                    }else {
+                        showError(binding.root,validation.second)
+                    }
                 }
-            }
 
-            R.id.btn_login -> { requireActivity().onBackPressed() }
+                R.id.btn_login -> { requireActivity().onBackPressed() }
+            }
         }
+
     }
 
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){
@@ -76,6 +80,10 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
         when (status) {
             is Resource.Success -> { loadData(status) }
             is Resource.DataError -> { showError(binding.root, status.errorMsg) }
+            else -> {
+
+            }
+
         }
 
     }

@@ -4,7 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import androidx.appcompat.widget.AppCompatTextView
+import com.heandroid.R
 import com.heandroid.ui.base.BaseApplication
+import com.heandroid.utils.extn.changeBackgroundColor
+import com.heandroid.utils.extn.changeTextColor
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -64,6 +68,39 @@ object Utils {
         val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault())
         return sdf.format(Date())
 
+    }
+
+    fun getDirection(entry: String?): String? {
+        return when (entry) {
+            "N" -> "NORTHBOUND"
+            "S" -> "SOUTHBOUND"
+            else -> ""
+        }
+    }
+
+    fun loadStatus(status: String, tvTitle: AppCompatTextView) {
+        when (status) {
+
+            "Y" -> {
+                tvTitle.text = tvTitle.context.getString(R.string.paid)
+                tvTitle.changeTextColor(R.color.color_10403C)
+                tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
+
+
+            }
+            "N" -> {
+                tvTitle.text = tvTitle.context.getString(R.string.unpaid)
+                tvTitle.changeTextColor(R.color.color_10403C)
+                tvTitle.changeBackgroundColor(R.color.FCD6C3)
+
+            }
+
+            else -> {
+                tvTitle.text = status
+                tvTitle.changeTextColor(R.color.color_594D00)
+                tvTitle.changeBackgroundColor(R.color.FFF7BF)
+            }
+        }
     }
 
 
