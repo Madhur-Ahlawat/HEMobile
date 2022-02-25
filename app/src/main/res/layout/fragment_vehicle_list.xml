@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/your_vehicle_txt"
+            android:id="@+id/yourVehicleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
@@ -35,13 +35,13 @@
             android:layout_height="0dp"
             android:padding="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintBottom_toTopOf="@+id/add_vehicle_btn"
+            app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_vehicle_txt" />
+            app:layout_constraintTop_toBottomOf="@id/yourVehicleTv" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_vehicle_btn"
+            android:id="@+id/addVehicleBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_20sdp"
