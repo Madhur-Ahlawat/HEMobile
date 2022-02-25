@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel" />
+            type="com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel" />
 
 
 

@@ -9,18 +9,13 @@ import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotChooseOptionBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
-import com.heandroid.utils.common.SessionManager
-import javax.inject.Inject
 
 class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding>(), RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
-    @Inject
-    lateinit var sessionManager : SessionManager
     private var model : RequestOTPModel?=null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotChooseOptionBinding = FragmentForgotChooseOptionBinding.inflate(inflater,container,false)

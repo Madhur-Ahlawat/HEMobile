@@ -9,19 +9,21 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.heandroid.data.model.response.auth.LoginResponse
 import com.heandroid.R
-import com.heandroid.data.model.request.auth.login.LoginModel
+import com.heandroid.data.model.auth.forgot.email.LoginModel
+import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.remote.ApiService
 import com.heandroid.databinding.FragmentLoginBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.*
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.startNormalActivity
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -74,7 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             saveAuthToken(response.data?.accessToken?:"")
             saveRefreshToken(response.data?.refreshToken?:"")
         }
-        //requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        requireActivity().startNormalActivity(HomeActivityMain::class.java)
     }
 
     override fun onClick(v: View?) {
