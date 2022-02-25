@@ -3,7 +3,7 @@ package com.heandroid.ui.account.profile
 import com.heandroid.R
 import com.heandroid.databinding.ActivityProfileBinding
 import com.heandroid.ui.base.BaseActivity
-import com.heandroid.utils.toolbar
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

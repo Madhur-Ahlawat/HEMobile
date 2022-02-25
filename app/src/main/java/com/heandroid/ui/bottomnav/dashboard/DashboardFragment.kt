@@ -49,7 +49,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private val TAG = "DashboardFragment"
-    private fun dashBoardResponse(status: Resource<List<VehicleResponse>?>) {
+    private fun dashBoardResponse(status: Resource<List<VehicleResponse?>?>?) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {

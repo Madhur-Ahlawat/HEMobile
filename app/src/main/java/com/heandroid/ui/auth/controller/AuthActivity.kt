@@ -1,6 +1,5 @@
 package com.heandroid.ui.auth.controller
 
-import com.heandroid.BuildConfig
 import com.heandroid.databinding.ActivityAuthBinding
 import com.heandroid.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint

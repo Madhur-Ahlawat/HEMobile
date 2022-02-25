@@ -2,7 +2,7 @@ package com.heandroid.data.model.crossingHistory
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CrossingHistoryItem(
@@ -32,3 +32,4 @@ data class CrossingHistoryItem(
     @SerializedName("plateNumber") val plateNumber: String
 
 ) : Parcelable
+

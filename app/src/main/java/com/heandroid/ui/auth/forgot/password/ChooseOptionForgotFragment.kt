@@ -29,6 +29,10 @@ class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding
     override fun init() {
         model= RequestOTPModel(optionType = "",optionValue = "")
         data=arguments?.getParcelable(Constants.OPTIONS)
+
+        binding.emailRadioBtn.text = "Email - ${data?.email}"
+        binding.textMessageRadioBtn.text = "Text message - ${data?.phone}"
+        binding.postMailRadioBtn.text = "Post mail - 3113********,Ap***NC,***02"
     }
 
     override fun initCtrl() {

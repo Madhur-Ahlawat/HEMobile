@@ -5,12 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.auth.forgot.email.ForgotUsernameApiResponse
-import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.dashboard.DashBoardRepo
 import com.heandroid.model.RetrievePaymentListApiResponse
-import com.heandroid.model.RetrievePaymentListRequest
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
@@ -25,7 +23,7 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : 
     val accountOverviewVal = MutableLiveData<Resource<AccountResponse>>()
     val monthlyUsageVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
     val paymentListVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
-    val vehicleListVal = MutableLiveData<Resource<List<VehicleResponse>?>>()
+    val vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val forgotUsernameVal = MutableLiveData<Response<ForgotUsernameApiResponse>>()
     val getAlertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>>()
 

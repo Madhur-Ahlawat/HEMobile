@@ -18,7 +18,7 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.toolbar
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,25 +51,28 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_next -> {
-                hideKeyboard()
+        v?.let {
+            when(v.id){
+                R.id.btn_next -> {
+                    hideKeyboard()
 //              Use this param to check with api
 //              binding.model?.accountNumber="118489252"
 //              binding.model?.zipCode="10002"
-                val validation=viewModel.validation(binding.model)
-                if(validation.first){
-                    binding.llEnterDetails.visibility = GONE
-                    binding.llUsername.visibility = VISIBLE
-                    loader?.show(requireActivity().supportFragmentManager,"")
-                    viewModel.forgotEmail(binding.model)
-                }else {
-                    showError(binding.root,validation.second)
+                    val validation=viewModel.validation(binding.model)
+                    if(validation.first){
+                        binding.llEnterDetails.visibility = GONE
+                        binding.llUsername.visibility = VISIBLE
+                        loader?.show(requireActivity().supportFragmentManager,"")
+                        viewModel.forgotEmail(binding.model)
+                    }else {
+                        showError(binding.root,validation.second)
+                    }
                 }
-            }
 
-            R.id.btn_login -> { requireActivity().onBackPressed() }
+                R.id.btn_login -> { requireActivity().onBackPressed() }
+            }
         }
+
     }
 
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){

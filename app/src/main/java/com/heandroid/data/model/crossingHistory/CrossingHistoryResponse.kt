@@ -8,3 +8,4 @@ data class CrossingHistoryResponse(
     @SerializedName(" count")
     val count: String,
 )
+
