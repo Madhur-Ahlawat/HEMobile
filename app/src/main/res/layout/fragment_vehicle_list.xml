@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_grey">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/yourVehicleTv"
@@ -21,7 +22,7 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="start"
-            android:text="@string/txt_your_vehicle"
+            android:text="@string/str_ur_vehicles"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
@@ -33,8 +34,9 @@
             android:id="@+id/rvVehicleList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            tools:listitem="@layout/vrm_header_lyt"
             app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,6 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart ="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
         android:background="@color/light_grey">
 
         <com.google.android.material.card.MaterialCardView
@@ -16,9 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_4sdp"
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_2sdp"
@@ -65,8 +65,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_below="@+id/cardview_top"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_2sdp"
