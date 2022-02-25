@@ -1,5 +1,5 @@
 package com.heandroid.utils.logout
 
-interface LogoutListner {
+interface LogoutListener {
     fun onLogout()
 }

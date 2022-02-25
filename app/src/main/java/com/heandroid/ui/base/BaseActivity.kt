@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.heandroid.utils.logout.LogoutListner
+import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 
-abstract class BaseActivity<T> : AppCompatActivity(), LogoutListner {
+abstract class BaseActivity<T> : AppCompatActivity(), LogoutListener {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()

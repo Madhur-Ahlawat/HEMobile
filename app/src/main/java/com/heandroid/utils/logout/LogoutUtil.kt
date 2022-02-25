@@ -3,10 +3,8 @@ package com.heandroid.utils.logout
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
-import android.os.AsyncTask
 import com.heandroid.ui.base.BaseApplication
 import kotlinx.coroutines.*
-import okhttp3.internal.wait
 import java.util.*
 
 
@@ -15,7 +13,7 @@ object LogoutUtil {
     private val LOGOUT_TIME = 20000L
 
     @Synchronized
-    fun startLogoutTimer(listner: LogoutListner?) {
+    fun startLogoutTimer(listner: LogoutListener?) {
         if (timer != null) {
             timer?.cancel()
             timer = null
