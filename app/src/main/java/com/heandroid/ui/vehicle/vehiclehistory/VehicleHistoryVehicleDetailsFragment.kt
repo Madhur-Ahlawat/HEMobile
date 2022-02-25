@@ -9,8 +9,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.response.EmptyApiResponse
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

@@ -9,9 +9,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.PlateInfoResponse
-import com.heandroid.data.model.response.vehicle.VehicleInfoResponse
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.vehicle.PlateInfoResponse
+import com.heandroid.data.model.vehicle.VehicleInfoResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.AddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Utils

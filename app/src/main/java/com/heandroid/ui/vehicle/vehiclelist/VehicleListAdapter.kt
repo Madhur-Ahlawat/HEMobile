@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.VehicleResponse
-import com.heandroid.data.model.response.vehicle.VehicleTitleAndSub
+import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.data.model.vehicle.VehicleTitleAndSub
 
 class VehicleListAdapter(
     private val mContext: Context,

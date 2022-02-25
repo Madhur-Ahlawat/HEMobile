@@ -8,9 +8,8 @@ import android.view.WindowManager
 import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.DateRangeModel
+import com.heandroid.data.model.vehicle.DateRangeModel
 import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
-import com.heandroid.databinding.DialogErrorBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.DatePicker
 import com.heandroid.utils.DateUtils.currentDate

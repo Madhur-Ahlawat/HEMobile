@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.*
+import com.heandroid.data.model.vehicle.PlateInfoResponse
+import com.heandroid.data.model.vehicle.VehicleInfoResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDoneBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener

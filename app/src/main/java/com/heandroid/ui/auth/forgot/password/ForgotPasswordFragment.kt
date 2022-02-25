@@ -9,8 +9,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotPasswordBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment

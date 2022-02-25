@@ -1,9 +1,9 @@
 package com.heandroid.data.repository.vehicle
 
 
-import com.heandroid.data.model.request.vehicle.CrossingHistoryDownloadRequest
-import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.remote.ApiService
 import javax.inject.Inject
 

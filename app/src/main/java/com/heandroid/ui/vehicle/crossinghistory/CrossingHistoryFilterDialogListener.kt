@@ -1,6 +1,7 @@
 package com.heandroid.ui.vehicle.crossinghistory
 
-import com.heandroid.data.model.response.vehicle.DateRangeModel
+import com.heandroid.data.model.vehicle.DateRangeModel
+
 
 interface CrossingHistoryFilterDialogListener {
    fun onRangedApplied(dataModel: DateRangeModel?)

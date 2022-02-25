@@ -14,9 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
-import com.heandroid.data.model.request.vehicle.CrossingHistoryDownloadRequest
-import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
-import com.heandroid.data.model.response.vehicle.*
+import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.vehicle.DateRangeModel
 import com.heandroid.databinding.FragmentCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

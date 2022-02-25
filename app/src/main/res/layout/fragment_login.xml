@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.request.auth.login.LoginModel" />
+            type="com.heandroid.data.model.auth.forgot.email.LoginModel" />
 
     </data>
 

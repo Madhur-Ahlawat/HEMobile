@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.*
+import com.heandroid.data.model.vehicle.PlateInfoResponse
+import com.heandroid.data.model.vehicle.VehicleInfoResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

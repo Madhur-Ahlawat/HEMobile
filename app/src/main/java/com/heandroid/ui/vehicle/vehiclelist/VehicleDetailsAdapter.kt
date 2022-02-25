@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.VehicleTitleAndSub
+import com.heandroid.data.model.vehicle.VehicleTitleAndSub
 
 class VehicleDetailsAdapter(private val mContext: Context) :
     RecyclerView.Adapter<VehicleDetailsAdapter.VehicleViewHolder>() {

@@ -5,7 +5,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.VehicleResponse
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.utils.common.Constants

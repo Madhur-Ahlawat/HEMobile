@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogLogoutBinding
 import com.heandroid.databinding.VehicleAddConformBinding
 import com.heandroid.ui.base.BaseDialog

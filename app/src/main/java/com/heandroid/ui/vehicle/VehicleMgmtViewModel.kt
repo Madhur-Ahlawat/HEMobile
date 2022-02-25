@@ -4,11 +4,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.heandroid.data.model.request.vehicle.CrossingHistoryDownloadRequest
-import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
-import com.heandroid.data.model.response.EmptyApiResponse
-import com.heandroid.data.model.response.vehicle.CrossingHistoryApiResponse
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource

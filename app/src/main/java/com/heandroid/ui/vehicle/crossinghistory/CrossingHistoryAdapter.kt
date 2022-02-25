@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.CrossingHistoryItem
+import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
 import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment
 import com.heandroid.utils.DateUtils

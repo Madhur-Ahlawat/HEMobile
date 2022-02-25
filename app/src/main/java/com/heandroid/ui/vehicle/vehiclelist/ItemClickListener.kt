@@ -1,6 +1,7 @@
 package com.heandroid.ui.vehicle.vehiclelist
 
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
+
 
 interface ItemClickListener {
 

@@ -10,10 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
-import com.heandroid.data.model.request.vehicle.CrossingHistoryRequest
-import com.heandroid.data.model.response.vehicle.CrossingHistoryApiResponse
-import com.heandroid.data.model.response.vehicle.CrossingHistoryItem
-import com.heandroid.data.model.response.vehicle.VehicleResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

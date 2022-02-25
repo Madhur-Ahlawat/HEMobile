@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
-import com.heandroid.data.model.response.EmptyApiResponse
-import com.heandroid.data.model.response.vehicle.*
+import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

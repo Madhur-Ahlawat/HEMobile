@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.CrossingHistoryItem
+import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.databinding.FragmentCrossingHistoryMakePaymentBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.DateUtils

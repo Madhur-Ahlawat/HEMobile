@@ -42,6 +42,7 @@ class LandingActivity : BaseActivity<Any?>() {
     }
 
     private fun startLoginActivity() {
+
         Intent(this, AuthActivity::class.java).run {
             putExtra(Constants.SHOW_SCREEN, screenType)
             startActivity(this)

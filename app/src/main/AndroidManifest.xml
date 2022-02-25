@@ -37,6 +37,9 @@
             android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".ui.bottomnav.HomeActivityMain"/>
+
     </application>
 
 </manifest>

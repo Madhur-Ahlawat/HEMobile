@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.request.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel
+import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotChooseOptionBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants

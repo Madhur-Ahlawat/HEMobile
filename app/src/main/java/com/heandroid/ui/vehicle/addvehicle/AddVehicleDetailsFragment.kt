@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.response.vehicle.*
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
