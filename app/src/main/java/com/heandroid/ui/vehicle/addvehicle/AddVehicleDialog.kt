@@ -39,7 +39,7 @@ class AddVehicleDialog : BaseDialog<AddVehicleBinding>() {
             var country = "UK"
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
-                    "Non UK"
+                    "Non-UK"
                 } else {
                     "UK"
                 }

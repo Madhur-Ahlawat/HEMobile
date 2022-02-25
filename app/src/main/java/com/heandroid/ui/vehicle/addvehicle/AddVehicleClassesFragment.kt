@@ -115,20 +115,20 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        val request = mVehicleDetails.apply {
-            plateInfo.state = "HE"
-            plateInfo.type = "STANDARD"
-            plateInfo.vehicleGroup = ""
-            plateInfo.vehicleComments = "new Vehicle"
-            plateInfo.planName = ""
-            vehicleInfo.year = "2022"
-            vehicleInfo.typeId = null
-            vehicleInfo.typeDescription = "REGULAR"
-        }
-        mVehicleDetails = request
-        vehicleMgmtViewModel.addVehicleApi(request)
+//        val request = mVehicleDetails.apply {
+//            plateInfo.state = "HE"
+//            plateInfo.type = "STANDARD"
+//            plateInfo.vehicleGroup = ""
+//            plateInfo.vehicleComments = "new Vehicle"
+//            plateInfo.planName = ""
+//            vehicleInfo.year = "2022"
+//            vehicleInfo.typeId = null
+//            vehicleInfo.typeDescription = "REGULAR"
+//        }
+//        mVehicleDetails = request
+//        vehicleMgmtViewModel.addVehicleApi(request)
 
-//        navigateToAddVehicleDoneScreen()
+        navigateToAddVehicleDoneScreen()
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
