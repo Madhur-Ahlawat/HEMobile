@@ -1,6 +1,6 @@
 package com.heandroid.data.repository.auth
 
-import com.heandroid.data.model.request.auth.login.LoginModel
+import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.remote.ApiService
 import javax.inject.Inject
 

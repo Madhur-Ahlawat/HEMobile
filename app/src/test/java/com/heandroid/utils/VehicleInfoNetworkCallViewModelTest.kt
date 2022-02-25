@@ -3,7 +3,7 @@ package com.heandroid.utils
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.heandroid.model.LoginResponse
-import com.heandroid.model.VehicleResponse
+import com.heandroid.data.model.request.auth.vehicle.VehicleResponse
 import com.heandroid.oldStructure.network.ApiHelper
 import com.heandroid.utils.common.Resource
 import com.heandroid.viewmodel.DashboardViewModel

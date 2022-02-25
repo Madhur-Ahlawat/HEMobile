@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
 
-    private lateinit var binding : ActivityProfileBinding
+    private lateinit var binding: ActivityProfileBinding
 
     override fun initViewBinding() {
         binding = ActivityProfileBinding.inflate(layoutInflater)

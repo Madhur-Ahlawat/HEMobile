@@ -1,10 +1,9 @@
 package com.heandroid.data.repository.auth
 
-import android.os.Build
 import com.heandroid.BuildConfig
-import com.heandroid.data.model.request.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.request.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.request.auth.forgot.password.ResetPasswordModel
+import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
+import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
+import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
 import com.heandroid.data.remote.ApiService
 import javax.inject.Inject
 

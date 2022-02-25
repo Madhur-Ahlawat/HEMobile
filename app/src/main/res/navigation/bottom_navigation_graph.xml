@@ -7,34 +7,34 @@
 
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.heandroid.oldStructure.fragments.DashboardFragment"
+        android:name="com.heandroid.ui.bottomnav.dashboard.DashboardFragment"
         android:label="Account Summary"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
 
     </fragment>
 
     <fragment
         android:id="@+id/vehicleFragment"
-        android:name="com.heandroid.oldStructure.fragments.VehicleFragment"
+        android:name="com.heandroid.ui.bottomnav.vehicle.VehicleFragment"
         android:label="Vehicle Management"
-        tools:layout="@layout/fragment_vehicle" >
+        tools:layout="@layout/fragment_vehicle">
 
     </fragment>
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.heandroid.oldStructure.fragments.AccountFragment"
+        android:name="com.heandroid.ui.bottomnav.account.AccountFragment"
         android:label="Account Management"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/fragment_account">
 
     </fragment>
 
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.heandroid.oldStructure.fragments.NotificationFragment"
+        android:name="com.heandroid.ui.bottomnav.notification.NotificationFragment"
         android:label="Notification Screen"
-        tools:layout="@layout/fragment_notification" >
+        tools:layout="@layout/fragment_notification">
 
     </fragment>
 

@@ -56,4 +56,6 @@ object Constants {
     const val ABOUT_SERVICE = "about_service"
     const val CONTACT_DART_CHARGES = "contact_dart_charges"
     const val CROSSING_SERVICE_UPDATE = "crossing_service_update"
+
+    const val LANGUAGE = "ENU"
 }
