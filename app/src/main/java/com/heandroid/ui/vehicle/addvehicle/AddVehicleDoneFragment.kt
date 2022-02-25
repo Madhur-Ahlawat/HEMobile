@@ -42,7 +42,6 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             binding.tickLayout.visibility = View.VISIBLE
             binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
             binding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
-            binding.addVehiclesTxt.visibility = View.GONE
         }
 
         setAdapter()
@@ -128,18 +127,12 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         }
     }
 
-    private fun showToast(message: String?) {
-        message?.let {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
-        TODO("Not yet implemented")
+
     }
 
 }
