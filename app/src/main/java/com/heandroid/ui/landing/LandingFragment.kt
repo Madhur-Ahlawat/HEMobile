@@ -1,5 +1,6 @@
 package com.heandroid.ui.landing
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,10 +52,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 screenType = Constants.VIEW_CHARGES
             }
 
+
         }
 
 
     }
+
+
+
 
     override fun onClick(v: View?) {
         v?.let {

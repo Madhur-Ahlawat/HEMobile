@@ -45,18 +45,20 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
     }
 
     private fun setFragmentInView() {
-        var oldGraph = navController.graph
-        when (screenType) {
-            Constants.ABOUT_SERVICE -> {
-                oldGraph.startDestination = R.id.aboutService
-            }
-            Constants.CROSSING_SERVICE_UPDATE -> {
-                oldGraph.startDestination = R.id.crossingUpdate
-            }
-            Constants.CONTACT_DART_CHARGES -> {
-                oldGraph.startDestination = R.id.contactDartCharge
+        var oldGraph = navController.graph.apply {
+            when (screenType) {
+                Constants.ABOUT_SERVICE -> {
+                    startDestination = R.id.aboutService
+                }
+                Constants.CROSSING_SERVICE_UPDATE -> {
+                    startDestination = R.id.crossingUpdate
+                }
+                Constants.CONTACT_DART_CHARGES -> {
+                    startDestination = R.id.contactDartCharge
+                }
             }
         }
+      
         navController.graph = oldGraph
     }
 
