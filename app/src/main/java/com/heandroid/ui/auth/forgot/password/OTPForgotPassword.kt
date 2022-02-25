@@ -81,6 +81,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
 
     private fun loadUI() {
         when(data?.optionType){
+
             Constants.SMS -> {
                 binding.topTitle.text = getString(R.string.check_sms)
                 binding.notReceivedTxt.text = getString(R.string.str_not_sms_received_otp_txt)

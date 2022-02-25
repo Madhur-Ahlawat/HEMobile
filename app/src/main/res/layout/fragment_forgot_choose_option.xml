@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="model"
+            type="com.heandroid.data.model.response.auth.forgot.password.ConfirmOptionResponseModel" />
+
+
+
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -43,7 +51,7 @@
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:checked="false"
                 android:focusable="true"
-                android:text="Email"
+                android:text="@{@string/email(model.email)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal"
@@ -62,7 +70,7 @@
                 android:checked="false"
                 android:cursorVisible="true"
                 android:focusable="true"
-                android:text="Text message"
+                android:text="@{@string/text_message(model.phone)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal" />
@@ -75,7 +83,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
                 android:focusable="true"
-                android:text="Post Mail"
+                android:text="@{@string/post_mail(model.address)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal"

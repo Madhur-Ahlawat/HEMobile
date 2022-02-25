@@ -22,17 +22,12 @@ class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding
     @Inject
     lateinit var sessionManager : SessionManager
     private var model : RequestOTPModel?=null
-    private var data: ConfirmOptionResponseModel?=null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotChooseOptionBinding = FragmentForgotChooseOptionBinding.inflate(inflater,container,false)
 
     override fun init() {
         model= RequestOTPModel(optionType = "",optionValue = "")
-        data=arguments?.getParcelable(Constants.OPTIONS)
-
-        binding.emailRadioBtn.text = "Email - ${data?.email}"
-        binding.textMessageRadioBtn.text = "Text message - ${data?.phone}"
-        binding.postMailRadioBtn.text = "Post mail - 3113********,Ap***NC,***02"
+        binding.model =arguments?.getParcelable(Constants.OPTIONS)
     }
 
     override fun initCtrl() {
@@ -48,15 +43,15 @@ class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding
 
             R.id.email_radio_btn ->{
                 model?.optionType = Constants.EMAIL
-                model?.optionValue=data?.email
+                model?.optionValue= binding.model?.email
             }
             R.id.text_message_radio_btn ->{
                 model?.optionType = Constants.SMS
-                model?.optionValue= data?.phone
+                model?.optionValue= binding.model?.email
             }
             R.id.post_mail_radio_btn ->{
                 model?.optionType= Constants.POST_MAIL
-                model?.optionValue= ""
+                model?.optionValue= binding.model?.address
             }
         }
     }

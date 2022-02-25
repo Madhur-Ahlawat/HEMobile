@@ -391,6 +391,9 @@
     <string name="str_class">Class</string>
     <string name="str_added_date">Added date</string>
     <string name="error_otp_time_expire">Time Expired!, Please try sending otp again</string>
+    <string name="email" >Email - %1$s</string>
+    <string name="text_message">Text message - %1$s</string>
+    <string name="post_mail">Post Mail - %1$s</string>
 
 
 </resources>

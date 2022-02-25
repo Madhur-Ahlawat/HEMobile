@@ -44,7 +44,7 @@ class ForgotPasswordViewModel @Inject constructor(private val repository: Forgot
     fun confirmOptionForForgot(model: ConfirmOptionModel?){
         viewModelScope.launch {
             try {
-                _confirmOption.postValue(success(repository.confirmOptionForForgot(model), errorManager))
+                _confirmOption.postValue(success(repository.confirmOptionForForgot(model),errorManager))
             } catch (e: Exception) {
                 _confirmOption.postValue(failure(e))
             }
@@ -86,5 +86,6 @@ class ForgotPasswordViewModel @Inject constructor(private val repository: Forgot
         if (model?.newPassword?.equals(model.confirmPassword)==false) ret=Pair(false,BaseApplication.INSTANCE.getString(R.string.error_password_not_match))
         return ret
     }
+
 }
 

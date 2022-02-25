@@ -99,9 +99,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
             style="@style/Theme.Button"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
-            android:enabled="@{model.enable}"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/btn_color"
             android:text="@string/txt_login"
             android:textSize="@dimen/_16ssp"
             android:textAllCaps="false"

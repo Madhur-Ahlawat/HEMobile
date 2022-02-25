@@ -5,7 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.request.auth.forgot.password.ResetPasswordModel
@@ -29,6 +32,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotCreateNewPasswordBinding = FragmentForgotCreateNewPasswordBinding.inflate(inflater,container,false)
 
     override fun init() {
+
         loader= LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
