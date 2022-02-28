@@ -99,6 +99,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
+                    android:id="@+id/nominated_contacts_lyt"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_1sdp"
                     android:background="@color/white"

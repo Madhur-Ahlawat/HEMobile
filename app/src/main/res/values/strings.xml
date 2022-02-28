@@ -392,9 +392,22 @@
     <string name="str_added_date">Added date</string>
     <string name="str_landing_screen">Landing Screen</string>
     <string name="error_otp_time_expire">Time Expired!, Please try sending otp again</string>
-    <string name="email" >Email - %1$s</string>
+    <string name="email">Email - %1$s</string>
     <string name="text_message">Text message - %1$s</string>
     <string name="post_mail">Post Mail - %1$s</string>
+    <string name="str_nominate_contact">Nominate Contact</string>
+    <string name="str_u_can_nominate_upto_five_users">You can nominate upto 5 users for your account</string>
+    <string name="str_mobile_number_optional">Mobile number (optional)</string>
+    <string name="str_invite_nominated_contact_title">Invite nominated contact</string>
+    <string name="str_contact">Contact</string>
+    <string name="str_edit_contact_details"><U>Edit contact details</U></string>
+    <string name="str_choose_access_rights">Choose access rights</string>
+    <string name="str_amend_access_rights_write"><b> Amend Account and vehicle data - </b> \n Write access to own information and notifications, and read only access to account holder and notifications></string>
+    <string name="str_view_information"><b>View Information -</b> View only access to account information</string>
+    <string name="str_invite">Invite</string>
+    <string name="str_nominated_contacts_list">Nominated contacts list</string>
+    <string name="str_invited">Invited</string>
+    <string name="str_active_small">Active</string>
 
 
 </resources>

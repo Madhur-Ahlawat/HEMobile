@@ -33,12 +33,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.vehicle.VehicleMgmtActivity"
+        <activity
+            android:name=".ui.vehicle.VehicleMgmtActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.bottomnav.HomeActivityMain"/>
+        <activity android:name=".ui.bottomnav.HomeActivityMain" />
+        <activity android:name=".ui.account.profile.ProfileActivity" />
+        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
+        <activity android:name=".ui.account.communication.CommunicationActivity" />
 
     </application>
 
