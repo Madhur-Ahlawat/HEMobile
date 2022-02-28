@@ -23,6 +23,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val ACCOUNT_NUMBER="account_number"
         const val SECURITY_CODE="security_code"
         const val SECURITY_CODE_OBJ="security_code_obj"
+        const val IS_USER_LOGIN="is_user_login"
     }
 
     /**

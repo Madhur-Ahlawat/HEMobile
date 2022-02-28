@@ -3,6 +3,8 @@ package com.heandroid.ui.auth.controller
 import com.heandroid.databinding.ActivityAuthBinding
 import com.heandroid.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 
 @AndroidEntryPoint
 class AuthActivity : BaseActivity<Any?>() {
@@ -12,7 +14,6 @@ class AuthActivity : BaseActivity<Any?>() {
     override fun initViewBinding() {
         binding= ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
     override fun observeViewModel() {}

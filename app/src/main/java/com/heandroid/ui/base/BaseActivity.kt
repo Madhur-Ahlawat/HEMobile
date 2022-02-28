@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.logout.LogoutListner
 import com.heandroid.utils.logout.LogoutUtil
+import javax.inject.Inject
 
 abstract class BaseActivity<T> : AppCompatActivity(), LogoutListner {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
@@ -27,17 +32,16 @@ abstract class BaseActivity<T> : AppCompatActivity(), LogoutListner {
 
     override fun onStart() {
         super.onStart()
-        LogoutUtil.startLogoutTimer(this)
+      //  LogoutUtil.startLogoutTimer(this)
     }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        LogoutUtil.startLogoutTimer(this)
-
+      //  LogoutUtil.startLogoutTimer(this)
     }
 
     override fun onLogout() {
-       Log.e("logout","yes")
+     //  Log.e("logout","yes")
     }
 
 
