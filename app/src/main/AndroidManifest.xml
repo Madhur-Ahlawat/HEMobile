@@ -33,11 +33,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity android:name=".ui.vehicle.VehicleMgmtActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobile"/>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain" />
         <activity android:name=".ui.account.profile.ProfileActivity" />

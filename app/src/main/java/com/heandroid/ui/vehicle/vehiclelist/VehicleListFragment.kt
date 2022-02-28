@@ -84,7 +84,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun setVehicleListAdapter() {
-        mAdapter = VehicleListAdapter(requireContext())
+        mAdapter = VehicleListAdapter(requireContext(), this)
         mAdapter.setList(mList)
         binding.rvVehicleList.apply {
             layoutManager = LinearLayoutManager(context)

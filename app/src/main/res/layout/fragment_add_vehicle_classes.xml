@@ -20,18 +20,19 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_10sdp"
-                    tools:text="Vehicle registration number: AB4 195"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Vehicle registration number: AB4 195" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,8 +50,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/roboto_bold"
-                        android:textSize="@dimen/_14ssp"
                         android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
                         app:buttonTint="@color/bottomActiveColor"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -59,10 +60,10 @@
                         android:id="@+id/tvclassA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/str_class_a"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_16ssp"
-                        android:fontFamily="@font/roboto_bold"
                         app:layout_constraintBottom_toTopOf="@+id/textView4"
                         app:layout_constraintStart_toEndOf="@+id/classA_RadioButton"
                         app:layout_constraintTop_toTopOf="@+id/classA_RadioButton"
@@ -72,10 +73,10 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_13ssp"
-                        android:textColor="@color/grey_two"
                         android:fontFamily="@font/roboto_light"
                         android:text="@string/str_motorcycles_quadcycles"
+                        android:textColor="@color/grey_two"
+                        android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="@+id/classA_RadioButton"
                         app:layout_constraintStart_toStartOf="@+id/tvclassA" />
 
@@ -90,6 +91,55 @@
                         app:layout_constraintStart_toEndOf="@+id/textView4"
                         app:layout_constraintTop_toTopOf="@+id/tvclassA"
                         app:srcCompat="@drawable/ic_class_a" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/classASeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_trans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classAView" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/classADesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#eceff1"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classASeparator">
+
+                    <TextView
+                        android:id="@+id/classADesc1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_cars_with_or_without"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/classADesc2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_Motorhomes_passengers_vans"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/classADesc1" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,7 +151,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/classAView">
+                    app:layout_constraintTop_toBottomOf="@id/classADesc">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/classB_RadioButton"
@@ -117,9 +167,9 @@
                         android:id="@+id/tvClassB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/str_class_b"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_bold"
                         android:textSize="@dimen/_16ssp"
                         app:layout_constraintBottom_toTopOf="@+id/classBSub"
                         app:layout_constraintStart_toEndOf="@+id/classB_RadioButton"
@@ -130,8 +180,8 @@
                         android:id="@+id/classBSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/str_goods_vans_car_based_vans"
                         android:fontFamily="@font/roboto_light"
+                        android:text="@string/str_goods_vans_car_based_vans"
                         android:textColor="@color/grey_two"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="@+id/classB_RadioButton"
@@ -163,6 +213,15 @@
                         app:srcCompat="@drawable/ic_class_b_first" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/classBSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_trans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classBView" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/classBDesc"
                     android:layout_width="match_parent"
@@ -172,18 +231,19 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:background="#eceff1"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/classBView">
+                    app:layout_constraintTop_toBottomOf="@id/classBSeparator">
 
                     <TextView
                         android:id="@+id/classBDesc1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_3sdp"
-                        android:textSize="@dimen/_14ssp"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
                         android:text="@string/str_cars_with_or_without"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -191,11 +251,11 @@
                         android:id="@+id/classBDesc2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
+                        android:text="@string/str_Motorhomes_passengers_vans"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="@string/str_Motorhomes_passengers_vans"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/classBDesc1" />
 
@@ -227,9 +287,9 @@
                         android:id="@+id/tvClassC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/str_class_c"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_bold"
                         android:textSize="@dimen/_16ssp"
                         app:layout_constraintBottom_toTopOf="@+id/classCSub"
                         app:layout_constraintStart_toEndOf="@+id/classC_RadioButton"
@@ -240,10 +300,10 @@
                         android:id="@+id/classCSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey_two"
                         android:fontFamily="@font/roboto_light"
-                        android:textSize="@dimen/_14ssp"
                         android:text="@string/str_axles_vehicles"
+                        android:textColor="@color/grey_two"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintBottom_toBottomOf="@+id/classC_RadioButton"
                         app:layout_constraintStart_toStartOf="@+id/tvClassC" />
 
@@ -260,6 +320,54 @@
                         app:srcCompat="@drawable/ic_class_c" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/classCSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_trans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classCView" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/classCDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#eceff1"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classCSeparator">
+
+                    <TextView
+                        android:id="@+id/classCDesc1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_cars_with_or_without"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/classCDesc2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_Motorhomes_passengers_vans"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/classCDesc1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/classDView"
@@ -270,7 +378,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/classCView">
+                    app:layout_constraintTop_toBottomOf="@id/classCDesc">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/classD_RadioButton"
@@ -319,6 +427,54 @@
                         app:srcCompat="@drawable/ic_class_d" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/classDSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_trans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classDView" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/classDDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#eceff1"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/classDSeparator">
+
+                    <TextView
+                        android:id="@+id/classDDesc1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_cars_with_or_without"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/classDDesc2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="@dimen/_3sdp"
+                        android:text="@string/str_Motorhomes_passengers_vans"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/classDDesc1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -327,66 +483,65 @@
             android:id="@+id/buttonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/classVehicleCheckbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/black"
-            android:gravity="start"
-            android:text="@string/str_declare_info"
-            android:textSize="@dimen/_15ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/continueButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:fontFamily="@font/roboto_bold"
-            android:backgroundTint="@color/green"
-            android:text="@string/str_continue"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/classVehicleCheckbox" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:includeFontPadding="true"
-            android:text="@string/str_cancel"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_16ssp"
-            android:textColor="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/continueButton"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:strokeColor="@color/green" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/classVehicleCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="start"
+                android:text="@string/str_declare_info"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/continueButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:backgroundTint="@color/green"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/str_continue"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/classVehicleCheckbox" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:includeFontPadding="true"
+                android:text="@string/str_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/continueButton"
+                app:strokeColor="@color/green" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
