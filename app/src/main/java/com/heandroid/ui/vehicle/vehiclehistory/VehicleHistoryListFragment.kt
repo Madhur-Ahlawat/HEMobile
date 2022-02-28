@@ -1,10 +1,7 @@
 package com.heandroid.ui.vehicle.vehiclehistory
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +13,6 @@ import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
-import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe

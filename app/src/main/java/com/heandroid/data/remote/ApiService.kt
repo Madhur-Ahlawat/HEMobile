@@ -17,6 +17,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.utils.common.Resource
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -86,6 +87,9 @@ interface ApiService {
     ): Response<ResponseBody?>?
 
     @POST(BuildConfig.GET_ALERT_MESSAGES)
-    suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse>
+    suspend fun getAlertMessages(
+        @Query("language") language: String
+    ): Response<AlertMessageApiResponse?>
+
 
 }

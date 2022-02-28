@@ -1,7 +1,6 @@
 package com.heandroid.ui.bottomnav.dashboard
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.auth.forgot.email.ForgotUsernameApiResponse
@@ -25,7 +24,7 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : 
     val paymentListVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
     val vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val forgotUsernameVal = MutableLiveData<Response<ForgotUsernameApiResponse>>()
-    val getAlertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>>()
+    val getAlertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
 
     fun getVehicleInformationApi() {
         viewModelScope.launch {
