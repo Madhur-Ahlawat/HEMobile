@@ -148,7 +148,7 @@ class VehicleHistoryCrossingHistoryFragment :
             R.id.download_crossing_history_btn -> {
             }
             R.id.back_to_vehicle_list_btn -> {
-                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)
             }
         }
     }

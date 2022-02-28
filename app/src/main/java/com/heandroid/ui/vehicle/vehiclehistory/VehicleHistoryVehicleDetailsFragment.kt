@@ -46,7 +46,7 @@ class VehicleHistoryVehicleDetailsFragment :
                 }
             }
             R.id.backToVehiclesBtn -> {
-                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)
             }
         }
     }

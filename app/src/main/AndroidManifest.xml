@@ -34,9 +34,8 @@
         </activity>
 
         <activity android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobile"/>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain"/>
 

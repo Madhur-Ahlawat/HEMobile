@@ -26,9 +26,9 @@ class VehicleListAdapter(
 
     class VrmHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val vrmNoTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_title)
-        private val arrowImg: AppCompatImageView = itemView.findViewById(R.id.arrow_img)
+        val arrowImg: AppCompatImageView = itemView.findViewById(R.id.arrowImg)
         private val mRecyclerView: RecyclerView = itemView.findViewById(R.id.recycler_view)
-        val cardViewTop: MaterialCardView = itemView.findViewById(R.id.cardview_top)
+//        val cardViewTop: MaterialCardView = itemView.findViewById(R.id.cardview_top)
 
         fun setView(context: Context, vehicleItem: VehicleResponse) {
             vrmNoTxt.text = "${vehicleItem.plateInfo.number}"
@@ -97,7 +97,7 @@ class VehicleListAdapter(
             holder.setView(mContext, it)
         }
 
-        holder.cardViewTop.setOnClickListener {
+        holder.arrowImg.setOnClickListener {
             vehicleList[position]?.let {
                 onItemClick?.onItemClick(it, position)
             }
