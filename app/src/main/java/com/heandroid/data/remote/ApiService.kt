@@ -20,7 +20,6 @@ import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.utils.common.Resource
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*

@@ -415,7 +415,6 @@
     <string name="str_amend_account_vehicle_data">Amend Account, Vehicle data</string>
 
     <string name="str_remove_vehicle">Remove vehicle</string>
-    <string name="str_remove">Remove</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
 
 </resources>
