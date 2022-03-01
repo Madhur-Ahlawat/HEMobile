@@ -32,7 +32,7 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
 
     override fun initCtrl() {
         binding.yesBtn.setOnClickListener {
-//            dismiss()
+            dismiss()
             mListener?.onAddClick(mVehicleDetails)
         }
         binding.cancelBtn.setOnClickListener {

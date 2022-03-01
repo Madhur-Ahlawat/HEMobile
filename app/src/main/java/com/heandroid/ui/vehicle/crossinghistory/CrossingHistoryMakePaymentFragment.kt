@@ -12,7 +12,8 @@ import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Utils.getDirection
 import com.heandroid.utils.common.Utils.loadStatus
 
-class CrossingHistoryMakePaymentFragment : BaseFragment<FragmentCrossingHistoryMakePaymentBinding>(), View.OnClickListener {
+class CrossingHistoryMakePaymentFragment :
+    BaseFragment<FragmentCrossingHistoryMakePaymentBinding>(), View.OnClickListener {
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -33,6 +34,7 @@ class CrossingHistoryMakePaymentFragment : BaseFragment<FragmentCrossingHistoryM
                 vehicle.text = plateNumber
                 transactionId.text = transactionNumber
                 loadStatus(prepaid, status)
+                loadMakePaymentStatus(prepaid)
             }
         }
     }
@@ -47,8 +49,27 @@ class CrossingHistoryMakePaymentFragment : BaseFragment<FragmentCrossingHistoryM
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.make_payment_btn -> {   }
-            R.id.back_btn -> { findNavController().popBackStack() }
+            R.id.make_payment_btn -> {
+            }
+            R.id.back_btn -> {
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun loadMakePaymentStatus(status: String) {
+        when (status) {
+            "Y" -> {
+                binding.makePaymentBtn.text =
+                    requireContext().getString(R.string.str_download_payment_receipt)
+            }
+            "N" -> {
+                binding.makePaymentBtn.text = requireContext().getString(R.string.str_make_payment)
+            }
+
+            else -> {
+                binding.makePaymentBtn.text = requireContext().getString(R.string.str_make_payment)
+            }
         }
     }
 }
