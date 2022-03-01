@@ -16,6 +16,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.utils.common.Resource
 import okhttp3.ResponseBody
@@ -73,6 +74,11 @@ interface ApiService {
     @PUT(BuildConfig.VEHICLE)
     suspend fun updateVehicleApi(
         @Body requestParam: VehicleResponse?
+    ): Response<EmptyApiResponse?>?
+
+    @POST(BuildConfig.DELETE_VEHICLE)
+    suspend fun deleteVehicle(
+        @Body deleteVehicleRequest: DeleteVehicleRequest?
     ): Response<EmptyApiResponse?>?
 
     @POST(BuildConfig.GET_VEHICLE_CROSSING_HISTORY)

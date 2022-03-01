@@ -12,16 +12,15 @@ import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.databinding.AddVehicleBinding
+import com.heandroid.databinding.DialogAddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Utils
 import kotlinx.coroutines.launch
 
-class AddVehicleDialog : BaseDialog<AddVehicleBinding>() {
-
+class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        AddVehicleBinding.inflate(inflater, container, false)
+        DialogAddVehicleBinding.inflate(inflater, container, false)
 
     override fun init() {
         setBtnNormal()
