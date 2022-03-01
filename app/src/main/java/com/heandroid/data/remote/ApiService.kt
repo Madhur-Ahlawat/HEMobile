@@ -15,7 +15,9 @@ import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.utils.common.Resource
 import okhttp3.ResponseBody
@@ -27,33 +29,40 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(BuildConfig.LOGIN)
-    suspend fun login(@Field("client_id") clientId: String?= BuildConfig.CLIENT_ID,
-                      @Field("grant_type") grant_type: String?=BuildConfig.GRANT_TYPE,
-                      @Field("agencyID") agencyID: String?=BuildConfig.AGENCY_ID,
-                      @Field("client_secret") client_secret: String?=BuildConfig.CLIENT_SECRET,
-                      @Field("value") value: String?,
-                      @Field("password") password: String?,
-                      @Field("validatePasswordCompliance") validatePasswordCompliance: String?): Response<LoginResponse?>?
+    suspend fun login(
+        @Field("client_id") clientId: String? = BuildConfig.CLIENT_ID,
+        @Field("grant_type") grant_type: String? = BuildConfig.GRANT_TYPE,
+        @Field("agencyID") agencyID: String? = BuildConfig.AGENCY_ID,
+        @Field("client_secret") client_secret: String? = BuildConfig.CLIENT_SECRET,
+        @Field("value") value: String?,
+        @Field("password") password: String?,
+        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
+    ): Response<LoginResponse?>?
 
 
     @DELETE(BuildConfig.LOGOUT)
-    suspend fun logout() : Response<AuthResponseModel?>
+    suspend fun logout(): Response<AuthResponseModel?>
 
 
     @POST(BuildConfig.FORGOT_EMAIL)
-    suspend fun forgotEmail(@Query("agencyId") agencyId: String?,
-                            @Body body: ForgotEmailModel?) : Response<ForgotEmailResponseModel?>?
+    suspend fun forgotEmail(
+        @Query("agencyId") agencyId: String?,
+        @Body body: ForgotEmailModel?
+    ): Response<ForgotEmailResponseModel?>?
 
 
     @POST(BuildConfig.FORGOT_CONFIRM_OPTION)
-    suspend fun confirmOptionForForgot(@Query("agencyId") agencyId: String?,
-                                       @Body body: ConfirmOptionModel?) : Response<ConfirmOptionResponseModel?>?
-
+    suspend fun confirmOptionForForgot(
+        @Query("agencyId") agencyId: String?,
+        @Body body: ConfirmOptionModel?
+    ): Response<ConfirmOptionResponseModel?>?
 
 
     @POST(BuildConfig.REQUEST_OTP)
-    suspend fun requestOTP(@Query("agencyId") agencyId: String?,
-                           @Body model: RequestOTPModel?): Response<SecurityCodeResponseModel?>?
+    suspend fun requestOTP(
+        @Query("agencyId") agencyId: String?,
+        @Body model: RequestOTPModel?
+    ): Response<SecurityCodeResponseModel?>?
 
 
     @POST(BuildConfig.RESET_PASSWORD)
@@ -91,5 +100,30 @@ interface ApiService {
         @Query("language") language: String
     ): Response<AlertMessageApiResponse?>
 
+    @POST(BuildConfig.CREATE_SECONDARY_ACCOUNT)
+    suspend fun createSecondaryAccount(
+        @Body secondaryBody: SecondaryAccountBody
+    ): Response<SecondaryAccountResp?>
+
+    @GET(BuildConfig.GET_SECONDARY_ACCOUNT)
+    suspend fun getSecondaryAccount(): Response<NominatedContactRes?>
+
+    @GET(BuildConfig.GET_SECONDARY_ACCESS_RIGHTS)
+    suspend fun getSecondaryAccessRights(@Path("accountId") accountId: String): Response<GetSecondaryAccessRightsResp?>
+
+    @GET(BuildConfig.UPDATE_SECONDARY_ACCOUNT)
+    suspend fun updateSecondaryAccount(
+        @Body body: UpdateSecAccountDetails
+    ): Response<ResponseBody?>
+
+    @GET(BuildConfig.UPDATE_SECONDARY_ACCESS_RIGHTS)
+    suspend fun updateSecondaryAccessRights(
+        @Body body: UpdateSecAccessRightsReq
+    ): Response<ResponseBody?>
+
+    @GET(BuildConfig.GET_TOLL_RATES)
+    suspend fun getTollRates(
+        @Body body: UpdateSecAccessRightsReq
+    ): Response<List<TollRatesResp>?>
 
 }

@@ -3,10 +3,14 @@ package com.heandroid.ui.nominatedcontacts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.heandroid.R
+import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.databinding.FragmentNominatedContactsBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.vehicle.vehiclelist.VehicleListAdapter
 import com.heandroid.utils.extn.*
 
 class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
@@ -67,6 +71,7 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                 .setOnClickListener {
                     includeViewContactDetailsLyt.gone()
                     includeNominatedContactsListLyt.visible()
+                    setNominatedContactsAdapter()
                 }
 
             includeViewContactDetailsLyt.findViewById<MaterialButton>(R.id.cancel_btn)
@@ -77,6 +82,60 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
         }
 
     }
+
+    private fun setNominatedContactsAdapter() {
+        val mAdapter = NominatedContactsAdapter(requireContext())
+        val mList = ArrayList<SecondaryAccountData?>()
+        val mdata1 = SecondaryAccountData(
+            "3784r4h",
+            "cheruk13@gmail.com",
+            "INVITED",
+            "Prasad",
+            "Cheruk",
+            "898686466",
+            true
+        )
+        val mdata2 = SecondaryAccountData(
+            "3784r4h",
+            "cheruk13@gmail.com",
+            "INVITED",
+            "Prasad",
+            "Cheruk",
+            "898686466",
+            true
+        )
+        val mdata3 = SecondaryAccountData(
+            "3784r4h",
+            "cheruk13@gmail.com",
+            "INVITED",
+            "Prasad",
+            "Cheruk",
+            "898686466",
+            true
+        )
+        val mdata4 = SecondaryAccountData(
+            "3784r4h",
+            "cheruk13@gmail.com",
+            "INVITED",
+            "Prasad",
+            "Cheruk",
+            "898686466",
+            true
+        )
+
+        mList.add(mdata1)
+        mList.add(mdata2)
+        mList.add(mdata3)
+        mList.add(mdata4)
+        mAdapter.setList(mList)
+        binding.includeNominatedContactsListLyt.findViewById<RecyclerView>(R.id.nominated_contact_recycler_view)
+            .apply {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = mAdapter
+            }
+    }
+
 
     private fun hideViews() {
         binding.apply {
@@ -91,8 +150,6 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
             nextBtn.gone()
 
         }
-
-
     }
 
     override fun observer() {
