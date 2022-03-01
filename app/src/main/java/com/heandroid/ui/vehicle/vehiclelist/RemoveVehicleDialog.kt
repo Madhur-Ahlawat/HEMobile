@@ -10,6 +10,7 @@ import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogRemoveVehicleBinding
 import com.heandroid.ui.base.BaseDialog
+import com.heandroid.utils.extn.showToast
 import kotlinx.coroutines.launch
 
 class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
@@ -32,8 +33,18 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
 
     override fun initCtrl() {
         binding.btnRemove.setOnClickListener {
-            dismiss()
-            mListener?.onRemoveClick(selectedVehicleList)
+            when {
+                selectedVehicleList.size == 0 -> {
+                    requireContext().showToast("please select one vehicle")
+                }
+                selectedVehicleList.size > 1 -> {
+                    requireContext().showToast("please select only one vehicle")
+                }
+                else -> {
+                    dismiss()
+                    mListener?.onRemoveClick(selectedVehicleList)
+                }
+            }
         }
 
         binding.btnCancel.setOnClickListener {
