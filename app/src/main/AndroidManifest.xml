@@ -39,6 +39,8 @@
         </activity>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain"/>
+        <activity android:name=".ui.futureModule.InProgressActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

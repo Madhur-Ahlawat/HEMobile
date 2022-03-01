@@ -1,6 +1,7 @@
 package com.heandroid.utils.common
 
 import com.heandroid.data.error.errorUsecase.ErrorManager
+import com.heandroid.data.remote.NoConnectivityException
 import retrofit2.Response
 import java.lang.Exception
 
@@ -16,6 +17,10 @@ object ResponseHandler {
     }
 
     fun <T> failure(e: Exception?) : Resource<T?> {
+        if(e is NoConnectivityException)
+        {
+             return Resource.DataError(e.message)
+        }
        return Resource.DataError(e?.message)
     }
 }

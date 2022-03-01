@@ -1,8 +1,10 @@
 package com.heandroid.di
 
+import android.content.Context
 import com.heandroid.BuildConfig
 import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
+import com.heandroid.data.remote.NetworkConnectionInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
 import com.heandroid.utils.common.SessionManager
 import dagger.Module
@@ -30,13 +32,19 @@ fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HeaderInterceptor(sessionManager)
     }
 
+    @Provides
+    @Singleton
+    fun provideNetworkConnectionInterceptor(context: Context): NetworkConnectionInterceptor{
+        return NetworkConnectionInterceptor(context)
+    }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(logging: HttpLoggingInterceptor, headerInterceptor: HeaderInterceptor): OkHttpClient {
+    fun provideOkHttpClient(logging: HttpLoggingInterceptor, headerInterceptor: HeaderInterceptor , networkConnectionInterceptor: NetworkConnectionInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
+            .addInterceptor(networkConnectionInterceptor)
             .callTimeout(2, TimeUnit.MINUTES)
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
