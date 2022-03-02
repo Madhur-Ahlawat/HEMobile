@@ -17,20 +17,27 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog?=null
 
+    @Inject
+    lateinit var session : SessionManager
+
     private val viewModel : ForgotEmailViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater,container,false)
 
     override fun init() {
+        session.clearAll()
+        session.saveAuthToken(null)
         requireActivity().toolbar(getString(R.string.txt_recovery_username))
         binding.model= ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
         loader= LoaderDialog()
@@ -55,13 +62,8 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
             when(v.id){
                 R.id.btn_next -> {
                     hideKeyboard()
-//              Use this param to check with api
-//              binding.model?.accountNumber="118489252"
-//              binding.model?.zipCode="10002"
                     val validation=viewModel.validation(binding.model)
                     if(validation.first){
-                        binding.llEnterDetails.visibility = GONE
-                        binding.llUsername.visibility = VISIBLE
                         loader?.show(requireActivity().supportFragmentManager,"")
                         viewModel.forgotEmail(binding.model)
                     }else {
@@ -78,11 +80,13 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){
         loader?.dismiss()
         when (status) {
-            is Resource.Success -> { loadData(status) }
-            is Resource.DataError -> { showError(binding.root, status.errorMsg) }
-            else -> {
-
+            is Resource.Success -> {
+                binding.llEnterDetails.visibility = GONE
+                binding.llUsername.visibility = VISIBLE
+                loadData(status)
             }
+            is Resource.DataError -> { showError(binding.root, status.errorMsg) }
+            else -> {}
 
         }
 

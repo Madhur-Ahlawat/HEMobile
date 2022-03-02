@@ -249,9 +249,9 @@
     <string name="str_notifications">Notifications</string>
     <string name="str_notification">Notification</string>
     <string name="txt_view_notification">View all (2)</string>
-    <string name="str_two_crossing">2 Crossings</string>
+    <string name="str_two_crossing">%s Crossings</string>
     <string name="txt_your_crossing">Your crossing</string>
-    <string name="str_two_vehicle">2 Vehicles</string>
+    <string name="str_two_vehicle">%s Vehicles</string>
     <string name="txt_your_vehicle">Your vehicle</string>
     <string name="txt_view_vehicles">View vehicles</string>
     <string name="txt_your_saving">Your saving</string>
@@ -392,6 +392,7 @@
     <string name="str_added_date">Added date</string>
     <string name="str_landing_screen">Landing Screen</string>
     <string name="error_otp_time_expire">Time Expired!, Please try sending otp again</string>
+    <string name="str_work_in_progress">Work in progress</string>
     <string name="email">Email - %1$s</string>
     <string name="text_message">Text message - %1$s</string>
     <string name="post_mail">Post Mail - %1$s</string>
@@ -416,6 +417,15 @@
 
     <string name="str_remove_vehicle">Remove vehicle</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
+
+    <string name="start_again">Start again</string>
+    <string name="you_have_sucessfully_sign_out_of_your_account">You have sucessfully sign out of your account</string>
+    <string name="your_session_has_expired">Your session has expired</string>
+    <string name="select_the_start_now_button_to_restart_your_session">Select the start now button to restart your session</string>
+    <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
+    <string name="email_recovery">Email Recovery</string>
+    <string name="contact_us">Contact us</string>
+
 
 </resources>
 

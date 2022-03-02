@@ -98,6 +98,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
         when(status){
             is Resource.Success -> {
                 response=status.data
+
                 timer= object : CountDownTimer(response?.otpExpiryInSeconds?:0L,1000){
                     override fun onTick(millisUntilFinished: Long) { timeFinish=true }
                     override fun onFinish() { timeFinish=true }

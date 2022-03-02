@@ -83,7 +83,7 @@
                     android:id="@+id/edt_post_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:text="@={model.zipCode}"

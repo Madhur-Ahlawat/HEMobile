@@ -1,24 +1,19 @@
 package com.heandroid.ui.auth.login
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.auth.login.LoginResponse
-import com.heandroid.data.remote.ApiService
 import com.heandroid.databinding.FragmentLoginBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.*
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
@@ -45,8 +40,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         requireActivity().toolbar(getString(R.string.str_log_in_dart_system))
     }
     override fun init() {
-        binding.model= LoginModel(value = "", password = "", enable = false)
-        loader= LoaderDialog()
+        binding.model= LoginModel(value = "", password = "")
+        loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
     }

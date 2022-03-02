@@ -34,6 +34,9 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
     }
 
     override fun initCtrl() {
+        binding.ivClose.setOnClickListener {
+            dismiss()
+        }
         binding.addVehicleBtn.setOnClickListener {
             var country = "UK"
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
@@ -43,18 +46,17 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
                     "UK"
                 }
                 val plateInfoResp = PlateInfoResponse(
-                    binding.addVrmInput.text.toString(),
-                    country,
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
+                    binding.addVrmInput.text.toString().trim(),
+                    country, "", "",
+                    "", "", ""
                 )
                 val vehicleInfoResp =
-                    VehicleInfoResponse("", "", "", "", "", "", "", "", Utils.currentDateAndTime())
+                    VehicleInfoResponse(
+                        "", "", "",
+                        "", "", "",
+                        "", "", ""
+                    )
 
-                //todo we have to check for this
                 val mVehicleResponse =
                     VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp)
                 mListener?.onAddClick(mVehicleResponse)

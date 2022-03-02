@@ -35,5 +35,18 @@
         android:id="@+id/addVehicleDoneFragment"
         android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
         android:label="AddVehicleDoneFragment"
-        tools:layout="@layout/fragment_add_vehicle_done"/>
+        tools:layout="@layout/fragment_add_vehicle_done">
+        <action
+            android:id="@+id/action_addVehicleDoneFragment_to_vehicleListFragment3"
+            app:destination="@id/vehicleListFragment3"
+            app:popUpTo="@+id/vehicle_history_nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleListFragment3"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list">
+
+    </fragment>
 </navigation>

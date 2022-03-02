@@ -1,50 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_20sdp"
-        android:layout_margin="@dimen/_20sdp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingBottom="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:gravity="start"
             android:text="@string/str_vehicle_details"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivClose"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:elevation="10dp"
+            android:padding="@dimen/_2sdp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txt_input_lyt"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_46sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:hint="@string/str_vrm_ful"
-            app:boxStrokeWidth="@dimen/_1sdp"
-            app:boxStrokeColor="@color/add_stroke_clr"
-            app:hintTextColor="@color/add_stroke_clr"
+            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeWidthFocused="1dp"
+            app:errorEnabled="false"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintTop_toBottomOf="@+id/title">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_vrm_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:hint="@string/str_vrm_ful"
+                android:imeOptions="actionDone"
                 android:inputType="textCapCharacters"
-                android:textColorHint="@color/add_stroke_clr"
+                android:singleLine="true"
+                android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal" />
 
@@ -56,44 +71,53 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            app:useMaterialThemeColors="false"
-            android:padding="@dimen/_10sdp"
+            android:checked="false"
             android:text="@string/str_country_of_registraion"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
-            android:checked="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_input_lyt" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_input_lyt"
+            app:thumbTint="@color/green"
+            app:trackTint="#04CF71"
+            app:useMaterialThemeColors="false" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_vehicle_btn"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:backgroundTint="@color/green"
             android:text="@string/str_add_vehicle"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/cancel_btn"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/switch_view" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btn"
-            android:layout_width="@dimen/_90sdp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            app:strokeWidth="@dimen/_1sdp"
-            app:strokeColor="@color/add_stroke_clr"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/str_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/green"
+            app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/add_vehicle_btn"
-            app:layout_constraintTop_toBottomOf="@+id/switch_view" />
-
+            app:layout_constraintTop_toBottomOf="@+id/switch_view"
+            app:strokeColor="@color/btn_color"
+            app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

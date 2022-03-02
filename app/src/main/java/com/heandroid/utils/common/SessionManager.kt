@@ -23,13 +23,14 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val ACCOUNT_NUMBER="account_number"
         const val SECURITY_CODE="security_code"
         const val SECURITY_CODE_OBJ="security_code_obj"
+        const val IS_USER_LOGIN="is_user_login"
     }
 
     /**
      * Function to save auth token
      */
-    fun saveAuthToken(token: String) {
-        Log.d("Session Manager::",token)
+    fun saveAuthToken(token: String?) {
+        Log.d("Session Manager::",token?:"")
         // todo use scope variable
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
@@ -86,6 +87,11 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         val jsonString = gson.toJson(myObject)
         editor.putString( SECURITY_CODE_OBJ, jsonString)
         editor.commit()
+    }
+
+    fun clearAll() {
+        prefs.edit().clear().commit()
+
     }
 
 //    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {
