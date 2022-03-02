@@ -111,6 +111,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/str_cancel"
             android:textAllCaps="false"
+            android:textColor="@color/green"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/add_vehicle_btn"
