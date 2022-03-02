@@ -36,6 +36,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotPasswordBinding = FragmentForgotPasswordBinding.inflate(inflater,container,false)
 
     override fun init() {
+        sessionManager.clearAll()
+
         requireActivity().toolbar(getString(R.string.str_password_recovery))
         binding.model= ConfirmOptionModel(identifier = "", zipCode = "",enable = false)
         loader= LoaderDialog()
