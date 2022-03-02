@@ -29,8 +29,8 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
     /**
      * Function to save auth token
      */
-    fun saveAuthToken(token: String) {
-        Log.d("Session Manager::",token)
+    fun saveAuthToken(token: String?) {
+        Log.d("Session Manager::",token?:"")
         // todo use scope variable
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
@@ -90,7 +90,8 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
     }
 
     fun clearAll() {
-        prefs.edit().clear()
+        prefs.edit().clear().commit()
+
     }
 
 //    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {

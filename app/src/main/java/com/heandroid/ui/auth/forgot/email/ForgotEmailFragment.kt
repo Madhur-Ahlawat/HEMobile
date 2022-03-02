@@ -17,20 +17,27 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog?=null
 
+    @Inject
+    lateinit var session : SessionManager
+
     private val viewModel : ForgotEmailViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater,container,false)
 
     override fun init() {
+        session.clearAll()
+        session.saveAuthToken(null)
         requireActivity().toolbar(getString(R.string.txt_recovery_username))
         binding.model= ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
         loader= LoaderDialog()
