@@ -3,7 +3,7 @@ package com.heandroid.ui.vehicle.addvehicle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
@@ -49,10 +49,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
     override fun initCtrl() {
         binding.conformBtn.setOnClickListener {
-            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
-//                val intent = Intent(this, ActivityFutureCrossing::class.java)
-//                intent.putExtra("list", mVehicleDetails)
-//                startActivity(intent)
+            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment3)
             } else {
 //                onBackPressed()
             }
