@@ -9,30 +9,20 @@ import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotChooseOptionBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
-import com.heandroid.utils.common.SessionManager
-import javax.inject.Inject
 
 class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding>(), RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
-    @Inject
-    lateinit var sessionManager : SessionManager
     private var model : RequestOTPModel?=null
-    private var data: ConfirmOptionResponseModel?=null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotChooseOptionBinding = FragmentForgotChooseOptionBinding.inflate(inflater,container,false)
 
     override fun init() {
         model= RequestOTPModel(optionType = "",optionValue = "")
-        data=arguments?.getParcelable(Constants.OPTIONS)
-
-        binding.emailRadioBtn.text = "Email - ${data?.email}"
-        binding.textMessageRadioBtn.text = "Text message - ${data?.phone}"
-        binding.postMailRadioBtn.text = "Post mail - 3113********,Ap***NC,***02"
+        binding.model =arguments?.getParcelable(Constants.OPTIONS)
     }
 
     override fun initCtrl() {
@@ -48,15 +38,15 @@ class ChooseOptionForgotFragment: BaseFragment<FragmentForgotChooseOptionBinding
 
             R.id.email_radio_btn ->{
                 model?.optionType = Constants.EMAIL
-                model?.optionValue=data?.email
+                model?.optionValue= binding.model?.email
             }
             R.id.text_message_radio_btn ->{
                 model?.optionType = Constants.SMS
-                model?.optionValue= data?.phone
+                model?.optionValue= binding.model?.email
             }
             R.id.post_mail_radio_btn ->{
                 model?.optionType= Constants.POST_MAIL
-                model?.optionValue= ""
+                model?.optionValue= binding.model?.address
             }
         }
     }

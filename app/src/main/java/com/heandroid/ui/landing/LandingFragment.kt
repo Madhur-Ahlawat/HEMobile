@@ -2,6 +2,7 @@ package com.heandroid.ui.landing
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,13 +75,30 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         v?.let {
             when (v.id) {
                 R.id.btn_continue -> {
+                    if (model.selectType == Constants.RESOLVE_PENALTY) {
 
-                    Intent(requireActivity(), InProgressActivity::class.java).run {
-                        startActivity(this)
+                        openUrlInWebBrowser()
+
+                    } else {
+                        Intent(requireActivity(), InProgressActivity::class.java).run {
+                            startActivity(this)
+                        }
+
                     }
 
                 }
             }
         }
+    }
+
+    private fun openUrlInWebBrowser() {
+
+            var url = "http://www.google.com";
+            Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
+                // Note the Chooser below. If no applications match,
+                // Android displays a system message.So here there is no need for try-catch.
+                startActivity(Intent.createChooser(this, "Browse with"));
+            }
+
     }
 }

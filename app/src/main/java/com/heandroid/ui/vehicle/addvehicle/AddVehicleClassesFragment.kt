@@ -18,10 +18,13 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>(), AddVehicleListener {
+class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>(),
+    AddVehicleListener {
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private lateinit var mVehicleDetails: VehicleResponse
@@ -36,55 +39,77 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     override fun init() {
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
         binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
-        binding.classBRadioButton.isChecked = true
-        mClassType = "Class B"
     }
 
     override fun initCtrl() {
         binding.classARadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.classBRadioButton.isChecked = false
-                binding.classCRadioButton.isChecked = false
-                binding.classDRadioButton.isChecked = false
+                binding.apply {
+                    classBRadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.visible()
+                    classBDesc.gone()
+                    classCDesc.gone()
+                    classDDesc.gone()
+                }
                 mClassType = "Class A"
             }
         }
 
         binding.classBRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.classARadioButton.isChecked = false
-                binding.classCRadioButton.isChecked = false
-                binding.classDRadioButton.isChecked = false
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.visible()
+                    classCDesc.gone()
+                    classDDesc.gone()
+                }
                 mClassType = "Class B"
             }
         }
         binding.classCRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked) {
-                binding.classARadioButton.isChecked = false
-                binding.classBRadioButton.isChecked = false
-                binding.classDRadioButton.isChecked = false
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classBRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.gone()
+                    classCDesc.visible()
+                    classDDesc.gone()
+                }
                 mClassType = "Class C"
             }
         }
         binding.classDRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.classARadioButton.isChecked = false
-                binding.classBRadioButton.isChecked = false
-                binding.classCRadioButton.isChecked = false
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classBRadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.gone()
+                    classCDesc.gone()
+                    classDDesc.visible()
+                }
                 mClassType = "Class D"
             }
         }
 
         binding.cancelButton.setOnClickListener {
-
+            findNavController().popBackStack()
         }
 
         binding.continueButton.setOnClickListener {
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 mVehicleDetails.vehicleInfo.vehicleClassDesc = mClassType
 
-                var dialog = VehicleAddConfirmDialog.newInstance(
+                VehicleAddConfirmDialog.newInstance(
                     mVehicleDetails,
                     this
                 ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
@@ -115,24 +140,24 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     override fun onAddClick(details: VehicleResponse) {
-//        val request = mVehicleDetails.apply {
-//            plateInfo.state = "HE"
-//            plateInfo.type = "STANDARD"
-//            plateInfo.vehicleGroup = ""
-//            plateInfo.vehicleComments = "new Vehicle"
-//            plateInfo.planName = ""
-//            vehicleInfo.year = "2022"
-//            vehicleInfo.typeId = null
-//            vehicleInfo.typeDescription = "REGULAR"
-//        }
-//        mVehicleDetails = request
-//        vehicleMgmtViewModel.addVehicleApi(request)
+        val request = mVehicleDetails.apply {
+            plateInfo.state = "HE"
+            plateInfo.type = "STANDARD"
+            plateInfo.vehicleGroup = ""
+            plateInfo.vehicleComments = "new Vehicle"
+            plateInfo.planName = ""
+            vehicleInfo.year = "2022"
+            vehicleInfo.typeId = null
+            vehicleInfo.typeDescription = "REGULAR"
+        }
+        mVehicleDetails = request
+        vehicleMgmtViewModel.addVehicleApi(request)
 
         navigateToAddVehicleDoneScreen()
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
-        when(status){
+        when (status) {
             is Resource.Success -> {
                 navigateToAddVehicleDoneScreen()
             }

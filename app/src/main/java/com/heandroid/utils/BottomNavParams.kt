@@ -10,7 +10,7 @@ class BottomNavParams {
     @ColorRes var passiveColor: Int = R.color.bottomPassiveColor
     @ColorRes var pressedColor: Int = R.color.bottomPressedColor
     var itemPadding: Float = 16f
-    var itemTextSize : Float = 40f
+    var itemTextSize : Float = 38f
     var animationDuration: Int = 300
     var endScale: Float = 0.95f
     var startScale: Float = 1f

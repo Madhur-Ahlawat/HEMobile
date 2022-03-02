@@ -8,10 +8,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class InProgressActivity : BaseActivity<Any?>() {
 
-    private lateinit var binding: ActivityLandingBinding
+    private lateinit var binding: ActivityInProgressBinding
 
     override fun initViewBinding() {
-        binding = ActivityLandingBinding.inflate(layoutInflater)
+        binding = ActivityInProgressBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 

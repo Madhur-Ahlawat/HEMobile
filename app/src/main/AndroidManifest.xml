@@ -34,13 +34,15 @@
         </activity>
 
         <activity android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobile"/>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain"/>
         <activity android:name=".ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.account.profile.ProfileActivity" />
+        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
+        <activity android:name=".ui.account.communication.CommunicationActivity" />
 
     </application>
 

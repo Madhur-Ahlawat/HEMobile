@@ -1,38 +1,169 @@
 package com.heandroid.ui.bottomnav.notification
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.heandroid.R
-import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.databinding.FragmentNotificationBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.heandroid.data.model.notification.AlertMessage
+import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.utils.common.*
+
 
 @AndroidEntryPoint
-class NotificationFragment : BaseFragment<FragmentNotificationBinding>()/*, FilterDialogListener,
+class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), View.OnClickListener/*, FilterDialogListener,
     NotificationItemClick*/ {
-    private lateinit var dataBinding: FragmentNotificationBinding
+    private val viewModel: NotificationViewModel by viewModels()
+    private var loader: LoaderDialog?=null
+    private val TAG = "NotificationFragment"
 
-    override fun onCreateView(
+    override fun getFragmentBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dataBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_notification,
-            container,
-            false
-        )
-        return dataBinding.root
+        container: ViewGroup?
+    ): FragmentNotificationBinding = FragmentNotificationBinding.inflate(inflater, container, false)
+
+    override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, "")
+        viewModel.getAlertsApi(Constants.LANGUAGE)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initCtrl() {
+       binding.apply {
+
+           takeAction.setOnClickListener(this@NotificationFragment)
+           inOrder.setOnClickListener(this@NotificationFragment)
+           others.setOnClickListener(this@NotificationFragment)
+           filterTxt.setOnClickListener(this@NotificationFragment)
+           clearAll.setOnClickListener(this@NotificationFragment)
+       }
     }
+
+    override fun observer() {
+        observe(viewModel.alertLivData, ::handleAlertResponse)
+    }
+
+    private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.messageList?.isNullOrEmpty() == false) {
+                    setNotificationAlert(resource.data.messageList)
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+                // do nothing
+            }
+        }
+    }
+
+    private fun setNotificationAlert(messageList: List<AlertMessage>) {
+        val mAdapter = NotificationAdapter(requireActivity(),messageList)
+        binding.notificationsRecyclerview.apply {
+            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = mAdapter
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.take_action -> {
+                binding.apply {
+
+                    clearLlyt.visibility = View.GONE
+
+                  //  setActionAdapter()
+
+                    takeAction.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+                    inOrder.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    others.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    takeAction.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+                    inOrder.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    subTitle.text = "High Priority"
+                    others.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+            }
+
+            R.id.in_order -> {
+                binding.apply {
+                    clearLlyt.visibility = View.GONE
+
+                    takeAction.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    inOrder.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+                    others.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    takeAction.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
+                    inOrder.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
+                    others.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    subTitle.text = "High Priority"
+
+                  //  setInOrderAdapter()
+                }
+            }
+
+            R.id.others -> {
+                binding.apply {
+
+                    clearLlyt.visibility = View.GONE
+
+                    takeAction.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    inOrder.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                    others.background =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+
+                    takeAction.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    inOrder.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    others.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    subTitle.text = "General Notifications"
+
+                   // setOthersAdapter()
+
+                }
+            }
+
+            R.id.filter_txt -> {
+                binding.apply {
+                 //   FilterDialog.newInstance(getString(R.string.str_sort), this)
+                 //       .show(requireActivity().supportFragmentManager, FilterDialog.TAG)
+                }
+            }
+
+            R.id.clear_all -> {
+
+            }
+
+        }
+    }
+
 
 /*
     private fun setUpViews() {
@@ -580,20 +711,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>()/*, Filt
 
     }
 */
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentNotificationBinding = FragmentNotificationBinding.inflate(inflater, container, false)
-
-    override fun init() {
-    }
-
-    override fun initCtrl() {
-    }
-
-    override fun observer() {
-    }
 
 
 }
