@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/color_EFEFEF">
 
-    <com.heandroid.oldStructure.customviews.CustomTextView
+    <com.heandroid.ui.customviews.CustomTextView
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,31 +15,31 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_15ssp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/priority_img"
         android:layout_width="@dimen/_16sdp"
         android:layout_height="@dimen/_16sdp"
-        android:id="@+id/priority_img"
         app:layout_constraintBottom_toBottomOf="@+id/category_title"
         app:layout_constraintStart_toEndOf="@+id/category_title"
         app:layout_constraintTop_toTopOf="@+id/category_title"
         app:srcCompat="@drawable/ic_priority_icon" />
 
 
-    <com.heandroid.oldStructure.customviews.CustomTextView
+    <com.heandroid.ui.customviews.CustomTextView
         android:id="@+id/view_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:padding="@dimen/_8sdp"
         android:text="@string/str_view_all"
-        android:visibility="gone"
         android:textColor="@color/green"
         android:textSize="@dimen/_15ssp"
         android:textStyle="normal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/category_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/category_title" />

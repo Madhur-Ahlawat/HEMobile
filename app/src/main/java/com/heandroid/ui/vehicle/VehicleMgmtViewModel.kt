@@ -8,6 +8,7 @@ import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
 import com.heandroid.ui.base.BaseViewModel
@@ -33,6 +34,10 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateVehicleApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
     val updateVehicleApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _updateVehicleApiVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _deleteVehicleApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
+    val deleteVehicleApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _deleteVehicleApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
@@ -122,6 +127,20 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
                 )
             } catch (e: Exception) {
                 _vehicleListVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun deleteVehicleApi(deleteVehicleRequest : DeleteVehicleRequest) {
+        viewModelScope.launch {
+            try {
+                _deleteVehicleApiVal.postValue(
+                    ResponseHandler.success(
+                        repository.deleteVehicleListApiCall(deleteVehicleRequest),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

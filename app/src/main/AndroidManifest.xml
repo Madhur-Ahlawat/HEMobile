@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ui.base.BaseApplication"
@@ -34,12 +37,25 @@
         </activity>
 
         <activity android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobile"/>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain"/>
+        <activity android:name=".ui.futureModule.InProgressActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.account.profile.ProfileActivity" />
+        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
+        <activity android:name=".ui.account.communication.CommunicationActivity" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

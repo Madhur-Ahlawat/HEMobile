@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<data>
+    <variable
+        name="model"
+        type="com.heandroid.data.model.landing.LandingModel" />
+</data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_30sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
                 android:text="@string/str_create_account"
                 android:textColor="@color/black"
                 app:buttonTint="@color/bottomActiveColor"
@@ -171,13 +176,13 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:backgroundTint="@color/btn_selector"
-            android:enabled="false"
+            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{model.enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@color/color_7D7D7D"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

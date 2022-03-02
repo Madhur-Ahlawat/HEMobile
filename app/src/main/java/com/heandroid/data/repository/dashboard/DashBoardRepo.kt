@@ -1,5 +1,6 @@
 package com.heandroid.data.repository.dashboard
 
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.remote.ApiService
 import com.heandroid.utils.common.Constants
 import retrofit2.Response
@@ -14,5 +15,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)
 
+    suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest) =
+        apiService.getVehicleCrossingHistoryData(requestParam)
 
 }

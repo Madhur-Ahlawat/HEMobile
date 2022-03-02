@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/_12sdp"
     android:background="@color/white">
 
-    <com.heandroid.oldStructure.customviews.CustomTextView
+    <com.heandroid.ui.customviews.CustomTextView
         android:id="@+id/date_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.heandroid.oldStructure.customviews.CustomTextView
+    <com.heandroid.ui.customviews.CustomTextView
         android:id="@+id/message_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

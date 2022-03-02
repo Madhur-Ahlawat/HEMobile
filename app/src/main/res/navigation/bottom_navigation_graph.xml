@@ -11,6 +11,9 @@
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard">
 
+        <action
+            android:id="@+id/action_dashBoardFragment_to_vehicleListFragment2"
+            app:destination="@id/vehicleListFragment2" />
     </fragment>
 
     <fragment
@@ -37,5 +40,10 @@
         tools:layout="@layout/fragment_notification">
 
     </fragment>
+    <fragment
+        android:id="@+id/vehicleListFragment2"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list"/>
 
 </navigation>

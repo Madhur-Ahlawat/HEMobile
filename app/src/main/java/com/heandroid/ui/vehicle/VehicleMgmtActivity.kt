@@ -1,9 +1,8 @@
 package com.heandroid.ui.vehicle
 
-import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.ui.base.BaseActivity
@@ -22,44 +21,40 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
     override fun initViewBinding() {
         binding = ActivityVehicleMgmtBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initCtrl()
+        setView()
     }
 
     override fun observeViewModel() { }
 
-    override fun onResume() {
-        super.onResume()
-        setView()
+    private fun initCtrl() {
+        binding.idToolBarLyt.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setView() {
-        mType = Constants.VEHICLE_SCREEN_TYPE_HISTORY
-        mType?.apply {
-            when (this) {
+        mType = intent.extras?.getInt(Constants.VEHICLE_SCREEN_KEY)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        mType?.let {
+            when (it) {
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.str_vehicle_list)
                     binding.chipLayout.gone()
-                    navHost = Navigation.findNavController(
-                        this@VehicleMgmtActivity,
-                        R.id.fragmentContainer
-                    )
+                    navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_vehicle_list)
                 }
                 Constants.VEHICLE_SCREEN_TYPE_ADD -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.str_add_vehicles)
                     binding.chipLayout.gone()
-                    navHost = Navigation.findNavController(
-                        this@VehicleMgmtActivity,
-                        R.id.fragmentContainer
-                    )
+                    navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_add_vehicle)
                 }
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.str_vehicle_history)
-                    navHost = Navigation.findNavController(
-                        this@VehicleMgmtActivity,
-                        R.id.fragmentContainer
-                    )
+                    navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_vehicle_history)
+
                     navHost.addOnDestinationChangedListener { _, destination, _ ->
                         when(destination.id){
                             R.id.vehicleHistoryVehicleDetailsFragment -> {
@@ -79,18 +74,12 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
                 Constants.VEHICLE_SCREEN_TYPE_CROSSING_HISTORY -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.crossing_history)
                     binding.chipLayout.gone()
-                    navHost = Navigation.findNavController(
-                        this@VehicleMgmtActivity,
-                        R.id.fragmentContainer
-                    )
+                    navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_crossing_history)
                 }
             }
         }
 
-        binding.idToolBarLyt.backButton.setOnClickListener {
-            onBackPressed()
-        }
         binding.vehicleDetailsTxt.setOnClickListener {
             binding.vehicleDetailsTxt.background =
                 ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
