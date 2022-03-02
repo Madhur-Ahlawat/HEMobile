@@ -1,14 +1,19 @@
 package com.heandroid.utils.common
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
 import com.heandroid.R
+import com.heandroid.ui.auth.session.SessionActivity
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.utils.extn.changeBackgroundColor
 import com.heandroid.utils.extn.changeTextColor
+import com.heandroid.utils.logout.LogoutUtil
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -103,5 +108,17 @@ object Utils {
         }
     }
 
+    fun sessionExpired(context: Activity) {
+        Log.e("name",context::class.simpleName.toString())
+        LogoutUtil.stopLogoutTimer()
+        context.finish()
+        context.startActivity(
+            Intent(context, SessionActivity::class.java)
+             .putExtra("screen","expire")
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .putExtra("type","LOGIN"))
+
+
+    }
 
 }

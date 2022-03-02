@@ -4,7 +4,7 @@
 
  <application>
      <activity
-         android:name=".auth.AuthActivity"
+         android:name=".auth.HiltTestActivity"
          android:exported="false" />
  </application>
 </manifest>

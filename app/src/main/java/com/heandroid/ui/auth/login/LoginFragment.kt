@@ -41,7 +41,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
     override fun init() {
         binding.model= LoginModel(value = "", password = "")
-        loader= LoaderDialog()
+        loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
     }

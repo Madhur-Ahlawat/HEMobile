@@ -15,10 +15,10 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     @StyleRes themeResId: Int = R.style.Dialog_NoTitle,
     crossinline action: Fragment.() -> Unit = {}
 ) {
-    val startActivityIntent = Intent.makeMainActivity(ComponentName(ApplicationProvider.getApplicationContext(), AuthActivity::class.java))
+    val startActivityIntent = Intent.makeMainActivity(ComponentName(ApplicationProvider.getApplicationContext(), HiltTestActivity::class.java))
                                     .putExtra("androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",themeResId)
 
-    ActivityScenario.launch(AuthActivity::class.java).onActivity { activity ->
+    ActivityScenario.launch(HiltTestActivity::class.java).onActivity { activity ->
         val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
             Preconditions.checkNotNull(T::class.java.classLoader),
             T::class.java.name

@@ -7,6 +7,8 @@ import com.heandroid.ui.customviews.BottomNavigationView
 import com.heandroid.databinding.ActivityHomeMainBinding
 import com.heandroid.listener.OnNavigationItemChangeListener
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.utils.common.Utils
+import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -56,5 +58,22 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>() {
         setContentView(dataBinding.root)
         setView()
 
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        Utils.sessionExpired(this)
     }
 }

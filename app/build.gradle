@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
@@ -174,16 +174,14 @@ android {
         androidTestImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
         kaptAndroidTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
         androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
+        androidTestImplementation "org.mockito:mockito-core:3.3.3"
+
 
         // For local unit tests
         testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
         testAnnotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
         implementation 'androidx.test:runner:1.4.0'
-
-
-
-
 
     }
 

@@ -89,6 +89,10 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         editor.commit()
     }
 
+    fun clearAll() {
+        prefs.edit().clear()
+    }
+
 //    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {
 //        val editor = prefs.edit()
 //        val gson = Gson()

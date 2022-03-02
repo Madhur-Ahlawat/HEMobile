@@ -1,6 +1,7 @@
 package com.heandroid.auth.login
 
 import androidx.test.core.app.launchActivity
+import com.heandroid.auth.launchFragmentInHiltContainer
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.auth.login.LoginFragment
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -15,15 +16,14 @@ class AuthTestActivity {
     @get:Rule val hiltRule = HiltAndroidRule(this)
 
     @Before
-    fun init() {
+    fun setup() {
         hiltRule.inject()
     }
 
     @Test
     fun loadActivity() {
-        val activity = launchActivity<AuthActivity>()
+        launchActivity<AuthActivity>()
     }
-
 
 
 }
