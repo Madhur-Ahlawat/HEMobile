@@ -249,9 +249,9 @@
     <string name="str_notifications">Notifications</string>
     <string name="str_notification">Notification</string>
     <string name="txt_view_notification">View all (2)</string>
-    <string name="str_two_crossing">2 Crossings</string>
+    <string name="str_two_crossing">%s Crossings</string>
     <string name="txt_your_crossing">Your crossing</string>
-    <string name="str_two_vehicle">2 Vehicles</string>
+    <string name="str_two_vehicle">%s Vehicles</string>
     <string name="txt_your_vehicle">Your vehicle</string>
     <string name="txt_view_vehicles">View vehicles</string>
     <string name="txt_your_saving">Your saving</string>
