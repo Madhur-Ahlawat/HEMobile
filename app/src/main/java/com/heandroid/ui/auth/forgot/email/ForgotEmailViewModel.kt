@@ -27,12 +27,7 @@ class ForgotEmailViewModel @Inject constructor(private val repository: ForgotEma
     fun forgotEmail(model: ForgotEmailModel?) {
         viewModelScope.launch {
             try {
-                _forgotEmail.postValue(
-                    ResponseHandler.success(
-                        repository.forgotEmail(model),
-                        errorManager
-                    )
-                )
+                _forgotEmail.postValue(ResponseHandler.success(repository.forgotEmail(model), errorManager))
             } catch (e: Exception) {
                 _forgotEmail.postValue(ResponseHandler.failure(e))
             }

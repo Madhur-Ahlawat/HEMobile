@@ -55,13 +55,8 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
             when(v.id){
                 R.id.btn_next -> {
                     hideKeyboard()
-//              Use this param to check with api
-//              binding.model?.accountNumber="118489252"
-//              binding.model?.zipCode="10002"
                     val validation=viewModel.validation(binding.model)
                     if(validation.first){
-                        binding.llEnterDetails.visibility = GONE
-                        binding.llUsername.visibility = VISIBLE
                         loader?.show(requireActivity().supportFragmentManager,"")
                         viewModel.forgotEmail(binding.model)
                     }else {
@@ -78,11 +73,13 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){
         loader?.dismiss()
         when (status) {
-            is Resource.Success -> { loadData(status) }
-            is Resource.DataError -> { showError(binding.root, status.errorMsg) }
-            else -> {
-
+            is Resource.Success -> {
+                binding.llEnterDetails.visibility = GONE
+                binding.llUsername.visibility = VISIBLE
+                loadData(status)
             }
+            is Resource.DataError -> { showError(binding.root, status.errorMsg) }
+            else -> {}
 
         }
 

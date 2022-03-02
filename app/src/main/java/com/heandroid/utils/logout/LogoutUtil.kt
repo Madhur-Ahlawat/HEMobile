@@ -13,10 +13,10 @@ import java.util.*
 object LogoutUtil {
     var timer: Timer? = null
     private const val LOGOUT_TIME = 60000L
-    private var listner: LogoutListner?=null
+    private var listner: LogoutListener?=null
 
     @Synchronized
-    fun startLogoutTimer(listne: LogoutListner?) {
+    fun startLogoutTimer(listne: LogoutListener?) {
         if (timer != null) {
             timer?.cancel()
             timer = null

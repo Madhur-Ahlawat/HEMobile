@@ -18,6 +18,7 @@ import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
+import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,6 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(private val repository: ForgotPasswordRepository): BaseViewModel() {
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _confirmOption = MutableLiveData<Resource<ConfirmOptionResponseModel?>?>()
@@ -44,7 +47,14 @@ class ForgotPasswordViewModel @Inject constructor(private val repository: Forgot
     fun confirmOptionForForgot(model: ConfirmOptionModel?){
         viewModelScope.launch {
             try {
-                _confirmOption.postValue(success(repository.confirmOptionForForgot(model),errorManager))
+                val response = repository.confirmOptionForForgot(model)
+                if(response?.isSuccessful==true){
+                    val serverToken = response?.headers()?.get("Authorization")?.split("Bearer ")?.get(1)
+                    sessionManager.saveAuthToken( serverToken?:"")
+                    _confirmOption.postValue(Resource.Success(response.body()))
+                }else{
+                    _confirmOption.postValue(Resource.DataError(errorManager.getError(response?.code() ?: 0).description))
+                }
             } catch (e: Exception) {
                 _confirmOption.postValue(failure(e))
             }

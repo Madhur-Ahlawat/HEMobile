@@ -8,12 +8,13 @@ import com.heandroid.databinding.ActivityHomeMainBinding
 import com.heandroid.listener.OnNavigationItemChangeListener
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.utils.common.Utils
+import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>() {
+class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(),LogoutListener {
 
     private lateinit var dataBinding: ActivityHomeMainBinding
 
