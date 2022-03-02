@@ -1,6 +1,7 @@
 package com.heandroid.ui.vehicle.crossinghistory
 
 import android.app.Activity
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -38,7 +39,8 @@ import okhttp3.ResponseBody
 import java.io.*
 
 @AndroidEntryPoint
-class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(), View.OnClickListener,
+class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
+    View.OnClickListener,
     CrossingHistoryFilterDialogListener, DownloadFilterDialogListener {
 
     private val viewModel: VehicleMgmtViewModel by viewModels()
@@ -129,24 +131,19 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(), 
 
             val ret = async {
                 return@async writeResponseBodyToDisk(body)
-
             }.await()
-            if (ret) {
 
+            if (ret) {
                 withContext(Dispatchers.Main) {
                     binding.progressBar.visibility = View.GONE
                     requireActivity().showToast("Document downloaded successfully")
                 }
             } else {
-
                 withContext(Dispatchers.Main) {
                     binding.progressBar.visibility = View.GONE
-                    requireActivity().showToast("Document  not downloaded ")
-
+                    requireActivity().showToast("Document download failed")
                 }
-
             }
-
         }
     }
 
@@ -178,82 +175,95 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(), 
     }
 
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
-
+        val fileExtension = if (selectionType == "pdf") ".pdf" else ".csv"
         try {
-            var path=""
-            path = if (selectionType == "pdf") {
-                ".pdf"
+            val filePath =
+                "${requireActivity().getExternalFilesDir(null)}${File.separator}${
+                    System.currentTimeMillis()
+                }$fileExtension"
 
-            }else{
-                ".txt"
+            val currentFile = File(filePath)
+//            val currentFile = File(
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+//                System.currentTimeMillis().toString() + fileExtension
+//            )
+            if (!currentFile.exists())
+                currentFile.parentFile?.mkdirs()
+
+            return if (selectionType == "pdf") {
+                savePdf(body, currentFile)
+            } else {
+                saveSpreadSheet(body, filePath)
             }
-            val futurePdfFile =
-                File("${requireActivity().getExternalFilesDir(null)}${File.separator}${System.currentTimeMillis()}$path")
-
-            Log.d("writeResponseBodyToDisk", "file download:  path $futurePdfFile")
-
-            if (!futurePdfFile.exists())
-                futurePdfFile.parentFile.mkdirs()
-
+        } catch (e: Exception) {
             Log.d(
                 "writeResponseBodyToDisk",
-                "file download:  futurePdfFile ${futurePdfFile.absolutePath}"
+                "failed to create file : ${e.localizedMessage}"
             )
+            return false
+        }
 
-            var inputStream: InputStream? = null
-            var outputStream: OutputStream? = null
-            try {
+    }
 
-                val pdfReader = ByteArray(4096)
-                val fileSize = body.contentLength()
-                var fileSizeDownloaded: Long = 0
-                inputStream = body.byteStream()
-                outputStream = FileOutputStream(futurePdfFile)
+    private fun savePdf(body: ResponseBody, futurePdfFile: File): Boolean {
+        var inputStream: InputStream? = null
+        var outputStream: OutputStream? = null
+        try {
+            val pdfReader = ByteArray(4096)
+            val fileSize = body.contentLength()
+            var fileSizeDownloaded: Long = 0
+            inputStream = body.byteStream()
+            outputStream = FileOutputStream(futurePdfFile)
 
-                while (true) {
-
-                    val read = inputStream.read(pdfReader)
-
-                    Log.d("writeResponseBodyToDisk", "file download: of read $read")
-
-                    if (read == -1) {
-                        break
-                    }
-
-                    outputStream.write(pdfReader, 0, read)
-                    fileSizeDownloaded += read
-                    Log.d(
-                        "writeResponseBodyToDisk",
-                        "file download: $fileSizeDownloaded of $fileSize"
-                    )
-
+            while (true) {
+                val read = inputStream.read(pdfReader)
+                Log.d("writeResponseBodyToDisk", "file download: of read $read")
+                if (read == -1) {
+                    break
                 }
-
-                outputStream.flush()
-            } catch (e: IOException) {
+                outputStream.write(pdfReader, 0, read)
+                fileSizeDownloaded += read
                 Log.d(
                     "writeResponseBodyToDisk",
-                    "file download: first IOException callee ${e.localizedMessage}"
+                    "file download: $fileSizeDownloaded of $fileSize"
                 )
-
-                return false
-
-            } finally {
-                inputStream?.close()
-                outputStream?.close()
-
             }
-
+            outputStream.flush()
             return true
         } catch (e: IOException) {
             Log.d(
                 "writeResponseBodyToDisk",
-                "file download: second IOException callee ${e.localizedMessage}"
+                "file download: first IOException callee ${e.localizedMessage}"
             )
-
             return false
+        } finally {
+            inputStream?.close()
+            outputStream?.close()
         }
+    }
 
+    private fun saveSpreadSheet(body: ResponseBody, pathToSaveFile: String): Boolean {
+        val input = body.byteStream()
+
+        try {
+            val fos = FileOutputStream(pathToSaveFile)
+            fos.use { output ->
+                val buffer = ByteArray(4 * 1024)
+                var read: Int
+                while (input.read(buffer).also {
+                        read = it }
+                    != -1) {
+                    output.write(buffer, 0, read)
+                }
+                output.flush()
+            }
+            return true
+        } catch (e: Exception) {
+            Log.e("writeResponseBodyToDisk", e.toString())
+            return false
+        } finally {
+            input.close()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -374,17 +384,20 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(), 
     private fun downloadCrossingHistory() {
 
         val downloadRequest = loadDownloadRequest()
+        Log.d("writeResponseBodyToDisk", downloadRequest.toString())
         viewModel.downloadCrossingHistoryApiCall(downloadRequest)
         viewModel.crossingHistoryDownloadVal.observe(requireActivity()) { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    callCoroutines(resource.data as ResponseBody)
+                    resource.data?.let {
+                        callCoroutines(resource.data)
+                    }
                 }
                 is Resource.DataError -> {
-                    requireActivity().showToast("Document downloaded stopped due to error ")
+                    requireActivity().showToast("failed to download the document")
                 }
-                is Resource.Loading -> {
-                    requireActivity().showToast("Document downloaded is loading")
+                else -> {
+
                 }
             }
         }

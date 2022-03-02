@@ -15,9 +15,11 @@ import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.tollrates.TollRatesResp
+import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.utils.common.Resource
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -75,6 +77,11 @@ interface ApiService {
         @Body requestParam: VehicleResponse?
     ): Response<EmptyApiResponse?>?
 
+    @POST(BuildConfig.DELETE_VEHICLE)
+    suspend fun deleteVehicle(
+        @Body deleteVehicleRequest: DeleteVehicleRequest?
+    ): Response<EmptyApiResponse?>?
+
     @POST(BuildConfig.GET_VEHICLE_CROSSING_HISTORY)
     suspend fun getVehicleCrossingHistoryData(
         @Body crossingHistoryRequest: CrossingHistoryRequest?
@@ -91,5 +98,30 @@ interface ApiService {
         @Query("language") language: String
     ): Response<AlertMessageApiResponse?>
 
+    @POST(BuildConfig.CREATE_SECONDARY_ACCOUNT)
+    suspend fun createSecondaryAccount(
+        @Body secondaryBody: SecondaryAccountBody
+    ): Response<SecondaryAccountResp?>
+
+    @GET(BuildConfig.GET_SECONDARY_ACCOUNT)
+    suspend fun getSecondaryAccount(): Response<NominatedContactRes?>
+
+    @GET(BuildConfig.GET_SECONDARY_ACCESS_RIGHTS)
+    suspend fun getSecondaryAccessRights(@Path("accountId") accountId: String): Response<GetSecondaryAccessRightsResp?>
+
+    @GET(BuildConfig.UPDATE_SECONDARY_ACCOUNT)
+    suspend fun updateSecondaryAccount(
+        @Body body: UpdateSecAccountDetails
+    ): Response<ResponseBody?>
+
+    @GET(BuildConfig.UPDATE_SECONDARY_ACCESS_RIGHTS)
+    suspend fun updateSecondaryAccessRights(
+        @Body body: UpdateSecAccessRightsReq
+    ): Response<ResponseBody?>
+
+    @GET(BuildConfig.GET_TOLL_RATES)
+    suspend fun getTollRates(
+        @Body body: UpdateSecAccessRightsReq
+    ): Response<List<TollRatesResp>?>
 
 }
