@@ -24,6 +24,7 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/adapter_vehicles_row.xml" value="0.1" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/dialog_error.xml" value="0.19882246376811594" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/dialog_loader.xml" value="0.19882246376811594" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_about_service.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account2.xml" value="0.1911231884057971" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_crosssing_service_update.xml" value="0.17481884057971014" />
@@ -31,25 +32,16 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_password_third.xml" value="0.1" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_landing.xml" value="0.1911231884057971" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_login.xml" value="0.16893115942028986" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_logout.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_select_communication_preference.xml" value="0.1" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_start_now.xml" value="0.1" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/home_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/payment_start_page_activity.xml" value="0.1" />
-<<<<<<< HEAD
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/progress_dialog.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/tool_bar_white.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/tool_bar_with_title_back.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/toolbar_with_logo.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/vehicle_add_conform.xml" value="0.1" />
-=======
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/adapter_high_priority_notifications.xml" value="0.1796875" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/adapter_notification.xml" value="0.1671875" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/adapter_notification_header.xml" value="0.1796875" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/fragment_dashboard.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/fragment_notification.xml" value="0.22" />
-        <entry key="..\:/Users/stephen.devan/AndroidStudioProjects/NewConduent/HE-MAPP-Android/app/src/main/res/layout/fragment_vehicle_history_crossing_history.xml" value="0.1796875" />
->>>>>>> ccc1d4087460a1ca0bb1cec463244d3248366b75
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/drawable/drawable_corner.xml" value="0.1895" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_right.xml" value="0.1895" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/drawable/ic_right2.xml" value="0.1895" />
@@ -64,7 +56,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/dialog_logout.xml" value="0.22" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_choose_option.xml" value="0.10666666666666667" />
-        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_choose_option.xml" value="0.1" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_choose_option.xml" value="0.15648148148148147" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_create_new_password.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_email.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_otp.xml" value="0.12" />

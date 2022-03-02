@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import com.heandroid.R
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>){
@@ -27,4 +28,11 @@ fun Activity.toolbar(title: String?){
     ivBack.setOnClickListener{
         onBackPressed()
     }
+}
+
+fun Activity.setRightButtonText(title:String)
+{
+    val btnRight = findViewById<AppCompatTextView>(R.id.btn_login)
+    btnRight.text= title
+
 }

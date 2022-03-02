@@ -2,6 +2,9 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val START_NOW_SCREEN="start_now"
+    const val LOGOUT_SCREEN="log_out"
+    const val LANDING_SCREEN="landing"
     const val TOLL_TRANSACTION = "Toll_Transaction"
     const val ALL_TRANSACTION = "ALL"
     const val SPREAD_SHEET = "spreadsheet"

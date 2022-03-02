@@ -417,6 +417,8 @@
 
     <string name="str_remove_vehicle">Remove vehicle</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
+    <string name="str_logout_msg">You have successfully sign out of your account</string>
+    <string name="contact_us">CONTACT US</string>
 
 </resources>
 

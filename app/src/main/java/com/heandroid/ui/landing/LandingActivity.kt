@@ -9,6 +9,7 @@ import com.heandroid.R
 import com.heandroid.databinding.ActivityLandingBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,15 +26,61 @@ class LandingActivity : BaseActivity<Any?>() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = findNavController(this, R.id.nav_host_fragment_container)
-        binding.idToolBarLyt.btnLogin.setOnClickListener {
-            startLoginActivity()
+        screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
+        loadFragment()
+        binding.toolBarLyt.btnLogin.setOnClickListener {
+           when(screenType)
+           {
+               Constants.LANDING_SCREEN,
+                   Constants.START_NOW_SCREEN->{
+                       startLoginActivity()
+                   }
+               Constants.LOGOUT_SCREEN->{
+
+                   openContactusScreen()
+               }
+
+               else->{
+                   startLoginActivity()
+               }
+           }
+
+        }
+
+    }
+
+    private fun loadFragment() {
+
+        var oldGraph = navController.graph.apply {
+            when (screenType) {
+                Constants.START_NOW_SCREEN -> {
+                    startDestination = R.id.startNow
+                }
+                Constants.LANDING_SCREEN -> {
+                    startDestination = R.id.landingFragment
+                }
+                Constants.LOGOUT_SCREEN -> {
+                    startDestination = R.id.logoutFragment
+                }
+            }
+        }
+
+        navController.graph = oldGraph
+    }
+
+    private fun openContactusScreen() {
+
+        Intent(this, InProgressActivity::class.java).run {
+            putExtra(Constants.SHOW_SCREEN, screenType)
+            startActivity(this)
         }
 
     }
 
 
     fun openLandingFragment() {
-        navController.navigate(R.id.action_landing_screen)
+        screenType = Constants.LANDING_SCREEN
+        loadFragment()
     }
 
     override fun observeViewModel() {
