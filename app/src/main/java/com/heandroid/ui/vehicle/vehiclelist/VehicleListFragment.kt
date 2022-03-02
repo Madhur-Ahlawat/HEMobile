@@ -139,10 +139,14 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        val bundle = Bundle().apply {
-            putSerializable(Constants.DATA, details)
+        if (details.plateInfo.country == "UK"){
+            requireContext().showToast("UK flow not yet added")
+        } else {
+            val bundle = Bundle().apply {
+                putSerializable(Constants.DATA, details)
+            }
+            findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
         }
-        findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
     }
 
     override fun onRemoveClick(selectedVehicleList: List<String>) {

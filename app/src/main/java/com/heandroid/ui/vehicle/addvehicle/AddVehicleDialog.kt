@@ -34,6 +34,9 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
     }
 
     override fun initCtrl() {
+        binding.ivClose.setOnClickListener{
+            dismiss()
+        }
         binding.addVehicleBtn.setOnClickListener {
             var country = "UK"
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
