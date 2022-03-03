@@ -16,6 +16,11 @@ data class LoginResponse(
     @SerializedName("refresh_token")
     var refreshToken: String,
 
+
+    @SerializedName("user_name")
+    var user_name: String,
+
+
     @SerializedName("expires_in")
     private var expiresIn: Int,
 
