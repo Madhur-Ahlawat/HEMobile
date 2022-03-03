@@ -427,7 +427,8 @@
     <string name="contact_us">Contact us</string>
     <string name="str_no_active_contacts">No contacts currently</string>
     <string name="str_nominated_contacts_limit_reached">A total of 5 contacts has been set-up, if you wish to add further nominated contacts you need to remove any one of the contact</string>
-
+    <string name="str_logout_msg">You have successfully sign out of your account</string>
+    <string name="str_session_time_out">Session Time out</string>
 
 </resources>
 
