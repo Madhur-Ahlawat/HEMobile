@@ -19,6 +19,7 @@ import com.heandroid.databinding.FragmentLandingBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
+import com.heandroid.ui.vehicle.payment.MakeOneOffPayment
 import com.heandroid.ui.viewcharges.ActivityViewCharges
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.setRightButtonText
@@ -108,6 +109,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                         Constants.VIEW_CHARGES -> {
                             requireActivity().startNewActivity(ActivityViewCharges::class.java)
 
+                        }
+
+                        Constants.ONE_OFF_PAYMENT -> {
+                            requireActivity().startNewActivity(MakeOneOffPayment::class.java)
                         }
 
                         Constants.CHECK_FOR_PAID -> {
