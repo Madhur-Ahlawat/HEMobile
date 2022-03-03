@@ -21,9 +21,8 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
 
     override fun onResume() {
         super.onResume()
-        val toolbar=requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.findViewById<TextView>(R.id.tvContactUs).gone()
-
+        val toolbar=requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+        toolbar.findViewById<TextView>(R.id.btn_login).gone()
     }
 
     override fun init() {

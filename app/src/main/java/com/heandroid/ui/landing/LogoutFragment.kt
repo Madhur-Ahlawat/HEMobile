@@ -21,7 +21,6 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
     override fun init() {
         binding.apply {
             requireActivity().setRightButtonText(getString(R.string.contact_us))
-
         }
     }
 

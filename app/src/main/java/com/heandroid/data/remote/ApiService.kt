@@ -104,4 +104,5 @@ interface ApiService {
     @GET(TOLL_RATES)
     suspend fun getTollRates(@Body body: UpdateSecAccessRightsReq): Response<List<TollRatesResp>?>
 
+
 }

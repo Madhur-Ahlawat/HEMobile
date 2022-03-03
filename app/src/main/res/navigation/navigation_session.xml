@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/signOutFragment"
-        android:name="com.heandroid.ui.auth.session.SignoutFragment"
+        android:name="com.heandroid.ui.landing.LogoutFragment"
         tools:layout="@layout/fragment_signout"
         android:label="SignoutFragment" />
 </navigation>
