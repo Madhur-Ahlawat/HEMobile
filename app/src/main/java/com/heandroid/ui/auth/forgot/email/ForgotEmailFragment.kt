@@ -29,15 +29,14 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     private var loader: LoaderDialog?=null
 
     @Inject
-    lateinit var session : SessionManager
+    lateinit var sessionManager : SessionManager
 
     private val viewModel : ForgotEmailViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater,container,false)
 
     override fun init() {
-        session.clearAll()
-        session.saveAuthToken(null)
+        sessionManager.clearAll()
         requireActivity().toolbar(getString(R.string.txt_recovery_username))
         binding.model= ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
         loader= LoaderDialog()

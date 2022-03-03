@@ -11,6 +11,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.databinding.AdapterCrossingHistoryBinding
 import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment
 import com.heandroid.utils.DateUtils
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Utils.getDirection
 import com.heandroid.utils.common.Utils.loadStatus
 
@@ -33,7 +34,7 @@ class CrossingHistoryAdapter(
 
         holder.binding.cvMain.setOnClickListener {
             val bundle = Bundle()
-            bundle.putParcelable("data", list?.get(position))
+            bundle.putParcelable(Constants.DATA, list?.get(position))
             if (myFragment is VehicleHistoryCrossingHistoryFragment)
                 it.findNavController().navigate(
                     R.id.action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2,

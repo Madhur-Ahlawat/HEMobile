@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
@@ -13,18 +14,22 @@ import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class VehicleHistoryVehicleDetailsFragment :
-    BaseFragment<FragmentVehicleHistoryVehicleDetailsBinding>(), View.OnClickListener {
+    BaseFragment<FragmentVehicleHistoryVehicleDetailsBinding>() {
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by activityViewModels()
     private var mVehicleDetails: VehicleResponse? = null
+    private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,33 +37,32 @@ class VehicleHistoryVehicleDetailsFragment :
     ) = FragmentVehicleHistoryVehicleDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         setBtnDisabled()
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.saveBtn -> {
+    override fun initCtrl() {
+        binding.apply {
+            backToVehiclesBtn.setOnClickListener {
+                findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)
+            }
+            saveBtn.setOnClickListener {
                 mVehicleDetails?.let {
                     val request = it.apply {
                         newPlateInfo = plateInfo
+                        newPlateInfo.vehicleComments = binding.edtNote.text.toString().trim()
+                        vehicleInfo.vehicleClassDesc =
+                            VehicleClassTypeConverter.toClassCode(vehicleInfo.vehicleClassDesc)
                     }
+                    loader?.show(requireActivity().supportFragmentManager, "")
                     vehicleMgmtViewModel.updateVehicleApi(request)
                 }
             }
-            R.id.backToVehiclesBtn -> {
-                findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)
-            }
-        }
-    }
 
-
-    override fun initCtrl() {
-        binding.apply {
-            saveBtn.setOnClickListener(this@VehicleHistoryVehicleDetailsFragment)
-            backToVehiclesBtn.setOnClickListener(this@VehicleHistoryVehicleDetailsFragment)
             edtNote.doOnTextChanged { _, _, _, _ ->
-                if (edtNote.text?.isEmpty() == true ||
-                    edtNote.text?.equals(mVehicleDetails?.plateInfo?.vehicleComments) == true
+                if (edtNote.text.toString()
+                        .trim() == mVehicleDetails?.plateInfo?.vehicleComments?.trim()
                 ) {
                     setBtnDisabled()
                 } else {
@@ -81,10 +85,15 @@ class VehicleHistoryVehicleDetailsFragment :
     }
 
     private fun handleUpdateVehicleResponse(response: Resource<EmptyApiResponse?>?) {
+        if (loader?.isVisible == true){
+            loader?.dismiss()
+        }
         when (response) {
             is Resource.Success -> {
-                response.data?.let {
-                    showToast("Vehicle is updated successfully")
+                requireContext().showToast("Vehicle is updated successfully")
+                setBtnDisabled()
+                mVehicleDetails?.let {
+                    it.plateInfo.vehicleComments = binding.edtNote.text.toString().trim()
                 }
             }
             is Resource.DataError -> {
@@ -137,9 +146,4 @@ class VehicleHistoryVehicleDetailsFragment :
         }
     }
 
-    private fun showToast(message: String?) {
-        message?.let {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-    }
 }

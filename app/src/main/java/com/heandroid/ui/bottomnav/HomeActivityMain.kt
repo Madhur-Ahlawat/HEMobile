@@ -75,6 +75,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(),LogoutListener 
     }
 
     override fun onLogout() {
+        finish()
         Utils.sessionExpired(this)
     }
 }

@@ -6,6 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:paddingStart="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_7sdp"
+        android:paddingTop="@dimen/_7sdp"
         android:paddingBottom="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -39,7 +42,7 @@
             android:id="@+id/txt_input_lyt"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_46sdp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -71,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:checked="false"
+            android:checked="true"
             android:text="@string/str_country_of_registraion"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"

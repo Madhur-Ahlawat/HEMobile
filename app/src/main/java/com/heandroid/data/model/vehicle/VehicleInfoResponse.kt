@@ -21,6 +21,6 @@ data class VehicleInfoResponse(
     @SerializedName("vehicleClassDesc")
     var vehicleClassDesc: String="",
     @SerializedName("effectiveStartDate")
-    val effectiveStartDate: String=""
+    var effectiveStartDate: String=""
 ) : Serializable
 

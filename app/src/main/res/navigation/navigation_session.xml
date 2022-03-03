@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/sessionExpireFragment"
-        android:name="com.heandroid.ui.auth.session.SessionExpireFragment"
+        android:name="com.heandroid.ui.landing.SessionExpireFragment"
         tools:layout="@layout/fragment_session_expire"
         android:label="SessionExpireFragment" />
 
