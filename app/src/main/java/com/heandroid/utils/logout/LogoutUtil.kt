@@ -3,23 +3,28 @@ package com.heandroid.utils.logout
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
+import android.os.AsyncTask
 import com.heandroid.ui.base.BaseApplication
 import kotlinx.coroutines.*
+import okhttp3.internal.wait
 import java.util.*
 
 
 object LogoutUtil {
     var timer: Timer? = null
-    private val LOGOUT_TIME = 20000L
+    private const val LOGOUT_TIME = 60000L
+    private var listner: LogoutListener?=null
 
     @Synchronized
-    fun startLogoutTimer(listner: LogoutListener?) {
+    fun startLogoutTimer(listne: LogoutListener?) {
         if (timer != null) {
             timer?.cancel()
             timer = null
+            listner=null
         }
         if (timer == null) {
             timer = Timer()
+            listner=listne
             timer?.schedule(object : TimerTask(){
                 override fun run() {
                     cancel()
@@ -27,10 +32,7 @@ object LogoutUtil {
                     try {
                         CoroutineScope(Dispatchers.Main).launch {
                             withContext(Dispatchers.IO){
-                                var foreGround = async { return@async isAppOnForeground() }.await()
-                                if(foreGround){
-                                    listner?.onLogout()
-                                }
+                                listner?.onLogout()
                             }
                         }
 
@@ -44,21 +46,12 @@ object LogoutUtil {
     }
 
 
-    private fun isAppOnForeground(): Boolean {
-        val activityManager = BaseApplication.INSTANCE.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val appProcesses = activityManager.runningAppProcesses ?: return false
-        val packageName: String = BaseApplication.INSTANCE.packageName
-        for (appProcess in appProcesses) {
-            if (appProcess.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName == packageName) {
-                return true
-            }
-        }
-        return false
-    }
+
 
     @Synchronized
     fun stopLogoutTimer() {
         if (timer != null) {
+            listner=null
             timer?.cancel()
             timer = null
         }

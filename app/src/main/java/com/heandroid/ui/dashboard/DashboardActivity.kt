@@ -4,13 +4,7 @@ import com.heandroid.ui.base.BaseActivity
 
 class DashboardActivity : BaseActivity<Any?>() {
 
+    override fun observeViewModel() {}
 
-    override fun observeViewModel() {
-
-    }
-
-    override fun initViewBinding() {
-
-    }
-
+    override fun initViewBinding() {}
 }

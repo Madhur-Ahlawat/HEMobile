@@ -1,15 +1,17 @@
 package com.heandroid.ui.bottomnav.dashboard
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.heandroid.R
+import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
-import com.heandroid.ui.auth.login.LoginViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
@@ -22,12 +24,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private var loader: LoaderDialog? = null
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -35,6 +31,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
 
     override fun init() {
+        binding.tvCrossingCount.text =
+            getString(R.string.str_two_crossing, "0")
+        binding.tvVehicleCount.text = getString(R.string.str_two_vehicle, "0")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
@@ -42,23 +41,32 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     override fun initCtrl() {
+        binding.tvViewVehicle.setOnClickListener{
+            val bundle = Bundle().apply {
+                putBoolean(Constants.DATA, true)
+            }
+            findNavController().navigate(R.id.action_dashBoardFragment_to_vehicleListFragment2, bundle)
+        }
     }
 
     override fun observer() {
-        observe(dashboardViewModel.vehicleListVal, ::dashBoardResponse)
+        observe(dashboardViewModel.vehicleListVal, ::vehicleListResponse)
+        observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
     }
 
-    private val TAG = "DashboardFragment"
-    private fun dashBoardResponse(status: Resource<List<VehicleResponse?>?>?) {
+    private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         loader?.dismiss()
-        when (status) {
+        when (resource) {
             is Resource.Success -> {
-                Logg.logging(TAG, "Vehicle Data ${status.data}")
-
-                dashboardViewModel.getAlertsApi(Constants.LANGUAGE)
+                resource.data?.let {
+                    it.transactionList?.count?.let { count ->
+                        binding.tvCrossingCount.text =
+                            getString(R.string.str_two_crossing, count)
+                    }
+                }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
 
@@ -67,4 +75,35 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     }
 
+    private fun vehicleListResponse(status: Resource<List<VehicleResponse?>?>?) {
+        loader?.dismiss()
+        when (status) {
+            is Resource.Success -> {
+                status.data?.let {
+                    if (it.isNotEmpty()) {
+                        binding.tvVehicleCount.text =
+                            getString(R.string.str_two_vehicle, it.size.toString())
+                    }
+                }
+                getCrossingData()
+//                dashboardViewModel.getAlertsApi(Constants.LANGUAGE)
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun getCrossingData() {
+        loader?.show(requireActivity().supportFragmentManager, "")
+        val request = CrossingHistoryRequest(
+            startIndex = 1,
+            count = 1,
+            transactionType = Constants.ALL_TRANSACTION
+        )
+        dashboardViewModel.crossingHistoryApiCall(request)
+    }
 }

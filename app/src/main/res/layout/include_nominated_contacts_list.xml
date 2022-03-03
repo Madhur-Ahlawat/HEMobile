@@ -1,82 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/nominated_contacts_list_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:gravity="start"
-        android:padding="@dimen/_5sdp"
-        android:text="@string/str_nominated_contacts_list"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <LinearLayout
-        android:id="@+id/chipLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nominated_contacts_list_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/_8sdp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nominated_contacts_list_title"
-        tools:visibility="visible">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/active_txt_lst"
+            android:id="@+id/nominated_contacts_list_title"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_28sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:background="@drawable/text_selected_bg"
-            android:gravity="center"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_15sdp"
-            android:text="@string/str_active_small"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/invited_txt_list"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_28sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:background="@drawable/text_unselected_bg"
-            android:gravity="center"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_15sdp"
-            android:text="@string/str_invited"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:gravity="start"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/str_nominated_contacts_list"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/nominated_contact_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipLayout" />
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/chipLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nominated_contacts_list_title"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/active_txt_lst"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/text_selected_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:text="@string/str_active_small"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/invited_txt_list"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/text_unselected_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:text="@string/str_invited"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/nominated_contact_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="4"
+            app:layout_constrainedHeight="true"
+            tools:listitem="@layout/nominated_contacts_adapter"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/nominate_btn_list"
+            app:layout_constraintTop_toBottomOf="@id/chipLayout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nominate_btn_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_60sdp"
+            android:backgroundTint="@color/white"
+            android:text="@string/str_nominate_contact"
+            android:textAllCaps="false"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nominated_contact_recycler_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeColor="@color/green"
+            app:strokeWidth="@dimen/_2sdp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

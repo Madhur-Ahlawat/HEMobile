@@ -22,10 +22,10 @@ fun <A : Activity> Activity.startNormalActivity(activity: Class<A>){
 }
 
 fun Activity.toolbar(title: String?){
-    val ivBack=findViewById<ImageView>(R.id.btn_back)
-    val tvHeader=findViewById<TextView>(R.id.tv_header)
-    tvHeader.text=title
-    ivBack.setOnClickListener{
+    val ivBack=findViewById<ImageView?>(R.id.btn_back)
+    val tvHeader=findViewById<TextView?>(R.id.tv_header)
+    tvHeader?.text=title
+    ivBack?.setOnClickListener{
         onBackPressed()
     }
 }

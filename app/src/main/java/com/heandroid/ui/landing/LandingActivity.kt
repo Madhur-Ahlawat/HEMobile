@@ -62,6 +62,9 @@ class LandingActivity : BaseActivity<Any?>() {
                 Constants.LOGOUT_SCREEN -> {
                     startDestination = R.id.logoutFragment
                 }
+                Constants.SESSION_TIME_OUT->{
+                    startDestination = R.id.sessionTimeOutFragment
+                }
             }
         }
 
@@ -80,6 +83,12 @@ class LandingActivity : BaseActivity<Any?>() {
 
     fun openLandingFragment() {
         screenType = Constants.LANDING_SCREEN
+        loadFragment()
+    }
+
+    fun openStartNowFragment()
+    {
+        screenType = Constants.START_NOW_SCREEN
         loadFragment()
     }
 

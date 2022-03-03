@@ -22,6 +22,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +41,11 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     ) = FragmentVehicleListBinding.inflate(inflater, container, false)
 
     override fun init() {
+        val buttonVisibility = arguments?.getBoolean(Constants.DATA, false) == true
+        if (buttonVisibility) {
+            binding.addVehicleBtn.gone()
+            binding.removeVehicleBtn.gone()
+        }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }

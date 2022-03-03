@@ -11,23 +11,24 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.databinding.DialogLogoutBinding
 import com.heandroid.ui.base.BaseDialog
-import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
 
     private val viewModel: LogoutViewModel by viewModels()
 
-    override fun getDialogBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): DialogLogoutBinding = DialogLogoutBinding.inflate(inflater, container, false)
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+    override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): DialogLogoutBinding = DialogLogoutBinding.inflate(inflater,container,false)
 
     override fun init() {
         binding.tvTitle.text = arguments?.getString("title")
@@ -64,6 +65,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
         when (status) {
             is Resource.Success -> {
                 dismiss()
+                sessionManager.clearAll()
                 openLogoutScreen()
             }
             is Resource.DataError -> {
@@ -74,8 +76,12 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
     }
 
     private fun openLogoutScreen() {
-        var intent = Intent(requireActivity(), LandingActivity::class.java)
-        intent.putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-        requireActivity().startActivity(intent)
+        requireActivity().finish()
+        Intent(requireActivity(), LandingActivity::class.java).apply {
+            putExtra(Constants.SHOW_SCREEN,Constants.LOGOUT_SCREEN)
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(this)
+        }
+
     }
 }

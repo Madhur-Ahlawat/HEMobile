@@ -17,7 +17,7 @@ data class SecondaryAccountData(
     @SerializedName("firstName") val firstName: String,
     @SerializedName("lastName") val lastName: String,
     @SerializedName("phoneNumber") val phoneNumber: String,
-    var isExpanded: Boolean
+    var isExpanded: Boolean = false
 )
 
 data class SecondaryAccountBody(

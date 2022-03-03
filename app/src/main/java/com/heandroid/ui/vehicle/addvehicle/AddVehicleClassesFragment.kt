@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +14,7 @@ import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
@@ -28,6 +30,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private lateinit var mVehicleDetails: VehicleResponse
+    private var loader: LoaderDialog? = null
     private var mClassType = ""
 
     override fun getFragmentBinding(
@@ -37,12 +40,14 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
         binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
     }
 
     override fun initCtrl() {
-        binding.classARadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.apply {
                     classBRadioButton.isChecked = false
@@ -53,11 +58,11 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     classCDesc.gone()
                     classDDesc.gone()
                 }
-                mClassType = "Class A"
+                mClassType = "1"
             }
         }
 
-        binding.classBRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.classBRadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.apply {
                     classARadioButton.isChecked = false
@@ -68,10 +73,10 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     classCDesc.gone()
                     classDDesc.gone()
                 }
-                mClassType = "Class B"
+                mClassType = "2"
             }
         }
-        binding.classCRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.classCRadioButton.setOnCheckedChangeListener { _, isChecked ->
 
             if (isChecked) {
                 binding.apply {
@@ -83,10 +88,10 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     classCDesc.visible()
                     classDDesc.gone()
                 }
-                mClassType = "Class C"
+                mClassType = "3"
             }
         }
-        binding.classDRadioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.classDRadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.apply {
                     classARadioButton.isChecked = false
@@ -97,7 +102,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     classCDesc.gone()
                     classDDesc.visible()
                 }
-                mClassType = "Class D"
+                mClassType = "4"
             }
         }
 
@@ -119,7 +124,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     "Please select the checkbox",
                     Snackbar.LENGTH_LONG
                 ).show()
-            } else if (binding.classVehicleCheckbox.isChecked && !mClassType.isNotEmpty()) {
+            } else if (binding.classVehicleCheckbox.isChecked && mClassType.isEmpty()) {
                 Snackbar.make(
                     binding.classAView,
                     "Please select the class",
@@ -140,7 +145,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        val request = mVehicleDetails.apply {
+        mVehicleDetails.apply {
             plateInfo.state = "HE"
             plateInfo.type = "STANDARD"
             plateInfo.vehicleGroup = ""
@@ -150,13 +155,13 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             vehicleInfo.typeId = null
             vehicleInfo.typeDescription = "REGULAR"
         }
-        mVehicleDetails = request
-        vehicleMgmtViewModel.addVehicleApi(request)
 
-        navigateToAddVehicleDoneScreen()
+        loader?.show(requireActivity().supportFragmentManager, "")
+        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
         when (status) {
             is Resource.Success -> {
                 navigateToAddVehicleDoneScreen()

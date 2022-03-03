@@ -16,6 +16,7 @@
             android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:gravity="start"
+            android:visibility="gone"
             android:padding="@dimen/_5sdp"
             android:text="@string/str_u_can_nominate_upto_five_users"
             android:textColor="@color/black"
@@ -55,6 +56,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="@color/green"
             android:text="@string/str_nominate_contact"
+            android:visibility="gone"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
@@ -106,6 +108,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/full_name_and_contact_sub_lyt">

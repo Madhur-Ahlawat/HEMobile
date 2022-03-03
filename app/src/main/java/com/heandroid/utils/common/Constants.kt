@@ -2,6 +2,11 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val REFRESH_TOKEN = "refresh_token_to_start"
+    const val TYPE ="type"
+    const val LOGIN ="login"
+    const val START_NOW ="start_now"
+    const val SESSION_TIME_OUT= "session_time_out"
     const val START_NOW_SCREEN="start_now"
     const val LOGOUT_SCREEN="log_out"
     const val LANDING_SCREEN="landing"

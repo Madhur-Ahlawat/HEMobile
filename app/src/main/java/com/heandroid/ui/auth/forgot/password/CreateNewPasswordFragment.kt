@@ -67,7 +67,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?){
         loader?.dismiss()
         when(status){
-            is Resource.Success ->{ findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment) }
+            is Resource.Success ->{
+                if(status.data?.success==true) findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment)
+                else showError(binding.root,status.data?.message)
+            }
             is Resource.DataError ->{ showError(binding.root,"") }
         }
     }

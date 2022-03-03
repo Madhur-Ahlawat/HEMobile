@@ -11,6 +11,9 @@ import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.databinding.NominatedContactsAdapterBinding
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 
 class NominatedContactsAdapter(
     private val mContext: Context,
@@ -19,34 +22,54 @@ class NominatedContactsAdapter(
     private var secAccountList: List<SecondaryAccountData?> = mutableListOf()
 
     fun setList(list: ArrayList<SecondaryAccountData?>) {
-            secAccountList = list
+        secAccountList = list
     }
 
-    class VrmHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val nameTxt: AppCompatTextView = itemView.findViewById(R.id.name_title)
-        private val arrowImg: AppCompatImageView = itemView.findViewById(R.id.arrow_img)
+    class VrmHeaderViewHolder(var binding: NominatedContactsAdapterBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun setView(context: Context, vehicleItem: SecondaryAccountData) {
-//            arrowImg.animate().rotation(180f).start()
+        fun setView(context: Context, contact: SecondaryAccountData) {
 
-            if (vehicleItem.isExpanded) {
-                arrowImg.animate().rotation(180f).start()
+            binding.nameTitle.text = "${contact.firstName}${contact.lastName}"
+            binding.emailIdStr.text = contact.emailAddress
+            binding.mobileNumberStr.text = contact.phoneNumber
+            if (contact.accountStatus.equals("INITIATED", true))
+                binding.statusTitleStr.text = "Pending"
+            else
+                binding.statusTitleStr.gone()
+
+            binding.rightsStr.text = "Amend Account, Vehicle Data"
+
+            if (contact.isExpanded) {
+                binding.arrowImg.animate().rotation(180f).start()
+                binding.bottomDetailsLyt.visible()
             } else {
-                arrowImg.animate().rotation(0f).start()
+                binding.arrowImg.animate().rotation(0f).start()
+                binding.bottomDetailsLyt.gone()
             }
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VrmHeaderViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.nominated_contacts_adapter, parent, false)
-        return VrmHeaderViewHolder(view)
+        return VrmHeaderViewHolder(
+            NominatedContactsAdapterBinding.inflate(
+                LayoutInflater.from(mContext), parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VrmHeaderViewHolder, position: Int) {
         secAccountList[position]?.let {
             holder.setView(mContext, it)
+
+        }
+
+        holder.binding.arrowTitleLyt.setOnClickListener {
+            val accList = secAccountList[position]
+            accList?.isExpanded = !accList!!.isExpanded
+            secAccountList[position]?.isExpanded = accList.isExpanded
+            notifyItemChanged(position)
         }
 
     }

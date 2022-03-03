@@ -10,26 +10,28 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnClickListener, AddVehicleListener {
+class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnClickListener,
+    AddVehicleListener {
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentAddVehicleBinding.inflate(inflater, container, false)
 
-    override fun observer() { }
+    override fun observer() {}
 
-    override fun init() { }
+    override fun init() {}
 
     override fun initCtrl() {
         binding.addVehicleBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.addVehicleBtn -> {
                 AddVehicleDialog.newInstance(
                     getString(R.string.str_title),
@@ -45,6 +47,7 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnCli
             putSerializable(Constants.DATA, details)
         }
         findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
+
     }
 
 
