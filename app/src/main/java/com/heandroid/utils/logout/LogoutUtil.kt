@@ -6,7 +6,7 @@ import com.heandroid.ui.base.BaseApplication
 
 object LogoutUtil {
     var timer: CountDownTimer? = null
-    var LOGOUT_TIME : Long= 1000 * 15
+    var LOGOUT_TIME : Long= 1000 * 120
     private var listner: LogoutListener?=null
 
     @Synchronized
