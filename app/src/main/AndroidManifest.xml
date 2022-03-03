@@ -49,7 +49,7 @@
         <activity android:name=".ui.account.profile.ProfileActivity" />
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
         <activity android:name=".ui.account.communication.CommunicationActivity" />
-
+        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment" />
 
 
         <provider
