@@ -16,10 +16,8 @@ import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.utils.VehicleClassTypeConverter
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -154,6 +152,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             vehicleInfo.year = "2022"
             vehicleInfo.typeId = null
             vehicleInfo.typeDescription = "REGULAR"
+            vehicleInfo.effectiveStartDate = "" //Utils.currentDateAndTime()
         }
 
         loader?.show(requireActivity().supportFragmentManager, "")
@@ -176,8 +175,12 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     private fun navigateToAddVehicleDoneScreen() {
+        val vehicleData = mVehicleDetails
+        vehicleData.apply {
+            this.vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+        }
         val bundle = Bundle().apply {
-            putSerializable(Constants.DATA, mVehicleDetails)
+            putSerializable(Constants.DATA, vehicleData)
             putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
         }
         findNavController().navigate(R.id.addVehicleDoneFragment, bundle)

@@ -59,6 +59,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
+                    // todo getting api count as null, so showing count as 0
                     it.transactionList?.count?.let { count ->
                         binding.tvCrossingCount.text =
                             getString(R.string.str_two_crossing, count)
