@@ -150,6 +150,16 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                 setNominatedContactsAdapter(initiatedList as ArrayList<SecondaryAccountData?>)
 
             }
+            includeNominatedContactsListLyt.nominateBtnList.setOnClickListener {
+
+                if (mList.isNotEmpty() && mList.size > 5) {
+                    requireActivity().showToast(getString(R.string.str_nominated_contacts_limit_reached))
+                } else {
+                    nominateContactBtn.performClick()
+                }
+
+            }
+
         }
 
     }
@@ -159,6 +169,8 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
     private fun setNominatedContactsAdapter(mTempList: ArrayList<SecondaryAccountData?>) {
         if (mTempList.isNotEmpty()) {
             binding.includeNominatedContactsListLyt.nominatedContactsListContainer.visible()
+            binding.includeNominatedContactsListLyt.nominatedContactRecyclerView.visible()
+            binding.includeNominatedContactsListLyt.noContacts.gone()
 
             mAdapter = NominatedContactsAdapter(requireContext())
             mAdapter.setList(mTempList)
@@ -168,7 +180,9 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                     adapter = mAdapter
                 }
         } else {
-            binding.includeNominatedContactsListLyt.nominatedContactsListContainer.gone()
+            binding.includeNominatedContactsListLyt.nominatedContactsListContainer.visible()
+            binding.includeNominatedContactsListLyt.nominatedContactRecyclerView.gone()
+            binding.includeNominatedContactsListLyt.noContacts.visible()
 
         }
     }

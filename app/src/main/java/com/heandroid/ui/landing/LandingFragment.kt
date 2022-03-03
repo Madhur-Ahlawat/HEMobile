@@ -13,9 +13,13 @@ import com.heandroid.databinding.FragmentLandingBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
+import com.heandroid.ui.viewcharges.ActivityViewCharges
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.extn.startNewActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener,
     RadioGroup.OnCheckedChangeListener {
 
@@ -75,13 +79,36 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         v?.let {
             when (v.id) {
                 R.id.btn_continue -> {
-                    if (model.selectType == Constants.RESOLVE_PENALTY) {
 
-                        openUrlInWebBrowser()
+                    when (model.selectType) {
 
-                    } else {
-                        Intent(requireActivity(), InProgressActivity::class.java).run {
-                            startActivity(this)
+                        Constants.VIEW_CHARGES -> {
+                            requireActivity().startNewActivity(ActivityViewCharges::class.java)
+
+                        }
+
+                        Constants.CHECK_FOR_PAID -> {
+                            Intent(requireActivity(), InProgressActivity::class.java).run {
+                                startActivity(this)
+                            }
+
+                        }
+
+                        Constants.RESOLVE_PENALTY -> {
+                            openUrlInWebBrowser()
+
+                        }
+                        Constants.ONE_OFF_PAYMENT -> {
+                            Intent(requireActivity(), InProgressActivity::class.java).run {
+                                startActivity(this)
+                            }
+
+                        }
+                        Constants.CREATE_ACCOUNT -> {
+                            Intent(requireActivity(), InProgressActivity::class.java).run {
+                                startActivity(this)
+                            }
+
                         }
 
                     }
@@ -93,12 +120,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
     private fun openUrlInWebBrowser() {
 
-            var url = "http://www.google.com";
-            Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
-                // Note the Chooser below. If no applications match,
-                // Android displays a system message.So here there is no need for try-catch.
-                startActivity(Intent.createChooser(this, "Browse with"));
-            }
+        var url = "http://www.google.com";
+        Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
+            // Note the Chooser below. If no applications match,
+            // Android displays a system message.So here there is no need for try-catch.
+            startActivity(Intent.createChooser(this, "Browse with"));
+        }
 
     }
 }

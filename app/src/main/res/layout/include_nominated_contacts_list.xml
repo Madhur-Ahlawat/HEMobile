@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:gravity="start"
             android:padding="@dimen/_5sdp"
@@ -24,13 +24,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <LinearLayout
             android:id="@+id/chipLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:gravity="start"
             android:orientation="horizontal"
             android:padding="@dimen/_8sdp"
@@ -69,19 +68,38 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nominated_contact_recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:itemCount="4"
-            app:layout_constrainedHeight="true"
-            tools:listitem="@layout/nominated_contacts_adapter"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible"
+            app:layout_constrainedHeight="true"
+            android:id="@+id/contacts_list_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/nominate_btn_list"
-            app:layout_constraintTop_toBottomOf="@id/chipLayout" />
+            app:layout_constraintTop_toBottomOf="@id/chipLayout"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nominated_contact_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="4"
+                tools:listitem="@layout/nominated_contacts_adapter"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/no_contacts"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:text="@string/str_no_active_contacts"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nominate_btn_list"
@@ -99,7 +117,7 @@
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nominated_contact_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/contacts_list_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:strokeColor="@color/green"
             app:strokeWidth="@dimen/_2sdp" />
