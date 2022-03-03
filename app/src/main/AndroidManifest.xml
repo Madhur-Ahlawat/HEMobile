@@ -43,6 +43,7 @@
             android:theme="@style/Theme.HEMobile"/>
 
         <activity android:name=".ui.bottomnav.HomeActivityMain"/>
+        <activity android:name=".ui.viewcharges.ActivityViewCharges"/>
         <activity android:name=".ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.account.profile.ProfileActivity" />

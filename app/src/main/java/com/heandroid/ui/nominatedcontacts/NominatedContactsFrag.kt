@@ -14,6 +14,7 @@ import com.heandroid.data.model.nominatedcontacts.SecondaryAccountResp
 import com.heandroid.databinding.FragmentNominatedContactsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -150,6 +151,19 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                 setNominatedContactsAdapter(initiatedList as ArrayList<SecondaryAccountData?>)
 
             }
+            includeNominatedContactsListLyt.nominateBtnList.setOnClickListener {
+
+                if (mList.isNotEmpty() && mList.size > 5) {
+                    ErrorUtil.showError(
+                        root,
+                        getString(R.string.str_nominated_contacts_limit_reached)
+                    )
+                } else {
+                    nominateContactBtn.performClick()
+                }
+
+            }
+
         }
 
     }
@@ -159,6 +173,8 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
     private fun setNominatedContactsAdapter(mTempList: ArrayList<SecondaryAccountData?>) {
         if (mTempList.isNotEmpty()) {
             binding.includeNominatedContactsListLyt.nominatedContactsListContainer.visible()
+            binding.includeNominatedContactsListLyt.nominatedContactRecyclerView.visible()
+            binding.includeNominatedContactsListLyt.noContacts.gone()
 
             mAdapter = NominatedContactsAdapter(requireContext())
             mAdapter.setList(mTempList)
@@ -168,7 +184,9 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                     adapter = mAdapter
                 }
         } else {
-            binding.includeNominatedContactsListLyt.nominatedContactsListContainer.gone()
+            binding.includeNominatedContactsListLyt.nominatedContactsListContainer.visible()
+            binding.includeNominatedContactsListLyt.nominatedContactRecyclerView.gone()
+            binding.includeNominatedContactsListLyt.noContacts.visible()
 
         }
     }

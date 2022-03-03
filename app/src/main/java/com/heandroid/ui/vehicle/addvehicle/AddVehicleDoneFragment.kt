@@ -50,7 +50,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     override fun initCtrl() {
         binding.conformBtn.setOnClickListener {
             if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment3)
+                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment)
             } else {
 //                onBackPressed()
             }

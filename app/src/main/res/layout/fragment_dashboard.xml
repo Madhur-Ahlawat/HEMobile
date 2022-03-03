@@ -244,10 +244,10 @@
                     android:layout_marginHorizontal="10dp"
                     android:textColor="@color/color_666666"
                     android:background="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_13ssp"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableRight="@drawable/ic_right"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    app:drawableRightCompat="@drawable/ic_right" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
                 android:layout_width="match_parent"
@@ -259,6 +259,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/crossingsView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
@@ -360,9 +361,9 @@
                     android:textColor="@color/color_666666"
                     android:background="@color/white"
                     android:drawablePadding="@dimen/_5sdp"
-                    android:drawableRight="@drawable/ic_right"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    app:drawableRightCompat="@drawable/ic_right" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
                 android:layout_width="match_parent"

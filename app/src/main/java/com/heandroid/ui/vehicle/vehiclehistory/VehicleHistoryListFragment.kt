@@ -2,6 +2,7 @@ package com.heandroid.ui.vehicle.vehiclehistory
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.ErrorUtil
@@ -23,6 +25,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     ItemClickListener {
 
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
+    private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by activityViewModels()
 
     override fun getFragmentBinding(
@@ -30,9 +33,13 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
         container: ViewGroup?
     ) = FragmentVehicleHistoryListBinding.inflate(inflater, container, false)
 
-    override fun init() {}
+    override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    }
 
     override fun initCtrl() {
+        loader?.show(requireActivity().supportFragmentManager, "")
         vehicleMgmtViewModel.getVehicleInformationApi()
     }
 
@@ -41,6 +48,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     }
 
     private fun handleVehicleHistoryListData(resource: Resource<List<VehicleResponse?>?>?) {
+        loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 if (!resource.data.isNullOrEmpty()) {
@@ -59,15 +67,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     }
 
     private fun setHistoryAdapter() {
-        val list = listOf(
-            VehicleResponse(
-                PlateInfoResponse(), PlateInfoResponse(), VehicleInfoResponse(
-                    "make",
-                    "audi", "2002", "type", "aa",
-                    "desc", "red", "class a", "12, 01, 3003"
-                ), false
-            )
-        )
         val mAdapter = VrmHistoryAdapter(this)
         mAdapter.setList(mList)
         binding.rvVehicleHistoryList.apply {
@@ -85,7 +84,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
 //        }
 //        (requireActivity() as VehicleMgmtActivity).setVehicleItem(details)
         vehicleMgmtViewModel.setSelectedVehicleResponse(details)
-        findNavController().navigate(R.id.vehicleHistoryVehicleDetailsFragment)
+        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment)
     }
 
 }

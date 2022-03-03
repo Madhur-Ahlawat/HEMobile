@@ -9,6 +9,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.databinding.FragmentCrossingHistoryMakePaymentBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.DateUtils
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Utils.getDirection
 import com.heandroid.utils.common.Utils.loadStatus
 
@@ -26,7 +27,7 @@ class CrossingHistoryMakePaymentFragment :
 
     override fun init() {
         binding.apply {
-            arguments?.getParcelable<CrossingHistoryItem?>("data")?.run {
+            arguments?.getParcelable<CrossingHistoryItem?>(Constants.DATA)?.run {
 
                 crossingDate.text = DateUtils.convertDateFormat(transactionDate, 0)
                 crossingTime.text = DateUtils.convertTimeFormat(exitTime, 0)
