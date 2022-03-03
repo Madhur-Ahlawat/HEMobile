@@ -21,7 +21,8 @@ import okhttp3.ResponseBody
 import okhttp3.internal.filterList
 
 @AndroidEntryPoint
-class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
+class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>(),
+    NominatedContactListener {
 
     private val nominatedContactsViewModel: NominatedContactsViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -48,6 +49,9 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
     private var readWrite: Boolean? = null
     private var permissionValue = ""
     private var accountId = ""
+    private var lastNameValue = ""
+    private var isEditClicked = false
+    private var contactStatus = ""
 
     override fun initCtrl() {
         binding.apply {
@@ -60,6 +64,7 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                 nominateContactBtn.gone()
                 fullNameAndContactSubLyt.visible()
                 tfFullName.visible()
+                tfLastName.visible()
                 nextBtn.visible()
                 fullName.setStyleBold()
                 fullName.setUnderLineTxt(getString(R.string.str_full_name))
@@ -68,42 +73,66 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
 
             nextBtn.setOnClickListener {
 
-                if (edtFullName.text.toString().isNotEmpty()) {
+                if (!isEditClicked) {
+                    if (edtFullName.text.toString().isNotEmpty() && edtLastName.text.toString()
+                            .isNotEmpty()
+                    ) {
 
-                    fullNameValue = edtFullName.text.toString()
-                    tfEmail.visible()
-                    tfMobileNo.visible()
-                    tfFullName.gone()
-                    fullName.text = getString(R.string.str_full_name)
-                    fullName.setStyleNormal()
-                    contact.setStyleBold()
-                    contact.setUnderLineTxt(getString(R.string.str_contact))
+                        fullNameValue = edtFullName.text.toString()
+                        lastNameValue = edtLastName.text.toString()
 
-                    if (edtEmail.text.toString().isNotEmpty()) {
-                        mailValue = edtEmail.text.toString()
-                        if (edtNumber.text.toString().isNotEmpty())
-                            mobileNumberValue = edtNumber.text.toString()
+                        tfEmail.visible()
+                        tfMobileNo.visible()
+                        tfFullName.gone()
+                        tfLastName.gone()
+                        fullName.text = getString(R.string.str_full_name)
+                        fullName.setStyleNormal()
+                        contact.setStyleBold()
+                        contact.setUnderLineTxt(getString(R.string.str_contact))
 
-                        setData()
-                        hideViews()
-                        val secBody = SecondaryAccountBody(
-                            fullNameValue,
-                            fullNameValue,
-                            mailValue,
-                            mobileNumberValue,
-                            ""
-                        )
-                        nominatedContactsViewModel.createAccount(secBody)
-                        loader?.show(requireActivity().supportFragmentManager, "TAG")
-                        Logg.logging("TESTSTR", "testess create account started")
+                        if (edtEmail.text.toString().isNotEmpty()) {
+                            mailValue = edtEmail.text.toString()
+                            if (edtNumber.text.toString().isNotEmpty())
+                                mobileNumberValue = edtNumber.text.toString()
 
-                        includeViewContactDetailsLyt.nominatedAccessRightsContainer.visible()
+                            setData()
+                            hideViews()
+                            val secBody = SecondaryAccountBody(
+                                fullNameValue,
+                                lastNameValue,
+                                mailValue,
+                                mobileNumberValue,
+                                ""
+                            )
+                            nominatedContactsViewModel.createAccount(secBody)
+                            loader?.show(requireActivity().supportFragmentManager, "TAG")
+                            Logg.logging("TESTSTR", "testess create account started")
+
+                            includeViewContactDetailsLyt.nominatedAccessRightsContainer.visible()
+                        } else {
+                            requireContext().showToast("Please enter email id correctly")
+                        }
+
                     } else {
-                        requireContext().showToast("Please enter email id correctly")
+                        requireContext().showToast("Please enter nominee full name")
                     }
-
                 } else {
-                    requireContext().showToast("Please enter nominee full name")
+                    mobileNumberValue = edtNumber.text.toString()
+                    mailValue = edtEmail.text.toString()
+
+                    val mUpdateAccount = UpdateSecAccountDetails(
+                        accountId,
+                        contactStatus,
+                        mobileNumberValue,
+                        mailValue
+                    )
+                    loader?.show(requireActivity().supportFragmentManager, "Update")
+                    nominatedContactsViewModel.updateSecondaryAccountData(mUpdateAccount)
+                    hideViews()
+                    includeViewContactDetailsLyt.nominatedAccessRightsContainer.visible()
+                    binding.includeViewContactDetailsLyt.emailAddressStr.text = mailValue
+                    binding.includeViewContactDetailsLyt.mobileNumberStr.text = mobileNumberValue
+
                 }
 
             }
@@ -247,15 +276,19 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
     }
 
     private val mList = ArrayList<SecondaryAccountData?>()
+    private val mFilteredList = ArrayList<SecondaryAccountData?>()
     lateinit var mAdapter: NominatedContactsAdapter
     private fun setNominatedContactsAdapter(mTempList: ArrayList<SecondaryAccountData?>) {
         if (mTempList.isNotEmpty()) {
             binding.includeNominatedContactsListLyt.nominatedContactsListContainer.visible()
             binding.includeNominatedContactsListLyt.nominatedContactRecyclerView.visible()
             binding.includeNominatedContactsListLyt.noContacts.gone()
+            if (mFilteredList.isNotEmpty())
+                mFilteredList.clear()
 
-            mAdapter = NominatedContactsAdapter(requireContext())
-            mAdapter.setList(mTempList)
+            mFilteredList.addAll(mTempList)
+            mAdapter = NominatedContactsAdapter(requireContext(), this)
+            mAdapter.setList(mFilteredList)
             binding.includeNominatedContactsListLyt.nominatedContactRecyclerView
                 .apply {
                     layoutManager = LinearLayoutManager(context)
@@ -268,7 +301,6 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
 
         }
     }
-
 
     private fun hideViews() {
         binding.apply {
@@ -343,7 +375,7 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
         when (status) {
             is Resource.Success -> {
                 Logg.logging("TESTSTR", "testess createAccount called status ${status.data}")
-                if (status.data!!.message.equals("SUCCESS",true)) {
+                if (status.data!!.message.equals("SUCCESS", true)) {
                     accountId = status.data.secondaryAccountId
 
                     ErrorUtil.showError(
@@ -370,13 +402,50 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
         }
     }
 
-    private fun getSecondaryAccountsRes(status: Resource<GetSecondaryAccessRightsResp?>) {
+    private var selPos = -1
+
+    private
+
+    fun getSecondaryAccountsRes(status: Resource<GetSecondaryAccessRightsResp?>) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
+                Logg.logging(
+                    "TESTSTR",
+                    "testess errror getSecondaryAccountsRes sucess  ${status.data}"
+                )
+                Logg.logging(
+                    "TESTSTR",
+                    "testess errror getSecondaryAccountsRes mFilteredList.size  ${mFilteredList.size}"
+                )
+                Logg.logging(
+                    "TESTSTR",
+                    "testess errror getSecondaryAccountsRes selPos  $selPos"
+                )
+                if (mFilteredList.size > 0 && selPos >= 0 && selPos < mFilteredList.size) {
+
+                    if (status.data!!.accessRights.accessVo.size > 0 && status.data!!.accessRights.accessVo[0].entity.equals(
+                            "READ",
+                            true
+                        )
+                    )
+                        mFilteredList[selPos]!!.mPermissionLevel = "Read Only"
+                    else
+                        mFilteredList[selPos]!!.mPermissionLevel = "Amend Account, Vehicle data"
+
+                    mAdapter?.apply {
+                        notifyItemChanged(selPos)
+                    }
+
+
+                }
 
             }
             is Resource.DataError -> {
+                Logg.logging(
+                    "TESTSTR",
+                    "testess errror getSecondaryAccountsRes errormsg ${status.errorMsg}"
+                )
 
             }
             else -> {
@@ -392,6 +461,10 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                 Logg.logging(
                     "TESTSTR",
                     "testess errror updateSecondaryAccessRightsRes  ${status.data}"
+                )
+                ErrorUtil.showError(
+                    binding.root,
+                    "Updated details successfully, Please set permissions for the account"
                 )
 
             }
@@ -413,6 +486,8 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
                     "TESTSTR",
                     "testess errror updateSecondaryAccessRightsRes  ${status.data}"
                 )
+                loader?.show(requireActivity().supportFragmentManager, "")
+                nominatedContactsViewModel.nominatedContactListFetch()
 
             }
             is Resource.DataError -> {
@@ -434,6 +509,72 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>() {
             includeViewContactDetailsLyt.fullNameStr.text = edtFullName.text.toString()
             includeViewContactDetailsLyt.emailAddressStr.text = edtEmail.text.toString()
             includeViewContactDetailsLyt.mobileNumberStr.text = edtNumber.text.toString()
+        }
+    }
+
+    override fun onItemClick(
+        type: String,
+        data: SecondaryAccountData,
+        pos: Int,
+        isExpanded: Boolean
+    ) {
+        Logg.logging(
+            "TESTSTR",
+            "testess createAccount activity called type $type  expamded $isExpanded rowID ${data.secAccountRowId}"
+        )
+
+        when (type) {
+
+            "open" -> {
+
+                if (isExpanded) {
+                    selPos = pos
+                    loader?.show(requireActivity().supportFragmentManager, "Load")
+                    nominatedContactsViewModel.getSecondaryRightsData(data.secAccountRowId)
+                }
+            }
+
+            "Resend" -> {
+
+            }
+            "Remove" -> {
+
+            }
+            "Edit" -> {
+                binding.apply {
+
+                    includeNominatedContactsListLyt.nominatedContactsListContainer.gone()
+                    isEditClicked = true
+                    tfEmail.visible()
+                    fullNameAndContactSubLyt.visible()
+                    tfMobileNo.visible()
+                    tfFullName.gone()
+                    tfLastName.gone()
+                    nextBtn.visible()
+                    fullName.text = getString(R.string.str_full_name)
+                    fullName.setStyleNormal()
+                    contact.setStyleBold()
+                    contact.setUnderLineTxt(getString(R.string.str_contact))
+                    binding.idNominateContactTitleLyt.visible()
+                    binding.youCanNominateTxt.gone()
+                    binding.lytEditInput.visible()
+                    binding.includeViewContactDetailsLyt.fullNameStr.text =
+                        "${data.firstName}${data.lastName}"
+                    binding.inviteNominatedContactTitle.visible()
+                    edtEmail.setText(data.emailAddress)
+                    edtNumber.setText(data.phoneNumber)
+                    accountId = data.secAccountRowId
+                    contactStatus = data.accountStatus
+
+                    readWrite =
+                        !(data.mPermissionLevel!!.isNotEmpty() && data.mPermissionLevel.equals(
+                            "READ",
+                            true
+                        ))
+                    includeViewContactDetailsLyt.readWriteRadioBtn.isChecked = readWrite!!
+                    includeViewContactDetailsLyt.readOnlyRadioBtn.isChecked = readWrite!!
+                }
+            }
         }
     }
 

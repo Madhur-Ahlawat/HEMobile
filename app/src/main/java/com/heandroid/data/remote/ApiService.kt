@@ -92,8 +92,8 @@ interface ApiService {
     @GET(SECONDARY_ACCOUNT)
     suspend fun getSecondaryAccount(): Response<NominatedContactRes?>
 
-    @GET(SECONDARY_ACCESS_RIGHTS)
-    suspend fun getSecondaryAccessRights(@Path("accountId") accountId: String): Response<GetSecondaryAccessRightsResp?>
+    @GET("$SECONDARY_ACCESS_RIGHTS/{accountId}")
+    suspend fun getSecondaryAccessRights(@Path("accountId",encoded = true) accountId: String): Response<GetSecondaryAccessRightsResp?>
 
     @PUT(UPDATE_SECONDARY_ACCOUNT)
     suspend fun updateSecondaryAccount(@Body body: UpdateSecAccountDetails): Response<ResponseBody?>
