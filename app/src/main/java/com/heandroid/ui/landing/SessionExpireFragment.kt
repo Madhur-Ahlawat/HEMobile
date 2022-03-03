@@ -1,4 +1,4 @@
-package com.heandroid.ui.auth.session
+package com.heandroid.ui.landing
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import com.heandroid.R
 import com.heandroid.databinding.FragmentSessionExpireBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.HomeActivityMain
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,22 +27,25 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
     }
 
     override fun init() {
-        type=arguments?.getString("type")
+        type=arguments?.getString(Constants.TYPE)
 
         when(type) {
 
-            "LOGIN"  -> { 
+            Constants.LOGIN  -> {
+                // to do login again
                 binding.tvLabel.text=getString(R.string.select_the_sign_in_button_to_log_in_to_your_account)
                 binding.btn.text=getString(R.string.txt_sign_in)
             }
 
-            "SIGN IN" -> {
+            Constants.REFRESH_TOKEN -> {
+                // to do refresh token ("Start Again" button click )
                 binding.tvLabel.text=getString(R.string.select_the_start_now_button_to_restart_your_session)
                 binding.btn.text=getString(R.string.start_again)
             }
         }
     }
     override fun initCtrl(){
+
         binding.btn.setOnClickListener(this)
     }
 
@@ -55,8 +60,14 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
             R.id.btn -> {
                 requireActivity().finish()
                 when(type) {
-                    "LOGIN" ->{ requireActivity().startActivity(Intent(requireActivity(),AuthActivity::class.java)) }
+                    Constants.LOGIN ->{ requireActivity().startActivity(Intent(requireActivity(),AuthActivity::class.java)) }
                   //  "SIGN IN" ->{ requireActivity().startActivity(Intent(requireActivity(),ActivityHome::class.java)) }
+                    Constants.REFRESH_TOKEN->{// refresh token api call
+                        requireActivity().finish()
+                        requireActivity().startActivity(Intent(requireActivity(),HomeActivityMain::class.java).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        })
+                    }
                 }
             }
         }

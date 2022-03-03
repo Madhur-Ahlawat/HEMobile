@@ -15,10 +15,7 @@ import com.heandroid.utils.common.Constants
 class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickListener {
 
     private var screenType: String = ""
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

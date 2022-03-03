@@ -58,12 +58,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
 
             R.id.log_out_lyt -> {
                 val dialog = LogoutDialog()
-                val bundle = Bundle()
-                bundle.putString("title", getString(R.string.logout))
-                bundle.putString("desc", getString(R.string.sure_wants_logout))
-                dialog.arguments = bundle
+                Bundle().run{
+                    putString("title", getString(R.string.logout))
+                    putString("desc", getString(R.string.sure_wants_logout))
+                    dialog.arguments = this
+                }
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                dialog.show(requireActivity().supportFragmentManager, "")
+                dialog.show(requireActivity().supportFragmentManager, "Logout Dialog")
             }
 
         }

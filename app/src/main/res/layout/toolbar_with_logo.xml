@@ -38,7 +38,6 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_login"
-            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentEnd="true"
@@ -51,7 +50,8 @@
             android:text="@string/str_login"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imv_menu"

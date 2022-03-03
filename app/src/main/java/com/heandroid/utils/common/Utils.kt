@@ -9,8 +9,8 @@ import android.os.Build
 import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
 import com.heandroid.R
-import com.heandroid.ui.auth.session.SessionActivity
 import com.heandroid.ui.base.BaseApplication
+import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.extn.changeBackgroundColor
 import com.heandroid.utils.extn.changeTextColor
 import com.heandroid.utils.logout.LogoutUtil
@@ -112,12 +112,16 @@ object Utils {
         Log.e("name",context::class.simpleName.toString())
         LogoutUtil.stopLogoutTimer()
         context.finish()
+//        context.startActivity(
+//            Intent(context, SessionActivity::class.java)
+//             .putExtra("screen","expire")
+//            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//            .putExtra("type","LOGIN"))
         context.startActivity(
-            Intent(context, SessionActivity::class.java)
-             .putExtra("screen","expire")
-            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            .putExtra("type","LOGIN"))
-
+            Intent(context, LandingActivity::class.java)
+                .putExtra(Constants.SHOW_SCREEN,Constants.SESSION_TIME_OUT)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .putExtra(Constants.TYPE,Constants.LOGIN))
 
     }
 
