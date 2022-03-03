@@ -419,7 +419,6 @@
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
 
     <string name="start_again">Start again</string>
-    <string name="you_have_sucessfully_sign_out_of_your_account">You have sucessfully sign out of your account</string>
     <string name="your_session_has_expired">Your session has expired</string>
     <string name="select_the_start_now_button_to_restart_your_session">Select the start now button to restart your session</string>
     <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
