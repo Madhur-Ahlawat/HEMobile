@@ -41,11 +41,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     override fun initCtrl() {
-        binding.tvViewVehicle.setOnClickListener{
+        binding.tvViewVehicle.setOnClickListener {
             val bundle = Bundle().apply {
                 putBoolean(Constants.DATA, true)
             }
             findNavController().navigate(R.id.action_dashBoardFragment_to_vehicleListFragment2, bundle)
+        }
+        binding.crossingsView.setOnClickListener {
+            findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment)
         }
     }
 
