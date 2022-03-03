@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<data>
+    <variable
+        name="model"
+        type="com.heandroid.data.model.account.EmailValidationModel" />
+</data>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/tv_verification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="@string/str_verification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="@string/str_step_1_of_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<RelativeLayout
+    android:id="@+id/rl_edit_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_verification">
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tf_email"
+        style="@style/Widget.HeMobile.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:hint="@string/str_email_address"
+        android:textColorHint="@color/color_CBCBCB"
+        app:errorEnabled="true"
+       >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:text="@={model.email}"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/_11ssp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tf_code"
+        android:visibility="gone"
+        style="@style/Widget.HeMobile.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:hint="@string/str_enter_security_code"
+        android:textColorHint="@color/color_CBCBCB"
+        app:errorEnabled="true"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:singleLine="true"
+            android:text="@={model.code}"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/_11ssp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="@string/str_email_verification_msg"
+        app:layout_constraintTop_toBottomOf="@+id/rl_edit_view" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_action"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+        android:enabled="@{model.enable}"
+        android:gravity="center"
+        android:padding="@dimen/_7sdp"
+        android:text="@string/str_send_security_code"
+        android:textAllCaps="false"
+        android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_msg" />/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

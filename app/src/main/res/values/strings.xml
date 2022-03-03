@@ -428,6 +428,14 @@
     <string name="str_nominated_contacts_limit_reached">A total of 5 contacts has been set-up, if you wish to add further nominated contacts you need to remove any one of the contact</string>
     <string name="str_logout_msg">You have successfully sign out of your account</string>
     <string name="str_session_time_out">Session Time out</string>
+    <string name="str_verification">Verification</string>
+    <string name="str_step_1_of_5">Step 1 of 5</string>
+    <string name="str_email_verification_msg">This email address will be used as your user name after verification. A security code will be sent to this email address for verification.</string>
+    <string name="str_send_verification_code">Send verification code</string>
+    <string name="str_send_security_code">Send security code</string>
+    <string name="str_enter_security_code">Enter security code</string>
+    <string name="str_email_verification">Email verification</string>
+    <string name="str_create_an_account">Create an account</string>
 
 </resources>
 

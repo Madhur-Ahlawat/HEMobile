@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_account_creation">
+    <fragment
+        android:id="@+id/emailVerification"
+        android:name="com.heandroid.ui.account.creation.FragmentEmailVerification"
+        android:label="@string/str_email_verification"
+        tools:layout="@layout/fragment_email_verification">
+    </fragment>
+
+</navigation>
