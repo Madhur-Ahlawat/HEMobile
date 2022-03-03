@@ -77,8 +77,10 @@ class VehicleHistoryCrossingHistoryFragment :
                         binding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
                     }, 100)
                     binding.progressBar.gone()
+                    binding.downloadCrossingHistoryBtn.visible()
                     binding.rvVehicleCrossingHistory.visible()
                     if (list?.size == 0) {
+                        binding.downloadCrossingHistoryBtn.gone()
                         binding.tvNoCrossing.visible()
                     }
                     endlessScroll()

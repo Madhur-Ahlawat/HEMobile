@@ -183,7 +183,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             putSerializable(Constants.DATA, vehicleData)
             putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
         }
-        findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
+        findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
     }
 
 }
