@@ -1,12 +1,8 @@
 package com.heandroid.ui.viewcharges
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.tollrates.ViewChargesResponse
-import com.heandroid.databinding.ActivityInProgressBinding
 import com.heandroid.databinding.ActivityViewChargesBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.utils.extn.toolbar

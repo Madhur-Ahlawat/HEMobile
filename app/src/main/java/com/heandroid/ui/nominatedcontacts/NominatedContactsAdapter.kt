@@ -33,10 +33,12 @@ class NominatedContactsAdapter(
             binding.nameTitle.text = "${contact.firstName}${contact.lastName}"
             binding.emailIdStr.text = contact.emailAddress
             binding.mobileNumberStr.text = contact.phoneNumber
-            if (contact.accountStatus.equals("INITIATED", true))
+            if (contact.accountStatus.equals("INITIATED", true)) {
                 binding.statusTitleStr.text = "Pending"
-            else
+            } else {
                 binding.statusTitleStr.gone()
+                binding.statusTitle.gone()
+            }
 
             binding.rightsStr.text = "Amend Account, Vehicle Data"
 
