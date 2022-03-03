@@ -76,23 +76,23 @@ interface ApiService {
     @POST(DELETE_VEHICLE)
     suspend fun deleteVehicle(@Body model: DeleteVehicleRequest?): Response<EmptyApiResponse?>?
 
-    @POST(GET_VEHICLE_CROSSING_HISTORY)
+    @POST(VEHICLE_CROSSING_HISTORY)
     suspend fun getVehicleCrossingHistoryData(@Body model: CrossingHistoryRequest?): Response<CrossingHistoryApiResponse?>?
 
     @Streaming
-    @POST(DOWNLOAD_TRANSACTION_LIST_FILE)
+    @POST(DOWNLOAD_TRANSACTION)
     suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest?): Response<ResponseBody?>?
 
-    @POST(GET_ALERT_MESSAGES)
+    @POST(ALERT_MESSAGES)
     suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse?>
 
     @POST(CREATE_SECONDARY_ACCOUNT)
     suspend fun createSecondaryAccount(@Body secondaryBody: SecondaryAccountBody): Response<SecondaryAccountResp?>
 
-    @GET(GET_SECONDARY_ACCOUNT)
+    @GET(SECONDARY_ACCOUNT)
     suspend fun getSecondaryAccount(): Response<NominatedContactRes?>
 
-    @GET(GET_SECONDARY_ACCESS_RIGHTS)
+    @GET(SECONDARY_ACCESS_RIGHTS)
     suspend fun getSecondaryAccessRights(@Path("accountId") accountId: String): Response<GetSecondaryAccessRightsResp?>
 
     @GET(UPDATE_SECONDARY_ACCOUNT)
@@ -101,7 +101,7 @@ interface ApiService {
     @GET(UPDATE_SECONDARY_ACCESS_RIGHTS)
     suspend fun updateSecondaryAccessRights(@Body body: UpdateSecAccessRightsReq): Response<ResponseBody?>
 
-    @GET(GET_TOLL_RATES)
+    @GET(TOLL_RATES)
     suspend fun getTollRates(@Body body: UpdateSecAccessRightsReq): Response<List<TollRatesResp>?>
 
 }
