@@ -22,6 +22,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER="account_number"
         const val SECURITY_CODE="security_code"
+        const val SESSION_TIME="session_time"
         const val SECURITY_CODE_OBJ="security_code_obj"
         const val IS_USER_LOGIN="is_user_login"
     }
@@ -90,8 +91,18 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
     }
 
     fun clearAll() {
-        prefs.edit().clear().commit()
+        prefs.edit().clear().apply()
 
+    }
+
+    fun setSessionTime(code: Long?) {
+        val editor = prefs.edit()
+        editor.putLong(SESSION_TIME, code?:0L)
+        editor.apply()
+    }
+
+    fun getSessionTime() : Long{
+        return prefs.getLong(SESSION_TIME, 0L)
     }
 
 //    fun saveSecurityCodeObject(myObject: GetSecurityCodeResponseModel) {

@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.landing.LandingActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,6 +49,8 @@
         <activity android:name=".ui.account.profile.ProfileActivity" />
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
         <activity android:name=".ui.account.communication.CommunicationActivity" />
+        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

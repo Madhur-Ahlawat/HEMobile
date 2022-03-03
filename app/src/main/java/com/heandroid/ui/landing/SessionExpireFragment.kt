@@ -13,6 +13,8 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.setRightButtonText
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,18 +23,17 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
 
     override fun onResume() {
         super.onResume()
-        val toolbar=requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.findViewById<TextView>(R.id.tvContactUs).gone()
-
+       val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+       toolbar.findViewById<TextView>(R.id.btn_login).gone()
     }
 
     override fun init() {
-        type=arguments?.getString(Constants.TYPE)
+
+        type=arguments?.getBundle(Constants.TYPE)?.getString(Constants.TYPE)
 
         when(type) {
 
             Constants.LOGIN  -> {
-                // to do login again
                 binding.tvLabel.text=getString(R.string.select_the_sign_in_button_to_log_in_to_your_account)
                 binding.btn.text=getString(R.string.txt_sign_in)
             }
@@ -50,7 +51,7 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
     }
 
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSessionExpireBinding = FragmentSessionExpireBinding.inflate(inflater,container)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSessionExpireBinding = FragmentSessionExpireBinding.inflate(inflater,container,false)
 
     override fun observer() {
     }

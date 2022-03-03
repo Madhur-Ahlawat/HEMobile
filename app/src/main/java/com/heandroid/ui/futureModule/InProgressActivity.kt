@@ -18,4 +18,8 @@ class InProgressActivity : BaseActivity<Any?>() {
     override fun observeViewModel() {
 
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 }

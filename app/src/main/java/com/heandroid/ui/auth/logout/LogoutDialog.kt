@@ -28,6 +28,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
     @Inject
     lateinit var sessionManager: SessionManager
 
+
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): DialogLogoutBinding = DialogLogoutBinding.inflate(inflater,container,false)
 
     override fun init() {
@@ -64,8 +65,6 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
         binding.tvLogout.isEnabled = true
         when (status) {
             is Resource.Success -> {
-                dismiss()
-                sessionManager.clearAll()
                 openLogoutScreen()
             }
             is Resource.DataError -> {
@@ -76,12 +75,13 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
     }
 
     private fun openLogoutScreen() {
-        requireActivity().finish()
+//        requireActivity().finish()
+        sessionManager.clearAll()
+        dismiss()
         Intent(requireActivity(), LandingActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN,Constants.LOGOUT_SCREEN)
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(this)
         }
-
     }
 }
