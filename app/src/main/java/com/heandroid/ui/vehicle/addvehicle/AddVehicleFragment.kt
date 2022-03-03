@@ -14,23 +14,24 @@ import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnClickListener, AddVehicleListener {
+class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnClickListener,
+    AddVehicleListener {
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentAddVehicleBinding.inflate(inflater, container, false)
 
-    override fun observer() { }
+    override fun observer() {}
 
-    override fun init() { }
+    override fun init() {}
 
     override fun initCtrl() {
         binding.addVehicleBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.addVehicleBtn -> {
                 AddVehicleDialog.newInstance(
                     getString(R.string.str_title),
@@ -42,14 +43,10 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(), View.OnCli
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        if (details.plateInfo.country == "UK"){
-            requireContext().showToast("UK flow not yet added")
-        } else {
-            val bundle = Bundle().apply {
-                putSerializable(Constants.DATA, details)
-            }
-            findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
+        val bundle = Bundle().apply {
+            putSerializable(Constants.DATA, details)
         }
+        findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
 
     }
 

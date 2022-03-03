@@ -1,6 +1,7 @@
 package com.heandroid.ui.bottomnav.dashboard
 
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -41,7 +42,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     override fun initCtrl() {
         binding.tvViewVehicle.setOnClickListener{
-            findNavController().navigate(R.id.action_dashBoardFragment_to_vehicleListFragment2)
+            val bundle = Bundle().apply {
+                putBoolean(Constants.DATA, true)
+            }
+            findNavController().navigate(R.id.action_dashBoardFragment_to_vehicleListFragment2, bundle)
         }
     }
 
