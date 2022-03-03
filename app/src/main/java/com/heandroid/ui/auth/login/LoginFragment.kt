@@ -70,6 +70,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         sessionManager.run {
             saveAuthToken(response.data?.accessToken?:"")
             saveRefreshToken(response.data?.refreshToken?:"")
+//            saveAccountNumber(response.data?.user_name?:"")
         }
         requireActivity().startNormalActivity(HomeActivityMain::class.java)
     }
