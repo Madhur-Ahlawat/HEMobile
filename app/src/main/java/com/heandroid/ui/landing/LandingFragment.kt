@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import android.widget.TextView
+import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.landing.LandingModel
 import com.heandroid.databinding.FragmentLandingBinding
@@ -19,13 +21,14 @@ import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.viewcharges.ActivityViewCharges
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.startNewActivity
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener,
-    RadioGroup.OnCheckedChangeListener {
+class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private var screenType: String = ""
     private lateinit var model: LandingModel
@@ -116,8 +119,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
                         Constants.RESOLVE_PENALTY -> {
                             openUrlInWebBrowser()
+                        }
 
-                    } else {
+                         else -> {
                         Intent(requireActivity(), InProgressActivity::class.java).run {
                             startActivity(this)
                         }
@@ -126,8 +130,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
                 }
             }
-        }
-    }
+        }}}
 
     private fun openUrlInWebBrowser() {
 
