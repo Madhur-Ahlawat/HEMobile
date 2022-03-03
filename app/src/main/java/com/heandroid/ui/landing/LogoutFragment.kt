@@ -4,11 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.databinding.FragmentLogoutBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.setRightButtonText
+import com.heandroid.utils.extn.visible
 
 class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListener {
     override fun getFragmentBinding(
@@ -18,11 +21,15 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
         return FragmentLogoutBinding.inflate(inflater, container, false)
     }
 
-    override fun init() {
-        binding.apply {
-            requireActivity().setRightButtonText(getString(R.string.contact_us))
-        }
+    override fun onResume() {
+        super.onResume()
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+        toolbar.findViewById<TextView>(R.id.btn_login).visible()
+        requireActivity().setRightButtonText(getString(R.string.contact_us))
+
     }
+
+    override fun init() {}
 
     override fun initCtrl() {
         binding.apply {

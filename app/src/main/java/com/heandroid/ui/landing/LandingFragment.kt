@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import android.widget.TextView
+import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.landing.LandingModel
 import com.heandroid.databinding.FragmentLandingBinding
@@ -14,7 +16,10 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.extn.visible
 
 class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener,
     RadioGroup.OnCheckedChangeListener {
@@ -26,6 +31,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         container: ViewGroup?
     ): FragmentLandingBinding {
         return FragmentLandingBinding.inflate(inflater, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+        toolbar.findViewById<TextView>(R.id.btn_login).visible()
+
+        requireActivity().setRightButtonText(getString(R.string.login))
     }
 
     override fun init() {
