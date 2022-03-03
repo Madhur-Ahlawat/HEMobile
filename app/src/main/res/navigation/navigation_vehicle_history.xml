@@ -11,9 +11,12 @@
         android:label="VehicleHistoryVehicleDetailsFragment"
         tools:layout="@layout/fragment_vehicle_history_vehicle_details">
         <action
-            android:id="@+id/action_vehicleHistoryVehicleDetailsFragment_to_vehicleHistoryListFragment"
-            app:destination="@id/vehicleHistoryListFragment" />
+            android:id="@+id/action_vehicleHistoryVehicleDetailsFragment_to_vehicleHistoryCrossingHistoryFragment"
+            app:destination="@id/vehicleHistoryCrossingHistoryFragment"
+            app:popUpToInclusive="false"
+            app:popUpTo="@id/vehicleHistoryListFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/vehicleHistoryCrossingHistoryFragment"
         android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment"
@@ -23,18 +26,16 @@
             android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_crossingHistoryMakePaymentFragment2"
             app:destination="@id/crossingHistoryMakePaymentFragment2" />
         <action
-            android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_vehicleHistoryListFragment"
-            app:destination="@id/vehicleHistoryListFragment" />
+            android:id="@+id/action_vehicleHistoryCrossingHistoryFragment_to_vehicleHistoryVehicleDetailsFragment"
+            app:destination="@id/vehicleHistoryVehicleDetailsFragment"
+            app:popUpToInclusive="false"
+            app:popUpTo="@id/vehicleHistoryListFragment"/>
     </fragment>
     <fragment
         android:id="@+id/crossingHistoryMakePaymentFragment2"
         android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
         android:label="CrossingHistoryMakePaymentFragment"
-        tools:layout="@layout/fragment_crossing_history_make_payment">
-        <action
-            android:id="@+id/action_crossingHistoryMakePaymentFragment2_to_vehicleHistoryCrossingHistoryFragment"
-            app:destination="@id/vehicleHistoryCrossingHistoryFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_crossing_history_make_payment"/>
     <fragment
         android:id="@+id/vehicleHistoryListFragment"
         android:name="com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryListFragment"
