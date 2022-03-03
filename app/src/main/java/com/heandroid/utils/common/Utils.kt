@@ -112,11 +112,6 @@ object Utils {
         Log.e("name",context::class.simpleName.toString())
         LogoutUtil.stopLogoutTimer()
         context.finish()
-//        context.startActivity(
-//            Intent(context, SessionActivity::class.java)
-//             .putExtra("screen","expire")
-//            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            .putExtra("type","LOGIN"))
         context.startActivity(
             Intent(context, LandingActivity::class.java)
                 .putExtra(Constants.SHOW_SCREEN,Constants.SESSION_TIME_OUT)

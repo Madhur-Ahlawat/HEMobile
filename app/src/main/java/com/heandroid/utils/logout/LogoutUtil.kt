@@ -1,18 +1,12 @@
 package com.heandroid.utils.logout
 
-import android.app.ActivityManager
-import android.app.ActivityManager.RunningAppProcessInfo
-import android.content.Context
-import android.os.AsyncTask
+import android.os.CountDownTimer
+import android.util.Log
 import com.heandroid.ui.base.BaseApplication
-import kotlinx.coroutines.*
-import okhttp3.internal.wait
-import java.util.*
-
 
 object LogoutUtil {
-    var timer: Timer? = null
-    private const val LOGOUT_TIME = 60000L
+    var timer: CountDownTimer? = null
+    var LOGOUT_TIME : Long= 1000 * 120
     private var listner: LogoutListener?=null
 
     @Synchronized
@@ -23,25 +17,22 @@ object LogoutUtil {
             listner=null
         }
         if (timer == null) {
-            timer = Timer()
             listner=listne
-            timer?.schedule(object : TimerTask(){
-                override fun run() {
-                    cancel()
-                    timer = null
-                    try {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            withContext(Dispatchers.IO){
-                                listner?.onLogout()
-                            }
-                        }
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+            timer =object : CountDownTimer(LOGOUT_TIME,1000){
+                override fun onTick(millisUntilFinished: Long) {
+                    BaseApplication.INSTANCE.setSessionTime()
                 }
 
-            },LOGOUT_TIME)
+                override fun onFinish() {
+                    BaseApplication.INSTANCE.setSessionTime()
+                    listner?.onLogout()
+                }
+
+            }
+
+
+           timer?.start()
+
         }
     }
 

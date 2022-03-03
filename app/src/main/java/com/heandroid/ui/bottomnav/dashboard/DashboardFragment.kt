@@ -2,6 +2,7 @@ package com.heandroid.ui.bottomnav.dashboard
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -62,6 +63,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
+                    Log.e("count","---> "+it.transactionList?.count?:"")
                     // todo getting api count as null, so showing count as 0
                     it.transactionList?.count?.let { count ->
                         binding.tvCrossingCount.text =
