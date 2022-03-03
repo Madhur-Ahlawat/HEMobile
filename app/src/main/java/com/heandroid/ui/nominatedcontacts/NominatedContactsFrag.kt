@@ -424,7 +424,7 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>(),
                 )
                 if (mFilteredList.size > 0 && selPos >= 0 && selPos < mFilteredList.size) {
 
-                    if (status.data!!.accessRights.accessVo.size > 0 && status.data!!.accessRights.accessVo[0].entity.equals(
+                    if (status.data!!.accessRights.accessVo.size > 0 && status.data!!.accessRights.accessVo[0].value.equals(
                             "READ",
                             true
                         )
