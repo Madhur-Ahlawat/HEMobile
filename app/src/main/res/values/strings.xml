@@ -396,6 +396,7 @@
     <string name="email">Email - %1$s</string>
     <string name="text_message">Text message - %1$s</string>
     <string name="post_mail">Post Mail - %1$s</string>
+    <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate Contact</string>
     <string name="str_u_can_nominate_upto_five_users">You can nominate upto 5 users for your account</string>
     <string name="str_mobile_number_optional">Mobile number (optional)</string>

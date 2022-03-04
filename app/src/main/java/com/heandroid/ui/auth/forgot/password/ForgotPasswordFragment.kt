@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
@@ -22,6 +23,7 @@ import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,7 +53,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     override fun observer() {
-        observe(viewModel.confirmOption,::handleConfirmOptionResponse)
+        lifecycleScope.launch {
+          observe(viewModel.confirmOption,::handleConfirmOptionResponse)
+        }
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
@@ -61,7 +65,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
                 if (status.data?.statusCode?.equals("1054")==true) {
                     showError(binding.root,status.data?.message)
                 } else {
-                    binding?.root?.post {
+                    binding?.root?.post{
                         val bundle = Bundle()
                         bundle.putParcelable(Constants.OPTIONS, status.data)
                         findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle)

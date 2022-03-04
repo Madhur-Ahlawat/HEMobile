@@ -39,6 +39,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         super.onResume()
         requireActivity().toolbar(getString(R.string.str_log_in_dart_system))
     }
+
     override fun init() {
         binding.model= LoginModel(value = "", password = "")
         loader = LoaderDialog()
@@ -70,14 +71,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         sessionManager.run {
             saveAuthToken(response.data?.accessToken?:"")
             saveRefreshToken(response.data?.refreshToken?:"")
+
 //            saveAccountNumber(response.data?.user_name?:"")
         }
         requireActivity().startNormalActivity(HomeActivityMain::class.java)
     }
 
+
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.btn_login-> {
+
                 hideKeyboard()
                 val validation=viewModel.validation(binding.model)
                 if(validation.first){
@@ -94,3 +98,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
 }
+
+

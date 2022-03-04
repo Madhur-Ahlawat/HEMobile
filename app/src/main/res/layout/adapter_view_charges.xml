@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.heandroid.data.model.tollrates.TollRatesResp" />
+
+    </data>
+
+<com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_1sdp"
@@ -45,7 +55,7 @@
             android:textStyle="normal"
             android:padding="@dimen/_2sdp"
             android:gravity="center"
-            android:text="@string/str_type_of_vehicle"
+            android:text="@{data.vehicleType}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
@@ -60,7 +70,7 @@
             android:textStyle="normal"
             android:padding="@dimen/_2sdp"
             android:gravity="center"
-            android:text="@string/str_one_of_payment"
+            android:text="@{@string/price(``+data.videoRate)}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
@@ -75,7 +85,7 @@
             android:textStyle="normal"
             android:padding="@dimen/_2sdp"
             android:gravity="center"
-            android:text="@string/str_pay_g_service"
+            android:text="@{@string/price(``+data.etcRate)}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guide_line_vertical2"
@@ -90,7 +100,7 @@
             android:textStyle="normal"
             android:gravity="center"
             android:padding="@dimen/_2sdp"
-            android:text="@string/str_pre_pay_service"
+            android:text="@{@string/price(``+data.etcRate)}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,3 +110,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
+</layout>

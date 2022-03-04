@@ -42,14 +42,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobile"/>
 
-        <activity android:name=".ui.bottomnav.HomeActivityMain"/>
-        <activity android:name=".ui.viewcharges.ActivityViewCharges"/>
+        <activity android:name=".ui.bottomnav.HomeActivityMain"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.viewcharges.ViewChargesActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.account.profile.ProfileActivity" />
-        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
-        <activity android:name=".ui.account.communication.CommunicationActivity" />
-        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment" />
+        <activity android:name=".ui.account.profile.ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.account.communication.CommunicationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment"
+            android:screenOrientation="portrait"/>
 
 
         <provider
