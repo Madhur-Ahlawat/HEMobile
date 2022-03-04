@@ -16,6 +16,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.landing.LandingModel
 import com.heandroid.databinding.FragmentLandingBinding
+import com.heandroid.ui.account.creation.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
@@ -126,6 +127,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                             openUrlInWebBrowser()
                         }
 
+                        Constants.CREATE_ACCOUNT->{
+                            Intent(requireActivity(), CreateAccountActivity::class.java).run {
+                                startActivity(this)
+                            }
+                            requireActivity().finish()
+                        }
                          else -> {
                         Intent(requireActivity(), InProgressActivity::class.java).run {
                             startActivity(this)

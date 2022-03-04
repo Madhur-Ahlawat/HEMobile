@@ -9,6 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_E5E5E5"
     android:padding="@dimen/_10sdp">
 
     <TextView
@@ -17,6 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:text="@string/str_verification"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,16 +30,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:text="@string/str_step_1_of_5"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 <RelativeLayout
     android:id="@+id/rl_edit_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_20sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/tv_verification">
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -46,9 +54,9 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:hint="@string/str_email_address"
-        android:textColorHint="@color/color_CBCBCB"
-        app:errorEnabled="true"
-       >
+        android:textColorHint="@color/color_1e1e1e"
+        app:boxStrokeColor="@color/color_00703C"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_email"
@@ -93,6 +101,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
+        android:textSize="@dimen/_11ssp"
+        android:textColor="@color/color_99000000"
         android:text="@string/str_email_verification_msg"
         app:layout_constraintTop_toBottomOf="@+id/rl_edit_view" />
 
@@ -100,8 +110,8 @@
         android:id="@+id/btn_action"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
+        android:layout_marginVertical="@dimen/_55sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_30sdp"
         android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
         android:enabled="@{model.enable}"
         android:gravity="center"

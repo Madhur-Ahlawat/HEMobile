@@ -56,6 +56,9 @@
     <color name="hyperlink_blue">#427AF7</color>
     <color name="color_3C3C4399">#993C3C43</color>
     <color name="color_D3D3D4">#D3D3D4</color>
+    <color name="color_1e1e1e">#1E1E1E</color>
+    <color name="color_FF000000">#FF000000</color>
+    <color name="color_99000000">#99000000</color>
 
 
 </resources>

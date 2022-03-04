@@ -50,6 +50,8 @@
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity" />
         <activity android:name=".ui.account.communication.CommunicationActivity" />
         <activity android:name=".ui.vehicle.payment.MakeOneOffPayment" />
+        <activity android:name=".ui.account.creation.CreateAccountActivity"
+            android:screenOrientation="portrait"/>
 
 
         <provider

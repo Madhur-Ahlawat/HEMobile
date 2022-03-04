@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val VPN_ERROR = "Connect your VPN to access network."
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE ="type"
     const val LOGIN ="login"
