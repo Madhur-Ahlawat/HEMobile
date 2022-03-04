@@ -436,6 +436,10 @@
     <string name="str_enter_security_code">Enter security code</string>
     <string name="str_email_verification">Email verification</string>
     <string name="str_create_an_account">Create an account</string>
+    <string name="str_pls_select_permissions">"Please select any on user permissions "</string>
+    <string name="str_last_name">LastName</string>
+    <string name="str_first_name">FirstName</string>
+    <string name="str_edit">Edit</string>
 
 </resources>
 
