@@ -79,50 +79,70 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     }
 
     override fun observer() {
-
-        viewModel.crossingHistoryVal.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    val response = resource.data as CrossingHistoryApiResponse
-                    totalCount = response.transactionList?.transaction?.size ?: 0
-                    Log.e("totalCount", "" + totalCount)
-                    if (response.transactionList != null) {
-                        list?.addAll(response.transactionList.transaction)
+        lifecycleScope.launch {
+            viewModel.crossingHistoryDownloadVal.observe(this@CrossingHistoryFragment) { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            callCoroutines(resource.data)
+                        }
                     }
-                    isLoading = false
-//                    isLoading = list?.size?:0 != totalCount
-                    Handler(Looper.myLooper()!!).postDelayed({
-                        binding.rvHistory.adapter?.notifyDataSetChanged()
-                    }, 2000)
-
-                    if (list?.size == 0) {
-                        binding.rvHistory.gone()
-                        binding.tvNoCrossing.visible()
-                        binding.progressBar.gone()
-                    } else {
-                        binding.rvHistory.visible()
-                        binding.progressBar.gone()
-                        binding.tvNoCrossing.gone()
+                    is Resource.DataError -> {
+                        requireActivity().showToast("failed to download the document")
+                    }
+                    else -> {
 
                     }
-                    endlessScroll()
-
                 }
-
-
-                is Resource.DataError -> {
-                    binding.rvHistory.gone()
-                    binding.progressBar.gone()
-                    binding.tvNoCrossing.visible()
-                }
-
-                is Resource.Loading -> {
-                    binding.progressBar.visible()
-                    binding.rvHistory.gone()
-                    binding.tvNoCrossing.gone()
-                }
-
             }
+
+            viewModel.crossingHistoryVal.observe(viewLifecycleOwner) { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            val response = resource.data as CrossingHistoryApiResponse
+                            totalCount = response.transactionList?.transaction?.size ?: 0
+                            Log.e("totalCount", "" + totalCount)
+                            if (response.transactionList != null) {
+                                list?.addAll(response.transactionList.transaction)
+                            }
+                            isLoading = false
+//                    isLoading = list?.size?:0 != totalCount
+                            Handler(Looper.myLooper()!!).postDelayed({
+                                binding.rvHistory.adapter?.notifyDataSetChanged()
+                            }, 2000)
+
+                            if (list?.size == 0) {
+                                binding.rvHistory.gone()
+                                binding.tvNoCrossing.visible()
+                                binding.progressBar.gone()
+                            } else {
+                                binding.rvHistory.visible()
+                                binding.progressBar.gone()
+                                binding.tvNoCrossing.gone()
+
+                            }
+                            endlessScroll()
+                        }
+
+                    }
+
+
+                    is Resource.DataError -> {
+                        binding.rvHistory.gone()
+                        binding.progressBar.gone()
+                        binding.tvNoCrossing.visible()
+                    }
+
+                    is Resource.Loading -> {
+                        binding.progressBar.visible()
+                        binding.rvHistory.gone()
+                        binding.tvNoCrossing.gone()
+                    }
+
+                }
+            }
+
         }
     }
 
@@ -251,7 +271,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 val buffer = ByteArray(4 * 1024)
                 var read: Int
                 while (input.read(buffer).also {
-                        read = it }
+                        read = it
+                    }
                     != -1) {
                     output.write(buffer, 0, read)
                 }
@@ -386,21 +407,6 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         val downloadRequest = loadDownloadRequest()
         Log.d("writeResponseBodyToDisk", downloadRequest.toString())
         viewModel.downloadCrossingHistoryApiCall(downloadRequest)
-        viewModel.crossingHistoryDownloadVal.observe(requireActivity()) { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.let {
-                        callCoroutines(resource.data)
-                    }
-                }
-                is Resource.DataError -> {
-                    requireActivity().showToast("failed to download the document")
-                }
-                else -> {
-
-                }
-            }
-        }
     }
 
     private var onScopeResultLauncher =
