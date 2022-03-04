@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryAdapter
 import com.heandroid.utils.common.Constants
@@ -30,7 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class VehicleHistoryCrossingHistoryFragment :
     BaseFragment<FragmentVehicleHistoryCrossingHistoryBinding>(), View.OnClickListener {
 
-    private val viewModel: VehicleMgmtViewModel by activityViewModels()
+    private val viewModel: VehicleMgmtViewModel by viewModels()
+    private val selectedViewModel: SelectedVehicleViewModel by activityViewModels()
     private lateinit var mVehicleDetails: VehicleResponse
     private var list: MutableList<CrossingHistoryItem?>? = ArrayList()
     private var isLoading = false
@@ -60,7 +63,7 @@ class VehicleHistoryCrossingHistoryFragment :
 
 
     override fun observer() {
-        observe(viewModel.selectedVehicleResponse, ::handleSelectedVehicleResponse)
+        observe(selectedViewModel.selectedVehicleResponse, ::handleSelectedVehicleResponse)
         observe(viewModel.crossingHistoryVal, ::handleVehicleCrossingHistoryResponse)
     }
 

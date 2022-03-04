@@ -24,10 +24,6 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _selectedVehicleResponse = MutableLiveData<VehicleResponse?>()
-    val selectedVehicleResponse: LiveData<VehicleResponse?> get() = _selectedVehicleResponse
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _addVehicleApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
     val addVehicleApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _addVehicleApiVal
 
@@ -50,10 +46,6 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
-
-    fun setSelectedVehicleResponse(details: VehicleResponse) {
-        _selectedVehicleResponse.value= details
-    }
 
     fun addVehicleApi(request: VehicleResponse) {
         viewModelScope.launch {
