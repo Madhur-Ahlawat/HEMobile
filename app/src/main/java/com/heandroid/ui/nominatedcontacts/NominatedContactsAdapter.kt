@@ -12,11 +12,12 @@ import com.heandroid.R
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.NominatedContactsAdapterBinding
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 
 class NominatedContactsAdapter(
-    private val mContext: Context,
+    private val mContext: Context, private val listener: NominatedContactListener
 ) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
 
     private var secAccountList: List<SecondaryAccountData?> = mutableListOf()
@@ -33,12 +34,19 @@ class NominatedContactsAdapter(
             binding.nameTitle.text = "${contact.firstName}${contact.lastName}"
             binding.emailIdStr.text = contact.emailAddress
             binding.mobileNumberStr.text = contact.phoneNumber
-            if (contact.accountStatus.equals("INITIATED", true))
+            if (contact.accountStatus.equals("INITIATED", true)) {
                 binding.statusTitleStr.text = "Pending"
-            else
+                binding.removeBtn.text = context.getString(R.string.str_remove)
+                binding.resendBtn.text = context.getString(R.string.str_resend)
+            } else {
                 binding.statusTitleStr.gone()
+                binding.statusTitle.gone()
+                binding.removeBtn.text = context.getString(R.string.str_edit)
+                binding.resendBtn.text = context.getString(R.string.str_remove)
 
-            binding.rightsStr.text = "Amend Account, Vehicle Data"
+            }
+
+            binding.rightsStr.text = contact.mPermissionLevel
 
             if (contact.isExpanded) {
                 binding.arrowImg.animate().rotation(180f).start()
@@ -62,14 +70,47 @@ class NominatedContactsAdapter(
     override fun onBindViewHolder(holder: VrmHeaderViewHolder, position: Int) {
         secAccountList[position]?.let {
             holder.setView(mContext, it)
-
         }
 
         holder.binding.arrowTitleLyt.setOnClickListener {
+
             val accList = secAccountList[position]
+
             accList?.isExpanded = !accList!!.isExpanded
+            listener.onItemClick("open", accList!!, position, accList!!.isExpanded)
+
             secAccountList[position]?.isExpanded = accList.isExpanded
             notifyItemChanged(position)
+        }
+
+        holder.binding.resendBtn.setOnClickListener {
+            Logg.logging(
+                "TESTSTR",
+                "testess createAccount called on adapter called ${holder.binding.resendBtn.text}"
+            )
+            val accList = secAccountList[position]
+            listener.onItemClick(
+                holder.binding.resendBtn.text.toString(),
+                accList!!,
+                position,
+                false
+            )
+
+        }
+        holder.binding.removeBtn.setOnClickListener {
+            val accList = secAccountList[position]
+
+            Logg.logging(
+                "TESTSTR",
+                "testess createAccount called on adapter called ${holder.binding.removeBtn.text}"
+            )
+            listener.onItemClick(
+                holder.binding.removeBtn.text.toString(),
+                accList!!,
+                position,
+                false
+            )
+
         }
 
     }

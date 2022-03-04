@@ -6,6 +6,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityVehicleMgmtBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment
+import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryVehicleDetailsFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
@@ -58,10 +60,12 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
                     navHost.addOnDestinationChangedListener { _, destination, _ ->
                         when(destination.id){
                             R.id.vehicleHistoryVehicleDetailsFragment -> {
+                                makeVehicleDetailsButton()
                                 binding.chipLayout.visible()
                             }
 
                             R.id.vehicleHistoryCrossingHistoryFragment -> {
+                                makeCrossingHistoryButton()
                                 binding.chipLayout.visible()
                             }
                             else -> {
@@ -81,46 +85,57 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
         }
 
         binding.vehicleDetailsTxt.setOnClickListener {
-            binding.vehicleDetailsTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-            binding.crossingHistoryTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-            binding.vehicleDetailsTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.white
-                )
-            )
-            binding.crossingHistoryTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.black
-                )
-            )
-            navHost.navigate(R.id.vehicleHistoryVehicleDetailsFragment)
-
+            makeVehicleDetailsButton()
+            if (navHostFragment.childFragmentManager.fragments[0] !is VehicleHistoryVehicleDetailsFragment) {
+                navHost.navigate(R.id.action_vehicleHistoryCrossingHistoryFragment_to_vehicleHistoryVehicleDetailsFragment)
+            }
         }
 
         binding.crossingHistoryTxt.setOnClickListener {
-            binding.crossingHistoryTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-            binding.vehicleDetailsTxt.background =
-                ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-            binding.crossingHistoryTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.white
-                )
-            )
-            binding.vehicleDetailsTxt.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.black
-                )
-            )
-            navHost.navigate(R.id.vehicleHistoryCrossingHistoryFragment)
+            makeCrossingHistoryButton()
+            if (navHostFragment.childFragmentManager.fragments[0] !is VehicleHistoryCrossingHistoryFragment) {
+                navHost.navigate(R.id.action_vehicleHistoryVehicleDetailsFragment_to_vehicleHistoryCrossingHistoryFragment)
+            }
         }
 
+    }
+
+    private fun makeVehicleDetailsButton(){
+        binding.vehicleDetailsTxt.background =
+            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+        binding.crossingHistoryTxt.background =
+            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+        binding.vehicleDetailsTxt.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
+        binding.crossingHistoryTxt.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.black
+            )
+        )
+    }
+
+    private fun makeCrossingHistoryButton() {
+        binding.crossingHistoryTxt.background =
+            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
+        binding.vehicleDetailsTxt.background =
+            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
+        binding.crossingHistoryTxt.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
+        binding.vehicleDetailsTxt.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.black
+            )
+        )
     }
 
 }

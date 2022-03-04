@@ -67,6 +67,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/green"
                 android:text="@string/str_download_crossing_history"
+                android:visibility="gone"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"

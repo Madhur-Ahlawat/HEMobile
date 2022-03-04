@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
@@ -13,6 +14,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.ErrorUtil
@@ -26,7 +28,8 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
 
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
     private var loader: LoaderDialog? = null
-    private val vehicleMgmtViewModel: VehicleMgmtViewModel by activityViewModels()
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private val selectedViewModel: SelectedVehicleViewModel by activityViewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -83,7 +86,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
 //            putSerializable(Constants.DATA, details)
 //        }
 //        (requireActivity() as VehicleMgmtActivity).setVehicleItem(details)
-        vehicleMgmtViewModel.setSelectedVehicleResponse(details)
+        selectedViewModel.setSelectedVehicleResponse(details)
         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment)
     }
 

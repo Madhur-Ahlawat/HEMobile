@@ -39,6 +39,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
         dashboardViewModel.getVehicleInformationApi()
+        getCrossingData()
     }
 
     override fun initCtrl() {
@@ -59,7 +60,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true){
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -82,7 +85,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun vehicleListResponse(status: Resource<List<VehicleResponse?>?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true){
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
                 status.data?.let {
@@ -91,8 +96,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                             getString(R.string.str_two_vehicle, it.size.toString())
                     }
                 }
-                getCrossingData()
-//                dashboardViewModel.getAlertsApi(Constants.LANGUAGE)
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status.errorMsg)
@@ -104,7 +107,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun getCrossingData() {
-        loader?.show(requireActivity().supportFragmentManager, "")
         val request = CrossingHistoryRequest(
             startIndex = 1,
             count = 1,

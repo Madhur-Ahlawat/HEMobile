@@ -1,13 +1,13 @@
 package com.heandroid.ui.vehicle.vehiclehistory
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
@@ -15,6 +15,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.ErrorUtil
@@ -22,12 +23,14 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class VehicleHistoryVehicleDetailsFragment :
     BaseFragment<FragmentVehicleHistoryVehicleDetailsBinding>() {
 
-    private val vehicleMgmtViewModel: VehicleMgmtViewModel by activityViewModels()
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private val selectedViewModel: SelectedVehicleViewModel by activityViewModels()
     private var mVehicleDetails: VehicleResponse? = null
     private var loader: LoaderDialog? = null
 
@@ -73,8 +76,10 @@ class VehicleHistoryVehicleDetailsFragment :
     }
 
     override fun observer() {
-        observe(vehicleMgmtViewModel.selectedVehicleResponse, ::handleSelectedVehicleResponse)
-        observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdateVehicleResponse)
+        lifecycleScope.launch {
+            observe(selectedViewModel.selectedVehicleResponse, ::handleSelectedVehicleResponse)
+            observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdateVehicleResponse)
+        }
     }
 
     private fun handleSelectedVehicleResponse(vehicleResponse: VehicleResponse?) {
