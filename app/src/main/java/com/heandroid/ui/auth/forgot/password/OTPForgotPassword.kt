@@ -19,6 +19,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
@@ -63,14 +64,16 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_verify -> {
-                if(response?.code?.equals(binding.edtOtp.text.toString())==true) {
+//                if(response?.code?.equals(binding.edtOtp.text.toString())==true) {
                     if(!timeFinish){
                     val bundle = Bundle()
+                    response?.code=binding.edtOtp.text.toString()
                     bundle.putParcelable("data",response)
                     findNavController().navigate(R.id.action_otpFragment_to_createPasswordFragment,bundle) }
                     else { showError(binding.root,getString(R.string.error_otp_time_expire)) }
-                }
-                else { showError(binding.root,getString(R.string.enter_otp)) }
+//                }
+//                else { showError(binding.root,getString(R.string.enter_otp)) }
+
             }
 
             R.id.resend_txt -> {
