@@ -1,7 +1,11 @@
 package com.heandroid.ui.vehicle.vehiclehistory
 
+import android.annotation.SuppressLint
+import android.text.InputType
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -43,9 +47,12 @@ class VehicleHistoryVehicleDetailsFragment :
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        binding.edtNote.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.edtNote.setRawInputType(InputType.TYPE_CLASS_TEXT)
         setBtnDisabled()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initCtrl() {
         binding.apply {
             backToVehiclesBtn.setOnClickListener {
@@ -72,6 +79,14 @@ class VehicleHistoryVehicleDetailsFragment :
                 } else {
                     setBtnActivated()
                 }
+            }
+
+            edtNote.setOnTouchListener { view, event ->
+                view.parent.requestDisallowInterceptTouchEvent(true)
+                if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    view.parent.requestDisallowInterceptTouchEvent(false)
+                }
+                return@setOnTouchListener false
             }
         }
     }

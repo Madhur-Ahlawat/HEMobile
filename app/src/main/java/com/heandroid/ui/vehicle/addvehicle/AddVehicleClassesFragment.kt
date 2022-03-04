@@ -42,6 +42,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
         binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
+        binding.classARadioButton.isChecked = true
+        mClassType = "1"
+        binding.classADesc.visible()
     }
 
     override fun initCtrl() {
