@@ -558,21 +558,16 @@ class NominatedContactsFrag : BaseFragment<FragmentNominatedContactsBinding>(),
                     binding.idNominateContactTitleLyt.visible()
                     binding.youCanNominateTxt.gone()
                     binding.lytEditInput.visible()
-                    binding.includeViewContactDetailsLyt.fullNameStr.text =
-                        "${data.firstName}${data.lastName}"
+                    binding.includeViewContactDetailsLyt.fullNameStr.text = "${data.firstName}${data.lastName}"
                     binding.inviteNominatedContactTitle.visible()
                     edtEmail.setText(data.emailAddress)
                     edtNumber.setText(data.phoneNumber)
                     accountId = data.secAccountRowId
                     contactStatus = data.accountStatus
 
-                    readWrite =
-                        !(data.mPermissionLevel!!.isNotEmpty() && data.mPermissionLevel.equals(
-                            "READ",
-                            true
-                        ))
-                    includeViewContactDetailsLyt.readWriteRadioBtn.isChecked = readWrite!!
-                    includeViewContactDetailsLyt.readOnlyRadioBtn.isChecked = readWrite!!
+                    readWrite = !(data.mPermissionLevel?.isNotEmpty()==true && data.mPermissionLevel?.equals("READ", true)==true)
+                    includeViewContactDetailsLyt.readWriteRadioBtn.isChecked = readWrite?:false
+                    includeViewContactDetailsLyt.readOnlyRadioBtn.isChecked = readWrite?:false
                 }
             }
         }

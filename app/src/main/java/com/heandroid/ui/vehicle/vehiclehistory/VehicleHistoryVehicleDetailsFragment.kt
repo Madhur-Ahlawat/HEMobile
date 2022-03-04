@@ -24,6 +24,7 @@ import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 @AndroidEntryPoint
 class VehicleHistoryVehicleDetailsFragment :
@@ -90,9 +91,8 @@ class VehicleHistoryVehicleDetailsFragment :
     }
 
     private fun handleUpdateVehicleResponse(response: Resource<EmptyApiResponse?>?) {
-        if (loader?.isVisible == true){
-            loader?.dismiss()
-        }
+        try{
+        loader?.dismiss()
         when (response) {
             is Resource.Success -> {
                 requireContext().showToast("Vehicle is updated successfully")
@@ -107,7 +107,7 @@ class VehicleHistoryVehicleDetailsFragment :
             else -> {
                 // do nothing
             }
-        }
+        }}catch (e: Exception){}
     }
 
     private fun setDataToView() {

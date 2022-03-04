@@ -1,6 +1,7 @@
 package com.heandroid.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +17,12 @@ import com.heandroid.databinding.FragmentForgotPasswordBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.*
 import com.heandroid.utils.common.ErrorUtil.showError
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.SessionManager
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,13 +58,14 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
+        try{
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("1054")==true) {
                     showError(binding.root,status.data?.message)
                 } else {
-                    binding?.root?.post{
+                    binding?.root?.post {
                         val bundle = Bundle()
                         bundle.putParcelable(Constants.OPTIONS, status.data)
                         findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle)
@@ -73,7 +73,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
                 }
             }
             is Resource.DataError -> { showError(binding.root,status.errorMsg) }
-        }
+        }}catch (e: Exception){}
     }
     override fun onClick(v: View?) {
         when(v?.id){
@@ -95,4 +95,5 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         if(binding.edtEmail.length()>0 && binding.edtPostcode.length()>0) binding.model = ConfirmOptionModel(enable = true, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
         else binding.model = ConfirmOptionModel(enable = false, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
     }
+
 }

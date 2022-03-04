@@ -61,11 +61,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
+        try{
         loader?.dismiss()
         when (status) {
             is Resource.Success -> { lauchIntent(status) }
             is Resource.DataError -> { showError(binding.root,status.errorMsg) }
-        }
+        }}catch (e: Exception){}
     }
 
     private fun lauchIntent(response: Resource.Success<LoginResponse?>) {

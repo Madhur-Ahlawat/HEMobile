@@ -21,6 +21,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.common.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import kotlin.getValue
 
 
@@ -97,6 +98,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
     }
 
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?){
+        try{
         loader?.dismiss()
         when(status){
             is Resource.Success -> {
@@ -109,7 +111,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
 
             }
             is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
-        }
+        }}catch (e:Exception){}
     }
 
 

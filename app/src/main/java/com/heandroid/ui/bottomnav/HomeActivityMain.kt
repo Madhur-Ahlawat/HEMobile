@@ -1,6 +1,7 @@
 package com.heandroid.ui.bottomnav
 
 import android.view.View
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.ActivityHomeMainBinding

@@ -17,6 +17,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
@@ -60,9 +61,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        if (loader?.isVisible == true){
+        try{
             loader?.dismiss()
-        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -80,7 +80,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             else -> {
 
             }
-        }
+        }}catch (e: Exception){}
 
     }
 
