@@ -62,8 +62,4 @@ class NominatedContactListViewModel @Inject constructor(private val repo: Nomina
             }
     }
 
-
-
-
-
 }

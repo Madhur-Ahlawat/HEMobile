@@ -96,9 +96,8 @@ interface ApiService {
     @GET(UPDATE_SECONDARY_ACCOUNT)
     suspend fun updateSecondaryAccount(@Body body: CreateAccountRequestModel?): Response<ResponseBody?>
 
-    @GET(UPDATE_SECONDARY_ACCESS_RIGHTS)
+    @POST(UPDATE_SECONDARY_ACCESS_RIGHTS)
     suspend fun updateAccessRight(@Body body: UpdateAccessRightModel?): Response<ResponseBody?>
-
 
     @GET(TOLL_RATES)
     suspend fun getTollRates(): Response<List<TollRatesResp>?>?
