@@ -18,7 +18,6 @@ class NotificationViewModel @Inject constructor(private val repo: NotificationRe
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val alertLivData : LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
 
-
     fun getAlertsApi(lang: String){
         viewModelScope.launch {
             try{

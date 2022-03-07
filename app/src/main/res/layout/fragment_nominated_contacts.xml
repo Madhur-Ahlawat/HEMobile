@@ -116,7 +116,6 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:orientation="vertical"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/full_name_and_contact_sub_lyt">
@@ -129,16 +128,15 @@
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textColorHint="@color/grey_two"
-                android:visibility="gone"
                 app:errorEnabled="true"
-                android:text="@string/str_first_name">
+                android:hint="@string/str_first_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     android:singleLine="true"
                     android:textColor="@color/color_000000"
                     android:textColorHint="@color/grey_two"
@@ -153,7 +151,6 @@
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:textColorHint="@color/grey_two"
-                android:visibility="gone"
                 app:errorEnabled="true"
                 android:hint="@string/str_last_name">
 
@@ -162,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     android:singleLine="true"
                     android:textColor="@color/color_000000"
                     android:textColorHint="@color/grey_two"
@@ -231,7 +228,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            android:visibility="gone"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -239,7 +235,7 @@
 
         <include
             android:id="@+id/include_view_contact_details_lyt"
-            layout="@layout/include_layout_nominate_contact"
+            layout="@layout/fragment_nominated_invitation_access_right"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

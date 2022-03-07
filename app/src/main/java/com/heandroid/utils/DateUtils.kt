@@ -80,11 +80,16 @@ object DateUtils {
         var dateFormatter: DateFormat? = null
         try {
 
-            dateFormatter = if (type == 0) {
-                SimpleDateFormat("dd/MM/YYYY")
-            } else {
-                SimpleDateFormat("MM/dd/YYYY")
-
+            dateFormatter = when (type) {
+                0 -> {
+                    SimpleDateFormat("dd/MM/YYYY")
+                }
+                1 -> {
+                    SimpleDateFormat("MM/dd/yyyy hh:mm aa") //"03/03/2022 01:07 AM"
+                }
+                else -> {
+                    SimpleDateFormat("MM/dd/YYYY")
+                }
             }
 
             var dateObj: Date? = null

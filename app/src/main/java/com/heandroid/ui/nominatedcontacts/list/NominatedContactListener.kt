@@ -1,4 +1,4 @@
-package com.heandroid.ui.nominatedcontacts
+package com.heandroid.ui.nominatedcontacts.list
 
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 

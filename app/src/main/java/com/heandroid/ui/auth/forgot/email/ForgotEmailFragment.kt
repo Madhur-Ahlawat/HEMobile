@@ -19,8 +19,10 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.observeOnce
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -77,7 +79,7 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     }
 
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){
-        loader?.dismiss()
+        try{loader?.dismiss()
         when (status) {
             is Resource.Success -> {
                 binding.llEnterDetails.visibility = GONE
@@ -87,8 +89,7 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
             is Resource.DataError -> { showError(binding.root, status.errorMsg) }
             else -> {}
 
-        }
-
+        }}catch (e: Exception){}
     }
 
     private fun loadData(status: Resource.Success<ForgotEmailResponseModel?>) {

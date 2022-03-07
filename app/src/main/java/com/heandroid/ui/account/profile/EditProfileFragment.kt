@@ -10,4 +10,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     override fun init() {}
     override fun initCtrl() {}
     override fun observer() {}
+
+
+
 }

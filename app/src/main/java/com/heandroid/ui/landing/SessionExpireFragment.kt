@@ -29,6 +29,7 @@ class SessionExpireFragment :  BaseFragment<FragmentSessionExpireBinding>(), Vie
 
     override fun init() {
 
+
         type=arguments?.getBundle(Constants.TYPE)?.getString(Constants.TYPE)
 
         when(type) {

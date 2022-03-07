@@ -21,7 +21,9 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBinding>(), View.OnClickListener {
@@ -65,6 +67,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?){
+        try{
         loader?.dismiss()
         when(status){
             is Resource.Success ->{
@@ -72,7 +75,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 else showError(binding.root,status.data?.message)
             }
             is Resource.DataError ->{ showError(binding.root,"") }
-        }
+        }}catch (e: Exception){}
     }
 
     private fun isEnable(){

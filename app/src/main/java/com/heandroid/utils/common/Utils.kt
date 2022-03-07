@@ -73,7 +73,7 @@ object Utils {
     }
 
     fun currentDateAndTime(): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault())
+        val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.getDefault())
         return sdf.format(Date())
 
     }
@@ -116,7 +116,6 @@ object Utils {
         val dialog=SessionDialog()
         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         dialog.show(context.supportFragmentManager,"")
-
     }
 
 }

@@ -1,31 +1,45 @@
 package com.heandroid.ui.bottomnav.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
+import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.databinding.FragmentAccountBinding
 import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.NominatedContactActivity
+import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
+import com.heandroid.utils.common.ErrorUtil
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener {
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
+    private val viewModel: NominatedContactListViewModel by viewModels()
+    private var loader: LoaderDialog?=null
+
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     override fun initCtrl() {
@@ -39,6 +53,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     }
 
     override fun observer() {
+        lifecycleScope.launch {
+            observe(viewModel.contactList,::handleContactListResponse)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -53,7 +70,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.nominated_contacts_lyt -> {
-                requireActivity().startNewActivity(NominatedContactActivity::class.java)
+                loader?.show(requireActivity().supportFragmentManager,"")
+                viewModel.nominatedContactList()
+
             }
 
             R.id.log_out_lyt -> {
@@ -68,6 +87,24 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
         }
+    }
+
+    private fun handleContactListResponse(status: Resource<NominatedContactRes?>?){
+        try{
+        loader?.dismiss()
+        when(status){
+            is Resource.Success -> {
+               Intent(requireActivity(), NominatedContactActivity::class.java).run {
+                     flags= Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                     putExtra("count",status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size?:0)
+                    startActivity(this)
+                }
+
+            }
+            is Resource.DataError ->{
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+        }}catch (e: Exception){}
     }
 
 

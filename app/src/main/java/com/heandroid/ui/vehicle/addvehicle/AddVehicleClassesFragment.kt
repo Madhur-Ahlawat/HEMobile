@@ -42,6 +42,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
         binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
+        binding.classARadioButton.isChecked = true
+        mClassType = "1"
+        binding.classADesc.visible()
     }
 
     override fun initCtrl() {
@@ -177,7 +180,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private fun navigateToAddVehicleDoneScreen() {
         val vehicleData = mVehicleDetails
         vehicleData.apply {
-            this.vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
         }
         val bundle = Bundle().apply {
             putSerializable(Constants.DATA, vehicleData)
