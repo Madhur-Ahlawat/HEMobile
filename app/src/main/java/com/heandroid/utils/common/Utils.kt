@@ -116,7 +116,6 @@ object Utils {
         val dialog=SessionDialog()
         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         dialog.show(context.supportFragmentManager,"")
-
     }
 
 }

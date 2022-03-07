@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import com.google.android.material.button.MaterialButton
 
 
 // method to hide keyboard in activity
@@ -42,6 +43,8 @@ fun TextView.changeTextColor(id: Int) {
 fun TextView.changeBackgroundColor(id: Int) {
     setBackgroundColor(ContextCompat.getColor(this.context, id))
 }
+
+
 
 
 fun View.visible() {

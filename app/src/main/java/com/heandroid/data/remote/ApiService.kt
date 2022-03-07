@@ -87,7 +87,7 @@ interface ApiService {
     suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse?>
 
     @POST(CREATE_SECONDARY_ACCOUNT)
-    suspend fun createSecondaryAccount(@Body secondaryBody: SecondaryAccountBody): Response<SecondaryAccountResp?>
+    suspend fun createSecondaryAccount(@Body model: CreateAccountRequestModel?): Response<CreateAccountResponseModel?>?
 
     @GET(SECONDARY_ACCOUNT)
     suspend fun getSecondaryAccount(): Response<NominatedContactRes?>
@@ -96,13 +96,11 @@ interface ApiService {
     suspend fun getSecondaryAccessRights(@Path("accountId") accountId: String): Response<GetSecondaryAccessRightsResp?>
 
     @GET(UPDATE_SECONDARY_ACCOUNT)
-    suspend fun updateSecondaryAccount(@Body body: UpdateSecAccountDetails): Response<ResponseBody?>
+    suspend fun updateSecondaryAccount(@Body body: CreateAccountRequestModel?): Response<ResponseBody?>
 
-    @GET(UPDATE_SECONDARY_ACCESS_RIGHTS)
-    suspend fun updateSecondaryAccessRights(@Body body: UpdateSecAccessRightsReq): Response<ResponseBody?>
+    @POST(UPDATE_SECONDARY_ACCESS_RIGHTS)
+    suspend fun updateAccessRight(@Body body: UpdateAccessRightModel?): Response<ResponseBody?>
 
     @GET(TOLL_RATES)
     suspend fun getTollRates(): Response<List<TollRatesResp>?>?
-
-
 }

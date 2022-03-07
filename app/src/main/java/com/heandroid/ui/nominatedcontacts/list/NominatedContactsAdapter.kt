@@ -1,28 +1,21 @@
-package com.heandroid.ui.nominatedcontacts
+package com.heandroid.ui.nominatedcontacts.list
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
-import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.NominatedContactsAdapterBinding
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 
-class NominatedContactsAdapter(
-    private val mContext: Context, private val listener: NominatedContactListener
-) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
+class NominatedContactsAdapter(private val mContext: Context, private val listener: NominatedContactListener) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
 
-    private var secAccountList: List<SecondaryAccountData?> = mutableListOf()
+    private var secAccountList: List<SecondaryAccountData?>? = mutableListOf()
 
-    fun setList(list: ArrayList<SecondaryAccountData?>) {
+    fun setList(list: List<SecondaryAccountData?>?) {
         secAccountList = list
     }
 
@@ -34,6 +27,7 @@ class NominatedContactsAdapter(
             binding.nameTitle.text = "${contact.firstName}${contact.lastName}"
             binding.emailIdStr.text = contact.emailAddress
             binding.mobileNumberStr.text = contact.phoneNumber
+
             if (contact.accountStatus.equals("INITIATED", true)) {
                 binding.statusTitleStr.text = "Pending"
                 binding.removeBtn.text = context.getString(R.string.str_remove)
@@ -45,6 +39,8 @@ class NominatedContactsAdapter(
                 binding.resendBtn.text = context.getString(R.string.str_remove)
 
             }
+
+
 
             binding.rightsStr.text = contact.mPermissionLevel
 
@@ -68,18 +64,18 @@ class NominatedContactsAdapter(
     }
 
     override fun onBindViewHolder(holder: VrmHeaderViewHolder, position: Int) {
-        secAccountList[position]?.let {
+        secAccountList?.get(position)?.let {
             holder.setView(mContext, it)
         }
 
         holder.binding.arrowTitleLyt.setOnClickListener {
 
-            val accList = secAccountList[position]
+            val accList = secAccountList?.get(position)
 
             accList?.isExpanded = !accList!!.isExpanded
             listener.onItemClick("open", accList!!, position, accList!!.isExpanded)
 
-            secAccountList[position]?.isExpanded = accList.isExpanded
+            secAccountList?.get(position)?.isExpanded = accList.isExpanded
             notifyItemChanged(position)
         }
 
@@ -88,7 +84,7 @@ class NominatedContactsAdapter(
                 "TESTSTR",
                 "testess createAccount called on adapter called ${holder.binding.resendBtn.text}"
             )
-            val accList = secAccountList[position]
+            val accList = secAccountList?.get(position)
             listener.onItemClick(
                 holder.binding.resendBtn.text.toString(),
                 accList!!,
@@ -98,7 +94,7 @@ class NominatedContactsAdapter(
 
         }
         holder.binding.removeBtn.setOnClickListener {
-            val accList = secAccountList[position]
+            val accList = secAccountList?.get(position)
 
             Logg.logging(
                 "TESTSTR",
@@ -116,6 +112,6 @@ class NominatedContactsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return secAccountList.size
+        return secAccountList?.size?:0
     }
 }
