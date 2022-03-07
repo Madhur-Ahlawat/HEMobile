@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_E5E5E5">
@@ -25,6 +27,8 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_charge_and_fines"
             android:textColor="@color/black"
+            android:visibility="gone"
+
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +40,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:backgroundTint="@color/white"
             android:id="@+id/title_card"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_title">

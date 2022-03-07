@@ -7,8 +7,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.DialogFragment
 import com.heandroid.R
+import com.heandroid.ui.auth.session.SessionDialog
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.extn.changeBackgroundColor
@@ -108,15 +111,11 @@ object Utils {
         }
     }
 
-    fun sessionExpired(context: Activity) {
-        Log.e("name",context::class.simpleName.toString())
+    fun sessionExpired(context: AppCompatActivity) {
         LogoutUtil.stopLogoutTimer()
-        context.finish()
-        context.startActivity(
-            Intent(context, LandingActivity::class.java)
-                .putExtra(Constants.SHOW_SCREEN,Constants.SESSION_TIME_OUT)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .putExtra(Constants.TYPE,Constants.LOGIN))
+        val dialog=SessionDialog()
+        dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        dialog.show(context.supportFragmentManager,"")
 
     }
 

@@ -21,7 +21,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.vehicle.payment.MakeOneOffPayment
-import com.heandroid.ui.viewcharges.ActivityViewCharges
+import com.heandroid.ui.viewcharges.ViewChargesActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.showToast
@@ -108,7 +108,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                     when (model.selectType) {
 
                         Constants.VIEW_CHARGES -> {
-                            requireActivity().startNewActivity(ActivityViewCharges::class.java)
+                            requireActivity().startNewActivity(ViewChargesActivity::class.java)
 
                         }
 
