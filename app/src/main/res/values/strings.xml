@@ -434,6 +434,8 @@
     <string name="str_last_name">LastName</string>
     <string name="str_first_name">FirstName</string>
     <string name="str_edit">Edit</string>
+    <string name="select_all">Select all</string>
+    <string name="activate">Activate</string>
     <string name="error_first_name">Please enter first name</string>
     <string name="error_last_name">Please enter last name</string>
     <string name="underline_full_name"><u>Full name</u></string>

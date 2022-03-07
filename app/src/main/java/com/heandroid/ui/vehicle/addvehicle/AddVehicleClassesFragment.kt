@@ -180,7 +180,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private fun navigateToAddVehicleDoneScreen() {
         val vehicleData = mVehicleDetails
         vehicleData.apply {
-            this.vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
         }
         val bundle = Bundle().apply {
             putSerializable(Constants.DATA, vehicleData)
