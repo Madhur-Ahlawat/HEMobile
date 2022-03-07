@@ -9,6 +9,8 @@ object LogoutUtil {
     var LOGOUT_TIME : Long= 1000 * 120
     private var listner: LogoutListener?=null
 
+    private var isTimeFinish=false
+
     @Synchronized
     fun startLogoutTimer(listne: LogoutListener?) {
         if (timer != null) {
@@ -16,6 +18,8 @@ object LogoutUtil {
             timer = null
             listner=null
         }
+
+        isTimeFinish=false
         if (timer == null) {
             listner=listne
             timer =object : CountDownTimer(LOGOUT_TIME,1000){
@@ -24,8 +28,10 @@ object LogoutUtil {
                 }
 
                 override fun onFinish() {
-                    BaseApplication.INSTANCE.setSessionTime()
-                    listner?.onLogout()
+                    if(!isTimeFinish){
+                        BaseApplication.INSTANCE.setSessionTime()
+                        listner?.onLogout()
+                    }
                 }
 
             }
@@ -43,6 +49,7 @@ object LogoutUtil {
     fun stopLogoutTimer() {
         if (timer != null) {
             listner=null
+            isTimeFinish=true
             timer?.cancel()
             timer = null
         }
