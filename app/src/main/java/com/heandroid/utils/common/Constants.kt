@@ -55,4 +55,6 @@ object Constants {
     const val CROSSING_SERVICE_UPDATE = "crossing_service_update"
 
     const val LANGUAGE = "ENU"
+    const val ALERT_ITEM_KEY = "cscLookupKey"
+
 }

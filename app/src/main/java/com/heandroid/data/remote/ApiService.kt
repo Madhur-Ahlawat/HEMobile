@@ -83,9 +83,6 @@ interface ApiService {
     @POST(DOWNLOAD_TRANSACTION)
     suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest?): Response<ResponseBody?>?
 
-    @POST(ALERT_MESSAGES)
-    suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse?>
-
     @POST(CREATE_SECONDARY_ACCOUNT)
     suspend fun createSecondaryAccount(@Body secondaryBody: SecondaryAccountBody): Response<SecondaryAccountResp?>
 
@@ -103,6 +100,12 @@ interface ApiService {
 
     @GET(TOLL_RATES)
     suspend fun getTollRates(): Response<List<TollRatesResp>?>?
+
+    @POST(GET_ALERT_MESSAGES)
+    suspend fun getAlertMessages(@Query("language") language: String): Response<AlertMessageApiResponse?>
+
+    @POST(DISMISS_ALERT)
+    suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String) : Response<String?>
 
 
 }

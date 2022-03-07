@@ -433,6 +433,8 @@
     <string name="str_last_name">LastName</string>
     <string name="str_first_name">FirstName</string>
     <string name="str_edit">Edit</string>
+    <string name="select_all">Select all</string>
+    <string name="activate">Activate</string>
 
 </resources>
 
