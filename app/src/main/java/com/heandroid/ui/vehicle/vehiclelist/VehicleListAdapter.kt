@@ -12,6 +12,7 @@ import com.google.android.material.card.MaterialCardView
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.model.vehicle.VehicleTitleAndSub
+import com.heandroid.utils.DateUtils
 
 class VehicleListAdapter(
     private val mContext: Context,
@@ -21,7 +22,7 @@ class VehicleListAdapter(
     private var vehicleList: List<VehicleResponse?> = mutableListOf()
 
     fun setList(list: ArrayList<VehicleResponse?>) {
-            vehicleList = list
+        vehicleList = list
     }
 
     class VrmHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,7 +32,7 @@ class VehicleListAdapter(
 //        val cardViewTop: MaterialCardView = itemView.findViewById(R.id.cardview_top)
 
         fun setView(context: Context, vehicleItem: VehicleResponse) {
-            vrmNoTxt.text = "${vehicleItem.plateInfo.number}"
+            vrmNoTxt.text = vehicleItem.plateInfo.number
 //            arrowImg.animate().rotation(180f).start()
 
             if (vehicleItem.isExpanded) {
@@ -72,7 +73,7 @@ class VehicleListAdapter(
                     5 -> {
                         val mem2 = VehicleTitleAndSub(
                             "DateAdded",
-                            vehicleItem.vehicleInfo.effectiveStartDate
+                            DateUtils.convertDateFormat(vehicleItem.vehicleInfo.effectiveStartDate,1)
                         )
                         mList.add(mem2)
                     }
