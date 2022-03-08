@@ -22,7 +22,7 @@ class NominatedInvitationFullNameFragment : BaseFragment<FragmentNominatedInvita
 
     override fun init() {
         if(arguments?.getBoolean("edit")==true) binding.model=arguments?.getParcelable("data")
-        else binding.model= CreateAccountRequestModel("","","","","","","")
+        else binding.model= CreateAccountRequestModel("","","","","READ","","")
     }
 
     override fun initCtrl() {

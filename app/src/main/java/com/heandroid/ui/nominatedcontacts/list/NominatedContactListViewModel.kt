@@ -24,18 +24,60 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class NominatedContactListViewModel @Inject constructor(private val repo: NominatedContactsRepo) : BaseViewModel() {
+class NominatedContactListViewModel @Inject constructor(private val repo: NominatedContactsRepo) :
+    BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _contactList = MutableLiveData<Resource<NominatedContactRes?>?>()
-    val contactList : LiveData<Resource<NominatedContactRes?>?> get()  = _contactList
+    val contactList: LiveData<Resource<NominatedContactRes?>?> get() = _contactList
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getSecondaryRights = MutableLiveData<Resource<GetSecondaryAccessRightsResp?>?>()
-    val getSecondaryRights : LiveData<Resource<GetSecondaryAccessRightsResp?>?> get()  = _getSecondaryRights
+    val getSecondaryRights: LiveData<Resource<GetSecondaryAccessRightsResp?>?> get() = _getSecondaryRights
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _getResendActivationMail = MutableLiveData<Resource<ResendRespModel?>?>()
+    val getResendActivationMail: LiveData<Resource<ResendRespModel?>?> get() = _getResendActivationMail
 
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _terminateNominatedContact = MutableLiveData<Resource<ResponseBody?>?>()
+    val terminateNominatedContact: LiveData<Resource<ResponseBody?>?> get() = _terminateNominatedContact
+
+    fun resendActivationMailContacts(body: ResendActivationMail) {
+        viewModelScope.launch {
+            try {
+                _getResendActivationMail.postValue(
+                    success(
+                        repo.resendActivationMailContacts(body),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _getResendActivationMail.postValue(failure(e))
+            }
+
+        }
+
+    }
+
+    fun terminateNominatedContact(body: TerminateRequestModel) {
+        viewModelScope.launch {
+            try {
+                _terminateNominatedContact.postValue(
+                    success(
+                        repo.terminateNominatedContact(body),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _terminateNominatedContact.postValue(failure(e))
+            }
+
+        }
+
+    }
 
     fun nominatedContactList() {
         viewModelScope.launch {
@@ -55,11 +97,16 @@ class NominatedContactListViewModel @Inject constructor(private val repo: Nomina
     fun getSecondaryRights(accId: String) {
         viewModelScope.launch {
             try {
-                _getSecondaryRights.postValue(success(repo.getSecondaryAccessRights(accId), errorManager))
+                _getSecondaryRights.postValue(
+                    success(
+                        repo.getSecondaryAccessRights(accId),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _getSecondaryRights.postValue(failure(e))
             }
-            }
+        }
     }
 
 }

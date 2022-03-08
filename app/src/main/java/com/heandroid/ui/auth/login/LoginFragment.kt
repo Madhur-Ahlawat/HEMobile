@@ -57,7 +57,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     override fun observer() {
-        observeOnce(viewModel.login, ::handleLoginResponse)
+        observe(viewModel.login, ::handleLoginResponse)
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
