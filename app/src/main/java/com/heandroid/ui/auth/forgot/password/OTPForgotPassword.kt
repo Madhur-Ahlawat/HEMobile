@@ -19,7 +19,6 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.common.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import kotlin.getValue

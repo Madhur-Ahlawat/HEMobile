@@ -18,7 +18,6 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.common.observeOnce
 import com.heandroid.utils.extn.startNormalActivity
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +56,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     override fun observer() {
-        observeOnce(viewModel.login, ::handleLoginResponse)
+        observe(viewModel.login, ::handleLoginResponse)
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
