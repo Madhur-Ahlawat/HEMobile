@@ -99,6 +99,12 @@ interface ApiService {
     @PUT(UPDATE_SECONDARY_ACCESS_RIGHTS)
     suspend fun updateAccessRight(@Body body: UpdateAccessRightModel?): Response<ResponseBody?>
 
+    @POST(RESEND_ACTIVATION_MAIL)
+    suspend fun resendActivationMailContacts(@Body body:ResendActivationMail?):Response<ResendRespModel?>
+
+    @PUT(ACCOUNT_TERMINATED)
+    suspend fun terminateNominatedContact(@Body body:TerminateRequestModel?):Response<ResponseBody?>
+
     @GET(TOLL_RATES)
     suspend fun getTollRates(): Response<List<TollRatesResp>?>?
 
@@ -107,4 +113,5 @@ interface ApiService {
 
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String) : Response<String?>
+
 }

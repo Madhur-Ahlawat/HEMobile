@@ -8,12 +8,9 @@ import kotlinx.android.parcel.Parcelize
 data class CreateAccountRequestModel(
     var firstName: String?,
     var lastName: String?,
-
     var emailId: String?,
-
     @SerializedName("phoneNumber", alternate = ["cellPhoneNumber"])
     var phoneNumber: String?,
-
     val accessType: String? = "",
     val accountId: String?,
     val status: String?,

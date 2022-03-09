@@ -11,13 +11,10 @@ import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 
-class NominatedContactsAdapter(private val mContext: Context, private val listener: NominatedContactListener) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
+class NominatedContactsAdapter(private val mContext: Context,
+                               private var secAccountList: MutableList<SecondaryAccountData?>?,
+                               private val listener: NominatedContactListener) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
 
-    private var secAccountList: List<SecondaryAccountData?>? = mutableListOf()
-
-    fun setList(list: List<SecondaryAccountData?>?) {
-        secAccountList = list
-    }
 
     class VrmHeaderViewHolder(var binding: NominatedContactsAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -39,8 +36,6 @@ class NominatedContactsAdapter(private val mContext: Context, private val listen
                 binding.resendBtn.text = context.getString(R.string.str_remove)
 
             }
-
-
 
             binding.rightsStr.text = contact.mPermissionLevel
 
