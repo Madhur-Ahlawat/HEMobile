@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_make_off_payment"
+    app:startDestination="@id/makeOneOffPaymentFragment">
+
+
+    <fragment
+        android:id="@+id/makeOneOffPaymentFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOneOffPaymentFragment"
+        tools:layout="@layout/fragment_make_off_payment"
+        android:label="MakeOneOffPaymentFragment" >
+        <action
+            android:id="@+id/action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment"
+            app:destination="@id/makeOneOffPaymentCrossingFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/makeOneOffPaymentCrossingFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentCrossingFragment"
+        tools:layout="@layout/fragment_make_off_payment_crossing"
+        android:label="MakeOneOffPaymentFragment" >
+        <action
+            android:id="@+id/action_makeOneOffPaymentCrossingFragment_to_makeOffPaymentReceiptFragment"
+            app:destination="@id/makeOffPaymentReceiptFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/makeOffPaymentReceiptFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentReceiptFragment"
+        tools:layout="@layout/fragment_make_off_payment_receipt"
+        android:label="MakeOffPaymentReceiptFragment" >
+        <action
+            android:id="@+id/action_makeOffPaymentReceiptFragment_to_makeOffPaymentCardFragment"
+            app:destination="@id/makeOffPaymentCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeOffPaymentCardFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentCardFragment"
+        tools:layout="@layout/fragment_make_off_payment_card"
+        android:label="MakeOffPaymentCardFragment" />
+
+
+</navigation>

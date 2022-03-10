@@ -55,10 +55,11 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.account.communication.CommunicationActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment"
+        <activity android:name=".ui.vehicle.payment.MakeOneOffPaymentFragment"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.vehicle.payment.MakeOffPaymentActivity" />
 
 
         <provider

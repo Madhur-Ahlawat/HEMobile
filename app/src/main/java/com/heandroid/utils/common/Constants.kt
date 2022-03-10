@@ -6,6 +6,7 @@ object Constants {
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE ="type"
     const val LOGIN ="login"
+    const val NMI ="NMI"
     const val START_NOW ="start_now"
     const val SESSION_TIME_OUT= "session_time_out"
     const val START_NOW_SCREEN="start_now"

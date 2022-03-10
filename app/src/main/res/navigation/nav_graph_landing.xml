@@ -20,6 +20,7 @@
         android:name="com.heandroid.ui.landing.LandingFragment"
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
+
     </fragment>
 
     <fragment
@@ -36,4 +37,8 @@
     android:label="@string/str_session_time_out"
     tools:layout="@layout/fragment_session_expire">
 </fragment>
+
+
+
+
 </navigation>

@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.databinding.FragmentNominatedInvitationEmailBinding
+import com.heandroid.databinding.FragmentNominatedInvitationContactBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.ErrorUtil.showError
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NominatedInvitationEmailFragment : BaseFragment<FragmentNominatedInvitationEmailBinding>(), View.OnClickListener {
+class NominatedInvitationContactFragment : BaseFragment<FragmentNominatedInvitationContactBinding>(), View.OnClickListener {
 
     private val viewModel : NominatedInvitationViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentNominatedInvitationEmailBinding = FragmentNominatedInvitationEmailBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentNominatedInvitationContactBinding = FragmentNominatedInvitationContactBinding.inflate(inflater,container,false)
 
     override fun init() {
         binding.model= arguments?.getParcelable("data")
