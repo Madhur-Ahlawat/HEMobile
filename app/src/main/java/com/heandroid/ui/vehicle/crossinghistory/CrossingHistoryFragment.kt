@@ -1,7 +1,7 @@
 package com.heandroid.ui.vehicle.crossinghistory
 
 import android.app.Activity
-import android.os.Environment
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -23,6 +23,7 @@ import com.heandroid.data.model.vehicle.DateRangeModel
 import com.heandroid.databinding.FragmentCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper.checkStoragePermissions
 import com.heandroid.utils.StorageHelper.requestStoragePermission
 import com.heandroid.utils.common.Constants
@@ -45,7 +46,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     private val viewModel: VehicleMgmtViewModel by viewModels()
     private var dateRangeModel: DateRangeModel? =
-        DateRangeModel(type = "", from = "", to = "", title = "")
+        DateRangeModel(type = "ALL", from = "", to = "", title = "")
 
     private var startIndex: Long = 1
     private val count: Long = 5
@@ -55,6 +56,9 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     private var totalCount: Int = 0
     private lateinit var request: CrossingHistoryRequest
     private var selectionType: String = Constants.PDF
+    private var isDownload = false
+    private var isCrossingHistory = false
+    private var crossingHistoryAdapter : CrossingHistoryAdapter? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -62,13 +66,23 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     ) = FragmentCrossingHistoryBinding.inflate(inflater, container, false)
 
 
-    override fun init() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        crossingHistoryAdapter = CrossingHistoryAdapter(this, list)
         request =
             CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
+        isCrossingHistory = true
         viewModel.crossingHistoryApiCall(request)
+    }
 
+
+    override fun init() {
         binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvHistory.adapter = CrossingHistoryAdapter(this, list)
+        binding.rvHistory.adapter = crossingHistoryAdapter
+
+        binding.rvHistory.gone()
+        binding.tvNoCrossing.gone()
+        binding.progressBar.visible()
     }
 
     override fun initCtrl() {
@@ -79,71 +93,72 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     }
 
     override fun observer() {
-        lifecycleScope.launch {
-            viewModel.crossingHistoryDownloadVal.observe(this@CrossingHistoryFragment) { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        resource.data?.let {
-                            callCoroutines(resource.data)
+            viewModel.crossingHistoryDownloadVal.observe(viewLifecycleOwner) { resource ->
+                if (isDownload) {
+                    when (resource) {
+                        is Resource.Success -> {
+                            resource.data?.let {
+                                callCoroutines(resource.data)
+                            }
+                        }
+                        is Resource.DataError -> {
+                            requireContext().showToast("failed to download the document")
+                        }
+                        else -> {
+
                         }
                     }
-                    is Resource.DataError -> {
-                        requireActivity().showToast("failed to download the document")
-                    }
-                    else -> {
-
-                    }
                 }
+                isDownload = false
             }
 
-            viewModel.crossingHistoryVal.observe(viewLifecycleOwner) { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        resource.data?.let {
-                            val response = resource.data as CrossingHistoryApiResponse
-                            totalCount = response.transactionList?.transaction?.size ?: 0
-                            Log.e("totalCount", "" + totalCount)
-                            if (response.transactionList != null) {
-                                list?.addAll(response.transactionList.transaction)
-                            }
-                            isLoading = false
+           viewModel.crossingHistoryVal.observe(viewLifecycleOwner) { resource ->
+               binding.rvHistory.visible()
+               binding.progressBar.gone()
+               if (isCrossingHistory) {
+                   when (resource) {
+                       is Resource.Success -> {
+                           resource.data?.let {
+                               val response = resource.data as CrossingHistoryApiResponse
+                               totalCount = response.transactionList?.transaction?.size ?: 0
+                               if (response.transactionList != null) {
+                                   list?.addAll(response.transactionList.transaction)
+                               }
+                               isLoading = false
 //                    isLoading = list?.size?:0 != totalCount
-                            Handler(Looper.myLooper()!!).postDelayed({
-                                binding.rvHistory.adapter?.notifyDataSetChanged()
-                            }, 2000)
+                               Handler(Looper.myLooper()!!).postDelayed({
+                                   binding.rvHistory.adapter?.notifyDataSetChanged()
+                               }, 100)
 
-                            if (list?.size == 0) {
-                                binding.rvHistory.gone()
-                                binding.tvNoCrossing.visible()
-                                binding.progressBar.gone()
-                            } else {
-                                binding.rvHistory.visible()
-                                binding.progressBar.gone()
-                                binding.tvNoCrossing.gone()
+                               if (list?.size == 0) {
+                                   binding.rvHistory.gone()
+                                   binding.tvNoCrossing.visible()
+                                   binding.progressBar.gone()
+                               } else {
+                                   binding.rvHistory.visible()
+                                   binding.progressBar.gone()
+                                   binding.tvNoCrossing.gone()
 
-                            }
-                            endlessScroll()
-                        }
+                               }
+                               endlessScroll()
+                           }
+                       }
 
-                    }
+                       is Resource.DataError -> {
+                           binding.rvHistory.gone()
+                           binding.progressBar.gone()
+                           binding.tvNoCrossing.visible()
+                       }
 
-
-                    is Resource.DataError -> {
-                        binding.rvHistory.gone()
-                        binding.progressBar.gone()
-                        binding.tvNoCrossing.visible()
-                    }
-
-                    is Resource.Loading -> {
-                        binding.progressBar.visible()
-                        binding.rvHistory.gone()
-                        binding.tvNoCrossing.gone()
-                    }
-
-                }
+                       is Resource.Loading -> {
+                           binding.progressBar.visible()
+                           binding.rvHistory.gone()
+                           binding.tvNoCrossing.gone()
+                       }
+                   }
+               }
+               isCrossingHistory = false
             }
-
-        }
     }
 
     private fun callCoroutines(body: ResponseBody) {
@@ -184,6 +199,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                                 isLoading = true
                                 request.startIndex = startIndex
                                 binding.progressBar.visible()
+                                isCrossingHistory = true
                                 viewModel.crossingHistoryApiCall(request)
                             }
                         }
@@ -297,15 +313,24 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         onPermissionlaucher = onPermissionLauncher
                     )
                 } else {
-                    val dialog = DownloadFormatSelectionFilterDialog()
-                    dialog.setListener(this)
-                    dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                    dialog.show(requireActivity().supportFragmentManager, "")
+                    if (list?.isEmpty() == true){
+                        requireContext().showToast("No crossings to download")
+                    } else {
+                        val dialog = DownloadFormatSelectionFilterDialog()
+                        dialog.setListener(this)
+                        dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                        dialog.show(requireActivity().supportFragmentManager, "")
+                    }
                 }
             }
             R.id.tvFilter -> {
                 val dialog = CrossingHistoryFilterDialog()
-                dialog.setDateWithListener(dateRangeModel, this)
+                val model = dateRangeModel
+                model?.apply {
+                    this.from = dateRangeModel?.from?.let { DateUtils.convertDateToDate(it) }
+                    this.to = dateRangeModel?.to?.let { DateUtils.convertDateToDate(it) }
+                }
+                dialog.setDateWithListener(model, this)
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 dialog.show(requireActivity().supportFragmentManager, "")
             }
@@ -329,27 +354,26 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         totalCount = 0
         isLoading = false
         list?.clear()
-        binding.rvHistory.adapter?.notifyDataSetChanged()
+        binding.rvHistory.adapter = CrossingHistoryAdapter(this, list)
         dateRangeModel = dataModel
         request = loadRequest(dateRangeModel)
+        isCrossingHistory = true
         viewModel.crossingHistoryApiCall(request)
     }
 
 
     private fun loadRequest(dataModel: DateRangeModel?): CrossingHistoryRequest {
         return when (dataModel?.type) {
-            "Toll_Transaction" -> {
+            Constants.TOLL_TRANSACTION -> {
                 CrossingHistoryRequest(
                     startIndex = startIndex,
                     count = count,
                     transactionType = dataModel.type ?: "",
-                    searchDate = "Transaction Date",
-                    startDate = "11/01/2021"/*dataModel.from?:""*/,
-                    endDate = "11/30/2021"/*dataModel.to?:""*/
+                    searchDate = Constants.TRANSACTION_DATE,
+                    startDate = dataModel.from?:"", //"11/01/2021" mm/dd/yyyy
+                    endDate = dataModel.to?:""  //"11/30/2021" mm/dd/yyyy
                 )
             }
-
-
             else -> {
                 CrossingHistoryRequest(
                     startIndex = startIndex,
@@ -360,41 +384,28 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         }
     }
 
-
-    override fun onCancelClicked() {
-    }
-
+    override fun onCancelClicked() { }
 
     private fun loadDownloadRequest(): CrossingHistoryDownloadRequest {
-
         return when (dateRangeModel?.type) {
-
-            "Toll_Transaction" -> {
-
+            Constants.TOLL_TRANSACTION -> {
                 CrossingHistoryDownloadRequest().apply {
-                    // todo here we need the latest startIndex value
                     startIndex = "1"
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: ""
-                    searchDate = "Transaction Date"
-                    startDate = "11/01/2021"/*dateRangeModel.from?:""*/
-                    endDate = "11/30/2021"/*dateRangeModel.to?:""*/
+                    searchDate = Constants.TRANSACTION_DATE
+                    startDate = dateRangeModel?.from?:"" //"11/01/2021" mm/dd/yyyy
+                    endDate = dateRangeModel?.to?:"" //"11/30/2021" mm/dd/yyyy
                 }
             }
-
-
             else -> {
-
                 CrossingHistoryDownloadRequest().apply {
-                    // todo here we need the latest startIndex value
                     startIndex = "1"
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: Constants.ALL_TRANSACTION
                 }
             }
-
         }
-
     }
 
     override fun onOkClickedListener(type: String) {
@@ -403,10 +414,10 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     }
 
     private fun downloadCrossingHistory() {
-
-        val downloadRequest = loadDownloadRequest()
-        Log.d("writeResponseBodyToDisk", downloadRequest.toString())
-        viewModel.downloadCrossingHistoryApiCall(downloadRequest)
+         val downloadRequest = loadDownloadRequest()
+         isDownload = true
+         requireContext().showToast("Document download started")
+         viewModel.downloadCrossingHistoryApiCall(downloadRequest)
     }
 
     private var onScopeResultLauncher =

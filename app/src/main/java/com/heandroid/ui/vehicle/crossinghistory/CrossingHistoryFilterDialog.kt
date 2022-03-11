@@ -1,22 +1,23 @@
 package com.heandroid.ui.vehicle.crossinghistory
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RadioGroup
-import androidx.fragment.app.DialogFragment
+import androidx.core.content.ContextCompat
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.DateRangeModel
 import com.heandroid.databinding.DialogCrossingHistoryFilterBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.DatePicker
+import com.heandroid.utils.DateUtils.convertDateToMonth
 import com.heandroid.utils.DateUtils.currentDate
 import com.heandroid.utils.DateUtils.lastPriorDate
 import com.heandroid.utils.common.Constants.ALL_TRANSACTION
 import com.heandroid.utils.common.Constants.TOLL_TRANSACTION
 import com.heandroid.utils.extn.isVisible
+import com.heandroid.utils.onTextChanged
 
 class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBinding>(),
     View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -79,6 +80,9 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 binding.edFrom.setText(dateRangeModel?.from ?: "")
                 binding.edTo.setText(dateRangeModel?.to ?: "")
             }
+            else -> {
+                binding.rbViewAll.isChecked = true
+            }
         }
     }
 
@@ -113,26 +117,81 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 dateRangeModel?.title = getString(R.string.last_30_days)
                 dateRangeModel?.type = TOLL_TRANSACTION
                 customSectionUI(false)
+                setBtnEnable()
             }
             R.id.rbLast90Days -> {
                 dateRangeModel?.title = getString(R.string.last_90_days)
                 dateRangeModel?.type = TOLL_TRANSACTION
                 customSectionUI(false)
+                setBtnEnable()
             }
 
             R.id.rbCustom -> {
                 dateRangeModel?.title = getString(R.string.custom)
                 dateRangeModel?.type = TOLL_TRANSACTION
                 customSectionUI(true)
+                checkButton()
+                binding.edFrom.onTextChanged {
+                    checkButton()
+                }
+                binding.edTo.onTextChanged {
+                    checkButton()
+                }
             }
 
             R.id.rbViewAll -> {
                 dateRangeModel?.title = getString(R.string.view_all)
                 dateRangeModel?.type = ALL_TRANSACTION
                 customSectionUI(false)
+                setBtnEnable()
             }
 
         }
+    }
+
+
+    private fun checkButton() {
+        if (binding.edFrom.text.toString().trim().isBlank() ||
+            binding.edTo.text.toString().trim().isBlank()){
+            setButtonDisable()
+        } else {
+            setBtnEnable()
+        }
+    }
+
+    private fun setBtnEnable() {
+        binding.btnApply.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.btn_color
+            )
+        )
+
+        binding.btnApply.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        binding.btnApply.isEnabled = true
+    }
+
+    private fun setButtonDisable() {
+        binding.btnApply.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.hint_color
+            )
+        )
+        binding.btnApply.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.black
+            )
+        )
+
+        binding.btnApply.isEnabled = false
+
     }
 
 
@@ -148,7 +207,8 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 loadRange(lastPriorDate(-90), currentDate())
             }
             R.id.rbCustom -> {
-                loadRange(binding.edFrom.text.toString(), binding.edTo.text.toString())
+                loadRange(convertDateToMonth(binding.edFrom.text.toString().trim()),
+                    convertDateToMonth(binding.edTo.text.toString().trim()))
             }
         }
     }
