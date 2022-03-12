@@ -27,7 +27,9 @@ import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper.checkStoragePermissions
 import com.heandroid.utils.StorageHelper.requestStoragePermission
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.visible
@@ -46,8 +48,9 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     private val viewModel: VehicleMgmtViewModel by viewModels()
     private var dateRangeModel: DateRangeModel? =
-        DateRangeModel(type = "ALL", from = "", to = "", title = "")
+        DateRangeModel(type = Constants.ALL_TRANSACTION, from = "", to = "", title = "")
 
+    private val startOne = "1"
     private var startIndex: Long = 1
     private val count: Long = 5
     private var isLoading = false
@@ -58,7 +61,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     private var selectionType: String = Constants.PDF
     private var isDownload = false
     private var isCrossingHistory = false
-    private var crossingHistoryAdapter : CrossingHistoryAdapter? = null
+    private var crossingHistoryAdapter: CrossingHistoryAdapter? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -93,72 +96,73 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     }
 
     override fun observer() {
-            viewModel.crossingHistoryDownloadVal.observe(viewLifecycleOwner) { resource ->
-                if (isDownload) {
-                    when (resource) {
-                        is Resource.Success -> {
-                            resource.data?.let {
-                                callCoroutines(resource.data)
-                            }
-                        }
-                        is Resource.DataError -> {
-                            requireContext().showToast("failed to download the document")
-                        }
-                        else -> {
+        observe(viewModel.crossingHistoryVal, ::handleCrossingHistoryData)
+        observe(viewModel.crossingHistoryDownloadVal, ::handleDownloadCrossingHistoryData)
+    }
 
-                        }
+    private fun handleDownloadCrossingHistoryData(resource: Resource<ResponseBody?>?) {
+        if (isDownload) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        callCoroutines(resource.data)
                     }
                 }
-                isDownload = false
-            }
+                is Resource.DataError -> {
+                    requireContext().showToast("failed to download the document")
+                }
+                else -> {
 
-           viewModel.crossingHistoryVal.observe(viewLifecycleOwner) { resource ->
-               binding.rvHistory.visible()
-               binding.progressBar.gone()
-               if (isCrossingHistory) {
-                   when (resource) {
-                       is Resource.Success -> {
-                           resource.data?.let {
-                               val response = resource.data as CrossingHistoryApiResponse
-                               totalCount = response.transactionList?.transaction?.size ?: 0
-                               if (response.transactionList != null) {
-                                   list?.addAll(response.transactionList.transaction)
-                               }
-                               isLoading = false
+                }
+            }
+            isDownload = false
+        }
+    }
+
+    private fun handleCrossingHistoryData(resource: Resource<CrossingHistoryApiResponse?>?) {
+        binding.rvHistory.visible()
+        binding.progressBar.gone()
+        if (isCrossingHistory) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        val response = resource.data as CrossingHistoryApiResponse
+                        totalCount = response.transactionList?.transaction?.size ?: 0
+                        if (response.transactionList != null) {
+                            list?.addAll(response.transactionList.transaction)
+                        }
+                        isLoading = false
 //                    isLoading = list?.size?:0 != totalCount
-                               Handler(Looper.myLooper()!!).postDelayed({
-                                   binding.rvHistory.adapter?.notifyDataSetChanged()
-                               }, 100)
+                        Handler(Looper.myLooper()!!).postDelayed({
+                            binding.rvHistory.adapter?.notifyDataSetChanged()
+                        }, 100)
 
-                               if (list?.size == 0) {
-                                   binding.rvHistory.gone()
-                                   binding.tvNoCrossing.visible()
-                                   binding.progressBar.gone()
-                               } else {
-                                   binding.rvHistory.visible()
-                                   binding.progressBar.gone()
-                                   binding.tvNoCrossing.gone()
+                        if (list?.size == 0) {
+                            binding.rvHistory.gone()
+                            binding.tvNoCrossing.visible()
+                            binding.progressBar.gone()
+                        } else {
+                            binding.rvHistory.visible()
+                            binding.progressBar.gone()
+                            binding.tvNoCrossing.gone()
 
-                               }
-                               endlessScroll()
-                           }
-                       }
+                        }
+                        endlessScroll()
+                    }
+                }
+                is Resource.DataError -> {
+                    binding.rvHistory.gone()
+                    binding.progressBar.gone()
+                    binding.tvNoCrossing.gone()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
 
-                       is Resource.DataError -> {
-                           binding.rvHistory.gone()
-                           binding.progressBar.gone()
-                           binding.tvNoCrossing.visible()
-                       }
-
-                       is Resource.Loading -> {
-                           binding.progressBar.visible()
-                           binding.rvHistory.gone()
-                           binding.tvNoCrossing.gone()
-                       }
-                   }
-               }
-               isCrossingHistory = false
+                }
             }
+
+        }
+        isCrossingHistory = false
     }
 
     private fun callCoroutines(body: ResponseBody) {
@@ -195,7 +199,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                             if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size
                                     ?: 0) - 1) && totalCount > 4
                             ) {
-                                startIndex += 5
+                                startIndex += count
                                 isLoading = true
                                 request.startIndex = startIndex
                                 binding.progressBar.visible()
@@ -313,7 +317,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         onPermissionlaucher = onPermissionLauncher
                     )
                 } else {
-                    if (list?.isEmpty() == true){
+                    if (list?.isEmpty() == true) {
                         requireContext().showToast("No crossings to download")
                     } else {
                         val dialog = DownloadFormatSelectionFilterDialog()
@@ -324,12 +328,13 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 }
             }
             R.id.tvFilter -> {
+                val model = DateRangeModel (
+                    dateRangeModel?.type,
+                    DateUtils.convertDateToDate(dateRangeModel?.from ?: ""),
+                    DateUtils.convertDateToDate(dateRangeModel?.to ?: ""),
+                    dateRangeModel?.title,
+                )
                 val dialog = CrossingHistoryFilterDialog()
-                val model = dateRangeModel
-                model?.apply {
-                    this.from = dateRangeModel?.from?.let { DateUtils.convertDateToDate(it) }
-                    this.to = dateRangeModel?.to?.let { DateUtils.convertDateToDate(it) }
-                }
                 dialog.setDateWithListener(model, this)
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 dialog.show(requireActivity().supportFragmentManager, "")
@@ -358,6 +363,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         dateRangeModel = dataModel
         request = loadRequest(dateRangeModel)
         isCrossingHistory = true
+        isFirstTime = true
         viewModel.crossingHistoryApiCall(request)
     }
 
@@ -370,8 +376,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                     count = count,
                     transactionType = dataModel.type ?: "",
                     searchDate = Constants.TRANSACTION_DATE,
-                    startDate = dataModel.from?:"", //"11/01/2021" mm/dd/yyyy
-                    endDate = dataModel.to?:""  //"11/30/2021" mm/dd/yyyy
+                    startDate = dataModel.from ?: "", //"11/01/2021" mm/dd/yyyy
+                    endDate = dataModel.to ?: ""  //"11/30/2021" mm/dd/yyyy
                 )
             }
             else -> {
@@ -384,23 +390,23 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         }
     }
 
-    override fun onCancelClicked() { }
+    override fun onCancelClicked() {}
 
     private fun loadDownloadRequest(): CrossingHistoryDownloadRequest {
         return when (dateRangeModel?.type) {
             Constants.TOLL_TRANSACTION -> {
                 CrossingHistoryDownloadRequest().apply {
-                    startIndex = "1"
+                    startIndex = startOne
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: ""
                     searchDate = Constants.TRANSACTION_DATE
-                    startDate = dateRangeModel?.from?:"" //"11/01/2021" mm/dd/yyyy
-                    endDate = dateRangeModel?.to?:"" //"11/30/2021" mm/dd/yyyy
+                    startDate = dateRangeModel?.from ?: "" //"11/01/2021" mm/dd/yyyy
+                    endDate = dateRangeModel?.to ?: "" //"11/30/2021" mm/dd/yyyy
                 }
             }
             else -> {
                 CrossingHistoryDownloadRequest().apply {
-                    startIndex = "1"
+                    startIndex = startOne
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: Constants.ALL_TRANSACTION
                 }
@@ -414,10 +420,10 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     }
 
     private fun downloadCrossingHistory() {
-         val downloadRequest = loadDownloadRequest()
-         isDownload = true
-         requireContext().showToast("Document download started")
-         viewModel.downloadCrossingHistoryApiCall(downloadRequest)
+        val downloadRequest = loadDownloadRequest()
+        isDownload = true
+        requireContext().showToast("Document download started")
+        viewModel.downloadCrossingHistoryApiCall(downloadRequest)
     }
 
     private var onScopeResultLauncher =
@@ -445,7 +451,6 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 }
             }
         }
-
 }
 
 

@@ -86,10 +86,6 @@
                 android:textSize="@dimen/_16ssp"
                 app:strokeColor="@color/green" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp" />
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
