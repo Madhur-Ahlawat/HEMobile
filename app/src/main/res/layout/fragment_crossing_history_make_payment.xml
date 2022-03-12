@@ -30,10 +30,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:layout_marginVertical="@dimen/_7sdp"
                     android:text="@string/str_your_crossing"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18ssp"
+                    android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.card.MaterialCardView
@@ -243,7 +243,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp" />
+                            android:layout_height="@dimen/_10sdp" />
 
                         <LinearLayout
                             android:id="@+id/linearLayout"
