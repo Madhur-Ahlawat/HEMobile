@@ -1,6 +1,5 @@
 package com.heandroid.utils
 
-import android.util.Log
 import java.lang.Exception
 import java.text.DateFormat
 import java.text.ParseException
@@ -8,10 +7,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 object DateUtils {
 
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+    private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
 
     fun currentDate(): String? {
         return dateFormat.format(Calendar.getInstance()?.time)
@@ -53,59 +51,65 @@ object DateUtils {
 
     // 02:20:00 AM
     fun convertTimeFormat(time: String, type: Int): String {
-        var timeFormatter: DateFormat? = null
-        Log.v("DateFormat"," time $time ")
-
-        try {
+        val timeFormatter: DateFormat?
+        return try {
             timeFormatter = if (type == 0) {
-                SimpleDateFormat("h:mm:ss aaa")
+                SimpleDateFormat("hh:mm:ss a")
             } else {
                 SimpleDateFormat("h:mm:ss")
 
             }
-            var dateObj: Date? = null
-            dateObj = timeFormatter.parse(time)
+            val dateObj = timeFormatter.parse(time)
             val postFormatter = SimpleDateFormat("HH:mm")
-
-            return postFormatter.format(dateObj)
-
+            postFormatter.format(dateObj)
         } catch (e: Exception) {
-            return ""
+            "__:__"
         }
     }
 
     //01/10/2022
     fun convertDateFormat(date: String, type: Int): String {
-        Log.v("DateFormat"," date $date ")
-        var dateFormatter: DateFormat? = null
+        val dateFormatter: DateFormat?
         try {
-
             dateFormatter = when (type) {
                 0 -> {
-                    SimpleDateFormat("dd/MM/YYYY")
+                    SimpleDateFormat("MM/dd/yyyy")
                 }
                 1 -> {
                     SimpleDateFormat("MM/dd/yyyy hh:mm aa") //"03/03/2022 01:07 AM"
                 }
                 else -> {
-                    SimpleDateFormat("MM/dd/YYYY")
+                    SimpleDateFormat("MM/dd/yyyy")
                 }
             }
-
-            var dateObj: Date? = null
-
-            dateObj = dateFormatter.parse(date)
-
+            val dateObj = dateFormatter.parse(date)
             val postFormatter = SimpleDateFormat("dd MMM yyyy")
-
-
             return postFormatter.format(dateObj)
-
         } catch (e: Exception) {
-            return ""
+            return "__ ___ ____"
         }
+    }
 
+    fun convertDateToMonth(date: String): String {
+        val dateFormatter: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("MM/dd/yyyy")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date
+        }
+    }
 
+    fun convertDateToDate(date: String): String {
+        val dateFormatter: DateFormat = SimpleDateFormat("MM/dd/yyyy")
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("dd/MM/yyyy")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date
+        }
     }
 
 }

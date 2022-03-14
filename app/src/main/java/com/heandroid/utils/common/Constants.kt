@@ -13,6 +13,7 @@ object Constants {
     const val LOGOUT_SCREEN="log_out"
     const val LANDING_SCREEN="landing"
     const val TOLL_TRANSACTION = "Toll_Transaction"
+    const val TRANSACTION_DATE = "Transaction Date"
     const val ALL_TRANSACTION = "ALL"
     const val SPREAD_SHEET = "spreadsheet"
     const val PDF = "pdf"

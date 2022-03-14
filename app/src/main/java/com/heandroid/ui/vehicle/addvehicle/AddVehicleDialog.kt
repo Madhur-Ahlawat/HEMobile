@@ -15,6 +15,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogAddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Utils
+import com.heandroid.utils.extn.showToast
 import kotlinx.coroutines.launch
 
 class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
@@ -60,14 +61,8 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
                 val mVehicleResponse =
                     VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp)
                 mListener?.onAddClick(mVehicleResponse)
-                dismiss()
-
             } else {
-                Snackbar.make(
-                    binding.root,
-                    "Please enter your vrn number",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                requireContext().showToast(   "Please enter your vehicle number")
             }
         }
 
@@ -124,13 +119,13 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         binding.addVehicleBtn.setBackgroundColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.hint_color
+                R.color.color_C9C9C9
             )
         )
         binding.addVehicleBtn.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.black
+                R.color.color_7D7D7D
             )
         )
 
