@@ -63,5 +63,8 @@ object Constants {
     const val BUSINESS_ACCOUNT="business_account"
     const val PRE_PAY_ACCOUNT="pre_pay_account"
     const val PAYG_ACCOUNT="pay_as_you_go_account"
+    const val UK = "UK"
+    const val NON_UK = "Non UK"
+    const val PAYMENT_PAGE = "payment page"
 
 }

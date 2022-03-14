@@ -30,6 +30,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private lateinit var mVehicleDetails: VehicleResponse
     private var loader: LoaderDialog? = null
     private var mClassType = ""
+    private var isFromPaymentScreen = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -41,6 +42,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
+        isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
         binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
         binding.classARadioButton.isChecked = true
         mClassType = "1"
@@ -112,6 +114,19 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
 
         binding.continueButton.setOnClickListener {
+            if (isFromPaymentScreen) {
+                val vehicleData = mVehicleDetails
+                vehicleData.apply {
+                    vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+                    vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
+                }
+                val bundle = Bundle().apply {
+                    putSerializable(Constants.DATA, vehicleData)
+                    putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+                }
+                findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
+                return@setOnClickListener
+            }
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 mVehicleDetails.vehicleInfo.vehicleClassDesc = mClassType
 

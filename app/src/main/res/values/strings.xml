@@ -140,7 +140,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_add_vehicle">Add vehicle</string>
     <string name="str_add_vehicles">Add vehicles</string>
-    <string name="str_add_upto_five_vehicles">Yoc can add upto five vehicles</string>
+    <string name="str_add_upto_five_vehicles">You can add upto five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
     <string name="str_country_of_registraion">Country of registration UK</string>
     <string name="str_find_vehicle">Find your vehicle</string>
@@ -465,6 +465,11 @@
     <string name="str_personal_details_entry">Personal details entry</string>
     <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="str_provide_below_details">"In order to set up your Dart Charge account, please provide the below information. "</string>
+
+    <string name="str_payment_des1">You have made since 6 am yesterday morning.</string>
+    <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
+    <string name="str_payment_des3">You can add only 5 vehicle.</string>
+    <string name="your_vehicle">Your vehicle</string>
 
 </resources>
 

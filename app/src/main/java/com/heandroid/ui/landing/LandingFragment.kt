@@ -57,7 +57,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     }
 
     override fun initCtrl() {
-        binding.radioGroup.setOnCheckedChangeListener(this)
+        binding.rgOptions.setOnCheckedChangeListener(this)
     }
 
     override fun observer() {
@@ -65,28 +65,29 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
-            R.id.rb_create_account -> {
-                binding.rbOneOfPayment.text = getString(R.string.str_make_one_of_payment)
+            R.id.rbCreateAccount -> {
+                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 model.selectType = Constants.CREATE_ACCOUNT
             }
-            R.id.rb_one_of_payment -> {
+            R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                binding.rbOneOfPayment.text = spannableString
+                binding.rbMakeOffPayment.text = spannableString
                 model.selectType = Constants.ONE_OFF_PAYMENT
             }
-            R.id.rb_resolve_penalty -> {
-                binding.rbOneOfPayment.text = getString(R.string.str_make_one_of_payment)
-                model.selectType = Constants.RESOLVE_PENALTY
+
+            R.id.rbResolvePenalty -> {
+                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
+                binding.model?.selectType = Constants.RESOLVE_PENALTY
             }
-            R.id.rb_check_for_paid -> {
-                binding.rbOneOfPayment.text = getString(R.string.str_make_one_of_payment)
-                model.selectType = Constants.CHECK_FOR_PAID
+            R.id.rbCheckForPaid -> {
+                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
+                binding.model?.selectType = Constants.CHECK_FOR_PAID
             }
-            R.id.rb_view_charges -> {
-                binding.rbOneOfPayment.text = getString(R.string.str_make_one_of_payment)
-                model.selectType = Constants.VIEW_CHARGES
+            R.id.rbViewCharges -> {
+                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
+                binding.model?.selectType = Constants.VIEW_CHARGES
             }
         }
         enableBtn()
