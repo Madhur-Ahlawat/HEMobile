@@ -105,7 +105,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         v?.let {
             when (v.id) {
-                R.id.btn_continue -> {
+                R.id.btnContinue -> {
 
                     when (model.selectType) {
 

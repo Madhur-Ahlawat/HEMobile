@@ -57,6 +57,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.vehicle.payment.MakeOneOffPayment"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait"/>
 
 

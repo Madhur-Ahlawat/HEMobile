@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
     const val VPN_ERROR = "Connect your VPN to access network."
@@ -66,5 +67,7 @@ object Constants {
     const val UK = "UK"
     const val NON_UK = "Non UK"
     const val PAYMENT_PAGE = "payment page"
+    const val NMI = "nmi"
+
 
 }
