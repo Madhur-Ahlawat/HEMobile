@@ -17,6 +17,8 @@
     <color name="login_blue_border">#1D70B8</color>
     <color name="hint_color">#B1B4B6</color>
     <color name="btn_color">#00703C</color>
+    <color name="btn_disable">#C9C9C9</color>
+    <color name="txt_disable">#7D7D7D</color>
     <color name="btn_shade">#002D18</color>
     <color name="tool_bar_clr">#0f0f0f</color>
     <color name="light_cyan">#e0ffff</color>
@@ -59,6 +61,7 @@
     <color name="color_1e1e1e">#1E1E1E</color>
     <color name="color_FF000000">#FF000000</color>
     <color name="color_99000000">#99000000</color>
+    <color name="color_757575">#757575</color>
 
 
 </resources>

@@ -6,6 +6,7 @@ import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
 import com.heandroid.data.remote.NetworkConnectionInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -64,6 +66,20 @@ object ApiModule {
             .client(client)
             .build()
     }
+
+
+    @Singleton
+    @Provides
+    @Named(Constants.NMI)
+    fun provideRetrofitNMI(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(NullOnEmptyConverterFactory())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
+
 
     @Provides
     @Singleton

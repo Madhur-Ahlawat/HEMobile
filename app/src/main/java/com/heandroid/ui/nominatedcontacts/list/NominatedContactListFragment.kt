@@ -148,6 +148,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
         }
     }
 
+
     private fun handleAccessRightResponse(status: Resource<GetSecondaryAccessRightsResp?>?) {
         try {
             loader?.dismiss()
@@ -183,7 +184,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
-                    showError(binding.root, "Contact Disabled Successfully")
+                    showError(binding.root, "Contact Removed Successfully")
                     Log.v(
                         "ListFrag",
                         " handleTerminatedContactsResp   succes called ${status.data}   "
@@ -273,7 +274,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 data?.let {
                     if (it.secAccountRowId.isNotEmpty()) {
                         val model =
-                            TerminateRequestModel(it.secAccountRowId, "DISABLED", data.phoneNumber)
+                            TerminateRequestModel(it.secAccountRowId, "TERMINATED", data.phoneNumber)
                         viewModel.terminateNominatedContact(model)
                     }
 

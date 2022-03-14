@@ -50,6 +50,7 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
             Constants.ABOUT_SERVICE -> { oldGraph.startDestination = R.id.aboutService }
             Constants.CROSSING_SERVICE_UPDATE -> { oldGraph.startDestination = R.id.crossingUpdate }
             Constants.CONTACT_DART_CHARGES -> { oldGraph.startDestination = R.id.contactDartCharge }
+
         }
         navController.graph = oldGraph
     }

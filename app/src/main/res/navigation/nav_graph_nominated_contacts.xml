@@ -30,9 +30,9 @@
 
     <fragment
         android:id="@+id/ncEmailFragment"
-        android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationEmailFragment"
+        android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationContactFragment"
         android:label="NominatedEmailFragment"
-        tools:layout="@layout/fragment_nominated_invitation_email">
+        tools:layout="@layout/fragment_nominated_invitation_contact">
         <action
             android:id="@+id/action_ncEmailFragment_to_ncAcceessRightFragment"
             app:destination="@id/ncAcceessRightFragment" />
