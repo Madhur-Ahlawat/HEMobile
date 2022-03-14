@@ -1,6 +1,8 @@
 package com.heandroid.ui.bottomnav.notification
 
 import android.content.Context
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -55,8 +57,11 @@ class NotificationViewAllAdapter(val context: Context, private var alertMsgList:
         fun bind(data: AlertMessage?) {
             data?.run {
                 binding.apply {
+
                     dateTxt.text = createTs ?: ""
                     messageTxt.text = message
+                    messageTxt.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
+                    messageTxt.movementMethod= LinkMovementMethod.getInstance()
                     btnTxt.visibility = View.GONE
 
                     if (isSelectListItem == true) {
