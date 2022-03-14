@@ -463,6 +463,15 @@
     <string name="card_security_code">Card security code</string>
     <string name="hint_cvv">The last 3 digits on the back of the card</string>
     <string name="name_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
+    <string name="confirm_payment_amount">Confirm payment amount</string>
+    <string name="payment_method">Payment method</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="receipt_number">Receipt number</string>
+    <string name="confirmation_email_sent">Confirmation Email sent</string>
+    <string name="download_receipt"><u>Download receipt</u></string>
+    <string name="make_another_payment">Make another payment</string>
+    <string name="view_all_vehicles"><u>View all vehicles</u></string>
 
 </resources>
 

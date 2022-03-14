@@ -42,6 +42,28 @@
         android:id="@+id/makeOffPaymentCardFragment"
         android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentCardFragment"
         tools:layout="@layout/fragment_make_off_payment_card"
+        android:label="MakeOffPaymentCardFragment" >
+        <action
+            android:id="@+id/action_makeOffPaymentCardFragment_to_makeOffPaymentConfirmationFragment"
+            app:destination="@id/makeOffPaymentConfirmationFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/makeOffPaymentConfirmationFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentConfirmationFragment"
+        tools:layout="@layout/fragment_make_off_payment_confirmation"
+        android:label="MakeOffPaymentCardFragment" >
+        <action
+            android:id="@+id/action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment"
+            app:destination="@id/makeOffPaymentSuccessfulFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/makeOffPaymentSuccessfulFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentSuccessfulFragment"
+        tools:layout="@layout/fragment_make_off_payment_successful"
         android:label="MakeOffPaymentCardFragment" />
 
 

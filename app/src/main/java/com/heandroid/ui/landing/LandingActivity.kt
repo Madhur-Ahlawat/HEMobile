@@ -50,6 +50,8 @@ class LandingActivity : BaseActivity<Any?>() {
         if(checkSession()) loadFragment()
 
         initCtrl()
+
+      //  doSomething("ABC")
     }
 
     private fun initCtrl() {
@@ -111,6 +113,11 @@ class LandingActivity : BaseActivity<Any?>() {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
+    }
+
+    fun <T> doSomething(value : T){
+        print("This is {T.class.simpleName}")
+
     }
 
 }
