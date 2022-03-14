@@ -14,6 +14,40 @@
         <action
             android:id="@+id/action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment"
             app:destination="@id/makeOneOffPaymentCrossingFragment" />
+        <action
+            android:id="@+id/action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment"
+            app:destination="@id/makePaymentAddVehicleFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/addVehicleDetailsFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:label="AddVehicleDetailsFragment"
+        tools:layout="@layout/fragment_add_vehicle_details">
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
+            app:destination="@id/addVehicleClassesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addVehicleClassesFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:label="AddVehicleClassesFragment"
+        tools:layout="@layout/fragment_add_vehicle_classes">
+        <action
+            android:id="@+id/action_addVehicleClassesFragment_to_addVehicleDoneFragment"
+            app:destination="@id/addVehicleDoneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addVehicleDoneFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
+        android:label="AddVehicleDoneFragment"
+        tools:layout="@layout/fragment_add_vehicle_done">
+        <action
+            android:id="@+id/action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment"
+            app:destination="@id/makeOneOffPaymentCrossingFragment" />
     </fragment>
 
 
@@ -65,6 +99,16 @@
         android:name="com.heandroid.ui.vehicle.payment.MakeOffPaymentSuccessfulFragment"
         tools:layout="@layout/fragment_make_off_payment_successful"
         android:label="MakeOffPaymentCardFragment" />
+
+    <fragment
+        android:id="@+id/makePaymentAddVehicleFragment"
+        android:name="com.heandroid.ui.vehicle.payment.MakePaymentAddVehicleFragment"
+        android:label="MakePaymentAddVehicleFragment"
+        tools:layout="@layout/fragment_make_payment_add_vehicle">
+        <action
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment"
+            app:destination="@id/addVehicleDetailsFragment" />
+    </fragment>
 
 
 </navigation>

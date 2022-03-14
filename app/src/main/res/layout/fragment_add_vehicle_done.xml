@@ -12,6 +12,21 @@
         android:layout_height="match_parent"
         android:background="@color/light_grey">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvYourVehicle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:text="@string/your_vehicle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <RelativeLayout
             android:id="@+id/tickLayout"
             android:layout_width="match_parent"
@@ -23,7 +38,7 @@
             android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/tvYourVehicle">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/tick_img"

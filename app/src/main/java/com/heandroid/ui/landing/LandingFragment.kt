@@ -64,10 +64,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
-            R.id.rb_create_account -> {
+            R.id.rbCreateAccount -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.CREATE_ACCOUNT
-                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
+                binding.model?.selectType = CREATE_ACCOUNT
             }
             R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
@@ -77,19 +76,19 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
                 spannableString.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireActivity(),R.color.color_757575)), 24, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
-                binding.model?.selectType = Constants.ONE_OFF_PAYMENT
+                binding.model?.selectType = ONE_OFF_PAYMENT
             }
             R.id.rbResolvePenalty -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.RESOLVE_PENALTY
+                binding.model?.selectType = RESOLVE_PENALTY
             }
             R.id.rbCheckForPaid -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.CHECK_FOR_PAID
+                binding.model?.selectType = CHECK_FOR_PAID
             }
             R.id.rbViewCharges -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.VIEW_CHARGES
+                binding.model?.selectType = VIEW_CHARGES
             }
         }
         binding.model= LandingModel(true,binding.model?.selectType?:"")

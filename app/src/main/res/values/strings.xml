@@ -98,7 +98,7 @@
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Make a one off payment</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
-    <string name="str_charges_for_crossing">The charges for crossings</string>
+    <string name="str_charges_for_crossing">The charges for the crossings</string>
     <string name="str_six_am_morning_txt">\u2022   You have made since 6 am yesterday morning.\n\u2022  You are planning to make for next 12 months        are valid for same time period.\n\u2022  You can add only 5 vehicle.</string>
     <string name="str_twelve_months_txt">\u2022  You are planning to make for next 12 months are valid for same time period</string>
     <string name="str_single_vehicle">Single Vehicle</string>
@@ -140,7 +140,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_add_vehicle">Add vehicle</string>
     <string name="str_add_vehicles">Add vehicles</string>
-    <string name="str_add_upto_five_vehicles">Yoc can add upto five vehicles</string>
+    <string name="str_add_upto_five_vehicles">You can add upto five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
     <string name="str_country_of_registraion">Country of registration UK</string>
     <string name="str_find_vehicle">Find your vehicle</string>
@@ -472,6 +472,10 @@
     <string name="download_receipt"><u>Download receipt</u></string>
     <string name="make_another_payment">Make another payment</string>
     <string name="view_all_vehicles"><u>View all vehicles</u></string>
+
+    <string name="str_payment_des1">You have made since 6 am yesterday morning.</string>
+    <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
+    <string name="str_payment_des3">You can add only 5 vehicle.</string>
 
 </resources>
 

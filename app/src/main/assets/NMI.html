@@ -1,9 +1,10 @@
 <html>
-    <head>
-        <script src="https://secure.nmi.com/token/Collect.js"
-                data-tokenization-key="5mN8N7-jhr55W-N22pxX-uAW2s9"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
-        <style>
+<head>
+    <script src="https://secure.nmi.com/token/Collect.js"
+            data-tokenization-key="5mN8N7-jhr55W-N22pxX-uAW2s9"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+    <style>
             input {
                 border: 5px inset #687C8D;
                 background-color: #c0c0c0;
@@ -12,85 +13,86 @@
                 font-family: monospace;
                 padding: 5px;
             }
-        </style>
-    </head>
-    <body>
-        <h1>Inline CollectJS Demo</h1>
-        <form  method="post">
-            <table>
-                <tr>
-                    <td>Amount: </td>
-                    <td><input size="50" type="text" name="amount" value="1.00" /></td>
-                </tr>
-                <tr>
-                    <td>First Name: </td>
-                    <td><input size="50" type="text" name="first_name" value="Test" /></td>
-                </tr>
-                <tr>
-                    <td>Last Name: </td>
-                    <td><input size="50" type="text" name="last_name" value="User" /></td>
-                </tr>
-                <tr>
-                    <td>Address1</td>
-                    <td><input size="50" type="text" name="address1" value="123 Main Street"></td>
-                </tr>
-                <tr>
-                    <td>City</td>
-                    <td><input size="50" type="text" name="city" value="Beverley Hills"></td>
-                </tr>
-                <tr>
-                    <td>State</td>
-                    <td><input size="50" type="text" name="state" value="CA"></td>
-                </tr>
-                <tr>
-                    <td>zip</td>
-                    <td><input size="50" type="text" name="zip" value="90210"></td>
-                </tr>
-                <tr>
-                    <td>country</td>
-                    <td><input size="50" type="text" name="country" value="US"></td>
-                </tr>
-                <tr>
-                    <td>phone</td>
-                    <td><input size="50" type="text" name="phone" value="5555555555"></td>
-                </tr>
-                <tr>
-                    <td>CC Number</td>
-                    <td id="demoCcnumber"></td>
-                </tr>
-                <tr>
-                    <td>CC Exp</td>
-                    <td id="demoCcexp"></td>
-                </tr>
-                <tr>
-                    <td>CVV</td>
-                    <td id="demoCvv"></td>
-                </tr>
-                <tr>
-                    <td>Account Number</td>
-                    <td id="demoCheckaccount"></td>
-                </tr>
-                <tr>
-                    <td>Routing Number</td>
-                    <td id="demoCheckaba"></td>
-                </tr>
-                <tr>
-                    <td>Name on Account</td>
-                    <td id="demoCheckname"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="googlePayButton"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="applePayButton"></td>
-                </tr>
-            </table>
-            <br>
-            <button id="demoPayButton" type="button">Pay the money.</button>
-        </form>
-        <script>
+
+    </style>
+</head>
+<body>
+<h1>Inline CollectJS Demo</h1>
+<form method="post">
+    <table>
+        <tr>
+            <td>Amount:</td>
+            <td><input size="50" type="text" name="amount" value="1.00"/></td>
+        </tr>
+        <tr>
+            <td>First Name:</td>
+            <td><input size="50" type="text" name="first_name" value="Test"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input size="50" type="text" name="last_name" value="User"/></td>
+        </tr>
+        <tr>
+            <td>Address1</td>
+            <td><input size="50" type="text" name="address1" value="123 Main Street"></td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td><input size="50" type="text" name="city" value="Beverley Hills"></td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td><input size="50" type="text" name="state" value="CA"></td>
+        </tr>
+        <tr>
+            <td>zip</td>
+            <td><input size="50" type="text" name="zip" value="90210"></td>
+        </tr>
+        <tr>
+            <td>country</td>
+            <td><input size="50" type="text" name="country" value="US"></td>
+        </tr>
+        <tr>
+            <td>phone</td>
+            <td><input size="50" type="text" name="phone" value="5555555555"></td>
+        </tr>
+        <tr>
+            <td>CC Number</td>
+            <td id="demoCcnumber"></td>
+        </tr>
+        <tr>
+            <td>CC Exp</td>
+            <td id="demoCcexp"></td>
+        </tr>
+        <tr>
+            <td>CVV</td>
+            <td id="demoCvv"></td>
+        </tr>
+        <tr>
+            <td>Account Number</td>
+            <td id="demoCheckaccount"></td>
+        </tr>
+        <tr>
+            <td>Routing Number</td>
+            <td id="demoCheckaba"></td>
+        </tr>
+        <tr>
+            <td>Name on Account</td>
+            <td id="demoCheckname"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="googlePayButton"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="applePayButton"></td>
+        </tr>
+    </table>
+    <br>
+    <button id="demoPayButton" type="button">Pay the money.</button>
+</form>
+<script>
             document.addEventListener('DOMContentLoaded', function () {
                 CollectJS.configure({
                     "paymentSelector" : "#demoPayButton",
@@ -234,8 +236,10 @@
                         console.log("Collect.js loaded the fields onto the form");
                     },
                     'callback' : function(response) {
-                        alert(response);
-			            return ;
+var apiResponse = JSON.stringify(response, null, "");
+                     console.log(apiResponse);
+                     return;
+
                         var input = document.createElement("input");
                         input.type = "hidden";
                         input.name = "payment_token";
@@ -243,9 +247,11 @@
                         var form = document.getElementsByTagName("form")[0];
                         form.appendChild(input);
                         form.submit();
+
                     }
                 });
             });
-        </script>
-    </body>
+
+</script>
+</body>
 </html>

@@ -14,6 +14,8 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.ui.vehicle.vehiclelist.VehicleListAdapter
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,14 +38,19 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     override fun init() {
         mVehicleDetails =
             arguments?.getSerializable(Constants.DATA) as VehicleResponse
-        mScreeType = arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)!!
-
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-            binding.tickLayout.visibility = View.VISIBLE
-            binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
-            binding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
         }
 
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+            binding.tickLayout.visible()
+            binding.tvYourVehicle.gone()
+            binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
+            binding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
+        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT){
+            binding.tickLayout.gone()
+            binding.tvYourVehicle.visible()
+        }
         setAdapter()
     }
 
@@ -51,8 +58,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         binding.conformBtn.setOnClickListener {
             if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
                 findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment)
-            } else {
-//                onBackPressed()
+            } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT){
+                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment)
             }
         }
     }
@@ -60,7 +67,6 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     private fun setAdapter() {
         mList.clear()
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
-
             val plateInfoResp = PlateInfoResponse(
                 mVehicleDetails.plateInfo.number,
                 mVehicleDetails.plateInfo.country,
@@ -79,16 +85,14 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 "",
                 "",
                 mVehicleDetails.vehicleInfo.color,
-                "",
-                ""
+                mVehicleDetails.vehicleInfo.vehicleClassDesc,
+                mVehicleDetails.vehicleInfo.effectiveStartDate
             )
 
             val mVehicleResponse1 =
                 VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp, true)
             mList.add(mVehicleResponse1)
-        } else {
-
-
+        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
             val plateInfoResp = PlateInfoResponse(
                 mVehicleDetails.plateInfo.number,
                 mVehicleDetails.plateInfo.country,

@@ -59,5 +59,8 @@ object Constants {
 
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
+    const val UK = "UK"
+    const val NON_UK = "Non UK"
+    const val PAYMENT_PAGE = "payment page"
 
 }

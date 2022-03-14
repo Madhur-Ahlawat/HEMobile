@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey"
+        android:padding="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/add_vehicles_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/str_add_vehicle_to_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVehiclesList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:listitem="@layout/adapter_vehicles_row"
+            tools:itemCount="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/add_upto_five_vehicles"
+            app:layout_constraintTop_toBottomOf="@+id/no_vehicles_added" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/no_vehicles_added"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="start"
+            android:text="@string/str_no_vehicles_added_txt"
+            android:textColor="@color/color_7D7D7D"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_vehicles_txt" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/add_upto_five_vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/str_add_upto_five_vehicles"
+            android:textColor="@color/color_7D7D7D"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addVehicleBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/str_add_vehicle"
+            android:textAllCaps="false"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconGravity="textStart"
+            app:iconTint="@color/green"
+            app:layout_constraintBottom_toTopOf="@+id/findVehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/green"
+            app:strokeWidth="@dimen/_1sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/findVehicle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:text="@string/str_find_vehicle"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
