@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:text="@string/str_step_1_of_5"
+        android:text=""
         android:textColor="@color/black"
         android:textStyle="normal"
         android:textSize="@dimen/_12ssp"
@@ -80,8 +80,8 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:hint="@string/str_enter_security_code"
         android:textColorHint="@color/color_CBCBCB"
-        app:errorEnabled="true"
-        >
+        app:boxStrokeColor="@color/color_00703C"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_code"
@@ -93,8 +93,19 @@
             android:text="@={model.code}"
             android:textColor="@color/color_000000"
             android:textSize="@dimen/_11ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/tv_resend"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_resend"
+        android:layout_margin="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/color_00703C"/>
 </RelativeLayout>
     <TextView
         android:id="@+id/tv_msg"

@@ -154,4 +154,5 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         }
 
     }
+
 }

@@ -431,7 +431,7 @@
     <string name="str_logout_msg">You have successfully sign out of your account</string>
     <string name="str_session_time_out">Session Time out</string>
     <string name="str_verification">Verification</string>
-    <string name="str_step_1_of_5">Step 1 of 5</string>
+    <string name="str_step_f_of_l">Step %d of %d</string>
     <string name="str_email_verification_msg">This email address will be used as your user name after verification. A security code will be sent to this email address for verification.</string>
     <string name="str_send_verification_code">Send verification code</string>
     <string name="str_send_security_code">Send security code</string>
@@ -451,6 +451,20 @@
     <string name="contact">Contact</string>
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
+    <string name="str_verify_security_code">Verify security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="str_select_account_type">Select an account type</string>
+    <string name="str_personal_account">Personal account</string>
+    <string name="str_business_account">Business account</string>
+    <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
+    <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
+    <string name="str_prepay">Pre-pay</string>
+    <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
+    <string name="str_payg_account">Pay as you go</string>
+    <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
+    <string name="str_personal_details_entry">Personal details entry</string>
+    <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
+    <string name="str_provide_below_details">"In order to set up your Dart Charge account, please provide the below information. "</string>
 
 </resources>
 

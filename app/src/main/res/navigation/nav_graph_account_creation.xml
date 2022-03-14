@@ -6,9 +6,29 @@
     app:startDestination="@id/emailVerification">
     <fragment
         android:id="@+id/emailVerification"
-        android:name="com.heandroid.ui.account.creation.FragmentEmailVerification"
+        android:name="com.heandroid.ui.account.creation.EmailVerificationFragment"
         android:label="@string/str_email_verification"
         tools:layout="@layout/fragment_email_verification">
+        <action
+            android:id="@+id/actionEmailVerification_to_AccountTypeSelection"
+            app:destination="@id/accountTypeSelectionFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/accountTypeSelectionFragment"
+        android:name="com.heandroid.ui.account.creation.AccountTypeSelectionFragment"
+        android:label="@string/str_select_account_type"
+        tools:layout="@layout/fragment_account_type_selection">
+        <action
+            android:id="@+id/actionAccountSelectionType_to_PersonalDetailsEntry"
+            app:destination="@id/personalDetailsEntryFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/personalDetailsEntryFragment"
+        android:name="com.heandroid.ui.account.creation.PersonalDetailsEntryFragment"
+        android:label="@string/str_personal_details_entry"
+        tools:layout="@layout/fragment_personal_details_entry">
+    </fragment>
 </navigation>

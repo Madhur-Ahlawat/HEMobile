@@ -2,6 +2,8 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val MAIN_ACCOUNT = "main_account"
+    const val SUB_ACCOUNT = "sub_account"
     const val VPN_ERROR = "Connect your VPN to access network."
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE ="type"
@@ -57,5 +59,9 @@ object Constants {
 
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
+    const val PERSONAL_ACCOUNT="personal_account"
+    const val BUSINESS_ACCOUNT="business_account"
+    const val PRE_PAY_ACCOUNT="pre_pay_account"
+    const val PAYG_ACCOUNT="pay_as_you_go_account"
 
 }

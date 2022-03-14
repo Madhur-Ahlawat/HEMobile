@@ -1,9 +1,7 @@
-package com.heandroid.auth.login
+package com.heandroid.hiltTesting.login
 
 import androidx.test.core.app.launchActivity
-import com.heandroid.auth.launchFragmentInHiltContainer
 import com.heandroid.ui.auth.controller.AuthActivity
-import com.heandroid.ui.auth.login.LoginFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
