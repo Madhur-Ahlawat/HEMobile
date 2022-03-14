@@ -33,6 +33,8 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:layout_marginEnd="@dimen/_12sdp"
+            android:linksClickable="true"
+            android:textColorLink="@color/blue"
             android:text="Phasellas id urna frimgella, imperdlet ex at please do topup."
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
