@@ -11,6 +11,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,13 +36,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     override fun initCtrl() {
-        binding.makeInputEditText.doOnTextChanged { _, _, _, _ ->
+        binding.makeInputEditText.onTextChanged {
             checkButton()
         }
-        binding.modelInputEditText.doOnTextChanged { _, _, _, _ ->
+        binding.modelInputEditText.onTextChanged {
             checkButton()
         }
-        binding.colorInputEditText.doOnTextChanged { _, _, _, _ ->
+        binding.colorInputEditText.onTextChanged {
             checkButton()
         }
 
@@ -56,6 +57,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
 
                 val bundle = Bundle().apply {
                     putSerializable(Constants.DATA, mVehicleDetails)
+                    putBoolean(Constants.PAYMENT_PAGE, true)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)
             }
