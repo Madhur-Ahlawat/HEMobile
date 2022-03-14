@@ -62,5 +62,6 @@ object Constants {
     const val UK = "UK"
     const val NON_UK = "Non UK"
     const val PAYMENT_PAGE = "payment page"
+    const val MAX_VEHICLE_SIZE = 5
 
 }
