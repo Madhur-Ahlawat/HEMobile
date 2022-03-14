@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
-    private lateinit var mVehicleDetails: VehicleResponse
+    private var mVehicleDetails: VehicleResponse ? =null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -29,9 +29,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     override fun init() {
-        mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
-        binding.subTitle.text = "Country of registration ${mVehicleDetails.plateInfo.country}"
+        mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
+        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        binding.subTitle.text = "Country of registration ${mVehicleDetails?.plateInfo?.country}"
         setBtnDisabled()
     }
 
@@ -51,12 +51,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                 && binding.modelInputEditText.text.toString().trim().isNotEmpty()
                 && binding.colorInputEditText.text.toString().trim().isNotEmpty()
             ) {
-                mVehicleDetails.vehicleInfo.color = binding.colorInputEditText.text.toString().trim()
-                mVehicleDetails.vehicleInfo.make = binding.makeInputEditText.text.toString().trim()
-                mVehicleDetails.vehicleInfo.model = binding.modelInputEditText.text.toString().trim()
+                mVehicleDetails?.vehicleInfo?.color = binding.colorInputEditText.text.toString().trim()
+                mVehicleDetails?.vehicleInfo?.make = binding.makeInputEditText.text.toString().trim()
+                mVehicleDetails?.vehicleInfo?.model = binding.modelInputEditText.text.toString().trim()
 
                 val bundle = Bundle().apply {
-                    putSerializable(Constants.DATA, mVehicleDetails)
+                    putParcelable(Constants.DATA, mVehicleDetails)
                     putBoolean(Constants.PAYMENT_PAGE, true)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)

@@ -51,12 +51,12 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
         private var mListener: AddVehicleListener? = null
 
         fun newInstance(
-            vehicleDetails: VehicleResponse,
+            vehicleDetails: VehicleResponse?,
             listener: AddVehicleListener
         ): VehicleAddConfirmDialog {
             val args = Bundle()
             mListener = listener
-            args.putSerializable(KEY_TITLE, vehicleDetails)
+            args.putParcelable(KEY_TITLE, vehicleDetails)
             val fragment = VehicleAddConfirmDialog()
             fragment.arguments = args
             return fragment

@@ -162,7 +162,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@{model.enable==false?@color/btn_disable:@color/green}"
             android:enabled="@{model.enable}"
             android:gravity="center"

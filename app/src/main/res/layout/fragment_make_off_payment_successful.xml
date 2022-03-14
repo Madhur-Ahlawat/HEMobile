@@ -275,7 +275,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@color/btn_disable"
             android:gravity="center"
             android:text="@string/str_continue"

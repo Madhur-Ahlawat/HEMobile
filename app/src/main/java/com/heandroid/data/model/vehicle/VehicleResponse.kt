@@ -1,8 +1,15 @@
 package com.heandroid.data.model.vehicle
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+
+
+
+@Parcelize
 data class VehicleResponse(
 
     @SerializedName("newPlateInfo")
@@ -14,7 +21,10 @@ data class VehicleResponse(
     @SerializedName("vehicleInfo")
     var vehicleInfo: VehicleInfoResponse,
 
-    var isExpanded: Boolean = false
+    var isExpanded: Boolean = false,
 
-) : Serializable
+    var quantity : Int =0,
+    var price : Double =0.0,
+
+) : Parcelable
 

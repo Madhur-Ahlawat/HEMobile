@@ -143,7 +143,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun onAddClick(details: VehicleResponse) {
         val bundle = Bundle().apply {
-            putSerializable(Constants.DATA, details)
+            putParcelable(Constants.DATA, details)
         }
         findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
     }

@@ -23,10 +23,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private lateinit var mAdapter: AddedVehicleListAdapter
     private var addDialog : AddVehicleDialog? = null
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentMakePaymentAddVehicleBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentMakePaymentAddVehicleBinding.inflate(inflater, container, false)
 
 
     override fun init() {
@@ -111,7 +108,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             // UK flow need to add here
         } else {
             val bundle = Bundle().apply {
-                putSerializable(Constants.DATA, details)
+                putParcelable(Constants.DATA, details)
             }
             findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
         }

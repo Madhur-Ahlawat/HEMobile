@@ -205,7 +205,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnInvite"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_36sdp"
             android:backgroundTint="@color/green"
             android:text="@string/str_invite"
@@ -221,7 +221,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:backgroundTint="@color/white"
             android:text="@string/str_cancel"

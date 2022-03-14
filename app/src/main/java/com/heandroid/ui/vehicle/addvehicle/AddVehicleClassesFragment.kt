@@ -27,7 +27,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     AddVehicleListener {
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-    private lateinit var mVehicleDetails: VehicleResponse
+    private var mVehicleDetails: VehicleResponse?=null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
     private var isFromPaymentScreen = false
@@ -41,9 +41,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        mVehicleDetails = arguments?.getSerializable(Constants.DATA) as VehicleResponse
+        mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
         isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails.plateInfo.number}"
+        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
         binding.classARadioButton.isChecked = true
         mClassType = "1"
         binding.classADesc.visible()
@@ -116,19 +116,19 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         binding.continueButton.setOnClickListener {
             if (isFromPaymentScreen) {
                 val vehicleData = mVehicleDetails
-                vehicleData.apply {
+                vehicleData?.apply {
                     vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
                     vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
                 }
                 val bundle = Bundle().apply {
-                    putSerializable(Constants.DATA, vehicleData)
+                    putParcelable(Constants.DATA, vehicleData)
                     putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
                 }
                 findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
                 return@setOnClickListener
             }
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                mVehicleDetails.vehicleInfo.vehicleClassDesc = mClassType
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
 
                 VehicleAddConfirmDialog.newInstance(
                     mVehicleDetails,
@@ -161,7 +161,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     override fun onAddClick(details: VehicleResponse) {
-        mVehicleDetails.apply {
+        mVehicleDetails?.apply {
             plateInfo.state = "HE"
             plateInfo.type = "STANDARD"
             plateInfo.vehicleGroup = ""
@@ -194,12 +194,12 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
     private fun navigateToAddVehicleDoneScreen() {
         val vehicleData = mVehicleDetails
-        vehicleData.apply {
+        vehicleData?.apply {
             vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
             vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
         }
         val bundle = Bundle().apply {
-            putSerializable(Constants.DATA, vehicleData)
+            putParcelable(Constants.DATA, vehicleData)
             putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
         }
         findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
