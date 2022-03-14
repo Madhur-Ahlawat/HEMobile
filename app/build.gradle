@@ -48,31 +48,30 @@ android {
     }
 
 
-
     def envConfig
     flavorDimensions "default"
     productFlavors {
         dev {
             envConfig = getProps("/config/dev.properties")
-            applicationId envConfig.APPLICATION_ID.replace("\"","")
-            versionCode envConfig.VERSION_CODE.replace("\"","").toInteger()
-            versionName envConfig.VERSION_NAME.replace("\"","")
+            applicationId envConfig.APPLICATION_ID.replace("\"", "")
+            versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
+            versionName envConfig.VERSION_NAME.replace("\"", "")
         }
 
 
         prod {
             envConfig = getProps("/config/prod.properties")
-            applicationId envConfig.APPLICATION_ID.replace("\"","")
-            versionCode envConfig.VERSION_CODE.replace("\"","").toInteger()
-            versionName envConfig.VERSION_NAME.replace("\"","")
+            applicationId envConfig.APPLICATION_ID.replace("\"", "")
+            versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
+            versionName envConfig.VERSION_NAME.replace("\"", "")
         }
 
 
         tstg {
             envConfig = getProps("/config/test.properties")
-            applicationId envConfig.APPLICATION_ID.replace("\"","")
-            versionCode envConfig.VERSION_CODE.replace("\"","").toInteger()
-            versionName envConfig.VERSION_NAME.replace("\"","")
+            applicationId envConfig.APPLICATION_ID.replace("\"", "")
+            versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
+            versionName envConfig.VERSION_NAME.replace("\"", "")
         }
     }
 
@@ -80,7 +79,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-        kotlinOptions {
+    kotlinOptions {
         jvmTarget = '1.8'
     }
 
@@ -88,23 +87,27 @@ android {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-
+        def materialVersion = '1.4.0'
+        def appCompatVersion = '1.3.0'
+        def appCoreVersion = '1.6.0'
+        def appTestCoreVersion = '1.3.0'
+        def constraintVersion = '2.0.4'
+        def navVersion = '2.3.5'
 
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation 'androidx.core:core-ktx:1.6.0'
-        implementation 'androidx.appcompat:appcompat:1.3.0'
-        implementation 'com.google.android.material:material:1.4.0'
-        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-        implementation 'androidx.test:core-ktx:1.3.0'
+        implementation "androidx.core:core-ktx:$appCoreVersion"
+        implementation "androidx.appcompat:appcompat:$appCompatVersion"
+        implementation "com.google.android.material:material:$materialVersion"
+        implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
+        implementation "androidx.test:core-ktx:$appTestCoreVersion"
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-        implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-        implementation 'androidx.navigation:navigation-runtime-ktx:2.3.5'
+        implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+        implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+        implementation "androidx.navigation:navigation-runtime-ktx:$navVersion"
         testImplementation 'junit:junit:4.13.2'
         androidTestImplementation 'androidx.test.ext:junit:1.1.3'
         androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
 
 
         // ViewModel
@@ -132,7 +135,6 @@ android {
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
         //UI
-        implementation 'com.google.android.material:material:1.2.1'
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -162,7 +164,6 @@ android {
         implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifeCycleVersion"
         kapt "androidx.hilt:hilt-compiler:$hiltLifeCycleVersion"
         kapt "com.google.dagger:hilt-compiler:$dagger_hilt_version"
-
 
 
         // For Robolectric tests.

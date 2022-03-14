@@ -33,8 +33,7 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
     private lateinit var navController: NavController
 
     @Inject
-    lateinit var sessionManager : SessionManager
-
+    lateinit var sessionManager: SessionManager
 
 
     override fun initViewBinding() {
@@ -43,14 +42,19 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
         toolbar(getString(R.string.str_nominated_contacts))
 
         navController = findNavController(R.id.fragmentContainerView)
-        val oldGraph=navController.graph
-        if(intent.getIntExtra("count",0)>0) oldGraph.startDestination=R.id.ncListFragment
-        else oldGraph.startDestination=R.id.ncNoListFragment
-        navController.graph=oldGraph
+        val oldGraph = navController.graph
+        if (intent.getIntExtra("count", 0) > 0) oldGraph.startDestination = R.id.ncListFragment
+        else oldGraph.startDestination = R.id.ncNoListFragment
+        navController.graph = oldGraph
     }
 
     override fun observeViewModel() {
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     override fun onStart() {
@@ -63,7 +67,7 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
         loadsession()
     }
 
-    private fun loadsession(){
+    private fun loadsession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
