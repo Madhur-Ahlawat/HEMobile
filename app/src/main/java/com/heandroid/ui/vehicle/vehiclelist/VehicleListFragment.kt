@@ -27,25 +27,23 @@ import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnClickListener,
-    ItemClickListener, AddVehicleListener, RemoveVehicleListener {
+class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnClickListener, ItemClickListener, AddVehicleListener, RemoveVehicleListener {
 
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
     private lateinit var mAdapter: VehicleListAdapter
     private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentVehicleListBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentVehicleListBinding.inflate(inflater, container, false)
 
     override fun init() {
         val buttonVisibility = arguments?.getBoolean(Constants.DATA, false) == true
+
         if (buttonVisibility) {
             binding.addVehicleBtn.gone()
             binding.removeVehicleBtn.gone()
         }
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -63,8 +61,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.addVehicleBtn -> {
-                AddVehicleDialog.newInstance(
+            R.id.addVehicleBtn -> { AddVehicleDialog.newInstance(
                     getString(R.string.str_title),
                     getString(R.string.str_sub_title),
                     this

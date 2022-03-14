@@ -7,12 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="10dp"
-            />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -48,6 +42,7 @@
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="5dp"
+            app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
@@ -191,11 +186,11 @@
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_48sdp"
-            android:backgroundTint="@color/btn_disable"
+            android:backgroundTint="@color/green"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@color/txt_disable"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"

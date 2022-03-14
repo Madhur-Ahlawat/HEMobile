@@ -12,8 +12,7 @@ import com.heandroid.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossingBinding>(), FutureCrossingQuantityListner,
-    View.OnClickListener {
+class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossingBinding>(), FutureCrossingQuantityListner, View.OnClickListener {
 
     val list: MutableList<MakeOffPaymentCrossingModel?>? = ArrayList()
     private var totalPrice : Double? = 0.0

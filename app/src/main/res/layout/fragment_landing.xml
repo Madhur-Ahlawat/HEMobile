@@ -73,8 +73,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black_trans" />
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
+
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbCreateAccount"
@@ -91,8 +93,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black_trans" />
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbResolvePenalty"
@@ -107,10 +110,13 @@
                 android:text="@string/str_resolve_penalty_charge"
                 android:textSize="@dimen/_13ssp" />
 
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black_trans" />
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
+
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbCheckForPaid"
@@ -127,17 +133,18 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black_trans" />
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbViewCharges"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="28dp"
+                android:paddingLeft="28dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
                 android:textColor="@color/black"
                 app:buttonTint="@color/bottomActiveColor"
                 android:text="@string/str_view_charges"
@@ -145,8 +152,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black_trans" />
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
 
         </RadioGroup>
 
@@ -154,7 +162,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_48sdp"
             android:backgroundTint="@{model.enable==false?@color/btn_disable:@color/green}"
             android:enabled="@{model.enable}"
             android:gravity="center"

@@ -37,7 +37,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.vehicle.VehicleMgmtActivity"
+        <activity
+            android:name=".ui.vehicle.VehicleMgmtActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobile"/>
 
@@ -56,8 +57,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.vehicle.payment.MakeOneOffPayment"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait"/>
+
+
+        <activity
+            android:name=".ui.vehicle.payment.MakeOffPaymentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileWhite" />
 
 
         <provider

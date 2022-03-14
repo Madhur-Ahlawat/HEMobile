@@ -465,11 +465,31 @@
     <string name="str_personal_details_entry">Personal details entry</string>
     <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="str_provide_below_details">"In order to set up your Dart Charge account, please provide the below information. "</string>
+    <string name="payment_amount">Payment amount</string>
+    <string name="your_vehicle">Your vehicle</string>
+    <string name="future_crossings_are_valid_for_12_months_from_the_date_you_make_them">Future crossings are valid for 12 months from the date you make them.</string>
+    <string name="future_crossings">Future crossings</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="i_declare_that_the_information_given_n_above_is_correct">I declare that the information given \n above is correct</string>
+    <string name="card_number">Card number</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="name_on_card">Name on card</string>
+    <string name="card_security_code">Card security code</string>
+    <string name="hint_cvv">The last 3 digits on the back of the card</string>
+    <string name="name_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
+    <string name="confirm_payment_amount">Confirm payment amount</string>
+    <string name="payment_method">Payment method</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="receipt_number">Receipt number</string>
+    <string name="confirmation_email_sent">Confirmation Email sent</string>
+    <string name="download_receipt"><u>Download receipt</u></string>
+    <string name="make_another_payment">Make another payment</string>
+    <string name="view_all_vehicles"><u>View all vehicles</u></string>
 
     <string name="str_payment_des1">You have made since 6 am yesterday morning.</string>
     <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
     <string name="str_payment_des3">You can add only 5 vehicle.</string>
-    <string name="your_vehicle">Your vehicle</string>
 
 </resources>
 

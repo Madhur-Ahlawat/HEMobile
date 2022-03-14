@@ -56,6 +56,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         model = LandingModel()
     }
 
+
     override fun initCtrl() {
         binding.rgOptions.setOnCheckedChangeListener(this)
     }
