@@ -28,6 +28,8 @@ import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class LandingActivity : BaseActivity<Any?>() {
@@ -51,7 +53,7 @@ class LandingActivity : BaseActivity<Any?>() {
 
         initCtrl()
 
-      //  doSomething("ABC")
+        doSomething("ABC")
     }
 
     private fun initCtrl() {
@@ -115,8 +117,9 @@ class LandingActivity : BaseActivity<Any?>() {
         }
     }
 
-    fun <T> doSomething(value : T){
-        print("This is {T.class.simpleName}")
+    inline fun <reified T> doSomething(value : T){
+        val type : KType = typeOf<T>()
+        print("This is $type")
 
     }
 

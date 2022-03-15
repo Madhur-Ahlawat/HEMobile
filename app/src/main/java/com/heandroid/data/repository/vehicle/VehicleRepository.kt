@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class VehicleRepository @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun addVehicleApiCall(requestParam: VehicleResponse) =
+    suspend fun addVehicleApiCall(requestParam: VehicleResponse?) =
         apiService.addVehicleApi(requestParam)
 
     suspend fun updateVehicleApiCall(requestParam: VehicleResponse) =

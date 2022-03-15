@@ -374,7 +374,7 @@
                     android:inputType="textPassword"
                     android:maxLength="40"
                     android:singleLine="true"
-                    android:text="@={model.newPassword}"
+                    android:text="@={model.createPassword}"
                     android:textColor="@color/color_000000"
                     android:textColorHint="@color/grey_two"
                     android:textSize="@dimen/_13ssp" />

@@ -96,7 +96,7 @@
             android:id="@+id/btnNominatedContact"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:letterSpacing="0"

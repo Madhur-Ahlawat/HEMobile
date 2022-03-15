@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.widget.EditText
 import com.google.android.material.button.MaterialButton
 
 
@@ -79,4 +80,34 @@ fun TextView.setStyleNormal() {
 
 fun TextView.setStyleBold() {
     setTypeface(typeface, Typeface.BOLD)
+}
+
+/**
+ * To open the key board.
+ */
+fun EditText.openKeyboardForced() {
+    requestFocus()
+    (this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+        InputMethodManager.SHOW_FORCED,
+        0
+    )
+}
+
+/**
+ * To open the key board.
+ */
+fun EditText.openKeyboard() {
+    requestFocus()
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+        this, InputMethodManager.SHOW_IMPLICIT
+    )
+}
+
+/**
+ * To open the key board.
+ */
+fun EditText.hideKeyboard() {
+    val inputMethodManager =
+        this.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }

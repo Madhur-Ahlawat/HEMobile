@@ -21,17 +21,27 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
     private val mVehicleList = ArrayList<VehicleResponse>()
     private lateinit var mAdapter: AddedVehicleListAdapter
-    private var addDialog : AddVehicleDialog? = null
+    private var addDialog: AddVehicleDialog? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentMakePaymentAddVehicleBinding.inflate(inflater, container, false)
 
-
     override fun init() {
-        if (mVehicleList.isEmpty()){
+        mAdapter = AddedVehicleListAdapter(this)
+        mAdapter.setList(mVehicleList)
+        binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvVehiclesList.setHasFixedSize(true)
+        binding.rvVehiclesList.adapter = mAdapter
+        if (mVehicleList.isEmpty() || mVehicleList.size == 0) {
+            binding.apply {
+                rvVehiclesList.visibility = View.GONE
+                noVehiclesAdded.visibility = View.VISIBLE
+                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
+            }
             setBtnDisabled()
+            setAddBtnActivated()
         } else {
             setAdapter()
         }
@@ -43,7 +53,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
     }
 
-    override fun observer() { }
+    override fun observer() {}
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.addVehicleBtn -> {
@@ -59,6 +69,61 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             }
         }
     }
+
+    private fun setAdapter() {
+        binding.rvVehiclesList.visibility = View.VISIBLE
+        binding.noVehiclesAdded.visibility = View.GONE
+        binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+
+        mAdapter.setList(mVehicleList)
+        mAdapter.notifyDataSetChanged()
+
+        if (mVehicleList.isNotEmpty()) {
+            setBtnActivated()
+        }
+        if (mVehicleList.size < Constants.MAX_VEHICLE_SIZE) {
+            setAddBtnActivated()
+        } else {
+            setAddBtnDisabled()
+        }
+    }
+
+    override fun onAddClick(details: VehicleResponse) {
+        addDialog?.dismiss()
+        if (details.plateInfo.country == Constants.UK) {
+            mVehicleList.add(details)
+            setAdapter()
+        } else {
+            val bundle = Bundle().apply {
+                putParcelable(Constants.DATA, details)
+            }
+            findNavController().navigate(
+                R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
+                bundle
+            )
+        }
+    }
+
+    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
+        setAddBtnActivated()
+        if (mVehicleList.size > 0) {
+            mVehicleList.removeAt(pos)
+            if (::mAdapter.isInitialized) {
+                mAdapter.setList(mVehicleList)
+                mAdapter.notifyItemRemoved(pos)
+            }
+        }
+        if (mVehicleList.size == 0) {
+            setBtnDisabled()
+            binding.apply {
+                rvVehiclesList.visibility = View.GONE
+                noVehiclesAdded.visibility = View.VISIBLE
+                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
+            }
+        }
+    }
+
+    override fun onItemClick(details: VehicleResponse, pos: Int) { }
 
     private fun setBtnActivated() {
         binding.findVehicle.apply {
@@ -86,56 +151,33 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
-    private fun setAdapter() {
-        binding.rvVehiclesList.visibility = View.VISIBLE
-        binding.noVehiclesAdded.visibility = View.GONE
-        binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
-        if (!::mAdapter.isInitialized) {
-            mAdapter = AddedVehicleListAdapter(this)
-            mAdapter.setList(mVehicleList)
-            binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvVehiclesList.setHasFixedSize(true)
-            binding.rvVehiclesList.adapter = mAdapter
-        } else {
-            mAdapter.setList(mVehicleList)
-            mAdapter.notifyDataSetChanged()
-        }
-        setBtnActivated()
-    }
-
-    override fun onAddClick(details: VehicleResponse) {
-        addDialog?.dismiss()
-        mVehicleList.add(details)
-        if(details.plateInfo.country == Constants.UK){
-            setAdapter()
-            // UK flow need to add here
-        } else {
-            val bundle = Bundle().apply {
-                putSerializable(Constants.DATA, details)
-            }
-            findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
+    private fun setAddBtnActivated() {
+        binding.addVehicleBtn.apply {
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            setStrokeColorResource(R.color.green)
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+            setIconTintResource(R.color.green)
+            isClickable = true
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
-        if (mVehicleList.size > 0) {
-            mVehicleList.removeAt(pos)
-            if (::mAdapter.isInitialized) {
-                mAdapter.setList(mVehicleList)
-                mAdapter.notifyItemRemoved(pos)
-            }
+    private fun setAddBtnDisabled() {
+        binding.addVehicleBtn.apply {
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_C9C9C9
+                )
+            )
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
+            setIconTintResource(R.color.color_7D7D7D)
+            setStrokeColorResource(R.color.color_7D7D7D)
+            isClickable = false
         }
-        if (mVehicleList.size == 0) {
-            setBtnDisabled()
-            binding.apply {
-                rvVehiclesList.visibility = View.GONE
-                noVehiclesAdded.visibility = View.VISIBLE
-                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
-            }
-        }
-    }
-
-    override fun onItemClick(details: VehicleResponse, pos: Int) {
-
     }
 }

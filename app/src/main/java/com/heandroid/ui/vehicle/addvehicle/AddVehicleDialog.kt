@@ -15,7 +15,11 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogAddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Utils
+import com.heandroid.utils.extn.hideKeyboard
+import com.heandroid.utils.extn.openKeyboard
+import com.heandroid.utils.extn.openKeyboardForced
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.onTextChanged
 import kotlinx.coroutines.launch
 
 class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
@@ -25,7 +29,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
 
     override fun init() {
         setBtnNormal()
-        binding.addVrmInput.addTextChangedListener {
+        binding.addVrmInput.onTextChanged {
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 setBtnActivated()
             } else {
@@ -34,11 +38,30 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hideKeyboard()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.addVrmInput.post {
+            binding.addVrmInput.openKeyboardForced()
+        }
+    }
+
     override fun initCtrl() {
         binding.ivClose.setOnClickListener {
+            binding.addVrmInput.hideKeyboard()
             dismiss()
         }
         binding.addVehicleBtn.setOnClickListener {
+            binding.addVrmInput.hideKeyboard()
             var country = "UK"
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
@@ -67,6 +90,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         }
 
         binding.cancelBtn.setOnClickListener {
+            binding.addVrmInput.hideKeyboard()
             dismiss()
         }
     }

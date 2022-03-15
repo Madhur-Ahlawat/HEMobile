@@ -37,7 +37,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView2"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/_25sdp"
             android:gravity="center_vertical"
             android:text="@string/your_vehicle"
             android:textColor="@color/black"
@@ -76,7 +76,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@color/green"
             android:gravity="center"
             android:text="@string/str_continue"

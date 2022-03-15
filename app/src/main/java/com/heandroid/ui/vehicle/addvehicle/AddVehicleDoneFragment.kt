@@ -1,5 +1,6 @@
 package com.heandroid.ui.vehicle.addvehicle
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), ItemClickListener {
 
-    private lateinit var mVehicleDetails: VehicleResponse
+    private var mVehicleDetails: VehicleResponse?=null
     private var mScreeType = 0
     private lateinit var mAdapter: VehicleListAdapter
     private val mList = ArrayList<VehicleResponse?>()
@@ -36,8 +37,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     override fun init() {
-        mVehicleDetails =
-            arguments?.getSerializable(Constants.DATA) as VehicleResponse
+        mVehicleDetails = arguments?.getParcelable(Constants.DATA)
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
@@ -59,7 +59,11 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
                 findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment)
             } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT){
-                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment)
+                val bundle=Bundle()
+                val list = mutableListOf<VehicleResponse?>()
+                list.add(mVehicleDetails)
+                bundle.putParcelableArrayList(Constants.DATA,ArrayList(list))
+                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment,bundle)
             }
         }
     }
@@ -68,8 +72,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         mList.clear()
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
             val plateInfoResp = PlateInfoResponse(
-                mVehicleDetails.plateInfo.number,
-                mVehicleDetails.plateInfo.country,
+                mVehicleDetails?.plateInfo?.number?:"",
+                mVehicleDetails?.plateInfo?.country?:"",
                 "HE",
                 "-",
                 "",
@@ -78,15 +82,15 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             )
 
             val vehicleInfoResp = VehicleInfoResponse(
-                mVehicleDetails.vehicleInfo.make,
-                mVehicleDetails.vehicleInfo.model,
+                mVehicleDetails?.vehicleInfo?.make?:"",
+                mVehicleDetails?.vehicleInfo?.model?:"",
                 "",
                 "",
                 "",
                 "",
-                mVehicleDetails.vehicleInfo.color,
-                mVehicleDetails.vehicleInfo.vehicleClassDesc,
-                mVehicleDetails.vehicleInfo.effectiveStartDate
+                mVehicleDetails?.vehicleInfo?.color?:"",
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc?:"",
+                mVehicleDetails?.vehicleInfo?.effectiveStartDate?:""
             )
 
             val mVehicleResponse1 =
@@ -94,8 +98,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             mList.add(mVehicleResponse1)
         } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
             val plateInfoResp = PlateInfoResponse(
-                mVehicleDetails.plateInfo.number,
-                mVehicleDetails.plateInfo.country,
+                mVehicleDetails?.plateInfo?.number?:"",
+                mVehicleDetails?.plateInfo?.country?:"",
                 "HE",
                 "-",
                 "",
@@ -104,15 +108,15 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             )
 
             val vehicleInfoResp = VehicleInfoResponse(
-                mVehicleDetails.vehicleInfo.make,
-                mVehicleDetails.vehicleInfo.model,
+                mVehicleDetails?.vehicleInfo?.make?:"",
+                mVehicleDetails?.vehicleInfo?.model?:"",
                 "",
                 "",
                 "",
                 "",
-                mVehicleDetails.vehicleInfo.color,
-                mVehicleDetails.vehicleInfo.vehicleClassDesc,
-                mVehicleDetails.vehicleInfo.effectiveStartDate
+                mVehicleDetails?.vehicleInfo?.color?:"",
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc?:"",
+                mVehicleDetails?.vehicleInfo?.effectiveStartDate?:""
             )
 
             val mVehicleResponse1 =
@@ -134,7 +138,9 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     override fun onItemClick(details: VehicleResponse, pos: Int) {
-
+        details.isExpanded = !details.isExpanded
+        mList[pos]?.isExpanded = details.isExpanded
+        mAdapter.notifyItemChanged(pos)
     }
 
 }

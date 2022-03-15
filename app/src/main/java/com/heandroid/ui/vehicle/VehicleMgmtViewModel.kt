@@ -47,7 +47,7 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
-    fun addVehicleApi(request: VehicleResponse) {
+    fun addVehicleApi(request: VehicleResponse?) {
         viewModelScope.launch {
             try {
                 _addVehicleApiVal.postValue(

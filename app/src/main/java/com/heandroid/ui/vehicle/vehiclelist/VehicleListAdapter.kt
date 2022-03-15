@@ -53,6 +53,7 @@ class VehicleListAdapter(
                         val mem0 = VehicleTitleAndSub("Country", vehicleItem.plateInfo.country)
                         mList.add(mem0)
                     }
+
                     1 -> {
                         val mem1 = VehicleTitleAndSub("Make", vehicleItem.vehicleInfo.make)
                         mList.add(mem1)
@@ -71,10 +72,7 @@ class VehicleListAdapter(
                         mList.add(mem2)
                     }
                     5 -> {
-                        val mem2 = VehicleTitleAndSub(
-                            "DateAdded",
-                            DateUtils.convertDateFormat(vehicleItem.vehicleInfo.effectiveStartDate,1)
-                        )
+                        val mem2 = VehicleTitleAndSub("DateAdded", DateUtils.convertDateFormat(vehicleItem.vehicleInfo.effectiveStartDate,1))
                         mList.add(mem2)
                     }
                 }
@@ -88,8 +86,7 @@ class VehicleListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VrmHeaderViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.vrm_header_lyt, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.vrm_header_lyt, parent, false)
         return VrmHeaderViewHolder(view)
     }
 
