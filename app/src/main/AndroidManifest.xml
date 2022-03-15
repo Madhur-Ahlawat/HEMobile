@@ -48,7 +48,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.account.creation.CreateAccountActivity"/>
+        <activity android:name=".ui.account.creation.CreateAccountActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity"

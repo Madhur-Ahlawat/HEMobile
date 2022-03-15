@@ -12,6 +12,9 @@ import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.createaccount.ConfirmEmailRequest
+import com.heandroid.data.model.createaccount.EmailVerificationRequest
+import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
@@ -113,5 +116,11 @@ interface ApiService {
 
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String) : Response<String?>
+
+    @POST(EMAIL_VERIFICATION_REQUEST)
+    suspend fun sendEmailVerification(@Body request : EmailVerificationRequest?): Response<EmailVerificationResponse?>?
+
+    @POST(CONFIRM_EMAIL_VERIFICATION)
+    suspend fun confirmEmailVerification(@Body request : ConfirmEmailRequest?) : Response<EmptyApiResponse?>?
 
 }

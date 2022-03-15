@@ -10,8 +10,8 @@
         android:label="@string/str_email_verification"
         tools:layout="@layout/fragment_email_verification">
         <action
-            android:id="@+id/actionEmailVerification_to_AccountTypeSelection"
-            app:destination="@id/accountTypeSelectionFragment" />
+            android:id="@+id/action_emailVerification_to_confirmEmailFragment"
+            app:destination="@id/confirmEmailFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +29,14 @@
         android:id="@+id/personalDetailsEntryFragment"
         android:name="com.heandroid.ui.account.creation.PersonalDetailsEntryFragment"
         android:label="@string/str_personal_details_entry"
-        tools:layout="@layout/fragment_personal_details_entry">
+        tools:layout="@layout/fragment_personal_details_entry" />
+    <fragment
+        android:id="@+id/confirmEmailFragment"
+        android:name="com.heandroid.ui.account.creation.ConfirmEmailFragment"
+        android:label="ConfirmEmailFragment"
+        tools:layout="@layout/fragment_confirm_email">
+        <action
+            android:id="@+id/action_confirmEmailFragment_to_accountTypeSelectionFragment"
+            app:destination="@id/accountTypeSelectionFragment" />
     </fragment>
 </navigation>
