@@ -15,7 +15,7 @@ android {
         targetSdkVersion 30
         vectorDrawables.useSupportLibrary = true
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner 'com.heandroid.MyTestRunner'
+        testInstrumentationRunner 'com.heandroid.hiltTesting.HiltTestRunner'
 
 
         // Add config properties as build configs
@@ -83,32 +83,34 @@ android {
         jvmTarget = '1.8'
     }
 
+    // to understand error meaning
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.0'
+    }
+
     dependencies {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def materialVersion = '1.4.0'
-        def appCompatVersion = '1.3.0'
-        def appCoreVersion = '1.6.0'
-        def appTestCoreVersion = '1.3.0'
-        def constraintVersion = '2.0.4'
-        def navVersion = '2.3.5'
 
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation "androidx.core:core-ktx:$appCoreVersion"
-        implementation "androidx.appcompat:appcompat:$appCompatVersion"
-        implementation "com.google.android.material:material:$materialVersion"
-        implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
-        implementation "androidx.test:core-ktx:$appTestCoreVersion"
+        implementation 'androidx.core:core-ktx:1.6.0'
+        implementation 'androidx.appcompat:appcompat:1.3.0'
+        implementation 'com.google.android.material:material:1.4.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+        implementation 'androidx.test:core-ktx:1.3.0'
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-        implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-        implementation "androidx.navigation:navigation-runtime-ktx:$navVersion"
+        implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+        implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+        implementation 'androidx.navigation:navigation-runtime-ktx:2.3.5'
+
         testImplementation 'junit:junit:4.13.2'
         androidTestImplementation 'androidx.test.ext:junit:1.1.3'
         androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+        testImplementation 'com.google.truth:truth:1.0.1'
+        androidTestImplementation 'com.google.truth:truth:1.0.1'
 
         // ViewModel
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
@@ -135,6 +137,7 @@ android {
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
         //UI
+        implementation 'com.google.android.material:material:1.2.1'
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -183,6 +186,8 @@ android {
         testAnnotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
         implementation 'androidx.test:runner:1.4.0'
+        // for testing fragment
+        debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
     }
 

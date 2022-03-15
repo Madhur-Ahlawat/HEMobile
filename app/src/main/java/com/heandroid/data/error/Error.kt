@@ -12,3 +12,4 @@ const val PASS_WORD_ERROR = -101
 const val USER_NAME_ERROR = -102
 const val CHECK_YOUR_FIELDS = 401
 const val UNKNOWN_ERROR = -104
+const val SERVER_ERROR = 500

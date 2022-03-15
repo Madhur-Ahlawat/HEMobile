@@ -98,8 +98,8 @@
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Make a one off payment</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
-    <string name="str_charges_for_crossing">The charges for the crossings</string>
-    <string name="str_six_am_morning_txt">\u2022   You have made since 6 am yesterday morning.\n\u2022  You are planning to make for next 12 months        are valid for same time period.\n\u2022  You can add only 5 vehicle.</string>
+    <string name="str_charges_for_crossing">The charges for crossings</string>
+    <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
     <string name="str_twelve_months_txt">\u2022  You are planning to make for next 12 months are valid for same time period</string>
     <string name="str_single_vehicle">Single Vehicle</string>
     <string name="str_multiple_vehicle">Multiple Vehicles</string>
@@ -107,7 +107,7 @@
     <string name="str_pay_dart_ford_crossing">Pay the Dartford Crossing charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Create an Account</string>
-    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice\n(PCN)</string>
+    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice(PCN)</string>
     <string name="str_check_for_paid_crossing">Check for paid crossing</string>
     <string name="str_view_charges">View charges (6AM - 10AM)</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
@@ -431,7 +431,7 @@
     <string name="str_logout_msg">You have successfully sign out of your account</string>
     <string name="str_session_time_out">Session Time out</string>
     <string name="str_verification">Verification</string>
-    <string name="str_step_1_of_5">Step 1 of 5</string>
+    <string name="str_step_f_of_l">Step %d of %d</string>
     <string name="str_email_verification_msg">This email address will be used as your user name after verification. A security code will be sent to this email address for verification.</string>
     <string name="str_send_verification_code">Send verification code</string>
     <string name="str_send_security_code">Send security code</string>
@@ -451,6 +451,20 @@
     <string name="contact">Contact</string>
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
+    <string name="str_verify_security_code">Verify security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="str_select_account_type">Select an account type</string>
+    <string name="str_personal_account">Personal account</string>
+    <string name="str_business_account">Business account</string>
+    <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
+    <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
+    <string name="str_prepay">Pre-pay</string>
+    <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
+    <string name="str_payg_account">Pay as you go</string>
+    <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
+    <string name="str_personal_details_entry">Personal details entry</string>
+    <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
+    <string name="str_provide_below_details">"In order to set up your Dart Charge account, please provide the below information. "</string>
     <string name="payment_amount">Payment amount</string>
     <string name="your_vehicle">Your vehicle</string>
     <string name="future_crossings_are_valid_for_12_months_from_the_date_you_make_them">Future crossings are valid for 12 months from the date you make them.</string>
@@ -476,7 +490,10 @@
     <string name="str_payment_des1">You have made since 6 am yesterday morning.</string>
     <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
     <string name="str_payment_des3">You can add only 5 vehicle.</string>
-    <string name="resend_success">Resend Successfully</string>
+    <string name="internal_server_error">Internal server error</string>
+    <string name="str_enter_telephone">Mobile telephone number (optional)</string>
+    <string name="str_personal_info">Personal info</string>
+    <string name="str_pin">Pin</string>
 
 </resources>
 
