@@ -59,14 +59,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         when (checkedId) {
             R.id.rbCreateAccount -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model.selectType = Constants.CREATE_ACCOUNT
+                binding.model!!.selectType = Constants.CREATE_ACCOUNT
             }
             R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
-                binding.model.selectType = Constants.ONE_OFF_PAYMENT
+                binding.model!!.selectType = Constants.ONE_OFF_PAYMENT
             }
 
             R.id.rbResolvePenalty -> {
@@ -87,7 +87,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     }
 
     private fun enableBtn() {
-        binding.model = binding.model.apply {
+        binding.model = binding.model?.apply {
             enable = true
         }
     }

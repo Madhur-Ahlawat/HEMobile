@@ -494,6 +494,14 @@
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
     <string name="str_pin">Pin</string>
+    <string name="resend_success">Resend Successfully</string>
+    <string name="str_understanding_charges_fines">Understanding Charges and fines</string>
+    <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
+    <string name="str_normal_phone_no">0300 300 0120</string>
+    <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
+    <string name="str_text_phone_val">18001 0300 300 0120</string>
+    <string name="str_make_enquiry"><u> Make an enquiry </u></string>
+
 
 </resources>
 
