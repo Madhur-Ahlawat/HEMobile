@@ -24,7 +24,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
     override fun initCtrl() {
         binding.apply {
-
+            tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 3, 5)
         }
     }
 

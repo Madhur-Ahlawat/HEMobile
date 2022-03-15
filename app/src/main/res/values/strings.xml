@@ -491,6 +491,9 @@
     <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
     <string name="str_payment_des3">You can add only 5 vehicle.</string>
     <string name="internal_server_error">Internal server error</string>
+    <string name="str_enter_telephone">Mobile telephone number (optional)</string>
+    <string name="str_personal_info">Personal info</string>
+    <string name="str_pin">Pin</string>
 
 </resources>
 

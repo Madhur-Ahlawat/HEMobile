@@ -131,7 +131,7 @@ class AccountTypeSelectionFragment : BaseFragment<FragmentAccountTypeSelectionBi
 
     private fun setPersonalSubAccountSelectionView() {
         binding.btnAction.isEnabled = !TextUtils.isEmpty(accountModel.subAccountType)
-        accountSelection == Constants.SUB_ACCOUNT
+        accountSelection = Constants.SUB_ACCOUNT
         binding.apply {
             rlMainAccountType.gone()
             rlPersonalAccountType.visible()
