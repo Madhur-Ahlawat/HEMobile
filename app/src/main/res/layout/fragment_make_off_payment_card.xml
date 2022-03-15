@@ -3,6 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="model"
+            type="com.heandroid.data.model.payment.CardModel" />
+
+
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -48,10 +58,12 @@
 
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="5dp"
+            android:visibility="gone"
             app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -85,6 +97,8 @@
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="19"
+                        android:editable="false"
+                        android:text="@{model.cardNo}"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
@@ -116,6 +130,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:singleLine="true"
+                        android:text="@{model.expiry}"
                         android:maxLength="5"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
@@ -142,6 +157,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
+                        android:text="@{model.name}"
                         android:digits="@string/name_validation"
                         android:singleLine="true"
                         android:maxLength="32"
@@ -175,6 +191,7 @@
                         android:imeOptions="actionDone"
                         android:drawableEnd="@drawable/cvv"
                         android:paddingEnd="5dp"
+                        android:text="@{model.cvv}"
                         android:maxLength="3"
                         android:inputType="number"
                         android:singleLine="true"

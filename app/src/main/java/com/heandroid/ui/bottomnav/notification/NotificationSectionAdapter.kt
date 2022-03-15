@@ -31,6 +31,7 @@ class NotificationSectionAdapter(val context: Context, private var map: MutableM
     inner class NotificationHeaderViewHolder(var binding: AdapterNotificationHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        //todo remove hard coded string and use either from constants or string.xml file
         fun bind(title: String?, data: List<AlertMessage?>?) {
             data?.run {
                 binding.categoryTitle.text = title

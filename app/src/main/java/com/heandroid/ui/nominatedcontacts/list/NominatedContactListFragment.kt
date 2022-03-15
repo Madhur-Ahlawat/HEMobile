@@ -222,6 +222,9 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                         "ListFrag",
                         " handleResendActivationMail   succes called ${status.data?.message}   "
                     )
+                    if(status.data?.status.equals("0")){
+                        showError(binding.root,getString(R.string.resend_success))
+                    }
 
                     showError(binding.root, status.data?.message)
 

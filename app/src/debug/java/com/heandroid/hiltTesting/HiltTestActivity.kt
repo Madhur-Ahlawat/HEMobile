@@ -1,4 +1,4 @@
-package com.heandroid.auth
+package com.heandroid.hiltTesting
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

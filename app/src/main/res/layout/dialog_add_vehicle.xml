@@ -62,6 +62,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal" />

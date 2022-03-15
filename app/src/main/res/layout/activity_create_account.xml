@@ -6,25 +6,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.heandroid.oldStructure.view.CommunicationActivity">
+
         <include
             android:id="@+id/tool_bar_lyt"
-            layout="@layout/activity_toolbar"/>
+            layout="@layout/tool_bar_with_title_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.9"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="visible"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph_account_creation"
-            />
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"
+            app:navGraph="@navigation/nav_graph_account_creation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
