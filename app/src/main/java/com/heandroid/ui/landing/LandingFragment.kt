@@ -8,17 +8,21 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.landing.LandingModel
+import com.heandroid.data.model.payment.Card
+import com.heandroid.data.model.payment.CardModel
 import com.heandroid.databinding.FragmentLandingBinding
 import com.heandroid.ui.account.creation.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
@@ -37,6 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLandingBinding {
         return FragmentLandingBinding.inflate(inflater, container, false)
@@ -114,5 +119,6 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
             startActivity(Intent.createChooser(this, "Browse with"));
         }
+
     }
 }

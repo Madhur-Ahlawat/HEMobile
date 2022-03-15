@@ -7,41 +7,46 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.heandroid.R
+import com.heandroid.data.model.payment.CardModel
+import com.heandroid.data.model.payment.CardResponseModel
 import com.heandroid.databinding.FragmentMakeOffPaymentCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.CardNumberFormatterTextWatcher
 import com.heandroid.utils.extn.addExpriryListner
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 
 
 class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBinding>(),View.OnClickListener {
+
+
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMakeOffPaymentCardBinding = FragmentMakeOffPaymentCardBinding.inflate(inflater,container,false)
     override fun init() {
+        binding.webview.setSettings()
 
-        val webSettings = binding.webview.settings;
-        webSettings.javaScriptEnabled = true;
-        webSettings.domStorageEnabled = true;
-        webSettings.loadWithOverviewMode = true;
-        webSettings.useWideViewPort = true;
-        webSettings.builtInZoomControls = true;
-        webSettings.displayZoomControls = false;
-        webSettings.setSupportZoom(true);
-
-        webSettings.defaultTextEncodingName = "utf-8";
-        binding.webview.loadUrl("file:///android_asset/NMI.html");
-        binding.webview.webViewClient = object : WebViewClient() {
-        }
+        binding.webview.loadUrl("file:///android_asset/NMI.html")
+        binding.webview.webViewClient = object : WebViewClient() {}
 
         binding.webview.webChromeClient = object : WebChromeClient(){
 
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                 Log.d("PaymentLog", " console log  ${consoleMessage.message()}")
+
                 val url : String = consoleMessage.message()
                 val check : Boolean = "tokenType" in url
+
                 Log.d("PaymentLog","url  $url" )
 
                 if (check){
                     Toast.makeText(context,url, Toast.LENGTH_LONG).show()
+                    binding.webview.gone()
+                    binding.mcvContainer.visible()
+                    val responseModel : CardResponseModel = Gson().fromJson(consoleMessage.message(),CardResponseModel::class.java)
+                    binding.model= CardModel(cardNo = responseModel.card.number,
+                                             name = responseModel.wallet.billingInfo.firstName +" "+responseModel.wallet.billingInfo.firstName,
+                                             expiry = responseModel.card.exp,cvv = "***")
                 }
                 return true
             }
@@ -65,4 +70,19 @@ class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBindin
     }
 
 
+
+
+}
+
+ fun WebView.setSettings(){
+    val webSettings = this.settings;
+    webSettings.javaScriptEnabled = true
+    webSettings.domStorageEnabled = true
+    webSettings.loadWithOverviewMode = true
+    webSettings.useWideViewPort = true
+    webSettings.builtInZoomControls = true
+    webSettings.displayZoomControls = false
+    webSettings.setSupportZoom(true)
+
+    webSettings.defaultTextEncodingName = "utf-8";
 }

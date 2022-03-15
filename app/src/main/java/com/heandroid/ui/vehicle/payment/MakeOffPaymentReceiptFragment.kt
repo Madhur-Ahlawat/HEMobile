@@ -21,11 +21,10 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
     }
     override fun observer() {}
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnContinue ->{
+        when(v?.id) {
+            R.id.btnContinue -> {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList(Constants.DATA,arguments?.getParcelableArrayList(Constants.DATA))
-
                 findNavController().navigate(R.id.action_makeOffPaymentReceiptFragment_to_makeOffPaymentCardFragment) }
         }
     }
