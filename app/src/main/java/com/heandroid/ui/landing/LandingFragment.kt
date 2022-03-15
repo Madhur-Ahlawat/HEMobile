@@ -20,32 +20,26 @@ import com.heandroid.ui.account.creation.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
-import com.heandroid.ui.vehicle.payment.MakeOneOffPayment
+import com.heandroid.ui.vehicle.payment.MakeOffPaymentActivity
 import com.heandroid.ui.viewcharges.ViewChargesActivity
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.extn.setRightButtonText
-import com.heandroid.utils.extn.showToast
-import com.heandroid.utils.extn.startNewActivity
-import com.heandroid.utils.extn.visible
+import com.heandroid.utils.common.Constants.CHECK_FOR_PAID
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT
+import com.heandroid.utils.common.Constants.ONE_OFF_PAYMENT
+import com.heandroid.utils.common.Constants.RESOLVE_PENALTY
+import com.heandroid.utils.common.Constants.VIEW_CHARGES
+import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private var screenType: String = ""
-    private lateinit var model: LandingModel
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentLandingBinding {
-        return FragmentLandingBinding.inflate(inflater, container, false)
-    }
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLandingBinding  = FragmentLandingBinding.inflate(inflater, container, false)
 
     override fun onResume() {
         super.onResume()
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
         toolbar.findViewById<TextView>(R.id.btn_login).visible()
-
         requireActivity().setRightButtonText(getString(R.string.login))
     }
 
@@ -65,14 +59,14 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         when (checkedId) {
             R.id.rbCreateAccount -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                model.selectType = Constants.CREATE_ACCOUNT
+                binding.model.selectType = Constants.CREATE_ACCOUNT
             }
             R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
-                model.selectType = Constants.ONE_OFF_PAYMENT
+                binding.model.selectType = Constants.ONE_OFF_PAYMENT
             }
 
             R.id.rbResolvePenalty -> {
@@ -93,7 +87,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     }
 
     private fun enableBtn() {
-        binding.model = model.apply {
+        binding.model = binding.model.apply {
             enable = true
         }
     }
