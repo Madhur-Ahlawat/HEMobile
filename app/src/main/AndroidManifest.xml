@@ -62,6 +62,8 @@
         <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.vehicle.payment.MakeOffPaymentActivity"

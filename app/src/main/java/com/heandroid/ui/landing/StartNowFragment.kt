@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.databinding.FragmentStartNowBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.startNow.StartNowBaseActivity
+import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.setRightButtonText
@@ -67,7 +68,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                 R.id.tv_contact_dart_charge,
                 R.id.rl_contact_dart_charge -> {
                     screenType = Constants.CONTACT_DART_CHARGES
-                    startServicesActivity()
+                    startContactDartChargeActivity()
                 }
 
                 R.id.tv_crossing_service_updates,
@@ -85,8 +86,6 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                 }
             }
         }
-
-
     }
 
     private fun startServicesActivity() {
@@ -94,6 +93,11 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             putExtra(Constants.SHOW_SCREEN, screenType)
             startActivity(this)
         }
+    }
 
+    private fun startContactDartChargeActivity() {
+        Intent(requireActivity(), ContactDartChargeActivity::class.java).run {
+            startActivity(this)
+        }
     }
 }

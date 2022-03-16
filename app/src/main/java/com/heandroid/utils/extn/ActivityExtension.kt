@@ -30,6 +30,15 @@ fun Activity.toolbar(title: String?){
     }
 }
 
+fun Activity.customToolbar(title: String?){
+    val ivBack=findViewById<ImageView?>(R.id.back_button)
+    val tvHeader=findViewById<TextView?>(R.id.title_txt)
+    tvHeader?.text=title
+    ivBack?.setOnClickListener{
+        onBackPressed()
+    }
+}
+
 fun Activity.setRightButtonText(title:String)
 {
     val btnRight = findViewById<AppCompatTextView>(R.id.btn_login)
