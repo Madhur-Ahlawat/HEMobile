@@ -1,6 +1,6 @@
 package com.heandroid.ui.account.creation
 
-import androidx.navigation.NavController
+import com.heandroid.R
 import com.heandroid.databinding.ActivityCreateAccountBinding
 import com.heandroid.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint

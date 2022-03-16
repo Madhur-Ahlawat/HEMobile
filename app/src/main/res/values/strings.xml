@@ -505,7 +505,7 @@
     <string name="str_text_phone">Textphone</string>
     <string name="str_do_you_have">Do you have a Dart Charge account?</string>
     <string name="cases_and_enquiry">Cases and Enquiry</string>
-
+    <string name="account_created_successfully">Account Created Successfully</string>
 
 
 </resources>
