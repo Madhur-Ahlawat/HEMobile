@@ -20,7 +20,43 @@
         android:id="@+id/dartChargeAccountTypeSelectionFragment"
         android:name="com.heandroid.ui.startNow.contactdartcharge.DartChargeAccountTypeSelectionFragment"
         android:label="DartChargeAccountTypeSelectionFragment"
-        tools:layout="@layout/fragment_dart_charge_account_type_selection"/>
+        tools:layout="@layout/fragment_dart_charge_account_type_selection">
+        <action
+            android:id="@+id/action_dartChargeAccountTypeSelectionFragment_to_provideDetailsDartChargeFragment"
+            app:destination="@id/provideDetailsDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/provideDetailsDartChargeFragment"
+        android:name="com.heandroid.ui.startNow.contactdartcharge.ProvideDetailsDartChargeFragment"
+        android:label="ProvideDetailsDartChargeFragment"
+        tools:layout="@layout/fragment_provide_details_dart_charge">
+        <action
+            android:id="@+id/action_provideDetailsDartChargeFragment_to_caseDetailsDartChargeFragment"
+            app:destination="@id/caseDetailsDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/caseDetailsDartChargeFragment"
+        android:name="com.heandroid.ui.startNow.contactdartcharge.CaseDetailsDartChargeFragment"
+        android:label="CaseDetailsDartChargeFragment"
+        tools:layout="@layout/fragment_case_details_dart_charge">
+        <action
+            android:id="@+id/action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment"
+            app:destination="@id/caseHistoryDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/caseHistoryDartChargeFragment"
+        android:name="com.heandroid.ui.startNow.contactdartcharge.CaseHistoryDartChargeFragment"
+        android:label="CaseHistoryDartChargeFragment"
+        tools:layout="@layout/fragment_case_history_dart_charge">
+        <action
+            android:id="@+id/action_caseHistoryDartChargeFragment_to_caseHistoryDetailsDartChargeFragment"
+            app:destination="@id/caseHistoryDetailsDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/caseHistoryDetailsDartChargeFragment"
+        android:name="com.heandroid.ui.startNow.contactdartcharge.CaseHistoryDetailsDartChargeFragment"
+        android:label="CaseHistoryDetailsDartChargeFragment"
+        tools:layout="@layout/fragment_case_history_details_dart_charge"/>
 
 
 </navigation>

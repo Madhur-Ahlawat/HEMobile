@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.heandroid.data.model.account.AccountTypeSelectionModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey"
+        android:padding="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/tvProvideDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/provide_below_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etCaseNumberLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:hint="@string/case_number"
+            android:textColorHint="@color/color_CBCBCB"
+            app:boxStrokeColor="@color/grey_two"
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProvideDetails">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCaseNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/_13ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLastNameLayout"
+            style="@style/Widget.HeMobile.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/last_name"
+            android:textColorHint="@color/color_CBCBCB"
+            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeWidthFocused="1dp"
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCaseNumberLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/_13ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/str_continue"
+            android:textAllCaps="false"
+            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRaiseNewQuery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/raise_new_query"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

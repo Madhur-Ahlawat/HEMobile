@@ -507,6 +507,22 @@
     <string name="cases_and_enquiry">Cases and Enquiry</string>
     <string name="account_created_successfully">Account Created Successfully</string>
 
+    <string name="cases_history">Case history</string>
+    <string name="cases_details">Case details</string>
+    <string name="check_enquiry_status">Check enquiry status</string>
+    <string name="provide_below_details">Provide below details</string>
+    <string name="provide_below_info">Provide below information</string>
+    <string name="first_name">First Name</string>
+    <string name="case_number">Case number</string>
+    <string name="last_name">Last Name</string>
+    <string name="telephone">Telephone no (Optional)</string>
+    <string name="raise_new_query">Raise a new enquiry</string>
+    <string name="case_number_column">Case number : </string>
+    <string name="submitted_date_column">Submitted date : </string>
+    <string name="submitted_time_column">Submitted time : </string>
+    <string name="resolution_info">Resolution information</string>
+    <string name="status_column">Status : </string>
+    <string name="go_to_start">Go to start now</string>
 
 </resources>
 
