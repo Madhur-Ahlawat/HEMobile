@@ -41,6 +41,7 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
         binding.apply {
             model = accountModel
             btnContinue.setOnClickListener(this@CaseDetailsDartChargeFragment)
+            btnRaiseNewQuery.setOnClickListener(this@CaseDetailsDartChargeFragment)
             etCaseNumber.onTextChanged {
                 checkButton()
             }
@@ -66,6 +67,10 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
             when (it.id) {
                 R.id.btnContinue -> {
                     findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment)
+                }
+
+                R.id.btnRaiseNewQuery -> {
+                    findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_newCaseCategoryFragment)
                 }
                 else -> {
                 }

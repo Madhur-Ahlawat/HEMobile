@@ -523,6 +523,14 @@
     <string name="resolution_info">Resolution information</string>
     <string name="status_column">Status : </string>
     <string name="go_to_start">Go to start now</string>
+    <string name="underline_category"><u>Category</u></string>
+    <string name="underline_comments"><u>Comments</u></string>
+    <string name="underline_summary"><u>Summary</u></string>
+    <string name="str_category">Category</string>
+    <string name="str_comments">Comments</string>
+    <string name="str_summary">Summary</string>
+    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+
 
 </resources>
 
