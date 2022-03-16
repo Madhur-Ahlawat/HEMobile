@@ -453,7 +453,7 @@
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
     <string name="str_verify_security_code">Verify security code</string>
-    <string name="send_security_code_msg">Security code has been sent to %s If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s. If you haven’t received the security code, please re-check your email address and click resend security code</string>
     <string name="str_select_account_type">Select an account type</string>
     <string name="str_personal_account">Personal account</string>
     <string name="str_business_account">Business account</string>
@@ -495,8 +495,18 @@
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
     <string name="str_pin">Pin</string>
-    <string name="account_created_successfully">Account created successfully</string>
-    <string name="resend_success">Resend Successful</string>
+    <string name="resend_success">Resend Successfully</string>
+    <string name="str_understanding_charges_fines">Understanding Charges and fines</string>
+    <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
+    <string name="str_normal_phone_no">0300 300 0120</string>
+    <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
+    <string name="str_text_phone_val">18001 0300 300 0120</string>
+    <string name="str_make_enquiry"><u> Make an enquiry </u></string>
+    <string name="str_text_phone">Textphone</string>
+    <string name="str_do_you_have">Do you have a Dart Charge account?</string>
+    <string name="cases_and_enquiry">Cases and Enquiry</string>
+
+
 
 </resources>
 

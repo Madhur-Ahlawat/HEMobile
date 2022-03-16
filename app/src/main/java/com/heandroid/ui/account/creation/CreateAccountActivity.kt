@@ -12,6 +12,15 @@ class CreateAccountActivity : BaseActivity<Any>() {
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+
+    }
+
+    private fun init() {
+        binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_account)
+        binding.toolBarLyt.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun observeViewModel() {

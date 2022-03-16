@@ -1,122 +1,113 @@
 package com.heandroid.ui.account.creation
 
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.EmailValidationModel
+import com.heandroid.data.model.createaccount.EmailVerificationRequest
+import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.databinding.FragmentEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.extn.gone
-import com.heandroid.utils.extn.showToast
-import com.heandroid.utils.extn.toolbar
-import com.heandroid.utils.extn.visible
+import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.hideKeyboard
+import com.heandroid.utils.onTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmailVerificationFragment : BaseFragment<FragmentEmailVerificationBinding>(),
     View.OnClickListener {
-    private var email: String = ""
+
+    private var loader: LoaderDialog? = null
+    private val createAccountViewModel: CreateAccountViewModel by viewModels()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentEmailVerificationBinding {
+    ) = FragmentEmailVerificationBinding.inflate(inflater, container, false)
 
-        return FragmentEmailVerificationBinding.inflate(inflater, container, false)
-    }
 
     override fun init() {
-        requireActivity().toolbar(getString(R.string.str_create_an_account))
+        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     override fun initCtrl() {
         binding.apply {
-            model = EmailValidationModel(false, " ", "")
-            edtEmail.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    isEnable()
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-            })
+            model = EmailValidationModel(false, "", "")
+            etEmail.onTextChanged {
+                isEnable()
+            }
             btnAction.setOnClickListener(this@EmailVerificationFragment)
-            tvResend.setOnClickListener(this@EmailVerificationFragment)
-            tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         }
     }
 
     override fun observer() {
-
+        observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
     }
 
-    override fun onClick(v: View?) {
-        v.let {
-            when (v?.id) {
-                R.id.btn_action -> {
-                    when (binding.btnAction.text.toString()) {
-                        requireActivity().getString(R.string.str_send_security_code) -> {
-                            // call api to send security code on user entered email
-                            callApiToVerifyEmail()
-                            setUpUiToEnterSecurityCode()
+    private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
+        loader?.dismiss()
+        resource?.let {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.referenceID?.let { ref ->
+                        val bundle = Bundle().apply {
+                            putString(Constants.EMAIL, binding.etEmail.text.toString().trim())
+                            putLong(Constants.REFERENCE_ID, ref)
                         }
-
-                        requireActivity().getString(R.string.str_verify_security_code) -> {
-                            // call api to verify security code
-                            callApiForCodeVerification()
-                        }
+                        findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
                     }
                 }
-                R.id.tv_resend -> {
-                    // call api to resend OTP
-                    callApiToResendOTP()
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+
                 }
             }
         }
     }
 
-    private fun callApiToResendOTP() {
-        requireActivity().showToast("Call api to resend OTP")
-        binding.edtCode.setText("");
-    }
 
-    private fun callApiForCodeVerification() {
-        findNavController().navigate(R.id.actionEmailVerification_to_AccountTypeSelection)
-    }
-
-    private fun setUpUiToEnterSecurityCode() {
-
-        binding.apply {
-            btnAction.text = requireActivity().getString(R.string.str_verify_security_code)
-            tfEmail.gone()
-            tfCode.visible()
-            tvResend.visible()
-            tvMsg.text = requireActivity().getString(R.string.send_security_code_msg, email)
+    override fun onClick(v: View?) {
+        v?.let {
+            when (v.id) {
+                R.id.btn_action -> {
+                    hideKeyboard()
+                    sendEmailVerificationRequest()
+                }
+            }
         }
-
     }
 
-    private fun callApiToVerifyEmail() {
-        email = binding.edtEmail.text.toString()
+    private fun sendEmailVerificationRequest() {
+        loader?.show(requireActivity().supportFragmentManager, "")
+        val request = EmailVerificationRequest(
+            Constants.EMAIL_SELECTION_TYPE,
+            binding.etEmail.text.toString().trim()
+        )
+        createAccountViewModel.emailVerificationApi(request)
     }
 
     private fun isEnable() {
-        if (binding.edtEmail.length() > 1) binding.model = EmailValidationModel(
-            enable = true,
-            email = binding.edtEmail.text.toString(),
-            code = binding.edtCode.text.toString()
-        )
-        else binding.model = EmailValidationModel(
-            enable = false,
-            email = binding.edtEmail.text.toString(),
-            code = binding.edtCode.text.toString()
-        )
-
+        if (Utils.isEmailValid(binding.etEmail.text.toString()))
+            binding.model = EmailValidationModel(
+                enable = true,
+                email = binding.etEmail.text.toString(),
+                ""
+            )
+        else
+            binding.model = EmailValidationModel(
+                enable = false,
+                email = binding.etEmail.text.toString(),
+                ""
+            )
     }
 }
