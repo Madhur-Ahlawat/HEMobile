@@ -1,5 +1,6 @@
 package com.heandroid.data.remote
 
+import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.WebSiteStatus
@@ -135,5 +136,10 @@ interface ApiService {
 
     @GET(WEB_SITE_SERVICE_STATUS)
     suspend fun webSiteServiceStatus(): Response<WebSiteStatus?>?
+
+
+    @POST(CREATE_ACCOUNT)
+    suspend fun createAccount(@Body model: com.heandroid.data.model.account.CreateAccountRequestModel?,
+                              @Query("agencyId") agencyId: String=AGENCY_ID) : Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
 }
