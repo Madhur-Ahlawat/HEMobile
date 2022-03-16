@@ -27,6 +27,7 @@
     <string name="txt_pound">"£"</string>
     <string name="txt_view_payment_history"><u>View payment history</u></string>
     <string name="account_number">Account number:</string>
+    <string name="account_number_">Account number</string>
     <string name="account_status">Account status:</string>
     <string name="account_type">Account type:</string>
     <string name="top_up_method">Top up Type:</string>
@@ -494,6 +495,8 @@
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
     <string name="str_pin">Pin</string>
+    <string name="account_created_successfully">Account created successfully</string>
+    <string name="resend_success">Resend Successful</string>
 
 </resources>
 

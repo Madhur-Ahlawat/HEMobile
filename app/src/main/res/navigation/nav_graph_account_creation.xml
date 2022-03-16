@@ -31,4 +31,22 @@
         android:label="@string/str_personal_details_entry"
         tools:layout="@layout/fragment_personal_details_entry">
     </fragment>
+
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.heandroid.ui.account.creation.CreateAccountCardFragment"
+        android:label="Card Fragment"
+        tools:layout="@layout/fragment_create_account_card">
+        <action
+            android:id="@+id/action_cardFragment_to_successfulFragment"
+            app:destination="@id/successfulFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successfulFragment"
+        android:name="com.heandroid.ui.account.creation.CreateAccountSuccessfulFragment"
+        android:label="Successfull Fragment"
+        tools:layout="@layout/fragment_create_account_successful"/>
+
+
 </navigation>

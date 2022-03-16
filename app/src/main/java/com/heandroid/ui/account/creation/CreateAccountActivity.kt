@@ -12,7 +12,6 @@ class CreateAccountActivity : BaseActivity<Any>() {
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
     override fun observeViewModel() {

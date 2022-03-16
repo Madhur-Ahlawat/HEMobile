@@ -58,36 +58,38 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
             R.id.rbCreateAccount -> {
+
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model.selectType = Constants.CREATE_ACCOUNT
+                binding.model?.selectType = CREATE_ACCOUNT
             }
+
             R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
-                binding.model.selectType = Constants.ONE_OFF_PAYMENT
+                binding.model?.selectType = ONE_OFF_PAYMENT
             }
 
             R.id.rbResolvePenalty -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.RESOLVE_PENALTY
+                binding.model?.selectType = RESOLVE_PENALTY
             }
+
             R.id.rbCheckForPaid -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.CHECK_FOR_PAID
+                binding.model?.selectType = CHECK_FOR_PAID
             }
             R.id.rbViewCharges -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.VIEW_CHARGES
+                binding.model?.selectType = VIEW_CHARGES
             }
         }
         enableBtn()
-
     }
 
     private fun enableBtn() {
-        binding.model = binding.model.apply {
+        binding.model = binding.model?.apply {
             enable = true
         }
     }

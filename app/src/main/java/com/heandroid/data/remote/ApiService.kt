@@ -1,5 +1,6 @@
 package com.heandroid.data.remote
 
+import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
@@ -113,5 +114,10 @@ interface ApiService {
 
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String) : Response<String?>
+
+
+    @POST(CREATE_ACCOUNT)
+    suspend fun createAccount(@Body model: com.heandroid.data.model.account.CreateAccountRequestModel?,
+                              @Query("agencyId") agencyId: String=AGENCY_ID) : Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
 }

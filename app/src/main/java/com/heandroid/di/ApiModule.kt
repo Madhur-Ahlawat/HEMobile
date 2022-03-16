@@ -68,18 +68,6 @@ object ApiModule {
     }
 
 
-    @Singleton
-    @Provides
-    @Named(Constants.NMI)
-    fun provideRetrofitNMI(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(NullOnEmptyConverterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-    }
-
 
     @Provides
     @Singleton
