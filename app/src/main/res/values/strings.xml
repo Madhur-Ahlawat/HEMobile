@@ -501,6 +501,7 @@
     <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
     <string name="str_text_phone_val">18001 0300 300 0120</string>
     <string name="str_make_enquiry"><u> Make an enquiry </u></string>
+    <string name="str_text_phone">Textphone</string>
 
 
 </resources>
