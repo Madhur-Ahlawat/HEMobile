@@ -2,6 +2,9 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val DART_CHARGE_FLOW_CODE: Int = 1002
+    const val FROM_DART_CHARGE_FLOW: String = "900"
+    const val NORMAL_LOGIN_FLOW_CODE=1001
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"

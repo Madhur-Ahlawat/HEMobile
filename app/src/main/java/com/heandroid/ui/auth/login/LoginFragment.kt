@@ -10,10 +10,12 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.databinding.FragmentLoginBinding
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
@@ -27,13 +29,16 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener {
 
     private val viewModel: LoginViewModel by viewModels()
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
 
 
     @Inject
     lateinit var sessionManager: SessionManager
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoginBinding = FragmentLoginBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentLoginBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
     override fun onResume() {
         super.onResume()
@@ -41,7 +46,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     override fun init() {
-        binding.model= LoginModel(value = "", password = "")
+        binding.model = LoginModel(value = "", password = "")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -60,18 +65,31 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
-        try{
-        loader?.dismiss()
-        when (status) {
-            is Resource.Success -> { lauchIntent(status) }
-            is Resource.DataError -> { showError(binding.root,status.errorMsg) }
-        }}catch (e: Exception){}
+        try {
+            loader?.dismiss()
+            when (status) {
+                is Resource.Success -> {
+                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+                        launchIntent(status)
+                    } else {
+
+                    }
+                }
+                is Resource.DataError -> {
+                    showError(binding.root, status.errorMsg)
+                }
+                else -> {
+
+                }
+            }
+        } catch (e: Exception) {
+        }
     }
 
-    private fun lauchIntent(response: Resource.Success<LoginResponse?>) {
+    private fun launchIntent(response: Resource.Success<LoginResponse?>) {
         sessionManager.run {
-            saveAuthToken(response.data?.accessToken?:"")
-            saveRefreshToken(response.data?.refreshToken?:"")
+            saveAuthToken(response.data?.accessToken ?: "")
+            saveRefreshToken(response.data?.refreshToken ?: "")
 
 //            saveAccountNumber(response.data?.user_name?:"")
         }
@@ -80,21 +98,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
 
     override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.btn_login-> {
+        when (v?.id) {
+            R.id.btn_login -> {
 
                 hideKeyboard()
-                val validation=viewModel.validation(binding.model)
-                if(validation.first){
-                    loader?.show(requireActivity().supportFragmentManager,"")
+                val validation = viewModel.validation(binding.model)
+                if (validation.first) {
+                    loader?.show(requireActivity().supportFragmentManager, "")
                     viewModel.login(binding.model)
-                }else {
-                    showError(binding.root,validation.second)
+                } else {
+                    showError(binding.root, validation.second)
                 }
             }
 
-            R.id.tv_forgot_username ->{ findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment) }
-            R.id.tv_forgot_password ->{ findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment) }
+            R.id.tv_forgot_username -> {
+                findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+            }
+            R.id.tv_forgot_password -> {
+                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+            }
         }
     }
 
