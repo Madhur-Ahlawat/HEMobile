@@ -14,8 +14,9 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_timing"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_28sdp"
-            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:gravity="center_vertical"
             android:text="@string/str_timing"
             android:textColor="@color/color_D8000000"
@@ -27,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_phone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_13sdp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,8 +45,8 @@
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/str_phone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
@@ -57,12 +58,14 @@
                 android:id="@+id/tv_phone_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/str_normal_phone_no"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
 
@@ -71,19 +74,20 @@
                 android:id="@+id/imv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:padding="@dimen/_8sdp"
                 android:paddingHorizontal="@dimen/_11sdp"
-                android:paddingVertical="@dimen/_8sdp"
                 android:src="@drawable/ic_phone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_phone_val"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/group"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_phone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_outside_uk"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,8 +104,8 @@
                 android:id="@+id/tv_outside_uk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/str_outside_uk"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
@@ -113,12 +117,14 @@
                 android:id="@+id/tv_outside_uk_phone_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/str_outside_uk_no"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_outside_uk" />
 
@@ -127,19 +133,19 @@
                 android:id="@+id/imv_outside_uk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_11sdp"
-                android:paddingVertical="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:padding="@dimen/_8sdp"
                 android:src="@drawable/ic_phone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_outside_uk_phone_val"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/group_two"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_outside_uk" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_text_phone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -156,8 +162,8 @@
                 android:id="@+id/tv_text_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/str_text_phone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
@@ -169,12 +175,14 @@
                 android:id="@+id/tv_text_phone_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/str_text_phone_val"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_text_phone" />
 
@@ -183,24 +191,25 @@
                 android:id="@+id/imv_text_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_11sdp"
-                android:paddingVertical="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:padding="@dimen/_8sdp"
                 android:src="@drawable/ic_phone"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_text_phone_val"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/group_three"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_text_phone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
+            android:id="@+id/makeEnquiry"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:gravity="center"
+            android:padding="@dimen/_5sdp"
             android:text="@string/str_make_enquiry"
             android:textColor="@color/login_blue_border"
             android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_text_phone" />

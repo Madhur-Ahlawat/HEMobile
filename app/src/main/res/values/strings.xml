@@ -502,6 +502,9 @@
     <string name="str_text_phone_val">18001 0300 300 0120</string>
     <string name="str_make_enquiry"><u> Make an enquiry </u></string>
     <string name="str_text_phone">Textphone</string>
+    <string name="str_do_you_have">Do you have a Dart Charge account?</string>
+    <string name="cases_and_enquiry">Cases and Enquiry</string>
+
 
 
 </resources>
