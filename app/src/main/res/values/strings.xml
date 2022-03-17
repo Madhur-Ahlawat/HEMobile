@@ -549,7 +549,7 @@
     <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
     <string name="postcode">Postcode</string>
     <string name="underline_postcode"><u>Postcode</u></string>
-    <string name="password" >Password</string>
+    <string name="password">Password</string>
     <string name="underline_password"><u>Password</u></string>
     <string name="mobile_telephone">Mobile telephone number (optional)</string>
     <string name="evening_number">Evening number (optional)</string>
@@ -584,6 +584,7 @@
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">case number</string>
     <string name="str_date">Date</string>
+    <string name="underline_personal_info"><u>Personal info</u></string>
 
 
 </resources>
