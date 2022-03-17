@@ -18,6 +18,8 @@ import com.heandroid.databinding.FragmentCreateAccountCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.CardNumberFormatterTextWatcher
+import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -40,6 +42,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun init() {
         model=arguments?.getParcelable("data")
         binding.webview.loadSetting("file:///android_asset/NMI.html")
+        binding.tvStep.text=getString(R.string.str_step_f_of_l,5,5)
     }
     override fun initCtrl() {
         binding.apply {
@@ -116,8 +119,9 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             loader?.dismiss()
             when(status){
                 is Resource.Success -> {
+                    status.data?.accountType= model?.accountType
                     val bundle = Bundle()
-                    bundle.putParcelable("data",status.data)
+                    bundle.putParcelable("response",status.data)
                     findNavController().navigate(R.id.action_cardFragment_to_successfulFragment,bundle)
                 }
 

@@ -30,7 +30,7 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
     override fun init() {
         requestModel=arguments?.getParcelable(DATA)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
-        binding.model = AccountTypeSelectionModel()
+        binding.enable= false
     }
 
     override fun initCtrl() {
@@ -43,7 +43,7 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
     override fun observer() {}
 
     override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
-        binding.model= AccountTypeSelectionModel(enable = true)
+        binding.enable= true
         when(rg?.checkedRadioButtonId) {
 
             R.id.rb_personal_act -> {

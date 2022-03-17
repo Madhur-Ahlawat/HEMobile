@@ -71,6 +71,18 @@
 
     <!-- Step 5 -->
     <fragment
+        android:id="@+id/choosePaymentFragment"
+        android:name="com.heandroid.ui.account.creation.step5.CreateAccountChoosePaymentFragment"
+        android:label="Choose Payment Fragment"
+        tools:layout="@layout/fragment_create_account_choose_payment">
+
+        <action
+            android:id="@+id/action_choosePaymentFragment_to_cardFragment"
+            app:destination="@id/cardFragment" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/cardFragment"
         android:name="com.heandroid.ui.account.creation.step5.CreateAccountCardFragment"
         android:label="Card Fragment"

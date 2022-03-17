@@ -12,7 +12,6 @@ import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.AccountTypeSelectionModel
-import com.heandroid.databinding.FragmentAccountTypeSelectionBinding
 import com.heandroid.databinding.FragmentCaseDetailsDartChargeBinding
 import com.heandroid.databinding.FragmentDartChargeAccountTypeSelectionBinding
 import com.heandroid.databinding.FragmentProvideDetailsDartChargeBinding

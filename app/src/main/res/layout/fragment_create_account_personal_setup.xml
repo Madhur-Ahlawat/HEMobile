@@ -5,14 +5,13 @@
     <data>
 
         <variable
-            name="model"
-            type="com.heandroid.data.model.account.AccountTypeSelectionModel" />
+            name="enable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_E5E5E5"
         android:padding="@dimen/_10sdp">
 
         <TextView
@@ -99,13 +98,13 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginVertical="@dimen/_55sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
-            android:enabled="true"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -25,7 +25,7 @@ class CreateAccountAccountPersonalSetupFragment : BaseFragment<FragmentCreateAcc
 
     override fun init() {
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
-        binding.model = AccountTypeSelectionModel()
+        binding.enable = false
     }
 
     override fun initCtrl() {
@@ -37,7 +37,7 @@ class CreateAccountAccountPersonalSetupFragment : BaseFragment<FragmentCreateAcc
 
     override fun observer() {}
     override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
-        binding.model=AccountTypeSelectionModel(enable = true)
+        binding.enable = true
         when(rg?.checkedRadioButtonId){
             R.id.rb_prepay -> { binding.tvPrepayDesc.visible() }
             R.id.rb_payg_act -> { binding.tvPaygDesc.visible() }

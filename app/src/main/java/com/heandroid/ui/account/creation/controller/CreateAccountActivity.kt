@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation
+package com.heandroid.ui.account.creation.controller
 
 import com.heandroid.R
 import com.heandroid.databinding.ActivityCreateAccountBinding
@@ -13,17 +13,13 @@ class CreateAccountActivity : BaseActivity<Any>() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-
     }
 
     private fun init() {
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_account)
-        binding.toolBarLyt.backButton.setOnClickListener {
-            onBackPressed()
-        }
+        binding.toolBarLyt.backButton.setOnClickListener { onBackPressed() }
     }
 
-    override fun observeViewModel() {
-    }
+    override fun observeViewModel() {}
 
 }

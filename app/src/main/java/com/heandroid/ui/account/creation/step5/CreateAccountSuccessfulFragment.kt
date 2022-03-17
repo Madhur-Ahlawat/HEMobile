@@ -16,8 +16,9 @@ import java.util.*
 @AndroidEntryPoint
 class CreateAccountSuccessfulFragment : BaseFragment<FragmentCreateAccountSuccessfulBinding>(),View.OnClickListener {
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountSuccessfulBinding = FragmentCreateAccountSuccessfulBinding.inflate(inflater,container,false)
+
     override fun init() {
-        binding.model=arguments?.getParcelable("data")
+        binding.model=arguments?.getParcelable("response")
         binding.tvDate.text= SimpleDateFormat("dd MMM yyyy",Locale.getDefault()).format(Calendar.getInstance().time)
     }
     override fun initCtrl() {
