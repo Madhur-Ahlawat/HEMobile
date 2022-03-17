@@ -1,0 +1,10 @@
+package com.heandroid.data.model
+
+data class WebSiteStatus(
+    val state: String?,
+    val title: String?,
+    val message: String?,
+    val isActive: String,
+    val startTime: String?,
+    val endTime: String?
+)

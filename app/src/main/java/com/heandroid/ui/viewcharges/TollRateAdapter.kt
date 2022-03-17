@@ -21,4 +21,6 @@ class TollRateAdapter(private val context: Context?,var list: List<TollRatesResp
     }
 
    inner class VehicleViewHolder(val binding: AdapterViewChargesBinding) : RecyclerView.ViewHolder(binding.root)
+
+
 }

@@ -8,6 +8,9 @@ object Constants {
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
 
+    const val DART_CHARGE_FLOW_CODE: Int = 1002
+    const val FROM_DART_CHARGE_FLOW: String = "900"
+    const val NORMAL_LOGIN_FLOW_CODE=1001
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
@@ -75,5 +78,7 @@ object Constants {
     const val PAYMENT_PAGE = "payment page"
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
+    const val EMAIL_SELECTION_TYPE = "Email"
+    const val REFERENCE_ID = "Reference Id"
 
 }

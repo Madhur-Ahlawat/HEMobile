@@ -27,6 +27,7 @@
     <string name="txt_pound">"£"</string>
     <string name="txt_view_payment_history"><u>View payment history</u></string>
     <string name="account_number">Account number:</string>
+    <string name="account_number_">Account number</string>
     <string name="account_status">Account status:</string>
     <string name="account_type">Account type:</string>
     <string name="top_up_method">Top up Type:</string>
@@ -452,7 +453,7 @@
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
     <string name="str_verify_security_code">Verify security code</string>
-    <string name="send_security_code_msg">Security code has been sent to %s If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s. If you haven’t received the security code, please re-check your email address and click resend security code</string>
     <string name="str_select_account_type">Select an account type</string>
     <string name="str_personal_account">Personal account</string>
     <string name="str_business_account">Business account</string>
@@ -501,5 +502,42 @@
     <string name="str_lrds_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae tincidunt lobortis suspendisse id lacus enim sed diam. Posuere eu elementum enim et nisi, sed elit. Id aliquam faucibus cursus gravida porta donec fermentum vivamus consequat. Mi aliquet lacus, fusce lacus, quis morbi facilisis imperdiet odio.</string>
     <string name="str_find_address">Find address</string>
     <string name="str_enter_evening_no">Evening number (optional)</string>
+    <string name="resend_success">Resend Successfully</string>
+    <string name="str_understanding_charges_fines">Understanding Charges and fines</string>
+    <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
+    <string name="str_normal_phone_no">0300 300 0120</string>
+    <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
+    <string name="str_text_phone_val">18001 0300 300 0120</string>
+    <string name="str_make_enquiry"><u> Make an enquiry </u></string>
+    <string name="str_text_phone">Textphone</string>
+    <string name="str_do_you_have">Do you have a Dart Charge account?</string>
+    <string name="cases_and_enquiry">Cases and Enquiry</string>
+    <string name="account_created_successfully">Account Created Successfully</string>
+
+    <string name="cases_history">Case history</string>
+    <string name="cases_details">Case details</string>
+    <string name="check_enquiry_status">Check enquiry status</string>
+    <string name="provide_below_details">Provide below details</string>
+    <string name="provide_below_info">Provide below information</string>
+    <string name="first_name">First Name</string>
+    <string name="case_number">Case number</string>
+    <string name="last_name">Last Name</string>
+    <string name="telephone">Telephone no (Optional)</string>
+    <string name="raise_new_query">Raise a new enquiry</string>
+    <string name="case_number_column">Case number : </string>
+    <string name="submitted_date_column">Submitted date : </string>
+    <string name="submitted_time_column">Submitted time : </string>
+    <string name="resolution_info">Resolution information</string>
+    <string name="status_column">Status : </string>
+    <string name="go_to_start">Go to start now</string>
+    <string name="underline_category"><u>Category</u></string>
+    <string name="underline_comments"><u>Comments</u></string>
+    <string name="underline_summary"><u>Summary</u></string>
+    <string name="str_category">Category</string>
+    <string name="str_comments">Comments</string>
+    <string name="str_summary">Summary</string>
+    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+
+
 </resources>
 

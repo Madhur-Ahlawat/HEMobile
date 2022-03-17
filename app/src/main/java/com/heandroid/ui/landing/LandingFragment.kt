@@ -20,83 +20,76 @@ import com.heandroid.ui.account.creation.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
-import com.heandroid.ui.vehicle.payment.MakeOneOffPayment
+import com.heandroid.ui.vehicle.payment.MakeOffPaymentActivity
 import com.heandroid.ui.viewcharges.ViewChargesActivity
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.extn.setRightButtonText
-import com.heandroid.utils.extn.showToast
-import com.heandroid.utils.extn.startNewActivity
-import com.heandroid.utils.extn.visible
+import com.heandroid.utils.common.Constants.CHECK_FOR_PAID
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT
+import com.heandroid.utils.common.Constants.ONE_OFF_PAYMENT
+import com.heandroid.utils.common.Constants.RESOLVE_PENALTY
+import com.heandroid.utils.common.Constants.VIEW_CHARGES
+import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private var screenType: String = ""
-    private lateinit var model: LandingModel
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentLandingBinding {
-        return FragmentLandingBinding.inflate(inflater, container, false)
-    }
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLandingBinding  = FragmentLandingBinding.inflate(inflater, container, false)
 
     override fun onResume() {
         super.onResume()
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
         toolbar.findViewById<TextView>(R.id.btn_login).visible()
-
         requireActivity().setRightButtonText(getString(R.string.login))
     }
 
     override fun init() {
-        binding.apply {
-            btnContinue.setOnClickListener(this@LandingFragment)
-        }
-        model = LandingModel()
+      binding.model= LandingModel(enable = false)
     }
 
 
     override fun initCtrl() {
         binding.rgOptions.setOnCheckedChangeListener(this)
+        binding.btnContinue.setOnClickListener(this@LandingFragment)
     }
 
-    override fun observer() {
-    }
+    override fun observer() { }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
             R.id.rbCreateAccount -> {
+
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                model.selectType = Constants.CREATE_ACCOUNT
+                binding.model?.selectType = CREATE_ACCOUNT
             }
+
             R.id.rbMakeOffPayment -> {
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
-                model.selectType = Constants.ONE_OFF_PAYMENT
+                binding.model?.selectType = ONE_OFF_PAYMENT
             }
 
             R.id.rbResolvePenalty -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.RESOLVE_PENALTY
+                binding.model?.selectType = RESOLVE_PENALTY
             }
+
             R.id.rbCheckForPaid -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.CHECK_FOR_PAID
+                binding.model?.selectType = CHECK_FOR_PAID
             }
             R.id.rbViewCharges -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = Constants.VIEW_CHARGES
+                binding.model?.selectType = VIEW_CHARGES
             }
         }
         enableBtn()
-
     }
 
     private fun enableBtn() {
-        binding.model = model.apply {
+        binding.model = binding.model?.apply {
             enable = true
         }
     }
@@ -106,55 +99,21 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         v?.let {
             when (v.id) {
                 R.id.btnContinue -> {
-
-                    when (model.selectType) {
-
-                        Constants.VIEW_CHARGES -> {
-                            requireActivity().startNewActivity(ViewChargesActivity::class.java)
-
-                        }
-
-                        Constants.ONE_OFF_PAYMENT -> {
-                            requireActivity().startNewActivity(MakeOneOffPayment::class.java)
-                        }
-
-                        Constants.CHECK_FOR_PAID -> {
-                            Intent(requireActivity(), InProgressActivity::class.java).run {
-                                startActivity(this)
-                            }
-
-                        }
-
-                        Constants.RESOLVE_PENALTY -> {
-                            openUrlInWebBrowser()
-                        }
-
-                        Constants.CREATE_ACCOUNT->{
-                            Intent(requireActivity(), CreateAccountActivity::class.java).run {
-                                startActivity(this)
-                            }
-                            requireActivity().finish()
-                        }
-                         else -> {
-                        Intent(requireActivity(), InProgressActivity::class.java).run {
-                            startActivity(this)
-                        }
-
-                    }
-
-                }
+                when (binding.model?.selectType) {
+                   VIEW_CHARGES -> { requireActivity().startNewActivity(ViewChargesActivity::class.java) }
+                   ONE_OFF_PAYMENT -> { requireActivity().startNewActivity(MakeOffPaymentActivity::class.java) }
+                   CHECK_FOR_PAID -> { requireActivity().startNormalActivity(InProgressActivity::class.java) }
+                   RESOLVE_PENALTY -> { openUrlInWebBrowser() }
+                   CREATE_ACCOUNT-> { requireActivity().startNormalActivity(CreateAccountActivity::class.java) }
+                   else -> { requireActivity().startNormalActivity(InProgressActivity::class.java) }
+              }
             }
         }}}
 
     private fun openUrlInWebBrowser() {
-
-        var url = "http://www.google.com";
+        val url = "http://www.google.com";
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
-            // Note the Chooser below. If no applications match,
-            // Android displays a system message.So here there is no need for try-catch.
             startActivity(Intent.createChooser(this, "Browse with"));
         }
-
     }
-
 }
