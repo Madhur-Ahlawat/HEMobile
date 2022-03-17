@@ -80,5 +80,6 @@ object Constants {
     const val MAX_VEHICLE_SIZE = 5
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
-
+    const val AGENCY_ID = 18
+    const val FIND_VEHICLE_DATA = "FIND_VEHICLE_DATA"
 }

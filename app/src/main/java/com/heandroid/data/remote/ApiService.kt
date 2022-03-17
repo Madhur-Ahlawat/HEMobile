@@ -1,9 +1,14 @@
 package com.heandroid.data.remote
 
+import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
-import com.heandroid.data.model.WebSiteStatus
+<<<<<<< HEAD
+import com.heandroid.data.model.address.AddressApiResponse
 import com.heandroid.data.model.address.DataAddress
+=======
+import com.heandroid.data.model.WebSiteStatus
+>>>>>>> 1c476722307497594f7c44811bd998e423915a1c
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
 import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
@@ -145,4 +150,7 @@ interface ApiService {
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(@Query("agencyId") agencyId: String? , @Query("search") postCode:String):Response<List<DataAddress>>
 
+    @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getAccountFindVehicle(@Path("vehicleNumber") vehicleNumber: String?,
+                                      @Query("agencyId") agencyId:Int?): Response<VehicleInfoDetails?>?
 }

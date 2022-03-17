@@ -86,5 +86,26 @@
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
 
+    <fragment
+        android:id="@+id/findYourVehicleFragment"
+        android:name="com.heandroid.ui.account.creation.findyourvehicle.FindYourVehicleFragment"
+        android:label="FindYourVehicleFragment"
+        tools:layout="@layout/fragment_find_your_vehicle"
+        >
+        <action
+            android:id="@+id/action_findYourVehicleFragment_to_showVehicleDetailsFragment"
+            app:destination="@id/showVehicleDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showVehicleDetailsFragment"
+        android:name="com.heandroid.ui.account.creation.findyourvehicle.ShowVehicleDetailsFragment"
+        android:label="ShowVehicleDetailsFragment"
+        tools:layout="@layout/fragment_show_vehicle_details"
+        >
+        <action
+            android:id="@+id/action_showVehicleDetailsFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+    </fragment>
 
 </navigation>
