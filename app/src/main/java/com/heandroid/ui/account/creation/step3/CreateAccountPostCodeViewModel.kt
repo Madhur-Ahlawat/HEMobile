@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateAccountAccountViewModel @Inject constructor(val repository: AccountCreationRepository): BaseViewModel() {
+class CreateAccountPostCodeViewModel @Inject constructor(val repository: AccountCreationRepository): BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _addresses = MutableLiveData<Resource<List<DataAddress>?>?>()

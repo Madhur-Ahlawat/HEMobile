@@ -1,9 +1,10 @@
-package com.heandroid.ui.account.creation.findyourvehicle
+package com.heandroid.ui.account.creation.step4
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.repository.auth.CreateAccountRespository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
@@ -12,8 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FindYourVehicleFragmentViewModel @Inject constructor(private val repo: FindYourVehicleRepo) :
-    BaseViewModel() {
+class CreateAccountVechileViewModel @Inject constructor(private val repo: CreateAccountRespository) : BaseViewModel() {
 
     private val findVehicleMutData = MutableLiveData<Resource<VehicleInfoDetails?>?>()
 

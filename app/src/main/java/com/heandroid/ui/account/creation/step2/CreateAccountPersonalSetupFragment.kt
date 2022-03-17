@@ -19,7 +19,7 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPersonalSetupBinding.inflate(inflater, container, false)
 
@@ -30,8 +30,8 @@ class CreateAccountAccountPersonalSetupFragment : BaseFragment<FragmentCreateAcc
 
     override fun initCtrl() {
         binding.apply {
-            btnAction.setOnClickListener(this@CreateAccountAccountPersonalSetupFragment)
-            rgPersonalSubAccount.setOnCheckedChangeListener(this@CreateAccountAccountPersonalSetupFragment)
+            btnAction.setOnClickListener(this@CreateAccountPersonalSetupFragment)
+            rgPersonalSubAccount.setOnCheckedChangeListener(this@CreateAccountPersonalSetupFragment)
         }
     }
 

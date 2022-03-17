@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="com.heandroid.data.model.account.CreateAccountRequestModel" />
+            name="enable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,9 +57,9 @@
             android:id="@+id/tvPersonaleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/underline_personal_info"
+            android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="@color/black"
+            android:textColor="#5C5C5C"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -74,9 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/postcode"
-            android:textColor="#5C5C5C"
+            android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
-            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
             app:layout_constraintStart_toEndOf="@+id/tvPersonaleInfo" />
 
@@ -86,8 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/password"
-            android:textColor="#5C5C5C"
+            android:text="@string/underline_password"
+            android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -99,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/password"
+            android:text="@string/cap_pin"
             android:textColor="#5C5C5C"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
@@ -122,17 +121,17 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_15sdp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFullName"
+                    android:id="@+id/tilPassword"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/full_name"
+                    android:hint="@string/txt_create_pwd"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -141,82 +140,40 @@
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieFullName"
+                        android:id="@+id/tiePassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:text="@{model.firstName +` `+model.lastName}"
-                        android:digits="@string/name_validation"
+                        android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
-
-
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMobileNo"
+                    android:id="@+id/tilConfirmPassword"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/mobile_telephone"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/str_confirm_password"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilFullName">
+                    app:layout_constraintTop_toBottomOf="@id/tilPassword">
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieMobileNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:text="@={model.cellPhone}"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEveningNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="26dp"
-                    android:hint="@string/evening_number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilMobileNo">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieEveningNo"
+                        android:id="@+id/tieConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:text="@={model.eveningPhone}"
-                        android:maxLength="10"
+                        android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
-
-
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -241,13 +198,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
-            android:enabled="@{model.enable}"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_next"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="parent"

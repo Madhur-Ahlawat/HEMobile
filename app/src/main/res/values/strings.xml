@@ -544,6 +544,27 @@
     <string name="country_registration">Country of registration</string>
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
+    <string name="personal_pre_pay_account">Personal Pre-pay account</string>
+    <string name="personal_pre_pay_account_info">Personal Pre-pay account information</string>
+    <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
+    <string name="postcode">Postcode</string>
+    <string name="underline_postcode"><u>Postcode</u></string>
+    <string name="password" >Password</string>
+    <string name="underline_password"><u>Password</u></string>
+    <string name="mobile_telephone">Mobile telephone number (optional)</string>
+    <string name="evening_number">Evening number (optional)</string>
+    <string name="find_address">Find address</string>
+    <string name="cap_pin"> PIN </string>
+    <string name="underline_cap_pin"> <u>PIN</u> </string>
+    <string name="please_enter_postcode">Please enter post code</string>
+    <string name="contact_centre_pin">Contact centre PIN</string>
+    <string name="pin_desc1">• Your PIN must be made up of four digits.</string>
+    <string name="pin_desc2">• This would be used to verify your identity if you contact us by phone</string>
+
+    <string name="initial_deposit">• An initial deposit of £10</string>
+    <string name="personal_deposit">• Personal details and details of the primary vehicle which you are registering</string>
+    <string name="valid_debit">• A valid debit or credit card</string>
+    <string name="setup_prepay_account">To set up a personal pre-pay account, you will need: </string>
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Select category</string>
     <string name="str_select_sub_category">Select sub-category</string>

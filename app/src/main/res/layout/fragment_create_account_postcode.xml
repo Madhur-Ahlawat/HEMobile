@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="com.heandroid.data.model.account.CreateAccountRequestModel" />
+            name="enable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,9 +57,9 @@
             android:id="@+id/tvPersonaleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/underline_personal_info"
+            android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="@color/black"
+            android:textColor="#5C5C5C"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -73,8 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/postcode"
-            android:textColor="#5C5C5C"
+            android:text="@string/underline_postcode"
+            android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
@@ -126,13 +126,13 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFullName"
+                    android:id="@+id/tilPostCode"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/full_name"
+                    android:hint="@string/postcode"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -141,83 +141,78 @@
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieFullName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:text="@{model.firstName +` `+model.lastName}"
-                        android:digits="@string/name_validation"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMobileNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/mobile_telephone"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilFullName">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieMobileNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:text="@={model.cellPhone}"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEveningNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="26dp"
-                    android:hint="@string/evening_number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilMobileNo">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieEveningNo"
+                        android:id="@+id/tiePostCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:text="@={model.eveningPhone}"
-                        android:maxLength="10"
+                        android:inputType="textPersonName"
+                        android:maxLength="12"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFindAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="26dp"
+                    android:backgroundTint="@color/white"
+                    android:letterSpacing="0"
+                    android:text="@string/find_address"
+                    android:textAllCaps="false"
+                    android:textColor="@color/green"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toBottomOf="@+id/tilPostCode"
+                    app:strokeColor="@color/green"
+                    app:strokeWidth="1dp" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAddress"
+                    style="@style/Widget.HeMobile.TextInputLayoutDrop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="26dp"
+                    android:focusable="false"
+                    android:visibility="gone"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/str_email"
+                    android:textColorHint="@color/black"
+                    app:hintEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toBottomOf="@+id/tilPostCode">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_vector_drop"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:text="Home Gardens, Dartford DA1 1DR"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -241,13 +236,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
-            android:enabled="@{model.enable}"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_next"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="parent"
