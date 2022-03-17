@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.heandroid.data.model.WebSiteStatus
+import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.repository.websiteservice.WebsiteServiceRepository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource

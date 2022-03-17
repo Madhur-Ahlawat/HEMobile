@@ -14,14 +14,14 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.*
 import java.util.ArrayList
 
-class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
+class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySuccessBinding>(),
     View.OnClickListener {
 
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentNewCaseSummaryBinding.inflate(inflater, container, false)
+    ) = FragmentRaiseNewEnquirySuccessBinding.inflate(inflater, container, false)
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
@@ -29,7 +29,8 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
 
     override fun initCtrl() {
         binding.apply {
-            btnNext.setOnClickListener(this@NewCaseSummeryFragment)
+            checkEnquiryStatus.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
+            goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
         }
     }
 
@@ -39,8 +40,11 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
 
         when (it?.id) {
 
-            R.id.btnNext -> {
-                findNavController().navigate(R.id.action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment)
+            R.id.check_enquiry_status -> {
+//                findNavController().navigate(R.id.action)
+            }
+            R.id.go_to_start_menu ->{
+
             }
             else -> {
             }

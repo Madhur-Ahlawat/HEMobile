@@ -544,6 +544,25 @@
     <string name="country_registration">Country of registration</string>
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
+    <string name="str_sub_category">Sub-category</string>
+    <string name="str_select_category">Select category</string>
+    <string name="str_select_sub_category">Select sub-category</string>
+    <string name="str_please_provide_additional_information_txt">please provide additonal information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
+    <string name="str_description">Descritption</string>
+    <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
+    <string name="str_upload_file">Upload file(Optional)</string>
+    <string name="str_upto_four_files_uploaded">* Upto 4 files can be uploaded</string>
+    <string name="str_file_size_may_be">* File size may be 8mb each</string>
+    <string name="str_permitted_file_types_are_doc_docx_xls">* Permitted files types are doc/docx, xls/xlsx,pdf,jpg,bmp,tiff,csv.</string>
+    <string name="str_duplicate_statements">Duplicate Statments</string>
+    <string name="str_transaction">Transaction</string>
+    <string name="str_Your_enquiry_submitted">"Your enquiry has been submitted successfully "</string>
+    <string name="str_we_will_get_back_to_you">* We will get back to you with in 7 working days</string>
+    <string name="str_email_conformation">* We will send an email confirmation to cherukuru13@gmail.com post verification</string>
+    <string name="str_check_enquiry_status">Check enquiry status</string>
+    <string name="str_go_to_start_menu">Go to start menu</string>
+    <string name="str_case_number">case number</string>
+    <string name="str_date">Date</string>
 
 
 </resources>

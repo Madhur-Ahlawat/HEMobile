@@ -1,4 +1,4 @@
-package com.heandroid.data.model
+package com.heandroid.data.model.webstatus
 
 data class WebSiteStatus(
     val state: String?,

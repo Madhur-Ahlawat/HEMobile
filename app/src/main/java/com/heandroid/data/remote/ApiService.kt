@@ -2,7 +2,7 @@ package com.heandroid.data.remote
 
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
-import com.heandroid.data.model.WebSiteStatus
+import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel

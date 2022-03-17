@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/str_email"
             android:textColorHint="@color/black"
-
             android:focusableInTouchMode="false"
             android:focusable="false"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -47,7 +46,6 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:focusable="false"
-
                 android:focusableInTouchMode="false"
                 android:drawableRight="@drawable/ic_vector_drop"
                 android:singleLine="true"
