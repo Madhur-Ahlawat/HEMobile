@@ -1,5 +1,6 @@
 package com.heandroid.ui.auth.login
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,14 @@ import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.startNow.StartNowBaseActivity
+import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.openActivityWithData
 import com.heandroid.utils.extn.startNormalActivity
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +77,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                         launchIntent(status)
                     } else {
 
+                        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java){
+                            putInt(Constants.FROM_LOGIN_TO_CASES,Constants.FROM_LOGIN_TO_CASES_VALUE)
+                        }
                     }
                 }
                 is Resource.DataError -> {
