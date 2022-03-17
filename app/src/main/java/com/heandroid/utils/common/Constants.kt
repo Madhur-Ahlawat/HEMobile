@@ -2,6 +2,12 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val PERSONAL_DETAILS = "personal_details"
+    const val POST_CODE_ADDRESS = "post_code_address"
+    const val PASSWORD = "password"
+    const val PIN = "pin"
+    const val LRDS_SCREEN = "lrds_screen"
+
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"

@@ -2,6 +2,8 @@ package com.heandroid.data.remote
 
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.address.AddressApiResponse
+import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
 import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
@@ -113,5 +115,8 @@ interface ApiService {
 
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String) : Response<String?>
+
+    @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
+    suspend fun getAddressListBasedOnPostalCode(@Query("agencyId") agencyId: String? , @Query("search") postCode:String):Response<List<DataAddress>>
 
 }

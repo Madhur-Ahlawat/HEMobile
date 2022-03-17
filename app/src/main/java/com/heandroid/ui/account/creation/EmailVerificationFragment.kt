@@ -14,7 +14,9 @@ import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmailVerificationFragment : BaseFragment<FragmentEmailVerificationBinding>(),
     View.OnClickListener {
     private var email: String = ""

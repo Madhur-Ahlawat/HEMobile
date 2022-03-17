@@ -18,7 +18,9 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountTypeSelectionFragment : BaseFragment<FragmentAccountTypeSelectionBinding>(),
     View.OnClickListener,
     RadioGroup.OnCheckedChangeListener {

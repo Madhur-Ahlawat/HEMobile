@@ -459,7 +459,7 @@
     <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_prepay">Pre-pay</string>
-    <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
+    <string name="str_pre_pay_desc">y\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
     <string name="str_personal_details_entry">Personal details entry</string>
@@ -494,6 +494,12 @@
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
     <string name="str_pin">Pin</string>
-
+    <string name="str_create_center_pin">Contact Centre PIN</string>
+    <string name="str_pin_suggestion">\u25CF Your PIN must be made up of four digits \n\u25CF This would be used to verify your identity if you contact us by phone</string>
+    <string name="str_local_resident_information">Local resident discount scheme information </string>
+    <string name="str_personal_pre_pay_eligible_for_local_resident_msg">Personal pre-pay eligible for local resident discount scheme (LRDS)</string>
+    <string name="str_lrds_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae tincidunt lobortis suspendisse id lacus enim sed diam. Posuere eu elementum enim et nisi, sed elit. Id aliquam faucibus cursus gravida porta donec fermentum vivamus consequat. Mi aliquet lacus, fusce lacus, quis morbi facilisis imperdiet odio.</string>
+    <string name="str_find_address">Find address</string>
+    <string name="str_enter_evening_no">Evening number (optional)</string>
 </resources>
 

@@ -1,6 +1,7 @@
 package com.heandroid.di
 
 import com.heandroid.data.remote.ApiService
+import com.heandroid.data.repository.account.AccountCreationRepository
 import com.heandroid.data.repository.auth.ForgotEmailRepository
 import com.heandroid.data.repository.auth.ForgotPasswordRepository
 import com.heandroid.data.repository.auth.LoginRepository
@@ -40,5 +41,10 @@ object RepositoryModule {
         return ForgotEmailRepository(apiService)
     }
 
+    @Singleton
+    @Provides
+    fun provideAccountCreationRepository(apiService: ApiService): AccountCreationRepository {
+        return AccountCreationRepository(apiService)
+    }
 
-}
+    }
