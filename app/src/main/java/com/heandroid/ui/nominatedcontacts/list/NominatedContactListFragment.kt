@@ -26,8 +26,7 @@ import java.lang.Exception
 
 
 @AndroidEntryPoint
-class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBinding>(),
-    View.OnClickListener, NominatedContactListener {
+class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBinding>(), View.OnClickListener, NominatedContactListener {
     private val viewModel: NominatedContactListViewModel by viewModels()
     private val list: MutableList<SecondaryAccountData?> = ArrayList()
 

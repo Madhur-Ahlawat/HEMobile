@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="model"
-            type="com.heandroid.data.model.account.VehicleInfoDetails" />
+            name="enable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -121,10 +121,11 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:backgroundTint="@color/btn_disable"
             android:text="@string/str_find_vehicle"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textAllCaps="false"
-            android:textColor="@color/txt_disable"
             android:textSize="@dimen/_14ssp"
             android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"

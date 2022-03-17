@@ -43,10 +43,11 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
                                                  ftvehicleList = null, lastName = "", maskedNumber = "",
                                                  password = "", replenishmentAmount = 0.0, securityCode = "",
                                                  smsOption = "", stateType = "", tcAccepted = "",
-                                                 thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "")
+                                                 thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "",enable = false)
 
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }

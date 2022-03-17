@@ -106,7 +106,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     }
 
                 }
-
+                binding.model= model
             }
             return true
         }
@@ -129,9 +129,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 else -> {}
             }
 
-        }catch (e: Exception){
-
-        }
+        }catch (e: Exception) { }
     }
 
 

@@ -13,8 +13,7 @@ import com.heandroid.utils.common.Constants.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountChoosePaymentFragment: BaseFragment<FragmentCreateAccountChoosePaymentBinding>(), View.OnClickListener,
-    RadioGroup.OnCheckedChangeListener {
+class CreateAccountChoosePaymentFragment: BaseFragment<FragmentCreateAccountChoosePaymentBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountChoosePaymentBinding.inflate(inflater,container,false)
     override fun init() {
         binding.tvStep.text=getString(R.string.str_step_f_of_l,5,5)

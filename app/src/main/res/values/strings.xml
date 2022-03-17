@@ -494,6 +494,7 @@
     <string name="internal_server_error">Internal server error</string>
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
+    <string name="underline_personal_info"><u>Personal info</u></string>
     <string name="str_pin">Pin</string>
     <string name="str_create_center_pin">Contact Centre PIN</string>
     <string name="str_pin_suggestion">\u25CF Your PIN must be made up of four digits \n\u25CF This would be used to verify your identity if you contact us by phone</string>
@@ -544,6 +545,15 @@
     <string name="country_registration">Country of registration</string>
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
+    <string name="personal_pre_pay_account">Personal Pre-pay account</string>
+    <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
+    <string name="postcode">Postcode</string>
+    <string name="underline_postcode"><u>Postcode</u></string>
+    <string name="password" >Password</string>
+    <string name="mobile_telephone">Mobile telephone number (optional)</string>
+    <string name="evening_number">Evening number (optional)</string>
+    <string name="find_address">Find address</string>
+    <string name="please_enter_postcode">Please enter post code</string>
 
 
 </resources>

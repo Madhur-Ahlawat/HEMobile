@@ -27,7 +27,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
     private lateinit var accountModel: AccountDetails
     private var entryType: String = Constants.PERSONAL_DETAILS
-    private val viewModelCreateAccount: CreateAccountAccountViewModel by viewModels()
+    private val viewModelCreateAccountPostCode: CreateAccountPostCodeViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPersonalDetailsEntryBinding.inflate(inflater, container, false)
@@ -167,7 +167,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
     }
 
     override fun observer() {
-        observe(viewModelCreateAccount.addresses, ::handleAddressApiResponse)
+        observe(viewModelCreateAccountPostCode.addresses, ::handleAddressApiResponse)
     }
 
     override fun onClick(view: View?) {
@@ -214,7 +214,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
     // method to fetch address based on postal code
     private fun callApiTofetchAddress() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        viewModelCreateAccount.fetchAddress(binding.edtPostCode.text.toString())
+        viewModelCreateAccountPostCode.fetchAddress(binding.edtPostCode.text.toString())
 
     }
 
