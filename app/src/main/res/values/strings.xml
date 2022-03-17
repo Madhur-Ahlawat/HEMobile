@@ -502,7 +502,6 @@
     <string name="str_lrds_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae tincidunt lobortis suspendisse id lacus enim sed diam. Posuere eu elementum enim et nisi, sed elit. Id aliquam faucibus cursus gravida porta donec fermentum vivamus consequat. Mi aliquet lacus, fusce lacus, quis morbi facilisis imperdiet odio.</string>
     <string name="str_find_address">Find address</string>
     <string name="str_enter_evening_no">Evening number (optional)</string>
-    <string name="resend_success">Resend Successfully</string>
     <string name="str_understanding_charges_fines">Understanding Charges and fines</string>
     <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
     <string name="str_normal_phone_no">0300 300 0120</string>
@@ -537,7 +536,13 @@
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
     <string name="str_raise_new_enquiry">Raise a new enquiry</string>
-
+    <string name="resend_success">Resend Success</string>
+    <string name="add_a_vehicle">Add a vehicle</string>
+    <string name="vehicle_reg_number">Vehicle registration number</string>
+    <string name="make">Make</string>
+    <string name="colour">Colour</string>
+    <string name="country_registration">Country of registration</string>
+    <string name="not_vehicle">This is not your vehicle</string>
 
 </resources>
 
