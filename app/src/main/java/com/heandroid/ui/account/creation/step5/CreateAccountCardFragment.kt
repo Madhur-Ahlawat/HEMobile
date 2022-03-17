@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation
+package com.heandroid.ui.account.creation.step5
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,12 +27,11 @@ import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(),View.OnClickListener {
 
-    private val viewModel : CreateAccountViewModel by viewModels()
+    private val viewModel : CreateAccountPaymentViewModel by viewModels()
     private var loader: LoaderDialog?=null
 
 
@@ -79,6 +78,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type
                 model?.securityCode = responseModel.card.hash
+
                 val fullName : List<String?>? =responseModel.check.name?.split(" ")
                 when(fullName?.size){
 

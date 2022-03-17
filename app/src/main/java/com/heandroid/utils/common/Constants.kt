@@ -69,8 +69,8 @@ object Constants {
 
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
-    const val PERSONAL_ACCOUNT = "personal_account"
-    const val BUSINESS_ACCOUNT = "business_account"
+    const val PERSONAL_ACCOUNT = "PRIVATE"
+    const val BUSINESS_ACCOUNT = "BUSINESS"
     const val PRE_PAY_ACCOUNT = "pre_pay_account"
     const val PAYG_ACCOUNT = "pay_as_you_go_account"
     const val UK = "UK"

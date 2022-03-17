@@ -465,7 +465,7 @@
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
     <string name="str_personal_details_entry">Personal details entry</string>
     <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
-    <string name="str_provide_below_details">"In order to set up your Dart Charge account, please provide the below information. "</string>
+    <string name="str_provide_below_details">In order to set up your Dart Charge account, please provide the below information. </string>
     <string name="payment_amount">Payment amount</string>
     <string name="your_vehicle">Your vehicle</string>
     <string name="future_crossings_are_valid_for_12_months_from_the_date_you_make_them">Future crossings are valid for 12 months from the date you make them.</string>
@@ -537,6 +537,7 @@
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
     <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+    <string name="personal_account_setup">Personal account setup</string>
 
 
 </resources>

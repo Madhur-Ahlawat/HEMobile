@@ -40,14 +40,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_provide_below_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginVertical="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:text="@string/str_provide_below_details"
+            android:text="In order to set up your Dart Charge account,\nplease provide the below information.
+"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_personal_details" />

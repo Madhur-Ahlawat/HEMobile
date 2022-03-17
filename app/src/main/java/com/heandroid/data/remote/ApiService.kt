@@ -1,14 +1,9 @@
 package com.heandroid.data.remote
 
-import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
-<<<<<<< HEAD
-import com.heandroid.data.model.address.AddressApiResponse
-import com.heandroid.data.model.address.DataAddress
-=======
 import com.heandroid.data.model.WebSiteStatus
->>>>>>> 1c476722307497594f7c44811bd998e423915a1c
+import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
 import com.heandroid.data.model.auth.forgot.password.RequestOTPModel

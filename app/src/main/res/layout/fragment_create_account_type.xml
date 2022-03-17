@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,8 +9,7 @@
             type="com.heandroid.data.model.account.AccountTypeSelectionModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_E5E5E5"
@@ -90,59 +90,6 @@
             </RadioGroup>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_personal_account_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_verification">
-
-            <RadioGroup
-                android:id="@+id/rg_personal_sub_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rb_prepay"
-                    android:buttonTint="@color/color_00703C"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:buttonTint="@color/color_00703C"
-                    android:text="@string/str_prepay" />
-
-                <TextView
-                    android:id="@+id/tv_prepay_desc"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
-                    android:text="@string/str_pre_pay_desc" />
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rb_payg_act"
-                    android:buttonTint="@color/color_00703C"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:text="@string/str_payg_account" />
-
-                <TextView
-                    android:id="@+id/tv_payg_desc"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
-                    android:text="@string/str_payg_desc" />
-
-            </RadioGroup>
-
-        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_action"

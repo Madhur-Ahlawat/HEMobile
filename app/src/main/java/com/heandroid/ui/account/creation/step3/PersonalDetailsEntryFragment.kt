@@ -1,8 +1,6 @@
-package com.heandroid.ui.account.creation
+package com.heandroid.ui.account.creation.step3
 
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,6 @@ import androidx.fragment.app.viewModels
 import com.heandroid.R
 import com.heandroid.data.model.account.AccountDetails
 import com.heandroid.data.model.address.DataAddress
-import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.databinding.FragmentPersonalDetailsEntryBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -26,31 +23,20 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBinding>(),
-    View.OnClickListener {
+class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBinding>(), View.OnClickListener {
+
     private lateinit var accountModel: AccountDetails
     private var entryType: String = Constants.PERSONAL_DETAILS
-    private val viewModel: AccountCreationViewModel by viewModels()
+    private val viewModelCreateAccount: CreateAccountAccountViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPersonalDetailsEntryBinding {
-        return FragmentPersonalDetailsEntryBinding.inflate(inflater, container, false)
-    }
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPersonalDetailsEntryBinding.inflate(inflater, container, false)
+
 
     override fun init() {
-        setGenericHeader()
         accountModel = AccountDetails()
         showPersonalDetailsEntryView()
     }
-
-    // header for personal details
-    private fun setGenericHeader() {
-        requireActivity().toolbar(getString(R.string.str_create_an_account))
-    }
-
 
     override fun initCtrl() {
         binding.apply {
@@ -112,7 +98,6 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clLrds.gone()
         }
 
-        setGenericHeader()
     }
 
     // view to enter personal details
@@ -182,7 +167,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
     }
 
     override fun observer() {
-        observe(viewModel.addresses, ::handleAddressApiResponse)
+        observe(viewModelCreateAccount.addresses, ::handleAddressApiResponse)
     }
 
     override fun onClick(view: View?) {
@@ -229,7 +214,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
     // method to fetch address based on postal code
     private fun callApiTofetchAddress() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        viewModel.fetchAddress(binding.edtPostCode.text.toString())
+        viewModelCreateAccount.fetchAddress(binding.edtPostCode.text.toString())
 
     }
 

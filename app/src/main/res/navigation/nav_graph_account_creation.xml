@@ -1,48 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
     app:startDestination="@id/emailVerification">
+
+
+   <!-- Step 1 -->
     <fragment
         android:id="@+id/emailVerification"
-        android:name="com.heandroid.ui.account.creation.EmailVerificationFragment"
+        android:name="com.heandroid.ui.account.creation.step1.CreateAccountEmailVerificationFragment"
         android:label="@string/str_email_verification"
-        tools:layout="@layout/fragment_email_verification">
+        tools:layout="@layout/fragment_create_account_email_verification">
         <action
             android:id="@+id/action_emailVerification_to_confirmEmailFragment"
             app:destination="@id/confirmEmailFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/accountTypeSelectionFragment"
-        android:name="com.heandroid.ui.account.creation.AccountTypeSelectionFragment"
-        android:label="@string/str_select_account_type"
-        tools:layout="@layout/fragment_account_type_selection">
-        <action
-            android:id="@+id/actionAccountSelectionType_to_PersonalDetailsEntry"
-            app:destination="@id/personalDetailsEntryFragment" />
-    </fragment>
 
-
-    <fragment
-        android:id="@+id/personalDetailsEntryFragment"
-        android:name="com.heandroid.ui.account.creation.PersonalDetailsEntryFragment"
-        android:label="@string/str_personal_details_entry"
-        tools:layout="@layout/fragment_personal_details_entry" />
     <fragment
         android:id="@+id/confirmEmailFragment"
-        android:name="com.heandroid.ui.account.creation.ConfirmEmailFragment"
+        android:name="com.heandroid.ui.account.creation.step1.CreateAccountConfirmEmailFragment"
         android:label="ConfirmEmailFragment"
-        tools:layout="@layout/fragment_confirm_email">
+        tools:layout="@layout/fragment_create_account_confirm_email">
         <action
             android:id="@+id/action_confirmEmailFragment_to_accountTypeSelectionFragment"
             app:destination="@id/accountTypeSelectionFragment" />
     </fragment>
 
+
+
+    <!-- Step 2 -->
+
+    <fragment
+        android:id="@+id/accountTypeSelectionFragment"
+        android:name="com.heandroid.ui.account.creation.step2.CreateAccountTypeFragment"
+        android:label="@string/str_select_account_type"
+        tools:layout="@layout/fragment_create_account_type">
+
+        <action
+            android:id="@+id/action_accountTypeSelectionFragment_to_personalTypeFragment"
+            app:destination="@id/personalTypeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personalTypeFragment"
+        android:name="com.heandroid.ui.account.creation.step2.CreateAccountAccountPersonalSetupFragment"
+        android:label="@string/str_select_account_type"
+        tools:layout="@layout/fragment_create_account_personal_setup">
+
+        <action
+            android:id="@+id/action_personalTypeFragment_to_personalDetailsEntryFragment"
+            app:destination="@id/personalDetailsEntryFragment" />
+    </fragment>
+
+
+
+    <!-- Step 3 -->
+    <fragment
+        android:id="@+id/personalDetailsEntryFragment"
+        android:name="com.heandroid.ui.account.creation.step3.PersonalDetailsEntryFragment"
+        android:label="@string/str_personal_details_entry"
+        tools:layout="@layout/fragment_personal_details_entry" />
+
+
+
+
+
+
+    <!-- Step 5 -->
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.heandroid.ui.account.creation.CreateAccountCardFragment"
+        android:name="com.heandroid.ui.account.creation.step5.CreateAccountCardFragment"
         android:label="Card Fragment"
         tools:layout="@layout/fragment_create_account_card">
         <action
@@ -52,7 +82,7 @@
 
     <fragment
         android:id="@+id/successfulFragment"
-        android:name="com.heandroid.ui.account.creation.CreateAccountSuccessfulFragment"
+        android:name="com.heandroid.ui.account.creation.step5.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
 

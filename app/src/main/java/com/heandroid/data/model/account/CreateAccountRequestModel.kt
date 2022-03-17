@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CreateAccountRequestModel(
-    val accountType: String?,
+    var accountType: String?,
     val address1: String?,
     val billingAddressLine1: String?,
     val billingAddressLine2: String?,
@@ -24,7 +24,7 @@ data class CreateAccountRequestModel(
     var creditCardNumber: String?,
     var creditCardType: String?,
     val digitPin: String?,
-    val emailAddress: String?,
+    var emailAddress: String?,
     val eveningPhone: String?,
     val firstName: String?,
     val ftvehicleList: CreateAccountVehicleListModel?,

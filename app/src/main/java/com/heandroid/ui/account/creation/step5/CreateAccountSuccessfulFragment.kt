@@ -1,11 +1,9 @@
-package com.heandroid.ui.account.creation
+package com.heandroid.ui.account.creation.step5
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.heandroid.R
-import com.heandroid.data.model.account.CreateAccountResponseModel
-import com.heandroid.databinding.FragmentCreateAccountCardBinding
 import com.heandroid.databinding.FragmentCreateAccountSuccessfulBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment

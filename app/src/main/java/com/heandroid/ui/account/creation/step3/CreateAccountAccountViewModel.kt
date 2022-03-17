@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation
+package com.heandroid.ui.account.creation.step3
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountCreationViewModel @Inject constructor(val repository: AccountCreationRepository): BaseViewModel() {
+class CreateAccountAccountViewModel @Inject constructor(val repository: AccountCreationRepository): BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _addresses = MutableLiveData<Resource<List<DataAddress>?>?>()
