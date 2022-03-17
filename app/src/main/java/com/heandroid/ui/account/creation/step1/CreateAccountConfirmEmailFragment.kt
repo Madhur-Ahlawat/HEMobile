@@ -91,19 +91,26 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
 
     private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
+        // todo must be removed, only for testing the flow
+        val bundle = Bundle()
+        bundle.putParcelable(DATA,requestModel)
+        findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
+        //
         try{
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 if(resource.data?.status?.equals("500")==true){
-                   showError(binding.root,resource.data.message)
+//                   showError(binding.root,resource.data.message)
                 }else{
                     val bundle = Bundle()
                     bundle.putParcelable(DATA,requestModel)
                     findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
                 }
             }
-            is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
+            is Resource.DataError -> {
+//                showError(binding.root, resource.errorMsg)
+            }
         }}catch (e: Exception){}
     }
 

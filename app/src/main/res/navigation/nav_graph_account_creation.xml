@@ -74,8 +74,37 @@
         android:id="@+id/postcodeFragment"
         android:name="com.heandroid.ui.account.creation.step3.CreateAccountPostCodeFragment"
         android:label="Personal Info"
-        tools:layout="@layout/fragment_create_account_postcode" />
+        tools:layout="@layout/fragment_create_account_postcode" >
+        <action
+            android:id="@+id/action_postcodeFragment_to_createAccoutPasswordFragment"
+            app:destination="@id/createAccoutPasswordFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/createAccoutPasswordFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutPasswordFragment"
+        android:label="CreateAccoutPasswordFragment"
+        tools:layout="@layout/fragment_create_account_possword">
+        <action
+            android:id="@+id/action_createAccoutPasswordFragment_to_createAccoutPinFragment"
+            app:destination="@id/createAccoutPinFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccoutPinFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutPinFragment"
+        android:label="CreateAccoutPinFragment"
+        tools:layout="@layout/fragment_create_account_pin">
+        <action
+            android:id="@+id/action_createAccoutPinFragment_to_createAccoutInfoFragment"
+            app:destination="@id/createAccoutInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccoutInfoFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutInfoFragment"
+        android:label="CreateAccoutInfoFragment"
+        tools:layout="@layout/fragment_create_account_info"/>
 
 
     <!-- Step 4 -->

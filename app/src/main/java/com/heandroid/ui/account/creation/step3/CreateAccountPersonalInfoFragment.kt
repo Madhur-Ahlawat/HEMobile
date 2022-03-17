@@ -36,7 +36,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     override fun observer() {}
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.btnActive -> {
+            R.id.btnAction -> {
                 if(binding.tieFullName.text.toString().contains(" ")){
                    binding.model?.firstName= binding.tieFullName.text.toString().split(" ")[0]
                    binding.model?.lastName= binding.tieFullName.text.toString().split(" ")[1]

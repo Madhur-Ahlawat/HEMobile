@@ -1,10 +1,12 @@
 package com.heandroid.ui.account.creation.step3
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.address.DataAddress
@@ -53,10 +55,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         hideKeyboard()
         when(v?.id) {
             R.id.btnAction -> {
-//                // password fragment to be called with the same model data
-//                val bundle = Bundle()
-//                bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
-//                findNavController().navigate(R.id._,bundle)
+                val bundle = Bundle().apply {
+                    putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                }
+                findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }
             R.id.btnFindAddress -> {
                 if(binding.tiePostCode.length()>0) {
@@ -84,6 +86,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         model?.city=locality
                         model?.stateType="India"
                     }
+                    binding.enable = true
                 }
                 is Resource.DataError -> { showError(binding.root, response.errorMsg) }
             }
