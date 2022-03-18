@@ -591,7 +591,8 @@
     <string name="str_no_need_to_remember_to_topup_of_funds_txt">"No need to remember to top-up, funds will be automatically added to your account when the balance falls below the specified amount "</string>
     <string name="str_will_you_be_making_more_than_10">Will you be making more than 10 crossings each?</string>
     <string name="str_top_up_my_account_by">Top-up my account by 5.00 when my balance falls below 10.00</string>
-
+    <string name="ten">€10</string>
+    <string name="pay">Pay</string>
 
 </resources>
 

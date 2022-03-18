@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/emailVerification">
+    app:startDestination="@id/findYourVehicleFragment">
 
 
    <!-- Step 1 -->
@@ -138,8 +138,20 @@
         >
         <action
             android:id="@+id/action_findYourVehicleFragment_to_showVehicleDetailsFragment"
-            app:destination="@id/showVehicleDetailsFragment" />
+            app:destination="@id/makePaymentAddVehicleFragment2" />
     </fragment>
+
+    <fragment
+        android:id="@+id/makePaymentAddVehicleFragment2"
+        android:name="com.heandroid.ui.vehicle.payment.MakePaymentAddVehicleFragment"
+        android:label="MakePaymentAddVehicleFragment" >
+
+        <action
+            android:id="@+id/action_showVehicleDetailsFragment_to_addAVehicleFragment"
+            app:destination="@id/showVehicleDetailsFragment" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/showVehicleDetailsFragment"
@@ -150,9 +162,21 @@
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment"
+            app:destination="@id/accountVehiclePaymentFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountVehiclePaymentFragment"
+        android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehiclePaymentFragment"
+        android:label="AccountVehiclePaymentFragment" >
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_choosePaymentFragment"
             app:destination="@id/choosePaymentFragment" />
+
     </fragment>
 
 
