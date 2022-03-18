@@ -42,9 +42,13 @@ class CreateAccountVehicleDetailsFragment : BaseFragment<FragmentCreateAccountVe
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.confirm_btn_vehicle ->{
-                val bundle = Bundle()
-                bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
-                findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_choosePaymentFragment)
+              //  val bundle = Bundle()
+              //  bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
+              //  findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_choosePaymentFragment)
+
+                  findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment)
+
+
             }
             R.id.not_vehicle -> { findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_findYourVehicleFragment) }
         }
