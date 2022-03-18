@@ -5,23 +5,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
+import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.model.vehicle.PlateInfoResponse
+import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.databinding.FragmentMakePaymentAddVehicleBinding
+import com.heandroid.ui.account.creation.step4.CreateAccountVechileViewModel
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.Constants
-
+import com.heandroid.utils.common.ErrorUtil
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
+import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
+@AndroidEntryPoint
 class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicleBinding>(),
     View.OnClickListener, AddVehicleListener, ItemClickListener {
 
     private val mVehicleList = ArrayList<VehicleResponse>()
     private lateinit var mAdapter: AddedVehicleListAdapter
     private var addDialog: AddVehicleDialog? = null
+    private var isAccountVehicle: Boolean? = false
+    private var loader: LoaderDialog? = null
+    private val viewModel: CreateAccountVechileViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -45,6 +60,12 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         } else {
             setAdapter()
         }
+
+        isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
+
+        if(isAccountVehicle == true){
+            setAdapter(isAccountVehicle!!)
+        }
     }
 
     override fun initCtrl() {
@@ -65,19 +86,59 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.findVehicle -> {
-
+                if(isAccountVehicle == true){
+                    callLoader()
+                    viewModel.getVehicleData(
+                        mVehicleList[0].plateInfo.number,
+                        Constants.AGENCY_ID
+                    )
+                    // mVehicleList.clear()
+                    //isAccountVehicle = false
+                    observe(viewModel.findVehicleLiveData, ::handleVehicleResponse)
+                }
             }
         }
     }
 
-    private fun setAdapter() {
+    private fun callLoader() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, "")
+    }
+
+    private fun handleVehicleResponse(resource: Resource<VehicleInfoDetails?>?) {
+        try {
+            loader?.dismiss()
+            when (resource) {
+                is Resource.Success -> {
+                    if (resource.data?.retrievePlateInfoDetails != null) {
+                        val bundle =  Bundle()
+                        bundle.putParcelable(Constants.FIND_VEHICLE_DATA,resource.data)
+                        findNavController().navigate(R.id.action_findYourVehicleFragment_to_showVehicleDetailsFragment, bundle)
+                    }
+                }
+                is Resource.DataError -> { ErrorUtil.showError(binding.root, resource.errorMsg) }
+            }
+        }catch (e: Exception){}}
+
+    private fun setAdapter(isAccountVehicle: Boolean = false) {
         binding.rvVehiclesList.visibility = View.VISIBLE
         binding.noVehiclesAdded.visibility = View.GONE
         binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
 
-        mAdapter.setList(mVehicleList)
-        mAdapter.notifyDataSetChanged()
-
+        val vehicleNo = arguments?.getString("VehicleNo")
+        if (isAccountVehicle) {
+            val plateRes = PlateInfoResponse()
+            plateRes.number = vehicleNo!!
+            plateRes.country = "UK"
+            val vehicleRes = VehicleResponse(PlateInfoResponse(),plateRes, VehicleInfoResponse(), false, 0, 0.0 )
+            mVehicleList.add(vehicleRes)
+            mAdapter.setList(mVehicleList)
+            mAdapter.notifyDataSetChanged()
+        }else {
+            mAdapter.setList(mVehicleList)
+            mAdapter.notifyDataSetChanged()
+        }
         if (mVehicleList.isNotEmpty()) {
             setBtnActivated()
         }

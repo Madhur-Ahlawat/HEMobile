@@ -594,6 +594,8 @@
     <string name="str_maintainance_notify">Manitainance Notification</string>
     <string name="str_maintainance_desc">Please note that we will be performing important server maintainance in a few minutes, during which time the server will be unavailable for approximately 5-10 minutes</string>
 
+    <string name="ten">€10</string>
+    <string name="pay">Pay</string>
 
 </resources>
 

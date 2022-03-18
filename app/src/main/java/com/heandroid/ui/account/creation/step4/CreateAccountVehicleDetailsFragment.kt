@@ -14,15 +14,12 @@ import com.heandroid.utils.common.Constants.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountVehicleDetailsFragment :
-    BaseFragment<FragmentCreateAccountVehicleDetailsBinding>(), View.OnClickListener {
+class CreateAccountVehicleDetailsFragment : BaseFragment<FragmentCreateAccountVehicleDetailsBinding>(), View.OnClickListener {
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountVehicleDetailsBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountVehicleDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        val vehicleInfoDetails =
-            arguments?.getParcelable(Constants.FIND_VEHICLE_DATA) as VehicleInfoDetails?
+        val vehicleInfoDetails = arguments?.getParcelable(Constants.FIND_VEHICLE_DATA) as VehicleInfoDetails?
         val plateInfo = vehicleInfoDetails?.retrievePlateInfoDetails
         binding.apply {
             vehicleNumber.text = plateInfo?.plateNumber
@@ -34,7 +31,7 @@ class CreateAccountVehicleDetailsFragment :
     }
 
     override fun initCtrl() {
-        binding.apply {
+         binding.apply {
             confirmBtnVehicle.setOnClickListener(this@CreateAccountVehicleDetailsFragment)
             notVehicle.setOnClickListener(this@CreateAccountVehicleDetailsFragment)
         }
@@ -43,21 +40,19 @@ class CreateAccountVehicleDetailsFragment :
     override fun observer() {}
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.confirm_btn_vehicle -> {
+        when(v?.id){
+            R.id.confirm_btn_vehicle ->{
                 val bundle = Bundle()
-                bundle.putParcelable(DATA, arguments?.getParcelable(DATA))
+                bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
                 bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
 
-//                if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO)
-                    findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_choosePaymentFragment)
-//                else
-//                    findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_choosePaymentFragment)
+//                findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_choosePaymentFragment)
+
+                  findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment)
+
 
             }
-            R.id.not_vehicle -> {
-                findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_findYourVehicleFragment)
-            }
+            R.id.not_vehicle -> { findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_findYourVehicleFragment) }
         }
     }
 }
