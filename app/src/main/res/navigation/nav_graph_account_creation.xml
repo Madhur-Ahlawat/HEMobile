@@ -98,6 +98,11 @@
         <action
             android:id="@+id/action_createAccoutPinFragment_to_createAccoutInfoFragment"
             app:destination="@id/createAccoutInfoFragment" />
+
+        <action
+            android:id="@+id/action_createAccoutPinFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+
     </fragment>
 
     <fragment
@@ -145,8 +150,7 @@
         android:id="@+id/showVehicleDetailsFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehicleDetailsFragment"
         android:label="ShowVehicleDetailsFragment"
-        tools:layout="@layout/fragment_create_account_vehicle_details"
-        >
+        tools:layout="@layout/fragment_create_account_vehicle_details">
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
@@ -154,10 +158,6 @@
             android:id="@+id/action_showVehicleDetailsFragment_to_choosePaymentFragment"
             app:destination="@id/choosePaymentFragment" />
     </fragment>
-
-
-
-
 
 
     <!-- Step 5 -->

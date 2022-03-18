@@ -63,6 +63,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 if (resource.data?.retrievePlateInfoDetails != null) {
                     val bundle =  Bundle()
                     bundle.putParcelable(Constants.FIND_VEHICLE_DATA,resource.data)
+                    bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+
                     findNavController().navigate(R.id.action_findYourVehicleFragment_to_showVehicleDetailsFragment, bundle)
                 }
             }

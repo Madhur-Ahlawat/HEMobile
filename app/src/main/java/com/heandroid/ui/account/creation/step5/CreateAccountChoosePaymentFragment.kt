@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.FragmentCreateAccountChoosePaymentBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +31,8 @@ class CreateAccountChoosePaymentFragment: BaseFragment<FragmentCreateAccountChoo
             R.id.btnContinue -> {
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
+                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+
                 findNavController().navigate(R.id.action_choosePaymentFragment_to_cardFragment,bundle)
             }
         }

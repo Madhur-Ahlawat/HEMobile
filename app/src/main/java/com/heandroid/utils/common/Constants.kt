@@ -2,8 +2,14 @@ package com.heandroid.utils.common
 
 object Constants {
 
+  const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
+    const val FROM_DART_CHARGE_FLOW: String = "900"
+    const val NORMAL_LOGIN_FLOW_CODE = 1001
+    const val DART_CHARGE_FLOW_CODE: Int = 1002
     const val FROM_LOGIN_TO_CASES_VALUE = 1003
     const val FROM_CASES_TO_CASES_VALUE = 1004
+    const val PERSONAL_TYPE_PREPAY = 1005
+    const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
     const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
     const val PERSONAL_DETAILS = "personal_details"
     const val POST_CODE_ADDRESS = "post_code_address"
@@ -11,9 +17,6 @@ object Constants {
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
 
-    const val DART_CHARGE_FLOW_CODE: Int = 1002
-    const val FROM_DART_CHARGE_FLOW: String = "900"
-    const val NORMAL_LOGIN_FLOW_CODE = 1001
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"

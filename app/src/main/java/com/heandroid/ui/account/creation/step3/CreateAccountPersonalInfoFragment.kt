@@ -10,6 +10,7 @@ import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.databinding.FragmentCreateAccountPersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,6 +47,8 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 }
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,binding.model)
+                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+
                 findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment,bundle)
             }
         }

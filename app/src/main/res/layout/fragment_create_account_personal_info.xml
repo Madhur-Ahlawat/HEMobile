@@ -147,8 +147,6 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
                         android:maxLength="50"
-                        android:text="@{model.firstName +` `+model.lastName}"
-                        android:digits="@string/name_validation"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />

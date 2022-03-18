@@ -57,6 +57,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }

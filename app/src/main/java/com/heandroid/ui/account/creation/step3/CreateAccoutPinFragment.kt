@@ -62,10 +62,21 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 model?.apply {
                     digitPin = binding.tieCode.text.toString().trim()
                 }
+
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,model)
+                    putParcelable(Constants.DATA, model)
+                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
                 }
-                findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle)
+                if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO)
+                    findNavController().navigate(
+                        R.id.action_createAccoutPinFragment_to_findYourVehicleFragment,
+                        bundle
+                    )
+                else
+                    findNavController().navigate(
+                        R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment,
+                        bundle
+                    )
             }
 
         }

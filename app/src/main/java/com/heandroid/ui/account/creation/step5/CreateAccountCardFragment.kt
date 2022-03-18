@@ -23,41 +23,52 @@ import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.extn.addExpriryListner
-import com.heandroid.utils.extn.loadSetting
-import com.heandroid.utils.extn.gone
-import com.heandroid.utils.extn.visible
+import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
 @AndroidEntryPoint
-class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(),View.OnClickListener {
+class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(),
+    View.OnClickListener {
 
-    private val viewModel : CreateAccountPaymentViewModel by viewModels()
-    private var loader: LoaderDialog?=null
+    private val viewModel: CreateAccountPaymentViewModel by viewModels()
+    private var loader: LoaderDialog? = null
 
 
-    private var model : CreateAccountRequestModel?=null
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountCardBinding = FragmentCreateAccountCardBinding.inflate(inflater,container,false)
+    private var model: CreateAccountRequestModel? = null
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCreateAccountCardBinding =
+        FragmentCreateAccountCardBinding.inflate(inflater, container, false)
+
     override fun init() {
-        model=arguments?.getParcelable("data")
+        model = arguments?.getParcelable("data")
         binding.webview.loadSetting("file:///android_asset/NMI.html")
-        binding.tvStep.text=getString(R.string.str_step_f_of_l,5,5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
     }
+
     override fun initCtrl() {
         binding.apply {
             tieCardNo.addTextChangedListener(CardNumberFormatterTextWatcher())
             tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
-            webview.webChromeClient=consoleListener
+            webview.webChromeClient = consoleListener
+            if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO)
+                appCompatTextView.invisible()
+            else
+                appCompatTextView.visible()
+
+
         }
     }
 
     override fun observer() {
-        observe(viewModel.createAccount,::handleCreateAccountResponse)
+        observe(viewModel.createAccount, ::handleCreateAccountResponse)
     }
+
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btnPay -> {
                 loader = LoaderDialog()
                 loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -68,45 +79,49 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     private val consoleListener = object : WebChromeClient() {
         override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-            val url : String = consoleMessage.message()
-            val check : Boolean = "tokenType" in url
-            if (check){
-                Toast.makeText(context,url, Toast.LENGTH_LONG).show()
+            val url: String = consoleMessage.message()
+            val check: Boolean = "tokenType" in url
+            if (check) {
+                Toast.makeText(context, url, Toast.LENGTH_LONG).show()
                 binding.webview.gone()
                 binding.mcvContainer.visible()
-                val responseModel : CardResponseModel = Gson().fromJson(consoleMessage.message(),CardResponseModel::class.java)
-                model?.creditCExpMonth = responseModel.card.exp.substring(0,1)
-                model?.creditCExpYear = responseModel.card.exp.substring(2,3)
+                val responseModel: CardResponseModel =
+                    Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                model?.creditCExpMonth = responseModel.card.exp.substring(0, 1)
+                model?.creditCExpYear = responseModel.card.exp.substring(2, 3)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type
                 model?.securityCode = responseModel.card.hash
 
-                val fullName : List<String?>? =responseModel.check.name?.split(" ")
-                when(fullName?.size){
+                val fullName: List<String?>? = responseModel.check.name?.split(" ")
+                when (fullName?.size) {
 
-                    1 -> { model?.cardFirstName= fullName[0]
-                           model?.cardMiddleName=""
-                           model?.cardLastName=""
-                         }
+                    1 -> {
+                        model?.cardFirstName = fullName[0]
+                        model?.cardMiddleName = ""
+                        model?.cardLastName = ""
+                    }
 
-                    2 -> { fullName.get(0).also { model?.cardFirstName = it }
-                           model?.cardMiddleName=""
-                           fullName.get(1).also { model?.cardLastName = it }
-                        }
-                    3 -> { fullName.get(0).also { model?.cardFirstName = it }
-                           fullName.get(1).also { model?.cardMiddleName = it }
-                           fullName.get(2).also { model?.cardLastName = it }
-                         }
+                    2 -> {
+                        fullName.get(0).also { model?.cardFirstName = it }
+                        model?.cardMiddleName = ""
+                        fullName.get(1).also { model?.cardLastName = it }
+                    }
+                    3 -> {
+                        fullName.get(0).also { model?.cardFirstName = it }
+                        fullName.get(1).also { model?.cardMiddleName = it }
+                        fullName.get(2).also { model?.cardLastName = it }
+                    }
 
-                    else ->{
-                        model?.cardFirstName=""
-                        model?.cardMiddleName=""
-                        model?.cardLastName=""
+                    else -> {
+                        model?.cardFirstName = ""
+                        model?.cardMiddleName = ""
+                        model?.cardLastName = ""
                     }
 
                 }
-                binding.model= model
+                binding.model = model
             }
             return true
         }
@@ -114,22 +129,33 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     }
 
-    private fun handleCreateAccountResponse(status : Resource<CreateAccountResponseModel?>?){
+    private fun handleCreateAccountResponse(status: Resource<CreateAccountResponseModel?>?) {
         try {
             loader?.dismiss()
-            when(status){
+            when (status) {
                 is Resource.Success -> {
-                    status.data?.accountType= model?.accountType
+                    status.data?.accountType = model?.accountType
                     val bundle = Bundle()
-                    bundle.putParcelable("response",status.data)
-                    findNavController().navigate(R.id.action_cardFragment_to_successfulFragment,bundle)
+                    bundle.putParcelable("response", status.data)
+                    bundle.putInt(
+                        Constants.PERSONAL_TYPE,
+                        arguments?.getInt(Constants.PERSONAL_TYPE)!!
+                    )
+                    findNavController().navigate(
+                        R.id.action_cardFragment_to_successfulFragment,
+                        bundle
+                    )
                 }
 
-                is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
-                else -> {}
+                is Resource.DataError -> {
+                    showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
             }
 
-        }catch (e: Exception) { }
+        } catch (e: Exception) {
+        }
     }
 
 
