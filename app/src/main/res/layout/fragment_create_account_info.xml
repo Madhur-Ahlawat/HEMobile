@@ -99,7 +99,7 @@
             android:backgroundTint="@color/green"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
-            android:text="@string/str_next"
+            android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"

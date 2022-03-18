@@ -1,7 +1,6 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityContactDartChargeBinding

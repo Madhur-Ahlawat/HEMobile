@@ -585,6 +585,12 @@
     <string name="str_case_number">case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
+    <string name="str_intial_deposit_to_account">Initial deposit to your account</string>
+    <string name="str_auto_top_up">Auto top-up</string>
+    <string name="str_you_need_to_make_an_initial_payment">You need to make an initial minimum deposit amount of £10 to open your account</string>
+    <string name="str_no_need_to_remember_to_topup_of_funds_txt">"No need to remember to top-up, funds will be automatically added to your account when the balance falls below the specified amount "</string>
+    <string name="str_will_you_be_making_more_than_10">Will you be making more than 10 crossings each?</string>
+    <string name="str_top_up_my_account_by">Top-up my account by 5.00 when my balance falls below 10.00</string>
 
 
 </resources>

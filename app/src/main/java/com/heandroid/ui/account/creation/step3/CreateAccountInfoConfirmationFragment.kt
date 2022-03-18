@@ -9,6 +9,7 @@ import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.databinding.FragmentCreateAccountInfoBinding
+import com.heandroid.databinding.FragmentCreateAccountInfoConfirmationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
@@ -16,13 +17,13 @@ import com.heandroid.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccoutInfoFragment : BaseFragment<FragmentCreateAccountInfoBinding>(),
+class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccountInfoConfirmationBinding>(),
     View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountInfoBinding.inflate(inflater, container, false)
+        FragmentCreateAccountInfoConfirmationBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = arguments?.getParcelable(Constants.DATA)
@@ -31,7 +32,7 @@ class CreateAccoutInfoFragment : BaseFragment<FragmentCreateAccountInfoBinding>(
 
     override fun initCtrl() {
         binding.apply {
-            btnAction.setOnClickListener(this@CreateAccoutInfoFragment)
+            btnAction.setOnClickListener(this@CreateAccountInfoConfirmationFragment)
         }
     }
 
@@ -43,7 +44,7 @@ class CreateAccoutInfoFragment : BaseFragment<FragmentCreateAccountInfoBinding>(
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
                 }
-                findNavController().navigate(R.id.action_createAccoutInfoFragment_to_createAccoutInfoConfirmationFragment, bundle)
+                findNavController().navigate(R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment, bundle)
 
             }
 
