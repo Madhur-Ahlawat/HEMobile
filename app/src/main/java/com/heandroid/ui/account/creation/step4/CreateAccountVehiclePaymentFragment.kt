@@ -19,7 +19,6 @@ class CreateAccountVehiclePaymentFragment  : BaseFragment<FragmentCreateAccountV
     }
 
     override fun init() {
-        TODO("Not yet implemented")
     }
 
     override fun initCtrl() {
@@ -27,7 +26,6 @@ class CreateAccountVehiclePaymentFragment  : BaseFragment<FragmentCreateAccountV
     }
 
     override fun observer() {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(v: View?) {

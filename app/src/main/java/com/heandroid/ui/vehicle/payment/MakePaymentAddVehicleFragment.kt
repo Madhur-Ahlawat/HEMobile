@@ -114,7 +114,8 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                     if (resource.data?.retrievePlateInfoDetails != null) {
                         val bundle =  Bundle()
                         bundle.putParcelable(Constants.FIND_VEHICLE_DATA,resource.data)
-                        findNavController().navigate(R.id.action_findYourVehicleFragment_to_showVehicleDetailsFragment, bundle)
+                        bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                        findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_CreateAccountVehicleDetailsFragment, bundle)
                     }
                 }
                 is Resource.DataError -> { ErrorUtil.showError(binding.root, resource.errorMsg) }

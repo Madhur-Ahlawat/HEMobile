@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:background="@color/login_blue_border"
                 android:gravity="center_vertical"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:text="@string/str_maintainance_notify"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_17ssp"

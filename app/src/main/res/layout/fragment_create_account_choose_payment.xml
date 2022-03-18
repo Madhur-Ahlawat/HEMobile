@@ -73,18 +73,6 @@
 
         </RadioGroup>
 
-
-
-
-
-
-
-
-
-
-
-
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContine"
             android:layout_width="0dp"
@@ -92,11 +80,10 @@
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:enabled="@{enable}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
-            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
-            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:backgroundTint="@color/btn_color"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />

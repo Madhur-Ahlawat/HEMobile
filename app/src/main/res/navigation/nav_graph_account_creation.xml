@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/findYourVehicleFragment">
+    app:startDestination="@id/emailVerification">
 
 
    <!-- Step 1 -->
@@ -28,7 +28,6 @@
             android:id="@+id/action_confirmEmailFragment_to_accountTypeSelectionFragment"
             app:destination="@id/accountTypeSelectionFragment" />
     </fragment>
-
 
 
     <!-- Step 2 -->
@@ -118,7 +117,6 @@
 
     </fragment>
 
-
     <fragment
         android:id="@+id/createAccoutInfoConfirmationFragment"
         android:name="com.heandroid.ui.account.creation.step3.CreateAccountInfoConfirmationFragment"
@@ -134,15 +132,13 @@
 
     <!-- Step 4 -->
 
-
     <fragment
         android:id="@+id/findYourVehicleFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateAccountFindVehicleFragment"
         android:label="FindYourVehicleFragment"
-        tools:layout="@layout/fragment_create_account_find_vehicle"
-        >
+        tools:layout="@layout/fragment_create_account_find_vehicle">
         <action
-            android:id="@+id/action_findYourVehicleFragment_to_showVehicleDetailsFragment"
+            android:id="@+id/action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2"
             app:destination="@id/makePaymentAddVehicleFragment2" />
     </fragment>
 
@@ -152,7 +148,7 @@
         android:label="MakePaymentAddVehicleFragment" >
 
         <action
-            android:id="@+id/action_showVehicleDetailsFragment_to_addAVehicleFragment"
+            android:id="@+id/action_showVehicleDetailsFragment_to_CreateAccountVehicleDetailsFragment"
             app:destination="@id/showVehicleDetailsFragment" />
 
     </fragment>
@@ -183,7 +179,6 @@
 
     </fragment>
 
-
     <!-- Step 5 -->
     <fragment
         android:id="@+id/choosePaymentFragment"
@@ -195,7 +190,6 @@
             android:id="@+id/action_choosePaymentFragment_to_cardFragment"
             app:destination="@id/cardFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/cardFragment"

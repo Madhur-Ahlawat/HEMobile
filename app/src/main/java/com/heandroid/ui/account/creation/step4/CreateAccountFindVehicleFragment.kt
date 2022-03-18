@@ -33,8 +33,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 4, 5)
     }
 
@@ -86,9 +84,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         R.id.continue_btn -> {
             isAccountVehicle = true
             val bundle = Bundle()
+            bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
             bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
             bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
-            findNavController().navigate(R.id.makePaymentAddVehicleFragment2, bundle)
+            findNavController().navigate(R.id.action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2, bundle)
 
         }
     }

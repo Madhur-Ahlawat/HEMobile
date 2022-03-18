@@ -34,7 +34,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     private val viewModel: CreateAccountPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
-
     private var model: CreateAccountRequestModel? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,6 +45,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         model = arguments?.getParcelable("data")
         binding.webview.loadSetting("file:///android_asset/NMI.html")
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
+        binding.webview.visibility = View.GONE
     }
 
     override fun initCtrl() {
@@ -70,9 +70,11 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-                loader = LoaderDialog()
-                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                viewModel.createAccount(model)
+                findNavController().navigate(R.id.action_cardFragment_to_successfulFragment)
+//                loader = LoaderDialog()
+//                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+//                viewModel.createAccount(model)
+
             }
         }
     }
