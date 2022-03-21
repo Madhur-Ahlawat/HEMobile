@@ -9,17 +9,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLabel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/personal_pre_pay_account_info"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
-            android:layout_margin="@dimen/_15sdp"
-            app:layout_constraintEnd_toStartOf="@+id/tvStep"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,26 +26,23 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="@color/black"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
             android:textSize="@dimen/_13sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/setup_prepay_account"
-            android:textSize="@dimen/_13ssp"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLabel"/>
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/tvLabel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/desc1"
@@ -58,7 +53,6 @@
             android:textSize="@dimen/_11ssp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title"/>
@@ -72,7 +66,6 @@
             android:textSize="@dimen/_11ssp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/desc1"/>
@@ -86,16 +79,46 @@
             android:textSize="@dimen/_11ssp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/desc2"/>
 
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAction"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_margin="@dimen/_15sdp"
             android:backgroundTint="@color/green"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
@@ -103,9 +126,9 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

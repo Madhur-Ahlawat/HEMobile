@@ -106,9 +106,9 @@
 
     <fragment
         android:id="@+id/createAccoutInfoFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutInfoFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccountSetupPrePayFragment"
         android:label="CreateAccoutInfoFragment"
-        tools:layout="@layout/fragment_create_account_info">
+        tools:layout="@layout/fragment_create_account_setup_prepay">
 
         <action
             android:id="@+id/action_createAccoutInfoFragment_to_createAccoutInfoConfirmationFragment"
@@ -119,9 +119,9 @@
 
     <fragment
         android:id="@+id/createAccoutInfoConfirmationFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountInfoConfirmationFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccountTopUpFragment"
         android:label="createAccoutInfoConfirmationFragment"
-        tools:layout="@layout/fragment_create_account_info_confirmation">
+        tools:layout="@layout/fragment_create_account_top_up">
 
         <action
             android:id="@+id/action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment"

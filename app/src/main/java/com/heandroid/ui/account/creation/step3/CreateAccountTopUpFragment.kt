@@ -4,33 +4,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
-import com.heandroid.data.model.address.DataAddress
-import com.heandroid.databinding.FragmentCreateAccountInfoBinding
-import com.heandroid.databinding.FragmentCreateAccountInfoConfirmationBinding
+import com.heandroid.databinding.FragmentCreateAccountTopUpBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccountInfoConfirmationBinding>(), View.OnClickListener {
-
+class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private var model: CreateAccountRequestModel? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountInfoConfirmationBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountTopUpBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.enable=false
     }
 
     override fun initCtrl() {
         binding.apply {
-            btnAction.setOnClickListener(this@CreateAccountInfoConfirmationFragment)
+            btnAction.setOnClickListener(this@CreateAccountTopUpFragment)
+            rbOptions.setOnCheckedChangeListener(this@CreateAccountTopUpFragment)
         }
     }
 
@@ -40,14 +41,29 @@ class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccount
         when (v?.id) {
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                    putParcelable(Constants.DATA,model)
                     putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
-
                 }
                 findNavController().navigate(R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment, bundle)
 
             }
 
+        }
+    }
+
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+        binding.enable=true
+        when(group?.checkedRadioButtonId){
+            R.id.mrbYes ->{
+                binding.clNoDes.gone()
+                binding.clYesDes.visible()
+                model?.thresholdAmount=10.0
+            }
+            R.id.mrbNo ->{
+                binding.clNoDes.visible()
+                binding.clYesDes.gone()
+                model?.thresholdAmount=05.0
+            }
         }
     }
 

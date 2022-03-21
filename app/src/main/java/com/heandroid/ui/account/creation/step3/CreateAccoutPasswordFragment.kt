@@ -74,7 +74,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                 }
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,model)
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
 
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
