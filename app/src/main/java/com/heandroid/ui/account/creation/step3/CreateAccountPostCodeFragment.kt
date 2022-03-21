@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
+import com.heandroid.utils.extn.setSpinnerAdapter
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,27 +33,35 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private val viewModel : CreateAccountPostCodeViewModel by viewModels()
     private var model : CreateAccountRequestModel? =null
 
+    private var addressList : MutableList<String> = ArrayList()
+    private var mainList : MutableList<DataAddress> = ArrayList()
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
 
     override fun init() {
-
-        // Pre Pay
-//        post code and address can add
-
-        // PAYG
-//        either postcode or address to add
         binding.enable=false
         model=arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
+        when(arguments?.getInt(Constants.PERSONAL_TYPE,0)){
+            Constants.PERSONAL_TYPE_PREPAY ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+            Constants.PERSONAL_TYPE_PAY_AS_U_GO ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+        }
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        binding.spnAddress.setSpinnerAdapter(addressList)
+
     }
     override fun initCtrl() {
         binding.apply {
             btnFindAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
             btnAction.setOnClickListener(this@CreateAccountPostCodeFragment)
+            tvChange.setOnClickListener(this@CreateAccountPostCodeFragment)
+            binding.tilAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
+            spnAddress.onItemSelectedListener = spinnerListener
         }
     }
     override fun observer() {
@@ -74,6 +84,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 }
                 else { showError(binding.root,getString(R.string.please_enter_postcode)) }
             }
+
+            R.id.tvChange -> { binding.btnFindAddress.performClick() }
+            R.id.tilAddress ->{ binding.spnAddress.performClick() }
         }
     }
 
@@ -83,21 +96,39 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             loader?.dismiss()
             when (response) {
                 is Resource.Success -> {
-                    response.data?.get(0)?.run {
-                        model?.address1 = "$town , $street ,  $locality , $country"
-                        binding.apply {
-                            btnFindAddress.gone()
-                            tilAddress.visible()
-                        }
-                        model?.countryType=country
-                        model?.city=locality
-                        model?.stateType="India"
+                    addressList.clear()
+                    mainList= response.data?.toMutableList()?:ArrayList()
+                    addressList?.add(0,"Select Address")
+                    for(address : DataAddress in mainList){
+                        addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
                     }
-                    binding.enable = true
+
+                    binding.apply {
+                        btnFindAddress.gone()
+                        tilAddress.visible()
+                        enable = true
+                        tvChange.visible()
+                        tilPostCode.endIconDrawable = null
+                    }
                 }
                 is Resource.DataError -> { showError(binding.root, response.errorMsg) }
             }
         } catch (e: Exception) { }
     }
 
+    private val spinnerListener = object : AdapterView.OnItemSelectedListener {
+
+        override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            if (position == 0) return
+            binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
+            mainList[position-1].run {
+                model?.countryType=country
+                model?.city=locality
+                model?.stateType=town
+                model?.zipCode1=postcode
+            }
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
 }

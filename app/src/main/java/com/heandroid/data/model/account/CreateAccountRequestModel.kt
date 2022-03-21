@@ -38,6 +38,7 @@ data class CreateAccountRequestModel(
     val tcAccepted: String?,
     val thresholdAmount: Double?=5.0,
     val transactionAmount: Double?=10.00,
-    val zipCode1: String?,
+    var zipCode1: String?,
     var enable : Boolean?,
+
 ) : Parcelable

@@ -8,12 +8,16 @@ import android.webkit.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.CreateAccountResponseModel
 import com.heandroid.data.model.payment.CardResponseModel
+import com.heandroid.data.repository.auth.CreateAccountRespository
 import com.heandroid.databinding.FragmentCreateAccountCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -66,6 +70,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         when (v?.id) {
             R.id.btnPay -> {
 
+
+
                 // Pre pay - need to pay //                 // add payment api
                 // Pay as go - later
 
@@ -77,6 +83,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             }
         }
     }
+
 
     private val progressListener = object : WebViewClient(){
 

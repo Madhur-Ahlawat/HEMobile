@@ -32,7 +32,7 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
     override fun initCtrl() {
         binding.apply {
             btnAction.setOnClickListener(this@CreateAccountPersonalSetupFragment)
-            rgPersonalSubAccount.setOnCheckedChangeListener(this@CreateAccountPersonalSetupFragment)
+            rgOptions.setOnCheckedChangeListener(this@CreateAccountPersonalSetupFragment)
         }
     }
 
@@ -40,20 +40,20 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
     override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
         binding.enable = true
         when (rg?.checkedRadioButtonId) {
-            R.id.rb_prepay -> { binding.tvPrepayDesc.visible() }
-            R.id.rb_payg_act -> { binding.tvPaygDesc.visible() }
+            R.id.mrbPrePay -> { binding.tvPrepayDesc.visible() }
+            R.id.mrbPayG -> { binding.tvPayGDesc.visible() }
         }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btn_action -> {
-                if(binding.rbPrepay.isChecked || binding.rbPaygAct.isChecked){
-                 val bundle = Bundle()
-                 bundle.putParcelable(DATA, arguments?.getParcelable(DATA))
-                 if (binding.rbPrepay.isChecked) bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PREPAY)
-                 else bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PAY_AS_U_GO)
-                 findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
+            R.id.btnAction -> {
+                if(binding.mrbPrePay.isChecked || binding.mrbPayG.isChecked){
+                     val bundle = Bundle()
+                     bundle.putParcelable(DATA, arguments?.getParcelable(DATA))
+                     if (binding.mrbPrePay.isChecked) bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PREPAY)
+                     else bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PAY_AS_U_GO)
+                     findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
                 }
                 else { showError(binding.root,getString(R.string.select_account_type)) }
             }

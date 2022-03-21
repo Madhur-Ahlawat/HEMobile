@@ -37,6 +37,11 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         binding.enable = false
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+
+        when(arguments?.getInt(Constants.PERSONAL_TYPE,0)){
+            Constants.PERSONAL_TYPE_PREPAY ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+            Constants.PERSONAL_TYPE_PAY_AS_U_GO ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+        }
     }
 
     override fun initCtrl() {

@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/password"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/pin"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPassword"
@@ -134,7 +134,9 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/postcode"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:endIconDrawable="@drawable/ic_vector"
+                    app:endIconMode="custom"
+                    app:endIconTint="@color/green"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -152,7 +154,25 @@
                         android:textSize="@dimen/_13ssp" />
 
 
+
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/change"
+                    android:visibility="gone"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tilPostCode"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toTopOf="@+id/tilPostCode"
+                    app:layout_constraintVertical_bias="0.86" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -164,7 +184,6 @@
                     android:backgroundTint="@color/white"
                     android:letterSpacing="0"
                     android:text="@string/find_address"
-
                     android:textAllCaps="false"
                     android:textColor="@color/green"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -211,6 +230,16 @@
 
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spnAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                    app:layout_constraintStart_toStartOf="@+id/tilAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddress" />
 
 
 

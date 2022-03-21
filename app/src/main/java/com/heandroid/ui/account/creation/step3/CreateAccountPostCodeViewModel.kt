@@ -9,6 +9,8 @@ import com.heandroid.data.repository.account.AccountCreationRepository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
+import com.heandroid.utils.common.ResponseHandler.failure
+import com.heandroid.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,9 +25,9 @@ class CreateAccountPostCodeViewModel @Inject constructor(val repository: Account
     fun fetchAddress(search: String) {
         viewModelScope.launch {
             try {
-                _addresses.postValue(ResponseHandler.success(repository.getAddressListForPostalCode(search), errorManager))
+                _addresses.postValue(success(repository.getAddressListForPostalCode(search), errorManager))
             } catch (e: Exception) {
-                _addresses.postValue(ResponseHandler.failure(e))
+                _addresses.postValue(failure(e))
             }
         }
     }

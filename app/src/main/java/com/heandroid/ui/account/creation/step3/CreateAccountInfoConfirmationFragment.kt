@@ -17,13 +17,11 @@ import com.heandroid.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccountInfoConfirmationBinding>(),
-    View.OnClickListener {
+class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccountInfoConfirmationBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountInfoConfirmationBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountInfoConfirmationBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = arguments?.getParcelable(Constants.DATA)
@@ -43,6 +41,8 @@ class CreateAccountInfoConfirmationFragment : BaseFragment<FragmentCreateAccount
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
+
                 }
                 findNavController().navigate(R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment, bundle)
 

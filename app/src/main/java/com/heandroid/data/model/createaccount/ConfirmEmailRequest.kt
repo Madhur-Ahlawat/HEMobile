@@ -1,7 +1,7 @@
 package com.heandroid.data.model.createaccount
 
 data class ConfirmEmailRequest(
-    val referenceID: String,
-    val emailID: String,
+    val referenceId: String,
+    val emailId: String,
     val securityCode: String
 )

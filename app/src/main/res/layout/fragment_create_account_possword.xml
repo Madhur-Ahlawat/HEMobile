@@ -98,12 +98,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/cap_pin"
-            android:textColor="#5C5C5C"
+            android:text="@string/pin"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPassword"
             app:layout_constraintStart_toEndOf="@+id/tvPassword" />
+
 
 
 
@@ -133,7 +134,7 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/txt_create_pwd"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:passwordToggleEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -161,6 +162,8 @@
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:passwordToggleEnabled="true"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilPassword">
 

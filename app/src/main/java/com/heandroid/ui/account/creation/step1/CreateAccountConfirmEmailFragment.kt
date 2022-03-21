@@ -40,7 +40,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     override fun init() {
         requestModel = arguments?.getParcelable(DATA)
-        refId = arguments?.getLong(Constants.REFERENCE_ID)
+        refId = arguments?.getLong(Constants.REFERENCE_ID,0)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()
@@ -103,7 +103,12 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
                     findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
                 }
             }
-            is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
+            is Resource.DataError -> {
+                val bundle = Bundle()
+                bundle.putParcelable(DATA,requestModel)
+                findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
+            //    showError(binding.root, resource.errorMsg)
+            }
         }}catch (e: Exception){}
     }
 
@@ -113,7 +118,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             when (resource) {
                 is Resource.Success -> {
                     requireContext().showToast("code sent successfully")
-                    refId=resource.data?.referenceID?:0
+                    refId=resource.data?.referenceId?:0
                 }
                 is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }

@@ -37,21 +37,21 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
     override fun initCtrl() {
         binding.apply {
             btnAction.setOnClickListener(this@CreateAccountTypeFragment)
-            rgMainAccount.setOnCheckedChangeListener(this@CreateAccountTypeFragment)
+            rgOptions.setOnCheckedChangeListener(this@CreateAccountTypeFragment)
         }
     }
 
     override fun observer() {}
 
     override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
-        binding.enable= true
+        binding.enable = true
         when(rg?.checkedRadioButtonId) {
 
-            R.id.rb_personal_act -> {
+            R.id.mrbPersonalAccount -> {
                 requestModel?.accountType = PERSONAL_ACCOUNT
                 binding.tvPersonalDesc.visible()
             }
-            R.id.rb_business_act -> {
+            R.id.mrbBusinessAccount -> {
                 requestModel?.accountType = BUSINESS_ACCOUNT
                 binding.tvBusinessDesc.visible()
             }
@@ -60,21 +60,17 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
 
 
     override fun onClick(view: View?) {
-     when (view?.id) {
-        R.id.btn_action -> {
+      when (view?.id) {
+
+        R.id.btnAction -> {
             val bundle = Bundle()
             bundle.putParcelable(DATA,requestModel)
-
-            when(requestModel?.accountType){
-                PERSONAL_ACCOUNT ->{
-                    findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle)
-                }
-                else ->{
-                    showError(binding.root,getString(R.string.in_progress))
-                }
+            when(requestModel?.accountType) {
+                PERSONAL_ACCOUNT -> { findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle) }
+                else ->{ showError(binding.root,getString(R.string.in_progress)) }
             }
-
         }
+
      }
     }
 }

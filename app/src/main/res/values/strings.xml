@@ -460,7 +460,7 @@
     <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_prepay">Pre-pay</string>
-    <string name="str_pre_pay_desc">y\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
+    <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
     <string name="str_personal_details_entry">Personal details entry</string>
@@ -597,8 +597,10 @@
     <string name="ten">€10</string>
     <string name="pay">Pay</string>
     <string name="select_account_type">Please select account type</string>
-    <string name="pin">Pin</string>
+    <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
+    <string name="pay_as_you_go">Personal -Pay as you go</string>
+    <string name="change">Change</string>
 
 </resources>
 

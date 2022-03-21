@@ -34,7 +34,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
 
     override fun init() {
-        requestModel = CreateAccountRequestModel(accountType = ",", address1 = "", billingAddressLine1 = "",
+        requestModel = CreateAccountRequestModel(accountType = "", address1 = "", billingAddressLine1 = "",
                                                  billingAddressLine2 = "", cardCity = "", cardFirstName = "", cardLastName = "",
                                                  cardMiddleName = "", cardStateType = "", cardZipCode = "",
                                                  cellPhone = "", city = "", countryType = "", creditCExpMonth = "",
@@ -47,7 +47,6 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -65,13 +64,14 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
+        try{
        loader?.dismiss()
        when (resource) {
             is Resource.Success -> {
                 if(resource.data?.statusCode?.equals("0")==true){
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
                     val bundle = Bundle().apply {
-                        putLong(Constants.REFERENCE_ID, resource.data.referenceID)
+                        putLong(Constants.REFERENCE_ID, resource.data.referenceId)
                         putParcelable(DATA,requestModel)
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
@@ -79,7 +79,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
             }
             is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
-      }
+      }}catch (e: Exception){}
     }
 
 
