@@ -28,24 +28,24 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
 @AndroidEntryPoint
-class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(),
-    View.OnClickListener {
+class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(), View.OnClickListener {
 
     private val viewModel: CreateAccountPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
     private var model: CreateAccountRequestModel? = null
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentCreateAccountCardBinding =
-        FragmentCreateAccountCardBinding.inflate(inflater, container, false)
+
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountCardBinding = FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = arguments?.getParcelable("data")
-        binding.webview.loadSetting("file:///android_asset/NMI.html")
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
-        binding.webview.visibility = View.GONE
+
+        binding.webview.loadSetting("file:///android_asset/NMI.html")
+        binding.webview.gone()
+
+        if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
+        else binding.tvPaymentAmount.visible()
     }
 
     override fun initCtrl() {
@@ -53,13 +53,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             tieCardNo.addTextChangedListener(CardNumberFormatterTextWatcher())
             tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
+            webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
-            if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO)
-                appCompatTextView.invisible()
-            else
-                appCompatTextView.visible()
-
-
         }
     }
 
@@ -70,6 +65,10 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
+
+                // Pre pay - need to pay //                 // add payment api
+                // Pay as go - later
+
                 findNavController().navigate(R.id.action_cardFragment_to_successfulFragment)
 //                loader = LoaderDialog()
 //                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -77,6 +76,21 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
             }
         }
+    }
+
+    private val progressListener = object : WebViewClient(){
+
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            view?.loadUrl("file:///android_asset/NMI.html")
+            loader?.show(requireActivity().supportFragmentManager,"")
+            return true
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            loader?.dismiss()
+        }
+
     }
 
     private val consoleListener = object : WebChromeClient() {
@@ -106,14 +120,14 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     }
 
                     2 -> {
-                        fullName.get(0).also { model?.cardFirstName = it }
+                        fullName[0].also { model?.cardFirstName = it }
                         model?.cardMiddleName = ""
-                        fullName.get(1).also { model?.cardLastName = it }
+                        fullName[1].also { model?.cardLastName = it }
                     }
                     3 -> {
-                        fullName.get(0).also { model?.cardFirstName = it }
-                        fullName.get(1).also { model?.cardMiddleName = it }
-                        fullName.get(2).also { model?.cardLastName = it }
+                        fullName[0].also { model?.cardFirstName = it }
+                        fullName[1].also { model?.cardMiddleName = it }
+                        fullName[2].also { model?.cardLastName = it }
                     }
 
                     else -> {
@@ -127,8 +141,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             }
             return true
         }
-
-
     }
 
     private fun handleCreateAccountResponse(status: Resource<CreateAccountResponseModel?>?) {
@@ -139,21 +151,12 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     status.data?.accountType = model?.accountType
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
-                    bundle.putInt(
-                        Constants.PERSONAL_TYPE,
-                        arguments?.getInt(Constants.PERSONAL_TYPE)!!
-                    )
-                    findNavController().navigate(
-                        R.id.action_cardFragment_to_successfulFragment,
-                        bundle
-                    )
+                    bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
+                    findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
                 }
 
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
-                else -> {
-                }
+                is Resource.DataError -> { showError(binding.root, status.errorMsg) }
+                else -> {}
             }
 
         } catch (e: Exception) {

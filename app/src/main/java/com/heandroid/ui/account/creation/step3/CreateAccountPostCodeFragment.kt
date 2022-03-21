@@ -35,6 +35,12 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
 
     override fun init() {
+
+        // Pre Pay
+//        post code and address can add
+
+        // PAYG
+//        either postcode or address to add
         binding.enable=false
         model=arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
@@ -57,8 +63,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
-
+                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }

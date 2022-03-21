@@ -145,7 +145,9 @@
     <fragment
         android:id="@+id/makePaymentAddVehicleFragment2"
         android:name="com.heandroid.ui.vehicle.payment.MakePaymentAddVehicleFragment"
-        android:label="MakePaymentAddVehicleFragment" >
+        android:label="MakePaymentAddVehicleFragment"
+        tools:layout="@layout/fragment_make_payment_add_vehicle"
+        >
 
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_CreateAccountVehicleDetailsFragment"
@@ -172,7 +174,9 @@
     <fragment
         android:id="@+id/accountVehiclePaymentFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehiclePaymentFragment"
-        android:label="AccountVehiclePaymentFragment" >
+        android:label="AccountVehiclePaymentFragment"
+        tools:layout="@layout/fragment_create_account_vehicle_payment"
+        >
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_choosePaymentFragment"
             app:destination="@id/choosePaymentFragment" />

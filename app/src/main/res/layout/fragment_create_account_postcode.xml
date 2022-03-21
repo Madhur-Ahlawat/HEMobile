@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/password"
+            android:text="@string/pin"
             android:textColor="#5C5C5C"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
@@ -164,6 +164,7 @@
                     android:backgroundTint="@color/white"
                     android:letterSpacing="0"
                     android:text="@string/find_address"
+
                     android:textAllCaps="false"
                     android:textColor="@color/green"
                     app:layout_constraintBottom_toBottomOf="parent"

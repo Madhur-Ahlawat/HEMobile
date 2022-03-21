@@ -47,8 +47,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 }
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,binding.model)
-                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
-
+                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
                 findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment,bundle)
             }
         }

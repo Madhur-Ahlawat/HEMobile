@@ -596,6 +596,9 @@
 
     <string name="ten">€10</string>
     <string name="pay">Pay</string>
+    <string name="select_account_type">Please select account type</string>
+    <string name="pin">Pin</string>
+    <string name="in_progress">Work in Progress</string>
 
 </resources>
 

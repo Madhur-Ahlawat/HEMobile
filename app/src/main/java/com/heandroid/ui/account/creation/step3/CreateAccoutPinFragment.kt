@@ -26,8 +26,7 @@ import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
-    View.OnClickListener {
+class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 

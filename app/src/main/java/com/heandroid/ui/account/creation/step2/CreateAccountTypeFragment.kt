@@ -16,6 +16,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.BUSINESS_ACCOUNT
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.Constants.PERSONAL_ACCOUNT
+import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,7 +64,16 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
         R.id.btn_action -> {
             val bundle = Bundle()
             bundle.putParcelable(DATA,requestModel)
-            findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle)
+
+            when(requestModel?.accountType){
+                PERSONAL_ACCOUNT ->{
+                    findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle)
+                }
+                else ->{
+                    showError(binding.root,getString(R.string.in_progress))
+                }
+            }
+
         }
      }
     }

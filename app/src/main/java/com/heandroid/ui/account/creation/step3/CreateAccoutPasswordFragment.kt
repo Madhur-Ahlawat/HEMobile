@@ -26,8 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordBinding>(),
-    View.OnClickListener {
+class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 
