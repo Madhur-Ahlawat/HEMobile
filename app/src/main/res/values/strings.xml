@@ -600,5 +600,13 @@
     <string name="pin">Pin</string>
     <string name="in_progress">Work in Progress</string>
 
+
+    <string name="resolved">RESOLVED</string>
+    <string name="in_progress_open">IN PROGRESS</string>
+    <string name="submitted">SUBMITTED</string>
+
+    //todo : get correct message
+    <string name="no_data_to_display">No Data to display</string>
+
 </resources>
 

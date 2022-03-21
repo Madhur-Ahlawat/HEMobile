@@ -3,8 +3,9 @@ package com.heandroid.ui.startNow.contactdartcharge
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.account.ServiceRequest
+import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
@@ -44,7 +45,7 @@ class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDet
                     requireActivity().finish()
                 }
                 R.id.btnRaiseNewQuery -> {
-
+                    findNavController().navigate(R.id.action_caseHistoryDetailsDartChargeFragment_to_newCaseCategoryFragment)
                 }
                 else -> { }
             }

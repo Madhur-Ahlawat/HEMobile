@@ -3,16 +3,10 @@ package com.heandroid.ui.startNow.contactdartcharge
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.account.ServiceRequest
-import com.heandroid.data.model.casesenquiries.CaseCategoriesModel
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.*
-import java.util.ArrayList
 
 class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySuccessBinding>(),
     View.OnClickListener {
