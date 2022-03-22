@@ -2,7 +2,8 @@ package com.heandroid.utils.common
 
 object Constants {
 
-  const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
+    const val PAYG: String ="PAYG"
+    const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW: String = "900"
     const val NORMAL_LOGIN_FLOW_CODE = 1001
     const val DART_CHARGE_FLOW_CODE: Int = 1002

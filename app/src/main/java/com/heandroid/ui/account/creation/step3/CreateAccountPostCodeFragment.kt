@@ -15,6 +15,10 @@ import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.PAYG
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PAY_AS_U_GO
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PREPAY
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -44,9 +48,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         model=arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
-        when(arguments?.getInt(Constants.PERSONAL_TYPE,0)){
-            Constants.PERSONAL_TYPE_PREPAY ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
-            Constants.PERSONAL_TYPE_PAY_AS_U_GO ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+        when(model?.planType){
+            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
 
         loader = LoaderDialog()
@@ -71,9 +75,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         hideKeyboard()
         when(v?.id) {
             R.id.btnAction -> {
+
+                viewModel.checkValidation(model)
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }
@@ -106,7 +111,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     binding.apply {
                         btnFindAddress.gone()
                         tilAddress.visible()
-                        enable = true
+                        when(model?.planType){
+                            PAYG -> enable = true
+                        }
                         tvChange.visible()
                         tilPostCode.endIconDrawable = null
                     }
@@ -120,12 +127,18 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
             if (position == 0) return
+
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
             mainList[position-1].run {
                 model?.countryType=country
                 model?.city=locality
                 model?.stateType=town
                 model?.zipCode1=postcode
+            }
+
+            when(model?.planType){
+                PAYG ->{ if(arguments?.getInt(PERSONAL_TYPE,0) == PERSONAL_TYPE_PAY_AS_U_GO) model?.zipCode1=null }
+                else -> { if(binding.tiePostCode.text?.isNotEmpty()==true) binding.enable = true }
             }
         }
 

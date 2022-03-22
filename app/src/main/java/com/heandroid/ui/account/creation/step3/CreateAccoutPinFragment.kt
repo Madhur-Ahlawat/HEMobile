@@ -17,6 +17,7 @@ import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -38,10 +39,12 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
-        when(arguments?.getInt(Constants.PERSONAL_TYPE,0)){
-            Constants.PERSONAL_TYPE_PREPAY ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
-            Constants.PERSONAL_TYPE_PAY_AS_U_GO ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+
+        when(model?.planType){
+            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
+
     }
 
     override fun initCtrl() {
@@ -80,11 +83,10 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
 
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, model)
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
                 }
-                when(arguments?.getInt(Constants.PERSONAL_TYPE,0)){
-                    Constants.PERSONAL_TYPE_PREPAY ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
-                    Constants.PERSONAL_TYPE_PAY_AS_U_GO ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
+                when(model?.planType){
+                    PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
+                    else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
                 }
 
             }

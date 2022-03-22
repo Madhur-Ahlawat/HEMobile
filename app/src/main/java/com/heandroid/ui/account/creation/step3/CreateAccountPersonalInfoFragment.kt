@@ -12,6 +12,7 @@ import com.heandroid.databinding.FragmentCreateAccountPersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.DATA
+import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PAY_AS_U_GO
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PREPAY
@@ -35,11 +36,12 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
         model?.enable=false
         binding.model=model
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
-        when(arguments?.getInt(PERSONAL_TYPE,0)){
-            PERSONAL_TYPE_PREPAY -> { binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
-            PERSONAL_TYPE_PAY_AS_U_GO ->{
+        when(model?.planType) {
+            PAYG ->{
                 binding.tilMobileNo.gone()
                 binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+
+            else -> { binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
     }
     override fun initCtrl() {
@@ -62,7 +64,6 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 }
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,binding.model)
-                bundle.putInt(PERSONAL_TYPE, arguments?.getInt(PERSONAL_TYPE)?:0)
                 findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment,bundle)
             }
         }

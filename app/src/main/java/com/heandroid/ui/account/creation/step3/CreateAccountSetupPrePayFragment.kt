@@ -39,7 +39,6 @@ class CreateAccountSetupPrePayFragment : BaseFragment<FragmentCreateAccountSetup
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,model)
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)?:0)
                 }
                 findNavController().navigate(R.id.action_createAccoutInfoFragment_to_createAccoutInfoConfirmationFragment, bundle)
             }

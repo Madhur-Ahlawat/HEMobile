@@ -44,7 +44,6 @@ class CreateAccountVehicleDetailsFragment : BaseFragment<FragmentCreateAccountVe
             R.id.confirm_btn_vehicle ->{
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
-                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
                   findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment)
 
 

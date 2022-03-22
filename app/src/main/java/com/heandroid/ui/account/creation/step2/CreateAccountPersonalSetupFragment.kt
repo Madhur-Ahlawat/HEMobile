@@ -9,6 +9,7 @@ import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.AccountTypeSelectionModel
+import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.databinding.FragmentCreateAccountPersonalSetupBinding
 import com.heandroid.databinding.FragmentCreateAccountTypeBinding
 import com.heandroid.ui.base.BaseFragment
@@ -22,9 +23,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
+    private var model : CreateAccountRequestModel?=null
+
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPersonalSetupBinding.inflate(inflater, container, false)
 
     override fun init() {
+        model=arguments?.getParcelable(DATA)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
         binding.enable = false
     }
@@ -40,8 +44,12 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
     override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
         binding.enable = true
         when (rg?.checkedRadioButtonId) {
-            R.id.mrbPrePay -> { binding.tvPrepayDesc.visible() }
-            R.id.mrbPayG -> { binding.tvPayGDesc.visible() }
+            R.id.mrbPrePay -> {
+                model?.planType=null
+                binding.tvPrepayDesc.visible() }
+            R.id.mrbPayG -> {
+                model?.planType=Constants.PAYG
+                binding.tvPayGDesc.visible() }
         }
     }
 
@@ -50,9 +58,7 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
             R.id.btnAction -> {
                 if(binding.mrbPrePay.isChecked || binding.mrbPayG.isChecked){
                      val bundle = Bundle()
-                     bundle.putParcelable(DATA, arguments?.getParcelable(DATA))
-                     if (binding.mrbPrePay.isChecked) bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PREPAY)
-                     else bundle.putInt(Constants.PERSONAL_TYPE, Constants.PERSONAL_TYPE_PAY_AS_U_GO)
+                     bundle.putParcelable(DATA, model)
                      findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
                 }
                 else { showError(binding.root,getString(R.string.select_account_type)) }

@@ -1,6 +1,7 @@
 package com.heandroid.ui.account.creation.step5
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,17 +70,9 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-
-
-
-                // Pre pay - need to pay //                 // add payment api
-                // Pay as go - later
-
-                findNavController().navigate(R.id.action_cardFragment_to_successfulFragment)
-//                loader = LoaderDialog()
-//                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//                viewModel.createAccount(model)
-
+                loader = LoaderDialog()
+                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                viewModel.createAccount(model)
             }
         }
     }
@@ -108,8 +101,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 Toast.makeText(context, url, Toast.LENGTH_LONG).show()
                 binding.webview.gone()
                 binding.mcvContainer.visible()
-                val responseModel: CardResponseModel =
-                    Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 model?.creditCExpMonth = responseModel.card.exp.substring(0, 1)
                 model?.creditCExpYear = responseModel.card.exp.substring(2, 3)
                 model?.maskedNumber = responseModel.card.number
@@ -131,6 +123,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                         model?.cardMiddleName = ""
                         fullName[1].also { model?.cardLastName = it }
                     }
+
                     3 -> {
                         fullName[0].also { model?.cardFirstName = it }
                         fullName[1].also { model?.cardMiddleName = it }
@@ -156,9 +149,11 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             when (status) {
                 is Resource.Success -> {
                     status.data?.accountType = model?.accountType
+
+
+                    // Add Payment Method
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
-                    bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
                     findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
                 }
 

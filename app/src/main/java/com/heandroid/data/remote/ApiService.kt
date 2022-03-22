@@ -147,4 +147,5 @@ interface ApiService {
 
     @POST(GET_GENERAL_ACCOUNT_SR_LIST)
     suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>
+
 }
