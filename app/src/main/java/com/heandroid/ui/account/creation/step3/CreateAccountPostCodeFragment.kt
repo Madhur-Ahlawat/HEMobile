@@ -76,7 +76,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         when(v?.id) {
             R.id.btnAction -> {
 
-                viewModel.checkValidation(model)
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
                 }
