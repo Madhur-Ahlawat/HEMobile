@@ -64,13 +64,17 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 checkButton() }
             tvPinFour.doAfterTextChanged {
                 if(it?.isNotEmpty()==true) hideKeyboard()
+                else binding.tvPinThree.requestFocus()
                 checkButton()
             }
         }
     }
 
     private fun checkButton() {
-        binding.enable = binding.tvPinOne.text.toString().length>1  && binding.tvPinTwo.text.toString().length>1 && binding.tvPinThree.text.toString().length>1 && binding.tvPinFour.text.toString().length>1
+        binding.enable = binding.tvPinOne.text.toString().isNotEmpty() &&
+                         binding.tvPinTwo.text.toString().isNotEmpty() &&
+                         binding.tvPinThree.text.toString().isNotEmpty() &&
+                         binding.tvPinFour.text.toString().isNotEmpty()
 
     }
 

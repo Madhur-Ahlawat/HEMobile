@@ -23,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartChargeBinding>(),
-    View.OnClickListener {
+class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartChargeBinding>(), View.OnClickListener {
 
     private lateinit var mAdapter: CaseHistoryAdapter
     private var loader: LoaderDialog? = null

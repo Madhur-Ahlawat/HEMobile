@@ -32,8 +32,5 @@ class CreateAccountPostCodeViewModel @Inject constructor(val repository: Account
         }
     }
 
-    fun checkValidation(model: CreateAccountRequestModel?) {
-
-    }
 
 }

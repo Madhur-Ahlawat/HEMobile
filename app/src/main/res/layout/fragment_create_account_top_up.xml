@@ -127,6 +127,7 @@
                 android:paddingBottom="8dp"
                 android:paddingStart="28dp"
                 android:drawablePadding="28dp"
+                android:buttonTint="@color/green"
                 android:text="@string/str_yes"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp" />
@@ -141,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:background="#E5E5E5">
+                android:background="@color/color_EFEFEF">
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -187,6 +188,7 @@
                 android:paddingBottom="8dp"
                 android:paddingStart="28dp"
                 android:drawablePadding="28dp"
+                android:buttonTint="@color/green"
                 android:layout_marginLeft="10dp"
                 android:text="@string/str_no"
                 android:textColor="@color/black"
@@ -208,7 +210,7 @@
                 android:id="@+id/clNoDes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#E5E5E5"
+                android:background="@color/color_EFEFEF"
                 android:visibility="gone"
                 >
 
