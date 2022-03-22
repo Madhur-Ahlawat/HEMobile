@@ -34,7 +34,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
 
     override fun init() {
-        requestModel = CreateAccountRequestModel(accountType = "", address1 = "", billingAddressLine1 = "",
+        requestModel = CreateAccountRequestModel(accountType = "", address1 = "", planType = null, billingAddressLine1 = "",
                                                  billingAddressLine2 = "", cardCity = "", cardFirstName = "", cardLastName = "",
                                                  cardMiddleName = "", cardStateType = "", cardZipCode = "",
                                                  cellPhone = "", city = "", countryType = "", creditCExpMonth = "",

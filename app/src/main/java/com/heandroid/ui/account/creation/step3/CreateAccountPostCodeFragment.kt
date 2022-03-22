@@ -137,7 +137,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             }
 
             when(model?.planType){
-                PAYG ->{ if(arguments?.getInt(PERSONAL_TYPE,0) == PERSONAL_TYPE_PAY_AS_U_GO) model?.zipCode1=null }
+                PAYG ->{ model?.zipCode1=null }
                 else -> { if(binding.tiePostCode.text?.isNotEmpty()==true) binding.enable = true }
             }
         }
