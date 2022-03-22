@@ -16,6 +16,8 @@ import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
+import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
@@ -142,4 +144,7 @@ interface ApiService {
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getAccountFindVehicle(@Path("vehicleNumber") vehicleNumber: String?,
                                       @Query("agencyId") agencyId:Int?): Response<VehicleInfoDetails?>?
+
+    @POST(GET_GENERAL_ACCOUNT_SR_LIST)
+    suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>
 }

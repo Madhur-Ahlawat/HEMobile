@@ -114,6 +114,7 @@
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
+            android:clickable="@{model.enable}"
             android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"

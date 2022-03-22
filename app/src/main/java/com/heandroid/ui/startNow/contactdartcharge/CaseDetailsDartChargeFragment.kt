@@ -1,6 +1,7 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
 import android.graphics.Typeface
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
@@ -65,7 +66,11 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
         view?.let {
             when (it.id) {
                 R.id.btnContinue -> {
-                    findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment)
+                    val bundle = Bundle().apply {
+                        putString(Constants.CASE_NUMBER, binding.etCaseNumber.text.toString().trim())
+                        putString(Constants.LAST_NAME, binding.etLastName.text.toString().trim())
+                    }
+                    findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment, bundle)
                 }
 
                 R.id.btnRaiseNewQuery -> {

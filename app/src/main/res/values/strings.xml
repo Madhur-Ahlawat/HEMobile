@@ -604,5 +604,13 @@
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
     <string name="str_maintainance_desc">No need to remember to top-up, funds will be automatically added to your account when the balance falls below the specified amount.</string>
 
+
+    <string name="resolved">RESOLVED</string>
+    <string name="in_progress_open">IN PROGRESS</string>
+    <string name="submitted">SUBMITTED</string>
+
+    //todo : get correct message
+    <string name="no_data_to_display">No Data to display</string>
+
 </resources>
 
