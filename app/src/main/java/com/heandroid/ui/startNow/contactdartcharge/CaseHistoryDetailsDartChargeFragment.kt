@@ -11,8 +11,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.*
 
-class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDetailsDartChargeBinding>(),
-    View.OnClickListener {
+class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDetailsDartChargeBinding>(), View.OnClickListener {
 
     private var data : ServiceRequest? = null
 
