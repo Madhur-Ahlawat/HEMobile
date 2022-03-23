@@ -127,43 +127,16 @@ class VehicleHistoryVehicleDetailsFragment :
 
     private fun setDataToView() {
         mVehicleDetails?.let { response ->
-            binding.apply {
-                regNum.text = response.plateInfo.number
-                countryMarker.text = response.plateInfo.country
-                vehicleClass.text = response.vehicleInfo.vehicleClassDesc
-                make.text = response.vehicleInfo.make
-                model.text = response.vehicleInfo.model
-                color.text = response.vehicleInfo.color
-                addedDate.text = response.vehicleInfo.effectiveStartDate
-                edtNote.setText(response.plateInfo.vehicleComments)
-            }
+            binding.vehicleData = response
         }
     }
 
     private fun setBtnActivated() {
-        binding.saveBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.btn_color
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            isClickable = true
-        }
+        binding.buttonModel = true
     }
 
     private fun setBtnDisabled() {
-        binding.saveBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_C9C9C9
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
-            isClickable = false
-        }
+        binding.buttonModel = false
     }
 
 }

@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="model"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,10 +100,11 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_7sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+            android:clickable="@{model}"
+            android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
             android:text="@string/str_add_vehicle"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/cancel_btn"
             app:layout_constraintHorizontal_chainStyle="spread"

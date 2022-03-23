@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="model"
+            type="Boolean" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -234,7 +239,9 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    android:backgroundTint="@color/btn_color"
+                    android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+                    android:clickable="@{model}"
+                    android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_6sdp"
                     android:text="@string/str_apply"

@@ -611,6 +611,8 @@
 
     //todo : get correct message
     <string name="no_data_to_display">No Data to display</string>
+    <string name="vehicle_reg_num">Vehicle registration number: %s</string>
+    <string name="country_reg">Country of registration %s</string>
 
 </resources>
 

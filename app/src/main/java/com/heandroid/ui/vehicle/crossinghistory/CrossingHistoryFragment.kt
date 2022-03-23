@@ -86,6 +86,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         binding.rvHistory.gone()
         binding.tvNoCrossing.gone()
         binding.progressBar.visible()
+        binding.tvDownload.visible()
     }
 
     override fun initCtrl() {
@@ -140,11 +141,13 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         if (list?.size == 0) {
                             binding.rvHistory.gone()
                             binding.tvNoCrossing.visible()
+                            binding.tvDownload.gone()
                             binding.progressBar.gone()
                         } else {
                             binding.rvHistory.visible()
                             binding.progressBar.gone()
                             binding.tvNoCrossing.gone()
+                            binding.tvDownload.visible()
 
                         }
                         endlessScroll()
@@ -153,7 +156,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 is Resource.DataError -> {
                     binding.rvHistory.gone()
                     binding.progressBar.gone()
-                    binding.tvNoCrossing.gone()
+                    binding.tvNoCrossing.visible()
+                    binding.tvDownload.gone()
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {

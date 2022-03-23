@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="addButton"
+            type="Boolean" />
+        <variable
+            name="findButton"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -77,16 +86,18 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:text="@string/str_add_vehicle"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:backgroundTint="@{addButton==true?@color/white:@color/color_C9C9C9}"
+            android:clickable="@{addButton}"
+            android:textColor="@{addButton==true?@color/green:@color/color_7D7D7D}"
+            app:iconTint="@{addButton==true?@color/green:@color/color_7D7D7D}"
+            app:strokeColor="@{addButton==true?@color/green:@color/color_7D7D7D}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:icon="@drawable/ic_baseline_add_24"
             app:iconGravity="textStart"
-            app:iconTint="@color/green"
             app:layout_constraintBottom_toTopOf="@+id/findVehicle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/green"
             app:strokeWidth="@dimen/_1sdp" />
 
 
@@ -94,10 +105,11 @@
             android:id="@+id/findVehicle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@{findButton==true?@color/btn_color:@color/color_C9C9C9}"
+            android:clickable="@{findButton}"
+            android:textColor="@{findButton==false?@color/color_7D7D7D:@color/white}"
             android:text="@string/str_find_vehicle"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

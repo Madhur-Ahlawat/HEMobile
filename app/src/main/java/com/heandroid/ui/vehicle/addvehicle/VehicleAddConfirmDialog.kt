@@ -13,10 +13,11 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogLogoutBinding
 import com.heandroid.databinding.VehicleAddConformBinding
 import com.heandroid.ui.base.BaseDialog
+import com.heandroid.utils.common.Constants
 
 class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
 
-    private lateinit var mVehicleDetails: VehicleResponse
+    private var mVehicleDetails: VehicleResponse? = null
 
     override fun getDialogBinding(
         inflater: LayoutInflater,
@@ -25,9 +26,10 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
 
     override fun init() {
         dialog?.setCanceledOnTouchOutside(false)
-        mVehicleDetails = arguments?.getSerializable(KEY_TITLE) as VehicleResponse
-        binding.subTitle.text = mVehicleDetails.plateInfo.number
-        setBtnActivated()
+        arguments?.getParcelable<VehicleResponse>(Constants.DATA)?.let {
+            mVehicleDetails = it
+        }
+        binding.subTitle.text = mVehicleDetails?.plateInfo?.number
     }
 
     override fun initCtrl() {
@@ -36,7 +38,7 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
         }
         binding.yesBtn.setOnClickListener {
             dismiss()
-            mListener?.onAddClick(mVehicleDetails)
+            mVehicleDetails?.let { it1 -> mListener?.onAddClick(it1) }
         }
         binding.cancelBtn.setOnClickListener {
             dismiss()
@@ -47,7 +49,6 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
 
     companion object {
         const val TAG = "VehicleAddConfirm"
-        private const val KEY_TITLE = "list"
         private var mListener: AddVehicleListener? = null
 
         fun newInstance(
@@ -56,29 +57,12 @@ class VehicleAddConfirmDialog : BaseDialog<VehicleAddConformBinding>() {
         ): VehicleAddConfirmDialog {
             val args = Bundle()
             mListener = listener
-            args.putParcelable(KEY_TITLE, vehicleDetails)
+            args.putParcelable(Constants.DATA, vehicleDetails)
             val fragment = VehicleAddConfirmDialog()
             fragment.arguments = args
             return fragment
         }
 
-    }
-
-    private fun setBtnActivated() {
-        binding.yesBtn.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.btn_color
-            )
-        )
-
-        binding.yesBtn.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.white
-            )
-        )
-        binding.yesBtn.isEnabled = true
     }
 
     override fun onStart() {

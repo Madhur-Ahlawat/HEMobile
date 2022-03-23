@@ -101,41 +101,11 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
     }
 
     private fun makeVehicleDetailsButton(){
-        binding.vehicleDetailsTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-        binding.crossingHistoryTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-        binding.vehicleDetailsTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
-        binding.crossingHistoryTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.black
-            )
-        )
+        binding.chipButtonVehicle = true
     }
 
     private fun makeCrossingHistoryButton() {
-        binding.crossingHistoryTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-        binding.vehicleDetailsTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-        binding.crossingHistoryTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
-        binding.vehicleDetailsTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.black
-            )
-        )
+        binding.chipButtonVehicle = false
     }
 
 }

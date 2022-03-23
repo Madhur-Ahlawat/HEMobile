@@ -114,26 +114,27 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
 
         binding.continueButton.setOnClickListener {
-            if (isFromPaymentScreen) {
-                val vehicleData = mVehicleDetails
-                vehicleData?.apply {
-                    vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-                    vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
-                }
-                val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA, vehicleData)
-                    putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
-                }
-                findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
-                return@setOnClickListener
-            }
+
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
-
-                VehicleAddConfirmDialog.newInstance(
-                    mVehicleDetails,
-                    this
-                ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+                if (isFromPaymentScreen) {
+                    val vehicleData = mVehicleDetails
+                    vehicleData?.apply {
+                        vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+                        vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
+                    }
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.DATA, vehicleData)
+                        putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+                    }
+                    findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
+                    return@setOnClickListener
+                } else {
+                    VehicleAddConfirmDialog.newInstance(
+                        mVehicleDetails,
+                        this
+                    ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+                }
             } else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 Snackbar.make(
                     binding.classAView,

@@ -158,6 +158,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         } else {
             val bundle = Bundle().apply {
                 putParcelable(Constants.DATA, details)
+                putBoolean(Constants.PAYMENT_PAGE, true)
             }
             findNavController().navigate(
                 R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
@@ -188,58 +189,18 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     override fun onItemClick(details: VehicleResponse, pos: Int) { }
 
     private fun setBtnActivated() {
-        binding.findVehicle.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.btn_color
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            isClickable = true
-        }
+        binding.findButton = true
     }
 
     private fun setBtnDisabled() {
-        binding.findVehicle.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_C9C9C9
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
-            isClickable = false
-        }
+        binding.findButton = false
     }
 
     private fun setAddBtnActivated() {
-        binding.addVehicleBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.white
-                )
-            )
-            setStrokeColorResource(R.color.green)
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            setIconTintResource(R.color.green)
-            isClickable = true
-        }
+        binding.addButton = true
     }
 
     private fun setAddBtnDisabled() {
-        binding.addVehicleBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_C9C9C9
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
-            setIconTintResource(R.color.color_7D7D7D)
-            setStrokeColorResource(R.color.color_7D7D7D)
-            isClickable = false
-        }
+        binding.addButton = false
     }
 }

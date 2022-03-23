@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="chipButtonVehicle"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,22 +30,22 @@
             android:orientation="horizontal"
             android:padding="@dimen/_8sdp"
             android:visibility="gone"
-            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_tool_bar_lyt">
+            app:layout_constraintTop_toBottomOf="@+id/id_tool_bar_lyt"
+            tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/vehicle_details_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/text_selected_bg"
+                android:background="@{chipButtonVehicle==true?@drawable/text_selected_bg:@drawable/text_unselected_bg}"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/str_vehicle_details"
-                android:textColor="@color/white"
+                android:textColor="@{chipButtonVehicle==true?@color/white:@color/black}"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -48,12 +55,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/text_unselected_bg"
+                android:background="@{chipButtonVehicle==false?@drawable/text_selected_bg:@drawable/text_unselected_bg}"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/str_crossing_history"
-                android:textColor="@color/black"
+                android:textColor="@{chipButtonVehicle==false?@color/white:@color/black}"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 

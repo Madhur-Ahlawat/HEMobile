@@ -391,7 +391,4 @@ class VehicleHistoryCrossingHistoryFragment :
             }
         }
 
-
-
-
 }

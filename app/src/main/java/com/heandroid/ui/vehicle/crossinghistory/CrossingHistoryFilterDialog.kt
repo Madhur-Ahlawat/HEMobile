@@ -66,12 +66,15 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
         when (dateRangeModel?.title) {
             getString(R.string.last_30_days) -> {
                 binding.rbLast30Days.isChecked = true
+                setBtnEnable()
             }
             getString(R.string.last_90_days) -> {
                 binding.rbLast90Days.isChecked = true
+                setBtnEnable()
             }
             getString(R.string.view_all) -> {
                 binding.rbViewAll.isChecked = true
+                setBtnEnable()
             }
             getString(R.string.custom) -> {
                 binding.rbCustom.isChecked = true
@@ -79,9 +82,11 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 binding.vCustom.isVisible(false)
                 binding.edFrom.setText(dateRangeModel?.from ?: "")
                 binding.edTo.setText(dateRangeModel?.to ?: "")
+                checkButton()
             }
             else -> {
                 binding.rbViewAll.isChecked = true
+                setBtnEnable()
             }
         }
     }
@@ -160,38 +165,11 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
     }
 
     private fun setBtnEnable() {
-        binding.btnApply.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.btn_color
-            )
-        )
-
-        binding.btnApply.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.white
-            )
-        )
-        binding.btnApply.isEnabled = true
+        binding.model = true
     }
 
     private fun setButtonDisable() {
-        binding.btnApply.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.hint_color
-            )
-        )
-        binding.btnApply.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.black
-            )
-        )
-
-        binding.btnApply.isEnabled = false
-
+        binding.model = false
     }
 
 
