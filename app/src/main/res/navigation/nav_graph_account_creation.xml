@@ -142,7 +142,7 @@
 
     <fragment
         android:id="@+id/makePaymentAddVehicleFragment2"
-        android:name="com.heandroid.ui.vehicle.payment.MakePaymentAddVehicleFragment"
+        android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
         android:label="MakePaymentAddVehicleFragment"
         tools:layout="@layout/fragment_make_payment_add_vehicle"
         >

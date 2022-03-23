@@ -1,4 +1,4 @@
-package com.heandroid.ui.vehicle.payment
+package com.heandroid.ui.payment
 
 import com.heandroid.R
 import com.heandroid.databinding.ActivityMakeOffPaymentBinding
