@@ -178,7 +178,7 @@ class VehicleHistoryCrossingHistoryFragment :
         lifecycleScope.launch(Dispatchers.IO) {
 
             val ret = async {
-                return@async writeResponseBodyToDisk(body)
+                return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
             }.await()
 
             if (ret) {
@@ -194,101 +194,6 @@ class VehicleHistoryCrossingHistoryFragment :
             }
         }
     }
-
-    //todo we can move these to utils files
-    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
-        val fileExtension = if (selectionType == "pdf") ".pdf" else ".csv"
-        try {
-            val filePath =
-                "${requireActivity().getExternalFilesDir(null)}${File.separator}${
-                    System.currentTimeMillis()
-                }$fileExtension"
-
-            val currentFile = File(filePath)
-//            val currentFile = File(
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-//                System.currentTimeMillis().toString() + fileExtension
-//            )
-            if (!currentFile.exists())
-                currentFile.parentFile?.mkdirs()
-
-            return if (selectionType == "pdf") {
-                savePdf(body, currentFile)
-            } else {
-                saveSpreadSheet(body, filePath)
-            }
-        } catch (e: Exception) {
-            Log.d(
-                "writeResponseBodyToDisk",
-                "failed to create file : ${e.localizedMessage}"
-            )
-            return false
-        }
-
-    }
-
-    private fun savePdf(body: ResponseBody, futurePdfFile: File): Boolean {
-        var inputStream: InputStream? = null
-        var outputStream: OutputStream? = null
-        try {
-            val pdfReader = ByteArray(4096)
-            val fileSize = body.contentLength()
-            var fileSizeDownloaded: Long = 0
-            inputStream = body.byteStream()
-            outputStream = FileOutputStream(futurePdfFile)
-
-            while (true) {
-                val read = inputStream.read(pdfReader)
-                Log.d("writeResponseBodyToDisk", "file download: of read $read")
-                if (read == -1) {
-                    break
-                }
-                outputStream.write(pdfReader, 0, read)
-                fileSizeDownloaded += read
-                Log.d(
-                    "writeResponseBodyToDisk",
-                    "file download: $fileSizeDownloaded of $fileSize"
-                )
-            }
-            outputStream.flush()
-            return true
-        } catch (e: IOException) {
-            Log.d(
-                "writeResponseBodyToDisk",
-                "file download: first IOException callee ${e.localizedMessage}"
-            )
-            return false
-        } finally {
-            inputStream?.close()
-            outputStream?.close()
-        }
-    }
-
-    private fun saveSpreadSheet(body: ResponseBody, pathToSaveFile: String): Boolean {
-        val input = body.byteStream()
-
-        try {
-            val fos = FileOutputStream(pathToSaveFile)
-            fos.use { output ->
-                val buffer = ByteArray(4 * 1024)
-                var read: Int
-                while (input.read(buffer).also {
-                        read = it
-                    }
-                    != -1) {
-                    output.write(buffer, 0, read)
-                }
-                output.flush()
-            }
-            return true
-        } catch (e: Exception) {
-            Log.e("writeResponseBodyToDisk", e.toString())
-            return false
-        } finally {
-            input.close()
-        }
-    }
-
 
     private fun endlessScroll() {
         if (isFirstTime) {

@@ -21,6 +21,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
@@ -128,6 +129,7 @@ class VehicleHistoryVehicleDetailsFragment :
     private fun setDataToView() {
         mVehicleDetails?.let { response ->
             binding.vehicleData = response
+            binding.addedDate.text = DateUtils.convertDateFormat(response.vehicleInfo.effectiveStartDate,1)
         }
     }
 

@@ -2,7 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
-    const val PAYG: String ="PAYG"
+    const val PAYG: String = "PAYG"
     const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW: String = "900"
     const val NORMAL_LOGIN_FLOW_CODE = 1001
@@ -92,5 +92,7 @@ object Constants {
     const val CASE_NUMBER = "case number"
     const val LAST_NAME = "last name"
     const val CLOSED = "Closed"
+    const val PDF_EXTENSION = ".pdf"
+    const val CSV_EXTENSION = ".csv"
 
 }
