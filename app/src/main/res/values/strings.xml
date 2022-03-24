@@ -460,7 +460,7 @@
     <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
     <string name="str_prepay">Pre-pay</string>
-    <string name="str_pre_pay_desc">y\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
+    <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
     <string name="str_personal_details_entry">Personal details entry</string>
@@ -545,7 +545,7 @@
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
     <string name="personal_pre_pay_account">Personal Pre-pay account</string>
-    <string name="personal_pre_pay_account_info">Personal Pre-pay account information</string>
+    <string name="personal_pre_pay_account_info">Personal Pre-pay account \n information</string>
     <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
     <string name="postcode">Postcode</string>
     <string name="underline_postcode"><u>Postcode</u></string>
@@ -564,7 +564,7 @@
     <string name="initial_deposit">• An initial deposit of £10</string>
     <string name="personal_deposit">• Personal details and details of the primary vehicle which you are registering</string>
     <string name="valid_debit">• A valid debit or credit card</string>
-    <string name="setup_prepay_account">To set up a personal pre-pay account, you will need: </string>
+    <string name="setup_prepay_account">To set up a personal pre-pay account, you will need:</string>
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Select category</string>
     <string name="str_select_sub_category">Select sub-category</string>
@@ -588,14 +588,31 @@
     <string name="str_intial_deposit_to_account">Initial deposit to your account</string>
     <string name="str_auto_top_up">Auto top-up</string>
     <string name="str_you_need_to_make_an_initial_payment">You need to make an initial minimum deposit amount of £10 to open your account</string>
-    <string name="str_no_need_to_remember_to_topup_of_funds_txt">"No need to remember to top-up, funds will be automatically added to your account when the balance falls below the specified amount "</string>
-    <string name="str_will_you_be_making_more_than_10">Will you be making more than 10 crossings each?</string>
+    <string name="str_no_need_to_remember_to_topup_of_funds_txt">No need to remember to top-up, funds will be \nautomatically added to your account when the \nbalance falls below the specified amount. </string>
+    <string name="str_will_you_be_making_more_than_10">Will you be making more than 10 crossings \neach month ?</string>
     <string name="str_top_up_my_account_by">Top-up my account by 5.00 when my balance falls below 10.00</string>
     <string name="str_maintainance_notify">Manitainance Notification</string>
-    <string name="str_maintainance_desc">Please note that we will be performing important server maintainance in a few minutes, during which time the server will be unavailable for approximately 5-10 minutes</string>
 
     <string name="ten">€10</string>
     <string name="pay">Pay</string>
+    <string name="select_account_type">Please select account type</string>
+    <string name="pin">PIN</string>
+    <string name="in_progress">Work in Progress</string>
+    <string name="pay_as_you_go">Personal -Pay as you go</string>
+    <string name="change">Change</string>
+    <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
+    <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
+    <string name="str_maintainance_desc">No need to remember to top-up, funds will be automatically added to your account when the balance falls below the specified amount.</string>
+
+
+    <string name="resolved">RESOLVED</string>
+    <string name="in_progress_open">IN PROGRESS</string>
+    <string name="submitted">SUBMITTED</string>
+
+    //todo : get correct message
+    <string name="no_data_to_display">No Data to display</string>
+    <string name="vehicle_reg_num">Vehicle registration number: %s</string>
+    <string name="country_reg">Country of registration %s</string>
 
 </resources>
 

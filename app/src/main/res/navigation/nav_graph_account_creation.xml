@@ -106,9 +106,9 @@
 
     <fragment
         android:id="@+id/createAccoutInfoFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutInfoFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccountSetupPrePayFragment"
         android:label="CreateAccoutInfoFragment"
-        tools:layout="@layout/fragment_create_account_info">
+        tools:layout="@layout/fragment_create_account_setup_prepay">
 
         <action
             android:id="@+id/action_createAccoutInfoFragment_to_createAccoutInfoConfirmationFragment"
@@ -119,14 +119,12 @@
 
     <fragment
         android:id="@+id/createAccoutInfoConfirmationFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountInfoConfirmationFragment"
+        android:name="com.heandroid.ui.account.creation.step3.CreateAccountTopUpFragment"
         android:label="createAccoutInfoConfirmationFragment"
-        tools:layout="@layout/fragment_create_account_info_confirmation">
-
+        tools:layout="@layout/fragment_create_account_top_up">
         <action
             android:id="@+id/action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
-
     </fragment>
 
 
@@ -144,8 +142,10 @@
 
     <fragment
         android:id="@+id/makePaymentAddVehicleFragment2"
-        android:name="com.heandroid.ui.vehicle.payment.MakePaymentAddVehicleFragment"
-        android:label="MakePaymentAddVehicleFragment" >
+        android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
+        android:label="MakePaymentAddVehicleFragment"
+        tools:layout="@layout/fragment_make_payment_add_vehicle"
+        >
 
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_CreateAccountVehicleDetailsFragment"
@@ -172,7 +172,9 @@
     <fragment
         android:id="@+id/accountVehiclePaymentFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehiclePaymentFragment"
-        android:label="AccountVehiclePaymentFragment" >
+        android:label="AccountVehiclePaymentFragment"
+        tools:layout="@layout/fragment_create_account_vehicle_payment"
+        >
         <action
             android:id="@+id/action_showVehicleDetailsFragment_to_choosePaymentFragment"
             app:destination="@id/choosePaymentFragment" />

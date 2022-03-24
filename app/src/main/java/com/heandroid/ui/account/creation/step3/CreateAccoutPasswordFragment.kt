@@ -15,6 +15,7 @@ import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -26,8 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordBinding>(),
-    View.OnClickListener {
+class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 
@@ -38,6 +38,11 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         binding.enable = false
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+
+        when(model?.planType){
+            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+        }
     }
 
     override fun initCtrl() {
@@ -70,8 +75,6 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                 }
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA,model)
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
-
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }

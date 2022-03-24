@@ -5,18 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogAddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
-import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.hideKeyboard
-import com.heandroid.utils.extn.openKeyboard
 import com.heandroid.utils.extn.openKeyboardForced
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.onTextChanged
@@ -28,12 +24,13 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         DialogAddVehicleBinding.inflate(inflater, container, false)
 
     override fun init() {
-        setBtnNormal()
+        dialog?.setCanceledOnTouchOutside(false)
+        setBtnDisabled()
         binding.addVrmInput.onTextChanged {
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 setBtnActivated()
             } else {
-                setBtnNormal()
+                setBtnDisabled()
             }
         }
     }
@@ -123,38 +120,11 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
     }
 
     private fun setBtnActivated() {
-        binding.addVehicleBtn.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.btn_color
-            )
-        )
-
-        binding.addVehicleBtn.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.white
-            )
-        )
-        binding.addVehicleBtn.isEnabled = true
+        binding.model = true
     }
 
-    private fun setBtnNormal() {
-        binding.addVehicleBtn.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.color_C9C9C9
-            )
-        )
-        binding.addVehicleBtn.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.color_7D7D7D
-            )
-        )
-
-        binding.addVehicleBtn.isEnabled = false
-
+    private fun setBtnDisabled() {
+        binding.model = false
     }
 
     override fun onStart() {

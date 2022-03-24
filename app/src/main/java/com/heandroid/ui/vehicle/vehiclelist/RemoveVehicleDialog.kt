@@ -22,7 +22,7 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
         DialogRemoveVehicleBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        setBtnNormal()
+        setBtnActivated()
         removeAdapter = RemoveVehicleDialogAdapter(this)
         binding.removeRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -85,35 +85,11 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
     }
 
     private fun setBtnActivated() {
-        binding.btnRemove.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.btn_color
-            )
-        )
-        binding.btnRemove.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.white
-            )
-        )
-        binding.btnRemove.isEnabled = true
+        binding.model = true
     }
 
-    private fun setBtnNormal() {
-        binding.btnRemove.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.hint_color
-            )
-        )
-        binding.btnRemove.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.black
-            )
-        )
-        binding.btnRemove.isEnabled = false
+    private fun setBtnDisabled() {
+        binding.model = false
     }
 
     override fun onStart() {

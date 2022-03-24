@@ -1,5 +1,6 @@
 package com.heandroid.data.remote
 
+import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus
@@ -15,6 +16,8 @@ import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
+import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
@@ -120,23 +123,29 @@ interface ApiService {
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
 
     @POST(EMAIL_VERIFICATION_REQUEST)
-    suspend fun sendEmailVerification(@Body request: EmailVerificationRequest?): Response<EmailVerificationResponse?>?
+    suspend fun sendEmailVerification(@Query ("agencyId") agencyId: String?= AGENCY_ID,
+                                      @Body request: EmailVerificationRequest?): Response<EmailVerificationResponse?>?
 
     @POST(CONFIRM_EMAIL_VERIFICATION)
-    suspend fun confirmEmailVerification(@Body request: ConfirmEmailRequest?): Response<EmptyApiResponse?>?
+    suspend fun confirmEmailVerification(@Query ("agencyId") agencyId: String?= AGENCY_ID,
+                                         @Body request: ConfirmEmailRequest?): Response<EmptyApiResponse?>?
 
     @GET(WEB_SITE_SERVICE_STATUS)
     suspend fun webSiteServiceStatus(): Response<WebSiteStatus?>?
 
 
     @POST(CREATE_ACCOUNT)
-    suspend fun createAccount(@Body model: com.heandroid.data.model.account.CreateAccountRequestModel?,
-                              @Query("agencyId") agencyId: String=AGENCY_ID) : Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
+    suspend fun createAccount(@Query("agencyId") agencyId: String=AGENCY_ID,
+                              @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?) : Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
-    suspend fun getAddressListBasedOnPostalCode(@Query("agencyId") agencyId: String? , @Query("search") postCode:String):Response<List<DataAddress>>
+    suspend fun getAddressListBasedOnPostalCode(@Query("search") postCode:String):Response<List<DataAddress>>
 
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getAccountFindVehicle(@Path("vehicleNumber") vehicleNumber: String?,
                                       @Query("agencyId") agencyId:Int?): Response<VehicleInfoDetails?>?
+
+    @POST(GET_GENERAL_ACCOUNT_SR_LIST)
+    suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>
+
 }

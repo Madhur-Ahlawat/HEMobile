@@ -12,6 +12,12 @@ import com.heandroid.databinding.FragmentCreateAccountPersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.DATA
+import com.heandroid.utils.common.Constants.PAYG
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PAY_AS_U_GO
+import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PREPAY
+import com.heandroid.utils.common.Constants.PRE_PAY_ACCOUNT
+import com.heandroid.utils.extn.gone
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,9 +29,20 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPersonalInfoBinding.inflate(inflater,container,false)
     override fun init() {
         model=arguments?.getParcelable(DATA)
+        model?.firstName=""
+        model?.lastName=""
+        model?.cellPhone=""
+        model?.eveningPhone=""
         model?.enable=false
         binding.model=model
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
+        when(model?.planType) {
+            PAYG ->{
+                binding.tilMobileNo.gone()
+                binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+
+            else -> { binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+        }
     }
     override fun initCtrl() {
         binding.btnAction.setOnClickListener(this)
@@ -47,8 +64,6 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 }
                 val bundle = Bundle()
                 bundle.putParcelable(DATA,binding.model)
-                bundle.putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
-
                 findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment,bundle)
             }
         }

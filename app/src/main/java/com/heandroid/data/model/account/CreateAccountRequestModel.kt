@@ -6,8 +6,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CreateAccountRequestModel(
+    var referenceId: String?,
+    var securityCd: String?,
+
     var accountType: String?,
     var address1: String?,
+    var planType: String?,
     val billingAddressLine1: String?,
     val billingAddressLine2: String?,
     val cardCity: String?,
@@ -36,8 +40,9 @@ data class CreateAccountRequestModel(
     val smsOption: String?,
     var stateType: String?,
     val tcAccepted: String?,
-    val thresholdAmount: Double?=5.0,
-    val transactionAmount: Double?=10.00,
-    val zipCode1: String?,
+    var thresholdAmount: Double?=5.0,
+    var transactionAmount: Double?=10.00,
+    var zipCode1: String?,
     var enable : Boolean?,
-) : Parcelable
+
+    ) : Parcelable

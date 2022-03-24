@@ -1,9 +1,8 @@
-package com.heandroid.ui.vehicle.payment
+package com.heandroid.ui.payment
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.heandroid.data.model.nominatedcontacts.CreateAccountResponseModel
 import com.heandroid.data.repository.nominatedcontacts.NominatedContactsRepo
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource

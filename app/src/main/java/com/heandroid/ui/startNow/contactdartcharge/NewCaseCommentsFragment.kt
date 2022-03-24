@@ -4,13 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.account.ServiceRequest
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.*
-import java.util.ArrayList
 
 class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     View.OnClickListener {

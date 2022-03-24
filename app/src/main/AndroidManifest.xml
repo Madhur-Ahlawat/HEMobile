@@ -48,15 +48,16 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.account.creation.controller.CreateAccountActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.account.creation.controller.CreateAccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileWhite"
+            />
         <activity android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.account.communication.CommunicationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.vehicle.payment.MakeOneOffPayment"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
@@ -66,7 +67,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.vehicle.payment.MakeOffPaymentActivity"
+            android:name="com.heandroid.ui.payment.MakeOffPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
 

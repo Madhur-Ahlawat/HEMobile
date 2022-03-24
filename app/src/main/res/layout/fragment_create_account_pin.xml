@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/postcode"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/password"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -168,32 +168,95 @@
                     app:layout_constraintTop_toBottomOf="@id/desc1"/>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPostCode"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/tvPinOne"
+                    android:layout_width="61dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/str_pin"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/desc2">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:maxLength="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:background="@drawable/bg_pin"
+                    android:gravity="center"
+                    android:inputType="numberPassword"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="33dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tvPinTwo"
+                    app:layout_constraintTop_toBottomOf="@+id/desc2" />
+
+                <EditText
+                    android:id="@+id/tvPinTwo"
+                    android:layout_width="61dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_pin"
+                    android:text=""
+                    android:maxLength="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberPassword"
+                    android:textSize="33dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvPinOne"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toRightOf="@+id/tvPinOne"
+                    app:layout_constraintRight_toLeftOf="@+id/tvPinThree" />
+
+                <EditText
+                    android:id="@+id/tvPinThree"
+                    android:layout_width="61dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_pin"
+                    android:text=""
+                    android:maxLength="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberPassword"
+                    android:textSize="33dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvPinTwo"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toRightOf="@+id/tvPinTwo"
+                    app:layout_constraintRight_toLeftOf="@+id/tvPinFour" />
+
+                <EditText
+                    android:id="@+id/tvPinFour"
+                    android:layout_width="61dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/bg_pin"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:singleLine="true"
+
+                    android:imeOptions="actionDone"
+                    android:inputType="numberPassword"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="33dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvPinThree"
+                    app:layout_constraintLeft_toRightOf="@+id/tvPinThree"
+                    app:layout_constraintRight_toRightOf="parent" />
 
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="numberPassword"
-                        android:maxLength="4"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

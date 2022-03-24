@@ -18,7 +18,7 @@ import com.heandroid.databinding.FragmentLandingBinding
 import com.heandroid.ui.account.creation.controller.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
-import com.heandroid.ui.vehicle.payment.MakeOffPaymentActivity
+import com.heandroid.ui.payment.MakeOffPaymentActivity
 import com.heandroid.ui.viewcharges.ViewChargesActivity
 import com.heandroid.utils.common.Constants.CHECK_FOR_PAID
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT

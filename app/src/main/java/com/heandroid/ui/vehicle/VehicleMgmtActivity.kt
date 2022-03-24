@@ -9,12 +9,15 @@ import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment
 import com.heandroid.ui.vehicle.vehiclehistory.VehicleHistoryVehicleDetailsFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
+import com.heandroid.utils.logout.LogoutListener
+import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
+class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutListener {
 
     private var mType: Int? = null
     private lateinit var binding: ActivityVehicleMgmtBinding
@@ -26,6 +29,23 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
         initCtrl()
         setView()
     }
+
+    override fun onStart() {
+        super.onStart()
+        loadsession()
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadsession()
+
+    }
+
+    private fun loadsession(){
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
 
     override fun observeViewModel() { }
 
@@ -58,7 +78,8 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
                     navHost.setGraph(R.navigation.navigation_vehicle_history)
 
                     navHost.addOnDestinationChangedListener { _, destination, _ ->
-                        when(destination.id){
+                        when(destination.id)
+                        {
                             R.id.vehicleHistoryVehicleDetailsFragment -> {
                                 makeVehicleDetailsButton()
                                 binding.chipLayout.visible()
@@ -68,13 +89,13 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
                                 makeCrossingHistoryButton()
                                 binding.chipLayout.visible()
                             }
+
                             else -> {
                                 binding.chipLayout.gone()
                             }
                         }
                     }
                 }
-
                 Constants.VEHICLE_SCREEN_TYPE_CROSSING_HISTORY -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.crossing_history)
                     binding.chipLayout.gone()
@@ -101,41 +122,15 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>() {
     }
 
     private fun makeVehicleDetailsButton(){
-        binding.vehicleDetailsTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-        binding.crossingHistoryTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-        binding.vehicleDetailsTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
-        binding.crossingHistoryTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.black
-            )
-        )
+        binding.chipButtonVehicle = true
     }
 
     private fun makeCrossingHistoryButton() {
-        binding.crossingHistoryTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_selected_bg)
-        binding.vehicleDetailsTxt.background =
-            ContextCompat.getDrawable(this, R.drawable.text_unselected_bg)
-        binding.crossingHistoryTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
-        binding.vehicleDetailsTxt.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.black
-            )
-        )
+        binding.chipButtonVehicle = false
+    }
+
+    override fun onLogout() {
+        Utils.sessionExpired(this)
     }
 
 }

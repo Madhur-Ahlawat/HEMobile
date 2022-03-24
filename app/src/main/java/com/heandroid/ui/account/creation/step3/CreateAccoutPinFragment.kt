@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -26,31 +28,53 @@ import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
-    View.OnClickListener {
+class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountPinBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPinBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = false
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+
+
+        when(model?.planType){
+            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+        }
+
     }
 
     override fun initCtrl() {
         binding.apply {
             btnAction.setOnClickListener(this@CreateAccoutPinFragment)
-            tieCode.onTextChanged {
+            tvPinOne.doAfterTextChanged {
+                if(it?.isNotEmpty()==true) binding.tvPinTwo.requestFocus()
+                checkButton() }
+            tvPinTwo.doAfterTextChanged {
+                if(it?.isNotEmpty()==true) binding.tvPinThree.requestFocus()
+                else binding.tvPinOne.requestFocus()
+                checkButton() }
+            tvPinThree.doAfterTextChanged {
+                if(it?.isNotEmpty()==true) binding.tvPinFour.requestFocus()
+                else binding.tvPinTwo.requestFocus()
+
+                checkButton() }
+            tvPinFour.doAfterTextChanged {
+                if(it?.isNotEmpty()==true) hideKeyboard()
+                else binding.tvPinThree.requestFocus()
                 checkButton()
             }
         }
     }
 
     private fun checkButton() {
-        binding.enable = (binding.tieCode.text.toString().trim().length == 4)
+        binding.enable = binding.tvPinOne.text.toString().isNotEmpty() &&
+                         binding.tvPinTwo.text.toString().isNotEmpty() &&
+                         binding.tvPinThree.text.toString().isNotEmpty() &&
+                         binding.tvPinFour.text.toString().isNotEmpty()
 
     }
 
@@ -59,24 +83,16 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.btnAction -> {
-                model?.apply {
-                    digitPin = binding.tieCode.text.toString().trim()
-                }
+                model?.digitPin = binding.tvPinOne.text.toString()+""+ binding.tvPinTwo.text.toString()+""+ binding.tvPinThree.text.toString()+""+ binding.tvPinFour.text.toString()
 
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, model)
-                    putInt(Constants.PERSONAL_TYPE, arguments?.getInt(Constants.PERSONAL_TYPE)!!)
                 }
-                if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO)
-                    findNavController().navigate(
-                        R.id.action_createAccoutPinFragment_to_findYourVehicleFragment,
-                        bundle
-                    )
-                else
-                    findNavController().navigate(
-                        R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment,
-                        bundle
-                    )
+                when(model?.planType){
+                    PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
+                    else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
+                }
+
             }
 
         }

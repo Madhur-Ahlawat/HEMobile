@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.heandroid.data.model.account.ServiceRequest" />
+            type="com.heandroid.data.model.contactdartcharge.ServiceRequest" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

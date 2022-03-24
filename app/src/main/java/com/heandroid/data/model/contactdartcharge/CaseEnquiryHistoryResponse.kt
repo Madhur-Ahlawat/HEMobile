@@ -1,17 +1,16 @@
-package com.heandroid.data.model.account
+package com.heandroid.data.model.contactdartcharge
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class CaseEnquiryResponse(
-    val serviceRequestList: ServiceRequestList,
+data class CaseEnquiryHistoryResponse(
+    val serviceRequestList: ServiceRequestList?,
     val statusCode: String,
     val message: String
 )
 
 data class ServiceRequestList(
-    val serviceRequest: List<ServiceRequest>,
+    val serviceRequest: List<ServiceRequest>?,
     val count: String
 )
 

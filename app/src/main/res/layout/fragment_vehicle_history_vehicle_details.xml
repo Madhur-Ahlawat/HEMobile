@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="buttonModel"
+            type="Boolean" />
+        <variable
+            name="vehicleData"
+            type="com.heandroid.data.model.vehicle.VehicleResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,6 +58,7 @@
                             android:id="@+id/reg_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.plateInfo.number}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
@@ -83,6 +89,7 @@
                             android:id="@+id/countryMarker"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.plateInfo.country}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
@@ -113,6 +120,7 @@
                             android:id="@+id/vehicleClass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.vehicleInfo.vehicleClassDesc}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
@@ -143,6 +151,7 @@
                             android:id="@+id/make"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.vehicleInfo.make}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
@@ -173,6 +182,7 @@
                             android:id="@+id/model"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.vehicleInfo.model}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:textColor="@color/black"
@@ -203,6 +213,7 @@
                             android:id="@+id/color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{vehicleData.vehicleInfo.color}"
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
                             android:padding="@dimen/_2sdp"
@@ -277,6 +288,7 @@
                                 android:id="@+id/edt_note"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_70sdp"
+                                android:text="@{vehicleData.plateInfo.vehicleComments}"
                                 android:hint="@string/str_note"
                                 android:imeOptions="actionDone"
                                 android:gravity="top|start"
@@ -323,10 +335,11 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:backgroundTint="@color/color_C9C9C9"
+                android:backgroundTint="@{buttonModel==true?@color/btn_color:@color/color_C9C9C9}"
+                android:clickable="@{buttonModel}"
+                android:textColor="@{buttonModel==false?@color/color_7D7D7D:@color/white}"
                 android:text="@string/str_save"
                 android:textAllCaps="false"
-                android:textColor="@color/color_7D7D7D"
                 android:textSize="@dimen/_14ssp"
                 app:cornerRadius="@dimen/_4sdp" />
 

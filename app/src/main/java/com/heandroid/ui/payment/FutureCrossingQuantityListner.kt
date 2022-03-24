@@ -1,4 +1,4 @@
-package com.heandroid.ui.vehicle.payment
+package com.heandroid.ui.payment
 
 interface FutureCrossingQuantityListner {
     fun onAdd(position: Int)

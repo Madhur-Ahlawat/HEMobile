@@ -12,103 +12,173 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp">
+        >
 
         <TextView
-            android:id="@+id/tv_verification"
+            android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
             android:text="@string/personal_account_setup"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
 
         <TextView
-            android:id="@+id/tv_step"
+            android:id="@+id/tvStep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
             android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd" />
 
 
-        <RelativeLayout
-            android:id="@+id/rl_personal_account_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_verification">
 
             <RadioGroup
-                android:id="@+id/rg_personal_sub_account"
+                android:id="@+id/rgOptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabel"
                 android:orientation="vertical">
 
+
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rb_prepay"
+                    android:id="@+id/mrbPrePay"
                     android:buttonTint="@color/color_00703C"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="28dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:textSize="@dimen/_13sdp"
                     android:background="@color/white"
                     app:buttonTint="@color/color_00703C"
                     android:text="@string/str_prepay" />
 
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/color_EFEFEF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_EFEFEF">
+
+
                 <TextView
-                    android:id="@+id/tv_prepay_desc"
+                    android:id="@+id/tvPrepayDesc"
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginHorizontal="16dp"
                     android:text="@string/str_pre_pay_desc" />
+                </LinearLayout>
+
+
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rb_payg_act"
+                    android:id="@+id/mrbPayG"
                     android:buttonTint="@color/color_00703C"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="28dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:textSize="@dimen/_13sdp"
                     android:background="@color/white"
                     android:text="@string/str_payg_account" />
 
-                <TextView
-                    android:id="@+id/tv_payg_desc"
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/color_EFEFEF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_EFEFEF"
+                    >
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPayGDesc"
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginHorizontal="16dp"
                     android:text="@string/str_payg_desc" />
+                </LinearLayout>
+
 
             </RadioGroup>
 
-        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_action"
-            android:layout_width="match_parent"
+            android:id="@+id/btnAction"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginVertical="@dimen/_55sdp"
             android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{enable}"
             android:gravity="center"
-            android:padding="@dimen/_7sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

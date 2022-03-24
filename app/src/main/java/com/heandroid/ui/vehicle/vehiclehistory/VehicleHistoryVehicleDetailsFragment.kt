@@ -21,6 +21,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
@@ -127,43 +128,17 @@ class VehicleHistoryVehicleDetailsFragment :
 
     private fun setDataToView() {
         mVehicleDetails?.let { response ->
-            binding.apply {
-                regNum.text = response.plateInfo.number
-                countryMarker.text = response.plateInfo.country
-                vehicleClass.text = response.vehicleInfo.vehicleClassDesc
-                make.text = response.vehicleInfo.make
-                model.text = response.vehicleInfo.model
-                color.text = response.vehicleInfo.color
-                addedDate.text = response.vehicleInfo.effectiveStartDate
-                edtNote.setText(response.plateInfo.vehicleComments)
-            }
+            binding.vehicleData = response
+            binding.addedDate.text = DateUtils.convertDateFormat(response.vehicleInfo.effectiveStartDate,1)
         }
     }
 
     private fun setBtnActivated() {
-        binding.saveBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.btn_color
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            isClickable = true
-        }
+        binding.buttonModel = true
     }
 
     private fun setBtnDisabled() {
-        binding.saveBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_C9C9C9
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
-            isClickable = false
-        }
+        binding.buttonModel = false
     }
 
 }

@@ -1,4 +1,4 @@
-package com.heandroid.ui.vehicle.payment
+package com.heandroid.ui.payment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.payment.MakeOffPaymentCrossingModel
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentCrossingBinding
 import com.heandroid.ui.base.BaseFragment

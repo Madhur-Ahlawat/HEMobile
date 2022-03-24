@@ -3,8 +3,6 @@ package com.heandroid.ui.vehicle.addvehicle
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -18,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
     private var mVehicleDetails: VehicleResponse ? =null
+    private var isFromPaymentScreen = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -29,10 +28,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     override fun init() {
+        binding.model = false
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
-        binding.subTitle.text = "Country of registration ${mVehicleDetails?.plateInfo?.country}"
-        setBtnDisabled()
+        isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
+        binding.title.text = getString(R.string.vehicle_reg_num, mVehicleDetails?.plateInfo?.number)//"Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        binding.subTitle.text = getString(R.string.country_reg, mVehicleDetails?.plateInfo?.country)//"Country of registration ${mVehicleDetails?.plateInfo?.country}"
     }
 
     override fun initCtrl() {
@@ -57,7 +57,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
 
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, mVehicleDetails)
-                    putBoolean(Constants.PAYMENT_PAGE, true)
+                    putBoolean(Constants.PAYMENT_PAGE, isFromPaymentScreen)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)
             }
@@ -77,29 +77,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     private fun setBtnActivated() {
-        binding.nextBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.btn_color
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            isClickable = true
-        }
+        binding.model = true
     }
 
     private fun setBtnDisabled() {
-        binding.nextBtn.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_C9C9C9
-                )
-            )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.color_7D7D7D))
-            isClickable = false
-        }
+        binding.model = false
     }
 
 }
