@@ -33,7 +33,6 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
     override fun onStart() {
         super.onStart()
         loadsession()
-
     }
 
     override fun onUserInteraction() {
@@ -79,7 +78,8 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
                     navHost.setGraph(R.navigation.navigation_vehicle_history)
 
                     navHost.addOnDestinationChangedListener { _, destination, _ ->
-                        when(destination.id){
+                        when(destination.id)
+                        {
                             R.id.vehicleHistoryVehicleDetailsFragment -> {
                                 makeVehicleDetailsButton()
                                 binding.chipLayout.visible()
@@ -89,13 +89,13 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
                                 makeCrossingHistoryButton()
                                 binding.chipLayout.visible()
                             }
+
                             else -> {
                                 binding.chipLayout.gone()
                             }
                         }
                     }
                 }
-
                 Constants.VEHICLE_SCREEN_TYPE_CROSSING_HISTORY -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.crossing_history)
                     binding.chipLayout.gone()

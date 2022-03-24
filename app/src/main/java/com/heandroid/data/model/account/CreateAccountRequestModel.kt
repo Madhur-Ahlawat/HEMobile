@@ -6,6 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CreateAccountRequestModel(
+    var referenceId: String?,
+    var securityCd: String?,
+
     var accountType: String?,
     var address1: String?,
     var planType: String?,
