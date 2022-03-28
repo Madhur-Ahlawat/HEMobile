@@ -109,7 +109,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         }}}
 
     private fun openUrlInWebBrowser() {
-        val url = Constants.PCN_RESOLVE_URL //"http://www.google.com";
+        val url = Constants.PCN_RESOLVE_URL
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
             startActivity(Intent.createChooser(this, "Browse with"));
         }
