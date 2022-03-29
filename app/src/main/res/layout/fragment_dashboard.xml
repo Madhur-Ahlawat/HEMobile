@@ -79,10 +79,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notification"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/white"
                 android:padding="@dimen/_10sdp">
 
@@ -159,6 +170,53 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintWidth_percent="0.6"
+                    app:constraint_referenced_ids="tv_account_number, tv_account_number_heading"/>
+                <TextView
+                    android:id="@+id/tv_account_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/str_account_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_account_number_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="29dp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:text="@string/str_account_number"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_account_number" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_1sdp"
+                android:background="@color/color_EFEFEF"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_three"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintWidth_percent="0.6"
                     app:constraint_referenced_ids="tv_account_status, tv_account_status_heading"/>
                 <TextView
                     android:id="@+id/tv_account_status"
@@ -199,55 +257,85 @@
                 android:background="@color/white">
 
                 <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_three"
+                    android:id="@+id/group_four"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintWidth_percent="0.6"
-                    app:constraint_referenced_ids="tv_notification_count, tv_notification_heading"/>
+                    app:constraint_referenced_ids="tv_account_type_heading, tv_account_type"/>
                 <TextView
-                    android:id="@+id/tv_notification_count"
+                    android:id="@+id/tv_account_type_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/str_notification_count"
+                    android:text="@string/str_account_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/tv_notification_heading"
+                    android:id="@+id/tv_account_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_notification"
+                    android:text="@string/str_personal_pre_pay_account"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_notification_count" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_account_type_heading" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_1sdp"
+                android:background="@color/color_EFEFEF"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_five"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintWidth_percent="0.6"
+                    app:constraint_referenced_ids="tv_top_up_heading, tv_top_up_type"/>
                 <TextView
-                    android:id="@+id/tv_view_notification"
+                    android:id="@+id/tv_top_up_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/str_top_up"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/tv_top_up_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="@string/txt_view_notification"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    android:layout_marginHorizontal="10dp"
-                    android:textColor="@color/color_666666"
-                    android:background="@color/white"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:text="@string/str_auto_top_up"
+                    android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/_13ssp"
-                    android:drawablePadding="@dimen/_5sdp"
                     android:textStyle="bold"
-                    app:drawableRightCompat="@drawable/ic_right" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_top_up_heading" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
                 android:layout_width="match_parent"
@@ -266,7 +354,7 @@
                 android:background="@color/white">
 
                 <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_four"
+                    android:id="@+id/group_six"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="0dp"
@@ -298,6 +386,25 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_crossing_count" />
+
+                <TextView
+                    android:id="@+id/tv_view_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/txt_view_crossing"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:layout_marginHorizontal="10dp"
+                    android:textColor="@color/color_666666"
+                    android:background="@color/white"
+                    android:textSize="@dimen/_13ssp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textStyle="bold"
+                    app:drawableRightCompat="@drawable/ic_right" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
                 android:layout_width="match_parent"
@@ -314,7 +421,7 @@
                 android:background="@color/white">
 
                 <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_five"
+                    android:id="@+id/group_seven"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="0dp"
@@ -373,55 +480,6 @@
                 android:background="@color/color_EFEFEF"
                 />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp"
-                tools:layout_editor_absoluteY="463dp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_six"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_saving_amount, tv_saving_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_saving_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_amount"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_saving_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/txt_your_saving"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_saving_amount" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginVertical="@dimen/_1sdp"
-                android:background="@color/color_EFEFEF"
-                />
 
 
         </LinearLayout>

@@ -27,21 +27,29 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : 
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
 
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    val vehicleListVal : LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
+
     val accountOverviewVal = MutableLiveData<Resource<AccountResponse>>()
     val monthlyUsageVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
     val paymentListVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
-    val vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+
     val forgotUsernameVal = MutableLiveData<Response<ForgotUsernameApiResponse>>()
-    val getAlertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val getAlertsVal : LiveData<Resource<AlertMessageApiResponse?>?> get() = _alertsVal
 
     fun getVehicleInformationApi() {
         viewModelScope.launch {
             try {
 
-                vehicleListVal.postValue(ResponseHandler.success(repo.getVehicleData(),errorManager))
+                _vehicleListVal.postValue(ResponseHandler.success(repo.getVehicleData(),errorManager))
 
             } catch (e: Exception) {
-                vehicleListVal.postValue(ResponseHandler.failure(e))
+                _vehicleListVal.postValue(ResponseHandler.failure(e))
             }
         }
 
@@ -49,14 +57,13 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : 
 
 
     fun getAlertsApi(
-        lng: String
     ) {
 
         viewModelScope.launch {
             try {
-                getAlertsVal.postValue(ResponseHandler.success(repo.getAlertMessages(),errorManager))
+                _alertsVal.postValue(ResponseHandler.success(repo.getAlertMessages(),errorManager))
             } catch (e: Exception) {
-                getAlertsVal.postValue(ResponseHandler.failure(e))
+                _alertsVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

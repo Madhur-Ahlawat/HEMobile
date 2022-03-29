@@ -613,6 +613,9 @@
     <string name="no_data_to_display">No Data to display</string>
     <string name="vehicle_reg_num">Vehicle registration number: %s</string>
     <string name="country_reg">Country of registration %s</string>
+    <string name="txt_view_crossings">View crossings</string>
+    <string name="txt_view_crossing"><![CDATA[View crossing >]]></string>
+    <string name="str_account_type">Account type</string>
 
 </resources>
 
