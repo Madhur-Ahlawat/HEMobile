@@ -104,7 +104,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                     findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment, bundle)
                 } else if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
                     val bundle =  Bundle()
-                    bundle.putBoolean("IsAccountVehicle", true)
+                    bundle.putBoolean("isNonUKVehicleUpdating", true)
                     findNavController().navigate(R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment, bundle)
                 }
             }

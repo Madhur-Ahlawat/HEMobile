@@ -40,15 +40,16 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private var isAccountVehicle: Boolean? = false
     private var pos: Int = 0
     private val createAccVehicleViewModel: CreateAccountVehicleViewModel by viewModels()
+    private var isNonUKVehicleUpdating: Boolean? = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleListBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Log.e("init", "test")
 
         val buttonVisibility = arguments?.getBoolean(Constants.DATA, false) == true
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
+        isNonUKVehicleUpdating = arguments?.getBoolean("isNonUKVehicleUpdating")
 
         if (buttonVisibility) {
             binding.addVehicleBtn.gone()
@@ -60,16 +61,15 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     override fun initCtrl() {
-        Log.e("initctrl", "test")
-
         binding.addVehicleBtn.setOnClickListener(this)
         binding.removeVehicleBtn.setOnClickListener(this)
 
-        if (isAccountVehicle == true) {
+        if (isAccountVehicle == true || isNonUKVehicleUpdating == true) {
             hitCreateAccVehicleList()
             binding.addVehicleBtn.text = resources.getString(R.string.str_confirm)
             binding.removeVehicleBtn.text = resources.getString(R.string.not_vehicle)
-        } else {
+        }
+        else {
             binding.addVehicleBtn.text = resources.getString(R.string.str_add_another_vehicle)
             binding.removeVehicleBtn.text = resources.getString(R.string.str_remove_vehicle)
             getVehicleListData()
@@ -77,8 +77,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun hitCreateAccVehicleList() {
-        Log.e("hitCreateAccVehicleList", "test")
-
         loader?.show(requireActivity().supportFragmentManager, "")
 
         for (i in VehicleHelper.list?.indices!!) {
@@ -89,7 +87,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                     Constants.AGENCY_ID
                 )
             } else {
-
                 val vehicleRes = VehicleHelper.list?.get(i)
                 if(!mList.contains(vehicleRes))
                 mList.add(vehicleRes)
@@ -101,7 +98,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun getVehicleListData() {
-        Log.e("getVehicleListData", "test")
 
         loader?.show(requireActivity().supportFragmentManager, "")
         vehicleMgmtViewModel.getVehicleInformationApi()
@@ -110,14 +106,20 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.addVehicleBtn -> {
-                if(isAccountVehicle == true){
-                    findNavController().navigate(R.id.action_createAccVehicleList_to_choosePaymentFragment)
-                }else {
-                    AddVehicleDialog.newInstance(
-                        getString(R.string.str_title),
-                        getString(R.string.str_sub_title),
-                        this
-                    ).show(childFragmentManager, AddVehicleDialog.TAG)
+                when {
+                    isAccountVehicle == true -> {
+                        findNavController().navigate(R.id.action_createAccVehicleList_to_choosePaymentFragment)
+                    }
+                    isNonUKVehicleUpdating == true -> {
+                        findNavController().navigate(R.id.action_NonUkDropDownVehicleListFragment_to_choosePaymentFragment)
+                    }
+                    else -> {
+                        AddVehicleDialog.newInstance(
+                            getString(R.string.str_title),
+                            getString(R.string.str_sub_title),
+                            this
+                        ).show(childFragmentManager, AddVehicleDialog.TAG)
+                    }
                 }
             }
             R.id.removeVehicleBtn -> {
@@ -148,7 +150,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     private fun handleDeleteVehicle(resource: Resource<EmptyApiResponse?>?) {
         loader?.dismiss()
-        Log.e("handleDeleteVehicle", "test")
 
         when (resource) {
             is Resource.Success -> {
@@ -167,7 +168,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
         loader?.dismiss()
-        Log.e("handleVehicleListData", "test")
 
         when (resource) {
             is Resource.Success -> {
@@ -191,7 +191,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private fun handleCreateAccVehicleResponse(resource: Resource<VehicleInfoDetails?>?) {
         try {
             loader?.dismiss()
-            Log.e("handleCreateAccVehicleResponse", "test")
 
             when (resource) {
                 is Resource.Success -> {
@@ -228,7 +227,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
 
     private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
-        Log.e("setVehicleListAdapter", "test")
 
         this.mList = mList
         mAdapter = VehicleListAdapter(requireContext(), this)
@@ -245,7 +243,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     override fun onItemClick(details: VehicleResponse?, pos: Int) {
-        Log.e("onItemClick", "test")
 
         details?.isExpanded = details?.isExpanded != true
         mList[pos]?.isExpanded = details?.isExpanded
