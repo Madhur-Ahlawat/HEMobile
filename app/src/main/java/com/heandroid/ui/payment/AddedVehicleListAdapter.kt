@@ -14,9 +14,9 @@ import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 class AddedVehicleListAdapter(var mListener: ItemClickListener) :
     RecyclerView.Adapter<AddedVehicleListAdapter.VehicleViewHolder>() {
 
-    var vehicleList: List<VehicleResponse> = mutableListOf()
+    var vehicleList: List<VehicleResponse?>? = mutableListOf()
 
-    fun setList(list: List<VehicleResponse>?) {
+    fun setList(list: MutableList<VehicleResponse?>?) {
         if (list != null) {
             vehicleList = list
         }
@@ -28,9 +28,9 @@ class AddedVehicleListAdapter(var mListener: ItemClickListener) :
         private val vrmCountryTxt: AppCompatTextView = itemView.findViewById(R.id.vrm_country)
         val deleteImg: AppCompatImageView = itemView.findViewById(R.id.delete_img)
 
-        fun setView(vehicleItem: VehicleResponse) {
-            vrmNoTxt.text = vehicleItem.plateInfo.number
-            vrmCountryTxt.text = vehicleItem.plateInfo.country
+        fun setView(vehicleItem: VehicleResponse?) {
+            vrmNoTxt.text = vehicleItem?.plateInfo?.number
+            vrmCountryTxt.text = vehicleItem?.plateInfo?.country
         }
 
     }
@@ -42,7 +42,7 @@ class AddedVehicleListAdapter(var mListener: ItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {
-        val vehicleItem = vehicleList[position]
+        val vehicleItem = vehicleList?.get(position)
         holder.setView(vehicleItem)
         holder.deleteImg.setOnClickListener {
             mListener.onItemDeleteClick(vehicleItem, holder.absoluteAdapterPosition)
@@ -54,6 +54,6 @@ class AddedVehicleListAdapter(var mListener: ItemClickListener) :
     }
 
     override fun getItemCount(): Int {
-        return vehicleList.size
+        return vehicleList?.size ?: 0
     }
 }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
 
     private lateinit var removeAdapter : RemoveVehicleDialogAdapter
-    private var selectedVehicleList = mutableListOf<String>()
+    private var selectedVehicleList = mutableListOf<String?>()
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?) =
         DialogRemoveVehicleBinding.inflate(inflater, container, false)
@@ -56,7 +56,7 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
         }
     }
 
-    fun addRemoveVehicleData(id : String){
+    fun addRemoveVehicleData(id : String?){
         if (selectedVehicleList.contains(id)){
             selectedVehicleList.remove(id)
         } else {

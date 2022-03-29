@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/emailVerification">
+    app:startDestination="@id/findYourVehicleFragment">
 
 
    <!-- Step 1 -->
@@ -138,8 +138,13 @@
         <action
             android:id="@+id/action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2"
             app:destination="@id/makePaymentAddVehicleFragment2" />
+
+        <action
+            android:id="@+id/action_findYourVehicleFragment_to_callNonUkVehicleAddFragment"
+            app:destination="@id/callNonUkVehicleAdd"/>
     </fragment>
 
+    <!-- UK Vehicle -->
     <fragment
         android:id="@+id/makePaymentAddVehicleFragment2"
         android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
@@ -148,13 +153,82 @@
         >
 
         <action
-            android:id="@+id/action_showVehicleDetailsFragment_to_CreateAccountVehicleDetailsFragment"
-            app:destination="@id/showVehicleDetailsFragment" />
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment"
+            app:destination="@id/createAccountVehicleList" />
+
+        <action
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_callNonUkVehicleAdd"
+            app:destination="@id/callNonUkVehicleAdd" />
 
     </fragment>
 
+    <fragment
+        android:id="@+id/createAccountVehicleList"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list">
+
+        <action
+            android:id="@+id/action_createAccVehicleList_to_choosePaymentFragment"
+            app:destination="@id/choosePaymentFragment" />
+
+        <action
+            android:id="@+id/action_createAccVehicleList_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+    </fragment>
+
+    <!-- Non-UK Vehicle -->
+    <fragment
+        android:id="@+id/callNonUkVehicleAdd"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:label="AddVehicleDetailsFragment"
+        tools:layout="@layout/fragment_add_vehicle_details">
+
+        <action
+            android:id="@+id/action_callNonUkVehicleAdd_to_non_UK_VehicleClassesFragment"
+            app:destination="@id/non_UK_VehicleClassesFragment" />
+    </fragment>
 
     <fragment
+        android:id="@+id/non_UK_VehicleClassesFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:label="NonUKVehicleClassesFragment"
+        tools:layout="@layout/fragment_add_vehicle_classes">
+
+        <action
+            android:id="@+id/action_nonUKVehicleClassFragment_to_nonUKVehicleListFragment"
+            app:destination="@id/ukAndNonUkVehicleListFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ukAndNonUkVehicleListFragment"
+        android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
+        android:label="MakePaymentAddVehicleFragment"
+        tools:layout="@layout/fragment_make_payment_add_vehicle">
+
+        <action
+            android:id="@+id/action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment"
+            app:destination="@id/NonUkDropDownVehicleListFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/NonUkDropDownVehicleListFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list">
+
+        <action
+            android:id="@+id/action_NonUkDropDownVehicleListFragment_to_choosePaymentFragment"
+            app:destination="@id/choosePaymentFragment"/>
+
+        <action
+            android:id="@+id/action_NonUkDropDownVehicleListFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+    </fragment>
+
+    <!--<fragment
         android:id="@+id/showVehicleDetailsFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehicleDetailsFragment"
         android:label="ShowVehicleDetailsFragment"
@@ -179,7 +253,7 @@
             android:id="@+id/action_showVehicleDetailsFragment_to_choosePaymentFragment"
             app:destination="@id/choosePaymentFragment" />
 
-    </fragment>
+    </fragment> -->
 
     <!-- Step 5 -->
     <fragment

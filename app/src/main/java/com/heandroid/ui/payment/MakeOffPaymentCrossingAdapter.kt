@@ -42,7 +42,7 @@ class MakeOffPaymentCrossingAdapter(private val context: Context?,
                     }
                 }
                 binding.tvAmount.text=context?.getString(R.string.price,""+price)
-                binding.tvVehicleNo.text=plateInfo.number
+                binding.tvVehicleNo.text=plateInfo?.number
                 binding.tvFutureCrossingQty.text=quantity.toString()
                 binding.cvMain.setOnClickListener(this@MyViewHolder)
                 binding.ivAdd.setOnClickListener(this@MyViewHolder)

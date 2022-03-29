@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
+import com.heandroid.data.model.account.CreateAccountNonVehicleModel
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.databinding.FragmentCreateAccountFindVehicleBinding
 import com.heandroid.ui.base.BaseFragment
@@ -20,6 +21,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -28,7 +30,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     private var isEnable: Boolean? = false
     private var isAccountVehicle = false
-  //  private val viewModel: CreateAccountVechileViewModel by viewModels()
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
 
@@ -82,13 +84,35 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
     when (v?.id) {
         R.id.continue_btn -> {
-            isAccountVehicle = true
-            val bundle = Bundle()
-            bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
-            bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
-            bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
-            findNavController().navigate(R.id.action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2, bundle)
 
+            var country = "UK"
+            if (binding.addVrmInput.text.toString().isNotEmpty()) {
+                country = if (!binding.switchView.isChecked) {
+                    "Non-UK"
+                } else {
+                    "UK"
+                }
+
+            if(country == "UK"){
+                isAccountVehicle = true
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
+                bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
+                findNavController().navigate(R.id.action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2, bundle)
+            }else {
+                val createAccountNonVehicleModel = CreateAccountNonVehicleModel()
+                createAccountNonVehicleModel.plateCountry = "Non-UK"
+                createAccountNonVehicleModel.vehiclePlate = binding.addVrmInput.text.toString()
+                createAccountNonVehicleModel.isFromCreateNonVehicleAccount = true
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
+                findNavController().navigate(R.id.action_findYourVehicleFragment_to_callNonUkVehicleAddFragment, bundle)
+            }
+
+            }else {
+                requireContext().showToast(   "Please enter your vehicle number")
+            }
         }
     }
     }

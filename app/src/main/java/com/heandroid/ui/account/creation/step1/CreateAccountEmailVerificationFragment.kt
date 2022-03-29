@@ -32,8 +32,8 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
-
     override fun init() {
+        VehicleHelper.list?.clear()
         requestModel = CreateAccountRequestModel(accountType = "", address1 = "", planType = null, billingAddressLine1 = "",
                                                  billingAddressLine2 = "", cardCity = "", cardFirstName = "", cardLastName = "",
                                                  cardMiddleName = "", cardStateType = "", cardZipCode = "",

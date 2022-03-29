@@ -133,13 +133,13 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {
+    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
 
     }
 
-    override fun onItemClick(details: VehicleResponse, pos: Int) {
-        details.isExpanded = !details.isExpanded
-        mList[pos]?.isExpanded = details.isExpanded
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
+        details?.isExpanded = details?.isExpanded != true
+        mList[pos]?.isExpanded = details?.isExpanded
         mAdapter.notifyItemChanged(pos)
     }
 
