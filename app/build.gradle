@@ -99,6 +99,14 @@ android {
         def constraintLyt = '2.0.4'
         def legacySupport ='1.0.0'
         def navFragment = '2.3.5'
+        def jUnit = '4.13.2'
+        def jUnitTest = '1.1.3'
+        def espressoCore = '3.4.0'
+        def googleTruth = '1.0.1'
+        def gson = '2.8.6'
+        def retrofit = '2.9.0'
+        def okHttp = '4.9.0'
+        def conscrypt = '2.4.0'
 
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -112,12 +120,12 @@ android {
         implementation "androidx.navigation:navigation-ui-ktx:$navFragment"
         implementation "androidx.navigation:navigation-runtime-ktx:$navFragment"
 
-        testImplementation 'junit:junit:4.13.2'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+        testImplementation "junit:junit:$jUnit"
+        androidTestImplementation "androidx.test.ext:junit:$jUnitTest"
+        androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
 
-        testImplementation 'com.google.truth:truth:1.0.1'
-        androidTestImplementation 'com.google.truth:truth:1.0.1'
+        testImplementation "com.google.truth:truth:$googleTruth"
+        androidTestImplementation "com.google.truth:truth:$googleTruth"
 
         // ViewModel
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
@@ -125,17 +133,17 @@ android {
         // LiveData
         implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 
-        implementation 'com.google.code.gson:gson:2.8.6'
+        implementation "com.google.code.gson:gson:$gson"
 
         // Network
-        implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-        implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-        implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+        implementation "com.squareup.retrofit2:retrofit:$retrofit"
+        implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+        implementation "com.squareup.okhttp3:okhttp:$okHttp"
+        implementation "com.squareup.okhttp3:logging-interceptor:$okHttp"
 
 
-        implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-        implementation 'org.conscrypt:conscrypt-android:2.4.0'
+        implementation "com.squareup.okhttp3:logging-interceptor:$okHttp"
+        implementation "org.conscrypt:conscrypt-android:$conscrypt"
 
         // Annotation processor
         //kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
@@ -144,7 +152,6 @@ android {
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
         //UI
-        implementation 'com.google.android.material:material:1.2.1'
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
