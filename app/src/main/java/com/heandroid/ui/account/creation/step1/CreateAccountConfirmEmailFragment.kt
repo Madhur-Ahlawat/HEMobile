@@ -32,7 +32,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
 
-    private var refId: Long? = null
     private var requestModel : CreateAccountRequestModel? =null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
@@ -40,7 +39,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     override fun init() {
         requestModel = arguments?.getParcelable(DATA)
-        refId = arguments?.getLong(Constants.REFERENCE_ID,0)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()
@@ -79,7 +77,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request = ConfirmEmailRequest(refId.toString(), requestModel?.emailAddress?:"", binding.etCode.text.toString().trim())
+        val request = ConfirmEmailRequest(requestModel?.referenceId?.toLong()?:0, requestModel?.emailAddress?:"", binding.etCode.text.toString().trim())
         createAccountViewModel.confirmEmailApi(request)
     }
 
@@ -95,21 +93,21 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if(resource.data?.status?.equals("500")==true){
-                    showError(binding.root,resource.data.message)
-                }else{
-                    val bundle = Bundle()
-                    bundle.putParcelable(DATA,requestModel)
-                    findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
-                }
+                if(resource.data?.status?.equals("500")==true) showError(binding.root,resource.data.message)
+                else  loadFragment()
             }
-            is Resource.DataError -> {
-                val bundle = Bundle()
-                bundle.putParcelable(DATA,requestModel)
-                findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
+            is Resource.DataError -> { loadFragment()
             //    showError(binding.root, resource.errorMsg)
             }
         }}catch (e: Exception){}
+    }
+
+    private fun loadFragment() {
+        requestModel?.securityCd = binding.etCode.text.toString().trim()
+        val bundle = Bundle()
+        bundle.putParcelable(DATA,requestModel)
+        findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
+
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
@@ -118,7 +116,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             when (resource) {
                 is Resource.Success -> {
                     requireContext().showToast("code sent successfully")
-                    refId=resource.data?.referenceId?:0
+                    requestModel?.referenceId=resource.data?.referenceId?:""
                 }
                 is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }

@@ -23,11 +23,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
+
     @Provides
     @Singleton
-   fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-}
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY) }
 
     @Provides
     @Singleton
@@ -53,21 +53,18 @@ object ApiModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
-
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(NullOnEmptyConverterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
     }
-
-
 
     @Provides
     @Singleton

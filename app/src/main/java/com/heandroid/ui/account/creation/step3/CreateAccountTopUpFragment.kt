@@ -15,6 +15,7 @@ import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -30,7 +31,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
 
     override fun initCtrl() {
         binding.apply {
-            btnAction.setOnClickListener(this@CreateAccountTopUpFragment)
+            btnAction.setOnClickListener(this@CreateAccountTopUpFragment )
             rbOptions.setOnCheckedChangeListener(this@CreateAccountTopUpFragment)
         }
     }
@@ -54,6 +55,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
         binding.enable=true
         when(group?.checkedRadioButtonId){
             R.id.mrbYes ->{
+
                 binding.clNoDes.gone()
                 binding.clYesDes.visible()
                 model?.thresholdAmount=10.0
