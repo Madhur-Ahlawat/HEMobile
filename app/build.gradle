@@ -92,18 +92,25 @@ android {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
+        def coreKtx = '1.6.0'
+        def testCoreKtx = '1.3.0'
+        def appCompat = '1.3.0'
+        def material = '1.4.0'
+        def constraintLyt = '2.0.4'
+        def legacySupport ='1.0.0'
+        def navFragment = '2.3.5'
 
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation 'androidx.core:core-ktx:1.6.0'
-        implementation 'androidx.appcompat:appcompat:1.3.0'
-        implementation 'com.google.android.material:material:1.4.0'
-        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-        implementation 'androidx.test:core-ktx:1.3.0'
-        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-        implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-        implementation 'androidx.navigation:navigation-runtime-ktx:2.3.5'
+        implementation "androidx.core:core-ktx:$coreKtx"
+        implementation "androidx.appcompat:appcompat:$appCompat"
+        implementation "com.google.android.material:material:$material"
+        implementation "androidx.constraintlayout:constraintlayout:$constraintLyt"
+        implementation "androidx.test:core-ktx:$testCoreKtx"
+        implementation "androidx.legacy:legacy-support-v4:$legacySupport"
+        implementation "androidx.navigation:navigation-fragment-ktx:$navFragment"
+        implementation "androidx.navigation:navigation-ui-ktx:$navFragment"
+        implementation "androidx.navigation:navigation-runtime-ktx:$navFragment"
 
         testImplementation 'junit:junit:4.13.2'
         androidTestImplementation 'androidx.test.ext:junit:1.1.3'
