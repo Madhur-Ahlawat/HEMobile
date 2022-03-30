@@ -43,8 +43,8 @@ class CreateAccountVehicleDetailsFragment : BaseFragment<FragmentCreateAccountVe
         val bundle = Bundle()
         bundle.putParcelable(DATA,arguments?.getParcelable(DATA))
         when(v?.id){
-            R.id.confirm_btn_vehicle ->{ findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment,bundle) }
-            R.id.not_vehicle -> { findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_findYourVehicleFragment,bundle) }
+        //    R.id.confirm_btn_vehicle ->{ findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment,bundle) }
+        //    R.id.not_vehicle -> { findNavController().navigate(R.id.action_showVehicleDetailsFragment_to_findYourVehicleFragment,bundle) }
         }
     }
 }

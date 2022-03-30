@@ -25,6 +25,7 @@ import com.heandroid.utils.common.Constants.CREATE_ACCOUNT
 import com.heandroid.utils.common.Constants.ONE_OFF_PAYMENT
 import com.heandroid.utils.common.Constants.RESOLVE_PENALTY
 import com.heandroid.utils.common.Constants.VIEW_CHARGES
+import com.heandroid.utils.common.VehicleHelper
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,12 +56,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
             R.id.rbCreateAccount -> {
-
+                VehicleHelper.list?.clear()
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = CREATE_ACCOUNT
             }
 
             R.id.rbMakeOffPayment -> {
+                VehicleHelper.list?.clear()
                 val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

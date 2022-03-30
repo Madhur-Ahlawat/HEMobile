@@ -68,7 +68,7 @@ object DateUtils {
     }
 
     //01/10/2022
-    fun convertDateFormat(date: String, type: Int): String {
+    fun convertDateFormat(date: String?, type: Int?): String {
         val dateFormatter: DateFormat?
         try {
             dateFormatter = when (type) {

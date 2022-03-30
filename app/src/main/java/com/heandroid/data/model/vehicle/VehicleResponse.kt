@@ -13,18 +13,18 @@ import java.io.Serializable
 data class VehicleResponse(
 
     @SerializedName("newPlateInfo")
-    var newPlateInfo: PlateInfoResponse,
+    var newPlateInfo: PlateInfoResponse?,
 
     @SerializedName("plateInfo")
-    var plateInfo: PlateInfoResponse,
+    var plateInfo: PlateInfoResponse?,
 
     @SerializedName("vehicleInfo")
-    var vehicleInfo: VehicleInfoResponse,
+    var vehicleInfo: VehicleInfoResponse?,
 
-    var isExpanded: Boolean = false,
+    var isExpanded: Boolean? = false,
 
-    var quantity : Int =0,
-    var price : Double =0.0,
+    var quantity : Int? =0,
+    var price : Double? =0.0,
 
 ) : Parcelable
 

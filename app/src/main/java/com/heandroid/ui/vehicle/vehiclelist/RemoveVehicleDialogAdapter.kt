@@ -23,7 +23,7 @@ class RemoveVehicleDialogAdapter(private val fragment: Fragment) :
     class RemoveVehicleHolder(var binding: ItemRemoveVehicleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setView(vehicleItem: VehicleResponse) {
-            binding.vehicleName.text = vehicleItem.plateInfo.number
+            binding.vehicleName.text = vehicleItem.plateInfo?.number
         }
     }
 
@@ -39,7 +39,7 @@ class RemoveVehicleDialogAdapter(private val fragment: Fragment) :
             holder.setView(vehicleItem)
             holder.binding.vehicleCheckBox.setOnCheckedChangeListener { _, _ ->
                 if(fragment is RemoveVehicleDialog){
-                    fragment.addRemoveVehicleData(it.vehicleInfo.rowId)
+                    fragment.addRemoveVehicleData(it.vehicleInfo?.rowId)
                 }
             }
         }

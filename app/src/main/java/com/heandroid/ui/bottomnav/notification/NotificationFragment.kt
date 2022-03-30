@@ -21,7 +21,6 @@ import com.heandroid.utils.common.*
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),FilterDialogListener, View.OnClickListener{
 
-   /* NotificationItemClick*/
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog?=null
     private val TAG = "NotificationFragment"
@@ -39,14 +38,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),FilterD
     }
 
     override fun initCtrl() {
-       binding.apply {
-
-//           takeAction.setOnClickListener(this@NotificationFragment)
-//           inOrder.setOnClickListener(this@NotificationFragment)
-//           others.setOnClickListener(this@NotificationFragment)
-//           filterTxt.setOnClickListener(this@NotificationFragment)
-//           clearAll.setOnClickListener(this@NotificationFragment)
-       }
     }
 
     override fun observer() {

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.CreateAccountNonVehicleModel
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
@@ -31,6 +32,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private var loader: LoaderDialog? = null
     private var mClassType = ""
     private var isFromPaymentScreen = false
+    private var createAccountNonVehicleModel: CreateAccountNonVehicleModel? = null
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,7 +46,14 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
         isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
+
+        if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
+            binding.title.text = "Vehicle registration number: ${createAccountNonVehicleModel?.vehiclePlate}"
+        }else {
+            binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        }
+
         binding.classARadioButton.isChecked = true
         mClassType = "1"
         binding.classADesc.visible()
@@ -116,12 +126,12 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         binding.continueButton.setOnClickListener {
 
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                 if (isFromPaymentScreen) {
+                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     val vehicleData = mVehicleDetails
                     vehicleData?.apply {
-                        vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-                        vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
+                        vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+                        vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
                     }
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, vehicleData)
@@ -129,13 +139,21 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     }
                     findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
                     return@setOnClickListener
-                } else {
+                }
+                else if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
+                    createAccountNonVehicleModel?.plateTypeDesc = mClassType
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
+                    findNavController().navigate(R.id.action_nonUKVehicleClassFragment_to_nonUKVehicleListFragment, bundle)
+                }
+                else {
                     VehicleAddConfirmDialog.newInstance(
                         mVehicleDetails,
                         this
                     ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
                 }
-            } else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
+            }
+            else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 Snackbar.make(
                     binding.classAView,
                     "Please select the checkbox",
@@ -163,15 +181,15 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
     override fun onAddClick(details: VehicleResponse) {
         mVehicleDetails?.apply {
-            plateInfo.state = "HE"
-            plateInfo.type = "STANDARD"
-            plateInfo.vehicleGroup = ""
-            plateInfo.vehicleComments = "new Vehicle"
-            plateInfo.planName = ""
-            vehicleInfo.year = "2022"
-            vehicleInfo.typeId = null
-            vehicleInfo.typeDescription = "REGULAR"
-            vehicleInfo.effectiveStartDate = "" //Utils.currentDateAndTime()
+            plateInfo?.state = "HE"
+            plateInfo?.type = "STANDARD"
+            plateInfo?.vehicleGroup = ""
+            plateInfo?.vehicleComments = "new Vehicle"
+            plateInfo?.planName = ""
+            vehicleInfo?.year = "2022"
+            vehicleInfo?.typeId = null
+            vehicleInfo?.typeDescription = "REGULAR"
+            vehicleInfo?.effectiveStartDate = "" //Utils.currentDateAndTime()
         }
 
         loader?.show(requireActivity().supportFragmentManager, "")
@@ -196,8 +214,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private fun navigateToAddVehicleDoneScreen() {
         val vehicleData = mVehicleDetails
         vehicleData?.apply {
-            vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-            vehicleInfo.effectiveStartDate = Utils.currentDateAndTime()
+            vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, vehicleData)

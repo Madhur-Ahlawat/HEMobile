@@ -31,11 +31,11 @@ class VehicleListAdapter(
         private val mRecyclerView: RecyclerView = itemView.findViewById(R.id.recycler_view)
 //        val cardViewTop: MaterialCardView = itemView.findViewById(R.id.cardview_top)
 
-        fun setView(context: Context, vehicleItem: VehicleResponse) {
-            vrmNoTxt.text = vehicleItem.plateInfo.number
+        fun setView(context: Context, vehicleItem: VehicleResponse?) {
+            vrmNoTxt.text = vehicleItem?.plateInfo?.number
 //            arrowImg.animate().rotation(180f).start()
 
-            if (vehicleItem.isExpanded) {
+            if (vehicleItem?.isExpanded == true) {
                 mRecyclerView.visibility = View.VISIBLE
                 arrowImg.animate().rotation(180f).start()
             } else {
@@ -50,29 +50,29 @@ class VehicleListAdapter(
                 when (i) {
 
                     0 -> {
-                        val mem0 = VehicleTitleAndSub("Country", vehicleItem.plateInfo.country)
+                        val mem0 = VehicleTitleAndSub("Country", vehicleItem?.plateInfo?.country)
                         mList.add(mem0)
                     }
 
                     1 -> {
-                        val mem1 = VehicleTitleAndSub("Make", vehicleItem.vehicleInfo.make)
+                        val mem1 = VehicleTitleAndSub("Make", vehicleItem?.vehicleInfo?.make)
                         mList.add(mem1)
                     }
                     2 -> {
-                        val mem2 = VehicleTitleAndSub("Model", vehicleItem.vehicleInfo.model)
+                        val mem2 = VehicleTitleAndSub("Model", vehicleItem?.vehicleInfo?.model)
                         mList.add(mem2)
                     }
                     3 -> {
-                        val mem2 = VehicleTitleAndSub("Colour", vehicleItem.vehicleInfo.color)
+                        val mem2 = VehicleTitleAndSub("Colour", vehicleItem?.vehicleInfo?.color)
                         mList.add(mem2)
                     }
                     4 -> {
                         val mem2 =
-                            VehicleTitleAndSub("Class", vehicleItem.vehicleInfo.vehicleClassDesc)
+                            VehicleTitleAndSub("Class", vehicleItem?.vehicleInfo?.vehicleClassDesc)
                         mList.add(mem2)
                     }
                     5 -> {
-                        val mem2 = VehicleTitleAndSub("DateAdded", DateUtils.convertDateFormat(vehicleItem.vehicleInfo.effectiveStartDate,1))
+                        val mem2 = VehicleTitleAndSub("DateAdded", DateUtils.convertDateFormat(vehicleItem?.vehicleInfo?.effectiveStartDate,1))
                         mList.add(mem2)
                     }
                 }

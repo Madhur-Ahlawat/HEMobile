@@ -1,27 +1,35 @@
 package com.heandroid.ui.landing
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
+import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.databinding.FragmentStartNowBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
+import com.heandroid.ui.websiteservice.WebSiteServiceViewModel
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.extn.gone
+import com.heandroid.utils.common.ErrorUtil
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickListener {
 
     private var screenType: String = ""
-
+    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
+    private var loader: LoaderDialog?=null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentStartNowBinding {
         return FragmentStartNowBinding.inflate(inflater, container, false)
@@ -32,11 +40,13 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
         toolbar.findViewById<TextView>(R.id.btn_login).visible()
         requireActivity().setRightButtonText(getString(R.string.login))
-
     }
 
     override fun init() {
-
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, "")
+        webServiceViewModel.tollRates()
     }
 
     override fun initCtrl() {
@@ -52,7 +62,28 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     }
 
     override fun observer() {
+        observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
+    }
 
+    private fun handleMaintenanceNotification(resource :Resource<WebSiteStatus?>){
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.apply {
+                    if (state == "LIVE" && title != null) {
+                          binding.maintainanceTitle.text = title
+                          if(message != null)
+                          binding.maintainanceDesc.text = message
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+                // do nothing
+            }
+        }
     }
 
     override fun onClick(v: View?) {
