@@ -78,8 +78,7 @@ object StorageHelper {
         val fileExtension =
             if (selectionType == Constants.PDF) Constants.PDF_EXTENSION else Constants.CSV_EXTENSION
         try {
-            val filePath =
-                "${activity.getExternalFilesDir(null)}${File.separator}${
+            val filePath ="${activity.getExternalFilesDir(null)}${File.separator}${
                     System.currentTimeMillis()
                 }$fileExtension"
 

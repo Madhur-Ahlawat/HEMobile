@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/drawable_bg_maintainance"
             app:layout_constraintEnd_toEndOf="parent"

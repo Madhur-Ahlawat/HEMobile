@@ -45,18 +45,11 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun init() {
         model = arguments?.getParcelable("data")
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
-
         binding.webview.loadSetting("file:///android_asset/NMI.html")
-        binding.webview.gone()
-
-        if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
-        else binding.tvPaymentAmount.visible()
     }
 
     override fun initCtrl() {
         binding.apply {
-            tieCardNo.addTextChangedListener(CardNumberFormatterTextWatcher())
-            tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
@@ -76,7 +69,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             }
         }
     }
-
 
     private val progressListener = object : WebViewClient(){
 
@@ -98,12 +90,15 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             val url: String = consoleMessage.message()
             val check: Boolean = "tokenType" in url
             if (check) {
+                if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
+                else binding.tvPaymentAmount.visible()
                 Toast.makeText(context, url, Toast.LENGTH_LONG).show()
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                Log.e("cardDetails",responseModel.toString())
                 model?.creditCExpMonth = responseModel.card.exp.substring(0, 1)
-                model?.creditCExpYear = responseModel.card.exp.substring(2, 3)
+                model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type
@@ -114,20 +109,20 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
                     1 -> {
                         model?.cardFirstName = fullName[0]
-                        model?.cardMiddleName = ""
-                        model?.cardLastName = ""
+                        model?.cardMiddleName = " "
+                        model?.cardLastName = " "
                     }
 
                     2 -> {
                         fullName[0].also { model?.cardFirstName = it }
-                        model?.cardMiddleName = ""
+                        model?.cardMiddleName = " "
                         fullName[1].also { model?.cardLastName = it }
                     }
 
                     3 -> {
                         fullName[0].also { model?.cardFirstName = it }
-                        fullName[1].also { model?.cardMiddleName = it }
-                        fullName[2].also { model?.cardLastName = it }
+                        fullName[1].also { model?.cardMiddleName = " $it" }
+                        fullName[2].also { model?.cardLastName = " $it" }
                     }
 
                     else -> {

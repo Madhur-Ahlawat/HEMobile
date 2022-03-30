@@ -18,6 +18,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -25,7 +26,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private val dashboardViewModel:DashboardViewModel by viewModels<DashboardViewModel>()
+    private val dashboardViewModel: DashboardViewModel  by viewModels()
 
     private var loader: LoaderDialog? = null
 
@@ -36,19 +37,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
 
     override fun init() {
-        binding.tvCrossingCount.text =
-            getString(R.string.str_two_crossing, "0")
+        binding.tvCrossingCount.text = getString(R.string.str_two_crossing, "0")
         binding.tvVehicleCount.text = getString(R.string.str_two_vehicle, "0")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
-        dashboardViewModel1.getVehicleInformationApi()
+        dashboardViewModel.getVehicleInformationApi()
         getCrossingData()
         getNotificationData()
     }
 
     private fun getNotificationData() {
-        dashboardViewModel1.getAlertsApi()
+        dashboardViewModel.getAlertsApi()
     }
 
     override fun initCtrl() {
@@ -74,6 +74,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         try {
+
             loader?.dismiss()
             when (resource) {
                 is Resource.Success -> {
@@ -85,17 +86,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                                 getString(R.string.str_two_crossing, count)
                         }
                     }
-                }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-                else -> {
+                    is Resource.DataError -> {
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
+                    else -> {
 
+                    }
                 }
             }
         } catch (e: Exception) {
-        }
 
+
+        }
     }
 
     private fun vehicleListResponse(status: Resource<List<VehicleResponse?>?>?) {
@@ -124,9 +126,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         val request = CrossingHistoryRequest(
             startIndex = 1,
             count = 1,
-            transactionType = Constants.ALL_TRANSACTION
+            transactionType = Constants.TOLL_TRANSACTION,
+            searchDate = Constants.TRANSACTION_DATE,
+            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
+            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
         )
-        dashboardViewModel1.crossingHistoryApiCall(request)
+        dashboardViewModel.crossingHistoryApiCall(request)
     }
 
     private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
@@ -147,6 +152,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
             }
         }
+
+//        val request = CrossingHistoryRequest(
+//            startIndex = 1,
+//            count = 1,
+//            transactionType = Constants.ALL_TRANSACTION
+//        )
+        dashboardViewModel.crossingHistoryApiCall(request)
     }
 
     private fun setNotificationAdapter(notificationList: List<AlertMessage>) {

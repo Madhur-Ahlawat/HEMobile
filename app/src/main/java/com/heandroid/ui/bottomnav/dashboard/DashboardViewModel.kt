@@ -13,10 +13,13 @@ import com.heandroid.data.repository.dashboard.DashBoardRepository
 import com.heandroid.model.RetrievePaymentListApiResponse
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Response
 import javax.inject.Inject
 
-class DashboardViewModel @Inject constructor(repository: DashBoardRepository) : BaseViewModel() {
+@HiltViewModel
+class DashboardViewModel @Inject constructor(private val repo: DashBoardRepository) : BaseViewModel() {
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal

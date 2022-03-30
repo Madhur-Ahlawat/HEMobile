@@ -1,5 +1,10 @@
 package com.heandroid.data.remote
 
+<<<<<<< HEAD
+=======
+import androidx.core.content.ContextCompat
+import com.heandroid.BuildConfig
+>>>>>>> 989058966ed1c2870a7dd8243a15612cacc78479
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountDetails
@@ -26,12 +31,19 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.profile.ProfileDetailModel
+import com.heandroid.data.model.profile.ProfileUpdateEmailModel
+import com.heandroid.data.model.profile.UpdateAccountPassword
+import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
+
+typealias  createAccountModel = com.heandroid.data.model.account.CreateAccountRequestModel
+typealias  respAccountModel = com.heandroid.data.model.account.CreateAccountResponseModel
 
 interface ApiService {
 
@@ -151,11 +163,22 @@ interface ApiService {
     @POST(CREATE_ACCOUNT)
     suspend fun createAccount(
         @Query("agencyId") agencyId: String = AGENCY_ID,
+<<<<<<< HEAD
         @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?
     ): Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(@Query("search") postCode: String): Response<List<DataAddress>>
+=======
+        @Body model: createAccountModel?
+    ): Response<respAccountModel?>?
+
+    @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
+    suspend fun getAddressListBasedOnPostalCode(
+        @Query("agencyId") agencyId: String = AGENCY_ID,
+        @Query("search") postCode: String
+    ): Response<List<DataAddress>>
+>>>>>>> 989058966ed1c2870a7dd8243a15612cacc78479
 
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getAccountFindVehicle(
@@ -164,7 +187,21 @@ interface ApiService {
     ): Response<VehicleInfoDetails?>?
 
     @POST(GET_GENERAL_ACCOUNT_SR_LIST)
-    suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>
+    suspend fun getCaseHistoryData(
+        @Body request: CaseEnquiryHistoryRequest?, @Query("agencyId") agencyId: String = AGENCY_ID
+    ): Response<CaseEnquiryHistoryResponse?>
+
+
+    @GET(ACCOUNT_DETAIL)
+    suspend fun accountDetail(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+
+
+    @PUT(EMAIL_VERIFICATION_FOR_UPDATION)
+    suspend fun emailValidationForUpdation(@Body model : ProfileUpdateEmailModel?) : Response<EmailVerificationResponse?>?
+
+
+    @PUT(UPDATE_PASSWORD)
+    suspend fun updatePassword(@Body model: UpdateAccountPassword?) : Response<UpdatePasswordResponseModel?>?
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData():Response<AccountDetails>

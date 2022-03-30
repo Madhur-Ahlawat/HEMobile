@@ -5,7 +5,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityContactDartChargeBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,14 @@ class ContactDartChargeActivity : BaseActivity<Any?>() {
 
         navController.graph = navGraph
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
+            finish()
+            startNormalActivity(HomeActivityMain::class.java)
+        }
     }
 
     override fun observeViewModel() {}

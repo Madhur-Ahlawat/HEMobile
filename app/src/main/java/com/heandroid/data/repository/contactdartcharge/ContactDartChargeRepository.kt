@@ -7,6 +7,6 @@ import javax.inject.Inject
 class ContactDartChargeRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getCaseHistoryDataApiCall(requestParam: CaseEnquiryHistoryRequest?) =
-        apiService.getCaseHistoryData(requestParam)
+        apiService.getCaseHistoryData(request=requestParam)
 
 }

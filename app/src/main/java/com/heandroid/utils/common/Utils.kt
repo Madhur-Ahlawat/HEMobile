@@ -1,27 +1,25 @@
 package com.heandroid.utils.common
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.ui.auth.session.SessionDialog
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.extn.changeBackgroundColor
 import com.heandroid.utils.extn.changeTextColor
 import com.heandroid.utils.logout.LogoutUtil
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object Utils {
+
     fun hasInternetConnection(application: BaseApplication): Boolean {
         val connectivityManager = application.getSystemService(
             Context.CONNECTIVITY_SERVICE
@@ -112,10 +110,13 @@ object Utils {
     }
 
     fun sessionExpired(context: AppCompatActivity) {
-        LogoutUtil.stopLogoutTimer()
-        val dialog=SessionDialog()
-        dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        dialog.show(context.supportFragmentManager,"")
+        try{
+            LogoutUtil.stopLogoutTimer()
+            val dialog=SessionDialog()
+            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            dialog.show(context.supportFragmentManager,"")
+
+        }catch (e: Exception){}
     }
 
 
@@ -144,6 +145,13 @@ object Utils {
                 tvTitle.changeBackgroundColor(R.color.color_DBD5E9)
             }
         }
+    }
+
+    fun isValidPassword(password: String?): Boolean {
+        val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$"
+        val pattern = Pattern.compile(PASSWORD_PATTERN)
+        val matcher: Matcher = pattern.matcher(password)
+        return matcher.matches()
     }
 
 }

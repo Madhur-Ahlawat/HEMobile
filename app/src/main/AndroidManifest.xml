@@ -54,6 +54,7 @@
             android:theme="@style/Theme.HEMobileWhite"
             />
         <activity android:name=".ui.account.profile.ProfileActivity"
+            android:theme="@style/Theme.HEMobileWhite"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.nominatedcontacts.NominatedContactActivity"
             android:screenOrientation="portrait"/>

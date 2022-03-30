@@ -18,6 +18,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.Utils.isValidPassword
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
@@ -31,8 +32,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
 
     private var model: CreateAccountRequestModel? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountPosswordBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPosswordBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = false
@@ -70,6 +70,8 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         hideKeyboard()
         when (v?.id) {
             R.id.btnAction -> {
+
+                if(isValidPassword(binding.tiePassword.text.toString().trim())){
                 model?.apply {
                     password = binding.tiePassword.text.toString().trim()
                 }
@@ -78,6 +80,14 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }
+            else {
+                showError(binding.root,"•\tMust begin with a letter\n" +
+                        "•\tBe at least 8 characters long\n" +
+                        "•\t1 uppercase letter\n" +
+                        "•\t1 lowercase letter\n" +
+                        "•\t1 number\n" +
+                        "•\t1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
+            }}
 
         }
     }

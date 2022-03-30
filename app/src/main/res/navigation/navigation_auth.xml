@@ -37,8 +37,6 @@
             app:destination="@id/chooseOptionFragment" />
     </fragment>
 
-
-
     <fragment
         android:id="@+id/chooseOptionFragment"
         android:name="com.heandroid.ui.auth.forgot.password.ChooseOptionForgotFragment"
