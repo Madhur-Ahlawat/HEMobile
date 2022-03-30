@@ -60,7 +60,7 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
         view?.let {
             when (it.id) {
                 R.id.btnContinue -> {
-                    findNavController().navigate(R.id.action_provideDetailsDartChargeFragment_to_caseDetailsDartChargeFragment)
+                    findNavController().navigate(R.id.action_provideDetailsDartChargeFragment_to_caseEnquiriesNewCheckFragment)
                 }
                 else -> { }
             }

@@ -19,6 +19,7 @@ fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle.()
     Intent(this, it).run {
         putExtras(Bundle().apply(extras))
         startActivity(this)
+        finish()
 
     }
 

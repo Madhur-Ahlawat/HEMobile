@@ -19,7 +19,7 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
     }
 
     override fun initCtrl() {
-        binding.makeEnquiry.setOnClickListener {
+        binding.rlCaseAndEnquiry.setOnClickListener {
             findNavController().navigate(R.id.action_contactDartCharge_to_dartChargeAccountTypeSelectionFragment)
         }
     }

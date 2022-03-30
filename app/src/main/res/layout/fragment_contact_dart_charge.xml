@@ -200,19 +200,39 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/makeEnquiry"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rl_case_and_enquiry"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:gravity="center"
-            android:padding="@dimen/_5sdp"
-            android:text="@string/str_make_enquiry"
-            android:textColor="@color/login_blue_border"
-            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@color/white"
+            android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rl_text_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/rl_text_phone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_cases_and_enquiry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_cases_and_enquiries"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

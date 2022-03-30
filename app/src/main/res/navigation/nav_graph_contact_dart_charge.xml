@@ -16,6 +16,8 @@
             android:id="@+id/action_contactDartCharge_to_dartChargeAccountTypeSelectionFragment"
             app:destination="@id/dartChargeAccountTypeSelectionFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/dartChargeAccountTypeSelectionFragment"
         android:name="com.heandroid.ui.startNow.contactdartcharge.DartChargeAccountTypeSelectionFragment"
@@ -31,9 +33,23 @@
         android:label="ProvideDetailsDartChargeFragment"
         tools:layout="@layout/fragment_provide_details_dart_charge">
         <action
-            android:id="@+id/action_provideDetailsDartChargeFragment_to_caseDetailsDartChargeFragment"
-            app:destination="@id/caseDetailsDartChargeFragment" />
+            android:id="@+id/action_provideDetailsDartChargeFragment_to_caseEnquiriesNewCheckFragment"
+            app:destination="@id/caseEnquiriesNewCheckFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/caseEnquiriesNewCheckFragment"
+        android:name="com.heandroid.ui.startNow.contactdartcharge.CaseEnquiriesNewCheckFragment"
+        android:label="CaseEnquiriesNewCheckFragment"
+        tools:layout="@layout/fragment_case_enquiries_options_what">
+        <action
+            android:id="@+id/action_caseEnquiriesNewCheckFragment_to_caseDetailsDartChargeFragment"
+            app:destination="@id/caseDetailsDartChargeFragment" />
+        <action
+            android:id="@+id/action_caseEnquiriesNewCheckFragment_to_newCaseCategoryFragment"
+            app:destination="@id/newCaseCategoryFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/caseDetailsDartChargeFragment"
         android:name="com.heandroid.ui.startNow.contactdartcharge.CaseDetailsDartChargeFragment"

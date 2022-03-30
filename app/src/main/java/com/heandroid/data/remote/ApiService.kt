@@ -36,6 +36,7 @@ import retrofit2.http.*
 
 typealias  createAccountModel = com.heandroid.data.model.account.CreateAccountRequestModel
 typealias  respAccountModel = com.heandroid.data.model.account.CreateAccountResponseModel
+
 interface ApiService {
 
 
@@ -170,6 +171,8 @@ interface ApiService {
     ): Response<VehicleInfoDetails?>?
 
     @POST(GET_GENERAL_ACCOUNT_SR_LIST)
-    suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>
+    suspend fun getCaseHistoryData(
+        @Body request: CaseEnquiryHistoryRequest?, @Query("agencyId") agencyId: String = AGENCY_ID
+    ): Response<CaseEnquiryHistoryResponse?>
 
 }

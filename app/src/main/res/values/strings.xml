@@ -613,6 +613,8 @@
     <string name="no_data_to_display">No Data to display</string>
     <string name="vehicle_reg_num">Vehicle registration number: %s</string>
     <string name="country_reg">Country of registration %s</string>
+    <string name="str_cases_and_enquiries">Cases and enquiry</string>
+    <string name="str_what_you_want_to_do">What you want to do</string>
 
 </resources>
 

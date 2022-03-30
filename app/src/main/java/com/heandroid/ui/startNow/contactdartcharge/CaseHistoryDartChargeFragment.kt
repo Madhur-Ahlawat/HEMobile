@@ -12,18 +12,18 @@ import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.databinding.*
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.logging.Logger
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartChargeBinding>(), View.OnClickListener {
+class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartChargeBinding>(),
+    View.OnClickListener {
 
     private lateinit var mAdapter: CaseHistoryAdapter
     private var loader: LoaderDialog? = null
@@ -42,8 +42,16 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
-//        getCaseHistoryApiData()
-        getCaseHistoryData()
+        Logg.logging("CaseHistoryDartChargeFragment","mValue ${(requireActivity() as ContactDartChargeActivity).mValue}")
+        if ((requireActivity() as ContactDartChargeActivity).mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
+            binding.btnGoStart.gone()
+            getCaseHistoryData()
+        } else {
+            getCaseHistoryApiData()
+            binding.btnGoStart.visible()
+
+        }
+
     }
 
     private fun getCaseHistoryApiData() {
@@ -115,6 +123,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                         binding.emptyDataMessage.gone()
                         showDataInView(it)
                     } else {
+                    //    getCaseHistoryData()
                         binding.emptyDataMessage.visible()
                     }
                 }

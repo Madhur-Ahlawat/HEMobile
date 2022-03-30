@@ -20,6 +20,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,9 +30,12 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
 
     private var screenType: String = ""
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentStartNowBinding {
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentStartNowBinding {
         return FragmentStartNowBinding.inflate(inflater, container, false)
     }
 
@@ -65,15 +69,17 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
         observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
     }
 
-    private fun handleMaintenanceNotification(resource :Resource<WebSiteStatus?>){
+    private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.apply {
                     if (state == "LIVE" && title != null) {
-                          binding.maintainanceTitle.text = title
-                          if(message != null)
-                          binding.maintainanceDesc.text = message
+                        binding.maintainanceTitle.text = title
+                        if (message != null)
+                            binding.maintainanceDesc.text = message
+                    } else {
+                        binding.maintainanceLyt.gone()
                     }
                 }
             }
