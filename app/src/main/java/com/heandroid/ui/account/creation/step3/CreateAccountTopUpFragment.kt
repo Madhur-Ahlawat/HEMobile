@@ -58,6 +58,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
 
                 binding.clNoDes.gone()
                 binding.clYesDes.visible()
+
                 model?.thresholdAmount=10.0
             }
             R.id.mrbNo ->{

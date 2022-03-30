@@ -22,7 +22,6 @@ import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
 
@@ -32,23 +31,23 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
-
     override fun init() {
-        requestModel = CreateAccountRequestModel(referenceId = "", securityCd = "", accountType = "", address1 = "", planType = null, billingAddressLine1 = "",
-                                                 billingAddressLine2 = "", cardCity = "", cardFirstName = "", cardLastName = "",
-                                                 cardMiddleName = "", cardStateType = "", cardZipCode = "",
-                                                 cellPhone = "", city = "", countryType = "", creditCExpMonth = "",
-                                                 creditCExpYear = "", creditCardNumber = "", creditCardType = "",
+       requestModel = CreateAccountRequestModel(referenceId = "", securityCd = "", accountType = "", address1 = "",
+                                                 planType = null , billingAddressLine1 = "" , billingAddressLine2 = "" , cardCity = "" ,
+                                                 cardFirstName = "" , cardLastName = "" , cardMiddleName = "" , cardStateType = "" ,
+                                                 cardZipCode = "" , cellPhone = "" , city = "" , countryType = "" , creditCExpMonth = "" ,
+                                                 creditCExpYear = "" , creditCardNumber = "" , creditCardType = "" ,
                                                  digitPin = "", emailAddress = "", eveningPhone = "", firstName = "",
                                                  ftvehicleList = null, lastName = "", maskedNumber = "",
                                                  password = "", replenishmentAmount = 0.0, securityCode = "",
                                                  smsOption = "", stateType = "", tcAccepted = "",
-                                                 thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "",enable = false)
+                                                 thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "", enable = false)
 
 
-        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+       binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+       loader = LoaderDialog()
+       loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     override fun initCtrl() {
@@ -68,15 +67,15 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
        loader?.dismiss()
        when (resource) {
             is Resource.Success -> {
-                if(resource.data?.statusCode?.equals("0")==true){
+                if(resource.data?.statusCode?.equals("0")==true) {
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
                     requestModel?.referenceId=resource.data.referenceId
                     val bundle = Bundle().apply {
                         putParcelable(DATA,requestModel)
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
-                }else{ showError(binding.root,resource.data?.message) }
-
+                }
+                else{ showError(binding.root,resource.data?.message) }
             }
             is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
       }}catch (e: Exception){}
@@ -84,12 +83,12 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_action -> {
-                hideKeyboard()
-                sendEmailVerificationRequest()
-            }
-        }
+       when (v?.id) {
+           R.id.btn_action -> {
+               hideKeyboard()
+               sendEmailVerificationRequest()
+           }
+       }
     }
 
     private fun sendEmailVerificationRequest() {
@@ -99,7 +98,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     }
 
     private fun isEnable() {
-        if (Utils.isEmailValid(binding.etEmail.text.toString())) binding.model = EmailValidationModel(enable = true, email = binding.etEmail.text.toString(), "")
+        if (Utils.isEmailValid(binding.etEmail.text.toString())) binding.model = EmailValidationModel(enable = true , email = binding.etEmail.text.toString(), "")
         else binding.model = EmailValidationModel(enable = false, email = binding.etEmail.text.toString(), "")
     }
 }

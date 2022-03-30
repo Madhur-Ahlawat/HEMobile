@@ -8,64 +8,31 @@
         <variable
             name="enable"
             type="Boolean" />
+
+        <variable
+            name="data"
+            type="com.heandroid.data.model.profile.ProfileDetailModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/personal_pre_pay_account"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/glTop" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@+id/glTop" />
-
-
-        <androidx.appcompat.widget.AppCompatCheckedTextView
-            android:id="@+id/appCompatCheckedTextView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information"
-            android:textColor="#626262"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabel" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPersonaleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_personal_info"
+            android:text="@string/underline_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="#5C5C5C"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatCheckedTextView2" />
+            app:layout_constraintTop_toBottomOf="@id/glTop" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -85,8 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/underline_password"
-            android:textColor="@color/black"
+            android:text="@string/password"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -122,62 +89,134 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_15sdp">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPassword"
+                    android:id="@+id/tilFirstName"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/txt_create_pwd"
+                    android:hint="First name"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:passwordToggleEnabled="true"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tiePassword"
+                        android:id="@+id/tieFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:text="@={data.personalInformation.firstName}"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
+
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilConfirmPassword"
+                    android:id="@+id/tilLastName"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/str_confirm_password"
+                    android:layout_marginTop="16dp"
+                    android:hint="Last name"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:passwordToggleEnabled="true"
-                    
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilPassword">
+                    app:layout_constraintTop_toBottomOf="@+id/tilFirstName">
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieConfirmPassword"
+                        android:id="@+id/tieLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPassword"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:text="@={data.personalInformation.lastName}"
+
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
+
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEmailId"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    android:hint="Email Id"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilLastName">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieEmailId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:text="@={data.personalInformation.emailAddress}"
+
+                        android:maxLength="45"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEveningNo"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="26dp"
+                    android:hint="Evening number"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilEmailId">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieEveningNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:text="@={data.personalInformation.eveningPhone}"
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -186,18 +225,29 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-
-
-
-
-
-
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAction"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
+            android:gravity="center"
+            android:padding="@dimen/_7sdp"
+            android:text="@string/str_next"
+            android:textAllCaps="false"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toTopOf="@+id/btnChangeEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAction"
+            android:id="@+id/btnChangeEmail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -205,7 +255,7 @@
             android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
-            android:text="@string/str_next"
+            android:text="Change Email Id"
             android:textAllCaps="false"
             android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
@@ -237,7 +287,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+            app:layout_constraintGuide_begin="@dimen/_10sdp" />
 
 
         <androidx.constraintlayout.widget.Guideline

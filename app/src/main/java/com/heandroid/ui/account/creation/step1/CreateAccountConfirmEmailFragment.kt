@@ -31,11 +31,9 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
-
     private var requestModel : CreateAccountRequestModel? =null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
-
 
     override fun init() {
         requestModel = arguments?.getParcelable(DATA)
@@ -58,8 +56,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
         observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
     }
-
-
 
     override fun onClick(v: View?) {
         hideKeyboard()
@@ -89,17 +85,18 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
 
     private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
-        try{
+        try {
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 if(resource.data?.status?.equals("500")==true) showError(binding.root,resource.data.message)
-                else  loadFragment()
+                else loadFragment()
             }
-            is Resource.DataError -> { loadFragment()
+            is Resource.DataError -> {
+                loadFragment()
             //    showError(binding.root, resource.errorMsg)
             }
-        }}catch (e: Exception){}
+        }}catch (e: Exception) {  }
     }
 
     private fun loadFragment() {
@@ -107,7 +104,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         val bundle = Bundle()
         bundle.putParcelable(DATA,requestModel)
         findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
-
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
@@ -116,10 +112,10 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             when (resource) {
                 is Resource.Success -> {
                     requireContext().showToast("code sent successfully")
-                    requestModel?.referenceId=resource.data?.referenceId?:""
+                    requestModel?.referenceId = resource.data?.referenceId?:""
                 }
                 is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }
-        }catch (e:Exception){ }
+        } catch (e:Exception) { }
     }
 }
