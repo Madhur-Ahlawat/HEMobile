@@ -67,9 +67,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     override fun observer() {
-        observe(dashboardViewModel1.vehicleListVal, ::vehicleListResponse)
-        observe(dashboardViewModel1.crossingHistoryVal, ::crossingHistoryResponse)
-        observe(dashboardViewModel1.getAlertsVal, ::handleAlertsData)
+        observe(dashboardViewModel.vehicleListVal, ::vehicleListResponse)
+        observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+        observe(dashboardViewModel.getAlertsVal, ::handleAlertsData)
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
@@ -153,12 +153,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             }
         }
 
-//        val request = CrossingHistoryRequest(
-//            startIndex = 1,
-//            count = 1,
-//            transactionType = Constants.ALL_TRANSACTION
-//        )
-        dashboardViewModel.crossingHistoryApiCall(request)
     }
 
     private fun setNotificationAdapter(notificationList: List<AlertMessage>) {

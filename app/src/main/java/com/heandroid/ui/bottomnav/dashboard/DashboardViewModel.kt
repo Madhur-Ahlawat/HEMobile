@@ -7,18 +7,20 @@ import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.auth.forgot.email.ForgotUsernameApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.dashboard.DashBoardRepository
 import com.heandroid.model.RetrievePaymentListApiResponse
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val repo: DashBoardRepository) : BaseViewModel() {
+class DashboardViewModel @Inject constructor(private val repository: DashBoardRepository) : BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
@@ -40,7 +42,46 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardReposito
     val getAlertsVal : LiveData<Resource<AlertMessageApiResponse?>?> get() = _alertsVal
 
 
-     fun getVehicleInformationApi() {
+    fun getVehicleInformationApi() {
+        viewModelScope.launch {
+            try {
+
+                _vehicleListVal.postValue(ResponseHandler.success(repository.getVehicleData(),errorManager))
+
+            } catch (e: Exception) {
+                _vehicleListVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+
 
     }
+
+
+    fun getAlertsApi(
+    ) {
+
+        viewModelScope.launch {
+            try {
+                _alertsVal.postValue(ResponseHandler.success(repository.getAlertMessages(),errorManager))
+            } catch (e: Exception) {
+                _alertsVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun crossingHistoryApiCall(request: CrossingHistoryRequest) {
+        viewModelScope.launch {
+            try {
+                _crossingHistoryVal.postValue(
+                    ResponseHandler.success(
+                        repository.crossingHistoryApiCall(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _crossingHistoryVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
 }
