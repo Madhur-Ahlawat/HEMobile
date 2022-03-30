@@ -195,6 +195,15 @@ interface ApiService {
     @GET(ACCOUNT_DETAIL)
     suspend fun accountDetail(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
 
+    @GET(GET_CASE_ENQUIRIES_CATEGORY)
+    suspend fun getCaseCategoriesList(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+
+    @GET(GET_CASE_ENQUIRIES_SUB_CATEGORY)
+    suspend fun getCaseSubCategoriesList(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+
+    @POST(CREATE_NEW_CASE)
+    suspend fun createNewCase(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+
 
     @PUT(EMAIL_VERIFICATION_FOR_UPDATION)
     suspend fun emailValidationForUpdation(@Body model : ProfileUpdateEmailModel?) : Response<EmailVerificationResponse?>?
