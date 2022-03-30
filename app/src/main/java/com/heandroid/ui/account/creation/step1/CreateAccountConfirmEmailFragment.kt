@@ -73,7 +73,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request = ConfirmEmailRequest(requestModel?.referenceId?.toLong()?:0, requestModel?.emailAddress?:"", binding.etCode.text.toString().trim())
+        val request = ConfirmEmailRequest(requestModel?.referenceId?:"", requestModel?.emailAddress?:"", binding.etCode.text.toString().trim())
         createAccountViewModel.confirmEmailApi(request)
     }
 
@@ -112,7 +112,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             when (resource) {
                 is Resource.Success -> {
                     requireContext().showToast("code sent successfully")
-                    requestModel?.referenceId = resource.data?.referenceId?:""
+                    requestModel?.referenceId = resource.data?.referenceId?.toString()
                 }
                 is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }
