@@ -32,8 +32,8 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
-
     override fun init() {
+        VehicleHelper.list?.clear()
         requestModel = CreateAccountRequestModel(referenceId = "", securityCd = "", accountType = "", address1 = "", planType = null, billingAddressLine1 = "",
                                                  billingAddressLine2 = "", cardCity = "", cardFirstName = "", cardLastName = "",
                                                  cardMiddleName = "", cardStateType = "", cardZipCode = "",
@@ -64,14 +64,14 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-       try{
+        try{
        loader?.dismiss()
        when (resource) {
             is Resource.Success -> {
                 if(resource.data?.statusCode?.equals("0")==true){
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
-                    requestModel?.referenceId=resource.data.referenceId
                     val bundle = Bundle().apply {
+                        putLong(Constants.REFERENCE_ID, resource.data.referenceId)
                         putParcelable(DATA,requestModel)
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)

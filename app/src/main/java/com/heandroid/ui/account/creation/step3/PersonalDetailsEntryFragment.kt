@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.heandroid.R
-import com.heandroid.data.model.account.AccountDetails
+import com.heandroid.data.model.account.AccountDetailsRequesstModel
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.databinding.FragmentPersonalDetailsEntryBinding
 import com.heandroid.ui.base.BaseFragment
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBinding>(), View.OnClickListener {
 
-    private lateinit var accountModel: AccountDetails
+    private lateinit var accountModelRequesstModel: AccountDetailsRequesstModel
     private var entryType: String = Constants.PERSONAL_DETAILS
     private val viewModelCreateAccountPostCode: CreateAccountPostCodeViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -34,7 +34,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
 
     override fun init() {
-        accountModel = AccountDetails()
+        accountModelRequesstModel = AccountDetailsRequesstModel()
         showPersonalDetailsEntryView()
     }
 
@@ -47,8 +47,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             tvPassword.setOnClickListener(this@PersonalDetailsEntryFragment)
 
             // set button disable first time
-            accountModel.enable = false
-            model = accountModel
+            accountModelRequesstModel.enable = false
             btnAction.text = requireActivity().getText(R.string.str_next)
             btnAction.setOnClickListener(this@PersonalDetailsEntryFragment)
             btnFindAddress.setOnClickListener(this@PersonalDetailsEntryFragment)
@@ -127,9 +126,9 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clPostCode.visible()
             viewTwo.visible()
 // set button disable first time
-            accountModel.enable =
-                accountModel.postCode.isNotEmpty() && edtPostCode.text.isNullOrEmpty()
-            model = accountModel
+            accountModelRequesstModel.enable =
+                accountModelRequesstModel.postCode.isNotEmpty() && edtPostCode.text.isNullOrEmpty()
+            //model = accountModelRequesstModel
 
         }
     }
@@ -143,9 +142,9 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clPassword.visible()
             viewThree.visible()
             // set button disable first time
-            accountModel.enable =
-                accountModel.createPassword.isNotEmpty() && edtConformPassword.text.isNullOrEmpty()
-            model = accountModel
+            accountModelRequesstModel.enable =
+                accountModelRequesstModel.createPassword.isNotEmpty() && edtConformPassword.text.isNullOrEmpty()
+            //model = accountModelRequesstModel
 
 
         }
@@ -160,8 +159,8 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clPinView.visible()
             viewFour.visible()
             // set button disable first time
-            accountModel.enable = accountModel.pin.isNotEmpty()
-            model = accountModel
+            accountModelRequesstModel.enable = accountModelRequesstModel.pin.isNotEmpty()
+            //model = accountModelRequesstModel
 
         }
     }
@@ -199,8 +198,8 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
                 R.id.tv_change->{
                     binding.apply {
                         edtPostCode.setText("")
-                        accountModel.postCode=""
-                        model=accountModel
+                        accountModelRequesstModel.postCode=""
+                        //model=accountModelRequesstModel
                     }
 
                 }
@@ -226,9 +225,9 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
                     Log.d("dataFound", "True")
                     response?.data?.let {
                         var addressItem = it[0]
-                        accountModel.address =
+                        accountModelRequesstModel.address =
                             "${addressItem.town} , ${addressItem.street} ,  ${addressItem.locality} , ${addressItem.country}"
-                        binding.tvAddress.text = accountModel.address
+                        binding.tvAddress.text = accountModelRequesstModel.address
                     }
                     binding.apply {
 
@@ -249,22 +248,22 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
         when (entryType) {
             Constants.PERSONAL_DETAILS -> {
-                Log.d("PersonalDet", accountModel.fullName)
+                Log.d("PersonalDet", accountModelRequesstModel.fullName)
                 showEnterAddressView()
             }
 
             Constants.POST_CODE_ADDRESS -> {
-                Log.d("PostCode", accountModel.postCode)
+                Log.d("PostCode", accountModelRequesstModel.postCode)
                 showCreatePasswordView()
             }
 
             Constants.PASSWORD -> {
-                Log.d("Password", accountModel.createPassword)
+                Log.d("Password", accountModelRequesstModel.createPassword)
                 showSetPinView()
             }
 
             Constants.PIN -> {
-                Log.d("Pin", accountModel.pin)
+                Log.d("Pin", accountModelRequesstModel.pin)
                 showLRDS()
             }
         }
@@ -279,8 +278,8 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clHeader.gone()
             requireActivity().toolbar(requireActivity().getString(R.string.str_local_resident_information))
             // set button disable first time
-            accountModel.enable = accountModel.fullName.isEmpty()
-            model = accountModel
+            accountModelRequesstModel.enable = accountModelRequesstModel.fullName.isEmpty()
+            //model = accountModelRequesstModel
             btnAction.text = requireActivity().getText(R.string.str_next)
         }
 
@@ -288,26 +287,26 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
 
     fun isEnable() {
-        if (binding.edtFullName.length() > 1 && entryType == Constants.PERSONAL_DETAILS) {
+//        if (binding.edtFullName.length() > 1 && entryType == Constants.PERSONAL_DETAILS) {
+//
+//            binding.model = accountModelRequesstModel.apply {
+//                enable = true
+//                fullName = binding.edtFullName.text.toString()
+//            }
+//        }
+//        if (binding.edtPostCode.length() > 1 && entryType == Constants.POST_CODE_ADDRESS) {
+//
+//            binding.model = accountModelRequesstModel.apply {
+//                enable = true
+//                fullName = binding.edtFullName.text.toString()
+//            }
+//        } else {
+//            binding.model?.let {
+//                it.enable = false
+//            } ?: AccountDetailsRequesstModel(enable = false)
+//        }
 
-            binding.model = accountModel.apply {
-                enable = true
-                fullName = binding.edtFullName.text.toString()
-            }
-        }
-        if (binding.edtPostCode.length() > 1 && entryType == Constants.POST_CODE_ADDRESS) {
-
-            binding.model = accountModel.apply {
-                enable = true
-                fullName = binding.edtFullName.text.toString()
-            }
-        } else {
-            binding.model?.let {
-                it.enable = false
-            } ?: AccountDetails(enable = false)
-        }
-
-        Log.d("ButtonEnable", accountModel.enable.toString());
+        Log.d("ButtonEnable", accountModelRequesstModel.enable.toString());
     }
 
 }

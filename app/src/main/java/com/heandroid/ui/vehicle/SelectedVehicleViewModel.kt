@@ -17,7 +17,7 @@ class SelectedVehicleViewModel @Inject constructor(private val repository: Vehic
     private val _selectedVehicleResponse = MutableLiveData<VehicleResponse?>()
     val selectedVehicleResponse: LiveData<VehicleResponse?> get() = _selectedVehicleResponse
 
-    fun setSelectedVehicleResponse(details: VehicleResponse) {
+    fun setSelectedVehicleResponse(details: VehicleResponse?) {
         _selectedVehicleResponse.value= details
     }
 

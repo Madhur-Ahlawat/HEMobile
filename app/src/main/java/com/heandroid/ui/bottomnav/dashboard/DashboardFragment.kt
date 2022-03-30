@@ -17,7 +17,6 @@ import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.bottomnav.notification.NotificationAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private val dashboardViewModel:DashboardViewModel by viewModels<DashboardViewModel>()
 
     private var loader: LoaderDialog? = null
 
@@ -43,13 +42,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
-        dashboardViewModel.getVehicleInformationApi()
+        dashboardViewModel1.getVehicleInformationApi()
         getCrossingData()
         getNotificationData()
     }
 
     private fun getNotificationData() {
-        dashboardViewModel.getAlertsApi()
+        dashboardViewModel1.getAlertsApi()
     }
 
     override fun initCtrl() {
@@ -68,9 +67,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     override fun observer() {
-        observe(dashboardViewModel.vehicleListVal, ::vehicleListResponse)
-        observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-        observe(dashboardViewModel.getAlertsVal, ::handleAlertsData)
+        observe(dashboardViewModel1.vehicleListVal, ::vehicleListResponse)
+        observe(dashboardViewModel1.crossingHistoryVal, ::crossingHistoryResponse)
+        observe(dashboardViewModel1.getAlertsVal, ::handleAlertsData)
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
@@ -127,7 +126,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             count = 1,
             transactionType = Constants.ALL_TRANSACTION
         )
-        dashboardViewModel.crossingHistoryApiCall(request)
+        dashboardViewModel1.crossingHistoryApiCall(request)
     }
 
     private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
@@ -153,7 +152,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun setNotificationAdapter(notificationList: List<AlertMessage>) {
         var layoutMgr = LinearLayoutManager(requireActivity())
         binding.rvNotification.apply {
-            adapter = NotificationAdapter(requireActivity(), notificationList)
+            adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
             layoutManager = layoutMgr
             setHasFixedSize(true)
         }

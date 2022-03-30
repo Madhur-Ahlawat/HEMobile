@@ -25,8 +25,8 @@ class VrmHistoryAdapter(private val onItemClick: ItemClickListener) :
         private val vrmCountry: AppCompatTextView = itemView.findViewById(R.id.vrm_country)
 
         fun setView(vehicleItem: VehicleResponse) {
-            vrmNoTxt.text = vehicleItem.plateInfo.number
-            vrmCountry.text = vehicleItem.plateInfo.country
+            vrmNoTxt.text = vehicleItem.plateInfo?.number
+            vrmCountry.text = vehicleItem.plateInfo?.country
         }
     }
 

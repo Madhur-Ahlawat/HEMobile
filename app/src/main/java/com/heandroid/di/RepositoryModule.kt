@@ -7,6 +7,7 @@ import com.heandroid.data.repository.auth.ForgotPasswordRepository
 import com.heandroid.data.repository.auth.LoginRepository
 import com.heandroid.data.repository.auth.LogoutRepository
 import com.heandroid.data.repository.contactdartcharge.ContactDartChargeRepository
+import com.heandroid.data.repository.dashboard.DashBoardRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,6 +53,12 @@ object RepositoryModule {
     @Provides
     fun provideAccountContactDartChargeRepository(apiService: ApiService): ContactDartChargeRepository {
         return ContactDartChargeRepository(apiService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDashboardRepository(apiService: ApiService):DashBoardRepository {
+        return DashBoardRepository(apiService)
     }
 
 }

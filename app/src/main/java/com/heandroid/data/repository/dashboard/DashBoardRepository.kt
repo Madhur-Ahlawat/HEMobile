@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import javax.inject.Inject
 
-class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
+class DashBoardRepository @Inject constructor(private val apiService: ApiService) {
 
 
     suspend fun getVehicleData() = apiService.getVehicleData()

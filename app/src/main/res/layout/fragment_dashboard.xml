@@ -66,26 +66,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="12dp"
                     android:backgroundTint="@color/btn_color"
-                    android:paddingVertical="@dimen/_8sdp"
                     android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_8sdp"
                     android:text="@string/str_click_here"
                     android:textAllCaps="false"
                     android:textSize="@dimen/_12ssp"
                     app:cornerRadius="@dimen/_5sdp"
                     app:layout_constraintLeft_toRightOf="@+id/side_view"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_notification"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_marginHorizontal="@dimen/_15sdp">
+                android:layout_marginHorizontal="@dimen/_5sdp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

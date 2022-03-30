@@ -2,7 +2,6 @@ package com.heandroid.utils.common
 
 object Constants {
 
-    const val ENU: String = "ENU"
     const val PAYG: String = "PAYG"
     const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW: String = "900"
@@ -97,5 +96,9 @@ object Constants {
     const val CSV_EXTENSION = ".csv"
     const val PCN_RESOLVE_URL =
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
+    const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
+    const val PAYMENT_ONE_OFF = "PaymentOneOff"
+
+
 
 }
