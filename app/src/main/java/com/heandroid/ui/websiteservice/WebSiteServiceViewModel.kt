@@ -18,7 +18,7 @@ class WebSiteServiceViewModel @Inject constructor(private val repository: Websit
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _webService= MutableLiveData<Resource<WebSiteStatus?>>()
-    val webService : LiveData<Resource<WebSiteStatus?>> get() = _webService
+    val webServiceLiveData : LiveData<Resource<WebSiteStatus?>> get() = _webService
 
     fun tollRates() {
         viewModelScope.launch {

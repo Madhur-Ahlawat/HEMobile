@@ -63,9 +63,9 @@ class VehicleHistoryVehicleDetailsFragment :
                 mVehicleDetails?.let {
                     val request = it.apply {
                         newPlateInfo = plateInfo
-                        newPlateInfo.vehicleComments = binding.edtNote.text.toString().trim()
-                        vehicleInfo.vehicleClassDesc =
-                            VehicleClassTypeConverter.toClassCode(vehicleInfo.vehicleClassDesc)
+                        newPlateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
+                        vehicleInfo?.vehicleClassDesc =
+                            VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
                     }
                     loader?.show(requireActivity().supportFragmentManager, "")
                     vehicleMgmtViewModel.updateVehicleApi(request)
@@ -114,7 +114,7 @@ class VehicleHistoryVehicleDetailsFragment :
                 requireContext().showToast("Vehicle is updated successfully")
                 setBtnDisabled()
                 mVehicleDetails?.let {
-                    it.plateInfo.vehicleComments = binding.edtNote.text.toString().trim()
+                    it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
                 }
             }
             is Resource.DataError -> {
@@ -129,7 +129,7 @@ class VehicleHistoryVehicleDetailsFragment :
     private fun setDataToView() {
         mVehicleDetails?.let { response ->
             binding.vehicleData = response
-            binding.addedDate.text = DateUtils.convertDateFormat(response.vehicleInfo.effectiveStartDate,1)
+            binding.addedDate.text = DateUtils.convertDateFormat(response.vehicleInfo?.effectiveStartDate,1)
         }
     }
 
@@ -140,5 +140,4 @@ class VehicleHistoryVehicleDetailsFragment :
     private fun setBtnDisabled() {
         binding.buttonModel = false
     }
-
 }

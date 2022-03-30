@@ -4,5 +4,5 @@ data class EmailVerificationResponse(
     val statusCode: String,
     val emailStatusCode: String,
     val message: String,
-    val referenceId: String
+    val referenceId: Long
 )

@@ -79,9 +79,9 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleResponse, pos: Int) {}
+    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {}
 
-    override fun onItemClick(details: VehicleResponse, pos: Int) {
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
 //        val bundle = Bundle().apply {
 //            putSerializable(Constants.DATA, details)
 //        }

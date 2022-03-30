@@ -1,5 +1,7 @@
 package com.heandroid.ui.payment
 
+import android.os.Bundle
+import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.text.Spanned
 import android.text.style.BulletSpan
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import com.heandroid.utils.common.Constants
 
 class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     View.OnClickListener {
@@ -47,7 +50,9 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
-                findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment)
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.PAYMENT_ONE_OFF, true)
+                findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment, bundle)
 //                findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment)
             }
         }

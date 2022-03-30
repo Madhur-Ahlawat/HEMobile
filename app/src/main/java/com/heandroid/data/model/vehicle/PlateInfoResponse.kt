@@ -8,7 +8,7 @@ data class PlateInfoResponse(
     @SerializedName("number")
     var number : String ="",
     @SerializedName("country")
-    var country :String = "",
+    var country :String = "UK",
     @SerializedName("state")
     var state:String="",
     @SerializedName("type")

@@ -3,7 +3,7 @@ package com.heandroid.utils
 
 object VehicleClassTypeConverter {
 
-    fun toClassCode(className: String): String {
+    fun toClassCode(className: String?): String {
         return when (className) {
             "A" -> {
                 "1"
