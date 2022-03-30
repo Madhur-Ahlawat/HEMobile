@@ -1,5 +1,6 @@
 package com.heandroid.data.remote
 
+import androidx.core.content.ContextCompat
 import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
@@ -33,18 +34,22 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
+typealias  createAccountModel = com.heandroid.data.model.account.CreateAccountRequestModel
+typealias  respAccountModel = com.heandroid.data.model.account.CreateAccountResponseModel
 interface ApiService {
 
 
     @FormUrlEncoded
     @POST(LOGIN)
-    suspend fun login(@Field("client_id") clientId: String? = CLIENT_ID,
-                      @Field("grant_type") grant_type: String? = GRANT_TYPE,
-                      @Field("agencyID") agencyID: String? = AGENCY_ID,
-                      @Field("client_secret") client_secret: String? = CLIENT_SECRET,
-                      @Field("value") value: String?,
-                      @Field("password") password: String?,
-                      @Field("validatePasswordCompliance") validatePasswordCompliance: String?): Response<LoginResponse?>?
+    suspend fun login(
+        @Field("client_id") clientId: String? = CLIENT_ID,
+        @Field("grant_type") grant_type: String? = GRANT_TYPE,
+        @Field("agencyID") agencyID: String? = AGENCY_ID,
+        @Field("client_secret") client_secret: String? = CLIENT_SECRET,
+        @Field("value") value: String?,
+        @Field("password") password: String?,
+        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
+    ): Response<LoginResponse?>?
 
 
     @DELETE(LOGOUT)
@@ -52,23 +57,31 @@ interface ApiService {
 
 
     @POST(FORGOT_EMAIL)
-    suspend fun forgotEmail(@Query("agencyId") agencyId: String?,
-                            @Body body: ForgotEmailModel?): Response<ForgotEmailResponseModel?>?
+    suspend fun forgotEmail(
+        @Query("agencyId") agencyId: String?,
+        @Body body: ForgotEmailModel?
+    ): Response<ForgotEmailResponseModel?>?
 
 
     @POST(FORGOT_CONFIRM_OPTION)
-    suspend fun confirmOptionForForgot(@Query("agencyId") agencyId: String?,
-                                       @Body body: ConfirmOptionModel?): Response<ConfirmOptionResponseModel?>?
+    suspend fun confirmOptionForForgot(
+        @Query("agencyId") agencyId: String?,
+        @Body body: ConfirmOptionModel?
+    ): Response<ConfirmOptionResponseModel?>?
 
 
     @POST(REQUEST_OTP)
-    suspend fun requestOTP(@Query("agencyId") agencyId: String?,
-                           @Body model: RequestOTPModel?): Response<SecurityCodeResponseModel?>?
+    suspend fun requestOTP(
+        @Query("agencyId") agencyId: String?,
+        @Body model: RequestOTPModel?
+    ): Response<SecurityCodeResponseModel?>?
 
 
     @POST(RESET_PASSWORD)
-    suspend fun resetPassword(@Query("agencyId") agencyId: String?,
-                              @Body model: ResetPasswordModel?): Response<ForgotPasswordResponseModel?>?
+    suspend fun resetPassword(
+        @Query("agencyId") agencyId: String?,
+        @Body model: ResetPasswordModel?
+    ): Response<ForgotPasswordResponseModel?>?
 
 
     @GET(VEHICLE)
@@ -123,27 +136,38 @@ interface ApiService {
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
 
     @POST(EMAIL_VERIFICATION_REQUEST)
-    suspend fun sendEmailVerification(@Query ("agencyId") agencyId: String?= AGENCY_ID,
-                                      @Body request: EmailVerificationRequest?): Response<EmailVerificationResponse?>?
+    suspend fun sendEmailVerification(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body request: EmailVerificationRequest?
+    ): Response<EmailVerificationResponse?>?
 
     @POST(CONFIRM_EMAIL_VERIFICATION)
-    suspend fun confirmEmailVerification(@Query ("agencyId") agencyId: String?= AGENCY_ID,
-                                         @Body request: ConfirmEmailRequest?): Response<EmptyApiResponse?>?
+    suspend fun confirmEmailVerification(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body request: ConfirmEmailRequest?
+    ): Response<EmptyApiResponse?>?
 
     @GET(WEB_SITE_SERVICE_STATUS)
     suspend fun webSiteServiceStatus(): Response<WebSiteStatus?>?
 
 
     @POST(CREATE_ACCOUNT)
-    suspend fun createAccount(@Query("agencyId") agencyId: String=AGENCY_ID,
-                              @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?) : Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
+    suspend fun createAccount(
+        @Query("agencyId") agencyId: String = AGENCY_ID,
+        @Body model: createAccountModel?
+    ): Response<respAccountModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
-    suspend fun getAddressListBasedOnPostalCode(@Query("search") postCode:String):Response<List<DataAddress>>
+    suspend fun getAddressListBasedOnPostalCode(
+        @Query("agencyId") agencyId: String = AGENCY_ID,
+        @Query("search") postCode: String
+    ): Response<List<DataAddress>>
 
     @GET(FIND_VEHICLE_ACCOUNT)
-    suspend fun getAccountFindVehicle(@Path("vehicleNumber") vehicleNumber: String?,
-                                      @Query("agencyId") agencyId:Int?): Response<VehicleInfoDetails?>?
+    suspend fun getAccountFindVehicle(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<VehicleInfoDetails?>?
 
     @POST(GET_GENERAL_ACCOUNT_SR_LIST)
     suspend fun getCaseHistoryData(@Body request: CaseEnquiryHistoryRequest?): Response<CaseEnquiryHistoryResponse?>

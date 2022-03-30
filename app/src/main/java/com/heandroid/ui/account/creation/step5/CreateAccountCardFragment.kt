@@ -77,7 +77,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         }
     }
 
-
     private val progressListener = object : WebViewClient(){
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {

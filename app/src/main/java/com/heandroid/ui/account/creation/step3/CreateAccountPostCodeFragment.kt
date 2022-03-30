@@ -56,7 +56,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        binding.spnAddress.setSpinnerAdapter(addressList)
 
     }
     override fun initCtrl() {
@@ -64,8 +63,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             btnFindAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
             btnAction.setOnClickListener(this@CreateAccountPostCodeFragment)
             tvChange.setOnClickListener(this@CreateAccountPostCodeFragment)
-            binding.tilAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
-            spnAddress.onItemSelectedListener = spinnerListener
+            tieAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
         }
     }
     override fun observer() {
@@ -90,7 +88,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             }
 
             R.id.tvChange -> { binding.btnFindAddress.performClick() }
-            R.id.tilAddress ->{ binding.spnAddress.performClick() }
+            R.id.tieAddress ->{ binding.spnAddress.performClick() }
         }
     }
 
@@ -108,8 +106,13 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     }
 
                     binding.apply {
+
+                        spnAddress.setSpinnerAdapter(addressList)
+                        spnAddress.onItemSelectedListener = spinnerListener
+
                         btnFindAddress.gone()
                         tilAddress.visible()
+
                         when(model?.planType){
                             PAYG -> enable = true
                         }
