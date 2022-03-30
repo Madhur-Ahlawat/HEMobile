@@ -1,8 +1,11 @@
 package com.heandroid.data.error
 
 class Error(val code: Int, val description: String) {
+
     constructor(exception: Exception) : this(code = DEFAULT_ERROR, description = exception.message
         ?: "")
+
+
 }
 
 const val NO_INTERNET_CONNECTION = -1
@@ -13,3 +16,4 @@ const val USER_NAME_ERROR = -102
 const val CHECK_YOUR_FIELDS = 401
 const val UNKNOWN_ERROR = -104
 const val SERVER_ERROR = 500
+const val TOO_MANY_LOGIN_ATTEMPT = 5260

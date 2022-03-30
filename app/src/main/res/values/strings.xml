@@ -492,6 +492,7 @@
     <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
     <string name="str_payment_des3">You can add only 5 vehicle.</string>
     <string name="internal_server_error">Internal server error</string>
+    <string name="too_many_login_attempt">You have incorrectly logged in too many times and your account is suspended for a few minutes.</string>
     <string name="str_enter_telephone">Mobile telephone number (optional)</string>
     <string name="str_personal_info">Personal info</string>
     <string name="str_pin">Pin</string>
@@ -615,6 +616,26 @@
     <string name="country_reg">Country of registration %s</string>
     <string name="str_cases_and_enquiries">Cases and enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do</string>
+    <string name="edit_details">Edit details</string>
+    <string name="change_password">Change password</string>
+    <string name="current_password_validation">New password can\'t be same as current password</string>
+    <string name="confirm_password_validation">•Confirm Password \n" +
+                "•Must begin with a letter\n" +
+                "•Be at least 8 characters long\n" +
+                "•1 uppercase letter\n" +
+                "•1 lowercase letter\n" +
+                "•1 number\n" +
+                "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
+
+    <string name="new_password_validation">•New Password \n" +
+                "•Must begin with a letter\n" +
+                "•Be at least 8 characters long\n" +
+                "•1 uppercase letter\n" +
+                "•1 lowercase letter\n" +
+                "•1 number\n" +
+                "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
+    <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsucessfully</string>
+    <string name="sent_email">We have sent a confirmation email to %s</string>
 
 </resources>
 

@@ -48,10 +48,7 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
-        )
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
     }
 
     fun setDateWithListener(

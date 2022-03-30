@@ -15,6 +15,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -33,8 +34,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
 
     override fun init() {
-        binding.tvCrossingCount.text =
-            getString(R.string.str_two_crossing, "0")
+        binding.tvCrossingCount.text = getString(R.string.str_two_crossing, "0")
         binding.tvVehicleCount.text = getString(R.string.str_two_vehicle, "0")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -69,8 +69,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                     Log.e("count","---> "+it.transactionList?.count?:"")
                     // todo getting api count as null, so showing count as 0
                     it.transactionList?.count?.let { count ->
-                        binding.tvCrossingCount.text =
-                            getString(R.string.str_two_crossing, count)
+                        binding.tvCrossingCount.text = getString(R.string.str_two_crossing, count)
                     }
                 }
             }
@@ -107,11 +106,20 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun getCrossingData() {
-        val request = CrossingHistoryRequest(
+       val request= CrossingHistoryRequest(
             startIndex = 1,
             count = 1,
-            transactionType = Constants.ALL_TRANSACTION
+            transactionType = Constants.TOLL_TRANSACTION,
+            searchDate = Constants.TRANSACTION_DATE,
+            startDate = DateUtils.lastPriorDate(-90)?:"", //"11/01/2021" mm/dd/yyyy
+            endDate = DateUtils.currentDate()?:"" //"11/30/2021" mm/dd/yyyy
         )
+
+//        val request = CrossingHistoryRequest(
+//            startIndex = 1,
+//            count = 1,
+//            transactionType = Constants.ALL_TRANSACTION
+//        )
         dashboardViewModel.crossingHistoryApiCall(request)
     }
 }

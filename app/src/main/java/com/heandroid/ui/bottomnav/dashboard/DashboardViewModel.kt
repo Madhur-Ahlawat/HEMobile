@@ -23,9 +23,13 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : BaseViewModel() {
 
+
+
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
+
 
     val accountOverviewVal = MutableLiveData<Resource<AccountResponse>>()
     val monthlyUsageVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()

@@ -27,6 +27,10 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.profile.ProfileDetailModel
+import com.heandroid.data.model.profile.ProfileUpdateEmailModel
+import com.heandroid.data.model.profile.UpdateAccountPassword
+import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -174,5 +178,17 @@ interface ApiService {
     suspend fun getCaseHistoryData(
         @Body request: CaseEnquiryHistoryRequest?, @Query("agencyId") agencyId: String = AGENCY_ID
     ): Response<CaseEnquiryHistoryResponse?>
+
+
+    @GET(ACCOUNT_DETAIL)
+    suspend fun accountDetail(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+
+
+    @PUT(EMAIL_VERIFICATION_FOR_UPDATION)
+    suspend fun emailValidationForUpdation(@Body model : ProfileUpdateEmailModel?) : Response<EmailVerificationResponse?>?
+
+
+    @PUT(UPDATE_PASSWORD)
+    suspend fun updatePassword(@Body model: UpdateAccountPassword?) : Response<UpdatePasswordResponseModel?>?
 
 }

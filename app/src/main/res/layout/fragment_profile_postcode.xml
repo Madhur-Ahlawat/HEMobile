@@ -8,49 +8,16 @@
         <variable
             name="enable"
             type="Boolean" />
+
+
+        <variable
+            name="data"
+            type="com.heandroid.data.model.profile.ProfileDetailModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/personal_pre_pay_account"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/glTop" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@+id/glTop" />
-
-
-        <androidx.appcompat.widget.AppCompatCheckedTextView
-            android:id="@+id/appCompatCheckedTextView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information"
-            android:textColor="#626262"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabel" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -59,13 +26,13 @@
             android:layout_height="wrap_content"
             android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="#5C5C5C"
+            android:textColor="#626262"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatCheckedTextView2" />
+            app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,9 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/postcode"
+            android:text="@string/underline_postcode"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
             app:layout_constraintStart_toEndOf="@+id/tvPersonaleInfo" />
 
@@ -85,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:text="@string/underline_password"
-            android:textColor="@color/black"
+            android:text="@string/password"
+            android:textColor="#626262"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -107,7 +75,6 @@
 
 
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mcvContainer"
             android:layout_width="0dp"
@@ -122,62 +89,130 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_15sdp">
+                android:layout_height="wrap_content">
+
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPassword"
+                    android:id="@+id/tilPostCode"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/txt_create_pwd"
+                    android:hint="@string/postcode"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:passwordToggleEnabled="true"
+                    app:endIconDrawable="@drawable/ic_vector"
+                    app:endIconMode="custom"
+                    app:endIconTint="@color/green"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tiePassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilConfirmPassword"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/str_confirm_password"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:passwordToggleEnabled="true"
-                    
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilPassword">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieConfirmPassword"
+                        android:id="@+id/tiePostCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:inputType="textPassword"
+                        android:inputType="textPersonName"
+                        android:maxLength="12"
+                        android:text="@={data.personalInformation.zipcode}"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
+
+
+
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/change"
+                    android:visibility="gone"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tilPostCode"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toTopOf="@+id/tilPostCode"
+                    app:layout_constraintVertical_bias="0.86" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFindAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="19dp"
+                    android:backgroundTint="@color/white"
+                    android:letterSpacing="0"
+                    android:text="@string/find_address"
+                    android:textAllCaps="false"
+                    android:textColor="@color/green"
+                    app:strokeColor="@color/green"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toBottomOf="@+id/tilPostCode"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAddress"
+                    style="@style/Widget.HeMobile.TextInputLayoutDrop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="26dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/str_email"
+                    android:textColorHint="@color/black"
+                    app:hintEnabled="false"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                    app:layout_constraintTop_toBottomOf="@+id/btnFindAddress">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_vector_drop"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+
+                        android:text="@{data.personalInformation.addressLine1}"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spnAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                    app:layout_constraintStart_toStartOf="@+id/tilAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/tilAddress" />
+
+
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -216,6 +251,9 @@
 
 
 
+
+
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
             android:layout_width="match_parent"
@@ -237,7 +275,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+            app:layout_constraintGuide_begin="@dimen/_10sdp" />
 
 
         <androidx.constraintlayout.widget.Guideline

@@ -1,5 +1,6 @@
 package com.heandroid.utils.common
 
+import android.util.Log
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.remote.NoConnectivityException
 import retrofit2.Response
@@ -10,9 +11,11 @@ object ResponseHandler {
 
     fun <T> success(response : Response<T>?,errorManager: ErrorManager): Resource<T?> {
         return if(response?.isSuccessful == true) {
+            Log.e("success","yes")
             Resource.Success(response.body())
         }
         else {
+
             Resource.DataError(errorManager.getError(response?.code() ?: 0).description)
         }
     }
