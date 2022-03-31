@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="model"
+            type="com.heandroid.data.model.account.AccountTypeSelectionModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -74,7 +81,6 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/white"
             android:backgroundTint="@color/white"
-            android:hint="@string/str_category"
             android:textSize="@dimen/_14ssp"
             app:boxStrokeColor="@color/grey_two"
             app:boxStrokeWidth="@dimen/_1sdp"
@@ -99,7 +105,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/str_sub_category"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
@@ -138,10 +143,11 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_61sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:clickable="@{model.enable}"
             android:text="@string/str_next"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
