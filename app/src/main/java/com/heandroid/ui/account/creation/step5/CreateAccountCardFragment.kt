@@ -67,6 +67,9 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
+                when(model?.planType){
+                    Constants.PAYG ->  model?.smsOption=null
+                }
                 loader?.show(requireActivity().supportFragmentManager,"")
                 viewModel.createAccount(model)
             }

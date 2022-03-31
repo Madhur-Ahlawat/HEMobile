@@ -36,7 +36,7 @@ data class CreateAccountRequestModel(
     var password: String?,
     val replenishmentAmount: Double?=5.0,
     var securityCode: String?,
-    val smsOption: String?,
+    var smsOption: String?,
     var stateType: String?,
     val tcAccepted: String?,
     var thresholdAmount: Double?=5.0,
