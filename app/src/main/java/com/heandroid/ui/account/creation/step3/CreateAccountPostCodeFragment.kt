@@ -114,7 +114,12 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         tilAddress.visible()
 
                         when(model?.planType){
-                            PAYG -> enable = true
+                            PAYG -> {
+                                model?.countryType=null
+                                model?.city=null
+                                model?.stateType=null
+                                enable = true
+                            }
                         }
                         tvChange.visible()
                         tilPostCode.endIconDrawable = null
@@ -133,9 +138,11 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
             mainList[position-1].run {
                 model?.countryType=country
-                model?.city=locality
-                model?.stateType=town
+                model?.city=town
+                model?.stateType="HE"
                 model?.zipCode1=postcode
+                model?.address1=street
+
             }
 
             when(model?.planType){

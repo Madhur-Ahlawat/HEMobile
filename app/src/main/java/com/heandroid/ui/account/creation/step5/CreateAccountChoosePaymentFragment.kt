@@ -32,19 +32,29 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         binding.rgPaymentOptions.setOnCheckedChangeListener(this)
         val model =arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA)
         val vehicle: MutableList<CreateAccountVehicleModel?>? = ArrayList()
-        for(i in VehicleHelper.list?.indices!!) {
-            VehicleHelper?.list?.get(i)?.run {
-                vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
-                                                       plateTypeDesc = vehicleInfo?.vehicleClassDesc,
-                                                       vehicleColor = vehicleInfo?.color,
-                                                       vehicleComments = plateInfo?.vehicleComments,
-                                                       vehicleMake = vehicleInfo?.make,
-                                                       vehicleModel = vehicleInfo?.model,
-                                                       vehiclePlate = plateInfo?.number,
-                                                       vehicleYear = vehicleInfo?.year))
 
-            }
-        }
+        vehicle?.add(CreateAccountVehicleModel(plateCountry = /*plateInfo?.country*/"UK",
+                                               plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
+                                               vehicleColor = /*vehicleInfo?.color*/"YELLOW",
+                                               vehicleComments = /*plateInfo?.vehicleComments*/"",
+                                               vehicleMake = /*vehicleInfo?.make*/"AUDI",
+                                               vehicleModel = /*vehicleInfo?.model*/"X3",
+                                               vehiclePlate = /*plateInfo?.number*/"TESTPLATE1",
+                                               vehicleYear = /*vehicleInfo?.year*/""))
+
+//        for(i in 0..2) {
+//            VehicleHelper?.list?.get(i)?.run {
+//                vehicle?.add(CreateAccountVehicleModel(plateCountry = /*plateInfo?.country*/"UK",
+//                                                       plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
+//                                                       vehicleColor = /*vehicleInfo?.color*/"YELLOW",
+//                                                       vehicleComments = /*plateInfo?.vehicleComments*/"",
+//                                                       vehicleMake = /*vehicleInfo?.make*/"AUDI",
+//                                                       vehicleModel = /*vehicleInfo?.model*/"X3",
+//                                                       vehiclePlate = /*plateInfo?.number*/"TESTPLATE1",
+//                                                       vehicleYear = /*vehicleInfo?.year*/""))
+//
+//            }
+//        }
         model?.ftvehicleList= CreateAccountVehicleListModel(vehicle=vehicle)
 
         Logg.logging("data",model.toString())
