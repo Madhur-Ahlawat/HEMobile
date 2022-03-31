@@ -46,6 +46,9 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
             etLastName.onTextChanged {
                 checkButton()
             }
+            etEmail.onTextChanged {
+                checkButton()
+            }
         }
     }
 
