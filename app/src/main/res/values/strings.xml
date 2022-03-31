@@ -636,6 +636,8 @@
                 "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsucessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="user_your_new_email_id_to_log_in_to_your_account">User your new email id to log in to your account</string>
+    <string name="create_your_password">Create your password</string>
 
 </resources>
 

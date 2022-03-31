@@ -40,7 +40,7 @@
             android:layout_marginTop="33dp"
             android:text="@{@string/sent_email(data.emailAddress)}"
             android:textColor="@color/color_99000000"
-            android:textSize="12sp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvVerification" />
@@ -93,9 +93,9 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
-            android:text="User your new email id to log in to your account"
+            android:text="@string/user_your_new_email_id_to_log_in_to_your_account"
             android:textColor="@color/color_99000000"
-            android:textSize="13sp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/otpView" />

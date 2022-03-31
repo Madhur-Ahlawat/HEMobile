@@ -45,6 +45,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
 
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
@@ -72,11 +73,10 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         }
     }
 
-    private val progressListener = object : WebViewClient(){
+    private val progressListener = object : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
             view?.loadUrl("file:///android_asset/NMI.html")
-            loader?.show(requireActivity().supportFragmentManager,"")
             return true
         }
 
@@ -95,6 +95,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
                 else binding.tvPaymentAmount.visible()
                // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
@@ -146,8 +147,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             when (status) {
                 is Resource.Success -> {
                     status.data?.accountType = model?.accountType
-
-
                     // Add Payment Method
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
