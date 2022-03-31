@@ -2,6 +2,8 @@ package com.heandroid.data.remote
 
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.AccountResponse
+import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.address.DataAddress
@@ -203,5 +205,12 @@ interface ApiService {
 
     @PUT(UPDATE_PASSWORD)
     suspend fun updatePassword(@Body model: UpdateAccountPassword?): Response<UpdatePasswordResponseModel?>?
+
+    @GET(ACCOUNT_DETAILS)
+    suspend fun getAccountDetailsData():Response<AccountResponse?>?
+
+    @GET(VIEW_ACCOUNT_BALANCE)
+    suspend fun getThresholdValue():Response<ThresholdAmountApiResponse?>?
+
 
 }
