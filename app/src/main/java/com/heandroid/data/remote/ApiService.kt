@@ -1,7 +1,5 @@
 package com.heandroid.data.remote
 
-import androidx.core.content.ContextCompat
-import com.heandroid.BuildConfig
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus

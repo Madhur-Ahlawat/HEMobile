@@ -45,7 +45,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
     override fun init() {
         binding.enable=false
-        model=arguments?.getParcelable(Constants.DATA)
+        model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
         when(model?.planType){
@@ -75,7 +75,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.btnAction -> {
 
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }

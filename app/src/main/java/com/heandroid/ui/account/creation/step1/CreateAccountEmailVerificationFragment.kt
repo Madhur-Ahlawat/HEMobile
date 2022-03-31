@@ -16,6 +16,7 @@ import com.heandroid.databinding.FragmentCreateAccountEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
@@ -40,7 +41,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
                                                  digitPin = "", emailAddress = "", eveningPhone = "", firstName = "",
                                                  ftvehicleList = null, lastName = "", maskedNumber = "",
                                                  password = "", replenishmentAmount = 0.0, securityCode = "",
-                                                 smsOption = "", stateType = "", tcAccepted = "",
+                                                 smsOption = "Y", stateType = "", tcAccepted = "Y",
                                                  thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "", enable = false)
 
 
@@ -71,7 +72,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
                     requestModel?.referenceId=resource.data.referenceId
                     val bundle = Bundle().apply {
-                        putParcelable(DATA,requestModel)
+                        putParcelable(CREATE_ACCOUNT_DATA,requestModel)
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
                 }

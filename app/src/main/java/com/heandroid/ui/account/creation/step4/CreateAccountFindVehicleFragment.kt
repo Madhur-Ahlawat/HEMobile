@@ -96,7 +96,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             if(country == "UK"){
                 isAccountVehicle = true
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
                 bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
                 findNavController().navigate(R.id.action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2, bundle)
@@ -106,6 +106,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 createAccountNonVehicleModel.vehiclePlate = binding.addVrmInput.text.toString()
                 createAccountNonVehicleModel.isFromCreateNonVehicleAccount = true
                 val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
                 findNavController().navigate(R.id.action_findYourVehicleFragment_to_callNonUkVehicleAddFragment, bundle)
             }

@@ -14,6 +14,7 @@ import com.heandroid.databinding.FragmentCreateAccountTypeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.BUSINESS_ACCOUNT
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.Constants.PERSONAL_ACCOUNT
 import com.heandroid.utils.common.ErrorUtil.showError
@@ -29,7 +30,7 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountTypeBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requestModel=arguments?.getParcelable(DATA)
+        requestModel=arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
         binding.enable= false
     }
@@ -64,7 +65,7 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
 
         R.id.btnAction -> {
             val bundle = Bundle()
-            bundle.putParcelable(DATA,requestModel)
+            bundle.putParcelable(CREATE_ACCOUNT_DATA,requestModel)
             when(requestModel?.accountType) {
                 PERSONAL_ACCOUNT -> { findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle) }
                 else ->{ showError(binding.root,getString(R.string.in_progress)) }

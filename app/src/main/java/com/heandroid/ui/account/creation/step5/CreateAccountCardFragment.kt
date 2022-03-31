@@ -43,7 +43,10 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountCardBinding = FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
-        model = arguments?.getParcelable("data")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
     }
@@ -63,8 +66,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-                loader = LoaderDialog()
-                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                loader?.show(requireActivity().supportFragmentManager,"")
                 viewModel.createAccount(model)
             }
         }
@@ -92,12 +94,12 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             if (check) {
                 if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
                 else binding.tvPaymentAmount.visible()
-                Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+               // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails",responseModel.toString())
-                model?.creditCExpMonth = responseModel.card.exp.substring(0, 1)
+                model?.creditCExpMonth = responseModel.card.exp.substring(0, 2)
                 model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token

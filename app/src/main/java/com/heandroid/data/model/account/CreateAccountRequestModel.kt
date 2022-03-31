@@ -30,7 +30,7 @@ data class CreateAccountRequestModel(
     var emailAddress: String?,
     var eveningPhone: String?,
     var firstName: String?,
-    val ftvehicleList: CreateAccountVehicleListModel?,
+    var ftvehicleList: CreateAccountVehicleListModel?,
     var lastName: String?,
     var maskedNumber: String?,
     var password: String?,

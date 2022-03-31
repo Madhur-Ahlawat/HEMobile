@@ -36,7 +36,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
 
     override fun init() {
         binding.enable = false
-        model = arguments?.getParcelable(Constants.DATA)
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
         when(model?.planType){
@@ -76,7 +76,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                     password = binding.tiePassword.text.toString().trim()
                 }
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,model)
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }

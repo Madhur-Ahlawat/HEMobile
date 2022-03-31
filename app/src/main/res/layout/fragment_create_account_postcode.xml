@@ -223,7 +223,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
-                        android:text="Home Gardens, Dartford DA1 1DR"
+                        android:text="Select Address"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/_13ssp" />
