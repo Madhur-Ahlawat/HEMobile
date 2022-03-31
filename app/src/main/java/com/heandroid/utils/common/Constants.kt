@@ -2,6 +2,9 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val CASE_COMMENTS_KEY = "case_comments_key"
+    const val CASES_CATEGORY ="cases_category"
+    const val CASES_SUB_CATEGORY ="cases_sub_category"
     const val PAYG = "PAYG"
     const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"

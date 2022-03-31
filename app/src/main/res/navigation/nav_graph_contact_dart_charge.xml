@@ -100,8 +100,11 @@
         android:name="com.heandroid.ui.startNow.contactdartcharge.CaseCreatedSuccessfullyFragment"
         android:label="CaseCreatedSuccessfullyFragment"
         tools:layout="@layout/fragment_raise_new_enquiry_success">
-    </fragment>
+        <action
+            android:id="@+id/action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment"
+            app:destination="@id/caseHistoryDartChargeFragment" />
 
+    </fragment>
 
     <fragment
         android:id="@+id/caseHistoryDartChargeFragment"
@@ -115,6 +118,7 @@
             android:id="@+id/action_caseHistoryDartChargeFragment_to_newCaseCategoryFragment"
             app:destination="@id/newCaseCategoryFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/caseHistoryDetailsDartChargeFragment"
         android:name="com.heandroid.ui.startNow.contactdartcharge.CaseHistoryDetailsDartChargeFragment"
