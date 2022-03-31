@@ -6,6 +6,8 @@ import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
+import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
@@ -212,5 +214,7 @@ interface ApiService {
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue():Response<ThresholdAmountApiResponse?>?
 
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
+    suspend fun getPaymentHistoryData(@Body request: AccountPaymentHistoryRequest?): Response<AccountPaymentHistoryResponse?>
 
 }

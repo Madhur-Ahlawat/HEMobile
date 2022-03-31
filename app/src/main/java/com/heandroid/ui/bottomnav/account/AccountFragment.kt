@@ -18,6 +18,7 @@ import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.NominatedContactActivity
 import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
@@ -45,6 +46,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun initCtrl() {
         binding.apply {
             profile.setOnClickListener(this@AccountFragment)
+            payment.setOnClickListener(this@AccountFragment)
             rlAccount.setOnClickListener(this@AccountFragment)
             logOutLyt.setOnClickListener(this@AccountFragment)
             nominatedContactsLyt.setOnClickListener(this@AccountFragment)
@@ -63,6 +65,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
 
             R.id.profile -> {
                 requireActivity().startNewActivity(ProfileActivity::class.java)
+            }
+
+            R.id.payment -> {
+                requireActivity().startNewActivity(AccountPaymentActivity::class.java)
             }
 
             R.id.rl_account -> {
