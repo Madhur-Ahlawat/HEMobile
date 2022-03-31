@@ -104,6 +104,13 @@ object Constants {
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
     const val PAYMENT_ONE_OFF = "PaymentOneOff"
 
+    const val CHOOSE_FILE_1 = "Choose_first_file"
+    const val CHOOSE_FILE_2 = "Choose_second_file"
+    const val CHOOSE_FILE_3 = "Choose_third_file"
+    const val CHOOSE_FILE_4 = "Choose_fourth_file"
+
+
+
 
 
 }
