@@ -36,7 +36,7 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
 
     override fun init() {
         binding.enable = false
-        model = arguments?.getParcelable(Constants.DATA)
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
 
@@ -86,7 +86,7 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 model?.digitPin = binding.tvPinOne.text.toString()+""+ binding.tvPinTwo.text.toString()+""+ binding.tvPinThree.text.toString()+""+ binding.tvPinFour.text.toString()
 
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA, model)
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                 }
                 when(model?.planType){
                     PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }

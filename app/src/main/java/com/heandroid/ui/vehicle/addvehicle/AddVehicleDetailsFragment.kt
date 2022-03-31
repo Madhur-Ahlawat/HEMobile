@@ -10,6 +10,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import java.nio.BufferUnderflowException
@@ -84,6 +85,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                    }
 
                     val bundle = Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
                     findNavController().navigate(R.id.action_callNonUkVehicleAdd_to_non_UK_VehicleClassesFragment, bundle)
 

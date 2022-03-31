@@ -11,6 +11,7 @@ import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.databinding.FragmentCreateAccountPersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE
@@ -28,7 +29,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPersonalInfoBinding.inflate(inflater,container,false)
     override fun init() {
-        model=arguments?.getParcelable(DATA)
+        model=arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         model?.firstName=""
         model?.lastName=""
         model?.cellPhone=""
@@ -63,7 +64,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                     binding.model?.lastName = ""
                 }
                 val bundle = Bundle()
-                bundle.putParcelable(DATA,binding.model)
+                bundle.putParcelable(CREATE_ACCOUNT_DATA,binding.model)
                 findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment,bundle)
             }
         }

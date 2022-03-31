@@ -108,10 +108,15 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             R.id.addVehicleBtn -> {
                 when {
                     isAccountVehicle == true -> {
-                        findNavController().navigate(R.id.action_createAccVehicleList_to_choosePaymentFragment)
+
+                        val bundle =  Bundle()
+                        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                        findNavController().navigate(R.id.action_createAccVehicleList_to_choosePaymentFragment,bundle)
                     }
                     isNonUKVehicleUpdating == true -> {
-                        findNavController().navigate(R.id.action_NonUkDropDownVehicleListFragment_to_choosePaymentFragment)
+                        val bundle =  Bundle()
+                        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                        findNavController().navigate(R.id.action_NonUkDropDownVehicleListFragment_to_choosePaymentFragment,bundle)
                     }
                     else -> {
                         AddVehicleDialog.newInstance(
@@ -124,7 +129,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             }
             R.id.removeVehicleBtn -> {
                 if(isAccountVehicle == true){
-                    findNavController().navigate(R.id.action_createAccVehicleList_to_findYourVehicleFragment)
+                    val bundle =  Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                    findNavController().navigate(R.id.action_createAccVehicleList_to_findYourVehicleFragment,bundle)
                 }else {
                     RemoveVehicleDialog.newInstance(
                         mList,
@@ -253,6 +260,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     override fun onAddClick(details: VehicleResponse) {
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, details)
+            putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
         }
         findNavController().navigate(R.id.addVehicleDetailsFragment, bundle)
     }

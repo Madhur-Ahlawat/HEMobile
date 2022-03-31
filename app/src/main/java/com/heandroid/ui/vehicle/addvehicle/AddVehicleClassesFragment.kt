@@ -135,6 +135,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     }
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, vehicleData)
+                      //  putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+
                         putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
                     }
                     findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
