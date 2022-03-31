@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountChoosePaymentBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountChoosePaymentBinding.inflate(inflater, container, false)
 
     override fun init() {
@@ -31,7 +32,7 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         binding.rgPaymentOptions.setOnCheckedChangeListener(this)
         val model =arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA)
         val vehicle: MutableList<CreateAccountVehicleModel?>? = ArrayList()
-        for(i in VehicleHelper.list?.indices!!){
+        for(i in VehicleHelper.list?.indices!!) {
             VehicleHelper?.list?.get(i)?.run {
                 vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
                                                        plateTypeDesc = vehicleInfo?.vehicleClassDesc,
@@ -44,10 +45,9 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
 
             }
         }
-        model?.ftvehicleList=     CreateAccountVehicleListModel( vehicle=vehicle)
+        model?.ftvehicleList= CreateAccountVehicleListModel(vehicle=vehicle)
 
         Logg.logging("data",model.toString())
-
         binding.btnContine.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(CREATE_ACCOUNT_DATA,model)
@@ -55,11 +55,10 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         }
     }
 
-    override fun initCtrl() {
-
-    }
+    override fun initCtrl() {}
 
     override fun observer() {}
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {

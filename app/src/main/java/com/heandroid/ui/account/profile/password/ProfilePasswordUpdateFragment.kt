@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +32,8 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfilePasswordUpdateBinding.inflate(inflater,container,false)
     override fun init() {
+        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+
         binding.enable=false
         binding.data= UpdateAccountPassword(currentPassword = "", newPassword = "", confirmPassword = "")
 
