@@ -72,6 +72,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
 
+        <activity
+            android:name=".ui.bottomnav.account.payments.AccountPaymentActivity"
+            android:screenOrientation="portrait"
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"

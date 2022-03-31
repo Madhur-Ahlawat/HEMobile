@@ -57,7 +57,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
     }
 
-
     private fun enableField() {
         binding.apply {
             isEnable = addVrmInput.length() > 1

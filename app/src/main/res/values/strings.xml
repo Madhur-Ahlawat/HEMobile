@@ -645,5 +645,10 @@
     <string name="user_your_new_email_id_to_log_in_to_your_account">User your new email id to log in to your account</string>
     <string name="create_your_password">Create your password</string>
 
+    <string name="str_payment">Payment</string>
+    <string name="payment_methods">Payment methods</string>
+    <string name="payment_history">Payment history</string>
+    <string name="your_payment">Your payment</string>
+
 </resources>
 
