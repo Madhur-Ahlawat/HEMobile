@@ -69,6 +69,7 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
                     val bundle = Bundle().apply {
                         putString(Constants.CASE_NUMBER, binding.etCaseNumber.text.toString().trim())
                         putString(Constants.LAST_NAME, binding.etLastName.text.toString().trim())
+                        putParcelable(Constants.CASES_PROVIDE_DETAILS_KEY,arguments?.getParcelable(Constants.CASES_PROVIDE_DETAILS_KEY))
                     }
                     findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment, bundle)
                 }

@@ -1,6 +1,7 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
 import android.graphics.Typeface
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
@@ -12,6 +13,7 @@ import android.widget.RadioGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.AccountTypeSelectionModel
+import com.heandroid.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.heandroid.databinding.FragmentProvideDetailsDartChargeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
@@ -47,22 +49,36 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
         }
     }
 
-    private fun checkButton(){
+    private fun checkButton() {
         binding.apply {
-            model = AccountTypeSelectionModel( binding.etFistName.text.toString().trim().isNotEmpty() &&
-                    binding.etLastName.text.toString().trim().isNotEmpty())
+            model = AccountTypeSelectionModel(
+                binding.etFistName.text.toString().trim().isNotEmpty() &&
+                        binding.etLastName.text.toString().trim()
+                            .isNotEmpty() && binding.etEmail.text.toString().trim().isNotEmpty()
+            )
         }
     }
 
-    override fun observer() { }
+    override fun observer() {}
 
     override fun onClick(view: View?) {
         view?.let {
             when (it.id) {
                 R.id.btnContinue -> {
-                    findNavController().navigate(R.id.action_provideDetailsDartChargeFragment_to_caseEnquiriesNewCheckFragment)
+                    val mCaseModel = CaseProvideDetailsModel(
+                        binding.etFistName.text.toString(),
+                        binding.etLastName.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etTelePhone.text.toString()
+                    )
+                    findNavController().navigate(R.id.action_provideDetailsDartChargeFragment_to_caseEnquiriesNewCheckFragment,
+                        Bundle().apply {
+                            putParcelable(Constants.CASES_PROVIDE_DETAILS_KEY,mCaseModel)
+                        }
+                    )
                 }
-                else -> { }
+                else -> {
+                }
             }
         }
     }
