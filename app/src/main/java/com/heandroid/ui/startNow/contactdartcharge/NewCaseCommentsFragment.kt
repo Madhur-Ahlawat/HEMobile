@@ -16,7 +16,9 @@ import android.provider.OpenableColumns
 import android.database.Cursor
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
+import com.heandroid.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.heandroid.utils.StorageHelper
+import com.heandroid.utils.common.Logg
 
 
 @AndroidEntryPoint
@@ -33,27 +35,27 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
-//        Logg.logging(
-//            "NewCaseComments",
-//            "bundle data CaseProvideDetailsModel ${
-//                arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
-//            }"
-//        )
-//        Logg.logging(
-//            "NewCaseComments",
-//            "bundle data cat  ${arguments?.getString(Constants.CASES_CATEGORY)}"
-//        )
-//        Logg.logging(
-//            "NewCaseComments",
-//            "bundle data  sub Cat ${arguments?.getString(Constants.CASES_SUB_CATEGORY)}"
-//        )
+        Logg.logging(
+            "NewCaseComments",
+            "bundle data CaseProvideDetailsModel ${
+                arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
+            }"
+        )
+        Logg.logging(
+            "NewCaseComments",
+            "bundle data cat  ${arguments?.getString(Constants.CASES_CATEGORY)}"
+        )
+        Logg.logging(
+            "NewCaseComments",
+            "bundle data  sub Cat ${arguments?.getString(Constants.CASES_SUB_CATEGORY)}"
+        )
     }
 
     override fun initCtrl() {
         binding.apply {
             btnNext.setOnClickListener(this@NewCaseCommentsFragment)
-//            tvSelectedCategory.text = arguments?.getString(Constants.CASES_CATEGORY)
-//            tvSubSelectCategory.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
+            tvSelectedCategory.text = arguments?.getString(Constants.CASES_CATEGORY)
+            tvSubSelectCategory.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
 
             chooseFileBtn1.setOnClickListener(this@NewCaseCommentsFragment)
             chooseFileBtn2.setOnClickListener(this@NewCaseCommentsFragment)
