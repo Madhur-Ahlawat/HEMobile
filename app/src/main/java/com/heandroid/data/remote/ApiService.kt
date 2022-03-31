@@ -15,8 +15,7 @@ import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
-import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
-import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
+import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
@@ -32,6 +31,7 @@ import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -177,25 +177,31 @@ interface ApiService {
         @Body request: CaseEnquiryHistoryRequest?, @Query("agencyId") agencyId: String = AGENCY_ID
     ): Response<CaseEnquiryHistoryResponse?>
 
-
     @GET(ACCOUNT_DETAIL)
-    suspend fun accountDetail(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+    suspend fun accountDetail(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<ProfileDetailModel?>?
 
     @GET(GET_CASE_ENQUIRIES_CATEGORY)
-    suspend fun getCaseCategoriesList(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+    suspend fun getCaseCategoriesList(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
 
     @GET(GET_CASE_ENQUIRIES_SUB_CATEGORY)
-    suspend fun getCaseSubCategoriesList(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+    suspend fun getCaseSubCategoriesList(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
 
     @POST(CREATE_NEW_CASE)
-    suspend fun createNewCase(@Query("agencyId") agencyId: String?= AGENCY_ID) : Response<ProfileDetailModel?>?
+    suspend fun createNewCase(
+        @Body modelReq: CreateNewCaseReq?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<CreateNewCaseResp?>?
 
+    @POST(UPLOAD_FILE)
+    suspend fun uploadFile(
+        @Part file: MultipartBody.Part?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<UploadFileReqModel?>?
 
     @PUT(EMAIL_VERIFICATION_FOR_UPDATION)
-    suspend fun emailValidationForUpdation(@Body model : ProfileUpdateEmailModel?) : Response<EmailVerificationResponse?>?
-
+    suspend fun emailValidationForUpdation(@Body model: ProfileUpdateEmailModel?): Response<EmailVerificationResponse?>?
 
     @PUT(UPDATE_PASSWORD)
-    suspend fun updatePassword(@Body model: UpdateAccountPassword?) : Response<UpdatePasswordResponseModel?>?
+    suspend fun updatePassword(@Body model: UpdateAccountPassword?): Response<UpdatePasswordResponseModel?>?
 
 }
