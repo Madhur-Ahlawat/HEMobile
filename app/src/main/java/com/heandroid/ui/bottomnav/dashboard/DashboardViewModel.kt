@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.AccountResponse
+import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.auth.forgot.email.ForgotUsernameApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
@@ -21,46 +22,53 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : BaseViewModel() {
-
-
-
+class DashboardViewModel @Inject constructor(private val repository: DashBoardRepo) : BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
 
 
-    val accountOverviewVal = MutableLiveData<Resource<AccountResponse>>()
-    val monthlyUsageVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
-    val paymentListVal = MutableLiveData<Resource<RetrievePaymentListApiResponse>>()
-    val vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
-    val forgotUsernameVal = MutableLiveData<Response<ForgotUsernameApiResponse>>()
-    val getAlertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    val vehicleListVal : LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _accountDetailsVal = MutableLiveData<Resource<AccountResponse?>?>()
+    val accountOverviewVal :MutableLiveData<Resource<AccountResponse?>?> get() = _accountDetailsVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
+    val thresholdAmountVal : MutableLiveData<Resource<ThresholdAmountApiResponse?>?> get() = _thresholdAmountVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val getAlertsVal : LiveData<Resource<AlertMessageApiResponse?>?> get() = _alertsVal
+
 
     fun getVehicleInformationApi() {
         viewModelScope.launch {
             try {
 
-                vehicleListVal.postValue(ResponseHandler.success(repo.getVehicleData(),errorManager))
+                _vehicleListVal.postValue(ResponseHandler.success(repository.getVehicleData(),errorManager))
 
             } catch (e: Exception) {
-                vehicleListVal.postValue(ResponseHandler.failure(e))
+                _vehicleListVal.postValue(ResponseHandler.failure(e))
             }
         }
+
 
     }
 
 
     fun getAlertsApi(
-        lng: String
     ) {
 
         viewModelScope.launch {
             try {
-                getAlertsVal.postValue(ResponseHandler.success(repo.getAlertMessages(),errorManager))
+                _alertsVal.postValue(ResponseHandler.success(repository.getAlertMessages(),errorManager))
             } catch (e: Exception) {
-                getAlertsVal.postValue(ResponseHandler.failure(e))
+                _alertsVal.postValue(ResponseHandler.failure(e))
             }
         }
     }
@@ -70,12 +78,40 @@ class DashboardViewModel @Inject constructor(private val repo: DashBoardRepo) : 
             try {
                 _crossingHistoryVal.postValue(
                     ResponseHandler.success(
-                        repo.crossingHistoryApiCall(request),
+                        repository.crossingHistoryApiCall(request),
                         errorManager
                     )
                 )
             } catch (e: Exception) {
                 _crossingHistoryVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun getAccountDetailsData()
+    {
+        viewModelScope.launch{
+            try {
+                _accountDetailsVal.postValue(
+                    ResponseHandler.success(repository.getAccountDetailsApiCall(), errorManager)
+                )
+            }catch (e:Exception)
+            {
+                _accountDetailsVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun getThresholdAmountData()
+    {
+        viewModelScope.launch{
+            try {
+                _thresholdAmountVal.postValue(
+                    ResponseHandler.success(repository.getThresholdAmountApiCAll(), errorManager)
+                )
+            }catch (e:Exception)
+            {
+                _thresholdAmountVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

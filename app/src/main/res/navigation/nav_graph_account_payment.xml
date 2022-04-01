@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_account_payment"
+    app:startDestination="@id/accountPaymentHistoryFragment">
+
+    <fragment
+        android:id="@+id/accountPaymentHistoryFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.AccountPaymentHistoryFragment"
+        android:label="AccountPaymentHistoryFragment"
+        tools:layout="@layout/fragment_account_payment_history" />
+    <fragment
+        android:id="@+id/accountPaymentMethodsFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.AccountPaymentMethodsFragment"
+        android:label="AccountPaymentMethodsFragment"
+        tools:layout="@layout/fragment_account_payment_methods" />
+</navigation>

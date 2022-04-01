@@ -636,9 +636,20 @@
                 "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsucessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
+    <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>
+    <string name="str_account_type">Account type</string>
+    <string name="txt_view_crossings">View crossings</string>
+    <string name="txt_view_crossing">View crossing</string>
+
     <string name="user_your_new_email_id_to_log_in_to_your_account">User your new email id to log in to your account</string>
     <string name="create_your_password">Create your password</string>
     <string name="please_select_option">Please select option</string>
+
+    <string name="str_payment">Payment</string>
+    <string name="payment_methods">Payment methods</string>
+    <string name="payment_history">Payment history</string>
+    <string name="your_payment">Your payment</string>
 
 </resources>
 

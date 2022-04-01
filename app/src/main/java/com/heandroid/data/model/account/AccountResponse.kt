@@ -7,4 +7,4 @@ data class AccountResponse(
     @SerializedName("financialInformation") val financialInformation : FinancialInformation,
     @SerializedName("replenishmentInformation") val replenishmentInformation : ReplenishmentInformation,
     @SerializedName("personalInformation") val personalInformation : PersonalInformation
-) 
+)
