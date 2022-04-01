@@ -10,6 +10,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,13 +21,15 @@ class CreateAccountVehicleViewModel @Inject constructor(private val repo: Create
 
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
-    fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
-        viewModelScope.launch {
+
+    suspend fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
+        viewModelScope.async {
             try {
-                findVehicleMutData.setValue(ResponseHandler.success(repo.getVehicleDetail(vehicleNumber, agencyId), errorManager)
-                )
+                findVehicleMutData.setValue(ResponseHandler.success(repo.getVehicleDetail(vehicleNumber, agencyId), errorManager))
+                return@async
             } catch (e: Exception) {
                 findVehicleMutData.setValue(ResponseHandler.failure(e))
+                return@async
             }
         }
     }

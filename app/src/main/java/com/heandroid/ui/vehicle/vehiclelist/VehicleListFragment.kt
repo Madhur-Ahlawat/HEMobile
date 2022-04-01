@@ -27,6 +27,7 @@ import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import java.lang.Exception
 
 @AndroidEntryPoint
@@ -41,6 +42,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private var pos: Int = 0
     private val createAccVehicleViewModel: CreateAccountVehicleViewModel by viewModels()
     private var isNonUKVehicleUpdating: Boolean? = false
+    private var currentPos : Int =0
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleListBinding.inflate(inflater, container, false)
@@ -76,24 +78,40 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         }
     }
 
-    private fun hitCreateAccVehicleList() {
-        loader?.show(requireActivity().supportFragmentManager, "")
 
+    private fun hitCreateAccVehicleList() {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            coroutineScope {
+                withContext(Dispatchers.IO){
+                    async {
+                        loadVehicleData()
+                    }.await()
+                }
+                setVehicleListAdapter(mList)
+
+            }
+        }
+
+
+    }
+
+    suspend  fun loadVehicleData() {
         for (i in VehicleHelper.list?.indices!!) {
 
             if (VehicleHelper.list?.get(i)?.plateInfo?.country == "UK") {
-                createAccVehicleViewModel.getVehicleData(
-                    VehicleHelper.list?.get(i)?.plateInfo?.number,
-                    Constants.AGENCY_ID
-                )
+                loader?.show(requireActivity().supportFragmentManager, "")
+                currentPos = i
+                CoroutineScope(Dispatchers.IO).async {
+                    createAccVehicleViewModel.getVehicleData(VehicleHelper.list?.get(i)?.plateInfo?.number, Constants.AGENCY_ID)
+                }.join()
+
             } else {
                 val vehicleRes = VehicleHelper.list?.get(i)
-                if(!mList.contains(vehicleRes))
-                mList.add(vehicleRes)
-                setVehicleListAdapter(mList)
+                if(!mList.contains(vehicleRes)) mList.add(vehicleRes)
+
             }
 
-            //setVehicleListAdapter(VehicleHelper.list as ArrayList<VehicleResponse?>)
         }
     }
 

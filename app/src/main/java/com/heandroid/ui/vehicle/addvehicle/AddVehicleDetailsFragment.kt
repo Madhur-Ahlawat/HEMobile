@@ -80,8 +80,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                 if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
                    createAccountNonVehicleModel?.apply {
                        vehicleMake = binding.makeInputEditText.text.toString().trim()
-                       vehicleColor = binding.modelInputEditText.text.toString().trim()
-                       vehicleModel = binding.colorInputEditText.text.toString().trim()
+                       vehicleColor = binding.colorInputEditText.text.toString().trim()
+                       vehicleModel = binding.modelInputEditText.text.toString().trim()
                    }
 
                     val bundle = Bundle()

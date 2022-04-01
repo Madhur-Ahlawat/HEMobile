@@ -138,6 +138,12 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     }
 
                 }
+
+                model?.cardStateType="HE"
+                model?.cardCity=""
+                model?.cardZipCode=""
+                model?.billingAddressLine1=""
+
                 binding.model = model
             }
             return true
@@ -163,6 +169,5 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         } catch (e: Exception) {
         }
     }
-
 
 }

@@ -18,6 +18,7 @@ import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.VehicleHelper
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,31 +34,21 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         val model =arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA)
         val vehicle: MutableList<CreateAccountVehicleModel?>? = ArrayList()
 
-        vehicle?.add(CreateAccountVehicleModel(plateCountry = /*plateInfo?.country*/"UK",
-                                               plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
-                                               vehicleColor = /*vehicleInfo?.color*/"YELLOW",
-                                               vehicleComments = /*plateInfo?.vehicleComments*/"",
-                                               vehicleMake = /*vehicleInfo?.make*/"AUDI",
-                                               vehicleModel = /*vehicleInfo?.model*/"X3",
-                                               vehiclePlate = /*plateInfo?.number*/"TESTPLATE1",
-                                               vehicleYear = /*vehicleInfo?.year*/""))
+        for(i in VehicleHelper.list?.indices!!) {
+            VehicleHelper?.list?.get(i)?.run {
+                vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
+                                                       plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
+                                                       vehicleColor = vehicleInfo?.color,
+                                                       vehicleComments = plateInfo?.vehicleComments,
+                                                       vehicleMake = vehicleInfo?.make,
+                                                       vehicleModel = vehicleInfo?.model,
+                                                       vehiclePlate = plateInfo?.number,
+                                                       vehicleYear = vehicleInfo?.year))
 
-//        for(i in 0..2) {
-//            VehicleHelper?.list?.get(i)?.run {
-//                vehicle?.add(CreateAccountVehicleModel(plateCountry = /*plateInfo?.country*/"UK",
-//                                                       plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
-//                                                       vehicleColor = /*vehicleInfo?.color*/"YELLOW",
-//                                                       vehicleComments = /*plateInfo?.vehicleComments*/"",
-//                                                       vehicleMake = /*vehicleInfo?.make*/"AUDI",
-//                                                       vehicleModel = /*vehicleInfo?.model*/"X3",
-//                                                       vehiclePlate = /*plateInfo?.number*/"TESTPLATE1",
-//                                                       vehicleYear = /*vehicleInfo?.year*/""))
-//
-//            }
-//        }
+            }
+        }
         model?.ftvehicleList= CreateAccountVehicleListModel(vehicle=vehicle)
 
-        Logg.logging("data",model.toString())
         binding.btnContine.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(CREATE_ACCOUNT_DATA,model)
@@ -72,12 +63,13 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
-                val bundle = Bundle()
-                bundle.putParcelable(CREATE_ACCOUNT_DATA, arguments?.getParcelable(CREATE_ACCOUNT_DATA))
-                findNavController().navigate(
-                    R.id.action_choosePaymentFragment_to_cardFragment,
-                    bundle
-                )
+                if(binding.rbDebitCard.isChecked){
+                    val bundle = Bundle()
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, arguments?.getParcelable(CREATE_ACCOUNT_DATA))
+                    findNavController().navigate(R.id.action_choosePaymentFragment_to_cardFragment, bundle)
+                }else{
+                   requireActivity().showToast(getString(R.string.please_select_option))
+                }
             }
         }
     }
