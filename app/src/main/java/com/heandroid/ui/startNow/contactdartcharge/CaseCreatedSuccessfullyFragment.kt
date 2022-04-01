@@ -30,6 +30,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             checkEnquiryStatus.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             rlCaseNoVal.text = arguments?.getString(Constants.CASE_NUMBER)
+            rlDateVal.text = "April 1 2022 03:34"
         }
     }
 

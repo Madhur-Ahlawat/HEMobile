@@ -63,6 +63,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             rlCategoryVal.text = arguments?.getString(Constants.CASES_CATEGORY)
             rlSubCategoryVal.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
             rlCommentsVal.text = arguments?.getString(Constants.CASE_COMMENTS_KEY)
+            rlTransactionVal.text = "1 April 2022 03:30"
         }
     }
 
@@ -81,7 +82,10 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                             R.id.action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment,
                             arguments?.apply {
                                 putString(Constants.CASE_NUMBER, it.srNumber)
-                                putString(Constants.LAST_NAME,arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.lName)
+                                putString(
+                                    Constants.LAST_NAME,
+                                    arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.lName
+                                )
                             }
                         )
                     } else {
@@ -118,12 +122,12 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                     mModel.telephoneNo,
                     "",
                     mComment,
-                    mSubCat,
-                    mCat,
+                    "OTHER",//SUB
+                    "WEB",//CAT
                     mList,
                     "ENU"
                 )
-                loader?.show(requireActivity().supportFragmentManager,"Loader")
+                loader?.show(requireActivity().supportFragmentManager, "Loader")
                 viewModel.createNewCase(newCaseReq)
             }
             else -> {
