@@ -54,6 +54,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     override fun initCtrl() {
         binding.apply {
+            tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
@@ -140,6 +141,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 }
 
                 model?.cardStateType="HE"
+                model?.cardCity="MAIDSTONE"
+                model?.cardZipCode="ME13 0BF"
 
                 model?.billingAddressLine1=model?.address1
                 model?.billingAddressLine2=null

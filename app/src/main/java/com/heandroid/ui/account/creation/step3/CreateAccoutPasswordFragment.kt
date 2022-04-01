@@ -61,7 +61,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         binding.enable = (binding.tiePassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString()
-            .trim() == binding.tieConfirmPassword.text.toString().trim())
+            .trim() == binding.tiePassword.text.toString().trim())
 
     }
 
@@ -81,12 +81,12 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }
             else {
-                showError(binding.root,"•\tMust begin with a letter\n" +
-                        "•\tBe at least 8 characters long\n" +
-                        "•\t1 uppercase letter\n" +
-                        "•\t1 lowercase letter\n" +
-                        "•\t1 number\n" +
-                        "•\t1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
+                showError(binding.root,"•Must begin with a letter\n" +
+                        "•Be at least 8 characters long\n" +
+                        "•1 uppercase letter\n" +
+                        "•1 lowercase letter\n" +
+                        "•1 number\n" +
+                        "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
             }}
 
         }
