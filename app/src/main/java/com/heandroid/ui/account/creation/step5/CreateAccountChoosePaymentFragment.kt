@@ -43,7 +43,7 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
                                                        vehicleMake = vehicleInfo?.make,
                                                        vehicleModel = vehicleInfo?.model,
                                                        vehiclePlate = plateInfo?.number,
-                                                       vehicleYear = vehicleInfo?.year))
+                                                       vehicleYear = "2025"))
 
             }
         }

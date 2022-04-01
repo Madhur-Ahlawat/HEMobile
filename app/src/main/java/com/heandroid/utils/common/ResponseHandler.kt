@@ -18,7 +18,7 @@ object ResponseHandler {
         }
         else {
             val errorResponse = Gson().fromJson(response?.errorBody()?.string(),ErrorResponseModel::class.java)
-            Resource.DataError(errorManager.getError(errorResponse?.errorCode?:response?.code()?:0).description)
+            Resource.DataError(errorResponse.message)
         }
     }
 

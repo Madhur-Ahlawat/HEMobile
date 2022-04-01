@@ -34,9 +34,9 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun init() {
        requestModel = CreateAccountRequestModel(referenceId = "", securityCd = "", accountType = "", address1 = "",
-                                                 planType = null , billingAddressLine1 = "" , billingAddressLine2 = "" , cardCity = "" ,
+                                                 planType = null , billingAddressLine1 = "" , billingAddressLine2 = "" , cardCity = "MAIDSTONE" ,
                                                  cardFirstName = "" , cardLastName = "" , cardMiddleName = "" , cardStateType = "" ,
-                                                 cardZipCode = "" , cellPhone = "" , city = "" , countryType = "" , creditCExpMonth = "" ,
+                                                 cardZipCode = "ME13 0BF" , cellPhone = "" , city = "" , countryType = "" , creditCExpMonth = "" ,
                                                  creditCExpYear = "" , creditCardNumber = "" , creditCardType = "" ,
                                                  digitPin = "", emailAddress = "", eveningPhone = "", firstName = "",
                                                  ftvehicleList = null, lastName = "", maskedNumber = "",

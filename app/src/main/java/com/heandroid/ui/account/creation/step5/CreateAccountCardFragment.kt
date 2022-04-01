@@ -104,7 +104,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails",responseModel.toString())
                 model?.creditCExpMonth = responseModel.card.exp.substring(0, 2)
-                model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
+                model?.creditCExpYear = responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type
@@ -140,9 +140,9 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 }
 
                 model?.cardStateType="HE"
-                model?.cardCity=""
-                model?.cardZipCode=""
-                model?.billingAddressLine1=""
+
+                model?.billingAddressLine1=model?.address1
+                model?.billingAddressLine2=null
 
                 binding.model = model
             }

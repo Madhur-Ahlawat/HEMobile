@@ -137,7 +137,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
             mainList[position-1].run {
-                model?.countryType=country
+                model?.countryType="UK"
                 model?.city=town
                 model?.stateType="HE"
                 model?.zipCode1=postcode

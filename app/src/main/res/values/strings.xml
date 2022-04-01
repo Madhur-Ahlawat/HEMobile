@@ -650,6 +650,7 @@
     <string name="payment_methods">Payment methods</string>
     <string name="payment_history">Payment history</string>
     <string name="your_payment">Your payment</string>
+    <string name="cannot_create_account">The request could not be completed at this time. Please try again later.</string>
 
 </resources>
 
