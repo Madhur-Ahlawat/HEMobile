@@ -11,6 +11,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +35,10 @@ class ContactDartChargeViewModel @Inject constructor(private val repository: Con
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _createNewCaseVal = MutableLiveData<Resource<CreateNewCaseResp?>?>()
     val createNewCaseVal: LiveData<Resource<CreateNewCaseResp?>?> get() = _createNewCaseVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _uploadFileVal = MutableLiveData<Resource<UploadFileResponseModel?>?>()
+    val uploadFileVal: LiveData<Resource<UploadFileResponseModel?>?> get() = _uploadFileVal
 
     fun getCaseHistoryData(request: CaseEnquiryHistoryRequest?) {
         viewModelScope.launch {
@@ -91,6 +96,21 @@ class ContactDartChargeViewModel @Inject constructor(private val repository: Con
                 )
             } catch (e: Exception) {
                 _createNewCaseVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun uploadFileApi(data : MultipartBody.Part) {
+        viewModelScope.launch {
+            try {
+                _uploadFileVal.postValue(
+                    ResponseHandler.success(
+                        repository.uploadFile(data),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _uploadFileVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

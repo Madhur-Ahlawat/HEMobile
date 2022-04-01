@@ -196,11 +196,11 @@ interface ApiService {
         @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<CreateNewCaseResp?>?
 
+    @Multipart
     @POST(UPLOAD_FILE)
     suspend fun uploadFile(
-        @Part file: MultipartBody.Part?,
-        @Query("agencyId") agencyId: String? = AGENCY_ID
-    ): Response<UploadFileReqModel?>?
+        @Part file: MultipartBody.Part?
+    ): Response<UploadFileResponseModel?>?
 
     @PUT(EMAIL_VERIFICATION_FOR_UPDATION)
     suspend fun emailValidationForUpdation(@Body model: ProfileUpdateEmailModel?): Response<EmailVerificationResponse?>?
