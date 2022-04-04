@@ -39,7 +39,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
-        when(model?.planType){
+        when(model?.planType) {
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
             else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }

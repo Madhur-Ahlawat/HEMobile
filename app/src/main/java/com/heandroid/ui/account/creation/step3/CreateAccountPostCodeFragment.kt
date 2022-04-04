@@ -40,9 +40,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private var addressList : MutableList<String> = ArrayList()
     private var mainList : MutableList<DataAddress> = ArrayList()
 
-
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
-
     override fun init() {
         binding.enable=false
         model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
@@ -72,8 +70,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     override fun onClick(v: View?) {
         hideKeyboard()
         when(v?.id) {
-            R.id.btnAction -> {
 
+            R.id.btnAction -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 }
@@ -91,8 +89,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.tieAddress ->{ binding.spnAddress.performClick() }
         }
     }
-
-
     private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
         try {
             loader?.dismiss()
@@ -113,7 +109,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         btnFindAddress.gone()
                         tilAddress.visible()
 
-                        when(model?.planType){
+                        when(model?.planType) {
+
                             PAYG -> {
                                 model?.countryType=null
                                 model?.city=null
@@ -122,6 +119,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                             }
                         }
                         tvChange.visible()
+
                         tilPostCode.endIconDrawable = null
                     }
                 }
@@ -129,7 +127,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             }
         } catch (e: Exception) { }
     }
-
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {

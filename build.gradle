@@ -33,6 +33,9 @@ ext {
     if (flavor.isBlank() || flavor.isEmpty()) {
         flavor = "dev"
     }
+    else if(flavor.contains("tstg")){
+        flavor = "test"
+    }
     config = getProps('config/'+flavor+'.properties')
 }
 
