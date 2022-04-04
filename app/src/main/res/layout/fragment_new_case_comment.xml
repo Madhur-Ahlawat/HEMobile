@@ -239,11 +239,29 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:srcCompat="@drawable/ic_upload" />
+
+                    <ProgressBar
+                        android:id="@+id/loader1"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:theme="@style/Theme.HEMobileLight"
+                        android:layout_marginStart="@dimen/_15sdp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/success1"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        app:srcCompat="@drawable/ic_upload" />
+                        app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName1"
@@ -277,6 +295,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
+                    <ProgressBar
+                        android:id="@+id/loader2"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:theme="@style/Theme.HEMobileLight"
+                        android:layout_marginStart="@dimen/_15sdp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/success2"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName2"
@@ -309,6 +344,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
+                    <ProgressBar
+                        android:id="@+id/loader3"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:theme="@style/Theme.HEMobileLight"
+                        android:layout_marginStart="@dimen/_15sdp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/success3"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName3"
@@ -341,6 +393,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
+
+                    <ProgressBar
+                        android:id="@+id/loader4"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:theme="@style/Theme.HEMobileLight"
+                        android:layout_marginStart="@dimen/_15sdp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/success4"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName4"
