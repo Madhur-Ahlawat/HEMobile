@@ -1,4 +1,4 @@
-package com.heandroid.ui.bottomnav.account.payments
+package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

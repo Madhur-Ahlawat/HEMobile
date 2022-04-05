@@ -1,4 +1,4 @@
-package com.heandroid.ui.bottomnav.account.payments
+package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>() {
 
     private val viewModel: AccountPaymentHistoryViewModel by viewModels()
-   // private var loader: LoaderDialog? = null
+  //  private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -29,9 +29,9 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     )= FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager, "")
+     //   loader = LoaderDialog()
+     //   loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+     //   loader?.show(requireActivity().supportFragmentManager, "")
     }
 
     override fun initCtrl() {
@@ -44,9 +44,9 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?){
-//        if (loader?.isVisible == true){
-//            loader?.dismiss()
-//        }
+    //    if (loader?.isVisible == true){
+    //        loader?.dismiss()
+    //    }
         when (resource) {
             is Resource.Success -> {
                 if(resource.data?.statusCode?.equals("0")==true){
