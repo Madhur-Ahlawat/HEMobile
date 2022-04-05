@@ -43,13 +43,18 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountCardBinding = FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
-        model = arguments?.getParcelable("data")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
+
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
     }
 
     override fun initCtrl() {
         binding.apply {
+            tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
@@ -63,18 +68,19 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-                loader = LoaderDialog()
-                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                when(model?.planType){
+                    Constants.PAYG ->  model?.smsOption=null
+                }
+                loader?.show(requireActivity().supportFragmentManager,"")
                 viewModel.createAccount(model)
             }
         }
     }
 
-    private val progressListener = object : WebViewClient(){
+    private val progressListener = object : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
             view?.loadUrl("file:///android_asset/NMI.html")
-            loader?.show(requireActivity().supportFragmentManager,"")
             return true
         }
 
@@ -92,13 +98,14 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             if (check) {
                 if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
                 else binding.tvPaymentAmount.visible()
-                Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+               // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails",responseModel.toString())
-                model?.creditCExpMonth = responseModel.card.exp.substring(0, 1)
-                model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
+                model?.creditCExpMonth = responseModel.card.exp.substring(0, 2)
+                model?.creditCExpYear = responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type
@@ -132,6 +139,14 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     }
 
                 }
+
+                model?.cardStateType="HE"
+                model?.cardCity="MAIDSTONE"
+                model?.cardZipCode="ME13 0BF"
+
+                model?.billingAddressLine1=model?.address1
+                model?.billingAddressLine2=null
+
                 binding.model = model
             }
             return true
@@ -144,8 +159,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             when (status) {
                 is Resource.Success -> {
                     status.data?.accountType = model?.accountType
-
-
                     // Add Payment Method
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
@@ -159,6 +172,5 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         } catch (e: Exception) {
         }
     }
-
 
 }

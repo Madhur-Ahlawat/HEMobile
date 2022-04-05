@@ -24,7 +24,6 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
@@ -93,18 +92,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                                 getString(R.string.str_two_crossing, count)
                         }
                     }
-//                    is Resource.DataError -> {
-//                        ErrorUtil.showError(binding.root, resource.errorMsg)
-//                    }
-//                    else -> {
-//
-//                    }
                 }
-            }
-        } catch (e: Exception) {
-
-
-        }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+                }
+            }}catch (e: Exception){}
     }
 
     private fun vehicleListResponse(status: Resource<List<VehicleResponse?>?>?) {
@@ -206,6 +200,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             tvAccountStatus.text =  data.accountInformation.accountStatus
             tvTopUpType.text = data.accountInformation.accountFinancialstatus
             tvAccountType.text =  data.accountInformation.type
+            //tvAccountStatus.text =  data.accountInformation.type
 
         }
     }

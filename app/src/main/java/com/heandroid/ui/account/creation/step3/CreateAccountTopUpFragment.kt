@@ -24,8 +24,9 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountTopUpBinding.inflate(inflater, container, false)
 
     override fun init() {
-        model = arguments?.getParcelable(Constants.DATA)
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        model?.thresholdAmount=300.0
         binding.enable=false
     }
 
@@ -42,7 +43,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
         when (v?.id) {
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,model)
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
                 }
                 findNavController().navigate(R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment, bundle)
 
@@ -59,12 +60,12 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
                 binding.clNoDes.gone()
                 binding.clYesDes.visible()
 
-                model?.thresholdAmount=10.0
+                model?.replenishmentAmount=10.0
             }
             R.id.mrbNo ->{
                 binding.clNoDes.visible()
                 binding.clYesDes.gone()
-                model?.thresholdAmount=05.0
+                model?.replenishmentAmount=05.0
             }
         }
     }

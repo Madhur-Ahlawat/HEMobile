@@ -29,6 +29,7 @@ class DashboardNotificationAdapter  (private val context: Context, private val l
         fun bind(data: AlertMessage?) {
             data?.run {
                 binding.tvTitle.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
+//                binding.btnUpdateNow.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
                 binding.btnUpdateNow.movementMethod= LinkMovementMethod.getInstance()
 
 //                if(isViewed == "N")

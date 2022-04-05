@@ -68,6 +68,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/payment"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"
                     android:layout_marginTop="@dimen/_1sdp"

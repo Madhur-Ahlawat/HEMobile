@@ -2,16 +2,21 @@ package com.heandroid.utils.common
 
 object Constants {
 
-    const val PAYG: String = "PAYG"
-    const val PERSONAL_TYPE: String = "personal_type_pre_pay_or_pay_as_go"
-    const val FROM_DART_CHARGE_FLOW: String = "900"
+    const val CASE_COMMENTS_KEY = "case_comments_key"
+    const val CASES_CATEGORY ="cases_category"
+    const val CASES_SUB_CATEGORY ="cases_sub_category"
+    const val PAYG = "PAYG"
+    const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
+    const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"
     const val NORMAL_LOGIN_FLOW_CODE = 1001
     const val DART_CHARGE_FLOW_CODE: Int = 1002
     const val FROM_LOGIN_TO_CASES_VALUE = 1003
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
+    const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
+
+        const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
     const val PERSONAL_DETAILS = "personal_details"
     const val POST_CODE_ADDRESS = "post_code_address"
     const val PASSWORD = "password"
@@ -50,6 +55,8 @@ object Constants {
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
     const val DATA = "list"
+    const val CREATE_ACCOUNT_DATA = "create_account_data"
+    const val DATA2 = "list2"
     const val POST_MAIL = "post"
     const val SMS = "SMS"
     const val EMAIL = "email"
@@ -98,6 +105,13 @@ object Constants {
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
     const val PAYMENT_ONE_OFF = "PaymentOneOff"
+
+    const val CHOOSE_FILE_1 = "Choose_first_file"
+    const val CHOOSE_FILE_2 = "Choose_second_file"
+    const val CHOOSE_FILE_3 = "Choose_third_file"
+    const val CHOOSE_FILE_4 = "Choose_fourth_file"
+
+
 
 
 

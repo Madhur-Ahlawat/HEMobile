@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.Constants.EMAIL_SELECTION_TYPE
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Utils.isEmailValid
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +34,9 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfileEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
-       loader = LoaderDialog()
+        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+
+        loader = LoaderDialog()
        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
        binding.enable = true

@@ -36,10 +36,10 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
 
     override fun init() {
         binding.enable = false
-        model = arguments?.getParcelable(Constants.DATA)
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
-        when(model?.planType){
+        when(model?.planType) {
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
             else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
@@ -61,7 +61,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         binding.enable = (binding.tiePassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString()
-            .trim() == binding.tieConfirmPassword.text.toString().trim())
+            .trim() == binding.tiePassword.text.toString().trim())
 
     }
 
@@ -76,17 +76,17 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                     password = binding.tiePassword.text.toString().trim()
                 }
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,model)
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }
             else {
-                showError(binding.root,"•\tMust begin with a letter\n" +
-                        "•\tBe at least 8 characters long\n" +
-                        "•\t1 uppercase letter\n" +
-                        "•\t1 lowercase letter\n" +
-                        "•\t1 number\n" +
-                        "•\t1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
+                showError(binding.root,"•Must begin with a letter\n" +
+                        "•Be at least 8 characters long\n" +
+                        "•1 uppercase letter\n" +
+                        "•1 lowercase letter\n" +
+                        "•1 number\n" +
+                        "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
             }}
 
         }

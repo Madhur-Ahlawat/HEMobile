@@ -1,7 +1,9 @@
 package com.heandroid.utils.common
 
 import android.util.Log
+import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
+import com.heandroid.data.model.ErrorResponseModel
 import com.heandroid.data.remote.NoConnectivityException
 import retrofit2.Response
 import java.lang.Exception
@@ -15,8 +17,8 @@ object ResponseHandler {
             Resource.Success(response.body())
         }
         else {
-
-            Resource.DataError(errorManager.getError(response?.code() ?: 0).description)
+            val errorResponse = Gson().fromJson(response?.errorBody()?.string(),ErrorResponseModel::class.java)
+            Resource.DataError(errorResponse.message)
         }
     }
 

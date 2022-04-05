@@ -21,6 +21,7 @@ class ErrorMapper @Inject constructor(@ApplicationContext val context: Context) 
             Pair(CHECK_YOUR_FIELDS, getErrorString(R.string.invalid_username_and_password)),
             Pair(UNKNOWN_ERROR, getErrorString(R.string.unknown_error)),
             Pair(TOO_MANY_LOGIN_ATTEMPT, getErrorString(R.string.too_many_login_attempt)),
+            Pair(CREATE_ACCOUNT_FAILED, getErrorString(R.string.cannot_create_account) ),
 
             Pair(SERVER_ERROR, getErrorString(R.string.internal_server_error))
 

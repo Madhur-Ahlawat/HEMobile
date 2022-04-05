@@ -18,6 +18,7 @@ import com.heandroid.databinding.FragmentCreateAccountConfirmEmailBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
+import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
@@ -36,7 +37,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requestModel = arguments?.getParcelable(DATA)
+        requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()
@@ -92,17 +93,14 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
                 if(resource.data?.status?.equals("500")==true) showError(binding.root,resource.data.message)
                 else loadFragment()
             }
-            is Resource.DataError -> {
-                loadFragment()
-            //    showError(binding.root, resource.errorMsg)
-            }
+            is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
         }}catch (e: Exception) {  }
     }
 
     private fun loadFragment() {
         requestModel?.securityCd = binding.etCode.text.toString().trim()
         val bundle = Bundle()
-        bundle.putParcelable(DATA,requestModel)
+        bundle.putParcelable(CREATE_ACCOUNT_DATA,requestModel)
         findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
     }
 

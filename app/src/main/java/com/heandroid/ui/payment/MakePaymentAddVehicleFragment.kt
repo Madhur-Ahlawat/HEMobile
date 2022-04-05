@@ -101,10 +101,13 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                    // loader?.show(requireActivity().supportFragmentManager, "")
                     val bundle =  Bundle()
                     bundle.putBoolean("IsAccountVehicle", true)
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+
                     findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment, bundle)
                 } else if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
                     val bundle =  Bundle()
                     bundle.putBoolean("isNonUKVehicleUpdating", true)
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                     findNavController().navigate(R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment, bundle)
                 }
             }

@@ -23,12 +23,10 @@
         <tr> <td>CC Number</td> <td id="ccNumber"></td> </tr>
         <tr> <td>CC Exp</td> <td id="ccExp"></td> </tr>
         <tr> <td>CVV</td> <td id="cvv"></td> </tr>
-        <tr> <td>Name on Account</td> <td id="name"></td> </tr>
-        <tr> <td></td> <td class="btnGooglePay"></td> </tr>
-        <tr> <td></td> <td class="btnApplePay"></td> </tr>
+        <tr> <td>Name</td> <td id="name"></td> </tr>
     </table>
     <br>
-    <button id="demoPayButton" type="button">Pay the money.</button>
+    <button id="demoPayButton" type="button">Proceed</button>
 </form>
 <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -80,7 +78,7 @@
                             "display": "show",
                             "selector": "#name",
                             "title": "Name on Checking Account",
-                            "placeholder": "Customer McCustomerface"
+                            "placeholder": "Name"
                         },
                         "googlePay": {
                             "selector": ".btnGooglePay",

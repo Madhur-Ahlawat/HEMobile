@@ -40,12 +40,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private var addressList : MutableList<String> = ArrayList()
     private var mainList : MutableList<DataAddress> = ArrayList()
 
-
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
-
     override fun init() {
         binding.enable=false
-        model=arguments?.getParcelable(Constants.DATA)
+        model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
         when(model?.planType){
@@ -72,10 +70,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     override fun onClick(v: View?) {
         hideKeyboard()
         when(v?.id) {
-            R.id.btnAction -> {
 
+            R.id.btnAction -> {
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }
@@ -91,8 +89,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.tieAddress ->{ binding.spnAddress.performClick() }
         }
     }
-
-
     private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
         try {
             loader?.dismiss()
@@ -113,10 +109,17 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         btnFindAddress.gone()
                         tilAddress.visible()
 
-                        when(model?.planType){
-                            PAYG -> enable = true
+                        when(model?.planType) {
+
+                            PAYG -> {
+                                model?.countryType=null
+                                model?.city=null
+                                model?.stateType=null
+                                enable = true
+                            }
                         }
                         tvChange.visible()
+
                         tilPostCode.endIconDrawable = null
                     }
                 }
@@ -124,7 +127,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             }
         } catch (e: Exception) { }
     }
-
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -132,10 +134,12 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
             mainList[position-1].run {
-                model?.countryType=country
-                model?.city=locality
-                model?.stateType=town
+                model?.countryType="UK"
+                model?.city=town
+                model?.stateType="HE"
                 model?.zipCode1=postcode
+                model?.address1=street
+
             }
 
             when(model?.planType){

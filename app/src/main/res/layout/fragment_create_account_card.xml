@@ -5,6 +5,8 @@
 
     <data>
 
+
+
         <variable
             name="model"
             type="com.heandroid.data.model.account.CreateAccountRequestModel" />
