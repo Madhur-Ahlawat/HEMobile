@@ -10,6 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
+import com.heandroid.data.model.account.AccountResponse
+import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.account.ThresholdAmountData
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessage
@@ -26,7 +29,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private val dashboardViewModel: DashboardViewModel  by viewModels()
+    private val dashboardViewModel: DashboardViewModel  by  viewModels()
 
     private var loader: LoaderDialog? = null
 
@@ -45,6 +48,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         dashboardViewModel.getVehicleInformationApi()
         getCrossingData()
         getNotificationData()
+        getAccountDetailsData()
+        dashboardViewModel.getThresholdAmountData()
     }
 
     private fun getNotificationData() {
@@ -70,6 +75,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         observe(dashboardViewModel.vehicleListVal, ::vehicleListResponse)
         observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         observe(dashboardViewModel.getAlertsVal, ::handleAlertsData)
+        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
+        observe(dashboardViewModel.thresholdAmountVal, ::handleThresholdAmountData)
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
@@ -86,12 +93,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                                 getString(R.string.str_two_crossing, count)
                         }
                     }
-                    is Resource.DataError -> {
-                        ErrorUtil.showError(binding.root, resource.errorMsg)
-                    }
-                    else -> {
-
-                    }
+//                    is Resource.DataError -> {
+//                        ErrorUtil.showError(binding.root, resource.errorMsg)
+//                    }
+//                    else -> {
+//
+//                    }
                 }
             }
         } catch (e: Exception) {
@@ -161,6 +168,72 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
             layoutManager = layoutMgr
             setHasFixedSize(true)
+        }
+    }
+
+
+    private fun getAccountDetailsData()
+    {
+        dashboardViewModel.getAccountDetailsData()
+    }
+
+    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?)
+    {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.let {
+                    var accountDetails = it
+                    setAccountDetailsView(accountDetails)
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun setAccountDetailsView(data: AccountResponse)
+    {
+        binding.apply{
+            tvAvailableBalance.text = data.replenishmentInformation.currentBalance
+            tvAccountNumber.text = data.accountInformation.number
+            tvAccountStatus.text =  data.accountInformation.accountStatus
+            tvTopUpType.text = data.accountInformation.accountFinancialstatus
+            tvAccountType.text =  data.accountInformation.type
+
+        }
+    }
+
+    private fun handleThresholdAmountData(status: Resource<ThresholdAmountApiResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.let {
+                    var thresholdAmountData = it.thresholdAmountVo
+                    stViewBalance(thresholdAmountData)
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+
+    }
+
+    private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
+        binding.apply{
+            tvTitle.text = requireActivity().getString(R.string.str_threshold_val_msg, thresholdAmountData.customerAmount, thresholdAmountData.thresholdAmount)
         }
     }
 

@@ -61,22 +61,21 @@
                     app:layout_constraintLeft_toRightOf="@+id/side_view"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_update_now"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_title_two"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    android:gravity="left"
                     android:layout_height="wrap_content"
+                    android:text="@string/str_activate_msg_now"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/black"
                     android:layout_marginVertical="@dimen/_10sdp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/btn_color"
-                    android:paddingHorizontal="@dimen/_5sdp"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:text="@string/str_click_here"
-                    android:textAllCaps="false"
-                    android:textSize="@dimen/_12ssp"
-                    app:cornerRadius="@dimen/_5sdp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     app:layout_constraintLeft_toRightOf="@+id/side_view"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView

@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import javax.inject.Inject
 
-class DashBoardRepository @Inject constructor(private val apiService: ApiService) {
+class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
 
     suspend fun getVehicleData() = apiService.getVehicleData()
@@ -17,5 +17,8 @@ class DashBoardRepository @Inject constructor(private val apiService: ApiService
 
     suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest) =
         apiService.getVehicleCrossingHistoryData(requestParam)
+
+    suspend fun getAccountDetailsApiCall()=apiService.getAccountDetailsData()
+    suspend fun getThresholdAmountApiCAll()=apiService.getThresholdValue()
 
 }

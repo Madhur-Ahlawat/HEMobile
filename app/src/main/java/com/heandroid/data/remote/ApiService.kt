@@ -1,25 +1,16 @@
 package com.heandroid.data.remote
 
-<<<<<<< HEAD
-=======
-import androidx.core.content.ContextCompat
-import com.heandroid.BuildConfig
->>>>>>> 989058966ed1c2870a7dd8243a15612cacc78479
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountDetails
-import com.heandroid.data.model.webstatus.WebSiteStatus
+import com.heandroid.data.model.account.AccountResponse
+import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
-import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.forgot.password.*
+import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
@@ -38,6 +29,7 @@ import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.data.model.webstatus.WebSiteStatus
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -163,22 +155,14 @@ interface ApiService {
     @POST(CREATE_ACCOUNT)
     suspend fun createAccount(
         @Query("agencyId") agencyId: String = AGENCY_ID,
-<<<<<<< HEAD
         @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?
     ): Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
-
-    @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
-    suspend fun getAddressListBasedOnPostalCode(@Query("search") postCode: String): Response<List<DataAddress>>
-=======
-        @Body model: createAccountModel?
-    ): Response<respAccountModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(
         @Query("agencyId") agencyId: String = AGENCY_ID,
         @Query("search") postCode: String
     ): Response<List<DataAddress>>
->>>>>>> 989058966ed1c2870a7dd8243a15612cacc78479
 
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getAccountFindVehicle(
@@ -213,10 +197,10 @@ interface ApiService {
     suspend fun updatePassword(@Body model: UpdateAccountPassword?) : Response<UpdatePasswordResponseModel?>?
 
     @GET(ACCOUNT_DETAILS)
-    suspend fun getAccountDetailsData():Response<AccountDetails>
+    suspend fun getAccountDetailsData():Response<AccountResponse?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
-    suspend fun getAccountBalanceData():Response<AccountDetails>
+    suspend fun getThresholdValue():Response<ThresholdAmountApiResponse?>?
 
 
 }

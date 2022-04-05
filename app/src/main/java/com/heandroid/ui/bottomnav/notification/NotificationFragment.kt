@@ -47,7 +47,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),FilterD
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.messageList?.isNullOrEmpty() == false) {
-                    setNotificationAlert(resource.data.messageList)
+                    setNotificationAlert(resource.data?.messageList)
                 }
             }
             is Resource.DataError -> {

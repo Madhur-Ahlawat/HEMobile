@@ -638,6 +638,8 @@
                 \n\u25CF 1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsucessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
+    <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>
 
 </resources>
 
