@@ -34,10 +34,19 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         val model =arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA)
         val vehicle: MutableList<CreateAccountVehicleModel?>? = ArrayList()
 
-        for(i in VehicleHelper.list?.indices!!) {
-            VehicleHelper?.list?.get(i)?.run {
-                vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
-                                                       plateTypeDesc = /*vehicleInfo?.vehicleClassDesc*/"STANDARD",
+
+/*        for(i in VehicleHelper.list?.indices!!) {
+            VehicleHelper?.list?.get(i)?.run {*/
+
+
+                  vehicle?.add(CreateAccountVehicleModel(plateCountry = "UK", plateTypeDesc = "STANDARD",
+                                                         vehicleColor = "White", vehicleComments = "test",
+                                                         vehicleMake = "BMW", vehicleModel = "M3",
+                                                         vehiclePlate = "OA05NNA", vehicleYear = "2025",
+                                                         vehicleStateType = "HE"))
+
+/*                vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
+                                                       plateTypeDesc = *//*vehicleInfo?.vehicleClassDesc*//*"STANDARD",
                                                        vehicleColor = vehicleInfo?.color,
                                                        vehicleComments = plateInfo?.vehicleComments,
                                                        vehicleMake = vehicleInfo?.make,
@@ -46,7 +55,9 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
                                                        vehicleYear = "2025"))
 
             }
-        }
+        }*/
+
+
         model?.ftvehicleList= CreateAccountVehicleListModel(vehicle=vehicle)
 
         binding.btnContine.setOnClickListener {

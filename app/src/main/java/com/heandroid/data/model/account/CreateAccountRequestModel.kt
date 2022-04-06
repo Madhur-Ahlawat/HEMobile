@@ -6,8 +6,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CreateAccountRequestModel(
-    var referenceId: String?,
-    var securityCd: String?,
+    var referenceId: Long?,
+    var securityCd: Long?,
     var accountType: String?,
     var address1: String?,
     var planType: String?,
@@ -34,13 +34,13 @@ data class CreateAccountRequestModel(
     var lastName: String?,
     var maskedNumber: String?,
     var password: String?,
-    var replenishmentAmount: Double?=5.0,
+    var replenishmentAmount: String?,
     var securityCode: String?,
     var smsOption: String?,
     var stateType: String?,
     val tcAccepted: String?,
-    var thresholdAmount: Double?=5.0,
-    var transactionAmount: Double?=10.00,
+    var thresholdAmount: String?,
+    var transactionAmount: String?,
     var zipCode1: String?,
     var enable : Boolean?,
 

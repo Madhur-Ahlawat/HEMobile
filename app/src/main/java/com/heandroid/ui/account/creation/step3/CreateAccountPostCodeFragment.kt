@@ -1,6 +1,7 @@
 package com.heandroid.ui.account.creation.step3
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private var mainList : MutableList<DataAddress> = ArrayList()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
+
     override fun init() {
         binding.enable=false
         model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
@@ -53,9 +55,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
     }
+
     override fun initCtrl() {
         binding.apply {
             btnFindAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
@@ -67,6 +68,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     override fun observer() {
         observe(viewModel.addresses,::handleAddressApiResponse)
     }
+
     override fun onClick(v: View?) {
         hideKeyboard()
         when(v?.id) {
@@ -76,6 +78,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
+
             }
             R.id.btnFindAddress -> {
                 if(binding.tiePostCode.length()>0) {
@@ -84,11 +87,12 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 }
                 else { showError(binding.root,getString(R.string.please_enter_postcode)) }
             }
-
             R.id.tvChange -> { binding.btnFindAddress.performClick() }
             R.id.tieAddress ->{ binding.spnAddress.performClick() }
+
         }
     }
+
     private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
         try {
             loader?.dismiss()
@@ -97,20 +101,26 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     addressList.clear()
                     mainList= response.data?.toMutableList()?:ArrayList()
                     addressList?.add(0,"Select Address")
+                    var list : MutableList<String>? = null
                     for(address : DataAddress in mainList){
-                        addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
+                        list = ArrayList()
+                        list.add(address.town)
+                        list.add(address.street)
+                        list.add(address.locality)
+                        list.add(address.country)
+                        addressList.add(TextUtils.join(",", list))
                     }
-
                     binding.apply {
 
                         spnAddress.setSpinnerAdapter(addressList)
                         spnAddress.onItemSelectedListener = spinnerListener
 
+
                         btnFindAddress.gone()
                         tilAddress.visible()
 
-                        when(model?.planType) {
 
+                        when(model?.planType) {
                             PAYG -> {
                                 model?.countryType=null
                                 model?.city=null
@@ -118,8 +128,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                                 enable = true
                             }
                         }
-                        tvChange.visible()
 
+                        tvChange.visible()
                         tilPostCode.endIconDrawable = null
                     }
                 }
@@ -139,7 +149,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 model?.stateType="HE"
                 model?.zipCode1=postcode
                 model?.address1=street
-
             }
 
             when(model?.planType){
@@ -150,4 +159,5 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
+
 }

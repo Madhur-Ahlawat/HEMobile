@@ -26,7 +26,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
     override fun init() {
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
-        model?.thresholdAmount=300.0
+        model?.thresholdAmount="10.00"
         binding.enable=false
     }
 
@@ -56,16 +56,14 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
         binding.enable=true
         when(group?.checkedRadioButtonId){
             R.id.mrbYes ->{
-
                 binding.clNoDes.gone()
                 binding.clYesDes.visible()
-
-                model?.replenishmentAmount=10.0
+                model?.replenishmentAmount="05.00"
             }
             R.id.mrbNo ->{
                 binding.clNoDes.visible()
                 binding.clYesDes.gone()
-                model?.replenishmentAmount=05.0
+                model?.replenishmentAmount="10.00"
             }
         }
     }

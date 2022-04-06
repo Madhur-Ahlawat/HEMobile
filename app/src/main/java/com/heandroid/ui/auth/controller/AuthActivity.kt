@@ -25,4 +25,6 @@ class AuthActivity : BaseActivity<Any?>() {
 
     override fun observeViewModel() {}
 
+
+
 }

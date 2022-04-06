@@ -31,6 +31,7 @@ import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
+import java.util.*
 
 @AndroidEntryPoint
 class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(), View.OnClickListener {
@@ -54,7 +55,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     override fun initCtrl() {
         binding.apply {
-            tieExpiryDate.addExpriryListner()
             btnPay.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
@@ -68,6 +68,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
+                model?.creditCExpYear=model?.creditCExpYear?.replace("/","")
                 when(model?.planType){
                     Constants.PAYG ->  model?.smsOption=null
                 }
@@ -105,25 +106,27 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails",responseModel.toString())
                 model?.creditCExpMonth = responseModel.card.exp.substring(0, 2)
-                model?.creditCExpYear = responseModel.card.exp.substring(2, 4)
+                model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
-                model?.creditCardType = responseModel.card.type
+                model?.creditCardType = responseModel.card.type.uppercase(Locale.ROOT)
                 model?.securityCode = responseModel.card.hash
 
+
                 val fullName: List<String?>? = responseModel.check.name?.split(" ")
+
                 when (fullName?.size) {
 
                     1 -> {
                         model?.cardFirstName = fullName[0]
-                        model?.cardMiddleName = " "
-                        model?.cardLastName = " "
+                        model?.cardMiddleName = ""
+                        model?.cardLastName = ""
                     }
 
                     2 -> {
                         fullName[0].also { model?.cardFirstName = it }
-                        model?.cardMiddleName = " "
-                        fullName[1].also { model?.cardLastName = it }
+                        model?.cardMiddleName = ""
+                        fullName[1].also { model?.cardLastName = " $it" }
                     }
 
                     3 -> {
@@ -138,11 +141,16 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                         model?.cardLastName = ""
                     }
 
+
                 }
 
+                binding.tieName.setText(responseModel.check.name?:"")
+                binding.tieCVV.setText("***")
+
+
                 model?.cardStateType="HE"
-                model?.cardCity="MAIDSTONE"
-                model?.cardZipCode="ME13 0BF"
+                model?.cardCity="GUILDFORD"
+                model?.cardZipCode="GU1 4LZ"
 
                 model?.billingAddressLine1=model?.address1
                 model?.billingAddressLine2=null
@@ -159,7 +167,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             when (status) {
                 is Resource.Success -> {
                     status.data?.accountType = model?.accountType
-                    // Add Payment Method
+
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
                     findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
