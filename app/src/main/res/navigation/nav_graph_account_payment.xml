@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_accountPaymentHistoryFragment_to_accountTopUpPaymentFragment2"
             app:destination="@id/accountTopUpPaymentFragment" />
+        <action
+            android:id="@+id/action_accountPaymentHistoryFragment_to_accountPaymentHistoryItemDetailFragment"
+            app:destination="@id/accountPaymentHistoryItemDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountPaymentMethodsFragment"
@@ -44,5 +47,10 @@
             android:id="@+id/action_accountTopUpPaymentFragment_to_accountPaymentHistoryFragment2"
             app:destination="@id/accountPaymentHistoryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/accountPaymentHistoryItemDetailFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryItemDetailFragment"
+        android:label="AccountPaymentHistoryItemDetailFragment"
+        tools:layout="@layout/account_payment_history_item_detail"/>
 
 </navigation>

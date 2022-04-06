@@ -34,13 +34,13 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         binding = ActivityAccountPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar(getString(R.string.str_payment))
-
         setView()
-
-
     }
 
     private fun setView() {
+        binding.toolbar.btnBack.setOnClickListener {
+            onBackPressed()
+        }
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerPayment) as NavHostFragment
         navController = navHostFragment.navController
@@ -61,16 +61,18 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
                     makeTopUpPaymentVisible()
                     binding.tabLikeButtonsLayout.visible()
                 }
+
+                R.id.accountPaymentHistoryItemDetailFragment -> {
+                    binding.tabLikeButtonsLayout.gone()
+                }
                 else -> {
                     binding.tabLikeButtonsLayout.visible()
                 }
             }
-
         }
 
         binding.paymentHistoryAccount.setOnClickListener {
             makePaymentHistoryAccountVisible()
-
             navHostFragment.childFragmentManager.apply {
                 if (fragments[0] !is AccountPaymentHistoryFragment) {
                     when {
@@ -122,26 +124,74 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
 
     private fun makePaymentHistoryAccountVisible() {
         binding.apply {
-            paymentHistoryAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_selected_bg)
-            paymentHistoryAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.white))
+            paymentHistoryAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_selected_bg
+            )
+            paymentHistoryAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.white
+                )
+            )
 
-            paymentMethodAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            paymentMethodAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
-            topUpPayment.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            topUpPayment.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
+            paymentMethodAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            paymentMethodAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
+            topUpPayment.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            topUpPayment.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
         }
     }
 
     private fun makePaymentMethodAccountVisible() {
         binding.apply {
-            paymentHistoryAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            paymentHistoryAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
+            paymentHistoryAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            paymentHistoryAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
 
-            paymentMethodAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_selected_bg)
-            paymentMethodAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.white))
+            paymentMethodAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_selected_bg
+            )
+            paymentMethodAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.white
+                )
+            )
 
-            topUpPayment.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            topUpPayment.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
+            topUpPayment.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            topUpPayment.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
 
         }
     }
@@ -149,25 +199,44 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
 
     private fun makeTopUpPaymentVisible() {
         binding.apply {
-            paymentHistoryAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            paymentHistoryAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
+            paymentHistoryAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            paymentHistoryAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
 
-            paymentMethodAccount.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_unselected_bg)
-            paymentMethodAccount.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.black))
+            paymentMethodAccount.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_unselected_bg
+            )
+            paymentMethodAccount.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.black
+                )
+            )
 
-            topUpPayment.background = AppCompatResources.getDrawable(this@AccountPaymentActivity, R.drawable.text_selected_bg)
-            topUpPayment.setTextColor(ContextCompat.getColor(this@AccountPaymentActivity, R.color.white))
+            topUpPayment.background = AppCompatResources.getDrawable(
+                this@AccountPaymentActivity,
+                R.drawable.text_selected_bg
+            )
+            topUpPayment.setTextColor(
+                ContextCompat.getColor(
+                    this@AccountPaymentActivity,
+                    R.color.white
+                )
+            )
         }
     }
 
 
     override fun observeViewModel() {
 
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 
     override fun onStart() {
@@ -189,6 +258,5 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         sessionManager.clearAll()
         Utils.sessionExpired(this)
     }
-
 
 }

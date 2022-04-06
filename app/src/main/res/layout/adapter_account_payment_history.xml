@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
+                app:layout_constraintGuide_begin="@dimen/_10sdp" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
+                app:layout_constraintGuide_end="@dimen/_10sdp" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/_9sdp" />
+                app:layout_constraintGuide_begin="@dimen/_6sdp" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="@dimen/_9sdp" />
+                app:layout_constraintGuide_end="@dimen/_6sdp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

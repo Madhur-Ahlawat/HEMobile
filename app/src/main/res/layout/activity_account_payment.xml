@@ -16,64 +16,69 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <HorizontalScrollView
             android:id="@+id/tabLikeButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_4sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:visibility="gone"
+            android:scrollbarSize="2dp"
+            android:scrollbars="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/payment_history_account"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:background="@drawable/text_selected_bg"
-                android:gravity="center"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/payment_history"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_15sdp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/payment_method_account"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_3sdp"
-                android:background="@drawable/text_unselected_bg"
-                android:gravity="center"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/payment_methods"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/payment_history_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/text_selected_bg"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/payment_history"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/top_up_payment"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:background="@drawable/text_unselected_bg"
-                android:gravity="center"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/str_top_up"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/payment_method_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:background="@drawable/text_unselected_bg"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/payment_methods"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
-
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/top_up_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:background="@drawable/text_unselected_bg"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/str_top_up"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerPayment"
@@ -85,9 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout"
-            app:navGraph="@navigation/nav_graph_account_payment" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
