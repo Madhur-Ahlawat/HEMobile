@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.account.AccountDetails" />
+            type="com.heandroid.data.model.account.AccountDetailsRequesstModel" />
     </data>
 
 

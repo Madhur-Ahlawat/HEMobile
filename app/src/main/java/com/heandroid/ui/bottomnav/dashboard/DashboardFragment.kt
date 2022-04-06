@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +13,6 @@ import com.heandroid.R
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.account.ThresholdAmountData
-import com.heandroid.data.model.contactdartcharge.CaseCategoriesModel
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessage
@@ -26,8 +24,6 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
@@ -83,14 +79,17 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        try{
+        try {
+
             loader?.dismiss()
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        Log.e("count","---> "+it.transactionList?.count?:"")
+                        Log.e("count", "---> " + it.transactionList?.count ?: "")
+                        // todo getting api count as null, so showing count as 0
                         it.transactionList?.count?.let { count ->
-                            binding.tvCrossingCount.text = getString(R.string.str_two_crossing, count)
+                            binding.tvCrossingCount.text =
+                                getString(R.string.str_two_crossing, count)
                         }
                     }
                 }
@@ -200,7 +199,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             tvAccountNumber.text = data.accountInformation.number
             tvAccountStatus.text =  data.accountInformation.accountStatus
             tvTopUpType.text = data.accountInformation.accountFinancialstatus
-            tvAccountStatus.text =  data.accountInformation.type
+            tvAccountType.text =  data.accountInformation.type
+            //tvAccountStatus.text =  data.accountInformation.type
 
         }
     }

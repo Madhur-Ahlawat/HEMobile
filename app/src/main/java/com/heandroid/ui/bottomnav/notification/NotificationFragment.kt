@@ -1,10 +1,8 @@
 package com.heandroid.ui.bottomnav.notification
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.databinding.FragmentNotificationBinding
@@ -49,7 +47,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),FilterD
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.messageList?.isNullOrEmpty() == false) {
-                    setNotificationAlert(resource.data.messageList)
+                    setNotificationAlert(resource.data?.messageList)
                 }
             }
             is Resource.DataError -> {
@@ -101,7 +99,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),FilterD
     }
 
     override fun onCancelClickedListener() {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
 

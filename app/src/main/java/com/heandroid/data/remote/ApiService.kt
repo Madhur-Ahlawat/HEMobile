@@ -10,14 +10,9 @@ import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
-import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.forgot.password.*
+import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
@@ -161,8 +156,8 @@ interface ApiService {
     @POST(CREATE_ACCOUNT)
     suspend fun createAccount(
         @Query("agencyId") agencyId: String = AGENCY_ID,
-        @Body model: createAccountModel?
-    ): Response<respAccountModel?>?
+        @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?
+    ): Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(
@@ -208,13 +203,14 @@ interface ApiService {
     @PUT(UPDATE_PASSWORD)
     suspend fun updatePassword(@Body model: UpdateAccountPassword?): Response<UpdatePasswordResponseModel?>?
 
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
+    suspend fun getPaymentHistoryData(@Body request: AccountPaymentHistoryRequest?): Response<AccountPaymentHistoryResponse?>
+
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData():Response<AccountResponse?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue():Response<ThresholdAmountApiResponse?>?
 
-    @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
-    suspend fun getPaymentHistoryData(@Body request: AccountPaymentHistoryRequest?): Response<AccountPaymentHistoryResponse?>
 
 }

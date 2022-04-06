@@ -7,12 +7,42 @@
 
     <fragment
         android:id="@+id/accountPaymentHistoryFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.AccountPaymentHistoryFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryFragment"
         android:label="AccountPaymentHistoryFragment"
-        tools:layout="@layout/fragment_account_payment_history" />
+        tools:layout="@layout/fragment_account_payment_history" >
+
+        <action
+            android:id="@+id/action_accountPaymentHistoryFragment_to_accountPaymentMethodsFragment"
+            app:destination="@id/accountPaymentMethodsFragment" />
+        <action
+            android:id="@+id/action_accountPaymentHistoryFragment_to_accountTopUpPaymentFragment2"
+            app:destination="@id/accountTopUpPaymentFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountPaymentMethodsFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.AccountPaymentMethodsFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymentmethod.AccountPaymentMethodsFragment"
         android:label="AccountPaymentMethodsFragment"
-        tools:layout="@layout/fragment_account_payment_methods" />
+        tools:layout="@layout/fragment_account_payment_methods" >
+
+        <action
+            android:id="@+id/action_accountPaymentMethodsFragment_to_accountTopUpPaymentFragment2"
+            app:destination="@id/accountTopUpPaymentFragment" />
+        <action
+            android:id="@+id/action_accountPaymentMethodsFragment_to_accountPaymentHistoryFragment"
+            app:destination="@id/accountPaymentHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountTopUpPaymentFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.accounttopup.AccountTopUpPaymentFragment"
+        android:label="AccountTopUpPaymentFragment"
+        tools:layout="@layout/fragment_account_topup_payment" >
+
+        <action
+            android:id="@+id/action_accountTopUpPaymentFragment_to_accountPaymentMethodsFragment2"
+            app:destination="@id/accountPaymentMethodsFragment" />
+        <action
+            android:id="@+id/action_accountTopUpPaymentFragment_to_accountPaymentHistoryFragment2"
+            app:destination="@id/accountPaymentHistoryFragment" />
+    </fragment>
+
 </navigation>

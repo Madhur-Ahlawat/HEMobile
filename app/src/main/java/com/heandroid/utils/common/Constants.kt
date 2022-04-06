@@ -101,6 +101,8 @@ object Constants {
     const val CLOSED = "Closed"
     const val PDF_EXTENSION = ".pdf"
     const val CSV_EXTENSION = ".csv"
+    const val PCN_RESOLVE_URL =
+        "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
     const val PAYMENT_ONE_OFF = "PaymentOneOff"
 

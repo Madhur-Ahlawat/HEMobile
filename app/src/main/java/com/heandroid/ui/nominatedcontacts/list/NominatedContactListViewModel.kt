@@ -1,20 +1,13 @@
 package com.heandroid.ui.nominatedcontacts.list
 
-import android.util.Patterns
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.heandroid.R
-import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.nominatedcontacts.*
-import com.heandroid.data.repository.dashboard.DashBoardRepo
 import com.heandroid.data.repository.nominatedcontacts.NominatedContactsRepo
-import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.ResponseHandler
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel

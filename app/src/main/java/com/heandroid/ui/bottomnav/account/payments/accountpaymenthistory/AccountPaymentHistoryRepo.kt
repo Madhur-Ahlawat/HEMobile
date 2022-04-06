@@ -1,4 +1,4 @@
-package com.heandroid.ui.bottomnav.account.payments
+package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
 
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest

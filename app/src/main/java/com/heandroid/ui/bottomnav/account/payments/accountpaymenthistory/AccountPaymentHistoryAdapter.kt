@@ -1,9 +1,8 @@
-package com.heandroid.ui.bottomnav.account.payments
+package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AdapterAccountPaymentHistoryBinding

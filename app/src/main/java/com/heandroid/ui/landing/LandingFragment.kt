@@ -20,6 +20,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.payment.MakeOffPaymentActivity
 import com.heandroid.ui.viewcharges.ViewChargesActivity
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.CHECK_FOR_PAID
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT
 import com.heandroid.utils.common.Constants.ONE_OFF_PAYMENT
@@ -110,7 +111,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         }}}
 
     private fun openUrlInWebBrowser() {
-        val url = "http://www.google.com";
+        val url = Constants.PCN_RESOLVE_URL
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
             startActivity(Intent.createChooser(this, "Browse with"));
         }
