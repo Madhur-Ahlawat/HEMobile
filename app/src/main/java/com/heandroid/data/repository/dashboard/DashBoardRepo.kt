@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
-
     suspend fun getVehicleData() = apiService.getVehicleData()
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)

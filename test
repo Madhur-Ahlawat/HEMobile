@@ -36,7 +36,7 @@ ext {
     else if(flavor.contains("tstg")){
         flavor = "test"
     }
-    config = getProps('config/'+flavor+'.properties')
+    config = getProps('/app/config/'+flavor+'.properties')
 }
 
 def getProps(path) {

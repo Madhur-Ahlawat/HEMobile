@@ -52,15 +52,16 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            envConfig = getProps("/config/dev.properties")
+            envConfig = getProps("app/config/dev.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
+            dimension 'default'
         }
 
 
         prod {
-            envConfig = getProps("/config/prod.properties")
+            envConfig = getProps("app/config/prod.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
@@ -68,7 +69,7 @@ android {
 
 
         tstg {
-            envConfig = getProps("/config/test.properties")
+            envConfig = getProps("app/config/test.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")

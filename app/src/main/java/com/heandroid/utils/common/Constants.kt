@@ -113,6 +113,7 @@ object Constants {
     const val CHOOSE_FILE_2 = "Choose_second_file"
     const val CHOOSE_FILE_3 = "Choose_third_file"
     const val CHOOSE_FILE_4 = "Choose_fourth_file"
+    const val PAYMENT = "Payment"
 
 
 

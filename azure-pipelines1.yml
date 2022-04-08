@@ -1,0 +1,45 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- code_review_development
+
+pool:
+  vmImage: 'macOS-latest'
+
+steps:
+  - task: Gradle@2
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      workingDirectory: '''**/src/*.gradle'''
+      tasks: 'assembleDebug'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
+      gradleOptions: '-Xmx3072m'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+  - task: PublishTestResults@2
+    inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test/TEST-*.xml'
+        searchFolder: $(System.DefaultWorkingDirectory)
+  - task: CopyFiles@2
+    inputs:
+        Contents: '**/*.apk'
+        TargetFolder:  '$(build.artifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'HE-MAPP-ANDROID'
+          publishLocation: 'Container'
+      
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+     
+

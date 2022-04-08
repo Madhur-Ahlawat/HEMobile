@@ -1,5 +1,8 @@
 package com.heandroid.data.model.accountpayment
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class AccountPaymentHistoryResponse(
     val transactionList: TransactionList?,
     val statusCode: String?,
@@ -11,6 +14,7 @@ val transaction: MutableList<TransactionData?>?,
 val count: String?
 )
 
+@Parcelize
 class TransactionData (
  val postingDate: String?,
  val transactionDate: String?,
@@ -37,5 +41,5 @@ class TransactionData (
  val plateNumber: String?,
  val rebillPaymentType: String?,
  val tranSettleStatus: String?,
- )
+ ) : Parcelable
 
