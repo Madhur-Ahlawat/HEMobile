@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="6dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPaymentAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Add new card details"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/glTop" />
+
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginTop="9dp"
+            app:cardElevation="5dp"
+            android:visibility="gone"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvPaymentAmount">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardNo"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/card_number"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieCardNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:focusableInTouchMode="false"
+                        android:focusable="false"
+                        android:editable="false"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilExpiryDate"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/expiry_date"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:helperText="Month/year, For example 12/21"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@+id/tilCardNo"
+                    app:layout_constraintStart_toStartOf="@+id/tilCardNo"
+                    app:layout_constraintTop_toBottomOf="@+id/tilCardNo">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieExpiryDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:focusableInTouchMode="false"
+                        android:focusable="false"
+                        android:editable="false"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilName"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/name_on_card"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
+                    app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tilExpiryDate">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:focusableInTouchMode="false"
+                        android:focusable="false"
+                        android:editable="false"
+                        android:digits="@string/name_validation"
+                        android:singleLine="true"
+                        android:maxLength="32"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCVV"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:boxStrokeColor="@color/color_00703C"
+
+
+                    android:hint="@string/card_security_code"
+                    app:helperText="@string/hint_cvv"
+                    app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
+                    app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tilName">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieCVV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/cvv"
+                        android:imeOptions="actionDone"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:focusable="false"
+                        android:paddingEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbDefault"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginBottom="21dp"
+                    android:buttonTint="@color/green"
+                    android:paddingLeft="14dp"
+                    android:text="@string/set_this_as_default_payment_method"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tilCVV"
+                    app:layout_constraintStart_toStartOf="@+id/tilCVV"
+                    app:layout_constraintTop_toBottomOf="@+id/tilCVV"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/green"
+            android:gravity="center"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/btnCancel"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:shadowRadius="6"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_16ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:strokeColor="@color/green"
+            app:strokeWidth="1dp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

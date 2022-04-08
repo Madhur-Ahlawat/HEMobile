@@ -1,17 +1,14 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
+package com.heandroid.ui.bottomnav.account.payments.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.heandroid.R
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionList
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe

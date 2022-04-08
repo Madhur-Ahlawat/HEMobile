@@ -1,17 +1,17 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymentmethod
+package com.heandroid.ui.bottomnav.account.payments.topup
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.heandroid.databinding.FragmentAccountPaymentMethodsBinding
+import com.heandroid.databinding.FragmentAccountTopupPaymentBinding
 import com.heandroid.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountPaymentMethodsFragment : BaseFragment<FragmentAccountPaymentMethodsBinding>() {
+class AccountTopUpPaymentFragment: BaseFragment<FragmentAccountTopupPaymentBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )= FragmentAccountPaymentMethodsBinding.inflate(inflater, container, false)
+    )= FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
     override fun init() {
     }
 

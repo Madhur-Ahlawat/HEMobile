@@ -1,7 +1,6 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
+package com.heandroid.ui.bottomnav.account.payments.history
 
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
-import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
 import com.heandroid.data.remote.ApiService
 import javax.inject.Inject
 

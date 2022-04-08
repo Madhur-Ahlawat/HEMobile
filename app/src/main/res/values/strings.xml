@@ -646,10 +646,20 @@
     <string name="please_select_option">Please select option</string>
 
     <string name="str_payment">Payment</string>
-    <string name="payment_methods">Payment methods</string>
+    <string name="payment_methods">Payment method</string>
     <string name="payment_history">Payment history</string>
     <string name="your_payment">Your payment</string>
     <string name="cannot_create_account">The request could not be completed at this time. Please try again later.</string>
+    <string name="default_payment_method">Default payment method</string>
+    <string name="other_debit_credit_card">Other debit/credit card</string>
+    <string name="add_new_debit_credit_card">Add new debit / credit card</string>
+    <string name="other_payment_methods">Other payment methods</string>
+    <string name="other_payment_method">Other payment methods</string>
+    <string name="direct_debit">Direct Debit</string>
+    <string name="add">Add</string>
+    <string name="set_as_default_payment">Set as default payment</string>
+    <string name="set_this_as_default_payment_method">Set this as default payment method</string>
+    <string name="change">Change</string>
 
 </resources>
 
