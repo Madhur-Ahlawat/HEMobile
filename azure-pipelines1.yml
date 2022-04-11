@@ -13,7 +13,7 @@ steps:
   - task: Gradle@2
     inputs:
       gradleWrapperFile: 'gradlew'
-      workingDirectory: '''**/src/*.gradle'''
+      workingDirectory: ''
       tasks: 'assembleDebug'
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
