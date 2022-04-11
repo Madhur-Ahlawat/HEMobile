@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PaymentMethodEditCardFragment : BaseFragment<FragmentPaymentMethodEditCardBinding>(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPaymentMethodEditCardBinding.inflate(inflater,container,false)
+
     override fun init() {
         binding.model=arguments?.getParcelable(DATA)
         binding.cbDefault.isChecked=binding.model?.default?:false

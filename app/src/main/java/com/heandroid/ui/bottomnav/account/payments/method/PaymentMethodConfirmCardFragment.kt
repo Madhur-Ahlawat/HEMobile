@@ -72,7 +72,6 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
                     if(status.data?.statusCode?.equals("500")==true){
                       showError(binding.root,status.data.message)
                     }else{
-                        requireActivity().finish()
                         findNavController().navigate(R.id.paymentMethodFragment)
                     }
                 }
