@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <data>
+
+        <variable
+            name="enable"
+            type="Boolean" />
+
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,8 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -41,16 +48,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDefaultLabel">
 
+
+
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbDefaultMethod"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginLeft="24dp"
+                android:paddingLeft="22dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:paddingLeft="22dp"
-                android:text="HDFC bank credit card \n *** **** *** 4567"
-
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 app:buttonTint="@color/bottomActiveColor" />
@@ -82,10 +89,16 @@
             </LinearLayout>
 
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvOtherPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 
@@ -181,12 +194,13 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="34dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@{enable==true?@color/green:@color/color_C9C9C9}"
             android:gravity="center"
             android:letterSpacing="0"
             android:text="@string/set_as_default_payment"
+            android:enabled="@{enable}"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@{enable==true?@color/white:@color/color_7D7D7D}"
             android:textSize="@dimen/_16ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/btnDelete"

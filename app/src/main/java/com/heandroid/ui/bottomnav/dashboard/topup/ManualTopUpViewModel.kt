@@ -1,0 +1,63 @@
+package com.heandroid.ui.bottomnav.dashboard.topup
+
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.heandroid.R
+import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
+import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
+import com.heandroid.data.model.payment.PaymentMethodDeleteResponseModel
+import com.heandroid.data.repository.auth.LoginRepository
+import com.heandroid.data.repository.manualtopup.ManualTopUpRepository
+import com.heandroid.ui.base.BaseApplication
+import com.heandroid.ui.base.BaseViewModel
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.ResponseHandler.failure
+import com.heandroid.utils.common.ResponseHandler.success
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ManualTopUpViewModel @Inject constructor(private val repository: ManualTopUpRepository): BaseViewModel()  {
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _paymentWithNewCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val paymentWithNewCard : LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get()  = _paymentWithNewCard
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _paymentWithExistingCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val paymentWithExistingCard : LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get()  = _paymentWithExistingCard
+
+
+    fun paymentWithNewCard(model: PaymentWithNewCardModel?) {
+        viewModelScope.launch {
+            try {
+                _paymentWithNewCard.postValue(success(repository.paymentWithNewCard(model)))
+            } catch (e: Exception) {
+                _paymentWithNewCard.postValue(failure(e))
+            }
+        }
+    }
+
+
+    fun paymentWithExistingCard(model: PaymentWithExistingCardModel?) {
+        viewModelScope.launch {
+            try {
+                _paymentWithExistingCard.postValue(success(repository.paymentWithExistingCard(model)))
+            } catch (e: Exception) {
+                _paymentWithExistingCard.postValue(failure(e))
+            }
+        }
+    }
+
+
+    fun validation(model: String?): Pair<Boolean,String> {
+        var ret= Pair(true,"")
+        if(model?.isEmpty()==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.enter_amount_top_up))
+        if(model?.equals("0")==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.validation_manual_top_up))
+        return ret
+    }
+}

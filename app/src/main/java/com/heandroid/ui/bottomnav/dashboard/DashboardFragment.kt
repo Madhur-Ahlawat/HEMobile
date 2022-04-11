@@ -20,9 +20,11 @@ import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,6 +69,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
         binding.crossingsView.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment)
+        }
+
+        binding.tvManualTopUp.setOnClickListener {
+            requireActivity().startNormalActivity(ManualTopUpActivity::class.java)
         }
     }
 

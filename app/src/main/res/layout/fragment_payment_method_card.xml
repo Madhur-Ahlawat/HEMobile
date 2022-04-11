@@ -149,7 +149,7 @@
                         android:editable="false"
                         android:digits="@string/name_validation"
                         android:singleLine="true"
-                        android:maxLength="32"
+                        android:maxLength="55"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
@@ -163,11 +163,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:boxStrokeColor="@color/color_00703C"
+                    android:layout_marginBottom="16dp"
 
 
                     android:hint="@string/card_security_code"
+                    app:boxStrokeColor="@color/color_00703C"
                     app:helperText="@string/hint_cvv"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
                     app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
                     app:layout_constraintTop_toBottomOf="@+id/tilName">
@@ -178,10 +180,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/cvv"
-                        android:imeOptions="actionDone"
                         android:editable="false"
-                        android:focusableInTouchMode="false"
                         android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionDone"
                         android:paddingEnd="5dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -199,6 +201,8 @@
                     android:layout_marginBottom="21dp"
                     android:buttonTint="@color/green"
                     android:paddingLeft="14dp"
+                    android:visibility="gone"
+                    android:textSize="16sp"
                     android:text="@string/set_this_as_default_payment_method"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tilCVV"

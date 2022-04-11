@@ -11,10 +11,7 @@ import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AdapterAccountPaymentHistoryBinding
 import com.heandroid.utils.common.Constants
 
-class AccountPaymentHistoryAdapter(
-    val fragment: Fragment,
-    private val transactionDataList: List<TransactionData?>?
-) : RecyclerView.Adapter<AccountPaymentHistoryAdapter.PaymentViewHolder>() {
+class AccountPaymentHistoryAdapter(val fragment: Fragment, private val transactionDataList: List<TransactionData?>?) : RecyclerView.Adapter<AccountPaymentHistoryAdapter.PaymentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentViewHolder {
         return PaymentViewHolder(

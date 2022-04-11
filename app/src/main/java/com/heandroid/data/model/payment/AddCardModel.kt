@@ -1,30 +1,33 @@
 package com.heandroid.data.model.payment
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AddCardModel(
-    val addressLine1: String??,
-    val addressLine2: String?,
+    var addressLine1: String??,
+    var addressLine2: String?,
     val bankRoutingNumber: String?,
     val cardNumber: String?,
-    val cardType: String?,
-    val city: String?,
-    val country: String?,
+    var cardType: String?,
+    var city: String?,
+    var country: String?,
     val customerVaultId: String?,
-    val easyPay: String?,
+    var easyPay: String?,
     val expMonth: String?,
-    val expYear: String?,
+    var expYear: String?,
     var firstName: String?,
     var lastName: String?,
     val maskedCardNumber: String?,
     var middleName: String?,
     val paymentType: String?,
-    val primaryCard: String?,
-    val state: String?,
-    val zipcode1: String?,
-    val zipcode2: String?,
+    var primaryCard: String?,
+    var saveCard: String?="N",
+    var useAddressCheck: String?="N",
+    var state: String?,
+    var zipcode1: String?,
+    var zipcode2: String?,
     val cvv: String?,
-    var default: Boolean=false
+    var default: Boolean?=false
 ) : Parcelable

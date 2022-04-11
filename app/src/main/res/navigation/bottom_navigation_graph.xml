@@ -17,6 +17,7 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
             app:destination="@id/crossingHistoryFragment" />
+
     </fragment>
 
     <fragment
@@ -65,5 +66,12 @@
         android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
         tools:layout="@layout/fragment_crossing_history_make_payment"
         android:label="CrossingHistoryMakePaymentFragment" />
+
+
+
+
+
+
+
 
 </navigation>

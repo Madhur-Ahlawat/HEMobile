@@ -1,11 +1,14 @@
 package com.heandroid.ui.bottomnav.account.payments.method
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.CompoundButton
+import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.heandroid.R
 import com.heandroid.data.model.payment.AddCardModel
@@ -13,7 +16,7 @@ import com.heandroid.data.model.payment.CardResponseModel
 import com.heandroid.databinding.FragmentPaymentMethodCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.CardNumberFormatterTextWatcher
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -32,8 +35,12 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager,"")
-
         binding.webview.loadSetting("file:///android_asset/NMI.html")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<LinearLayout>(R.id.tabLikeButtonsLayout).gone()
     }
 
     override fun initCtrl() {
@@ -42,7 +49,6 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
             webview.webChromeClient = consoleListener
             btnAdd.setOnClickListener(this@PaymentMethodCardFragment)
             btnCancel.setOnClickListener(this@PaymentMethodCardFragment)
-            tieCardNo.addTextChangedListener(CardNumberFormatterTextWatcher())
             cbDefault.setOnCheckedChangeListener(this@PaymentMethodCardFragment)
         }
     }
@@ -52,7 +58,10 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAdd -> {
-
+                val bundle= Bundle()
+                bundle.putParcelable(Constants.DATA,cardModel)
+                if(arguments?.getBoolean("edit") == true) findNavController().navigate(R.id.action_paymentMethodCardFragment_to_paymentMethodConfirmCardFragment,bundle)
+                else findNavController().navigate(R.id.action_paymentMethodCardFragment_to_paymentMethodEditCardFragment,bundle)
             }
 
             R.id.btnCancel ->{ requireActivity().onBackPressed() }
@@ -62,7 +71,7 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
     private val progressListener = object : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl("file:///android_asset/NMI.html")
+             view?.loadUrl("file:///android_asset/NMI.html")
             return true
         }
 
@@ -84,15 +93,15 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
 
                 cardModel = AddCardModel(addressLine1 = "", addressLine2 = "", bankRoutingNumber = "",
                                          cardNumber = responseModel.token, cardType =  responseModel.card.type.uppercase(Locale.ROOT), city = "",
-                                         country = "", customerVaultId = "", easyPay = "N",
+                                         country = "", customerVaultId = null, easyPay = "Y",
                                          expMonth = responseModel.card.exp.substring(0, 2), expYear = responseModel.card.exp.substring(2, 4), firstName = "",
                                          middleName = "",lastName = "", maskedCardNumber = responseModel.card.number,
                                          paymentType = "card", primaryCard = "N", state = "",
-                                         zipcode1 = "", zipcode2 = "",cvv=responseModel.card.hash)
+                                         zipcode1 = "", zipcode2 = "",cvv=null)
 
                 binding.apply {
                     tieCardNo.setText( cardModel?.maskedCardNumber?:"")
-                    tieExpiryDate.setText( cardModel?.expMonth?:""+"/"+cardModel?.expYear)
+                    tieExpiryDate.setText("${cardModel?.expMonth}/${cardModel?.expYear}")
                     tieName.setText( responseModel.check.name?:"")
                     tieCVV.setText("***")
                 }

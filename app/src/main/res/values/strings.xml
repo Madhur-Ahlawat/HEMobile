@@ -664,7 +664,11 @@
     <string name="add">Add</string>
     <string name="set_as_default_payment">Set as default payment</string>
     <string name="set_this_as_default_payment_method">Set this as default payment method</string>
-    <string name="change">Change</string>
+    <string name="how_much_amount_would_you_like_to_top_up">How much amount would you like to top-up?</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="enter_amount_top_up">Please enter amount for top up</string>
+    <string name="validation_manual_top_up">Please enter amount greater than 0</string>
 
 </resources>
 

@@ -21,6 +21,8 @@ import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
+import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.payment.*
@@ -191,7 +193,9 @@ interface ApiService {
     @GET(SAVED_CARD_LIST)
     suspend fun savedCard(@Query("agencyId") agencyId: String? = AGENCY_ID):Response<PaymentMethodResponseModel?>?
 
-    @DELETE(SAVED_CARD_LIST)
+
+
+    @HTTP(method = "DELETE", path = SAVED_CARD_LIST, hasBody = true)
     suspend fun deleteCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                            @Body model: PaymentMethodDeleteModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
@@ -199,5 +203,21 @@ interface ApiService {
     @POST(EDIT_CARD)
     suspend fun editDefaultCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                 @Body model : PaymentMethodEditModel?) : Response<PaymentMethodEditResponse?>?
+
+
+    @POST(SAVED_CARD_LIST)
+    suspend fun savedNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                             @Body model : AddCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+
+    @POST(PAYMENT_WITH_NEW_CARD)
+    suspend fun paymentWithNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                   @Body model : PaymentWithNewCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+
+
+    @POST(PAYMENT_WITH_EXISTING_CARD)
+    suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                        @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
 }

@@ -3,59 +3,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/paymentHistoryFragment" >
+    app:startDestination="@id/accountPaymentHistoryFragment">
 
-     <!-- Payment History -->
 
-    <fragment
-        android:id="@+id/paymentHistoryFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment"
+    <!-- Payment History -->
+
+        <fragment
+        android:id="@+id/accountPaymentHistoryFragment"
         android:label="Payment History"
-        tools:layout="@layout/fragment_account_payment_history" >
+        android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment"
+        tools:layout="@layout/fragment_account_payment_history">
+            <action
+                android:id="@+id/action_accountPaymentHistoryFragment_to_accountPaymentHistoryItemDetailFragment"
+                app:destination="@id/accountPaymentHistoryItemDetailFragment" />
 
-    </fragment>
+        </fragment>
+
+            <fragment
+                android:id="@+id/accountPaymentHistoryItemDetailFragment"
+                android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryItemDetailFragment"
+                android:label="AccountPaymentHistoryItemDetailFragment"
+                tools:layout="@layout/account_payment_history_item_detail" />
+
+       <!-- Payment Method -->
 
 
-
-
-
-
-
-
-
-
-    <!-- Payment Method -->
-
-
-
-    <fragment
+        <fragment
         android:id="@+id/paymentMethodFragment"
         android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodFragment"
-        tools:layout="@layout/fragment_payment_method" >
+        tools:layout="@layout/fragment_payment_method">
 
 
         <action
             android:id="@+id/action_paymentMethodFragment_to_paymentMethodCardFragment"
             app:destination="@id/paymentMethodCardFragment" />
-    </fragment>
+        </fragment>
 
 
-    <fragment
+        <fragment
         android:id="@+id/paymentMethodCardFragment"
         android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodCardFragment"
-        tools:layout="@layout/fragment_payment_method_card" >
+        tools:layout="@layout/fragment_payment_method_card">
 
 
         <action
             android:id="@+id/action_paymentMethodCardFragment_to_paymentMethodEditCardFragment"
             app:destination="@id/paymentMethodEditCardFragment" />
-    </fragment>
+            <action
+                android:id="@+id/action_paymentMethodCardFragment_to_paymentMethodConfirmCardFragment"
+                app:destination="@id/paymentMethodConfirmCardFragment" />
+        </fragment>
 
 
-    <fragment
+        <fragment
         android:id="@+id/paymentMethodEditCardFragment"
         android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodEditCardFragment"
-        tools:layout="@layout/fragment_payment_method_edit_card" >
+        tools:layout="@layout/fragment_payment_method_edit_card">
 
 
         <action
@@ -64,31 +67,28 @@
         <action
             android:id="@+id/action_paymentMethodEditCardFragment_to_paymentMethodCardFragment"
             app:destination="@id/paymentMethodCardFragment" />
-    </fragment>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Top Up -->
+            <action
+                android:id="@+id/action_paymentMethodEditCardFragment_to_paymentMethodConfirmCardFragment"
+                app:destination="@id/paymentMethodConfirmCardFragment" />
+        </fragment>
 
 
     <fragment
+        android:id="@+id/paymentMethodConfirmCardFragment"
+        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodConfirmCardFragment"
+        tools:layout="@layout/fragment_payment_method_confirm_card"/>
+
+
+            <!-- Top Up -->
+
+
+        <fragment
         android:id="@+id/paymentTopUpFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.topup.AccountTopUpPaymentFragment"
         android:label="AccountTopUpPaymentFragment"
-        tools:layout="@layout/fragment_account_topup_payment" >
+        android:name="com.heandroid.ui.bottomnav.account.payments.topup.AccountTopUpPaymentFragment"
+        tools:layout="@layout/fragment_account_topup_payment">
 
 
-    </fragment>
+        </fragment>
 
-</navigation>
+    </navigation>

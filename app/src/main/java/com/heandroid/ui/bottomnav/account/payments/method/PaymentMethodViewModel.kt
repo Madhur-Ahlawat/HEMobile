@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.payment.*
+import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.data.repository.payment.PaymentMethodRepository
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.ui.bottomnav.notification.NotificationViewAllRepo
@@ -30,6 +31,19 @@ class PaymentMethodViewModel @Inject constructor(val repository: PaymentMethodRe
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _defaultCard = MutableLiveData<Resource<PaymentMethodEditResponse?>?>()
     val defaultCard : LiveData<Resource<PaymentMethodEditResponse?>?> get() = _defaultCard
+
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _saveNewCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val saveNewCard : LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveNewCard
+
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
+    val accountDetail : LiveData<Resource<ProfileDetailModel?>?> get()  = _accountDetail
+
 
 
 
@@ -61,6 +75,28 @@ class PaymentMethodViewModel @Inject constructor(val repository: PaymentMethodRe
                 _defaultCard.postValue(success(repository.editDefaultCard(model)))
             }catch (e: Exception){
                 _defaultCard.postValue(failure(e))
+            }
+        }
+    }
+
+
+    fun saveNewCard(model: AddCardModel?){
+        viewModelScope.launch {
+            try{
+                _saveNewCard.postValue(success(repository.saveNewCard(model)))
+            }catch (e: Exception){
+                _saveNewCard.postValue(failure(e))
+            }
+        }
+    }
+
+
+    fun accountDetail(){
+        viewModelScope.launch {
+            try{
+                _accountDetail.postValue(success(repository.accountDetail()))
+            }catch (e: Exception){
+                _accountDetail.postValue(failure(e))
             }
         }
     }
