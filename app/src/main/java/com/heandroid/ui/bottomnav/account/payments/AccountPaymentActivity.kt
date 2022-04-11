@@ -43,10 +43,66 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     override fun initViewBinding() {
         binding = ActivityAccountPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        customToolbar(getString(R.string.str_payment))
+        setView()
         binding.model= PaymentScreenModel(history = true, method = false, topUp = false)
         toolbar(getString(R.string.str_payment))
         initCtrl()
     }
+
+    private fun setView() {
+        binding.toolbar.backButton.setOnClickListener {
+            onBackPressed()
+        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerPayment) as NavHostFragment
+        navController = navHostFragment.navController
+        navController.setGraph(R.navigation.nav_graph_account_payment)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+
+                R.id.payment_history_account -> {
+                    makePaymentHistoryAccountVisible()
+                    binding.tabLikeButtonsLayout.visible()
+                }
+                R.id.payment_method_account -> {
+                    makePaymentMethodAccountVisible()
+                    binding.tabLikeButtonsLayout.visible()
+                }
+                R.id.top_up_payment -> {
+                    makeTopUpPaymentVisible()
+                    binding.tabLikeButtonsLayout.visible()
+                }
+
+                R.id.accountPaymentHistoryFilterFragment -> {
+                    binding.tabLikeButtonsLayout.gone()
+                }
+
+                R.id.accountPaymentHistoryItemDetailFragment -> {
+                    binding.tabLikeButtonsLayout.gone()
+                }
+                else -> {
+                    binding.tabLikeButtonsLayout.visible()
+                }
+            }
+        }
+
+        binding.paymentHistoryAccount.setOnClickListener {
+            makePaymentHistoryAccountVisible()
+            navHostFragment.childFragmentManager.apply {
+                if (fragments[0] !is AccountPaymentHistoryFragment) {
+                    when {
+                        fragments[0] is AccountPaymentMethodsFragment -> {
+                            navController.navigate(R.id.action_accountPaymentMethodsFragment_to_accountPaymentHistoryFragment)
+                        }
+                        else -> {
+                            navController.navigate(R.id.action_accountTopUpPaymentFragment_to_accountPaymentHistoryFragment2)
+                        }
+                    }
+                }
+            }
+        }
 
     private fun initCtrl() {
         binding.apply {
