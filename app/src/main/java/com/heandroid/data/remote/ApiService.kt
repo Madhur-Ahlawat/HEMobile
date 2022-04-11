@@ -8,6 +8,8 @@ import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
@@ -42,8 +44,6 @@ typealias  createAccountModel = com.heandroid.data.model.account.CreateAccountRe
 typealias  respAccountModel = com.heandroid.data.model.account.CreateAccountResponseModel
 
 interface ApiService {
-
-
     @FormUrlEncoded
     @POST(LOGIN)
     suspend fun login(@Field("client_id") clientId: String? = CLIENT_ID,
@@ -219,5 +219,8 @@ interface ApiService {
     @POST(PAYMENT_WITH_EXISTING_CARD)
     suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                         @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+    @PUT(UPDATE_ACCOUNT_BALANCE)
+    suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
 
 }

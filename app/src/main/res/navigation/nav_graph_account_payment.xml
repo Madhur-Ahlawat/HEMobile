@@ -17,6 +17,11 @@
                 android:id="@+id/action_accountPaymentHistoryFragment_to_accountPaymentHistoryItemDetailFragment"
                 app:destination="@id/accountPaymentHistoryItemDetailFragment" />
 
+
+            <action
+                android:id="@+id/action_accountPaymentHistoryFragment_to_accountPaymentHistoryFilterFragment"
+                app:destination="@id/accountPaymentHistoryFilterFragment" />
+
         </fragment>
 
             <fragment
@@ -90,5 +95,12 @@
 
 
         </fragment>
+
+
+        <fragment
+            android:id="@+id/accountPaymentHistoryFilterFragment"
+            android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryFilterFragment"
+            android:label="AccountPaymentHistoryFilterFragment"
+            tools:layout="@layout/fragment_account_payment_history_filter"/>
 
     </navigation>

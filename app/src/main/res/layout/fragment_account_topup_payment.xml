@@ -4,19 +4,158 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/color_E5E5E5">
+        android:background="@color/color_EFEFEF"
+        android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="163dp"
-            android:layout_marginTop="229dp"
-            android:text="@string/in_progress"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_EFEFEF"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                android:text="@string/payment_top_up"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                android:text="@string/payment_top_up_contents"
+                android:textColor="@color/color_666666"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                android:text="@string/str_auto_top_up_my_account"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/top_up_my_account_layout"
+                style="@style/Widget.HeMobile.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColorHint="@color/grey_two"
+                app:errorEnabled="true"
+                android:hint="@string/enter_amount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/top_up_my_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:drawableLeft="@drawable/ic_pound_currency"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:maxLength="10"
+                    android:textColor="@color/color_000000"
+                    android:textColorHint="@color/grey_two"
+                    android:textSize="@dimen/_13ssp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:text="@string/suggested_amount"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/roboto_regular"
+                android:textStyle="normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:text="@string/account_falls"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:text="@string/suggested_amount"
+                android:textColor="@color/color_666666"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_last_name"
+                style="@style/Widget.HeMobile.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColorHint="@color/grey_two"
+                app:errorEnabled="true"
+                android:hint="@string/enter_amount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/top_up_falls_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:maxLength="10"
+                    android:drawableLeft="@drawable/ic_pound_currency"
+                    android:textColor="@color/color_000000"
+                    android:textColorHint="@color/grey_two"
+                    android:textSize="@dimen/_13ssp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:backgroundTint="@color/green"
+                android:text="@string/str_update"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                android:fontFamily="@font/roboto_medium"
+                app:cornerRadius="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

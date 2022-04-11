@@ -12,6 +12,8 @@ import com.heandroid.utils.common.Constants.PAYMENT_METHOD
 import com.heandroid.utils.common.Constants.PAYMENT_TOP_UP
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
+import com.heandroid.utils.extn.customToolbar
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
@@ -25,6 +27,13 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+
+
+
+    override fun observeViewModel() {
+
+    }
 
     override fun onStart() {
         super.onStart()
@@ -47,7 +56,6 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         }
     }
 
-    override fun observeViewModel() {}
 
     override fun onUserInteraction() {
         super.onUserInteraction()

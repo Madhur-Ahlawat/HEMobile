@@ -19,7 +19,7 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/tool_bar_white"
+            layout="@layout/tool_bar_with_title_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

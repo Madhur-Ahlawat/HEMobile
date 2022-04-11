@@ -3,7 +3,6 @@ package com.heandroid.ui.bottomnav.dashboard.topup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.heandroid.R
 import com.heandroid.data.model.payment.PaymentMethodDeleteResponseModel
 import com.heandroid.databinding.FragmentManualTopUpSuccessfulBinding
@@ -11,7 +10,6 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +34,7 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
             R.id.btnContinue ->{
                 requireActivity().finish()
                 requireActivity().startNormalActivity(HomeActivityMain::class.java)

@@ -1,0 +1,49 @@
+<resources>
+    <array name="button_text_auto_size">
+
+        <item>1sp</item>
+        <item>2sp</item>
+        <item>3sp</item>
+        <item>4sp</item>
+        <item>5sp</item>
+        <item>6sp</item>
+        <item>7sp</item>
+        <item>8sp</item>
+        <item>9sp</item>
+        <item>10sp</item>
+        <item>11sp</item>
+        <item>12sp</item>
+        <item>13sp</item>
+        <item>14sp</item>
+        <item>15sp</item>
+        <item>16sp</item>
+        <item>17sp</item>
+        <item>18sp</item>
+        <item>19sp</item>
+        <item>20sp</item>
+        <item>21sp</item>
+        <item>22sp</item>
+        <item>23sp</item>
+        <item>24sp</item>
+        <item>25sp</item>
+        <item>26sp</item>
+        <item>28sp</item>
+        <item>30sp</item>
+        <item>32sp</item>
+        <item>34sp</item>
+        <item>36sp</item>
+        <item>38sp</item>
+        <item>40sp</item>
+        <item>42sp</item>
+        <item>44sp</item>
+        <item>46sp</item>
+        <item>48sp</item>
+        <item>50sp</item>
+        <item>52sp</item>
+        <item>54sp</item>
+        <item>56sp</item>
+        <item>58sp</item>
+        <item>60sp</item>
+    </array>
+
+</resources>
