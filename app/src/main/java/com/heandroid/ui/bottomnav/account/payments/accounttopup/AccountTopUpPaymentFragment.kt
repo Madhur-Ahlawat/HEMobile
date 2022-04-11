@@ -1,20 +1,24 @@
 package com.heandroid.ui.bottomnav.account.payments.accounttopup
 
+import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.heandroid.R
+import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.databinding.FragmentAccountTopupPaymentBinding
-import com.heandroid.databinding.FragmentCreateAccountTopUpBinding
 import com.heandroid.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-import com.heandroid.databinding.FragmentAccountTopupPaymentBinding
-import com.heandroid.databinding.FragmentCreateAccountTopUpBinding
-import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
-import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint

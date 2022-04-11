@@ -114,23 +114,17 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                     }
                     else {
                         val customerAmount: Double = topUpMyAccount.text.toString().toDouble()
-                        val thresholdAmount: Double =
-                            topUpFallsAmount.text.toString().toDouble()
+                        val thresholdAmount: Double = topUpFallsAmount.text.toString().toDouble()
 
                         when {
                             customerAmount < 5.0 -> {
-                                topUpMyAccount.error =
-                                    resources.getString(R.string.customer_amount_err_msg)
+                                topUpMyAccount.error = resources.getString(R.string.customer_amount_err_msg)
                             }
                             thresholdAmount < 10.0 -> {
-                                topUpFallsAmount.error =
-                                    resources.getString(R.string.threshold_amount_err_msg)
+                                topUpFallsAmount.error = resources.getString(R.string.threshold_amount_err_msg)
                             }
                             else -> {
-                                val request = AccountTopUpUpdateThresholdRequest(
-                                    thresholdAmount.toString(),
-                                    customerAmount.toString()
-                                )
+                                val request = AccountTopUpUpdateThresholdRequest(thresholdAmount.toString(), customerAmount.toString())
                                 viewModel.updateThresholdAmount(request)
                             }
                         }

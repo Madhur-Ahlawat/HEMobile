@@ -55,8 +55,7 @@ interface ApiService {
         @Field("client_secret") client_secret: String? = CLIENT_SECRET,
         @Field("value") value: String?,
         @Field("password") password: String?,
-        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
-    ): Response<LoginResponse?>?
+        @Field("validatePasswordCompliance") validatePasswordCompliance: String?): Response<LoginResponse?>?
 
 
     @DELETE(LOGOUT)
@@ -64,22 +63,17 @@ interface ApiService {
 
 
     @POST(FORGOT_EMAIL)
-    suspend fun forgotEmail(
-        @Query("agencyId") agencyId: String?,
-        @Body body: ForgotEmailModel?
-    ): Response<ForgotEmailResponseModel?>?
+    suspend fun forgotEmail(@Query("agencyId") agencyId: String?,
+                            @Body body: ForgotEmailModel?): Response<ForgotEmailResponseModel?>?
 
 
     @POST(FORGOT_CONFIRM_OPTION)
-    suspend fun confirmOptionForForgot(
-        @Query("agencyId") agencyId: String?,
-        @Body body: ConfirmOptionModel?
-    ): Response<ConfirmOptionResponseModel?>?
+    suspend fun confirmOptionForForgot(@Query("agencyId") agencyId: String?,
+                                       @Body body: ConfirmOptionModel?): Response<ConfirmOptionResponseModel?>?
 
 
     @POST(REQUEST_OTP)
-    suspend fun requestOTP(
-        @Query("agencyId") agencyId: String?,
+    suspend fun requestOTP(@Query("agencyId") agencyId: String?,
         @Body model: RequestOTPModel?
     ): Response<SecurityCodeResponseModel?>?
 
@@ -247,8 +241,6 @@ interface ApiService {
     suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                         @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
-    @PUT(UPDATE_ACCOUNT_BALANCE)
-    suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
 

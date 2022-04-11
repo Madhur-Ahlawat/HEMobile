@@ -16,6 +16,8 @@ import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryAdapter
+import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryViewModel
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper

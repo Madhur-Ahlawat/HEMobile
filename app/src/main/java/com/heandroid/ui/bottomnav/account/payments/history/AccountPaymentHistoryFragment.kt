@@ -16,6 +16,7 @@ import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryPaginationAdapter
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
@@ -29,9 +30,7 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(),
-    View.OnClickListener,
-    DownloadFilterDialogListener {
+class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(), View.OnClickListener, DownloadFilterDialogListener {
 
     private val viewModel: AccountPaymentHistoryViewModel by viewModels()
     private var listData: MutableList<TransactionData?> = ArrayList()
@@ -43,16 +42,12 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     private var noOfPages = 1
     private var selectedPosition = 1
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, listData)
-        paginationNumberAdapter =
-            AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
+        paginationNumberAdapter = AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
         getDataForPage(startIndex)
     }
 
@@ -63,12 +58,12 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         binding.paymentRecycleView.gone()
         binding.paginationLayout.gone()
         binding.tvNoHistory.gone()
-        paginationLinearLayoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        paginationLinearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.paymentRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentHistoryAdapter
         }
+
         binding.paginationNumberRecyclerView.apply {
             layoutManager = paginationLinearLayoutManager
             adapter = paginationNumberAdapter
@@ -215,10 +210,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun scrollToPosition() {
-        val lastPos =
-            (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() + 1
-        val firstPos =
-            (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition() + 1
+        val lastPos = (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() + 1
+        val firstPos = (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition() + 1
         if (selectedPosition > lastPos) {
             binding.paginationNumberRecyclerView.scrollToPosition(selectedPosition - 1)
         }
@@ -243,8 +236,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         }
 
 
-    private var onPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+    private var onPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             var permission = true
             permissions.entries.forEach { if (!it.value) { permission = it.value } }
             when (permission) {
