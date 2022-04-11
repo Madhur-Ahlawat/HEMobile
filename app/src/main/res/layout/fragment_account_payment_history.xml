@@ -2,6 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="prevBtnModel"
+            type="Boolean" />
+
+        <variable
+            name="nextBtnModel"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +31,7 @@
                 android:id="@+id/yourPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center_vertical"
@@ -72,18 +83,18 @@
 
         <View
             android:id="@+id/spaceView"
-            android:background="@color/light_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filterLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_12sdp"/>
+            android:layout_height="@dimen/_12sdp"
+            android:background="@color/light_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filterLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paymentRecycleView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spaceView" />
@@ -93,10 +104,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.HEMobileDark"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spaceView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_payment_history"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/paginationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/previousBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@{prevBtnModel==true?@color/white:@color/color_C9C9C9}"
+                android:clickable="@{prevBtnModel}"
+                android:text="@string/previous"
+                android:textAllCaps="false"
+                android:textColor="@{prevBtnModel==true?@color/green:@color/color_7D7D7D}"
+                app:autoSizePresetSizes="@array/button_text_auto_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@{prevBtnModel==true?@color/green:@color/color_C9C9C9}" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@{nextBtnModel==true?@color/white:@color/color_C9C9C9}"
+                android:clickable="@{nextBtnModel}"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@{nextBtnModel==true?@color/green:@color/color_7D7D7D}"
+                app:autoSizePresetSizes="@array/button_text_auto_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@{nextBtnModel==true?@color/green:@color/color_C9C9C9}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paginationNumberRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/nextBtn"
+                app:layout_constraintStart_toEndOf="@id/previousBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_pagination_number" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

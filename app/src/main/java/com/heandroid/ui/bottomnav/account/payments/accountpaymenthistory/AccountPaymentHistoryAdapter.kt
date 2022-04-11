@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AdapterAccountPaymentHistoryBinding
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
 
 class AccountPaymentHistoryAdapter(
@@ -45,7 +46,7 @@ class AccountPaymentHistoryAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionData: TransactionData?) {
             transactionData?.run {
-                binding.transactionDate.text = transactionDate
+                binding.transactionDate.text = DateUtils.convertDateFormat(transactionDate, 0)
                 binding.transactionNumber.text = transactionNumber
                 binding.paymentAmount.text = amount
             }

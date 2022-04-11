@@ -13,6 +13,7 @@ import com.heandroid.ui.bottomnav.account.payments.accountpaymentmethod.AccountP
 import com.heandroid.ui.bottomnav.account.payments.accounttopup.AccountTopUpPaymentFragment
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
+import com.heandroid.utils.extn.customToolbar
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.extn.visible
@@ -33,12 +34,12 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     override fun initViewBinding() {
         binding = ActivityAccountPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbar(getString(R.string.str_payment))
+        customToolbar(getString(R.string.str_payment))
         setView()
     }
 
     private fun setView() {
-        binding.toolbar.btnBack.setOnClickListener {
+        binding.toolbar.backButton.setOnClickListener {
             onBackPressed()
         }
         val navHostFragment =
@@ -60,6 +61,10 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
                 R.id.top_up_payment -> {
                     makeTopUpPaymentVisible()
                     binding.tabLikeButtonsLayout.visible()
+                }
+
+                R.id.accountPaymentHistoryFilterFragment -> {
+                    binding.tabLikeButtonsLayout.gone()
                 }
 
                 R.id.accountPaymentHistoryItemDetailFragment -> {
