@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
-
     suspend fun getVehicleData() = apiService.getVehicleData()
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)
@@ -18,9 +17,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
     suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest) =
         apiService.getVehicleCrossingHistoryData(requestParam)
 
-    suspend fun getAccountDetailsApiCall()=apiService.getAccountDetailsData()
-    suspend fun getThresholdAmountApiCAll()=apiService.getThresholdValue()
-
-
+    suspend fun getAccountDetailsApiCall() = apiService.getAccountDetailsData()
+    suspend fun getThresholdAmountApiCAll() = apiService.getThresholdValue()
 
 }

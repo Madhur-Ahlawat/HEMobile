@@ -13,5 +13,6 @@ data class CreateAccountVehicleModel (
     val vehicleMake: String?,
     val vehicleModel: String?,
     val vehiclePlate: String?,
-    val vehicleYear: String?
+    val vehicleYear: String?,
+    val vehicleStateType: String?,
 ) : Parcelable

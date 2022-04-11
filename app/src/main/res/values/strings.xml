@@ -266,6 +266,7 @@
     <string name="crossing_history">Crossing history</string>
     <string name="str_activity_log">Activity log</string>
     <string name="str_close_account">Close account</string>
+    <string name="str_close">Close</string>
     <string name="str_vehicle_list">Vehicle list</string>
     <string name="str_full_name">Full name</string>
     <string name="str_email_txt">Email ID</string>
@@ -312,6 +313,7 @@
     <string name="str_clear">Clear</string>
     <string name="str_apply">Apply</string>
     <string name="str_filter">Filter</string>
+    <string name="str_filter_underline"><u>Filter</u></string>
     <string name="str_clear_selected">Clear selected</string>
     <string name="str_unselect_all">Unselect all</string>
     <string name="str_add_another_vehicle">Add another vehicle</string>
@@ -480,11 +482,14 @@
     <string name="name_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
     <string name="confirm_payment_amount">Confirm payment amount</string>
     <string name="payment_method">Payment method</string>
+    <string name="payment_date">Payment Date</string>
+    <string name="payment_type">Payment Type</string>
     <string name="pay_now">Pay Now</string>
     <string name="payment_successful">Payment successful</string>
     <string name="receipt_number">Receipt number</string>
     <string name="confirmation_email_sent">Confirmation Email sent</string>
     <string name="download_receipt"><u>Download receipt</u></string>
+    <string name="download_recei">Download receipt</string>
     <string name="make_another_payment">Make another payment</string>
     <string name="view_all_vehicles"><u>View all vehicles</u></string>
 

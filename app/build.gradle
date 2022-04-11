@@ -1,10 +1,9 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'kotlin-parcelize'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-parcelize'
+
 
 android {
     compileSdkVersion 31
@@ -52,15 +51,16 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            envConfig = getProps("/config/dev.properties")
+            envConfig = getProps("app/config/dev.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
+            dimension 'default'
         }
 
 
         prod {
-            envConfig = getProps("/config/prod.properties")
+            envConfig = getProps("app/config/prod.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
@@ -68,7 +68,7 @@ android {
 
 
         tstg {
-            envConfig = getProps("/config/test.properties")
+            envConfig = getProps("app/config/test.properties")
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")

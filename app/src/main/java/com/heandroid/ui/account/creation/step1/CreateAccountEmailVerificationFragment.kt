@@ -34,16 +34,18 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun init() {
 
-       requestModel = CreateAccountRequestModel(referenceId = "", securityCd = "", accountType = "", address1 = "",
+       requestModel = CreateAccountRequestModel(referenceId = 0, securityCd = 0, accountType = "", address1 = "",
                                                  planType = null , billingAddressLine1 = "" , billingAddressLine2 = "" , cardCity = "" ,
                                                  cardFirstName = "" , cardLastName = "" , cardMiddleName = "" , cardStateType = "" ,
                                                  cardZipCode = "" , cellPhone = "" , city = "" , countryType = "" , creditCExpMonth = "" ,
                                                  creditCExpYear = "" , creditCardNumber = "" , creditCardType = "" ,
                                                  digitPin = "", emailAddress = "", eveningPhone = "", firstName = "",
                                                  ftvehicleList = null, lastName = "", maskedNumber = "",
-                                                 password = "", replenishmentAmount = 0.0, securityCode = "",
+                                                 password = "", replenishmentAmount = null, securityCode = "",
                                                  smsOption = "Y", stateType = "", tcAccepted = "Y",
-                                                 thresholdAmount = 0.0, transactionAmount = 0.0, zipCode1 = "", enable = false)
+                                                 thresholdAmount = null, transactionAmount = null, zipCode1 = "", enable = false)
+
+
 
 
        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
@@ -71,7 +73,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
             is Resource.Success -> {
                 if(resource.data?.statusCode?.equals("0")==true) {
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
-                    requestModel?.referenceId=resource.data.referenceId
+                    requestModel?.referenceId=resource.data.referenceId.toLongOrNull()
                     val bundle = Bundle().apply {
                         putParcelable(CREATE_ACCOUNT_DATA,requestModel)
                     }
