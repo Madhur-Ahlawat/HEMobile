@@ -5,9 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.heandroid.R
 import com.heandroid.databinding.DialogErrorBinding
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseDialog
+import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.extn.startNormalActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class ErrorDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
+
+    @Inject
+    lateinit var sessionManager : SessionManager
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): DialogErrorBinding = DialogErrorBinding.inflate(inflater,container,false)
 
@@ -24,7 +34,13 @@ class ErrorDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.btnOk ->{ dismiss() }
+            R.id.btnOk ->{
+                dismiss()
+                if(arguments?.getString("message")?.contains("Access token expired")==true){
+                sessionManager?.clearAll()
+                requireActivity().startNormalActivity(AuthActivity::class.java)
+                }
+                }
         }
     }
 }

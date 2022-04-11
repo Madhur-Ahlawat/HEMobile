@@ -7,16 +7,17 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AccountPaymentHistoryItemDetailBinding
+import com.heandroid.databinding.FragmentAccountPaymentHistoryFilterBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 
-class AccountPaymentHistoryItemDetailFragment :
-    BaseFragment<AccountPaymentHistoryItemDetailBinding>(), View.OnClickListener {
+class AccountPaymentHistoryFilterFragment :
+    BaseFragment<FragmentAccountPaymentHistoryFilterBinding>(), View.OnClickListener {
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = AccountPaymentHistoryItemDetailBinding.inflate(inflater, container, false)
+    ) = FragmentAccountPaymentHistoryFilterBinding.inflate(inflater, container, false)
 
     override fun observer() {
 
@@ -24,24 +25,22 @@ class AccountPaymentHistoryItemDetailFragment :
 
     override fun init() {
         binding.apply {
-            arguments?.getParcelable<TransactionData?>(Constants.DATA)?.run {
-                data = this
-            }
+
         }
     }
 
     override fun initCtrl() {
         binding.apply {
-            downloadReceiptBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
-            backBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
+            applyBtn.setOnClickListener(this@AccountPaymentHistoryFilterFragment)
+            closeImage.setOnClickListener(this@AccountPaymentHistoryFilterFragment)
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.downloadReceiptBtn -> {
+            R.id.applyBtn -> {
             }
-            R.id.backBtn -> {
+            R.id.closeImage -> {
                 findNavController().popBackStack()
             }
         }

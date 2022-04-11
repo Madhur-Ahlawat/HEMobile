@@ -11,9 +11,8 @@ import java.net.SocketTimeoutException
 
 object ResponseHandler {
 
-    fun <T> success(response : Response<T>?,errorManager: ErrorManager): Resource<T?> {
+    fun <T> success(response : Response<T>?,errorManager: ErrorManager?=null): Resource<T?> {
         return if(response?.isSuccessful == true) {
-            Log.e("success","yes")
             Resource.Success(response.body())
         }
         else {

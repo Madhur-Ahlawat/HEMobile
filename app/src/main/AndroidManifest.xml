@@ -16,72 +16,73 @@
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.startNow.StartNowBaseActivity"
+            android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-
-        </activity>
+            android:theme="@style/Theme.HEMobileWhite"
+            android:exported="false" />
+        <activity
+            android:name=".ui.startNow.StartNowBaseActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.auth.controller.AuthActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.landing.LandingActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.vehicle.VehicleMgmtActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobile"/>
-
-        <activity android:name=".ui.bottomnav.HomeActivityMain"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.viewcharges.ViewChargesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.futureModule.InProgressActivity"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".ui.bottomnav.HomeActivityMain"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.viewcharges.ViewChargesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.futureModule.InProgressActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite"
-            />
-        <activity android:name=".ui.account.profile.ProfileActivity"
-            android:theme="@style/Theme.HEMobileWhite"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.nominatedcontacts.NominatedContactActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.account.communication.CommunicationActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
-            android:screenOrientation="portrait"/>
-
+            android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.heandroid.ui.payment.MakeOffPaymentActivity"
+            android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
-
+        <activity
+            android:name=".ui.nominatedcontacts.NominatedContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.account.communication.CommunicationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.payment.MakeOffPaymentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name=".ui.bottomnav.account.payments.AccountPaymentActivity"
             android:screenOrientation="portrait"
-            />
+            android:theme="@style/Theme.HEMobileWhite" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />

@@ -56,6 +56,7 @@
     <color name="FCD6C3">#FCD6C3</color>
     <color name="FFF7BF">#FFF7BF</color>
     <color name="hyperlink_blue">#427AF7</color>
+    <color name="hyperlink_blue2">#007AFF</color>
     <color name="color_3C3C4399">#993C3C43</color>
     <color name="color_D3D3D4">#D3D3D4</color>
     <color name="color_1e1e1e">#1E1E1E</color>
@@ -68,6 +69,7 @@
     <color name="color_3D2375">#3D2375</color>
     <color name="E5E5E5">#E5E5E5</color>
     <color name="color_009CDE">#009CDE</color>
+    <color name="line_grey">#B8B8B8</color>
 
 
 </resources>
