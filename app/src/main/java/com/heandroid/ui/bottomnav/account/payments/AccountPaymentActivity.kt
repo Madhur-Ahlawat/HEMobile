@@ -28,11 +28,7 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     @Inject
     lateinit var sessionManager: SessionManager
 
-
-
-
     override fun observeViewModel() {
-
     }
 
     override fun onStart() {

@@ -64,6 +64,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textColorHint="@color/grey_two"
                 app:errorEnabled="true"
+                app:prefixText="@string/txt_pound"
                 android:hint="@string/enter_amount">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -71,7 +72,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:drawableLeft="@drawable/ic_pound_currency"
                     android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:maxLength="10"
@@ -120,6 +120,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textColorHint="@color/grey_two"
                 app:errorEnabled="true"
+                app:prefixText="@string/txt_pound"
                 android:hint="@string/enter_amount">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -130,7 +131,6 @@
                     android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:maxLength="10"
-                    android:drawableLeft="@drawable/ic_pound_currency"
                     android:textColor="@color/color_000000"
                     android:textColorHint="@color/grey_two"
                     android:textSize="@dimen/_13ssp" />
