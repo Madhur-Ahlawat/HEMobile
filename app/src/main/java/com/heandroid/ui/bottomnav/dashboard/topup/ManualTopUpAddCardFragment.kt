@@ -1,6 +1,7 @@
 package com.heandroid.ui.bottomnav.dashboard.topup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>(), View.OnClickListener {
+
     private var loader: LoaderDialog? = null
 
     private var cardModel : PaymentWithNewCardModel?=null
@@ -96,10 +98,11 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                Log.e("payment token ",responseModel?.toString())
                 cardModel= PaymentWithNewCardModel(transactionAmount = arguments?.getString("amount"),
                                                    cardType = responseModel.card.type.uppercase(Locale.ROOT), cardNumber = responseModel.token,
                                                    cvv=responseModel.card.hash, expMonth = responseModel.card.exp.substring(0, 2),
-                                                   expYear = responseModel.card.exp.substring(2, 4), saveCard = "Y", useAddressCheck = "N",
+                                                   expYear = "20${responseModel.card.exp.substring(2, 4)}" , saveCard = "Y", useAddressCheck = "N",
                                                    bankRoutingNumber = "", paymentType = "card", maskedNumber =  responseModel.card.number,
                                                    firstName = "", middleName = "", lastName = "", primaryCard = "N", easyPay = "Y")
 
