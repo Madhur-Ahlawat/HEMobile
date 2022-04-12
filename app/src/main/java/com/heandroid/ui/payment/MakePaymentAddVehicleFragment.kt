@@ -20,6 +20,8 @@ import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,28 +44,26 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        Logg.logging("MakePayMent", " vehicleList size ${vehicleList?.size} ")
+        Logg.logging("MakePayMent", " vehicleList empty  ${vehicleList?.isEmpty()} ")
+
 
         mAdapter = AddedVehicleListAdapter(this)
         mAdapter.setList(vehicleList)
         binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
-        if (vehicleList?.isEmpty() == true || vehicleList?.size == 0) {
-            binding.apply {
-                rvVehiclesList.visibility = View.GONE
-                noVehiclesAdded.visibility = View.VISIBLE
-                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
-            }
-            setBtnDisabled()
-            setAddBtnActivated()
-        }
-        //else {
-        //    setAdapter()
-        //}
 
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
         createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
         isFromOneOfPayment = arguments?.getBoolean(Constants.PAYMENT_ONE_OFF)
+
+        Logg.logging("MakePayMent", " calling isAccountVehicle $isAccountVehicle")
+        Logg.logging(
+            "MakePayMent",
+            " calling createAccountNonVehicleModel $createAccountNonVehicleModel"
+        )
+        Logg.logging("MakePayMent", " calling isFromOneOfPayment $isFromOneOfPayment")
 
         when {
             isAccountVehicle == true -> {
@@ -97,40 +97,66 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.findVehicle -> {
-                if(isAccountVehicle == true){
-                   // loader?.show(requireActivity().supportFragmentManager, "")
-                    val bundle =  Bundle()
+                if (isAccountVehicle == true) {
+                    // loader?.show(requireActivity().supportFragmentManager, "")
+                    val bundle = Bundle()
                     bundle.putBoolean("IsAccountVehicle", true)
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+                    )
 
-                    findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment, bundle)
-                } else if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
-                    val bundle =  Bundle()
+                    findNavController().navigate(
+                        R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment,
+                        bundle
+                    )
+                } else if (createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true) {
+                    val bundle = Bundle()
                     bundle.putBoolean("isNonUKVehicleUpdating", true)
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
-                    findNavController().navigate(R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment, bundle)
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+                    )
+                    findNavController().navigate(
+                        R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment,
+                        bundle
+                    )
                 }
             }
         }
     }
 
     private fun setAdapter(isAccountVehicle: Boolean? = false, vehicle: String? = "UK") {
-        binding.rvVehiclesList.visibility = View.VISIBLE
-        binding.noVehiclesAdded.visibility = View.GONE
-        binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+        if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
+            binding.apply {
+                Logg.logging("MakePayMent", " calling inside ")
+
+                rvVehiclesList.gone()
+                noVehiclesAdded.visible()
+                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
+            }
+            setBtnDisabled()
+            setAddBtnActivated()
+        } else {
+            binding.rvVehiclesList.visibility = View.VISIBLE
+            binding.noVehiclesAdded.visibility = View.GONE
+            binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+
+        }
+
 
         if (isAccountVehicle == true && vehicle == "UK") {
             val vehicleNo = arguments?.getString("VehicleNo")
             val plateRes = PlateInfoResponse()
             plateRes.number = vehicleNo.toString()
             plateRes.country = "UK"
-            val vehicleRes = VehicleResponse(PlateInfoResponse(),plateRes, VehicleInfoResponse(), false, 0, 0.0 )
-            if(vehicleList?.contains(vehicleRes)==false)
-            vehicleList?.add(vehicleRes)
+            val vehicleRes =
+                VehicleResponse(PlateInfoResponse(), plateRes, VehicleInfoResponse(), false, 0, 0.0)
+            if (vehicleList?.contains(vehicleRes) == false)
+                vehicleList?.add(vehicleRes)
             mAdapter.setList(vehicleList)
             mAdapter.notifyDataSetChanged()
-        }
-        else if(isAccountVehicle == true && vehicle == "Non-UK"){
+        } else if (isAccountVehicle == true && vehicle == "Non-UK") {
             val plateResponse = PlateInfoResponse()
             plateResponse.number = createAccountNonVehicleModel?.vehiclePlate.toString()
             plateResponse.country = vehicle
@@ -141,20 +167,20 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             vehicleInfo.model = createAccountNonVehicleModel?.vehicleModel
             vehicleInfo.vehicleClassDesc = createAccountNonVehicleModel?.plateTypeDesc
 
-            val vehicleRes = VehicleResponse(PlateInfoResponse(),plateResponse, vehicleInfo, false, 0, 0.0 )
-            if(vehicleList?.contains(vehicleRes)==false)
-            vehicleList?.add(vehicleRes)
+            val vehicleRes =
+                VehicleResponse(PlateInfoResponse(), plateResponse, vehicleInfo, false, 0, 0.0)
+            if (vehicleList?.contains(vehicleRes) == false)
+                vehicleList?.add(vehicleRes)
             mAdapter.setList(vehicleList)
             mAdapter.notifyDataSetChanged()
-        }
-        else {
+        } else {
             mAdapter.setList(vehicleList)
             mAdapter.notifyDataSetChanged()
         }
         if (vehicleList?.isNotEmpty() == true) {
             setBtnActivated()
         }
-        if (vehicleList?.size?:0 < Constants.MAX_VEHICLE_SIZE) {
+        if (vehicleList?.size ?: 0 < Constants.MAX_VEHICLE_SIZE) {
             setAddBtnActivated()
         } else {
             setAddBtnDisabled()
@@ -162,13 +188,26 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     }
 
     override fun onAddClick(details: VehicleResponse) {
+        Logg.logging("MakePayMent", " onAddClick called vehicleList  $vehicleList ")
+        Logg.logging("MakePayMent", " onAddClick called details  $details ")
+
         addDialog?.dismiss()
         when {
             details.plateInfo?.country == Constants.UK -> {
                 vehicleList?.add(details)
-                setAdapter(true)
+                Logg.logging("MakePayMent", " onAddClick called vehicleList after  $vehicleList ")
+                Logg.logging(
+                    "MakePayMent",
+                    " onAddClick called vehicleList size after  ${vehicleList?.size} "
+                )
+
+                if (isFromOneOfPayment == true)
+                    setAdapter(false)
+                else
+                    setAdapter(true)
             }
 
+/*
             isFromOneOfPayment == true -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, details)
@@ -179,20 +218,24 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                     bundle
                 )
             }
+*/
             else -> {
                 val bundle = Bundle().apply {
                     putBoolean("isSecondNonUkVehicle", true)
                     putString("VehicleNo", details?.plateInfo?.number)
                     putString("Country", "Non-UK")
                 }
-                findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_callNonUkVehicleAdd, bundle)
+                findNavController().navigate(
+                    R.id.action_makePaymentAddVehicleFragment_to_callNonUkVehicleAdd,
+                    bundle
+                )
             }
         }
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
         setAddBtnActivated()
-        if (vehicleList?.size?: 0 > 0) {
+        if (vehicleList?.size ?: 0 > 0) {
             vehicleList?.removeAt(pos)
             if (::mAdapter.isInitialized) {
                 mAdapter.setList(vehicleList)
@@ -209,7 +252,12 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
-    override fun onItemClick(details: VehicleResponse?, pos: Int) { }
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
+
+        Logg.logging("MakePayMent", " onAdonItemClick Click called details  $details ")
+
+
+    }
 
     private fun setBtnActivated() {
         binding.findButton = true
