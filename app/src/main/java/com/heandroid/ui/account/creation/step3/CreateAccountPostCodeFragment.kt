@@ -155,9 +155,12 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 PAYG ->{ model?.zipCode1=null }
                 else -> { if(binding.tiePostCode.text?.isNotEmpty()==true) binding.enable = true }
             }
+
         }
 
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
     }
 
 }

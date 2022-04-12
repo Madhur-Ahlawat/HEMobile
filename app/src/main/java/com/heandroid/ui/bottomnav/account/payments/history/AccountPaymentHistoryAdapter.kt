@@ -1,4 +1,4 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
+package com.heandroid.ui.bottomnav.account.payments.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AdapterAccountPaymentHistoryBinding
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
 
-class AccountPaymentHistoryAdapter(
-    val fragment: Fragment,
-    private val transactionDataList: List<TransactionData?>?
-) : RecyclerView.Adapter<AccountPaymentHistoryAdapter.PaymentViewHolder>() {
+class AccountPaymentHistoryAdapter(val fragment: Fragment, private val transactionDataList: List<TransactionData?>?) : RecyclerView.Adapter<AccountPaymentHistoryAdapter.PaymentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentViewHolder {
         return PaymentViewHolder(
@@ -45,7 +43,7 @@ class AccountPaymentHistoryAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionData: TransactionData?) {
             transactionData?.run {
-                binding.transactionDate.text = transactionDate
+                binding.transactionDate.text = DateUtils.convertDateFormat(transactionDate, 0)
                 binding.transactionNumber.text = transactionNumber
                 binding.paymentAmount.text = amount
             }

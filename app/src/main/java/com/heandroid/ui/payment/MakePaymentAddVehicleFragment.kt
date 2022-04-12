@@ -20,6 +20,7 @@ import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -209,7 +210,13 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
-    override fun onItemClick(details: VehicleResponse?, pos: Int) { }
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
+
+        // call tp launch payment screen
+
+        requireActivity().showToast("Vehicle item is clicked.")
+       // findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_makeOffPaymentCrossingFragment)
+    }
 
     private fun setBtnActivated() {
         binding.findButton = true

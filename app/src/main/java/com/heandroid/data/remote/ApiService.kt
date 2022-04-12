@@ -8,6 +8,8 @@ import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
+import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
@@ -21,8 +23,11 @@ import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
+import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.payment.*
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.data.model.profile.ProfileUpdateEmailModel
 import com.heandroid.data.model.profile.UpdateAccountPassword
@@ -50,8 +55,7 @@ interface ApiService {
         @Field("client_secret") client_secret: String? = CLIENT_SECRET,
         @Field("value") value: String?,
         @Field("password") password: String?,
-        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
-    ): Response<LoginResponse?>?
+        @Field("validatePasswordCompliance") validatePasswordCompliance: String?): Response<LoginResponse?>?
 
 
     @DELETE(LOGOUT)
@@ -59,22 +63,17 @@ interface ApiService {
 
 
     @POST(FORGOT_EMAIL)
-    suspend fun forgotEmail(
-        @Query("agencyId") agencyId: String?,
-        @Body body: ForgotEmailModel?
-    ): Response<ForgotEmailResponseModel?>?
+    suspend fun forgotEmail(@Query("agencyId") agencyId: String?,
+                            @Body body: ForgotEmailModel?): Response<ForgotEmailResponseModel?>?
 
 
     @POST(FORGOT_CONFIRM_OPTION)
-    suspend fun confirmOptionForForgot(
-        @Query("agencyId") agencyId: String?,
-        @Body body: ConfirmOptionModel?
-    ): Response<ConfirmOptionResponseModel?>?
+    suspend fun confirmOptionForForgot(@Query("agencyId") agencyId: String?,
+                                       @Body body: ConfirmOptionModel?): Response<ConfirmOptionResponseModel?>?
 
 
     @POST(REQUEST_OTP)
-    suspend fun requestOTP(
-        @Query("agencyId") agencyId: String?,
+    suspend fun requestOTP(@Query("agencyId") agencyId: String?,
         @Body model: RequestOTPModel?
     ): Response<SecurityCodeResponseModel?>?
 
@@ -210,7 +209,39 @@ interface ApiService {
     suspend fun getAccountDetailsData():Response<AccountResponse?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
-    suspend fun getThresholdValue():Response<ThresholdAmountApiResponse?>?
+    suspend fun getThresholdValue() :Response<ThresholdAmountApiResponse?>?
 
+    @GET(SAVED_CARD_LIST)
+    suspend fun savedCard(@Query("agencyId") agencyId: String? = AGENCY_ID):Response<PaymentMethodResponseModel?>?
+
+
+
+    @HTTP(method = "DELETE", path = SAVED_CARD_LIST, hasBody = true)
+    suspend fun deleteCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                           @Body model: PaymentMethodDeleteModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+
+    @POST(EDIT_CARD)
+    suspend fun editDefaultCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                @Body model : PaymentMethodEditModel?) : Response<PaymentMethodEditResponse?>?
+
+
+    @POST(SAVED_CARD_LIST)
+    suspend fun savedNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                             @Body model : AddCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+
+    @POST(PAYMENT_WITH_NEW_CARD)
+    suspend fun paymentWithNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                   @Body model : PaymentWithNewCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+
+
+    @POST(PAYMENT_WITH_EXISTING_CARD)
+    suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                        @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+    @PUT(UPDATE_ACCOUNT_BALANCE)
+    suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
 
 }

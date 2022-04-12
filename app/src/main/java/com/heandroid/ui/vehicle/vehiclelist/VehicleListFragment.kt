@@ -161,10 +161,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
         if (isAccountVehicle == false) {
             Log.e("observer A", "test")
-
-            observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
             observe(vehicleMgmtViewModel.deleteVehicleApiVal, ::handleDeleteVehicle)
         } else {
             Log.e("observer B", "test")

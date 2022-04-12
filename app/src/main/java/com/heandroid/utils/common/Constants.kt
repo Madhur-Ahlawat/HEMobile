@@ -6,6 +6,9 @@ object Constants {
     const val CASES_CATEGORY ="cases_category"
     const val CASES_SUB_CATEGORY ="cases_sub_category"
     const val PAYG = "PAYG"
+    const val PAYMENT_HISTORY = "payment_history"
+    const val PAYMENT_METHOD = "payment_method"
+    const val PAYMENT_TOP_UP = "payment_top_up"
     const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"
     const val NORMAL_LOGIN_FLOW_CODE = 1001

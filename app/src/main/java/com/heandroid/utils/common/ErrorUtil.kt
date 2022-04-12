@@ -12,6 +12,7 @@ object ErrorUtil {
 
     fun showError(view: View?,message: String?){
         try{
+
             val dialog= ErrorDialog()
             val bundle= Bundle()
             bundle.putString("message",message)

@@ -4,93 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
+    <data>
+        <variable
+            name="model"
+            type="com.heandroid.data.model.payment.PaymentScreenModel" />
+
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_EFEFEF">
+        android:background="@color/E5E5E5">
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/tool_bar_white"
+            layout="@layout/tool_bar_with_title_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <HorizontalScrollView
+        <LinearLayout
             android:id="@+id/tabLikeButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbarSize="2dp"
-            android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tvPaymentHistory"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_6sdp"
-                android:paddingVertical="@dimen/_15sdp">
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/payment_history"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/green"
+                app:cornerRadius="16dp"
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/payment_history_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:background="@drawable/text_selected_bg"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/payment_history"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
+                android:backgroundTint="@{model.history==false?@color/white:@color/btn_color}"
+                android:textColor="@{model.history==false?@color/green:@color/white}"
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/payment_method_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:background="@drawable/text_unselected_bg"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/payment_methods"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
+                />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/top_up_payment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_2sdp"
-                    android:background="@drawable/text_unselected_bg"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/str_top_up"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </HorizontalScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tvPaymentMethod"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/payment_methods"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/green"
+                app:cornerRadius="16dp"
+                android:backgroundTint="@{model.method==false?@color/white:@color/btn_color}"
+                android:textColor="@{model.method==false?@color/green:@color/white}"
+
+                />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tvTopUp"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/str_top_up"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/green"
+                app:cornerRadius="16dp"
+                android:backgroundTint="@{model.topUp==false?@color/white:@color/btn_color}"
+                android:textColor="@{model.topUp==false?@color/green:@color/white}"
+
+                />
+
+
+        </LinearLayout>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerPayment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout"
+            app:navGraph="@navigation/nav_graph_account_payment" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
