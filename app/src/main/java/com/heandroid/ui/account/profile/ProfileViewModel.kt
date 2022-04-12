@@ -97,4 +97,9 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
         return ret
     }
 
+    fun updateUserDetails()
+    {
+
+    }
+
 }

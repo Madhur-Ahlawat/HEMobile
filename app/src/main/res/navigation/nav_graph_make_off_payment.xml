@@ -108,6 +108,9 @@
         <action
             android:id="@+id/action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment"
             app:destination="@id/addVehicleDetailsFragment" />
+        <action
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_makeOffPaymentCrossingFragment"
+            app:destination="@id/makeOneOffPaymentCrossingFragment" />
     </fragment>
 
 
