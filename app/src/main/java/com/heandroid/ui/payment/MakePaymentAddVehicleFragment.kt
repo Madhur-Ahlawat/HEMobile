@@ -134,7 +134,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
         }
 
-
         if (isAccountVehicle == true && vehicle == "UK") {
             val vehicleNo = arguments?.getString("VehicleNo")
             val plateRes = PlateInfoResponse()
