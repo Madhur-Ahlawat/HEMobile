@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
+import com.heandroid.BuildConfig
 import com.heandroid.R
 import com.heandroid.data.model.payment.AddCardModel
 import com.heandroid.data.model.payment.CardResponseModel
@@ -33,6 +34,7 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
 
     override fun init() {
         loader = LoaderDialog()
+        BuildConfig.BASE_URL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager,"")
         binding.webview.loadSetting("file:///android_asset/NMI.html")
@@ -133,6 +135,4 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         cardModel?.default=isChecked
     }
-
-
 }
