@@ -43,9 +43,10 @@ class AccountPaymentHistoryAdapter(val fragment: Fragment, private val transacti
         RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionData: TransactionData?) {
             transactionData?.run {
-                binding.transactionDate.text = DateUtils.convertDateFormat(transactionDate, 0)
+                binding.transactionDate.text = "${exitTime?.let { DateUtils.convertTimeFormat(it,0) }}, ${DateUtils.convertDateFormat(transactionDate, 0)}"
                 binding.transactionNumber.text = transactionNumber
                 binding.paymentAmount.text = amount
+                binding.topUpPlan.text = exitPlazaName
             }
         }
     }

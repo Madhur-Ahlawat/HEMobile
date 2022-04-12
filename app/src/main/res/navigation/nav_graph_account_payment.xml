@@ -26,7 +26,7 @@
 
             <fragment
                 android:id="@+id/accountPaymentHistoryItemDetailFragment"
-                android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryItemDetailFragment"
+                android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryItemDetailFragment"
                 android:label="AccountPaymentHistoryItemDetailFragment"
                 tools:layout="@layout/account_payment_history_item_detail" />
 

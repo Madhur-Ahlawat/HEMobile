@@ -175,13 +175,13 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                     if (it.isNotEmpty()) {
                         listData.clear()
                         listData.addAll(it)
-                        binding.paymentRecycleView.adapter?.notifyDataSetChanged()
+                        binding.paymentRecycleView.adapter = AccountPaymentHistoryAdapter(this, listData)
                         binding.paginationLayout.visible()
                         paginationNumberAdapter?.apply {
                             setCount(noOfPages)
                             setSelectedPosit(selectedPosition)
                         }
-                        binding.paginationNumberRecyclerView.adapter?.notifyDataSetChanged()
+                        binding.paginationNumberRecyclerView.adapter = paginationNumberAdapter
                     } else {
                         binding.tvNoHistory.visible()
                     }
