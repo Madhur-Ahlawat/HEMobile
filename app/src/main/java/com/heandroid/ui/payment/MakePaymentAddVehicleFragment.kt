@@ -1,10 +1,12 @@
 package com.heandroid.ui.payment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.persistableBundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 
 @AndroidEntryPoint
 class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicleBinding>(),
@@ -95,6 +98,10 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                         Constants.CREATE_ACCOUNT_DATA,
                         arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
                     )
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.DATA)
+                    )
 
                     findNavController().navigate(
                         R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment,
@@ -111,6 +118,19 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                         R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment,
                         bundle
                     )
+                }else{
+                    val bundle = Bundle()
+                    bundle.putBoolean("IsAccountVehicle", false)
+                    bundle.putParcelableArrayList(
+                        Constants.DATA,
+                        ArrayList(vehicleList)
+                    )
+
+                    findNavController().navigate(
+                        R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
+                        bundle
+                    )
+
                 }
             }
         }
@@ -228,7 +248,21 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
-    override fun onItemClick(details: VehicleResponse?, pos: Int) { }
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
+        val bundle = Bundle()
+        bundle.putBoolean("IsAccountVehicle", false)
+        bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+        bundle.putParcelable(
+            Constants.DATA,
+            details
+        )
+
+        findNavController().navigate(
+            R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
+            bundle
+        )
+
+    }
 
     private fun setBtnActivated() {
         binding.findButton = true

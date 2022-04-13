@@ -50,8 +50,6 @@
             app:destination="@id/makeOneOffPaymentCrossingFragment" />
     </fragment>
 
-
-
     <fragment
         android:id="@+id/makeOneOffPaymentCrossingFragment"
         android:name="com.heandroid.ui.payment.MakeOffPaymentCrossingFragment"
@@ -72,6 +70,7 @@
             android:id="@+id/action_makeOffPaymentReceiptFragment_to_makeOffPaymentCardFragment"
             app:destination="@id/makeOffPaymentCardFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/makeOffPaymentCardFragment"
         android:name="com.heandroid.ui.payment.MakeOffPaymentCardFragment"
@@ -105,12 +104,20 @@
         android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
         android:label="MakePaymentAddVehicleFragment"
         tools:layout="@layout/fragment_make_payment_add_vehicle">
+
         <action
             android:id="@+id/action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment"
             app:destination="@id/addVehicleDetailsFragment" />
+
         <action
-            android:id="@+id/action_makePaymentAddVehicleFragment_to_makeOffPaymentCrossingFragment"
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_makeOneOffPaymentCrossingFragment"
             app:destination="@id/makeOneOffPaymentCrossingFragment" />
+
+
+        <action
+            android:id="@+id/action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment"
+            app:destination="@id/addVehicleDoneFragment" />
+
     </fragment>
 
 

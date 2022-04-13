@@ -93,7 +93,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             }
         }
 
-
     }
 
     suspend  fun loadVehicleData() {
