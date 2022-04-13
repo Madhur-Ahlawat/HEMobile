@@ -16,7 +16,6 @@ import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryPaginationAdapter
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
@@ -168,13 +167,13 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                     if (it.isNotEmpty()) {
                         listData.clear()
                         listData.addAll(it)
-                        binding.paymentRecycleView.adapter?.notifyDataSetChanged()
+                        binding.paymentRecycleView.adapter = paymentHistoryAdapter
                         binding.paginationLayout.visible()
                         paginationNumberAdapter?.apply {
                             setCount(noOfPages)
                             setSelectedPosit(selectedPosition)
                         }
-                        binding.paginationNumberRecyclerView.adapter?.notifyDataSetChanged()
+                        binding.paginationNumberRecyclerView.adapter = paginationNumberAdapter
                     } else {
                         binding.tvNoHistory.visible()
                     }

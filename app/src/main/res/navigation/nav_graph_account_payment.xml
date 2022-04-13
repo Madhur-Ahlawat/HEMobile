@@ -99,7 +99,7 @@
 
         <fragment
             android:id="@+id/accountPaymentHistoryFilterFragment"
-            android:name="com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryFilterFragment"
+            android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryFilterFragment"
             android:label="AccountPaymentHistoryFilterFragment"
             tools:layout="@layout/fragment_account_payment_history_filter"/>
 

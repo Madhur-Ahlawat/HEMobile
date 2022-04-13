@@ -7,7 +7,7 @@ import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.ui.base.BaseViewModel
-import com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory.AccountPaymentHistoryRepo
+import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryRepo
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
