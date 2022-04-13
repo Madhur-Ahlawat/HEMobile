@@ -654,6 +654,7 @@
     <string name="payment_methods">Payment method</string>
     <string name="payment_history">Payment history</string>
     <string name="your_payment">Your payment</string>
+    <string name="your_payment_receipt">Your payment receipt</string>
     <string name="cannot_create_account">The request could not be completed at this time. Please try again later.</string>
     <string name="default_payment_method">Default payment method</string>
     <string name="other_debit_credit_card">Other debit/credit card</string>

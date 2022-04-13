@@ -1,5 +1,10 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
+package com.heandroid.ui.bottomnav.account.payments.history
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.pdf.PdfDocument
+import android.os.Build
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +12,13 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AccountPaymentHistoryItemDetailBinding
+import com.heandroid.databinding.DownloadAccountPaymentHistoryPdfBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.showToast
+import java.io.File
+import java.io.FileOutputStream
 
 class AccountPaymentHistoryItemDetailFragment :
     BaseFragment<AccountPaymentHistoryItemDetailBinding>(), View.OnClickListener {
@@ -38,11 +47,70 @@ class AccountPaymentHistoryItemDetailFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.downloadReceiptBtn -> {
-
+                generatePaymentReceipt()
             }
             R.id.backBtn -> {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    private fun generatePaymentReceipt() {
+        val inflater = LayoutInflater.from(context)
+        val paymentBinding = DownloadAccountPaymentHistoryPdfBinding.inflate(inflater)
+        arguments?.getParcelable<TransactionData?>(Constants.DATA)?.let { tData ->
+            paymentBinding.transactionId.text = tData.transactionNumber
+            paymentBinding.paymentDate.text = DateUtils.convertDateFormat(tData.transactionDate, 0)
+            paymentBinding.paymentType.text = tData.exitPlazaName
+            paymentBinding.paymentMethod.text = tData.rebillPaymentType
+            paymentBinding.amount.text = tData.amount
+        }
+        val view = paymentBinding.root
+
+        val displayMetrics = DisplayMetrics()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context?.display?.getRealMetrics(displayMetrics)
+            displayMetrics.densityDpi
+        } else {
+            activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        }
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(
+                displayMetrics.widthPixels, View.MeasureSpec.EXACTLY
+            ),
+            View.MeasureSpec.makeMeasureSpec(
+                displayMetrics.heightPixels, View.MeasureSpec.EXACTLY
+            )
+        )
+        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels)
+        val bitmap = view.measuredWidth.let {
+            view.measuredHeight.let { it1 ->
+                Bitmap.createBitmap(
+                    it,
+                    it1, Bitmap.Config.ARGB_8888
+                )
+            }
+        }
+        //Bitmap.createScaledBitmap(bitmap, 595, 842, true)
+        val canvas = bitmap?.let { Canvas(it) }
+        view.draw(canvas)
+
+        val pdfDocument = PdfDocument()
+        val pageInfo =
+            PdfDocument.PageInfo.Builder(displayMetrics.widthPixels, displayMetrics.heightPixels, 1)
+                .create()
+        val page = pdfDocument.startPage(pageInfo)
+        bitmap?.let { page.canvas.drawBitmap(it, 0F, 0F, null) }
+        pdfDocument.finishPage(page)
+
+        val path = "${activity?.getExternalFilesDir(null)}${File.separator}paymentReceipt${
+            System.currentTimeMillis()
+        }.pdf"
+
+        val file = File(path)
+        pdfDocument.writeTo(FileOutputStream(file))
+        pdfDocument.close()
+        activity?.showToast("Payment receipt downloaded successfully")
+
     }
 }
