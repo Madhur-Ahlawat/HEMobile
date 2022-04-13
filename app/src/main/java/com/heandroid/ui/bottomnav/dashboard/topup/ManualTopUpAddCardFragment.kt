@@ -98,7 +98,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
-                Log.e("payment token ",responseModel?.toString())
+                Log.e("payment token ",responseModel.toString())
                 cardModel= PaymentWithNewCardModel(transactionAmount = arguments?.getString("amount"),
                                                    cardType = responseModel.card.type.uppercase(Locale.ROOT), cardNumber = responseModel.token,
                                                    cvv=responseModel.card.hash, expMonth = responseModel.card.exp.substring(0, 2),

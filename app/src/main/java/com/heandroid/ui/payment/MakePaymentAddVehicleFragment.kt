@@ -137,22 +137,8 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     }
 
     private fun setAdapter(isAccountVehicle: Boolean? = false, vehicle: String? = "UK") {
-        if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
-            binding.apply {
-                Logg.logging("MakePayMent", " calling inside ")
 
-                rvVehiclesList.gone()
-                noVehiclesAdded.visible()
-                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
-            }
-            setBtnDisabled()
-            setAddBtnActivated()
-        } else {
-            binding.rvVehiclesList.visibility = View.VISIBLE
-            binding.noVehiclesAdded.visibility = View.GONE
-            binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
-
-        }
+        hideAndShowRecyclerView()
 
         if (isAccountVehicle == true && vehicle == "UK") {
             val vehicleNo = arguments?.getString("VehicleNo")
@@ -162,6 +148,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             val vehicleRes = VehicleResponse(PlateInfoResponse(),plateRes, VehicleInfoResponse(), false, 0, 0.0 )
             if(vehicleList?.contains(vehicleRes)==false)
             vehicleList?.add(vehicleRes)
+            hideAndShowRecyclerView()
             mAdapter.setList(vehicleList)
             mAdapter.notifyDataSetChanged()
         }
@@ -193,6 +180,25 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             setAddBtnActivated()
         } else {
             setAddBtnDisabled()
+        }
+    }
+
+    private fun hideAndShowRecyclerView() {
+        if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
+            binding.apply {
+                Logg.logging("MakePayMent", " calling inside ")
+
+                rvVehiclesList.gone()
+                noVehiclesAdded.visible()
+                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
+            }
+            setBtnDisabled()
+            setAddBtnActivated()
+        } else {
+            binding.rvVehiclesList.visibility = View.VISIBLE
+            binding.noVehiclesAdded.visibility = View.GONE
+            binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+
         }
     }
 

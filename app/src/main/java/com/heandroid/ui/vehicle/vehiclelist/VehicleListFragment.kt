@@ -80,8 +80,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
 
     private fun hitCreateAccVehicleList() {
+        loader?.show(requireActivity().supportFragmentManager, "")
+        createAccVehicleViewModel.getVehicleData(VehicleHelper.list?.get(0)?.plateInfo?.number, Constants.AGENCY_ID)
 
-        CoroutineScope(Dispatchers.Main).launch {
+     /*
+     // TODO - Will be used in the future for multiple vehicle add
+      CoroutineScope(Dispatchers.Main).launch {
             coroutineScope {
                 withContext(Dispatchers.IO){
                     async {
@@ -91,11 +95,13 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                 setVehicleListAdapter(mList)
 
             }
-        }
+        } */
 
     }
 
-    suspend  fun loadVehicleData() {
+   /*
+     // TODO - Will be used in the future for multiple vehicle add
+    suspend fun loadVehicleData() {
         for (i in VehicleHelper.list?.indices!!) {
 
             if (VehicleHelper.list?.get(i)?.plateInfo?.country == "UK") {
@@ -112,7 +118,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             }
 
         }
-    }
+    } */
 
     private fun getVehicleListData() {
 
@@ -161,15 +167,19 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun observer() {
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
-        if (isAccountVehicle == false) {
-            Log.e("observer A", "test")
-            observe(vehicleMgmtViewModel.deleteVehicleApiVal, ::handleDeleteVehicle)
-        } else {
-            Log.e("observer B", "test")
+        observe(vehicleMgmtViewModel.deleteVehicleApiVal, ::handleDeleteVehicle)
+        observe(createAccVehicleViewModel.findVehicleLiveData, ::handleCreateAccVehicleResponse)
 
-            observe(createAccVehicleViewModel.findVehicleLiveData, ::handleCreateAccVehicleResponse)
+
+     //   if (isAccountVehicle == false) {
+     //       Log.e("observer A", "test")
+    //        observe(vehicleMgmtViewModel.deleteVehicleApiVal, ::handleDeleteVehicle)
+    //    } else {
+    //        Log.e("observer B", "test")
+
+    //        observe(createAccVehicleViewModel.findVehicleLiveData, ::handleCreateAccVehicleResponse)
         }
-    }
+
 
     private fun handleDeleteVehicle(resource: Resource<EmptyApiResponse?>?) {
         loader?.dismiss()
@@ -212,7 +222,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
 
     private fun handleCreateAccVehicleResponse(resource: Resource<VehicleInfoDetails?>?) {
-        try {
             loader?.dismiss()
 
             when (resource) {
@@ -242,11 +251,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
-        } catch (e: Exception) {
-
-            Log.e("exception", e.message ?: "")
         }
-    }
 
 
     private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
