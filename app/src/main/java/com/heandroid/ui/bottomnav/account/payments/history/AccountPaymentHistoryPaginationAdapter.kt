@@ -1,4 +1,4 @@
-package com.heandroid.ui.bottomnav.account.payments.accountpaymenthistory
+package com.heandroid.ui.bottomnav.account.payments.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
