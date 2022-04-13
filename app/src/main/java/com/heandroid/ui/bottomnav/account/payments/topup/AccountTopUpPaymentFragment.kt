@@ -32,11 +32,9 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("create", "test")
     }
 
     override fun init() {
-        Log.e("init", "test")
         getThresholdAmount()
     }
 
