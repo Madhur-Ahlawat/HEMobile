@@ -17,6 +17,8 @@ object Constants {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
+    const val FILE_NAMES_KEY=" file_names_key"
+
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
         const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
