@@ -22,15 +22,11 @@ import com.heandroid.utils.extn.showToast
 
 
 @AndroidEntryPoint
-class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBinding>(),
-    View.OnClickListener {
+class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBinding>(), View.OnClickListener {
 
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

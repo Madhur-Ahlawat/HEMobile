@@ -69,10 +69,10 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
             loader?.dismiss()
             when(status){
                 is Resource.Success -> {
-                    if(status.data?.statusCode?.equals("500")==true){
-                      showError(binding.root,status.data.message)
-                    }else{
+                    if(status.data?.statusCode?.equals("0")==true){
                         findNavController().navigate(R.id.paymentMethodFragment)
+                    }else{
+                        showError(binding.root,status.data?.message)
                     }
                 }
                 is Resource.DataError -> { showError(binding.root,status.errorMsg)}
@@ -93,8 +93,8 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
                             var data=status.data.personalInformation
                             binding.model?.run {
                                 city=data?.city
-                                addressLine1=/*data?.addressLine1*/"SS"
-                                addressLine2=/*data?.addressLine2*/"SA"
+                                addressLine1=data?.addressLine1
+                                addressLine2=data?.addressLine2
                                 country=data?.country
                                 state=data?.state
                                 zipcode1=data?.zipcode

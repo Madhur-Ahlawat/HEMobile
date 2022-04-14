@@ -6,12 +6,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PaymentWithExistingCardModel(
-    val addressline1: String?="",
-    val addressline2: String?="",
+    var addressline1: String?="",
+    var addressline2: String?="",
     val cardNumber: String?,
     val cardType: String?,
-    val city: String?="",
-    val country: String?="",
+    var city: String?="",
+    var country: String?="",
     val cvv: String?,
     val easyPay: String?,
     val firstName: String?,
@@ -22,10 +22,10 @@ data class PaymentWithExistingCardModel(
     val primaryCard: String?,
     val rowId: String?,
     val saveCard: String?,
-    val state: String?="",
+    var state: String?="",
     val useAddressCheck: String?="N",
-    val zipcode1: String?="",
-    val zipcode2: String?="",
+    var zipcode1: String?="",
+    var zipcode2: String?="",
     val transactionAmount: String?
 ) : Parcelable
 

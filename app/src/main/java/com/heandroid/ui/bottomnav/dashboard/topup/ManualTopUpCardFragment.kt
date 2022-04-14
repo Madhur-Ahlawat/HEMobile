@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.heandroid.R
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.payment.*
+import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentManualTopUpCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.account.payments.method.PaymentCardAdapter
@@ -74,7 +75,6 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
         lifecycleScope.launch {
             observe(paymentViewModel.savedCardList,::handleSaveCardResponse)
             observe(manualTopUpViewModel.paymentWithExistingCard,::handlePaymentWithExistingCardResponse)
-
         }
     }
 
@@ -94,16 +94,15 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
                     else -> {
                         loader?.show(requireActivity().supportFragmentManager,"")
                         val model=PaymentWithExistingCardModel(transactionAmount = arguments?.getString("amount"), cardType = "",
-                                                               cardNumber = "", cvv = "", rowId = defaultCardModel?.rowId,
-                                                               saveCard = "", useAddressCheck = "N", firstName = defaultCardModel?.firstName,
-                                                               middleName = defaultCardModel?.middleName, lastName = defaultCardModel?.lastName,
-                                                               paymentType = "", primaryCard = "", maskedCardNumber = "", easyPay = "")
+                                                                cardNumber = "", cvv = "", rowId = defaultCardModel?.rowId,
+                                                                saveCard = "", useAddressCheck = "N", firstName = defaultCardModel?.firstName,
+                                                                middleName = defaultCardModel?.middleName, lastName = defaultCardModel?.lastName,
+                                                                paymentType = "", primaryCard = "", maskedCardNumber = "", easyPay = "")
                         manualTopUpViewModel.paymentWithExistingCard(model)
                     }
                 }
+                }
             }
-
-        }
     }
 
 
@@ -162,10 +161,6 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
         }catch (e: Exception){}
     }
 
-
-
-
-
     override fun invoke(check: Boolean?, position: Int?, model: CardListResponseModel?) {
         rowId=model?.rowId
         defaultCardModel=model
@@ -174,3 +169,5 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
         binding.rgPayment.clearCheck()
     }
 }
+
+

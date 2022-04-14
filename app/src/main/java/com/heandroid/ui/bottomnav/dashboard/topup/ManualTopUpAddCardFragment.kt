@@ -12,11 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.heandroid.R
+import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
+import com.heandroid.data.model.payment.CardListResponseModel
 import com.heandroid.data.model.payment.CardResponseModel
 import com.heandroid.data.model.payment.PaymentMethodDeleteResponseModel
+import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentPaymentMethodCardBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
@@ -37,10 +41,9 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     private var cardModel : PaymentWithNewCardModel?=null
     private val viewModel : ManualTopUpViewModel by viewModels()
-
+    private val paymentViewModel : PaymentMethodViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPaymentMethodCardBinding.inflate(inflater,container,false)
-
 
 
     override fun init() {
@@ -62,14 +65,14 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     override fun observer() {
         observe(viewModel.paymentWithNewCard,::handlePaymentWithNewCardResponse)
+        observe(paymentViewModel.accountDetail,::handleAccountDetailResponse)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAdd -> {
                 loader?.show(requireActivity().supportFragmentManager,"")
-                viewModel.paymentWithNewCard(cardModel)
-
+                paymentViewModel.accountDetail()
             }
 
             R.id.btnCancel ->{ requireActivity().onBackPressed() }
@@ -156,6 +159,40 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                 is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
             }
         }catch (e: Exception){}
+    }
+
+
+    private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?){
+        try {
+            when(status){
+                is  Resource.Success -> {
+                    status.data?.run {
+                        if(status?.equals("500")){
+                            loader?.dismiss()
+                            showError(binding.root,message)
+                        }
+                        else {
+                            var data=status.data.personalInformation
+                            cardModel?.run {
+                                city=data?.city
+                                addressline1=data?.addressLine1
+                                addressline2=data?.addressLine2
+                                country=data?.country
+                                state=data?.state?:""
+                                zipcode1=data?.zipcode?:""
+                                zipcode2=""
+                            }
+                            viewModel.paymentWithNewCard(cardModel)
+                        }
+                    }
+                   }
+
+                    is  Resource.DataError ->{
+                        loader?.dismiss()
+                        showError(binding.root,status.errorMsg) }
+                }
+            }
+           catch (e: Exception){}
     }
 
 

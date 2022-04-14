@@ -75,10 +75,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
             R.id.btnAction -> {
                 val bundle = Bundle().apply {
-                    putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                    putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
                 }
                 findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
-
             }
             R.id.btnFindAddress -> {
                 if(binding.tiePostCode.length()>0) {
@@ -98,6 +97,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             loader?.dismiss()
             when (response) {
                 is Resource.Success -> {
+
                     addressList.clear()
                     mainList= response.data?.toMutableList()?:ArrayList()
                     addressList?.add(0,"Select Address")
@@ -126,6 +126,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                                 model?.city=null
                                 model?.stateType=null
                                 enable = true
+                                model?.zipCode1=binding.tiePostCode.text.toString()
                             }
                         }
 

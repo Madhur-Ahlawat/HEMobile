@@ -119,6 +119,10 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                         binding.viewDefault.gone()
                     }
                     else {
+
+                        binding.tvDefaultLabel.visible()
+                        binding.rbDefaultMethod.visible()
+                        binding.viewDefault.visible()
                         val spannableString = if(defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType+"\n"+ defaultCardModel?.bankAccountNumber)
                         else SpannableString(defaultCardModel?.cardType+"\n"+ defaultCardModel?.cardNumber)
                         spannableString?.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -238,6 +242,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
             binding.btnAdd.gone()
             binding.btnDelete.visible()
         }
+
         else {
             binding.btnDelete.gone()
             binding.btnDefault.gone()
