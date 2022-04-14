@@ -99,7 +99,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_payment_history.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_payment_methods.xml" value="0.2" />
-        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_topup_payment.xml" value="0.17962962962962964" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_topup_payment.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_choose_option.xml" value="0.10666666666666667" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_card.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_choose_payment.xml" value="0.2" />
@@ -114,7 +114,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_postcode.xml" value="0.12" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_setup_prepay.xml" value="0.22" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_successful.xml" value="0.17962962962962964" />
-        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_top_up.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_top_up.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_type.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_vehicle_details.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_vehicle_payment.xml" value="0.2" />

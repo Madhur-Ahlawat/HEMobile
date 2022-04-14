@@ -148,6 +148,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 binding.tieCVV.setText("***")
 
 
+
+                // NMI we are no
                 model?.cardStateType="HE"
                 model?.cardCity="GUILDFORD"
                 model?.cardZipCode="GU1 4LZ"
