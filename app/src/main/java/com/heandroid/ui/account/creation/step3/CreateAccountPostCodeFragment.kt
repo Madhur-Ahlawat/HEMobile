@@ -118,6 +118,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
                         btnFindAddress.gone()
                         tilAddress.visible()
+                        model?.zipCode1=binding.tiePostCode.text.toString()
 
 
                         when(model?.planType) {
@@ -126,7 +127,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                                 model?.city=null
                                 model?.stateType=null
                                 enable = true
-                                model?.zipCode1=binding.tiePostCode.text.toString()
                             }
                         }
 
