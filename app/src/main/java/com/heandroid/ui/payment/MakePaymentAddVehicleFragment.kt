@@ -1,10 +1,12 @@
 package com.heandroid.ui.payment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.persistableBundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +22,10 @@ import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 
 @AndroidEntryPoint
 class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicleBinding>(),
@@ -48,18 +53,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
-        if (vehicleList?.isEmpty() == true || vehicleList?.size == 0) {
-            binding.apply {
-                rvVehiclesList.visibility = View.GONE
-                noVehiclesAdded.visibility = View.VISIBLE
-                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
-            }
-            setBtnDisabled()
-            setAddBtnActivated()
-        }
-        //else {
-        //    setAdapter()
-        //}
 
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
         createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
@@ -97,27 +90,55 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.findVehicle -> {
-                if(isAccountVehicle == true){
-                   // loader?.show(requireActivity().supportFragmentManager, "")
-                    val bundle =  Bundle()
+                if (isAccountVehicle == true) {
+                    // loader?.show(requireActivity().supportFragmentManager, "")
+                    val bundle = Bundle()
                     bundle.putBoolean("IsAccountVehicle", true)
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+                    )
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.DATA)
+                    )
 
-                    findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment, bundle)
-                } else if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
-                    val bundle =  Bundle()
+                    findNavController().navigate(
+                        R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment,
+                        bundle
+                    )
+                } else if (createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true) {
+                    val bundle = Bundle()
                     bundle.putBoolean("isNonUKVehicleUpdating", true)
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
-                    findNavController().navigate(R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment, bundle)
+                    bundle.putParcelable(
+                        Constants.CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+                    )
+                    findNavController().navigate(
+                        R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment,
+                        bundle
+                    )
+                }else{
+                    val bundle = Bundle()
+                    bundle.putBoolean("IsAccountVehicle", false)
+                    bundle.putParcelableArrayList(
+                        Constants.DATA,
+                        ArrayList(vehicleList)
+                    )
+
+                    findNavController().navigate(
+                        R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
+                        bundle
+                    )
+
                 }
             }
         }
     }
 
     private fun setAdapter(isAccountVehicle: Boolean? = false, vehicle: String? = "UK") {
-        binding.rvVehiclesList.visibility = View.VISIBLE
-        binding.noVehiclesAdded.visibility = View.GONE
-        binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+
+        hideAndShowRecyclerView()
 
         if (isAccountVehicle == true && vehicle == "UK") {
             val vehicleNo = arguments?.getString("VehicleNo")
@@ -127,6 +148,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             val vehicleRes = VehicleResponse(PlateInfoResponse(),plateRes, VehicleInfoResponse(), false, 0, 0.0 )
             if(vehicleList?.contains(vehicleRes)==false)
             vehicleList?.add(vehicleRes)
+            hideAndShowRecyclerView()
             mAdapter.setList(vehicleList)
             mAdapter.notifyDataSetChanged()
         }
@@ -161,12 +183,35 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
+    private fun hideAndShowRecyclerView() {
+        if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
+            binding.apply {
+                Logg.logging("MakePayMent", " calling inside ")
+
+                rvVehiclesList.gone()
+                noVehiclesAdded.visible()
+                addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
+            }
+            setBtnDisabled()
+            setAddBtnActivated()
+        } else {
+            binding.rvVehiclesList.visibility = View.VISIBLE
+            binding.noVehiclesAdded.visibility = View.GONE
+            binding.addVehiclesTxt.text = requireContext().getString(R.string.txt_your_vehicle)
+
+        }
+    }
+
     override fun onAddClick(details: VehicleResponse) {
         addDialog?.dismiss()
         when {
             details.plateInfo?.country == Constants.UK -> {
                 vehicleList?.add(details)
-                setAdapter(true)
+
+                if (isFromOneOfPayment == true)
+                    setAdapter(false)
+                else
+                    setAdapter(true)
             }
 
             isFromOneOfPayment == true -> {
@@ -209,7 +254,21 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
-    override fun onItemClick(details: VehicleResponse?, pos: Int) { }
+    override fun onItemClick(details: VehicleResponse?, pos: Int) {
+        val bundle = Bundle()
+        bundle.putBoolean("IsAccountVehicle", false)
+        bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+        bundle.putParcelable(
+            Constants.DATA,
+            details
+        )
+
+        findNavController().navigate(
+            R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
+            bundle
+        )
+
+    }
 
     private fun setBtnActivated() {
         binding.findButton = true

@@ -22,7 +22,25 @@ class CreateAccountVehicleViewModel @Inject constructor(private val repo: Create
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
 
-    suspend fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
+    fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
+        viewModelScope.async {
+            try {
+                findVehicleMutData.setValue(
+                    ResponseHandler.success(
+                        repo.getVehicleDetail(
+                            vehicleNumber,
+                            agencyId
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                findVehicleMutData.setValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+}
+
+  /* suspend fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.async {
             try {
                 findVehicleMutData.setValue(ResponseHandler.success(repo.getVehicleDetail(vehicleNumber, agencyId), errorManager))
@@ -32,5 +50,4 @@ class CreateAccountVehicleViewModel @Inject constructor(private val repo: Create
                 return@async
             }
         }
-    }
-}
+    }*/

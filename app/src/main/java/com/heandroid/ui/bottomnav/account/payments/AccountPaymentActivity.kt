@@ -2,6 +2,7 @@ package com.heandroid.ui.bottomnav.account.payments
 
 import android.view.View
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.data.model.payment.PaymentScreenModel
 import com.heandroid.databinding.ActivityAccountPaymentBinding
@@ -15,39 +16,42 @@ import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.customToolbar
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.toolbar
+import com.heandroid.utils.extn.visible
 import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), LogoutListener, View.OnClickListener {
+class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), LogoutListener,
+    View.OnClickListener {
 
     private lateinit var binding: ActivityAccountPaymentBinding
 
     @Inject
     lateinit var sessionManager: SessionManager
 
-    override fun observeViewModel() {
-    }
+    override fun observeViewModel() {}
 
     override fun onStart() {
         super.onStart()
-        loadsession()
+        loadSession()
     }
 
     override fun initViewBinding() {
         binding = ActivityAccountPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         customToolbar(getString(R.string.str_payment))
-        binding.model= PaymentScreenModel(history = true, method = false, topUp = false)
-        toolbar(getString(R.string.str_payment))
+        binding.model = PaymentScreenModel(history = true, method = false, topUp = false)
         initCtrl()
     }
 
 
     private fun initCtrl() {
         binding.apply {
+            toolbar.backButton.setOnClickListener {
+                onBackPressed()
+            }
             tvPaymentHistory.setOnClickListener(this@AccountPaymentActivity)
             tvPaymentMethod.setOnClickListener(this@AccountPaymentActivity)
             tvTopUp.setOnClickListener(this@AccountPaymentActivity)
@@ -57,11 +61,11 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        loadsession()
+        loadSession()
     }
 
 
-    private fun loadsession() {
+    private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
@@ -72,25 +76,43 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.tvPaymentHistory -> { binding.model= PaymentScreenModel(history = true, method = false, topUp = false)
-                                       loadStartDestination(PAYMENT_HISTORY)  }
-            R.id.tvPaymentMethod  -> { binding.model=PaymentScreenModel(history = false, method = true, topUp = false)
-                                       loadStartDestination(PAYMENT_METHOD)  }
-            R.id.tvTopUp ->         { binding.model=PaymentScreenModel(history = false, method = false, topUp = true)
-                                      loadStartDestination(PAYMENT_TOP_UP)  }
+        when (v?.id) {
+            R.id.tvPaymentHistory -> {
+                binding.model = PaymentScreenModel(history = true, method = false, topUp = false)
+                loadStartDestination(PAYMENT_HISTORY)
+            }
+            R.id.tvPaymentMethod -> {
+                binding.model = PaymentScreenModel(history = false, method = true, topUp = false)
+                loadStartDestination(PAYMENT_METHOD)
+            }
+            R.id.tvTopUp -> {
+                binding.model = PaymentScreenModel(history = false, method = false, topUp = true)
+                loadStartDestination(PAYMENT_TOP_UP)
+            }
         }
     }
 
     private fun loadStartDestination(type: String?) {
-       val navController= Navigation.findNavController(this,R.id.fragmentContainerPayment)
-       val oldGraph= navController.graph
-        when(type){
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerPayment) as NavHostFragment
+//        val navController = navHostFragment.navController
+        val navController = Navigation.findNavController(this, R.id.fragmentContainerPayment)
+        val oldGraph = navController.graph
+        when (type) {
             PAYMENT_HISTORY -> oldGraph.startDestination = R.id.accountPaymentHistoryFragment
-            PAYMENT_METHOD ->  oldGraph.startDestination = R.id.paymentMethodFragment
-            PAYMENT_TOP_UP ->  oldGraph.startDestination  = R.id.paymentTopUpFragment
-       }
+            PAYMENT_METHOD -> oldGraph.startDestination = R.id.paymentMethodFragment
+            PAYMENT_TOP_UP -> oldGraph.startDestination = R.id.paymentTopUpFragment
+        }
         navController.graph = oldGraph
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.accountPaymentHistoryItemDetailFragment -> {
+                    binding.tabLikeButtonsLayout.gone()
+                }
+                else -> {
+                    binding.tabLikeButtonsLayout.visible()
+                }
+            }
+        }
     }
 
 }

@@ -54,6 +54,18 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             "NewCaseSummeryFragment",
             "bundle data  sub comments ${arguments?.getString(Constants.CASE_COMMENTS_KEY)}"
         )
+        Logg.logging(
+            "NewCaseSummeryFragment",
+            "string arraylist ${arguments?.getStringArrayList(Constants.FILE_NAMES_KEY)}"
+        )
+
+        val mTempList = arguments?.getStringArrayList(Constants.FILE_NAMES_KEY) as ArrayList<String>
+        mList.addAll(mTempList)
+
+        Logg.logging(
+            "NewCaseSummeryFragment",
+            "string mList $mList"
+        )
 
     }
 
@@ -110,6 +122,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
         when (it?.id) {
 
             R.id.btnNext -> {
+
                 val mModel =
                     arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
                 val mCat = arguments?.getString(Constants.CASES_CATEGORY)

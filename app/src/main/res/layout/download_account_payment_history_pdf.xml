@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="data"
             type="com.heandroid.data.model.accountpayment.TransactionData" />
@@ -17,21 +18,20 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:background="@color/color_EFEFEF"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/color_EFEFEF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@color/color_EFEFEF"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +43,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginVertical="@dimen/_7sdp"
-                        android:text="@string/your_payment"
+                        android:gravity="center_horizontal"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/your_payment_receipt"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_16ssp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -224,45 +226,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:background="@color/color_EFEFEF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/downloadReceiptBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:backgroundTint="@color/green"
-                android:text="@string/download_recei"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_14ssp"
-                app:cornerRadius="@dimen/_4sdp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/backBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:includeFontPadding="true"
-                android:text="@string/str_close"
-                android:textAllCaps="false"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_16ssp"
-                app:strokeColor="@color/green" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp"/>
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

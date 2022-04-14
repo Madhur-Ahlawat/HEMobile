@@ -91,6 +91,8 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             is Resource.Success -> {
                 resource.data?.let {
                     checkUploadedFile(it.originalFileName)
+                    mList.add(it.fileName!!)
+
                 }
             }
             is Resource.DataError -> {
@@ -103,6 +105,7 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     private fun checkUploadedFile(originalFileName: String?) {
         file1?.let {
             if (it.name.equals(originalFileName, true)) {
+
                 binding.loader1.gone()
                 binding.success1.visible()
             }
@@ -126,11 +129,13 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             }
         }
     }
+    private val mList = mutableListOf<String>()
 
     override fun onClick(it: View?) {
 
         when (it?.id) {
             R.id.btnNext -> {
+                arguments?.putStringArrayList(Constants.FILE_NAMES_KEY,ArrayList(mList))
                 if (binding.tfDescriptionInput.text.toString().isNotEmpty()) {
                     findNavController().navigate(
                         R.id.action_NewCaseCommentsFragment_to_NewCaseSummeryFragment,
