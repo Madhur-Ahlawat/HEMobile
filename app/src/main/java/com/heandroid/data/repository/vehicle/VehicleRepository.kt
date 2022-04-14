@@ -1,7 +1,7 @@
 package com.heandroid.data.repository.vehicle
 
 
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -19,7 +19,7 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest?) =
         apiService.getVehicleCrossingHistoryData(requestParam)
 
-    suspend fun downloadCrossingHistoryAPiCall(requestParam: CrossingHistoryDownloadRequest) =
+    suspend fun downloadCrossingHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest) =
         apiService.getDownloadTransactionListDataInFile(requestParam)
 
     suspend fun getVehicleListApiCall() = apiService.getVehicleData()

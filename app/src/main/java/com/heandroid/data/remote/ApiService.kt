@@ -21,7 +21,7 @@ import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
@@ -103,7 +103,7 @@ interface ApiService {
 
     @Streaming
     @POST(DOWNLOAD_TRANSACTION)
-    suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest?): Response<ResponseBody?>?
+    suspend fun getDownloadTransactionListDataInFile(@Body request: TransactionHistoryDownloadRequest?): Response<ResponseBody?>?
 
 
     @POST(CREATE_SECONDARY_ACCOUNT)

@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionData
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
+import com.heandroid.data.model.payment.PaymentDateRangeModel
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
@@ -27,26 +30,37 @@ import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 
 @AndroidEntryPoint
-class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(), View.OnClickListener, DownloadFilterDialogListener {
+class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(),
+    View.OnClickListener, DownloadFilterDialogListener, AccountPaymentHistoryFilterListener {
 
     private val viewModel: AccountPaymentHistoryViewModel by viewModels()
     private var listData: MutableList<TransactionData?> = ArrayList()
     private var paymentHistoryAdapter: AccountPaymentHistoryAdapter? = null
     private var paginationNumberAdapter: AccountPaymentHistoryPaginationAdapter? = null
     private var paginationLinearLayoutManager: LinearLayoutManager? = null
+    private var dateRangeModel: PaymentDateRangeModel? =
+        PaymentDateRangeModel(filterType = Constants.PAYMENT_FILTER_SPECIFIC, null, null, null)
+    private var selectionType: String = Constants.PDF
     private val countPerPage = 10
     private var startIndex = 1
     private var noOfPages = 1
     private var selectedPosition = 1
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, listData)
-        paginationNumberAdapter = AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
+        paginationNumberAdapter =
+            AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
         getDataForPage(startIndex)
     }
 
@@ -57,7 +71,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         binding.paymentRecycleView.gone()
         binding.paginationLayout.gone()
         binding.tvNoHistory.gone()
-        paginationLinearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        paginationLinearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.paymentRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentHistoryAdapter
@@ -99,12 +114,16 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 }
             }
             R.id.tvFilter -> {
-                findNavController().navigate(R.id.action_accountPaymentHistoryFragment_to_accountPaymentHistoryFilterFragment)
+                AccountPaymentHistoryFilterDialog.newInstance(
+                    getString(R.string.str_title),
+                    getString(R.string.str_sub_title),
+                    this
+                ).show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.previousBtn -> {
                 if (selectedPosition >= 2) {
                     binding.nextBtnModel = true
-                    selectedPosition --
+                    selectedPosition--
                     paginationNumberAdapter?.apply {
                         setSelectedPosit(selectedPosition)
                     }
@@ -122,7 +141,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             R.id.nextBtn -> {
                 if (selectedPosition < noOfPages) {
                     binding.prevBtnModel = true
-                    selectedPosition ++
+                    selectedPosition++
                     paginationNumberAdapter?.apply {
                         setSelectedPosit(selectedPosition)
                     }
@@ -142,7 +161,9 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
 
     override fun observer() {
         observe(viewModel.paymentHistoryLiveData, ::handlePaymentResponse)
+        observe(viewModel.paymentHistoryDownloadVal, ::handleDownloadPaymentHistoryData)
     }
+
 
     private fun getDataForPage(index: Int) {
         val request = AccountPaymentHistoryRequest(index, Constants.PAYMENT, countPerPage)
@@ -190,6 +211,47 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         }
     }
 
+    private fun handleDownloadPaymentHistoryData(resource: Resource<ResponseBody?>?) {
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    callCoroutines(resource.data)
+                }
+            }
+            is Resource.DataError -> {
+                requireContext().showToast("failed to download the document")
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun callCoroutines(body: ResponseBody) {
+        lifecycleScope.launch(Dispatchers.IO) {
+
+            val ret = async {
+                return@async return@async StorageHelper.writeResponseBodyToDisk(
+                    requireActivity(),
+                    selectionType,
+                    body
+                )
+            }.await()
+
+            if (ret) {
+                withContext(Dispatchers.Main) {
+                    binding.progressBar.visibility = View.GONE
+                    requireActivity().showToast("Document downloaded successfully")
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    binding.progressBar.visibility = View.GONE
+                    requireActivity().showToast("Document download failed")
+                }
+            }
+        }
+    }
+
     fun setSelectedPosition(pos: Int) {
         if (selectedPosition != pos) {
             selectedPosition = pos
@@ -209,8 +271,12 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun scrollToPosition() {
-        val lastPos = (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() + 1
-        val firstPos = (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition() + 1
+        val lastPos =
+            (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager)
+                .findLastCompletelyVisibleItemPosition() + 1
+        val firstPos =
+            (binding.paginationNumberRecyclerView.layoutManager as LinearLayoutManager)
+                .findFirstCompletelyVisibleItemPosition() + 1
         if (selectedPosition > lastPos) {
             binding.paginationNumberRecyclerView.scrollToPosition(selectedPosition - 1)
         }
@@ -219,12 +285,31 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         }
     }
 
-    override fun onOkClickedListener(type: String) {
+    override fun onApplyFilterClick(vehicleName: String?, startDate: String?, endDate: String?) {
 
     }
 
-    override fun onCancelClicked() {
+    override fun onOkClickedListener(type: String) {
+        selectionType = type
+        downloadPaymentHistory()
+    }
 
+    override fun onCancelClicked() {}
+
+    private fun downloadPaymentHistory() {
+        val downloadRequest = loadDownloadRequest()
+        requireContext().showToast("Document download started")
+        viewModel.downloadPaymentHistoryApiCall(downloadRequest)
+    }
+
+    private fun loadDownloadRequest(): TransactionHistoryDownloadRequest {
+        return TransactionHistoryDownloadRequest().apply {
+            startIndex = "1"
+            downloadType = selectionType
+            transactionType = Constants.PAYMENT
+            startDate = dateRangeModel?.startDate//"11/01/2021" mm/dd/yyyy
+            endDate = dateRangeModel?.endDate //"11/30/2021" mm/dd/yyyy
+        }
     }
 
     private var onScopeResultLauncher =
@@ -234,13 +319,21 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             }
         }
 
-
-    private var onPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+    private var onPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             var permission = true
-            permissions.entries.forEach { if (!it.value) { permission = it.value } }
+            permissions.entries.forEach {
+                if (!it.value) {
+                    permission = it.value
+                }
+            }
             when (permission) {
-                true -> { binding.tvDownload.performClick() }
-                else -> { requireActivity().showToast("Please enable permission to download") }
+                true -> {
+                    binding.tvDownload.performClick()
+                }
+                else -> {
+                    requireActivity().showToast("Please enable permission to download")
+                }
             }
         }
 }

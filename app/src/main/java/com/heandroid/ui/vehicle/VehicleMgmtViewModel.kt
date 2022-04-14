@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -93,7 +93,7 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
         }
     }
 
-    fun downloadCrossingHistoryApiCall(request: CrossingHistoryDownloadRequest) {
+    fun downloadCrossingHistoryApiCall(request: TransactionHistoryDownloadRequest) {
         viewModelScope.launch {
             try {
                 _crossingHistoryDownloadVal.postValue(

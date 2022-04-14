@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DateRangeModel
@@ -304,10 +303,10 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     override fun onCancelClicked() {}
 
-    private fun loadDownloadRequest(): CrossingHistoryDownloadRequest {
+    private fun loadDownloadRequest(): TransactionHistoryDownloadRequest {
         return when (dateRangeModel?.type) {
             Constants.TOLL_TRANSACTION -> {
-                CrossingHistoryDownloadRequest().apply {
+                TransactionHistoryDownloadRequest().apply {
                     startIndex = startOne
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: ""
@@ -317,7 +316,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 }
             }
             else -> {
-                CrossingHistoryDownloadRequest().apply {
+                TransactionHistoryDownloadRequest().apply {
                     startIndex = startOne
                     downloadType = selectionType
                     transactionType = dateRangeModel?.type ?: Constants.ALL_TRANSACTION
