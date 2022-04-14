@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.FragmentProfilePasswordSuccessfulBinding
 import com.heandroid.ui.auth.controller.AuthActivity
@@ -16,16 +17,25 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfilePasswordSuccessfulFragment : BaseFragment<FragmentProfilePasswordSuccessfulBinding>(), View.OnClickListener {
+class ProfilePasswordSuccessfulFragment : BaseFragment<FragmentProfilePasswordSuccessfulBinding>(),
+    View.OnClickListener {
 
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
+    private var updatePinFlow = false
 
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)= FragmentProfilePasswordSuccessfulBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfilePasswordSuccessfulBinding.inflate(inflater, container, false)
+
     override fun init() {
         requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
-        binding.data=arguments?.getParcelable(Constants.DATA)
+        binding.data = arguments?.getParcelable(Constants.DATA)
+        updatePinFlow = arguments?.getBoolean(Constants.UPDATE_PIN_FLOW, false) == true
+        if (updatePinFlow) {
+            binding.tvVerification.text = getString(R.string.update_pin_success)
+            binding.btnLogin.text = getString(R.string.str_account_summary)
+        }
     }
 
     override fun initCtrl() {
@@ -36,11 +46,15 @@ class ProfilePasswordSuccessfulFragment : BaseFragment<FragmentProfilePasswordSu
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnLogin ->{
-                sessionManager.clearAll()
-                requireActivity().finish()
-                requireActivity().startNormalActivity(AuthActivity::class.java)
+        when (v?.id) {
+            R.id.btnLogin -> {
+                if (updatePinFlow) {
+                    findNavController().navigate(R.id.action_updatePasswordSuccessfulFragment_to_viewProfile)
+                } else {
+                    sessionManager.clearAll()
+                    requireActivity().finish()
+                    requireActivity().startNormalActivity(AuthActivity::class.java)
+                }
             }
         }
     }

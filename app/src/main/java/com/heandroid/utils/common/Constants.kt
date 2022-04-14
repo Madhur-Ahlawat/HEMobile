@@ -119,5 +119,6 @@ object Constants {
     const val PAYMENT_FILTER_VEHICLE = "Payment_filter_with_vehicle_number"
     const val PAYMENT_FILTER_SPECIFIC = "Payment_filter_with_specified_date"
     const val PAYMENT_DATE_RANGE = "Payment_filter_with_date_range"
+    const val UPDATE_PIN_FLOW = "update pin flow"
 
 }

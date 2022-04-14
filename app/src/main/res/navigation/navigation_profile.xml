@@ -71,6 +71,9 @@
         android:name="com.heandroid.ui.account.profile.pin.ProfilePinFragment"
         tools:layout="@layout/fragment_profile_pin">
 
+        <action
+            android:id="@+id/action_pinFragment_to_updatePasswordSuccessfulFragment"
+            app:destination="@id/updatePasswordSuccessfulFragment" />
     </fragment>
 
 
@@ -114,7 +117,13 @@
     <fragment
         android:id="@+id/updatePasswordSuccessfulFragment"
         android:name="com.heandroid.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
-        tools:layout="@layout/fragment_profile_password_successful"/>
+        tools:layout="@layout/fragment_profile_password_successful">
+        <action
+            android:id="@+id/action_updatePasswordSuccessfulFragment_to_viewProfile"
+            app:destination="@id/viewProfile"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/viewProfile"/>
+    </fragment>
 
 
 </navigation>

@@ -688,5 +688,7 @@
     <string name="specific_date">Specific date</string>
     <string name="date_rang">Date range</string>
     <string name="str_clear_underlined"><u>Clear</u></string>
+    <string name="update_password_success">Password has been updated successfully</string>
+    <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
 </resources>
 

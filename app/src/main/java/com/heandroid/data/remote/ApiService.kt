@@ -28,10 +28,7 @@ import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.payment.*
-import com.heandroid.data.model.profile.ProfileDetailModel
-import com.heandroid.data.model.profile.ProfileUpdateEmailModel
-import com.heandroid.data.model.profile.UpdateAccountPassword
-import com.heandroid.data.model.profile.UpdatePasswordResponseModel
+import com.heandroid.data.model.profile.*
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -243,5 +240,8 @@ interface ApiService {
 
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
+
+    @PUT(ACCOUNT_PIN)
+    suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
 
 }
