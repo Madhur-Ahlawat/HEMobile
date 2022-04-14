@@ -1,5 +1,6 @@
 package com.heandroid.ui.bottomnav.account.payments.history
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.pdf.PdfDocument
@@ -8,13 +9,17 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AccountPaymentHistoryItemDetailBinding
 import com.heandroid.databinding.DownloadAccountPaymentHistoryPdfBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.DateUtils
+import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.showToast
 import java.io.File
@@ -47,7 +52,15 @@ class AccountPaymentHistoryItemDetailFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.downloadReceiptBtn -> {
-                generatePaymentReceipt()
+                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+                    StorageHelper.requestStoragePermission(
+                        requireActivity(),
+                        onScopeResultLaucher = onScopeResultLauncher,
+                        onPermissionlaucher = onPermissionLauncher
+                    )
+                } else {
+                    generatePaymentReceipt()
+                }
             }
             R.id.backBtn -> {
                 findNavController().popBackStack()
@@ -112,5 +125,22 @@ class AccountPaymentHistoryItemDetailFragment :
         pdfDocument.close()
         activity?.showToast("Payment receipt downloaded successfully")
 
+    }
+
+    private var onScopeResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                binding.downloadReceiptBtn.performClick()
+            }
+        }
+
+
+    private var onPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        var permission = true
+        permissions.entries.forEach { if (!it.value) { permission = it.value } }
+        when (permission) {
+            true -> { binding.downloadReceiptBtn.performClick() }
+            else -> { requireActivity().showToast("Please enable permission to download") }
+        }
     }
 }

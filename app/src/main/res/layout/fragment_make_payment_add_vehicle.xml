@@ -62,7 +62,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_vehicles_txt" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/add_upto_five_vehicles"
             android:layout_width="match_parent"
