@@ -673,7 +673,7 @@
     <string name="payment_top_up">Payment top-up</string>
     <string name="payment_top_up_contents">The top-up and minimum amount can be changed by clicking on one of the below button. We have suggested an amount based on your account history data related to the crossing</string>
     <string name="str_auto_top_up_my_account">Auto top-up my account by</string>
-    <string name="suggested_amount">Suggested amount £50.00</string>
+    <string name="suggested_amount">Suggested amount £</string>
     <string name="account_falls">When my account top-up falls below</string>
     <string name="enter_amount">Enter amount</string>
     <string name="str_update">Update</string>

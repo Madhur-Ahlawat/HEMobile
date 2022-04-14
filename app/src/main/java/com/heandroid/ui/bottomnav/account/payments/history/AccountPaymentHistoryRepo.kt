@@ -10,7 +10,7 @@ class AccountPaymentHistoryRepo @Inject constructor(private val apiService: ApiS
     suspend fun getAccountPayment(requestParam: AccountPaymentHistoryRequest?) =
         apiService.getPaymentHistoryData(requestParam)
 
-    suspend fun getThresholdAmount() = apiService.getThresholdValue()
+    suspend fun getThresholdAmount() = apiService.getThresholdValuePayment()
     suspend fun updateThresholdAmount(requestParam: AccountTopUpUpdateThresholdRequest?) =
         apiService.updateThresholdValue(requestParam)
 

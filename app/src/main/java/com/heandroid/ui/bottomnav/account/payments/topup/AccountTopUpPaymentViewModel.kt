@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.accountpayment.AccountGetThresholdResponse
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.ui.base.BaseViewModel
@@ -17,8 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountTopUpPaymentViewModel @Inject constructor(private val repo: AccountPaymentHistoryRepo) : BaseViewModel(){
 
-    private val thresholdMutLiveData = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
-    val thresholdLiveData: LiveData<Resource<ThresholdAmountApiResponse?>?> get() = thresholdMutLiveData
+    private val thresholdMutLiveData = MutableLiveData<Resource<AccountGetThresholdResponse?>?>()
+    val thresholdLiveData: LiveData<Resource<AccountGetThresholdResponse?>?> get() = thresholdMutLiveData
 
     private val updateAmountMutLiveData = MutableLiveData<Resource<AccountTopUpUpdateThresholdResponse?>?>()
     val updateAmountLiveData: LiveData<Resource<AccountTopUpUpdateThresholdResponse?>?> get() = updateAmountMutLiveData

@@ -6,10 +6,7 @@ import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
-import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
-import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
-import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
+import com.heandroid.data.model.accountpayment.*
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
@@ -237,6 +234,9 @@ interface ApiService {
     @POST(PAYMENT_WITH_EXISTING_CARD)
     suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                         @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
+    @GET(VIEW_ACCOUNT_BALANCE)
+    suspend fun getThresholdValuePayment() :Response<AccountGetThresholdResponse?>?
 
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
