@@ -164,11 +164,13 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?){
         try {
+            loader?.dismiss()
+            loader?.show(requireActivity().supportFragmentManager,"")
+
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
                         if(status?.equals("500")){
-                            loader?.dismiss()
                             showError(binding.root,message)
                         }
                         else {
@@ -187,9 +189,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                     }
                    }
 
-                    is  Resource.DataError ->{
-                        loader?.dismiss()
-                        showError(binding.root,status.errorMsg) }
+                    is  Resource.DataError ->{ showError(binding.root,status.errorMsg) }
                 }
             }
            catch (e: Exception){}

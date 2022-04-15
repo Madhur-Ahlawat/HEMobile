@@ -84,6 +84,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_home_main.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_in_progress.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_login.xml" value="0.15648148148148147" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_make_off_payment.xml" value="0.16209371042634022" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_manual_top_up.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_nominated_contacts.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/activity_profile.xml" value="0.2" />
@@ -100,6 +101,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_payment_history.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_payment_methods.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_account_topup_payment.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_add_vehicle_done.xml" value="0.16417272338606242" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_choose_option.xml" value="0.10666666666666667" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_card.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_create_account_choose_payment.xml" value="0.2" />
@@ -132,13 +134,14 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_forgot_password_third.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_landing.xml" value="0.17962962962962964" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_login.xml" value="0.1925925925925926" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_card.xml" value="0.16209371042634022" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_confirmation.xml" value="0.17962962962962964" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_receipt.xml" value="0.17962962962962964" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_successful.xml" value="0.22" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_payment_add_vehicle.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_manual_top_up.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_manual_top_up_card.xml" value="0.13333333333333333" />
-        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_manual_top_up_successful.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_manual_top_up_successful.xml" value="0.6" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_no_nomiated_contact.xml" value="0.22" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_contact_active.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_contact_invited.xml" value="0.2" />
@@ -170,6 +173,7 @@
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_start_now.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_update_password.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_update_postcode.xml" value="0.2" />
+        <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_vehicle.xml" value="0.16209371042634022" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_view_profile.xml" value="0.22" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/include_layout_nominate_contact.xml" value="0.2" />
         <entry key="..\:/Users/tanvir.ahmed/StudioProjects/HE-MAPP-Android/app/src/main/res/layout/include_nominated_contacts_list.xml" value="0.2" />

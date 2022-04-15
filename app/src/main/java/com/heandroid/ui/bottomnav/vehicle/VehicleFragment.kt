@@ -12,10 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class VehicleFragment : BaseFragment<FragmentVehicleBinding>() {
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentVehicleBinding = FragmentVehicleBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVehicleBinding = FragmentVehicleBinding.inflate(inflater, container, false)
 
     override fun init() { }
 
