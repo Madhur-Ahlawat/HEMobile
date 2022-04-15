@@ -144,7 +144,6 @@
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/str_amount"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"/>

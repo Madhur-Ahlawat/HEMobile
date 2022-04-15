@@ -201,13 +201,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun setAccountDetailsView(data: AccountResponse)
     {
         binding.apply{
-            tvAvailableBalance.text = data.replenishmentInformation.currentBalance
+            tvAvailableBalance.text = "£ "+data.replenishmentInformation.currentBalance
             tvAccountNumber.text = data.accountInformation.number
             tvAccountStatus.text =  data.accountInformation.accountStatus
             tvTopUpType.text = data.accountInformation.accountFinancialstatus
             tvAccountType.text =  data.accountInformation.type
             //tvAccountStatus.text =  data.accountInformation.type
-
         }
     }
 

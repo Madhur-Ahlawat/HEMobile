@@ -42,11 +42,13 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
     private var cardModel : PaymentWithNewCardModel?=null
     private val viewModel : ManualTopUpViewModel by viewModels()
     private val paymentViewModel : PaymentMethodViewModel by viewModels()
+    private var isAlready : Boolean =false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPaymentMethodCardBinding.inflate(inflater,container,false)
 
 
     override fun init() {
+        isAlready=false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager,"")
@@ -71,6 +73,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAdd -> {
+                isAlready=true
                 loader?.show(requireActivity().supportFragmentManager,"")
                 paymentViewModel.accountDetail()
             }
@@ -144,6 +147,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?){
         try {
+            isAlready=false
             loader?.dismiss()
             when(status){
                 is Resource.Success ->{
@@ -164,13 +168,12 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?){
         try {
-            loader?.dismiss()
-            loader?.show(requireActivity().supportFragmentManager,"")
-
+            if(!isAlready) return
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
                         if(status?.equals("500")){
+                            loader?.dismiss()
                             showError(binding.root,message)
                         }
                         else {
@@ -184,12 +187,16 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                                 zipcode1=data?.zipcode?:""
                                 zipcode2=""
                             }
+
                             viewModel.paymentWithNewCard(cardModel)
                         }
                     }
                    }
 
-                    is  Resource.DataError ->{ showError(binding.root,status.errorMsg) }
+                    is  Resource.DataError ->{
+                        loader?.dismiss()
+
+                        showError(binding.root,status.errorMsg) }
                 }
             }
            catch (e: Exception){}

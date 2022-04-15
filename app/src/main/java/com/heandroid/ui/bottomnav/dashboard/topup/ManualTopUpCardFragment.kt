@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,16 +51,12 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
     private var defaultCardModel: CardListResponseModel? =null
     private var defaultConstantCardModel: CardListResponseModel? =null
 
-   
-
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)= FragmentManualTopUpCardBinding.inflate(inflater, container, false)
-
-
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+
         paymentViewModel.saveCardList()
         binding.tieAmount.setText(arguments?.getString("amount"))
     }
@@ -76,13 +73,14 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
             observe(paymentViewModel.savedCardList,::handleSaveCardResponse)
             observe(manualTopUpViewModel.paymentWithExistingCard,::handlePaymentWithExistingCardResponse)
         }
+
+        loader?.show(requireActivity().supportFragmentManager,"")
+
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnContinue -> {
-
-
 
                 when(binding.rgPayment.checkedRadioButtonId){
                     R.id.rbAddCard -> {
@@ -108,8 +106,8 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?){
         try {
-            binding.clMain.visible()
             loader?.dismiss()
+            binding.clMain.visible()
             when(status){
                 is Resource.Success ->{
                     cardsList?.clear()
