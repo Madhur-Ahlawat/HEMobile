@@ -116,9 +116,9 @@ object Constants {
     const val CHOOSE_FILE_3 = "Choose_third_file"
     const val CHOOSE_FILE_4 = "Choose_fourth_file"
     const val PAYMENT = "Payment"
-
-
-
-
+    const val PAYMENT_FILTER_VEHICLE = "Payment_filter_with_vehicle_number"
+    const val PAYMENT_FILTER_SPECIFIC = "Payment_filter_with_specified_date"
+    const val PAYMENT_DATE_RANGE = "Payment_filter_with_date_range"
+    const val UPDATE_PIN_FLOW = "update pin flow"
 
 }

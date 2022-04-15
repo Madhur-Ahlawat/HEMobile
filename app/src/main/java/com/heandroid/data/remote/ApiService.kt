@@ -6,10 +6,7 @@ import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
-import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
-import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
-import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
+import com.heandroid.data.model.accountpayment.*
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
@@ -21,17 +18,14 @@ import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.payment.*
-import com.heandroid.data.model.profile.ProfileDetailModel
-import com.heandroid.data.model.profile.ProfileUpdateEmailModel
-import com.heandroid.data.model.profile.UpdateAccountPassword
-import com.heandroid.data.model.profile.UpdatePasswordResponseModel
+import com.heandroid.data.model.profile.*
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -95,7 +89,7 @@ interface ApiService {
 
     @Streaming
     @POST(DOWNLOAD_TRANSACTION)
-    suspend fun getDownloadTransactionListDataInFile(@Body request: CrossingHistoryDownloadRequest?): Response<ResponseBody?>?
+    suspend fun getDownloadTransactionListDataInFile(@Body request: TransactionHistoryDownloadRequest?): Response<ResponseBody?>?
 
 
     @POST(CREATE_SECONDARY_ACCOUNT)
@@ -218,7 +212,13 @@ interface ApiService {
     suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                         @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
+    @GET(VIEW_ACCOUNT_BALANCE)
+    suspend fun getThresholdValuePayment() :Response<AccountGetThresholdResponse?>?
+
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
+
+    @PUT(ACCOUNT_PIN)
+    suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
 
 }

@@ -37,7 +37,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/your_payment"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
                 android:paddingEnd="@dimen/_5sdp"
                 android:text="@string/str_filter_underline"
                 android:textColor="@color/color_00703C"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -17,6 +17,7 @@ import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.databinding.AccountPaymentHistoryItemDetailBinding
 import com.heandroid.databinding.DownloadAccountPaymentHistoryPdfBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper
@@ -47,6 +48,12 @@ class AccountPaymentHistoryItemDetailFragment :
             downloadReceiptBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
             backBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
         }
+        (requireActivity() as AccountPaymentActivity).hideTabLayout()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (requireActivity() as AccountPaymentActivity).showTabLayout()
     }
 
     override fun onClick(v: View?) {

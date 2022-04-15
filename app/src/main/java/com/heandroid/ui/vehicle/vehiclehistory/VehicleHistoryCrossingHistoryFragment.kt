@@ -3,7 +3,6 @@ package com.heandroid.ui.vehicle.vehiclehistory
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryDownloadRequest
+import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -259,7 +258,7 @@ class VehicleHistoryCrossingHistoryFragment :
     override fun onCancelClicked() { }
 
     private fun downloadCrossingHistory() {
-        val downloadRequest =  CrossingHistoryDownloadRequest().apply {
+        val downloadRequest =  TransactionHistoryDownloadRequest().apply {
             startIndex = startOne
             downloadType = selectionType
             transactionType = Constants.ALL_TRANSACTION

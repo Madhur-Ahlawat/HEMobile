@@ -103,16 +103,24 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
             PAYMENT_TOP_UP -> oldGraph.startDestination = R.id.paymentTopUpFragment
         }
         navController.graph = oldGraph
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.accountPaymentHistoryItemDetailFragment -> {
-                    binding.tabLikeButtonsLayout.gone()
-                }
-                else -> {
-                    binding.tabLikeButtonsLayout.visible()
-                }
-            }
-        }
+//        navController.addOnDestinationChangedListener { _, destination, _ ->
+//            when (destination.id) {
+//                R.id.accountPaymentHistoryItemDetailFragment -> {
+//                    binding.tabLikeButtonsLayout.gone()
+//                }
+//                else -> {
+//                    binding.tabLikeButtonsLayout.visible()
+//                }
+//            }
+//        }
+    }
+
+    fun hideTabLayout(){
+        binding.tabLikeButtonsLayout.gone()
+    }
+
+    fun showTabLayout(){
+        binding.tabLikeButtonsLayout.visible()
     }
 
 }
