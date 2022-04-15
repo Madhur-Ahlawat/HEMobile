@@ -52,6 +52,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     private var startIndex = 1
     private var noOfPages = 1
     private var selectedPosition = 1
+    private var isDownload = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
@@ -212,24 +213,27 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun handleDownloadPaymentHistoryData(resource: Resource<ResponseBody?>?) {
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let {
-                    callCoroutines(resource.data)
+        if (isDownload) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        callCoroutines(resource.data)
+                    }
+                }
+                is Resource.DataError -> {
+                    requireContext().showToast("failed to download the document")
+                }
+                else -> {
+
                 }
             }
-            is Resource.DataError -> {
-                requireContext().showToast("failed to download the document")
-            }
-            else -> {
-
-            }
+            isDownload = false
         }
+
     }
 
     private fun callCoroutines(body: ResponseBody) {
         lifecycleScope.launch(Dispatchers.IO) {
-
             val ret = async {
                 return@async return@async StorageHelper.writeResponseBodyToDisk(
                     requireActivity(),
@@ -299,6 +303,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     private fun downloadPaymentHistory() {
         val downloadRequest = loadDownloadRequest()
         requireContext().showToast("Document download started")
+        isDownload = true
         viewModel.downloadPaymentHistoryApiCall(downloadRequest)
     }
 
