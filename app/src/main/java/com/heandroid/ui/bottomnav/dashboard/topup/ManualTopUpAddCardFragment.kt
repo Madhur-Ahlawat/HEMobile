@@ -199,7 +199,9 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                         showError(binding.root,status.errorMsg) }
                 }
             }
-           catch (e: Exception){}
+           catch (e: Exception){
+
+           }
     }
 
 

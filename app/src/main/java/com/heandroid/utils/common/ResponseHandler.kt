@@ -20,6 +20,7 @@ object ResponseHandler {
                 return Resource.DataError(errorResponse.message)
             }catch (e: Exception) {
                return Resource.DataError(e.message)
+
             }
         }
     }
