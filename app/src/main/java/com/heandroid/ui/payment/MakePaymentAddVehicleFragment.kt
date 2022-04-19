@@ -33,10 +33,8 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
     private lateinit var mAdapter: AddedVehicleListAdapter
     private var addDialog: AddVehicleDialog? = null
-    private var isAccountVehicle: Boolean? = false
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
-    private var createAccountNonVehicleModel: CreateAccountNonVehicleModel? = null
     private var isFromOneOfPayment: Boolean? = false
 
     override fun getFragmentBinding(
@@ -54,21 +52,9 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
 
-        isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
-        createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
         isFromOneOfPayment = arguments?.getBoolean(Constants.PAYMENT_ONE_OFF)
 
-        when {
-            isAccountVehicle == true -> {
-                setAdapter(true)
-            }
-            createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true -> {
-                setAdapter(true, createAccountNonVehicleModel?.plateCountry)
-            }
-            else -> {
-                setAdapter(false)
-            }
-        }
+        setAdapter()
     }
 
     override fun initCtrl() {
@@ -90,93 +76,22 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.findVehicle -> {
-                if (isAccountVehicle == true) {
-                    // loader?.show(requireActivity().supportFragmentManager, "")
-                    val bundle = Bundle()
-                    bundle.putBoolean("IsAccountVehicle", true)
-                    bundle.putParcelable(
-                        Constants.CREATE_ACCOUNT_DATA,
-                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-                    )
-                    bundle.putParcelable(
-                        Constants.CREATE_ACCOUNT_DATA,
-                        arguments?.getParcelable(Constants.DATA)
-                    )
 
-                    findNavController().navigate(
-                        R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment,
-                        bundle
-                    )
-                } else if (createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true) {
-                    val bundle = Bundle()
-                    bundle.putBoolean("isNonUKVehicleUpdating", true)
-                    bundle.putParcelable(
-                        Constants.CREATE_ACCOUNT_DATA,
-                        arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-                    )
-                    findNavController().navigate(
-                        R.id.action_ukAndNonUkVehicleListFragment_to_NonUkDropDownVehicleListFragment,
-                        bundle
-                    )
-                }else{
-                    val bundle = Bundle()
-                    bundle.putBoolean("IsAccountVehicle", false)
-                    bundle.putParcelableArrayList(
-                        Constants.DATA,
-                        ArrayList(vehicleList)
-                    )
-
-                    findNavController().navigate(
-                        R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
-                        bundle
-                    )
-
-                }
             }
         }
     }
 
-    private fun setAdapter(isAccountVehicle: Boolean? = false, vehicle: String? = "UK") {
+    private fun setAdapter() {
 
         hideAndShowRecyclerView()
 
-        if (isAccountVehicle == true && vehicle == "UK") {
-            val vehicleNo = arguments?.getString("VehicleNo")
-            val plateRes = PlateInfoResponse()
-            plateRes.number = vehicleNo.toString()
-            plateRes.country = "UK"
-            val vehicleRes = VehicleResponse(PlateInfoResponse(),plateRes, VehicleInfoResponse(), false, 0, 0.0 )
-            if(vehicleList?.contains(vehicleRes)==false)
-            vehicleList?.add(vehicleRes)
-            hideAndShowRecyclerView()
-            mAdapter.setList(vehicleList)
-            mAdapter.notifyDataSetChanged()
-        }
-        else if(isAccountVehicle == true && vehicle == "Non-UK"){
-            val plateResponse = PlateInfoResponse()
-            plateResponse.number = createAccountNonVehicleModel?.vehiclePlate.toString()
-            plateResponse.country = vehicle
+        mAdapter.setList(vehicleList)
+        mAdapter.notifyDataSetChanged()
 
-            val vehicleInfo = VehicleInfoResponse()
-            vehicleInfo.color = createAccountNonVehicleModel?.vehicleColor
-            vehicleInfo.make = createAccountNonVehicleModel?.vehicleMake
-            vehicleInfo.model = createAccountNonVehicleModel?.vehicleModel
-            vehicleInfo.vehicleClassDesc = createAccountNonVehicleModel?.plateTypeDesc
-
-            val vehicleRes = VehicleResponse(PlateInfoResponse(),plateResponse, vehicleInfo, false, 0, 0.0 )
-            if(vehicleList?.contains(vehicleRes)==false)
-            vehicleList?.add(vehicleRes)
-            mAdapter.setList(vehicleList)
-            mAdapter.notifyDataSetChanged()
-        }
-        else {
-            mAdapter.setList(vehicleList)
-            mAdapter.notifyDataSetChanged()
-        }
         if (vehicleList?.isNotEmpty() == true) {
             setBtnActivated()
         }
-        if (vehicleList?.size?:0 < Constants.MAX_VEHICLE_SIZE) {
+        if (vehicleList?.size ?: 0 < Constants.MAX_VEHICLE_SIZE) {
             setAddBtnActivated()
         } else {
             setAddBtnDisabled()
@@ -204,40 +119,21 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
     override fun onAddClick(details: VehicleResponse) {
         addDialog?.dismiss()
-        when {
-            details.plateInfo?.country == Constants.UK -> {
-                vehicleList?.add(details)
 
-                if (isFromOneOfPayment == true)
-                    setAdapter(false)
-                else
-                    setAdapter(true)
-            }
-
-            isFromOneOfPayment == true -> {
-                val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA, details)
-                    putBoolean(Constants.PAYMENT_PAGE, true)
-                }
-                findNavController().navigate(
-                    R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
-                    bundle
-                )
-            }
-            else -> {
-                val bundle = Bundle().apply {
-                    putBoolean("isSecondNonUkVehicle", true)
-                    putString("VehicleNo", details?.plateInfo?.number)
-                    putString("Country", "Non-UK")
-                }
-                findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_callNonUkVehicleAdd, bundle)
-            }
+        setAdapter()
+        val bundle = Bundle().apply {
+            putParcelable(Constants.DATA, details)
+            putBoolean(Constants.PAYMENT_PAGE, true)
         }
+        findNavController().navigate(
+            R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
+            bundle
+        )
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
         setAddBtnActivated()
-        if (vehicleList?.size?: 0 > 0) {
+        if (vehicleList?.size ?: 0 > 0) {
             vehicleList?.removeAt(pos)
             if (::mAdapter.isInitialized) {
                 mAdapter.setList(vehicleList)
@@ -256,8 +152,10 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
     override fun onItemClick(details: VehicleResponse?, pos: Int) {
         val bundle = Bundle()
-        bundle.putBoolean("IsAccountVehicle", false)
-        bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+        bundle.putInt(
+            Constants.VEHICLE_SCREEN_KEY,
+            Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
+        )
         bundle.putParcelable(
             Constants.DATA,
             details
@@ -267,7 +165,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
             bundle
         )
-
     }
 
     private fun setBtnActivated() {

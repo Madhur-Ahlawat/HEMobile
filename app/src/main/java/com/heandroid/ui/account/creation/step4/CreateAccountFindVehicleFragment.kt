@@ -7,30 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountNonVehicleModel
-import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.databinding.FragmentCreateAccountFindVehicleBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(), View.OnClickListener {
 
     private var isEnable: Boolean? = false
     private var isAccountVehicle = false
-
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
 
@@ -98,7 +88,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
                 bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
                 bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
-                findNavController().navigate(R.id.action_findYourVehicleFragment_to_makePaymentAddVehicleFragment2, bundle)
+                findNavController().navigate(R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment, bundle)
             }else {
                 val createAccountNonVehicleModel = CreateAccountNonVehicleModel()
                 createAccountNonVehicleModel.plateCountry = "Non-UK"

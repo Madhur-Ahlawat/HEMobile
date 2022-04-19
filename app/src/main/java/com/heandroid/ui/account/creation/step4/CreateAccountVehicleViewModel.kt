@@ -21,7 +21,6 @@ class CreateAccountVehicleViewModel @Inject constructor(private val repo: Create
 
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
-
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.async {
             try {

@@ -1,4 +1,4 @@
-package com.heandroid.ui.vehicle.addvehicle
+package com.heandroid.ui.account.creation.step4.nonukvehicle
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +14,12 @@ import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.CreateAccountNonVehicleModel
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
+import com.heandroid.databinding.FragmentCreateAccountNonukVehicleClassBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
+import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
@@ -24,28 +27,32 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>(),
+class CreateAccountNonUkVehicleClassFragment : BaseFragment<FragmentCreateAccountNonukVehicleClassBinding>(),
     AddVehicleListener {
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var mVehicleDetails: VehicleResponse?=null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
-    private var isFromPaymentScreen = false
+    private var createAccountNonVehicleModel: CreateAccountNonVehicleModel? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentAddVehicleClassesBinding.inflate(inflater, container, false)
+    ) = FragmentCreateAccountNonukVehicleClassBinding.inflate(inflater, container, false)
 
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
-        isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
+        createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
 
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
+            binding.title.text = "Vehicle registration number: ${createAccountNonVehicleModel?.vehiclePlate}"
+        }else {
+            binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        }
 
         binding.classARadioButton.isChecked = true
         mClassType = "1"
@@ -119,21 +126,12 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         binding.continueButton.setOnClickListener {
 
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                if (isFromPaymentScreen) {
-                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
-                    val vehicleData = mVehicleDetails
-                    vehicleData?.apply {
-                        vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-                        vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
-                    }
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.DATA, vehicleData)
-                      //  putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
 
-                        putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
-                    }
-                    findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
-                    return@setOnClickListener
+                 if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
+                    createAccountNonVehicleModel?.plateTypeDesc = mClassType
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
+                    findNavController().navigate(R.id.action_nonUKVehicleClassFragment_to_nonUKVehicleListFragment, bundle)
                 }
                 else {
                     VehicleAddConfirmDialog.newInstance(
