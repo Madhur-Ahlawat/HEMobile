@@ -30,72 +30,144 @@
 </form>
 <script>
             document.addEventListener('DOMContentLoaded', function () {
-               window.CollectJS.configure({
-          variant: "inline",
-          customCss: {
-            "border-radius": "0",
-            height: "40px",
-            padding: "5px",
-            border: "2px solid #0b0c0c",
-            "font-size": "16px",
-            "font-family": "'GDS Transport','sans-sarif'",
-            "font-weight": "400",
-            "line-height": " 1.25",
-            "box-sizing": "border-box",
-          },
-          focusCss: {
-            outline: "1px solid #ffdd00",
-            "outline-offset": "0",
-            "box-shadow": "inset 0 0 0 1px",
-            "border-color": "black",
-          },
-          validCss: {
-            color: "black",
-            "background-color": "white",
-          },
-          invalidCss: {
-            color: "black",
-            "border-color": "red",
-            "border-width": "2px",
-          },
+                CollectJS.configure({
+                    "paymentSelector" : "#demoPayButton",
+                    "variant" : "inline",
+                    "styleSniffer" : "false",
+                    "googleFont": "Montserrat:400",
+                    "customCss" : {
+                        "color": "#0000ff",
+                        "background-color": "#d0d0ff"
+                    },
+                    "invalidCss": {
+                        "color": "white",
+                        "background-color": "red"
+                    },
+                    "validCss": {
+                        "color": "black",
+                        "background-color": "#d0ffd0"
+                    },
+                    "placeholderCss": {
+                        "color": "green",
+                        "background-color": "#687C8D"
+                    },
+                    "focusCss": {
+                        "color": "yellow",
+                        "background-color": "#202020"
+                    },
+                    "fields": {
 
-          callback: (token) => {
-            if (token) {
-              let obj = token;
-console.log(obj);
+                        "ccnumber": {
 
-return;
-            }
-          },
-          fields: {
-            // ccnumber: {
-            //   title: "Card Number",
-            //   placeholder: "CC Number",
-            //   selector: "#ccnumber",
-            // },
-            ccnumber: {
-              selector: "#ccnumber",
-              title: "Card Number",
-              placeholder: "0000 0000 0000 0000",
-            },
-            ccexp: {
-              placeholder: "MM/YY ",
-              title: "CC Exp",
-              selector: "#ccexp",
-            },
-            cvv: {
-              display: "hide",
-              placeholder: "***",
-              title: "CVV",
-              selector: "#cvv",
-            },
-            checkname: {
-              selector: "#name",
-              title: "Name on Checking Account",
-              placeholder: "Card Name",
-            },
-          },
-        });
+                            "selector": "#ccNumber",
+                            "title": "Card Number",
+                            "placeholder": "0000 0000 0000 0000"
+                        },
+                        "ccexp": {
+                            "selector": "#ccExp",
+                            "title": "Card Expiration",
+                            "placeholder": "00 / 00"
+                        },
+                        "cvv": {
+                            "display": "show",
+                            "selector": "#cvv",
+                            "title": "CVV Code",
+                            "placeholder": "***"
+                        },
+
+                        "checkname": {
+                            "display": "show",
+                            "selector": "#name",
+                            "title": "Name on Checking Account",
+                            "placeholder": "Name"
+                        },
+                        "googlePay": {
+                            "selector": ".btnGooglePay",
+                            "shippingAddressRequired": true,
+                            "shippingAddressParameters": {
+                                "phoneNumberRequired": true,
+                                "allowedCountryCodes": ['US', 'CA']
+                            },
+                            "billingAddressRequired": true,
+                            "billingAddressParameters": {
+                                "phoneNumberRequired": true,
+                                "format": "MIN"
+                            },
+                            'emailRequired': true,
+                            "buttonType": "buy",
+                            "buttonColor": "white",
+                            "buttonLocale": "en"
+                        },
+                        'applePay' : {
+                            'selector' : '.btnApplePay',
+                            'shippingMethods': [
+                                {
+                                    'label': 'Free Standard Shipping',
+                                    'amount': '0.00',
+                                    'detail': 'Arrives in 5-7 days',
+                                    'identifier': 'standardShipping'
+                                },
+                                {
+                                    'label': 'Express Shipping',
+                                    'amount': '10.00',
+                                    'detail': 'Arrives in 2-3 days',
+                                    'identifier': 'expressShipping'
+                                }
+                            ],
+                            'shippingType': 'delivery',
+                            'requiredBillingContactFields': [
+                                'postalAddress',
+                                'name'
+                            ],
+                            'requiredShippingContactFields': [
+                                'postalAddress',
+                                'name'
+                            ],
+                            'contactFields': [
+                                'phone',
+                                'email'
+                            ],
+                            'contactFieldsMappedTo': 'shipping',
+                            'lineItems': [
+                                {
+                                    'label': 'Foobar',
+                                    'amount': '3.00'
+                                },
+                                {
+                                    'label': 'Arbitrary Line Item #2',
+                                    'amount': '1.00'
+                                }
+                            ],
+                            'totalLabel': 'foobar',
+                            'type': 'buy',
+                            'style': {
+                                'button-style': 'white-outline',
+                                'height': '50px',
+                                'border-radius': '0'
+                            }
+                        }
+                    },
+                    'price': '1.00',
+                    'currency':'USD',
+                    'country': 'US',
+                    'validationCallback' : function(field, status, message) {
+                        if (status) {
+                            var message = field + " is now OK: " + message;
+                        } else {
+                            var message = field + " is now Invalid: " + message;
+                        }
+                    },
+                    "timeoutDuration" : 10000,
+                    "timeoutCallback" : function () {
+                    },
+                    "fieldsAvailableCallback" : function () {
+                    },
+                    'callback' : function(response) {
+var apiResponse = JSON.stringify(response, null, "");
+                     console.log(apiResponse);
+                     return;
+                    }
+                });
             });
 
 </script>
