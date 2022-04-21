@@ -173,7 +173,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         lifecycleScope.launch(Dispatchers.IO) {
 
             val ret = async {
-                return@async return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
+                return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
             }.await()
 
             if (ret) {

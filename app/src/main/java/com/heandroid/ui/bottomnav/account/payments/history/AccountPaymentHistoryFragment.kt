@@ -2,6 +2,7 @@ package com.heandroid.ui.bottomnav.account.payments.history
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadReques
 import com.heandroid.data.model.payment.PaymentDateRangeModel
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
@@ -35,31 +35,41 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.utils.DatePicker
+import com.heandroid.utils.DateUtils
+import com.heandroid.utils.onTextChanged
 
 @AndroidEntryPoint
 class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(),
-    View.OnClickListener, DownloadFilterDialogListener, AccountPaymentHistoryFilterListener {
+    View.OnClickListener, DownloadFilterDialogListener {
 
     private val viewModel: AccountPaymentHistoryViewModel by viewModels()
-    private var listData: MutableList<TransactionData?> = ArrayList()
+    private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
+    private var vehicleNamesList: ArrayList<VehicleResponse?> = ArrayList()
+    private var vehicleNamesAdapter: FilterVehicleNamesAdapter? = null
     private var paymentHistoryAdapter: AccountPaymentHistoryAdapter? = null
     private var paginationNumberAdapter: AccountPaymentHistoryPaginationAdapter? = null
     private var paginationLinearLayoutManager: LinearLayoutManager? = null
-    private var dateRangeModel: PaymentDateRangeModel? =
-        PaymentDateRangeModel(filterType = Constants.PAYMENT_FILTER_SPECIFIC, null, null, null)
+    private var dateRangeModel: PaymentDateRangeModel =
+        PaymentDateRangeModel(filterType = Constants.PAYMENT_FILTER_SPECIFIC, null, null, "")
     private var selectionType: String = Constants.PDF
     private val countPerPage = 10
     private var startIndex = 1
     private var noOfPages = 1
     private var selectedPosition = 1
     private var isDownload = false
+    private var isFilterVehicleResponse = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAccountPaymentHistoryBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, listData)
+        isFilterVehicleResponse = true
+        paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, paymentHistoryListData)
         paginationNumberAdapter =
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
         getDataForPage(startIndex)
@@ -72,8 +82,10 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         binding.paymentRecycleView.gone()
         binding.paginationLayout.gone()
         binding.tvNoHistory.gone()
+        binding.rbSpecificDay.isChecked = true
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         paginationLinearLayoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.paymentRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentHistoryAdapter
@@ -91,7 +103,32 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             tvFilter.setOnClickListener(this@AccountPaymentHistoryFragment)
             previousBtn.setOnClickListener(this@AccountPaymentHistoryFragment)
             nextBtn.setOnClickListener(this@AccountPaymentHistoryFragment)
+            closeImage.setOnClickListener(this@AccountPaymentHistoryFragment)
+            applyBtn.setOnClickListener(this@AccountPaymentHistoryFragment)
+            edFrom.setOnClickListener(this@AccountPaymentHistoryFragment)
+            edTo.setOnClickListener(this@AccountPaymentHistoryFragment)
+            rbSpecificDay.setOnClickListener(this@AccountPaymentHistoryFragment)
+            rbDateRange.setOnClickListener(this@AccountPaymentHistoryFragment)
+            edSpecificDay.setOnClickListener(this@AccountPaymentHistoryFragment)
+            clearAllDateRange.setOnClickListener(this@AccountPaymentHistoryFragment)
+            clearAllSpecificDate.setOnClickListener(this@AccountPaymentHistoryFragment)
+            clearAllNumber.setOnClickListener(this@AccountPaymentHistoryFragment)
+            edFrom.onTextChanged {
+                checkFilterApplyBtn()
+            }
+            edTo.onTextChanged {
+                checkFilterApplyBtn()
+            }
+            edSpecificDay.onTextChanged {
+                checkFilterApplyBtn()
+            }
         }
+    }
+
+    override fun observer() {
+        observe(viewModel.paymentHistoryLiveData, ::handlePaymentResponse)
+        observe(viewModel.paymentHistoryDownloadVal, ::handleDownloadPaymentHistoryData)
+        observe(viewModel.vehicleListVal, ::handleVehicleListData)
     }
 
     override fun onClick(v: View?) {
@@ -104,7 +141,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                         onPermissionlaucher = onPermissionLauncher
                     )
                 } else {
-                    if (listData.isEmpty()) {
+                    if (paymentHistoryListData.isEmpty()) {
                         requireContext().showToast("No payment history to download")
                     } else {
                         val dialog = DownloadFormatSelectionFilterDialog()
@@ -115,11 +152,53 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 }
             }
             R.id.tvFilter -> {
-                AccountPaymentHistoryFilterDialog.newInstance(
-                    getString(R.string.str_title),
-                    getString(R.string.str_sub_title),
-                    this
-                ).show(childFragmentManager, AddVehicleDialog.TAG)
+                openFilterDrawer()
+                checkFilterApplyBtn()
+                viewModel.getVehicleInformationApi()
+            }
+            R.id.closeImage -> {
+                closeFilterDrawer()
+            }
+            R.id.clearAllNumber -> {
+                dateRangeModel.vehicleNumber = ""
+                vehicleNamesAdapter?.clearCheckedButtons()
+                checkFilterApplyBtn()
+            }
+            R.id.clearAllDateRange -> {
+                dateRangeModel.startDate = null
+                dateRangeModel.endDate = null
+                binding.rbDateRange.isChecked = false
+                checkFilterApplyBtn()
+            }
+            R.id.clearAllSpecificDate -> {
+                dateRangeModel.startDate = null
+                dateRangeModel.endDate = null
+                binding.rbSpecificDay.isChecked = false
+                checkFilterApplyBtn()
+            }
+            R.id.edFrom -> {
+                DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager, "")
+            }
+            R.id.edTo -> {
+                DatePicker(binding.edTo).show(requireActivity().supportFragmentManager, "")
+            }
+            R.id.edSpecificDay -> {
+                DatePicker(binding.edSpecificDay).show(requireActivity().supportFragmentManager, "")
+            }
+            R.id.applyBtn -> {
+                binding.tvNoHistory.gone()
+                closeFilterDrawer()
+                callFilterPaymentHistoryData()
+            }
+            R.id.rbSpecificDay -> {
+                binding.rbSpecificDay.isChecked = true
+                binding.rbDateRange.isChecked = false
+                checkFilterApplyBtn()
+            }
+            R.id.rbDateRange -> {
+                binding.rbDateRange.isChecked = true
+                binding.rbSpecificDay.isChecked = false
+                checkFilterApplyBtn()
             }
             R.id.previousBtn -> {
                 if (selectedPosition >= 2) {
@@ -160,20 +239,40 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         }
     }
 
-    override fun observer() {
-        observe(viewModel.paymentHistoryLiveData, ::handlePaymentResponse)
-        observe(viewModel.paymentHistoryDownloadVal, ::handleDownloadPaymentHistoryData)
+    private fun callFilterPaymentHistoryData() {
+        if (binding.rbSpecificDay.isChecked) {
+            dateRangeModel.startDate =
+                DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
+            dateRangeModel.endDate =
+                DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
+        } else {
+            dateRangeModel.startDate = DateUtils.convertDateToMonth(binding.edFrom.text.toString())
+            dateRangeModel.endDate = DateUtils.convertDateToMonth(binding.edTo.text.toString())
+        }
+        binding.paymentRecycleView.gone()
+        binding.progressBar.visible()
+        selectedPosition = 1
+        getDataForPage(1)
     }
 
-
-    private fun getDataForPage(index: Int) {
-        val request = AccountPaymentHistoryRequest(index, Constants.PAYMENT, countPerPage)
+    private fun getDataForPage(
+        index: Int
+    ) {
+        val request = AccountPaymentHistoryRequest(
+            index,
+            Constants.PAYMENT,
+            countPerPage,
+            dateRangeModel.startDate,
+            dateRangeModel.endDate,
+            dateRangeModel.vehicleNumber
+        )
         viewModel.paymentHistoryDetails(request)
     }
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         binding.progressBar.gone()
         binding.paymentRecycleView.visible()
+        binding.paginationLayout.visible()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -182,29 +281,36 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                     } else {
                         (it.toInt() / countPerPage) + 1
                     }
-                    if (noOfPages == 1)
-                        binding.nextBtnModel = false
+
                 }
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
-                        listData.clear()
-                        listData.addAll(it)
+                        paymentHistoryListData.clear()
+                        paymentHistoryListData.addAll(it)
                         binding.paymentRecycleView.adapter = paymentHistoryAdapter
                         binding.paginationLayout.visible()
+                        binding.nextBtnModel = selectedPosition != noOfPages
+                        binding.prevBtnModel = selectedPosition != 1
                         paginationNumberAdapter?.apply {
                             setCount(noOfPages)
                             setSelectedPosit(selectedPosition)
                         }
                         binding.paginationNumberRecyclerView.adapter = paginationNumberAdapter
                     } else {
+                        binding.paymentRecycleView.gone()
                         binding.tvNoHistory.visible()
+                        binding.paginationLayout.gone()
                     }
                 } ?: run {
+                    binding.paymentRecycleView.gone()
                     binding.tvNoHistory.visible()
+                    binding.paginationLayout.gone()
                 }
             }
             is Resource.DataError -> {
                 binding.tvNoHistory.visible()
+                binding.paymentRecycleView.gone()
+                binding.paginationLayout.gone()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
@@ -229,13 +335,49 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             }
             isDownload = false
         }
+    }
 
+    private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
+        if (isFilterVehicleResponse) {
+            binding.filterProgressBar.gone()
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        if (!it.isNullOrEmpty()) {
+                            vehicleNamesList.clear()
+                            vehicleNamesList.addAll(it)
+                            setVehicleNamesAdapter(vehicleNamesList)
+                        }
+                    }
+                }
+                is Resource.DataError -> {
+                    binding.tvNoVehicle.visible()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+                }
+            }
+            isFilterVehicleResponse = false
+        }
+    }
+
+    private fun setVehicleNamesAdapter(namesList: ArrayList<VehicleResponse?>) {
+        binding.filterProgressBar.gone()
+        binding.rvVehicleNumber.visible()
+        vehicleNamesList = namesList
+        vehicleNamesAdapter = FilterVehicleNamesAdapter(this)
+        vehicleNamesAdapter?.setList(vehicleNamesList)
+        binding.rvVehicleNumber.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = vehicleNamesAdapter
+        }
     }
 
     private fun callCoroutines(body: ResponseBody) {
         lifecycleScope.launch(Dispatchers.IO) {
             val ret = async {
-                return@async return@async StorageHelper.writeResponseBodyToDisk(
+                return@async StorageHelper.writeResponseBodyToDisk(
                     requireActivity(),
                     selectionType,
                     body
@@ -289,8 +431,9 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         }
     }
 
-    override fun onApplyFilterClick(vehicleName: String?, startDate: String?, endDate: String?) {
-
+    fun setSelectedVehicleName(name: String) {
+        dateRangeModel.vehicleNumber = name
+        checkFilterApplyBtn()
     }
 
     override fun onOkClickedListener(type: String) {
@@ -312,8 +455,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             startIndex = "1"
             downloadType = selectionType
             transactionType = Constants.PAYMENT
-            startDate = dateRangeModel?.startDate//"11/01/2021" mm/dd/yyyy
-            endDate = dateRangeModel?.endDate //"11/30/2021" mm/dd/yyyy
+            startDate = dateRangeModel.startDate//"11/01/2021" mm/dd/yyyy
+            endDate = dateRangeModel.endDate //"11/30/2021" mm/dd/yyyy
         }
     }
 
@@ -341,5 +484,31 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 }
             }
         }
+
+    private fun openFilterDrawer() {
+        val drawer: DrawerLayout = binding.drawerLayout
+        if (!drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.openDrawer(GravityCompat.END)
+        } else {
+            drawer.closeDrawers()
+        }
+    }
+
+    fun isFilterDrawerOpen() : Boolean {
+        val drawer: DrawerLayout = binding.drawerLayout
+        return drawer.isDrawerOpen(GravityCompat.END)
+    }
+
+    fun closeFilterDrawer() {
+        binding.drawerLayout.closeDrawers()
+    }
+
+    private fun checkFilterApplyBtn() {
+        binding.applyBtnModel =
+            (binding.rbSpecificDay.isChecked && !binding.edSpecificDay.text.isNullOrEmpty()) ||
+                    (binding.rbDateRange.isChecked && !binding.edFrom.text.isNullOrEmpty()
+                            && !binding.edTo.text.isNullOrEmpty() || dateRangeModel.vehicleNumber?.isNotEmpty() == true)
+    }
+
 }
 

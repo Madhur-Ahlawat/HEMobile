@@ -97,18 +97,21 @@
         </HorizontalScrollView>
 
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerPayment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
+        <LinearLayout
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout"
-            app:navGraph="@navigation/nav_graph_account_payment" />
-
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerPayment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph_account_payment" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

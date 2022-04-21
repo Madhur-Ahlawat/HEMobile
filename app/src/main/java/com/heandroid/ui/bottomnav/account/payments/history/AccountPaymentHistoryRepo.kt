@@ -16,4 +16,6 @@ class AccountPaymentHistoryRepo @Inject constructor(private val apiService: ApiS
 
     suspend fun downloadPaymentHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest) =
         apiService.getDownloadTransactionListDataInFile(requestParam)
+
+    suspend fun getVehicleListApiCall() = apiService.getVehicleData()
 }
