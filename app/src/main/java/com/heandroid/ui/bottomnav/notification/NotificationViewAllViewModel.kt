@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NotificationViewAllViewModel @Inject constructor(public val repo: NotificationViewAllRepo) : BaseViewModel() {
+class NotificationViewAllViewModel @Inject constructor(val repo: NotificationViewAllRepo) : BaseViewModel() {
 
     private val alertMutData = MutableLiveData<Resource<String?>?>()
     val alertLivData : LiveData<Resource<String?>?> get() = alertMutData

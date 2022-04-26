@@ -123,6 +123,9 @@ interface ApiService {
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
 
+    @POST(READ_ALERT)
+    suspend fun readAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
+
     @POST(EMAIL_VERIFICATION_REQUEST)
     suspend fun sendEmailVerification(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                       @Body request: EmailVerificationRequest?): Response<EmailVerificationResponse?>?
