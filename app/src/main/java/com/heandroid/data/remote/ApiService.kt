@@ -4,6 +4,7 @@ import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.account.UpdateProfileRequest
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.accountpayment.*
@@ -218,7 +219,15 @@ interface ApiService {
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
 
+    @POST(WHERE_TO_RECEIVE_PAYMENT_RECEIPT)
+    suspend fun whereToReceivePaymentReceipt(@Body request: PaymentReceiptDeliveryTypeSelectionRequest): Response<ResponseBody?>?
+
+    @PUT(UPDATE_ACCOUNT_SETTINGS)
+    suspend fun updateProfileData(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
+
     @PUT(ACCOUNT_PIN)
     suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
 
+    @PUT(UPDATE_ACCOUNT_SETTINGS)
+    suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest) : Response<EmptyApiResponse?>?
 }
