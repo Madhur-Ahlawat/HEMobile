@@ -691,5 +691,33 @@
     <string name="str_clear_underlined"><u>Clear</u></string>
     <string name="update_password_success">Password has been updated successfully</string>
     <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
+    <string name="group_mngmt">Group management</string>
+    <string name="create_vehicle_group">Create new group</string>
+    <string name="rename_vehicle_group">Rename group</string>
+    <string name="vehicle_group_name">Group Name</string>
+    <string name="vehicle_group_management">Group management</string>
+    <string name="delete_vehicle_group">Delete group</string>
+    <string name="delete_vehicle_group_dialog_title">The selected group will be deleted and vehicles in the group will remain unallocated in the account</string>
+    <string name="group_mngmt_desc1">• You can select one or more groups to delete.</string>
+    <string name="group_mngmt_desc2">• This will remove the group from the account and unallocate the vehicles.</string>
+    <string name="group_mngmt_desc3">• Only one group can be renamed at a time.</string>
+    <string name="group_desc">You can manually ADD or REMOVE up to 20 vehicles from the selected group at one time. For more than 20 vehicles, use the Bulk upload vehicles button.</string>
+    <string name="vehicle_add">Add vehicles to group</string>
+    <string name="vehicle_remove">Remove vehicles from group</string>
+    <string name="vehicle_bulk_upload">Bulk upload vehicles</string>
+    <string name="str_no_vehicles">No added vehicles</string>
+    <string name="str_no_available_vehicles">No available vehicles found</string>
+    <string name="str_edit_vehicle_details">Edit vehicle details</string>
+    <string name="vehicle_details_number">Vehicle registration number</string>
+    <string name="vehicle_details_country">Country of registration</string>
+    <string name="vehicle_details_group_desc">The group name field can be used to help you disinguish different vehicles associated with your account</string>
+    <string name="vehicle_details_date_added">Date added</string>
+    <string name="vehicle_details_group_name">Group name</string>
+    <string name="no_groups_added">No groups added</string>
+    <string name="no_vehicles_found">No vehicles found with %s</string>
+    <string name="by_number_plate">By number plate</string>
+    <string name="unallocated_vehicle_desc1">All unallocated vehicles registered to the account are displayed below.</string>
+    <string name="unallocated_vehicle_desc2">Manually Select up to 20 vehicles at one time which are required to be added to the selected group and click on Add vehicles to group button. For more than 20 vehicles, use the Bulk upload vehicles button.</string>
+    <string name="add_vehicle_to_group">Add vehicle to %s</string>
 </resources>
 
