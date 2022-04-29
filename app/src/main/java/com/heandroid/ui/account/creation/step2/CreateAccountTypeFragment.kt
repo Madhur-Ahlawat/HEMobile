@@ -59,7 +59,6 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
         }
     }
 
-
     override fun onClick(view: View?) {
       when (view?.id) {
 
@@ -67,7 +66,12 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
             val bundle = Bundle()
             bundle.putParcelable(CREATE_ACCOUNT_DATA,requestModel)
             when(requestModel?.accountType) {
-                PERSONAL_ACCOUNT -> { findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle) }
+                PERSONAL_ACCOUNT -> {
+                    findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle)
+                }
+                BUSINESS_ACCOUNT -> {
+                    findNavController().navigate(R.id.action_personalTypeFragment_to_businssInfoFragment,bundle)
+                }
                 else ->{ showError(binding.root,getString(R.string.in_progress)) }
             }
         }

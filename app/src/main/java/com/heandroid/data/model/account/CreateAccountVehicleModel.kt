@@ -6,13 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CreateAccountVehicleModel (
-    val plateCountry: String?,
-    val plateTypeDesc: String?,
-    val vehicleColor: String?,
-    val vehicleComments: String?,
-    val vehicleMake: String?,
-    val vehicleModel: String?,
-    val vehiclePlate: String?,
-    val vehicleYear: String?,
-    val vehicleStateType: String?,
+    var plateCountry: String?,
+    var plateTypeDesc: String?,
+    var vehicleColor: String?,
+    var vehicleComments: String?,
+    var vehicleMake: String?,
+    var vehicleModel: String?,
+    var vehiclePlate: String?,
+    var vehicleYear: String?,
+    var vehicleStateType: String?,
 ) : Parcelable

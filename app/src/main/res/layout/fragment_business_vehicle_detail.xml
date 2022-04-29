@@ -2,39 +2,63 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="buttonModel"
-            type="Boolean" />
-        <variable
-            name="vehicleData"
-            type="com.heandroid.data.model.vehicle.VehicleResponse" />
-    </data>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/separator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/color_F5F5F5">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/color_EFEFEF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_C4C4C4"
+                    android:background="@color/color_F5F5F5"
                     android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10ssp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/addTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center_vertical"
+                            android:text="@string/add_a_vehicle"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/step_4to5"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15sdp" />
+
+                    </RelativeLayout>
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -49,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="@string/str_reg_num"
+                            android:text="@string/vehicle_reg_number"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="bold" />
@@ -60,38 +84,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="@{vehicleData.plateInfo.number}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp"
-                            android:textStyle="normal" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/white"
-                        android:padding="@dimen/_10sdp"
-                        android:paddingHorizontal="@dimen/_10sdp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/str_country_marker"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/countryMarker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{vehicleData.plateInfo.country}"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="normal" />
@@ -120,9 +113,9 @@
                             android:id="@+id/vehicleClass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vehicleData.vehicleInfo.vehicleClassDesc}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:text="@string/str_A"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="normal" />
@@ -148,12 +141,12 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/make"
+                            android:id="@+id/vehicleMake"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vehicleData.vehicleInfo.make}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="normal" />
@@ -179,12 +172,12 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/model"
+                            android:id="@+id/vehicleModel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vehicleData.vehicleInfo.model}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="normal" />
@@ -210,12 +203,43 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/color"
+                            android:id="@+id/vehicleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vehicleData.vehicleInfo.color}"
                             android:layout_alignParentEnd="true"
                             android:gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15ssp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_48sdp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:padding="@dimen/_10sdp"
+                        android:paddingHorizontal="@dimen/_10sdp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/country_registration"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/countryRegistration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="center"
+                            android:text=""
                             android:padding="@dimen/_2sdp"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp" />
@@ -235,77 +259,37 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="@string/str_added_date"
+                            android:text="@string/group_name_optional"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/addedDate"
+                            android:id="@+id/groupName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:gravity="center"
-                            android:padding="@dimen/_2sdp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/white"
-                        android:padding="@dimen/_10sdp">
-
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvNotes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="@string/str_notes"
+                            android:layout_centerVertical="true"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tf_note"
-                            style="@style/Widget.HeMobile.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvNotes"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:textColorHint="@color/color_CBCBCB"
-                            android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvNotes">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_note"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_70sdp"
-                                android:text="@{vehicleData.plateInfo.vehicleComments}"
-                                android:hint="@string/str_note"
-                                android:imeOptions="actionDone"
-                                android:gravity="top|start"
-                                android:inputType="textMultiLine"
-                                android:overScrollMode="always"
-                                android:scrollbarStyle="insideInset"
-                                android:scrollbars="vertical"
-                                android:padding="@dimen/_5sdp"
-                                android:textColor="@color/color_000000"
-                                android:textSize="@dimen/_13ssp" />
-                        </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/group_name_field"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="normal" />
+
                 </LinearLayout>
+
+
             </com.google.android.material.card.MaterialCardView>
-
-
-        </androidx.core.widget.NestedScrollView>
 
         <View
             android:id="@+id/separator"
@@ -315,7 +299,7 @@
             app:layout_constraintBottom_toTopOf="@+id/buttonsView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCard" />
 
         <LinearLayout
             android:id="@+id/buttonsView"
@@ -328,23 +312,22 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/saveBtn"
+                android:id="@+id/confirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:backgroundTint="@{buttonModel==true?@color/btn_color:@color/color_C9C9C9}"
-                android:clickable="@{buttonModel}"
-                android:textColor="@{buttonModel==false?@color/color_7D7D7D:@color/white}"
-                android:text="@string/str_save"
+                android:backgroundTint="@color/btn_color"
+                android:text="@string/str_confirm"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:cornerRadius="@dimen/_4sdp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/backToVehiclesBtn"
+                android:id="@+id/notVehicle"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -353,11 +336,15 @@
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:includeFontPadding="true"
-                android:text="@string/str_back_to_vehicles_list"
+                android:text="@string/not_vehicle"
                 android:textAllCaps="false"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_16ssp"
                 app:strokeColor="@color/green" />
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 </layout>
