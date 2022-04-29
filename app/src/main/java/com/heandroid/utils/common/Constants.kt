@@ -120,5 +120,9 @@ object Constants {
     const val PAYMENT_FILTER_SPECIFIC = "Payment_filter_with_specified_date"
     const val PAYMENT_DATE_RANGE = "Payment_filter_with_date_range"
     const val UPDATE_PIN_FLOW = "update pin flow"
+    const val VEHICLE_NO = "VehicleNo"
+    const val COUNTRY_BUSINESS = "country"
+    const val NON_UK_VEHICLE_DATA =  "Non_UK_Model"
+
 
 }

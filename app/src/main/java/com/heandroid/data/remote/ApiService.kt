@@ -4,6 +4,7 @@ import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.accountpayment.*
@@ -220,5 +221,9 @@ interface ApiService {
 
     @PUT(ACCOUNT_PIN)
     suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
+
+    @POST(VALID_VEHICLE_CHECK)
+    suspend fun validVehicleCheck(@Body request: ValidVehicleCheckRequest?, @Query("agencyId") agencyId: Int?)
+                                  :Response<String?>?
 
 }

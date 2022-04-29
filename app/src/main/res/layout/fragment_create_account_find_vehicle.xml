@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="model"
-            type="com.heandroid.data.model.account.VehicleInfoDetails" />
+            name="isEnable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,8 +57,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -121,12 +122,12 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:backgroundTint="@color/btn_disable"
+            android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{isEnable}"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@color/txt_disable"
+            android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
-            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
