@@ -43,7 +43,10 @@ data class LoginResponse(
     private var lastName: String,
 
     @SerializedName("jti")
-    private var jti: String
+    private var jti: String,
+
+    @SerializedName("accountType")
+    var accountType: String? = null,
 )
 
 data class LogOutResp(val success: String)
