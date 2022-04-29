@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_navigation_graph"
@@ -8,7 +7,7 @@
 
     <fragment
         android:id="@+id/viewProfile"
-        android:name="com.heandroid.ui.account.profile.ViewProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.personalAccount.ViewProfileFragment"
         tools:layout="@layout/fragment_view_profile">
         <action
             android:id="@+id/action_viewProfile_to_personalInfoFragment"
@@ -16,11 +15,9 @@
     </fragment>
 
 
-
-
     <fragment
         android:id="@+id/personalInfoFragment"
-        android:name="com.heandroid.ui.account.profile.email.ProfilePersonalInfoFragment"
+        android:name="com.heandroid.ui.account.profile.personalInfo.ProfilePersonalInfoFragment"
         tools:layout="@layout/fragment_profile_personal_info">
         <action
             android:id="@+id/action_personalInfoFragment_to_postCodeFragment"
@@ -31,14 +28,12 @@
     </fragment>
 
 
-
     <fragment
         android:id="@+id/emailUpdatedFragment"
         android:name="com.heandroid.ui.account.profile.email.ProfileEmailSuccessfulFragment"
         tools:layout="@layout/fragment_profile_email_successful">
 
     </fragment>
-
 
 
     <fragment
@@ -49,7 +44,6 @@
             android:id="@+id/action_postCodeFragment_to_passwordFragment"
             app:destination="@id/passwordFragment" />
     </fragment>
-
 
 
     <fragment
@@ -65,7 +59,6 @@
     </fragment>
 
 
-
     <fragment
         android:id="@+id/pinFragment"
         android:name="com.heandroid.ui.account.profile.pin.ProfilePinFragment"
@@ -75,8 +68,6 @@
             android:id="@+id/action_pinFragment_to_updatePasswordSuccessfulFragment"
             app:destination="@id/updatePasswordSuccessfulFragment" />
     </fragment>
-
-
 
 
     <fragment
@@ -90,7 +81,6 @@
     </fragment>
 
 
-
     <fragment
         android:id="@+id/confirmEmailFragment"
         android:name="com.heandroid.ui.account.profile.email.ProfileConfirmEmailFragment"
@@ -100,7 +90,6 @@
             android:id="@+id/action_confirmEmailFragment_to_emailUpdatedFragment"
             app:destination="@id/emailUpdatedFragment" />
     </fragment>
-
 
 
     <fragment
@@ -113,7 +102,6 @@
     </fragment>
 
 
-
     <fragment
         android:id="@+id/updatePasswordSuccessfulFragment"
         android:name="com.heandroid.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
@@ -121,9 +109,67 @@
         <action
             android:id="@+id/action_updatePasswordSuccessfulFragment_to_viewProfile"
             app:destination="@id/viewProfile"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/viewProfile"/>
+            app:popUpTo="@id/viewProfile"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_updatePasswordSuccessfulFragment_to_viewBusinessAccountProfile"
+            app:destination="@id/viewBusinessAccountProfileFragment"
+            app:popUpTo="@id/viewBusinessAccountProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewBusinessAccountProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.businessAccount.ViewBusinessAccountProfileFragment"
+        tools:layout="@layout/fragment_view_business_account_profile">
+        <action
+            android:id="@+id/action_viewBusinessAccountProfile_to_UpdatePersonalInfo"
+            app:destination="@id/personalInfoFragment" />
+
     </fragment>
 
 
+    <fragment
+        android:id="@+id/viewNominatedUserAccountProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
+        tools:layout="@layout/fragment_view_nominated_contact_user_profile">
+        <action
+            android:id="@+id/action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo"
+            app:destination="@id/personalInfoFragment" />
+        <action
+            android:id="@+id/action_viewNominatedContactUserProfile_to_viewPrimaryAccountHolderProfile"
+            app:destination="@id/viewPrimaryAccountUserProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewPrimaryAccountUserProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewPrimaryUserAccountProfileFragment"
+        tools:layout="@layout/fragment_view_primary_user_account_profile">
+
+        <action
+            android:id="@+id/action_viewPrimaryAccountProfile_to_UpdatePersonalInfo"
+            app:destination="@id/personalInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewPayGAccountProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
+        tools:layout="@layout/fragment_view_payg_account_user">
+        <action
+            android:id="@+id/action_viewPaygAccountProfile_to_UpdatePersonalInfo"
+            app:destination="@id/personalInfoFragment" />
+        <action
+            android:id="@+id/action_viewPaygAccountProfile_to_viewAdditionalDetails"
+            app:destination="@id/viewPrimaryAccountUserProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPayGAccountAdditionalDetailsFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.payGAccount.ViewPAYGAccountAdditionalDetailsFragment"
+        tools:layout="@layout/fragment_view_payg_account_user">
+
+        <action
+            android:id="@+id/action_viewPaygAdditionalDetails_to_UpdatePersonalInfo"
+            app:destination="@id/personalInfoFragment" />
+    </fragment>
 </navigation>

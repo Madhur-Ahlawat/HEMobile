@@ -222,12 +222,13 @@ interface ApiService {
     @POST(WHERE_TO_RECEIVE_PAYMENT_RECEIPT)
     suspend fun whereToReceivePaymentReceipt(@Body request: PaymentReceiptDeliveryTypeSelectionRequest): Response<ResponseBody?>?
 
+    @GET(ACCOUNT_DETAIL)
+    suspend fun getUserProfileData() : Response<ProfileDetailModel?>?
+
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateProfileData(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
 
     @PUT(ACCOUNT_PIN)
     suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
 
-    @PUT(UPDATE_ACCOUNT_SETTINGS)
-    suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest) : Response<EmptyApiResponse?>?
 }

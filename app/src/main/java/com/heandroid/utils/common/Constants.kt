@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val NOMINATED_ACCOUNT= "NOMINATED"
     const  val PENDING_STATUS ="PENDING"
     const val CASE_COMMENTS_KEY = "case_comments_key"
     const val CASES_CATEGORY ="cases_category"

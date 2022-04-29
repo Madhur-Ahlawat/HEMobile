@@ -22,3 +22,4 @@ data class FinancialInformation(
     val tollBalance: String?,
     val violationBalance: String?
 ) : Parcelable
+

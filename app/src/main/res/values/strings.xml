@@ -691,5 +691,9 @@
     <string name="str_clear_underlined"><u>Clear</u></string>
     <string name="update_password_success">Password has been updated successfully</string>
     <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
+    <string name="company_reg_no">Company registration number</string>
+    <string name="company_name">Company Name</string>
+    <string name="str_account_holder_profile">Account holder profile</string>
+    <string name="str_additional_details">Additional details (optional)</string>
 </resources>
 

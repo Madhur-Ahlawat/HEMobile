@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.profile.email
+package com.heandroid.ui.account.profile.personalInfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
