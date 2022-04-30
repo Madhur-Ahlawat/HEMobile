@@ -14,6 +14,8 @@ import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Utils.getDirection
 import com.heandroid.utils.common.Utils.loadStatus
+import com.heandroid.utils.extn.changeBackgroundColor
+import com.heandroid.utils.extn.changeTextColor
 
 class CrossingHistoryAdapter(
     private val myFragment: Fragment?,
@@ -59,7 +61,11 @@ class CrossingHistoryAdapter(
                     tvDate.text = "${DateUtils.convertDateFormat(transactionDate,0)}, ${DateUtils.convertTimeFormat(exitTime,0)}"
                     tvVrm.text = plateNumber
                     tvDirection.text = getDirection(exitDirection)
-                    loadStatus(prepaid, tvStatus)
+                    tvStatus.text = tranSettleStatus
+                    tvStatus.changeTextColor(R.color.color_10403C)
+                    tvStatus.changeBackgroundColor(R.color.color_CCE2D8)
+
+//                    loadStatus(prepaid, tvStatus)
                 }
             }
         }
