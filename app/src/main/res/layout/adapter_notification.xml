@@ -41,6 +41,17 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_txt" />
+        <View
+            android:id="@+id/green_view"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@color/green"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/message_txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/date_txt" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_txt"
