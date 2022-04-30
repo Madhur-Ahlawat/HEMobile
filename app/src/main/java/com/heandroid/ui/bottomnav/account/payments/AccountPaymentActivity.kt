@@ -1,12 +1,14 @@
 package com.heandroid.ui.bottomnav.account.payments
 
 import android.view.View
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.data.model.payment.PaymentScreenModel
 import com.heandroid.databinding.ActivityAccountPaymentBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.PAYMENT_HISTORY
 import com.heandroid.utils.common.Constants.PAYMENT_METHOD
@@ -27,6 +29,7 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     View.OnClickListener {
 
     private lateinit var binding: ActivityAccountPaymentBinding
+    private lateinit var navController: NavController
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -43,6 +46,7 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         setContentView(binding.root)
         customToolbar(getString(R.string.str_payment))
         binding.model = PaymentScreenModel(history = true, method = false, topUp = false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         initCtrl()
     }
 
@@ -95,7 +99,7 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     private fun loadStartDestination(type: String?) {
 //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerPayment) as NavHostFragment
 //        val navController = navHostFragment.navController
-        val navController = Navigation.findNavController(this, R.id.fragmentContainerPayment)
+        navController = Navigation.findNavController(this, R.id.fragmentContainerPayment)
         val oldGraph = navController.graph
         when (type) {
             PAYMENT_HISTORY -> oldGraph.startDestination = R.id.accountPaymentHistoryFragment
@@ -103,24 +107,36 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
             PAYMENT_TOP_UP -> oldGraph.startDestination = R.id.paymentTopUpFragment
         }
         navController.graph = oldGraph
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.accountPaymentHistoryItemDetailFragment -> {
-//                    binding.tabLikeButtonsLayout.gone()
-//                }
-//                else -> {
-//                    binding.tabLikeButtonsLayout.visible()
-//                }
-//            }
-//        }
+
     }
 
-    fun hideTabLayout(){
+    fun hideTabLayout() {
         binding.tabLikeButtonsLayout.gone()
     }
 
-    fun showTabLayout(){
+    fun showTabLayout() {
         binding.tabLikeButtonsLayout.visible()
     }
 
+    override fun onBackPressed() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerPayment) as NavHostFragment
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.accountPaymentHistoryFragment -> {
+                    val currentFrag =
+                        navHostFragment.childFragmentManager.fragments[0]
+                    if (currentFrag is AccountPaymentHistoryFragment) {
+                        if (currentFrag.isFilterDrawerOpen()) {
+                            currentFrag.closeFilterDrawer()
+                        } else {
+                            super.onBackPressed()
+                        }
+                    }
+                }
+                else -> {
+                    super.onBackPressed()
+                }
+            }
+        }
+    }
 }

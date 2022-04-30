@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
@@ -17,20 +18,32 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountPaymentHistoryViewModel @Inject constructor(private val repo: AccountPaymentHistoryRepo) : BaseViewModel() {
+class AccountPaymentHistoryViewModel @Inject constructor(private val repo: AccountPaymentHistoryRepo) :
+    BaseViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val accountPaymentMutLiveData = MutableLiveData<Resource<AccountPaymentHistoryResponse?>?>()
+    private val accountPaymentMutLiveData =
+        MutableLiveData<Resource<AccountPaymentHistoryResponse?>?>()
     val paymentHistoryLiveData: LiveData<Resource<AccountPaymentHistoryResponse?>?> get() = accountPaymentMutLiveData
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _paymentHistoryDownloadVal = MutableLiveData<Resource<ResponseBody?>?>()
     val paymentHistoryDownloadVal: LiveData<Resource<ResponseBody?>?> get() = _paymentHistoryDownloadVal
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
+
     fun paymentHistoryDetails(request: AccountPaymentHistoryRequest) {
         viewModelScope.launch {
             try {
-                accountPaymentMutLiveData.postValue(ResponseHandler.success(repo.getAccountPayment(request), errorManager))
+                accountPaymentMutLiveData.postValue(
+                    ResponseHandler.success(
+                        repo.getAccountPayment(
+                            request
+                        ), errorManager
+                    )
+                )
             } catch (e: Exception) {
                 accountPaymentMutLiveData.postValue(ResponseHandler.failure(e))
             }
@@ -51,4 +64,20 @@ class AccountPaymentHistoryViewModel @Inject constructor(private val repo: Accou
             }
         }
     }
+
+    fun getVehicleInformationApi() {
+        viewModelScope.launch {
+            try {
+                _vehicleListVal.postValue(
+                    ResponseHandler.success(
+                        repo.getVehicleListApiCall(),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _vehicleListVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
 }

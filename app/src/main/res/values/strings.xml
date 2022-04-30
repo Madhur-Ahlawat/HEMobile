@@ -682,6 +682,7 @@
     <string name="previous">Prev</string>
     <string name="next">Next</string>
     <string name="no_payment_history">No payment history</string>
+    <string name="no_vehicles">No added vehicles</string>
     <string name="search_filter">Search by Filter</string>
     <string name="number_plate">Number plate</string>
     <string name="specific_day">Specific day</string>

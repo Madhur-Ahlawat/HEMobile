@@ -296,7 +296,7 @@
         android:id="@+id/businessVehicleUKListFragment"
         android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleFindUK"
         android:label="BusinessUKVehicleList"
-        tools:layout="@layout/fragment_business_vehicle_uk_list">
+        tools:layout="@layout/fragment_business_vehicle_find_uk">
 
         <action
             android:id="@+id/action_businessUKListFragment_to_businessNonUKMakeFragment"

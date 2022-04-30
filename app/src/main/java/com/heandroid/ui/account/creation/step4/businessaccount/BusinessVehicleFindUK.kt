@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.*
-import com.heandroid.databinding.FragmentBusinessVehicleUkListBinding
+import com.heandroid.databinding.FragmentBusinessVehicleFindUkBinding
 import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -23,7 +23,7 @@ import com.heandroid.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleUkListBinding>(),
+class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>(),
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
@@ -32,14 +32,14 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleUkListBinding>
 
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
-    private var isLiveDataCallback = false
+    private var isObserverBack = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentBusinessVehicleUkListBinding.inflate(inflater, container, false)
+        FragmentBusinessVehicleFindUkBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isLiveDataCallback = true
+        isObserverBack = true
     }
 
     override fun init() {
@@ -64,7 +64,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleUkListBinding>
         when (view?.id) {
             R.id.findVehicleBusiness -> {
                 loader?.show(requireActivity().supportFragmentManager, "")
-                isLiveDataCallback = true
+                isObserverBack = true
                 getVehicleDataFromDVRM()
             }
         }
@@ -80,7 +80,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleUkListBinding>
             loader?.dismiss()
         }
 
-        if(isLiveDataCallback) {
+        if(isObserverBack) {
             when(resource) {
                 is Resource.Success -> {
                     resource.data?.let {
@@ -91,7 +91,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleUkListBinding>
                 is Resource.DataError -> {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                    isLiveDataCallback = false
+                    isObserverBack = false
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                     findNavController().navigate(R.id.action_businessUKListFragment_to_businessNonUKMakeFragment, bundle)
