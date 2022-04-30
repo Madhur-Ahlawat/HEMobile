@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vehicle_list_nav_graph"
+    app:startDestination="@id/vehicleListFragment">
+    <fragment
+        android:id="@+id/vehicleListFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list">
+        <action
+            android:id="@+id/action_vehicleListFragment_to_addVehicleDetailsFragment"
+            app:destination="@id/addVehicleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addVehicleDetailsFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:label="AddVehicleDetailsFragment"
+        tools:layout="@layout/fragment_add_vehicle_details">
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
+            app:destination="@id/addVehicleClassesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addVehicleClassesFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:label="AddVehicleClassesFragment"
+        tools:layout="@layout/fragment_add_vehicle_classes">
+        <action
+            android:id="@+id/action_addVehicleClassesFragment_to_addVehicleDoneFragment"
+            app:destination="@id/addVehicleDoneFragment"
+            app:popUpTo="@id/addVehicleDetailsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addVehicleDoneFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
+        android:label="AddVehicleDoneFragment"
+        tools:layout="@layout/fragment_add_vehicle_done">
+
+        <action
+            android:id="@+id/action_addVehicleDoneFragment_to_vehicleListFragment"
+            app:destination="@id/vehicleListFragment"
+            app:popUpTo="@id/vehicle_list_nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>

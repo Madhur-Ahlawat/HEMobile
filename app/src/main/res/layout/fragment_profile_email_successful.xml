@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="enable"
+            type="Boolean" />
+
+        <variable
+            name="data"
+            type="com.heandroid.data.model.profile.ProfileUpdateEmailModel" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvVerification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_address_had_been_updated_nsucessfully"
+            android:drawableStart="@drawable/ic_successful"
+            android:drawablePadding="16dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+
+        <TextView
+            android:id="@+id/tvTopLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:text="@{@string/sent_email(data.emailAddress)}"
+            android:textColor="@color/color_99000000"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerification" />
+
+
+        <RelativeLayout
+            android:id="@+id/otpView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvTopLabel">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etCodeLayout"
+                style="@style/Widget.HeMobile.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="New Email"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:textColorHint="@color/color_CBCBCB"
+                app:boxStrokeColor="@color/color_00703C">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:text="@{data.emailAddress}"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:clickable="false"
+                    android:maxLength="60"
+                    android:singleLine="true"
+                    android:textColor="@color/color_000000" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/user_your_new_email_id_to_log_in_to_your_account"
+            android:textColor="@color/color_99000000"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/otpView" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/btn_color"
+            android:gravity="center"
+            android:text="@string/str_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

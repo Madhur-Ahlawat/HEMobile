@@ -4,16 +4,30 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'macOS-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: Gradle@2
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
+      gradleOptions: '-Xmx3072m'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+      publishJunitResults: false
+      testResultsFiles: '**/TEST-*.xml'
+      tasks: 'assembleDebug'
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+     
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+
+ 

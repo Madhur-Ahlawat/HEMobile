@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="enable"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_select_account_type"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+
+        <RadioGroup
+            android:id="@+id/rgOptions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel">
+
+
+
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/mrbPersonalAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:lineSpacingExtra="6dp"
+                android:paddingLeft="28dp"
+                android:layout_marginLeft="28dp"
+                android:drawablePadding="@dimen/_40sdp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/str_personal_account"
+                android:textSize="@dimen/_13sdp"
+                app:buttonTint="@color/color_00703C" />
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="@color/color_EFEFEF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EFEFEF">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPersonalDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/str_personal_account_desc"
+                android:visibility="gone" />
+
+            </LinearLayout>
+
+
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/mrbBusinessAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:background="@color/white"
+
+                android:lineSpacingExtra="6dp"
+                android:paddingLeft="28dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/str_business_account"
+                android:textSize="@dimen/_13sdp"
+                app:buttonTint="@color/color_00703C" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/color_EFEFEF" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EFEFEF"
+                >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBusinessDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/str_business_account_desc"
+                android:visibility="gone" />
+
+            </LinearLayout>
+
+        </RadioGroup>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{enable}"
+            android:gravity="center"
+            android:padding="@dimen/_7sdp"
+            android:text="@string/str_continue"
+            android:textAllCaps="false"
+            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

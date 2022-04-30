@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_business_prepay_account"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_20ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvStep"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_2_of_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="normal"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/business_prepay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:text="@string/str_business_prepay"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/tvStep"
+            app:layout_constraintStart_toStartOf="@id/tvLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvLabel" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_business"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="84dp"
+            android:backgroundTint="@color/green"
+            android:gravity="center"
+            android:text="@string/str_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_session"
+    app:startDestination="@id/sessionExpireFragment">
+
+    <fragment
+        android:id="@+id/sessionExpireFragment"
+        android:name="com.heandroid.ui.landing.SessionExpireFragment"
+        tools:layout="@layout/fragment_session_expire"
+        android:label="SessionExpireFragment" />
+
+
+    <fragment
+        android:id="@+id/signOutFragment"
+        android:name="com.heandroid.ui.landing.LogoutFragment"
+        tools:layout="@layout/fragment_signout"
+        android:label="SignoutFragment" />
+</navigation>

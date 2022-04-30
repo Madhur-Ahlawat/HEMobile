@@ -1,0 +1,51 @@
+package com.heandroid.data.model.account
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
+data class CreateAccountRequestModel(
+    var referenceId: Long?,
+    var securityCd: Long?,
+    var accountType: String? = null,
+    val tcAccepted: String?,
+    var firstName: String?,
+    var lastName: String?,
+    var address1: String?,
+    var city: String?,
+    var stateType: String?,
+    var countryType: String?,
+    var zipCode1: String?,
+    var emailAddress: String?,
+    var cellPhone: String?,
+    var eveningPhone: String?,
+    var smsOption: String?,
+    var password: String?,
+    var digitPin: String?,
+    var companyName: String?,
+    var fein: String?,
+    var nonRevenueOption: String?,
+    var ftvehicleList: CreateAccountVehicleListModel?,
+    var creditCardType: String?,
+    var creditCardNumber: String?,
+    var maskedNumber: String?,
+    var creditCExpMonth: String?,
+    var creditCExpYear: String?,
+    var securityCode: String?,
+    var cardFirstName: String?,
+    var cardMiddleName: String?,
+    var cardLastName: String?,
+    var billingAddressLine1: String?,
+    var billingAddressLine2: String?,
+    var cardCity: String?,
+    var cardStateType: String?,
+    var cardZipCode: String?,
+    var thresholdAmount: String?,
+    var replenishmentAmount: String?,
+    var transactionAmount: String?,
+    var planType: String?,
+    var enable : Boolean?,
+    var classType : String?,
+    var vehicleNo: String?
+    ) : Parcelable

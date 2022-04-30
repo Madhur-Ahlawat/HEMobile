@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_trans">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            app:cardCornerRadius="@dimen/_7sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center|start"
+                    android:text="@string/select_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:elevation="10dp"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <RadioGroup
+                    android:id="@+id/rgFilterOption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView5">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/rb_pdf"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:button="@drawable/drawable_selector_radio_button"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingLeft="@dimen/_21sdp"
+                        android:text="@string/pdf"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_BFBFBF" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/rb_spread_sheet"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:button="@drawable/drawable_selector_radio_button"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingLeft="@dimen/_21sdp"
+                        android:text="@string/spread_sheet"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_BFBFBF" />
+
+                </RadioGroup>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApply"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:backgroundTint="@color/btn_color"
+                    android:fontFamily="@font/roboto_regular"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/str_ok"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_13ssp"
+                    app:cornerRadius="@dimen/_4sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnClear"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rgFilterOption" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClear"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/str_cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_color"
+                    android:textSize="@dimen/_13ssp"
+                    app:cornerRadius="@dimen/_4sdp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/btnApply"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btnApply"
+                    app:strokeColor="@color/btn_color"
+                    app:strokeWidth="1dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

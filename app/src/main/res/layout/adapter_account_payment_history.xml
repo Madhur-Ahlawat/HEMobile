@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transaction_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:lineSpacingExtra="@dimen/_100sdp"
+                android:text="12:30, 02 Aug 2021"
+                android:textColor="@color/color_3C3C4399"
+                android:textStyle="bold"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                app:layout_constraintStart_toStartOf="@+id/glStart"
+                app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transaction_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/roboto_bold"
+                android:lineHeight="@dimen/_22sdp"
+                android:text="ID2908211234"
+                android:textColor="@color/color_009CDE"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                app:layout_constraintStart_toStartOf="@+id/glStart"
+                app:layout_constraintTop_toBottomOf="@+id/transaction_date" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/glBottom"
+                app:layout_constraintEnd_toEndOf="@+id/glEnd"
+                app:layout_constraintTop_toTopOf="@+id/glTop">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/payment_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="£ 2.00"
+                    android:textColor="@color/color_00703C"
+                    android:textSize="@dimen/_14sdp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:src="@drawable/ic_chevron_right_24px" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1sp"
+                android:background="@color/color_B8B8B8"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/top_up_plan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_2sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/str_auto_top_up"
+                android:textColor="@color/color_3C3C4399"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toTopOf="@+id/glBottom"
+                app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/glStart"
+                app:layout_constraintTop_toBottomOf="@+id/transaction_number" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glStart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/_10sdp" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glEnd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/_10sdp" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glTop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/_6sdp" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glBottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/_6sdp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

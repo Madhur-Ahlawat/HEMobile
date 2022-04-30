@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_graph"
+    app:startDestination="@id/dashBoardFragment">
+
+    <fragment
+        android:id="@+id/dashBoardFragment"
+        android:name="com.heandroid.ui.bottomnav.dashboard.DashboardFragment"
+        android:label="Account Summary"
+        tools:layout="@layout/fragment_dashboard">
+
+        <action
+            android:id="@+id/action_dashBoardFragment_to_vehicleListFragment2"
+            app:destination="@id/vehicleListFragment2" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
+            app:destination="@id/crossingHistoryFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/vehicleFragment"
+        android:name="com.heandroid.ui.bottomnav.vehicle.VehicleFragment"
+        android:label="Vehicle Management"
+        tools:layout="@layout/fragment_vehicle">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.heandroid.ui.bottomnav.account.AccountFragment"
+        android:label="Account Management"
+        tools:layout="@layout/fragment_account">
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.heandroid.ui.bottomnav.notification.NotificationFragment"
+        android:label="Notification Screen"
+        tools:layout="@layout/fragment_notification">
+
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleListFragment2"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list"/>
+
+    <fragment
+        android:id="@+id/crossingHistoryFragment"
+        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryFragment"
+        tools:layout="@layout/fragment_crossing_history"
+        android:label="CrossingHistoryFragment" >
+
+        <action
+            android:id="@+id/action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment"
+            app:destination="@id/crossingHistoryMakePaymentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/crossingHistoryMakePaymentFragment"
+        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
+        tools:layout="@layout/fragment_crossing_history_make_payment"
+        android:label="CrossingHistoryMakePaymentFragment" />
+
+
+
+
+
+
+
+
+</navigation>

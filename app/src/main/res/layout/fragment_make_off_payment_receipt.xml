@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="Where do you want your receipt to be sent?"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/glTop" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilOptionEmail"
+            style="@style/Widget.HeMobile.TextInputLayoutDrop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/str_email"
+            android:textColorHint="@color/black"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
+
+
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieOptionEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:drawableRight="@drawable/ic_vector_drop"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
+            style="@style/Widget.HeMobile.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/str_email"
+            android:layout_marginTop="14dp"
+            android:textColorHint="@color/grey_two"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tilOptionEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_two"
+                android:textSize="@dimen/_13ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfirmEmail"
+            style="@style/Widget.HeMobile.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_email"
+            android:layout_marginTop="14dp"
+            android:textColorHint="@color/grey_two"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tilEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieConfirmEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_two"
+                android:textSize="@dimen/_13ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/appCompatCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:paddingTop="@dimen/_12sdp"
+            android:buttonTint="@color/green"
+            android:paddingLeft="@dimen/_11sdp"
+            android:text="@string/i_declare_that_the_information_given_n_above_is_correct"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:gravity="center"
+            android:text="@string/str_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="0dp"
+            />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_11sdp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

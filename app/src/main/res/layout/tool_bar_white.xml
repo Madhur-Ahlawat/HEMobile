@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/white"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:tint="@color/black"
+                app:srcCompat="@drawable/ic_back_grey" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_toEndOf="@+id/btn_back"
+                android:text="@string/str_password_recovery"
+                android:textColor="@color/color_D8000000"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+</layout>

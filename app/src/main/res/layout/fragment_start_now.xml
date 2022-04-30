@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EFEFEF">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/maintainance_lyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/drawable_bg_maintainance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/maintainance_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@color/login_blue_border"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_10sdp"
+                android:text="@string/str_maintainance_notify"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/maintainance_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:gravity="start|center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/str_maintainance_desc"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maintainance_title" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pay_dart_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:gravity="start"
+            android:text="@string/str_pay_dart_ford_crossing_charge"
+            android:textColor="@color/color_D8000000"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maintainance_lyt" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/id_title_lyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:gravity="start"
+            android:text="@string/str_pay_dart_ford_crossing_free_flow_crossing"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />
+
+        <RelativeLayout
+            android:id="@+id/rl_about_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_title_lyt">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_about_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_about_this_service"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_crossing_service_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1ssp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_about_service">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_crossing_service_updates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_crossing_service_update"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_contact_dart_charge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@color/white"
+            android:paddingVertical="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_crossing_service_update">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_contact_dart_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_contact_dart_charge"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_understand_charges_fines_lyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@color/white"
+            android:paddingVertical="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_contact_dart_charge">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_understand_charges_fines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_understanding_charges_fines"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_dart_charge_guidance_and_documents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@color/white"
+            android:paddingVertical="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_understand_charges_fines_lyt">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dart_charge_guidance_and_documents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/str_dart_charge_guidance_and_documents"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:src="@drawable/ic_right" />
+        </RelativeLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_now"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/btn_color"
+            android:enabled="true"
+            android:gravity="center"
+            android:padding="@dimen/_7sdp"
+            android:text="@string/str_start_now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

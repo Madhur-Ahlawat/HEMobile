@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_EFEFEF">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:text="@string/str_notifications"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!--   <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/clear_all"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginHorizontal="@dimen/_10sdp"
+               android:layout_marginVertical="@dimen/_10sdp"
+               android:text="@string/str_clear_all"
+               android:textColor="@color/green"
+               android:textSize="@dimen/_14ssp"
+               android:textStyle="normal"
+               app:layout_constraintBottom_toBottomOf="@+id/notification_title"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@+id/notification_title" />
+            -->
+
+        <LinearLayout
+            android:id="@+id/clear_llyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notification_title">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear_selected"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_EFEFEF"
+                android:text="@string/str_clear_selected"
+                android:textAllCaps="false"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                app:cornerRadius="@dimen/_5sdp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_unselect"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_EFEFEF"
+                android:text="@string/str_unselect_all"
+                android:textAllCaps="false"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12ssp"
+                app:cornerRadius="@dimen/_5sdp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notifications_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@color/color_EFEFEF"
+            android:clipToPadding="false"
+            android:clickable="true"
+            android:paddingBottom="@dimen/_190sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notification_title"
+            android:focusable="true" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

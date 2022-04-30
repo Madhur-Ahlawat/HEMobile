@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_navigation_graph"
+    app:startDestination="@id/viewProfile">
+
+    <fragment
+        android:id="@+id/viewProfile"
+        android:name="com.heandroid.ui.account.profile.ViewProfileFragment"
+        tools:layout="@layout/fragment_view_profile">
+        <action
+            android:id="@+id/action_viewProfile_to_personalInfoFragment"
+            app:destination="@id/personalInfoFragment" />
+    </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/personalInfoFragment"
+        android:name="com.heandroid.ui.account.profile.email.ProfilePersonalInfoFragment"
+        tools:layout="@layout/fragment_profile_personal_info">
+        <action
+            android:id="@+id/action_personalInfoFragment_to_postCodeFragment"
+            app:destination="@id/postCodeFragment" />
+        <action
+            android:id="@+id/action_personalInfoFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/emailUpdatedFragment"
+        android:name="com.heandroid.ui.account.profile.email.ProfileEmailSuccessfulFragment"
+        tools:layout="@layout/fragment_profile_email_successful">
+
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/postCodeFragment"
+        android:name="com.heandroid.ui.account.profile.postcode.ProfilePostCodeFragment"
+        tools:layout="@layout/fragment_profile_postcode">
+        <action
+            android:id="@+id/action_postCodeFragment_to_passwordFragment"
+            app:destination="@id/passwordFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordFragment"
+        tools:layout="@layout/fragment_profile_password">
+        <action
+            android:id="@+id/action_passwordFragment_to_pinFragment"
+            app:destination="@id/pinFragment" />
+        <action
+            android:id="@+id/action_passwordFragment_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/pinFragment"
+        android:name="com.heandroid.ui.account.profile.pin.ProfilePinFragment"
+        tools:layout="@layout/fragment_profile_pin">
+
+        <action
+            android:id="@+id/action_pinFragment_to_updatePasswordSuccessfulFragment"
+            app:destination="@id/updatePasswordSuccessfulFragment" />
+    </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="com.heandroid.ui.account.profile.email.ProfileEmailVerificationFragment"
+        tools:layout="@layout/fragment_profile_email_verification">
+
+        <action
+            android:id="@+id/action_emailFragment_to_confirmEmailFragment"
+            app:destination="@id/confirmEmailFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/confirmEmailFragment"
+        android:name="com.heandroid.ui.account.profile.email.ProfileConfirmEmailFragment"
+        tools:layout="@layout/fragment_profile_confirm_email">
+
+        <action
+            android:id="@+id/action_confirmEmailFragment_to_emailUpdatedFragment"
+            app:destination="@id/emailUpdatedFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordUpdateFragment"
+        tools:layout="@layout/fragment_profile_password_update">
+        <action
+            android:id="@+id/action_updatePasswordFragment_to_updatePasswordSuccessfulFragment"
+            app:destination="@id/updatePasswordSuccessfulFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/updatePasswordSuccessfulFragment"
+        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
+        tools:layout="@layout/fragment_profile_password_successful">
+        <action
+            android:id="@+id/action_updatePasswordSuccessfulFragment_to_viewProfile"
+            app:destination="@id/viewProfile"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/viewProfile"/>
+    </fragment>
+
+
+</navigation>

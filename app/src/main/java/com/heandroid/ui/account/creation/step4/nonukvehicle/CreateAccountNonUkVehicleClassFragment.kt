@@ -1,0 +1,211 @@
+package com.heandroid.ui.account.creation.step4.nonukvehicle
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.heandroid.R
+import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.NonUKVehicleModel
+import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.databinding.FragmentCreateAccountNonukVehicleClassBinding
+import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
+import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
+import com.heandroid.utils.VehicleClassTypeConverter
+import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class CreateAccountNonUkVehicleClassFragment : BaseFragment<FragmentCreateAccountNonukVehicleClassBinding>(),
+    AddVehicleListener {
+
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private var mVehicleDetails: VehicleResponse?=null
+    private var loader: LoaderDialog? = null
+    private var mClassType = ""
+    private var nonUKVehicleModel: NonUKVehicleModel? = null
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentCreateAccountNonukVehicleClassBinding.inflate(inflater, container, false)
+
+
+    override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
+        nonUKVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
+
+        if(nonUKVehicleModel?.isFromCreateNonVehicleAccount == true){
+            binding.title.text = "Vehicle registration number: ${nonUKVehicleModel?.vehiclePlate}"
+        }else {
+            binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        }
+
+        binding.classARadioButton.isChecked = true
+        mClassType = "1"
+        binding.classADesc.visible()
+    }
+
+    override fun initCtrl() {
+        binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.apply {
+                    classBRadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.visible()
+                    classBDesc.gone()
+                    classCDesc.gone()
+                    classDDesc.gone()
+                }
+                mClassType = "1"
+            }
+        }
+
+        binding.classBRadioButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.visible()
+                    classCDesc.gone()
+                    classDDesc.gone()
+                }
+                mClassType = "2"
+            }
+        }
+        binding.classCRadioButton.setOnCheckedChangeListener { _, isChecked ->
+
+            if (isChecked) {
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classBRadioButton.isChecked = false
+                    classDRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.gone()
+                    classCDesc.visible()
+                    classDDesc.gone()
+                }
+                mClassType = "3"
+            }
+        }
+        binding.classDRadioButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.apply {
+                    classARadioButton.isChecked = false
+                    classBRadioButton.isChecked = false
+                    classCRadioButton.isChecked = false
+                    classADesc.gone()
+                    classBDesc.gone()
+                    classCDesc.gone()
+                    classDDesc.visible()
+                }
+                mClassType = "4"
+            }
+        }
+
+        binding.cancelButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.continueButton.setOnClickListener {
+
+            if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
+
+                 if(nonUKVehicleModel?.isFromCreateNonVehicleAccount == true){
+                    nonUKVehicleModel?.plateTypeDesc = mClassType
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, nonUKVehicleModel)
+                    findNavController().navigate(R.id.action_nonUKVehicleClassFragment_to_nonUKVehicleListFragment, bundle)
+                }
+                else {
+                    VehicleAddConfirmDialog.newInstance(
+                        mVehicleDetails,
+                        this
+                    ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+                }
+            }
+            else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
+                Snackbar.make(
+                    binding.classAView,
+                    "Please select the checkbox",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (binding.classVehicleCheckbox.isChecked && mClassType.isEmpty()) {
+                Snackbar.make(
+                    binding.classAView,
+                    "Please select the class",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                Snackbar.make(
+                    binding.classAView,
+                    "Please select the class and checkbox",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    override fun observer() {
+        observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
+    }
+
+    override fun onAddClick(details: VehicleResponse) {
+        mVehicleDetails?.apply {
+            plateInfo?.state = "HE"
+            plateInfo?.type = "STANDARD"
+            plateInfo?.vehicleGroup = ""
+            plateInfo?.vehicleComments = "new Vehicle"
+            plateInfo?.planName = ""
+            vehicleInfo?.year = "2022"
+            vehicleInfo?.typeId = null
+            vehicleInfo?.typeDescription = "REGULAR"
+            vehicleInfo?.effectiveStartDate = "" //Utils.currentDateAndTime()
+        }
+
+        loader?.show(requireActivity().supportFragmentManager, "")
+        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
+    }
+
+    private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (status) {
+            is Resource.Success -> {
+                navigateToAddVehicleDoneScreen()
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun navigateToAddVehicleDoneScreen() {
+        val vehicleData = mVehicleDetails
+        vehicleData?.apply {
+            vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+            vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
+        }
+        val bundle = Bundle().apply {
+            putParcelable(Constants.DATA, vehicleData)
+            putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
+        }
+        findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
+    }
+
+}

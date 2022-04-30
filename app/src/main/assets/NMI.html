@@ -1,0 +1,175 @@
+<html>
+<head>
+    <script src="https://secure.nmi.com/token/Collect.js"
+            data-tokenization-key="3prUhx-Kh6ET2-cXJe4H-uZ845r"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+    <style>
+            input {
+                border: 5px inset #687C8D;
+                background-color: #c0c0c0;
+                color: green;
+                font-size: 25px;
+                font-family: monospace;
+                padding: 5px;
+            }
+
+    </style>
+</head>
+<body>
+<form method="post">
+    <table>
+
+        <tr> <td>CC Number</td> <td id="ccNumber"></td> </tr>
+        <tr> <td>CC Exp</td> <td id="ccExp"></td> </tr>
+        <tr> <td>CVV</td> <td id="cvv"></td> </tr>
+        <tr> <td>Name</td> <td id="name"></td> </tr>
+    </table>
+    <br>
+    <button id="demoPayButton" type="button">Proceed</button>
+</form>
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                CollectJS.configure({
+                    "paymentSelector" : "#demoPayButton",
+                    "variant" : "inline",
+                    "styleSniffer" : "false",
+                    "googleFont": "Montserrat:400",
+                    "customCss" : {
+                        "color": "#0000ff",
+                        "background-color": "#d0d0ff"
+                    },
+                    "invalidCss": {
+                        "color": "white",
+                        "background-color": "red"
+                    },
+                    "validCss": {
+                        "color": "black",
+                        "background-color": "#d0ffd0"
+                    },
+                    "placeholderCss": {
+                        "color": "green",
+                        "background-color": "#687C8D"
+                    },
+                    "focusCss": {
+                        "color": "yellow",
+                        "background-color": "#202020"
+                    },
+                    "fields": {
+
+                        "ccnumber": {
+
+                            "selector": "#ccNumber",
+                            "title": "Card Number",
+                            "placeholder": "0000 0000 0000 0000"
+                        },
+                        "ccexp": {
+                            "selector": "#ccExp",
+                            "title": "Card Expiration",
+                            "placeholder": "00 / 00"
+                        },
+                        "cvv": {
+                            "display": "show",
+                            "selector": "#cvv",
+                            "title": "CVV Code",
+                            "placeholder": "***"
+                        },
+
+                        "checkname": {
+                            "display": "show",
+                            "selector": "#name",
+                            "title": "Name on Checking Account",
+                            "placeholder": "Name"
+                        },
+                        "googlePay": {
+                            "selector": ".btnGooglePay",
+                            "shippingAddressRequired": true,
+                            "shippingAddressParameters": {
+                                "phoneNumberRequired": true,
+                                "allowedCountryCodes": ['US', 'CA']
+                            },
+                            "billingAddressRequired": true,
+                            "billingAddressParameters": {
+                                "phoneNumberRequired": true,
+                                "format": "MIN"
+                            },
+                            'emailRequired': true,
+                            "buttonType": "buy",
+                            "buttonColor": "white",
+                            "buttonLocale": "en"
+                        },
+                        'applePay' : {
+                            'selector' : '.btnApplePay',
+                            'shippingMethods': [
+                                {
+                                    'label': 'Free Standard Shipping',
+                                    'amount': '0.00',
+                                    'detail': 'Arrives in 5-7 days',
+                                    'identifier': 'standardShipping'
+                                },
+                                {
+                                    'label': 'Express Shipping',
+                                    'amount': '10.00',
+                                    'detail': 'Arrives in 2-3 days',
+                                    'identifier': 'expressShipping'
+                                }
+                            ],
+                            'shippingType': 'delivery',
+                            'requiredBillingContactFields': [
+                                'postalAddress',
+                                'name'
+                            ],
+                            'requiredShippingContactFields': [
+                                'postalAddress',
+                                'name'
+                            ],
+                            'contactFields': [
+                                'phone',
+                                'email'
+                            ],
+                            'contactFieldsMappedTo': 'shipping',
+                            'lineItems': [
+                                {
+                                    'label': 'Foobar',
+                                    'amount': '3.00'
+                                },
+                                {
+                                    'label': 'Arbitrary Line Item #2',
+                                    'amount': '1.00'
+                                }
+                            ],
+                            'totalLabel': 'foobar',
+                            'type': 'buy',
+                            'style': {
+                                'button-style': 'white-outline',
+                                'height': '50px',
+                                'border-radius': '0'
+                            }
+                        }
+                    },
+                    'price': '1.00',
+                    'currency':'USD',
+                    'country': 'US',
+                    'validationCallback' : function(field, status, message) {
+                        if (status) {
+                            var message = field + " is now OK: " + message;
+                        } else {
+                            var message = field + " is now Invalid: " + message;
+                        }
+                    },
+                    "timeoutDuration" : 10000,
+                    "timeoutCallback" : function () {
+                    },
+                    "fieldsAvailableCallback" : function () {
+                    },
+                    'callback' : function(response) {
+var apiResponse = JSON.stringify(response, null, "");
+                     console.log(apiResponse);
+                     return;
+                    }
+                });
+            });
+
+</script>
+</body>
+</html>

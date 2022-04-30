@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.heandroid.data.model.payment.PaymentScreenModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/E5E5E5">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar_with_title_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <HorizontalScrollView
+            android:id="@+id/tabLikeButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:visibility="visible">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tvPaymentHistory"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@{model.history==false?@color/white:@color/btn_color}"
+                    android:gravity="center"
+                    android:letterSpacing="0"
+                    android:text="@string/payment_history"
+                    android:textAllCaps="false"
+                    android:textColor="@{model.history==false?@color/green:@color/white}"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/green"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tvPaymentMethod"
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@{model.method==false?@color/white:@color/btn_color}"
+                    android:gravity="center"
+                    android:letterSpacing="0"
+                    android:text="@string/payment_methods"
+                    android:textAllCaps="false"
+                    android:textColor="@{model.method==false?@color/green:@color/white}"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/green"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tvTopUp"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@{model.topUp==false?@color/white:@color/btn_color}"
+                    android:gravity="center"
+                    android:letterSpacing="0"
+                    android:text="@string/str_top_up"
+                    android:textAllCaps="false"
+                    android:textColor="@{model.topUp==false?@color/green:@color/white}"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/green"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+        <LinearLayout
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerPayment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph_account_payment" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

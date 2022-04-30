@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey">
+
+        <TextView
+            android:id="@+id/tvProvideDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/cases_history"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emptyDataMessage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            android:text="@string/no_data_to_display"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProvideDetails"
+            app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCaseHistory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_case_history"
+            app:layout_constraintTop_toBottomOf="@id/tvProvideDetails"
+            app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoStart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/go_to_start"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRaiseNewQuery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/green"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/raise_new_query"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:cornerRadius="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/btnGoStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
