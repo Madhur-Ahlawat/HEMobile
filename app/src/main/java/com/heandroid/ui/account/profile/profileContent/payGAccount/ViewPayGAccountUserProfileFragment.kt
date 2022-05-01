@@ -13,9 +13,11 @@ import com.heandroid.databinding.FragmentViewPaygAccountUserBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.*
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ViewPayGAccountUserProfileFragment :  BaseFragment<FragmentViewPaygAccountUserBinding> (),View.OnClickListener{
     private val viewModel : ProfileViewModel by viewModels()
     // private var loader: LoaderDialog? = null

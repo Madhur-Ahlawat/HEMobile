@@ -154,14 +154,14 @@
 
     <fragment
         android:id="@+id/viewPayGAccountProfileFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
+        android:name="com.heandroid.ui.account.profile.profileContent.payGAccount.ViewPayGAccountUserProfileFragment"
         tools:layout="@layout/fragment_view_payg_account_user">
         <action
             android:id="@+id/action_viewPaygAccountProfile_to_UpdatePersonalInfo"
             app:destination="@id/personalInfoFragment" />
         <action
             android:id="@+id/action_viewPaygAccountProfile_to_viewAdditionalDetails"
-            app:destination="@id/viewPrimaryAccountUserProfileFragment" />
+            app:destination="@id/viewPayGAccountAdditionalDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPayGAccountAdditionalDetailsFragment"

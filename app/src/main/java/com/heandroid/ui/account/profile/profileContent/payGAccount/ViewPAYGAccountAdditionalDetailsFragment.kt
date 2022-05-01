@@ -12,9 +12,13 @@ import com.heandroid.databinding.FragmentViewPaygAccountUserBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ViewPAYGAccountAdditionalDetailsFragment : BaseFragment<FragmentViewPaygAccountUserBinding> (), View.OnClickListener{
     private val viewModel : ProfileViewModel by viewModels()
     // private var loader: LoaderDialog? = null
@@ -31,6 +35,20 @@ class ViewPAYGAccountAdditionalDetailsFragment : BaseFragment<FragmentViewPaygAc
 //        loader = LoaderDialog()
 //        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 //        loader?.show(requireActivity().supportFragmentManager,"")
+
+        binding.apply {
+            rlEmailId.gone()
+            rlMobileNo.gone()
+            rlPassword.gone()
+            rlAdditionalDetails.gone()
+
+            rlCompanyName.visible()
+            rlCompanyRegNo.visible()
+            rlFirstName.visible()
+            rlLastName.visible()
+
+        }
+
         viewModel.accountDetail()
     }
 
