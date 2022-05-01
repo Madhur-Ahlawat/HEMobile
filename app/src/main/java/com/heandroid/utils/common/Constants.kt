@@ -2,6 +2,10 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val CATEGORY_RECEIPTS = "Receipts"
+
+    const val COUNTRY_TYPE_UK = "UK"
+    const val COUNTRY_TYPE_NON_UK = "NON UK"
     const val CASE_COMMENTS_KEY = "case_comments_key"
     const val CASES_CATEGORY ="cases_category"
     const val CASES_SUB_CATEGORY ="cases_sub_category"

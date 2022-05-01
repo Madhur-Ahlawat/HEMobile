@@ -375,9 +375,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     }
 
-
-
-
     var mNotificationAdapter: NotificationTypeAdapter? = null
     override fun onLongClick(notificationModel: NotificationModel, pos: Int) {
     }

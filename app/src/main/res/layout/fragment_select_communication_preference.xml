@@ -98,18 +98,17 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
-                            android:visibility="gone"
                             android:background="@color/white"
                             android:text="@string/str_printed_statmnt"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_like_advice"
@@ -117,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_EFEFEF"
                 android:padding="@dimen/_10sdp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintHeight_percent="0.65"
                 app:layout_constraintTop_toBottomOf="@+id/cl_select_pref">
 
@@ -190,12 +189,12 @@
                                 android:textStyle="normal" />
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/change_img"
                                 android:layout_width="@dimen/_52sdp"
-                                app:srcCompat="@drawable/ic_change"
+                                android:layout_height="@dimen/_16sdp"
                                 android:layout_gravity="end"
                                 android:layout_marginEnd="@dimen/_20sdp"
-                                android:id="@+id/change_img"
-                                android:layout_height="@dimen/_16sdp"/>
+                                app:srcCompat="@drawable/ic_change" />
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/numberTextInput"
@@ -206,9 +205,9 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="15dp"
                                 android:focusable="true"
-                                android:visibility="gone"
                                 android:focusableInTouchMode="false"
                                 android:hint="@string/str_mobile_number"
+                                android:visibility="gone"
                                 app:boxStrokeColor="@color/color_00703C"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -219,10 +218,10 @@
                                     android:id="@+id/numberEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
                                     android:imeOptions="actionDone"
                                     android:inputType="phone"
-                                    android:focusableInTouchMode="true"
-                                    android:focusable="true"
                                     android:singleLine="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_13ssp" />
@@ -246,6 +245,44 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/you_can_monthly_statements_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/cl_like_advice"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/str_you_have_opted_to_receive_by_post_msg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toTopOf="@+id/agreeCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/agreeCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/you_can_monthly_statements_post"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:padding="@dimen/_5sdp"
+                android:buttonTint="@color/green"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center_vertical"
+                android:text="@string/str_i_agree_txt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="0dp"
@@ -261,7 +298,7 @@
                 app:cornerRadius="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_like_advice" />
+                app:layout_constraintTop_toBottomOf="@+id/agreeCheckBox" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
@@ -269,6 +306,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
                 android:backgroundTint="@color/btn_color"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/str_cancel"
