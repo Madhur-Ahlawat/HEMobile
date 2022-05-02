@@ -21,11 +21,11 @@ object Constants {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val FILE_NAMES_KEY=" file_names_key"
+    const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
-        const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
+    const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
     const val PERSONAL_DETAILS = "personal_details"
     const val POST_CODE_ADDRESS = "post_code_address"
     const val PASSWORD = "password"
@@ -126,9 +126,8 @@ object Constants {
     const val UPDATE_PIN_FLOW = "update pin flow"
     const val VEHICLE_NO = "VehicleNo"
     const val COUNTRY_BUSINESS = "country"
-    const val NON_UK_VEHICLE_DATA =  "Non_UK_Model"
+    const val NON_UK_VEHICLE_DATA = "Non_UK_Model"
     const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
-
-
+    const val PENDING_STATUS = "PENDING"
 }
