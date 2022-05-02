@@ -2,18 +2,15 @@ package com.heandroid.ui.account.creation.step4.nonukvehicle
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
-import com.heandroid.data.model.account.CreateAccountNonVehicleModel
+import com.heandroid.data.model.account.NonUKVehicleModel
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.databinding.FragmentCreateAccountNonukVehicleClassBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -34,7 +31,7 @@ class CreateAccountNonUkVehicleClassFragment : BaseFragment<FragmentCreateAccoun
     private var mVehicleDetails: VehicleResponse?=null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
-    private var createAccountNonVehicleModel: CreateAccountNonVehicleModel? = null
+    private var nonUKVehicleModel: NonUKVehicleModel? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,10 +43,10 @@ class CreateAccountNonUkVehicleClassFragment : BaseFragment<FragmentCreateAccoun
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
-        createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
+        nonUKVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
 
-        if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
-            binding.title.text = "Vehicle registration number: ${createAccountNonVehicleModel?.vehiclePlate}"
+        if(nonUKVehicleModel?.isFromCreateNonVehicleAccount == true){
+            binding.title.text = "Vehicle registration number: ${nonUKVehicleModel?.vehiclePlate}"
         }else {
             binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
         }
@@ -127,10 +124,10 @@ class CreateAccountNonUkVehicleClassFragment : BaseFragment<FragmentCreateAccoun
 
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
 
-                 if(createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true){
-                    createAccountNonVehicleModel?.plateTypeDesc = mClassType
+                 if(nonUKVehicleModel?.isFromCreateNonVehicleAccount == true){
+                    nonUKVehicleModel?.plateTypeDesc = mClassType
                     val bundle = Bundle()
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, createAccountNonVehicleModel)
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, nonUKVehicleModel)
                     findNavController().navigate(R.id.action_nonUKVehicleClassFragment_to_nonUKVehicleListFragment, bundle)
                 }
                 else {

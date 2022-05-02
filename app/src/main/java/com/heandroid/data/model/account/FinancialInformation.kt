@@ -2,6 +2,7 @@ package com.heandroid.data.model.account
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.heandroid.data.model.communicationspref.AvailablePaymentsModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -21,7 +22,7 @@ data class FinancialInformation(
     @SerializedName("editCardExpMonth") val editCardExpMonth: Int,
     @SerializedName("editCardExpYear") val editCardExpYear: Int,
     @SerializedName("maskedNumber") val maskedNumber: String,
-    @SerializedName("paymentTypeInfo") val paymentTypeInfo: Double,
-    @SerializedName("availablePayments") val availablePayments: Double
+    @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?=null,
+    @SerializedName("availablePayments") val availablePayments: ArrayList<AvailablePaymentsModel>? = null
 
-    ) : Parcelable
+) : Parcelable

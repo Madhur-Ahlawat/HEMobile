@@ -98,7 +98,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         //loader?.show(requireActivity().supportFragmentManager, "")
-        viewModel.deleteAlertItem()
+//        viewModel.deleteAlertItem()
         observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
     }
 

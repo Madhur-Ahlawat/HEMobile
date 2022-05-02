@@ -85,7 +85,7 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
-                        if(status?.equals("500")){
+                        if(status.equals("500")){
                             loader?.dismiss()
                             showError(binding.root,message)
                         }
