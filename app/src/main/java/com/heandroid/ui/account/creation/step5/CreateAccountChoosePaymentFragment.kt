@@ -43,7 +43,7 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
                                                          vehicleColor = "White", vehicleComments = "test",
                                                          vehicleMake = "BMW", vehicleModel = "M3",
                                                          vehiclePlate = "OA05NNA", vehicleYear = "2025",
-                                                         vehicleStateType = "HE"))
+                                                         vehicleStateType = "HE", "", ""))
 
 /*                vehicle?.add(CreateAccountVehicleModel(plateCountry = plateInfo?.country,
                                                        plateTypeDesc = *//*vehicleInfo?.vehicleClassDesc*//*"STANDARD",

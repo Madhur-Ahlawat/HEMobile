@@ -17,6 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/roboto_bold"
             android:textStyle="bold" />
 
         <TextView
@@ -34,15 +35,14 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/personal_account"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_15sdp"
             android:text="@string/str_business_account_intro"
             android:textColor="@color/black"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="15dp"
             android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/roboto_regular"
             android:textStyle="normal"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

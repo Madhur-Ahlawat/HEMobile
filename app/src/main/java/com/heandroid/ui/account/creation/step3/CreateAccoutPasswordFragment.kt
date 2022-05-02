@@ -41,6 +41,9 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
 
         when(model?.planType) {
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            Constants.BUSINESS_ACCOUNT -> {
+                binding.tvLabel.text=getString(R.string.business_prepay_account)
+            }
             else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
     }

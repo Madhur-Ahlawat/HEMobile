@@ -14,5 +14,7 @@ data class NonUKVehicleModel (
     var vehiclePlate: String?="",
     var vehicleYear: String?="",
     var vehicleClass: String?="",
-    var isFromCreateNonVehicleAccount: Boolean? = false
+    var isFromCreateNonVehicleAccount: Boolean? = false,
+    var vehicleClassDesc: String?="",
+    var vehicleGroup: String?=""
 ) : Parcelable

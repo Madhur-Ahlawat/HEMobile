@@ -225,6 +225,7 @@
                 android:id="@+id/businessAccountParent"
                 android:layout_width="match_parent"
                 android:visibility="visible"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -376,7 +377,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/alternative_number"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"

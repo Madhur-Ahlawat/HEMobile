@@ -21,12 +21,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class BusinessVehicleTitleFragment: BaseFragment<FragmentBusinessVehicleTitleFragmentBinding>(),
     View.OnClickListener {
 
+    private var requestModel: CreateAccountRequestModel? = null
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) =  FragmentBusinessVehicleTitleFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
+        requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
     }
 
     override fun initCtrl() {

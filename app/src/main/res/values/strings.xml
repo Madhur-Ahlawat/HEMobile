@@ -705,11 +705,11 @@
     <string name="crossings">Crossings</string>
     <string name="top_up_recommendation">Top-up recommendations</string>
     <string name="top_up_calculate">calculate top up</string>
-    <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000. Please note that you can change these amounts by manually entering the amounts you require.</string>
+    <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000.\nPlease note that you can change these amounts by manually entering the amounts you require.</string>
     <string name="business_prepay_auto_topup">Business Auto topup</string>
     <string name="step_2_of_5">step 2 of 5</string>
-    <string name="str_business_prepay_account">Business pre-pay account information</string>
-    <string name="company_name">Company name</string>
+    <string name="str_business_prepay_account_information">Business pre-pay account information</string>
+    <string name="str_business_prepay_account">Business pre-pay account</string>
     <string name="company_reg_number">Company reg. number</string>
     <string name="alternative_number">Alternative number</string>
     <string name="vehicle_not_recognized">The vehicle registration number is not recognised. You have to self declare the details below</string>
@@ -723,6 +723,7 @@
     <string name="uk_vehicle">UK</string>
     <string name="step_4to5">Step 4 of 5</string>
     <string name="str_A">A</string>
+    <string name="business_topup_recommendation">Business Topup Recommendation</string>
     <string name="company_reg_no">Company registration number</string>
     <string name="company_name">Company Name</string>
     <string name="str_account_holder_profile">Account holder profile</string>

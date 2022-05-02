@@ -18,6 +18,7 @@ import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.Constants.PERSONAL_ACCOUNT
 import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -93,14 +94,12 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 Utils.mobileNumber(businessMobNo.text?.toString()) == "Password not matched" -> setError(businessMobNo, "Please enter valid mobile number (0-9, +)")
                 else -> {
                     val bundle = Bundle()
-                    bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
                     findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment, bundle)
                 }
             }
         }
         }
-
-
 
     private fun setError(textInputEditText: TextInputEditText, errorMsg: String){
         textInputEditText.error = errorMsg
@@ -112,9 +111,14 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 binding.tvPersonaleInfo.text = "Company Info"
                 model?.planType = BUSINESS_ACCOUNT
                 model?.enable = true
+                binding.businessAccountParent.visible()
+                binding.personalAccountParent.gone()
+
             }
             else -> {
                 binding.tvPersonaleInfo.text = "Personal Info"
+                binding.personalAccountParent.visible()
+                binding.businessAccountParent.gone()
             }
         }
     }
@@ -123,7 +127,8 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
         when(model?.planType) {
             PAYG ->{
                 binding.tilMobileNo.gone()
-                binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+                binding.tvLabel.text=getString(R.string.pay_as_you_go)
+            }
 
             BUSINESS_ACCOUNT -> {
                 binding.tvLabel.text=getString(R.string.business_prepay_account)
