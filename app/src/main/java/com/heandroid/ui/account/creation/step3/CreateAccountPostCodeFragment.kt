@@ -16,6 +16,7 @@ import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.BUSINESS_ACCOUNT
 import com.heandroid.utils.common.Constants.PAYG
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PAY_AS_U_GO
@@ -48,13 +49,22 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
+        accountType()
+
         when(model?.planType){
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            BUSINESS_ACCOUNT -> { binding.tvLabel.text=getString(R.string.business_prepay_account) }
             else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    }
+
+    private fun accountType() {
+        when(model?.accountType){
+            BUSINESS_ACCOUNT -> { model?.planType = BUSINESS_ACCOUNT }
+        }
     }
 
     override fun initCtrl() {
@@ -74,10 +84,33 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         when(v?.id) {
 
             R.id.btnAction -> {
-                val bundle = Bundle().apply {
-                    putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
+
+                if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
+                    }
+                    findNavController().navigate(
+                        R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
+                        bundle
+                    )
+
+                } else {
+
+                    var country = "UK"
+                    country = if (!binding.switchViewBusiness.isChecked) {
+                        "Non-UK"
+                    } else {
+                        "UK"
+                    }
+                    model?.countryType = country
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
+                    }
+                    findNavController().navigate(
+                        R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
+                        bundle
+                    )
                 }
-                findNavController().navigate(R.id.action_postcodeFragment_to_createAccoutPasswordFragment,bundle)
             }
             R.id.btnFindAddress -> {
                 if(binding.tiePostCode.length()>0) {

@@ -42,6 +42,9 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
 
         when(model?.planType){
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            Constants.BUSINESS_ACCOUNT -> {
+                binding.tvLabel.text=getString(R.string.business_prepay_account)
+            }
             else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
 
@@ -90,12 +93,10 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 }
                 when(model?.planType){
                     PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
+                    Constants.BUSINESS_ACCOUNT -> { findNavController().navigate(R.id.action_createAccountPinFragment_to_businessVehicleTitleFragment, bundle) }
                     else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
                 }
-
             }
-
         }
     }
-
 }
