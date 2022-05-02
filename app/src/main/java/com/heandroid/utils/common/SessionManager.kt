@@ -21,10 +21,12 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val USER_TOKEN = "user_token"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER="account_number"
+        const val ACCOUNT_TYPE="account_type"
         const val SECURITY_CODE="security_code"
         const val SESSION_TIME="session_time"
         const val SECURITY_CODE_OBJ="security_code_obj"
         const val IS_USER_LOGIN="is_user_login"
+        const val IS_SECONDARY="is_secondary_user"
     }
 
     /**
@@ -118,6 +120,26 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
 //        return gson.fromJson(json, GetSecurityCodeResponseModel::class.java)
 //    }
 
+
+    fun setAccountType(type: String?) {
+        val editor = prefs.edit()
+        editor.putString(ACCOUNT_TYPE,type)
+        editor.apply()
+    }
+
+    fun getAccountType() : String?{
+        return prefs.getString(ACCOUNT_TYPE ,null)
+    }
+
+    fun isSecondaryUser(isSecondaryUser: Boolean) {
+        val editor = prefs.edit()
+        editor.putBoolean(IS_SECONDARY,isSecondaryUser)
+        editor.apply()
+    }
+
+    fun getSecondaryUser() : Boolean{
+        return prefs.getBoolean(IS_SECONDARY ,false)
+    }
 
 
 }

@@ -710,7 +710,6 @@
     <string name="step_2_of_5">step 2 of 5</string>
     <string name="str_business_prepay_account_information">Business pre-pay account information</string>
     <string name="str_business_prepay_account">Business pre-pay account</string>
-    <string name="company_name">Company name</string>
     <string name="company_reg_number">Company reg. number</string>
     <string name="alternative_number">Alternative number</string>
     <string name="vehicle_not_recognized">The vehicle registration number is not recognised. You have to self declare the details below</string>
@@ -725,6 +724,10 @@
     <string name="step_4to5">Step 4 of 5</string>
     <string name="str_A">A</string>
     <string name="business_topup_recommendation">Business Topup Recommendation</string>
+    <string name="company_reg_no">Company registration number</string>
+    <string name="company_name">Company Name</string>
+    <string name="str_account_holder_profile">Account holder profile</string>
+    <string name="str_additional_details">Additional details (optional)</string>
     <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
     <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
     <string name="str_priority">Priority</string>
