@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/addTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_10sdp"
@@ -19,6 +19,21 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStep"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center_vertical"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:text="@string/step_4to5"
+        android:textSize="@dimen/_15ssp"
+        android:layout_marginEnd="@dimen/_10ssp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vehicleDescription"

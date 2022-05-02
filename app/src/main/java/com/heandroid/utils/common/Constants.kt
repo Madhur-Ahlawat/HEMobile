@@ -124,6 +124,8 @@ object Constants {
     const val VEHICLE_NO = "VehicleNo"
     const val COUNTRY_BUSINESS = "country"
     const val NON_UK_VEHICLE_DATA =  "Non_UK_Model"
+    const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
+    const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
 
 
 }

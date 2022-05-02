@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/findYourVehicleFragment">
+    app:startDestination="@id/emailVerification">
 
 
    <!-- Step 1 -->
@@ -89,6 +89,18 @@
         tools:layout="@layout/fragment_business_prepay_auto_topup" >
 
         <action
+            android:id="@+id/action_businessPrePayAutoTopUpFragment_to_businessTopUpRecommendationFragment"
+            app:destination="@id/businessTopUpRecommendataionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/businessTopUpRecommendataionFragment"
+        android:name="com.heandroid.ui.account.creation.step2.businessaccount.BusinessTopUpRecommendationFragment"
+        android:label="@string/business_topup_recommendation"
+        tools:layout="@layout/fragment_business_top_up_recommendation" >
+
+        <action
             android:id="@+id/action_businessPrePayAutoTopUpFragment_to_personalDetailsEntryFragment"
             app:destination="@id/personalDetailsEntryFragment" />
 
@@ -125,6 +137,7 @@
         <action
             android:id="@+id/action_createAccoutPasswordFragment_to_createAccoutPinFragment"
             app:destination="@id/createAccoutPinFragment" />
+
     </fragment>
 
     <fragment
@@ -139,6 +152,10 @@
         <action
             android:id="@+id/action_createAccoutPinFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_createAccountPinFragment_to_businessVehicleTitleFragment"
+            app:destination="@+id/businessVehicleTitleFragment" />
 
     </fragment>
 
@@ -192,6 +209,11 @@
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleNonUKMakeFragment"
             app:destination="@+id/businessNonUKMakeFragment"/>
+
+        <action
+            android:id="@+id/action_findYourVehicleFragment_to_businessVehicleDetailFragment"
+            app:destination="@id/businessVehicleDetailFragment"
+            />
 
     </fragment>
 
