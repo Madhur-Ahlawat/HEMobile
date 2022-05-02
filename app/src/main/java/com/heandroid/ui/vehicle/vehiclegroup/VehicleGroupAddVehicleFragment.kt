@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
+import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.VehicleGroupResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleGroupAddVehicleBinding
 import com.heandroid.databinding.FragmentVehicleGroupBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryPaginationAdapter
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +37,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
     private var paginationNumberAdapter: AccountPaymentHistoryPaginationAdapter? = null
     private var paginationLinearLayoutManager: LinearLayoutManager? = null
     private var vehicleGroup: VehicleGroupResponse? = null
+    private var loader: LoaderDialog? = null
     private val countPerPage = 10
     private var searchVehicleNumber: String? = null
     private var startIndex = 1
@@ -44,6 +50,8 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         vehicleGroup = arguments?.getParcelable(Constants.DATA)
 
@@ -93,8 +101,35 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdatedVehicle)
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
-        observe(vehicleGroupMgmtViewModel.searchVehicleVal, ::handleVehicleListData)
+        observe(
+            vehicleGroupMgmtViewModel.searchVehicleVal,
+            ::handleVehicleListData
+        )
+    }
+
+    private fun handleUpdatedVehicle(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                requireActivity().showToast("vehicle added successfully")
+                vehicleGroup?.let {
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.DATA, it)
+                    }
+                    findNavController().navigate(
+                        R.id.action_vehicleGroupAddVehicleFragment_to_vehicleGroupFragment,
+                        bundle
+                    )
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
@@ -171,14 +206,17 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 //                ).show(childFragmentManager, "")
             }
             R.id.addVehicleBtn -> {
-                vehicleGroup?.let {
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.DATA, it)
+                if (checkedVehicleList.size > 1) {
+                    requireActivity().showToast("multiple vehicles cant be added, it is in dev")
+                } else if (checkedVehicleList.size == 1) {
+                    checkedVehicleList[0]?.let {
+                        val request = it.apply {
+                            newPlateInfo = plateInfo
+                            newPlateInfo?.vehicleGroup = vehicleGroup?.groupName.toString()
+                        }
+                        loader?.show(requireActivity().supportFragmentManager, "")
+                        vehicleMgmtViewModel.updateVehicleApi(request)
                     }
-                    findNavController().navigate(
-                        R.id.action_vehicleGroupAddVehicleFragment_to_vehicleGroupFragment,
-                        bundle
-                    )
                 }
             }
             R.id.cancelBtn -> {

@@ -4,17 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
+import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.VehicleGroupResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleGroupBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryPaginationAdapter
+import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,11 +30,13 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     private var vehicleResponseList: ArrayList<VehicleResponse?> = ArrayList()
     private lateinit var vehiclesAdapter: VehicleGroupVehiclesAdapter
     private val vehicleGroupMgmtViewModel: VehicleGroupMgmtViewModel by viewModels()
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var checkedVehicleList: ArrayList<VehicleResponse?> = ArrayList()
     private var paginationNumberAdapter: AccountPaymentHistoryPaginationAdapter? = null
     private var paginationLinearLayoutManager: LinearLayoutManager? = null
     private var vehicleGroup: VehicleGroupResponse? = null
     private val countPerPage = 10
+    private var loader: LoaderDialog? = null
     private var searchVehicleNumber: String? = null
     private var startIndex = 1
     private var noOfPages = 1
@@ -44,6 +51,8 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
 
         vehicleGroup = arguments?.getParcelable(Constants.DATA)
 
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         paginationNumberAdapter =
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
 
@@ -90,8 +99,23 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdatedVehicle)
         observe(vehicleGroupMgmtViewModel.vehicleListVal, ::handleVehicleListData)
         observe(vehicleGroupMgmtViewModel.searchVehicleVal, ::handleVehicleListData)
+    }
+
+    private fun handleUpdatedVehicle(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                requireActivity().showToast("vehicle removed successfully")
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
@@ -184,7 +208,18 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 }
             }
             R.id.removeVehicleBtn -> {
-
+                if (checkedVehicleList.size > 1) {
+                    requireActivity().showToast("multiple vehicles cant be removed, it is in dev")
+                } else if (checkedVehicleList.size == 1) {
+                    checkedVehicleList[0]?.let {
+                        val request = it.apply {
+                            newPlateInfo = plateInfo
+                            newPlateInfo?.vehicleGroup = ""
+                        }
+                        loader?.show(requireActivity().supportFragmentManager, "")
+                        vehicleMgmtViewModel.updateVehicleApi(request)
+                    }
+                }
             }
             R.id.bulkUploadBtn -> {
 

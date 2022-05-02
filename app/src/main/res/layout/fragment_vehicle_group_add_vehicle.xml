@@ -259,7 +259,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:backgroundTint="@{bulkUploadModel==true?@color/btn_color:@color/E5E5E5}"
             android:clickable="@{bulkUploadModel}"
             android:includeFontPadding="true"

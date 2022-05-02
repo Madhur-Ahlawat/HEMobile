@@ -154,6 +154,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
             R.id.tvFilter -> {
                 openFilterDrawer()
                 checkFilterApplyBtn()
+                if (isFilterVehicleResponse)
                 viewModel.getVehicleInformationApi()
             }
             R.id.closeImage -> {
@@ -240,12 +241,14 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun callFilterPaymentHistoryData() {
+        dateRangeModel.startDate = null
+        dateRangeModel.endDate = null
         if (binding.rbSpecificDay.isChecked) {
             dateRangeModel.startDate =
                 DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
             dateRangeModel.endDate =
                 DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
-        } else {
+        } else if (binding.rbDateRange.isChecked){
             dateRangeModel.startDate = DateUtils.convertDateToMonth(binding.edFrom.text.toString())
             dateRangeModel.endDate = DateUtils.convertDateToMonth(binding.edTo.text.toString())
         }

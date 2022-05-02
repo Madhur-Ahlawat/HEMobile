@@ -738,7 +738,7 @@
     <string name="str_clear_u"><u>clear</u></string>
     <string name="str_you_have_opted_to_receive_by_post_msg">You can opt to receive your monthly statements by post by checking the box below. This is a chargeable service</string>
     <string name="str_i_agree_txt">I agree to a monthly charge of £ 7.00 being taken from my registered card to receive your monthly account statements</string>
-    </resources>
+
     <string name="group_mngmt">Group management</string>
     <string name="create_vehicle_group">Create new group</string>
     <string name="rename_vehicle_group">Rename group</string>
