@@ -23,7 +23,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnActive"
-            android:layout_width="@dimen/_64sdp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_38sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:backgroundTint="@color/green"
@@ -47,7 +47,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnInvited"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="@dimen/_64sdp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_38sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_12sdp"

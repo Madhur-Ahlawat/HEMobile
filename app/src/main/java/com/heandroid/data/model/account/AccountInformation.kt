@@ -2,6 +2,7 @@ package com.heandroid.data.model.account
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.heandroid.data.model.communicationspref.CommunicationPrefsModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -40,7 +41,7 @@ data class AccountInformation(
     @SerializedName("challengeQuestionThree") val challengeQuestionThree: String,
     @SerializedName("challengeAnswerThree") val challengeAnswerThree: String,
     @SerializedName("languagePref") val languagePref: String,
-    @SerializedName("communicationPreferences") val communicationPreferences: String,
+    @SerializedName("communicationPreferences") val communicationPreferences: ArrayList<CommunicationPrefsModel>? = null,
     @SerializedName("paymentTypeInfo") val paymentTypeInfo: String,
     @SerializedName("stmtDelivaryType") val stmtDelivaryType: String
 ) : Parcelable

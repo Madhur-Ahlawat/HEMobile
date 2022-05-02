@@ -1,10 +1,10 @@
 package com.heandroid.listener
 
-import androidx.fragment.app.DialogFragment
+import com.heandroid.ui.account.communication.UpdatePhoneNumberDialog
 
 interface UpdatePhoneNumberClickListener {
 
-    /*fun onSaveClickedListener(number: String , d: UpdatePhoneNumberDialog)
+    fun onSaveClickedListener(number: String , d: UpdatePhoneNumberDialog)
     fun onCancelClickedListener(d: UpdatePhoneNumberDialog)
-    fun onCrossImageClickedListener(d: UpdatePhoneNumberDialog)*/
+    fun onCrossImageClickedListener(d: UpdatePhoneNumberDialog)
 }

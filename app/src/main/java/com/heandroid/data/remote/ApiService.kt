@@ -15,6 +15,8 @@ import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.data.model.auth.forgot.password.*
 import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -124,6 +126,9 @@ interface ApiService {
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
 
+    @POST(READ_ALERT)
+    suspend fun readAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
+
     @POST(EMAIL_VERIFICATION_REQUEST)
     suspend fun sendEmailVerification(@Query("agencyId") agencyId: String? = AGENCY_ID,
                                       @Body request: EmailVerificationRequest?): Response<EmailVerificationResponse?>?
@@ -180,6 +185,12 @@ interface ApiService {
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData():Response<AccountResponse?>?
+
+    @GET(ACCOUNT_SETTINGS)
+    suspend fun getAccountSettings():Response<AccountResponse?>?
+
+    @PUT(UPDATE_COMMUNICATION_PREFS)
+    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue() :Response<ThresholdAmountApiResponse?>?
