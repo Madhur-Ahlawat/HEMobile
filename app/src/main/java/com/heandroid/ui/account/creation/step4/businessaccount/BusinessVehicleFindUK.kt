@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.*
@@ -27,7 +25,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var vehicleNumber: String? = null
+    private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
 
     private var loader: LoaderDialog? = null
@@ -44,6 +42,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
         binding.vehicleNumber.text = requestModel?.vehicleNo
         binding.countryBusiness.text = requestModel?.countryType
 
@@ -117,23 +116,20 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
         when(resource) {
             is Resource.Success -> {
 
-                    // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-                    retrieveVehicle?.apply {
-                        val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
-                        val accountVehicleModel = CreateAccountVehicleModel(
-                            requestModel?.countryType, "STANDARD", vehicleColor, "",
-                            vehicleMake, vehicleModel, vehicleNumber, "2022", "HE"
-                        )
-                        requestModel?.classType = VehicleClassTypeConverter.toClassName(vehicleClass!!)
+              // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
+               requestModel?.classType = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
-                        vehicleList.add(accountVehicleModel)
-                        requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
+               nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
+               nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
+               nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
 
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                    findNavController().navigate(R.id.action_businessUKListFragment_to_businessVehicleDetailFragment, bundle)
-                }
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+
+                findNavController().navigate(R.id.action_businessUKListFragment_to_businessVehicleDetailFragment, bundle)
             }
+
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -141,6 +137,4 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
             }
         }
     }
-
-
 }
