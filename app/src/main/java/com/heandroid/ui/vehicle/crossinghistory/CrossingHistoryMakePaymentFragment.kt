@@ -12,6 +12,8 @@ import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Utils.getDirection
 import com.heandroid.utils.common.Utils.loadStatus
+import com.heandroid.utils.extn.changeBackgroundColor
+import com.heandroid.utils.extn.changeTextColor
 
 class CrossingHistoryMakePaymentFragment :
     BaseFragment<FragmentCrossingHistoryMakePaymentBinding>(), View.OnClickListener {
@@ -34,7 +36,11 @@ class CrossingHistoryMakePaymentFragment :
                 direction.text = getDirection(exitDirection)
                 vehicle.text = plateNumber
                 transactionId.text = transactionNumber
-                loadStatus(prepaid, status)
+//                loadStatus(prepaid, status)
+                status.text = tranSettleStatus
+                status.changeTextColor(R.color.color_10403C)
+                status.changeBackgroundColor(R.color.color_CCE2D8)
+
                 loadMakePaymentStatus(prepaid)
             }
         }

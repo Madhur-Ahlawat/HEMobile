@@ -25,8 +25,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:visibility="visible"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/communication_preferences_nav_graph"
-            />
+            app:navGraph="@navigation/communication_preferences_nav_graph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

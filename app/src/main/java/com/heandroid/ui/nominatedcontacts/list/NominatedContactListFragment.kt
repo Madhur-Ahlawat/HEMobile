@@ -26,7 +26,8 @@ import java.lang.Exception
 
 
 @AndroidEntryPoint
-class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBinding>(), View.OnClickListener, NominatedContactListener {
+class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBinding>(),
+    View.OnClickListener, NominatedContactListener {
     private val viewModel: NominatedContactListViewModel by viewModels()
     private val list: MutableList<SecondaryAccountData?> = ArrayList()
 
@@ -221,11 +222,11 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                         "ListFrag",
                         " handleResendActivationMail   succes called ${status.data?.message}   "
                     )
-                    if(status.data?.status.equals("0")){
-                        showError(binding.root,getString(R.string.resend_success))
+                    if (status.data?.status.equals("0")) {
+                        showError(binding.root, getString(R.string.resend_success))
+                    } else {
+                        showError(binding.root, status.errorMsg)
                     }
-
-                    showError(binding.root, status.data?.message)
 
                 }
                 is Resource.DataError -> {
@@ -276,7 +277,11 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 data?.let {
                     if (it.secAccountRowId.isNotEmpty()) {
                         val model =
-                            TerminateRequestModel(it.secAccountRowId, "TERMINATED", data.phoneNumber)
+                            TerminateRequestModel(
+                                it.secAccountRowId,
+                                "TERMINATED",
+                                data.phoneNumber
+                            )
                         viewModel.terminateNominatedContact(model)
                     }
 
