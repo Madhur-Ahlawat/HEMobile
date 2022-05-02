@@ -25,7 +25,6 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
 
     private var loader: LoaderDialog? = null
@@ -42,7 +41,6 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
         binding.vehicleNumber.text = requestModel?.vehicleNo
         binding.countryBusiness.text = requestModel?.countryType
 
@@ -117,11 +115,13 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
             is Resource.Success -> {
 
               // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-               requestModel?.classType = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
-               nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
-               nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
-               nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
+               val nonUKVehicleModel = NonUKVehicleModel()
+               nonUKVehicleModel.vehicleMake = retrieveVehicle?.vehicleMake
+               nonUKVehicleModel.vehicleModel = retrieveVehicle?.vehicleModel
+               nonUKVehicleModel.vehicleColor = retrieveVehicle?.vehicleColor
+               nonUKVehicleModel.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
+
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

@@ -101,10 +101,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
            if(country == "UK")
                 findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleUKListFragment, bundle)
-             else {
-
+             else
                getVehicleDataFromDVRM()
-           }
     }
 
     private fun standardAccountVehicle(country: String) {
@@ -114,10 +112,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
             bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
             bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
-            findNavController().navigate(
-                R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment,
-                bundle
-            )
+            findNavController().navigate(R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment, bundle)
         } else {
             val nonVehicleModel = NonUKVehicleModel()
             nonVehicleModel.plateCountry = "Non-UK"
@@ -184,11 +179,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             is Resource.Success -> {
 
                 // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-                requestModel?.classType = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
-
                 nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
                 nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
                 nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
+                nonUKVehicleModel?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

@@ -42,7 +42,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
             ftvehicleList = null, creditCardType = "", creditCardNumber = "", maskedNumber = "", creditCExpMonth = "",
             creditCExpYear = "", securityCode = "", cardFirstName = "", cardMiddleName = "", cardLastName = "",
             billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
-            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, classType = "", vehicleNo = "")
+            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "")
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()

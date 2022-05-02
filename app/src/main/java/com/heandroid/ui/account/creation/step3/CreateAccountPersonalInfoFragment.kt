@@ -94,7 +94,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 Utils.mobileNumber(businessMobNo.text?.toString()) == "Password not matched" -> setError(businessMobNo, "Please enter valid mobile number (0-9, +)")
                 else -> {
                     val bundle = Bundle()
-                    bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
                     findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment, bundle)
                 }
             }
