@@ -1,6 +1,7 @@
 package com.heandroid.ui.account.profile.pin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.UpdateProfileRequest
 import com.heandroid.data.model.profile.AccountPinChangeModel
+import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentProfilePinBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
@@ -31,6 +34,9 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
     override fun init() {
         binding.enable = false
+        binding.enable = true
+        binding.data = arguments?.getParcelable(Constants.DATA)
+        // binding.data?.personalInformation?.confirmPassword=binding.data?.accountInformation?.password
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -63,6 +69,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     }
 
     override fun observer() {
+        observe(viewModel.updateProfileApiVal, ::handleUpdateProfileDetail)
         observe(viewModel.updateAccountPinApiVal, ::handlePinChange)
     }
 
@@ -74,7 +81,10 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                     putBoolean(Constants.UPDATE_PIN_FLOW, true)
                     putParcelable(Constants.DATA, arguments?.getParcelable(Constants.DATA))
                 }
-                findNavController().navigate(R.id.action_pinFragment_to_updatePasswordSuccessfulFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_pinFragment_to_updatePasswordSuccessfulFragment,
+                    bundle
+                )
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -89,8 +99,9 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
         hideKeyboard()
         when (v?.id) {
             R.id.btnSave -> {
-                val digitPin =
-                    binding.tvPinOne.text.toString() + "" + binding.tvPinTwo.text.toString() + "" + binding.tvPinThree.text.toString() + "" + binding.tvPinFour.text.toString()
+                loader?.show(requireActivity().supportFragmentManager, "")
+                updateUserProfile()
+
             }
 
             R.id.btnChangePin -> {
@@ -99,6 +110,35 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
         }
     }
+
+    private fun updateUserProfile() {
+
+        binding.data?.personalInformation?.run {
+            var request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneNumber ?: "",
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = ""
+            )
+
+            viewModel.updateUserDetails(request)
+        }
+
+    }
+
 
     private fun changeAccountPin() {
         loader?.show(requireActivity().supportFragmentManager, "")
@@ -118,4 +158,19 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                 binding.tvPinFour.text.toString().isNotEmpty()
     }
 
+
+    private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                Log.d("Success", "Updated successfully")
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+    }
 }

@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="data"
+            type="com.heandroid.data.model.profile.ProfileDetailModel" />
         <variable
             name="enable"
             type="Boolean" />
