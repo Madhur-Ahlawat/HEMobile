@@ -723,5 +723,19 @@
     <string name="uk_vehicle">UK</string>
     <string name="step_4to5">Step 4 of 5</string>
     <string name="str_A">A</string>
+    <string name="company_reg_no">Company registration number</string>
+    <string name="company_name">Company Name</string>
+    <string name="str_account_holder_profile">Account holder profile</string>
+    <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
+    <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
+    <string name="str_priority">Priority</string>
+    <string name="str_standard">Standard</string>
+    <string name="str_your_notifications">Your Notifications</string>
+    <string name="str_select_all"><u>Select all</u></string>
+    <string name="str_clear_notification"><u>Clear notification</u></string>
+    <string name="str_clear_u"><u>clear</u></string>
+    <string name="str_you_have_opted_to_receive_by_post_msg">You can opt to receive your monthly statements by post by checking the box below. This is a chargeable service</string>
+    <string name="str_i_agree_txt">I agree to a monthly charge of £ 7.00 being taken from my registered card to receive your monthly account statements</string>
 </resources>
 
