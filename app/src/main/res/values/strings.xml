@@ -691,5 +691,15 @@
     <string name="str_clear_underlined"><u>Clear</u></string>
     <string name="update_password_success">Password has been updated successfully</string>
     <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
+    <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
+    <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
+    <string name="str_priority">Priority</string>
+    <string name="str_standard">Standard</string>
+    <string name="str_your_notifications">Your Notifications</string>
+    <string name="str_select_all"><u>Select all</u></string>
+    <string name="str_clear_notification"><u>Clear notification</u></string>
+    <string name="str_clear_u"><u>clear</u></string>
+    <string name="str_you_have_opted_to_receive_by_post_msg">You can opt to receive your monthly statements by post by checking the box below. This is a chargeable service</string>
+    <string name="str_i_agree_txt">I agree to a monthly charge of £ 7.00 being taken from my registered card to receive your monthly account statements</string>
 </resources>
 
