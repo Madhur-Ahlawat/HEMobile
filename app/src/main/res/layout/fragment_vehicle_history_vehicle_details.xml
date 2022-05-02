@@ -58,9 +58,9 @@
                             android:id="@+id/reg_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vehicleData.plateInfo.number}"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:text="@{vehicleData.plateInfo.number}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="normal" />

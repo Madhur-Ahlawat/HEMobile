@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CreateAccountNonVehicleModel (
+data class NonUKVehicleModel (
     var plateCountry: String?="",
     var plateTypeDesc: String?="",
     var vehicleColor: String?="",
@@ -13,5 +13,8 @@ data class CreateAccountNonVehicleModel (
     var vehicleModel: String?="",
     var vehiclePlate: String?="",
     var vehicleYear: String?="",
-    var isFromCreateNonVehicleAccount: Boolean? = false
+    var vehicleClass: String?="",
+    var isFromCreateNonVehicleAccount: Boolean? = false,
+    var vehicleClassDesc: String?="",
+    var vehicleGroup: String?=""
 ) : Parcelable

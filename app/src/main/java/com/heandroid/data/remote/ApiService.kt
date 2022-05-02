@@ -4,6 +4,7 @@ import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
+import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.account.UpdateProfileRequest
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.data.model.account.VehicleInfoDetails
@@ -14,6 +15,8 @@ import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.data.model.auth.forgot.password.*
 import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -132,6 +135,9 @@ interface ApiService {
     @POST(DISMISS_ALERT)
     suspend fun dismissAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
 
+    @POST(READ_ALERT)
+    suspend fun readAlert(@Query("cscLookupKey") itemKey: String): Response<String?>
+
     @POST(EMAIL_VERIFICATION_REQUEST)
     suspend fun sendEmailVerification(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
@@ -203,6 +209,12 @@ interface ApiService {
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
 
+    @GET(ACCOUNT_SETTINGS)
+    suspend fun getAccountSettings():Response<AccountResponse?>?
+
+    @PUT(UPDATE_COMMUNICATION_PREFS)
+    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue(): Response<ThresholdAmountApiResponse?>?
 
@@ -253,11 +265,18 @@ interface ApiService {
     @POST(WHERE_TO_RECEIVE_PAYMENT_RECEIPT)
     suspend fun whereToReceivePaymentReceipt(@Body request: PaymentReceiptDeliveryTypeSelectionRequest): Response<ResponseBody?>?
 
+    @GET(ACCOUNT_DETAIL)
+    suspend fun getUserProfileData() : Response<ProfileDetailModel?>?
+
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateProfileData(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
 
     @PUT(ACCOUNT_PIN)
     suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
+
+    @POST(VALID_VEHICLE_CHECK)
+    suspend fun validVehicleCheck(@Body request: ValidVehicleCheckRequest?, @Query("agencyId") agencyId: Int?)
+                                  :Response<String?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest) : Response<EmptyApiResponse?>?

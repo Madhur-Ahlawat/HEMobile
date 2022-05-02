@@ -2,7 +2,12 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val NOMINATED_ACCOUNT= "NOMINATED"
     const  val PENDING_STATUS ="PENDING"
+    const val CATEGORY_RECEIPTS = "Receipts"
+
+    const val COUNTRY_TYPE_UK = "UK"
+    const val COUNTRY_TYPE_NON_UK = "NON UK"
     const val CASE_COMMENTS_KEY = "case_comments_key"
     const val CASES_CATEGORY ="cases_category"
     const val CASES_SUB_CATEGORY ="cases_sub_category"
@@ -18,11 +23,11 @@ object Constants {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val FILE_NAMES_KEY=" file_names_key"
+    const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
-        const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
+    const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
     const val PERSONAL_DETAILS = "personal_details"
     const val POST_CODE_ADDRESS = "post_code_address"
     const val PASSWORD = "password"
@@ -121,6 +126,11 @@ object Constants {
     const val PAYMENT_FILTER_SPECIFIC = "Payment_filter_with_specified_date"
     const val PAYMENT_DATE_RANGE = "Payment_filter_with_date_range"
     const val UPDATE_PIN_FLOW = "update pin flow"
+    const val VEHICLE_NO = "VehicleNo"
+    const val COUNTRY_BUSINESS = "country"
+    const val NON_UK_VEHICLE_DATA = "Non_UK_Model"
+    const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
+    const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
 
 }
