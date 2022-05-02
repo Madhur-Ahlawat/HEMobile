@@ -1,11 +1,14 @@
 package com.heandroid.ui.account.communication
 
 import android.view.LayoutInflater
+import com.heandroid.R
+import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.heandroid.R
 import com.heandroid.data.model.account.AccountResponse
 import com.heandroid.data.model.communicationspref.CommunicationPrefsModel
 import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
