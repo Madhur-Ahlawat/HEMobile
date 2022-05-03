@@ -409,6 +409,15 @@
         android:label="Card Fragment"
         tools:layout="@layout/fragment_create_account_card">
         <action
+            android:id="@+id/action_cardFragment_to_detailsCheckFrag"
+            app:destination="@id/detailsCheckFrag" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsCheckFrag"
+        android:name="com.heandroid.ui.account.creation.step5.CreateAccountDetailsCheckFragment"
+        android:label="Card Fragment"
+        tools:layout="@layout/fragment_create_account_details_check_pay">
+        <action
             android:id="@+id/action_cardFragment_to_successfulFragment"
             app:destination="@id/successfulFragment" />
     </fragment>

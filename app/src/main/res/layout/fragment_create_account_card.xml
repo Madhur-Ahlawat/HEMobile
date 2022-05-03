@@ -12,7 +12,6 @@
             type="com.heandroid.data.model.account.CreateAccountRequestModel" />
 
 
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -236,12 +235,12 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPay"
+            android:id="@+id/btn_confirm"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@color/green"
             android:gravity="center"
-            android:text="Pay"
+            android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
