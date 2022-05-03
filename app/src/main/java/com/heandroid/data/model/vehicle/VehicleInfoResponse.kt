@@ -5,22 +5,24 @@ import java.io.Serializable
 
 data class VehicleInfoResponse(
     @SerializedName("make")
-    var make: String?="",
+    var make: String? = "",
     @SerializedName("model")
-    var model: String?="",
+    var model: String? = "",
     @SerializedName("year")
-    var year: String? ="",
+    var year: String? = "",
     @SerializedName("typeId")
     var typeId: String? = null,
     @SerializedName("rowId")
-    val rowId: String?="",
+    val rowId: String? = "",
     @SerializedName("typeDescription")
-    var typeDescription: String?="",
+    var typeDescription: String? = "",
     @SerializedName("color")
-    var color: String?="",
+    var color: String? = "",
     @SerializedName("vehicleClassDesc")
-    var vehicleClassDesc: String?="",
+    var vehicleClassDesc: String? = "",
     @SerializedName("effectiveStartDate")
-    var effectiveStartDate: String?=""
+    var effectiveStartDate: String? = "",
+    @SerializedName("groupName")
+    var groupName: String? = ""
 ) : Serializable
 

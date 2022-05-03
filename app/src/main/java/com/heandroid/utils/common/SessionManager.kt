@@ -84,6 +84,16 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         return prefs.getString(SECURITY_CODE, null)
     }
 
+    fun saveAccountType(accountType: String) {
+        Log.d("Session Manager::",accountType)
+        val editor = prefs.edit()
+        editor.putString(ACCOUNT_TYPE, accountType)
+        editor.apply()
+    }
+    fun fetchAccountType(): String? {
+        return prefs.getString(ACCOUNT_TYPE, null)
+    }
+
     fun saveSecurityCodeObject(myObject: SecurityCodeResponseModel?) {
         val editor = prefs.edit()
         val gson = Gson()

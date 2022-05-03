@@ -100,6 +100,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
             isSecondaryUser(response.data?.isSecondary ?: false)
             //saveAccountNumber(response.data?.user_name?:"")
+            saveAccountType(response.data?.accountType ?: "")
         }
         requireActivity().startNormalActivity(HomeActivityMain::class.java)
     }
