@@ -209,12 +209,6 @@ interface ApiService {
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
 
-    @GET(ACCOUNT_SETTINGS)
-    suspend fun getAccountSettings():Response<AccountResponse?>?
-
-    @PUT(UPDATE_COMMUNICATION_PREFS)
-    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
-
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue(): Response<ThresholdAmountApiResponse?>?
 
@@ -223,41 +217,32 @@ interface ApiService {
 
 
     @HTTP(method = "DELETE", path = SAVED_CARD_LIST, hasBody = true)
-    suspend fun deleteCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
-        @Body model: PaymentMethodDeleteModel?
-    ): Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun deleteCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                           @Body model: PaymentMethodDeleteModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
 
     @POST(EDIT_CARD)
-    suspend fun editDefaultCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
-        @Body model: PaymentMethodEditModel?
-    ): Response<PaymentMethodEditResponse?>?
+    suspend fun editDefaultCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                @Body model : PaymentMethodEditModel?) : Response<PaymentMethodEditResponse?>?
 
 
     @POST(SAVED_CARD_LIST)
-    suspend fun savedNewCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
-        @Body model: AddCardModel?
-    ): Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun savedNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                             @Body model : AddCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
 
     @POST(PAYMENT_WITH_NEW_CARD)
-    suspend fun paymentWithNewCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
-        @Body model: PaymentWithNewCardModel?
-    ): Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun paymentWithNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                   @Body model : PaymentWithNewCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+
 
 
     @POST(PAYMENT_WITH_EXISTING_CARD)
-    suspend fun paymentWithExistingCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
-        @Body model: PaymentWithExistingCardModel?
-    ): Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
+                                        @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
-    suspend fun getThresholdValuePayment(): Response<AccountGetThresholdResponse?>?
+    suspend fun getThresholdValuePayment() :Response<AccountGetThresholdResponse?>?
 
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
@@ -297,4 +282,10 @@ interface ApiService {
 
     @GET(VEHICLE_GROUP_VEHICLE_LIST_SEARCH)
     suspend fun getSearchVehiclesForGroup(@Path("vehicleGroup") vehicleGroup: String?, @Path("plateNumber") plateNumber: String?): Response<List<VehicleResponse?>?>?
+
+    @GET(ACCOUNT_SETTINGS)
+    suspend fun getAccountSettings():Response<AccountResponse?>?
+
+    @PUT(UPDATE_COMMUNICATION_PREFS)
+    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
 }
