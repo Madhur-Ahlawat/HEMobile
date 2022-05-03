@@ -142,7 +142,11 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
                     if (!it.isNullOrEmpty()) {
                         checkedVehicleList.clear()
                         vehicleResponseList.clear()
-                        vehicleResponseList.addAll(it)
+                        it.forEach { vehicle ->
+                            if (vehicle?.plateInfo?.vehicleGroup.isNullOrEmpty()){
+                                vehicleResponseList.add(vehicle)
+                            }
+                        }
                         setVehicleListAdapter()
                     } else {
                         searchVehicleNumber?.let {

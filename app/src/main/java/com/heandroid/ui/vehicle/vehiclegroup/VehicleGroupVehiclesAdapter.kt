@@ -21,6 +21,7 @@ class VehicleGroupVehiclesAdapter(
     var vehicleList: List<VehicleResponse?>
 ) :
     RecyclerView.Adapter<VehicleGroupVehiclesAdapter.FilterVehicleNamesHolder>() {
+    private var checkedList = arrayListOf<String?>()
 
 
     class FilterVehicleNamesHolder(var binding: ItemVehicleGroupVehicleBinding) :
@@ -40,6 +41,7 @@ class VehicleGroupVehiclesAdapter(
         val vehicleItem = vehicleList[position]
         vehicleItem?.let {
             vehicleItem.plateInfo?.number?.let { holder.setView(it) }
+            holder.binding.cbVehicleGroup.isChecked = checkedList.contains(vehicleList[holder.absoluteAdapterPosition]?.plateInfo?.number)
             holder.binding.mainLayout.setOnClickListener {
                 if (fragment is VehicleGroupFragment) {
                     val bundle = Bundle().apply {
@@ -60,6 +62,12 @@ class VehicleGroupVehiclesAdapter(
     }
 
     private fun makeButton(holder: FilterVehicleNamesHolder) {
+        if (checkedList.contains(vehicleList[holder.absoluteAdapterPosition]?.plateInfo?.number)){
+            checkedList.remove(vehicleList[holder.absoluteAdapterPosition]?.plateInfo?.number)
+        } else {
+            checkedList.add(vehicleList[holder.absoluteAdapterPosition]?.plateInfo?.number)
+        }
+
         if (fragment is VehicleGroupFragment) {
             fragment.setSelectedVehicle(
                 vehicleList[holder.absoluteAdapterPosition]

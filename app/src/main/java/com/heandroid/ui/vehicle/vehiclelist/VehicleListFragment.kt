@@ -29,6 +29,7 @@ import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.lang.Exception
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnClickListener,
@@ -40,6 +41,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var isAccountVehicle: Boolean? = false
     private var pos: Int = 0
+    private var isBusinessAccount = false
+    @Inject
+    lateinit var sessionManager: SessionManager
     private val createAccVehicleViewModel: CreateAccountVehicleViewModel by viewModels()
     private var currentPos: Int = 0
 
@@ -54,6 +58,11 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         if (buttonVisibility) {
             binding.addVehicleBtn.gone()
             binding.removeVehicleBtn.gone()
+        }
+        sessionManager.fetchAccountType()?.let {
+            if (it == Constants.BUSINESS_ACCOUNT){
+                isBusinessAccount = true
+            }
         }
 
         loader = LoaderDialog()
@@ -142,9 +151,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
-
         this.mList = mList
-        mAdapter = VehicleListAdapter(requireContext(), this)
+        mAdapter = VehicleListAdapter(requireContext(), this, isBusinessAccount)
         mAdapter.setList(mList)
         binding.rvVehicleList.apply {
             layoutManager = LinearLayoutManager(context)
