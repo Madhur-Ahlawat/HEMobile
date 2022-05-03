@@ -186,12 +186,6 @@ interface ApiService {
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData():Response<AccountResponse?>?
 
-    @GET(ACCOUNT_SETTINGS)
-    suspend fun getAccountSettings():Response<AccountResponse?>?
-
-    @PUT(UPDATE_COMMUNICATION_PREFS)
-    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
-
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue() :Response<ThresholdAmountApiResponse?>?
 
@@ -249,4 +243,10 @@ interface ApiService {
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest) : Response<EmptyApiResponse?>?
+
+    @GET(ACCOUNT_SETTINGS)
+    suspend fun getAccountSettings():Response<AccountResponse?>?
+
+    @PUT(UPDATE_COMMUNICATION_PREFS)
+    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
 }
