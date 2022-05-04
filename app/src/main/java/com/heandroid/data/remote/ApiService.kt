@@ -185,7 +185,7 @@ interface ApiService {
     suspend fun getCaseCategoriesList(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
 
     @GET(GET_CASE_ENQUIRIES_SUB_CATEGORY)
-    suspend fun getCaseSubCategoriesList(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
+    suspend fun getCaseSubCategoriesList(@Path("category") category:String?,@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
 
     @POST(CREATE_NEW_CASE)
     suspend fun createNewCase(

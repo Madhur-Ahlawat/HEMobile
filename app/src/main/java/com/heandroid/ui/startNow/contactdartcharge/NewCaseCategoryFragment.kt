@@ -61,7 +61,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                     "categoryDropdown mSelCat  ${mSelCat} "
                 )
                 checkButton()
-                viewModel.getCaseSubCategoriesList()
+                viewModel.getCaseSubCategoriesList(mSelCat)
             }
             subCategoryDropdown.setOnItemClickListener { parent, view, position, id ->
                 mSelSubCat = parent.getItemAtPosition(position) as String
@@ -97,7 +97,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                         val mList = ArrayList<String>()
 
                         it.forEach {
-                            mList.add(it!!.value!!)
+                            mList.add(it!!.name!!)
                         }
 
                         val mAdapter =
