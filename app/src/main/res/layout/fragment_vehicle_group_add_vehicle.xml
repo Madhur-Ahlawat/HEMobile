@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="prevBtnModel"
+            type="Boolean" />
+
+        <variable
+            name="nextBtnModel"
+            type="Boolean" />
+
+        <variable
+            name="addVehicleModel"
+            type="Boolean" />
+
+        <variable
+            name="bulkUploadModel"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/E5E5E5">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/addVehicleToGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="start"
+            android:paddingHorizontal="@dimen/_2sdp"
+            android:text="@string/add_vehicle_to_group"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/unAllocated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="start"
+            android:paddingHorizontal="@dimen/_2sdp"
+            android:text="Unallocated vehicle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addVehicleToGroup" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/unAllocatedDesc1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="start"
+            android:lineSpacingExtra="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_2sdp"
+            android:text="@string/unallocated_vehicle_desc1"
+            android:textColor="@color/color_3C3C4399"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unAllocated" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/unAllocatedDesc2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="start"
+            android:lineSpacingExtra="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_2sdp"
+            android:text="@string/unallocated_vehicle_desc2"
+            android:textColor="@color/color_3C3C4399"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unAllocatedDesc1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDownload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:drawableEnd="@drawable/ic_download_crossing"
+            android:drawablePadding="@dimen/_8sdp"
+            android:drawableTint="@color/black"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/download"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@+id/tvFilter"
+            app:layout_constraintTop_toBottomOf="@id/unAllocatedDesc2" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:drawableStart="@drawable/ic_filter_small"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:text="@string/str_filter"
+            android:textColor="@color/color_00703C"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unAllocatedDesc2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVehicleList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDownload"
+            tools:listitem="@layout/item_vehicle_group_vehicle" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDownload" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoVehicles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_no_available_vehicles"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDownload" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/paginationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/addVehicleBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/previousBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@{prevBtnModel==true?@color/white:@color/color_C9C9C9}"
+                android:clickable="@{prevBtnModel}"
+                android:text="@string/previous"
+                android:textAllCaps="false"
+                android:textColor="@{prevBtnModel==true?@color/green:@color/color_7D7D7D}"
+                app:autoSizePresetSizes="@array/button_text_auto_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@{prevBtnModel==true?@color/green:@color/color_C9C9C9}" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="1dp"
+                android:backgroundTint="@{nextBtnModel==true?@color/white:@color/color_C9C9C9}"
+                android:clickable="@{nextBtnModel}"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@{nextBtnModel==true?@color/green:@color/color_7D7D7D}"
+                app:autoSizePresetSizes="@array/button_text_auto_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@{nextBtnModel==true?@color/green:@color/color_C9C9C9}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paginationNumberRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/nextBtn"
+                app:layout_constraintStart_toEndOf="@id/previousBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_pagination_number" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addVehicleBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:backgroundTint="@{addVehicleModel==true?@color/btn_color:@color/E5E5E5}"
+            android:clickable="@{addVehicleModel}"
+            android:text="@string/vehicle_add"
+            android:textAllCaps="false"
+            android:textColor="@{addVehicleModel==true?@color/white:@color/btn_color}"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toTopOf="@id/bulkUploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/btn_color" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bulkUploadBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:backgroundTint="@{bulkUploadModel==true?@color/btn_color:@color/E5E5E5}"
+            android:clickable="@{bulkUploadModel}"
+            android:includeFontPadding="true"
+            android:text="@string/vehicle_bulk_upload"
+            android:textAllCaps="false"
+            android:textColor="@{bulkUploadModel==true?@color/white:@color/btn_color}"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toTopOf="@id/cancelBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/btn_color" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:backgroundTint="@color/E5E5E5"
+            android:includeFontPadding="true"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/btn_color"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/btn_color" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

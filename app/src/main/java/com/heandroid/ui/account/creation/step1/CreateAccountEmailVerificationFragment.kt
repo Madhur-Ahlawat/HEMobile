@@ -34,24 +34,19 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun init() {
 
-       requestModel = CreateAccountRequestModel(referenceId = 0, securityCd = 0, accountType = "", address1 = "",
-                                                 planType = null , billingAddressLine1 = "" , billingAddressLine2 = "" , cardCity = "" ,
-                                                 cardFirstName = "" , cardLastName = "" , cardMiddleName = "" , cardStateType = "" ,
-                                                 cardZipCode = "" , cellPhone = "" , city = "" , countryType = "" , creditCExpMonth = "" ,
-                                                 creditCExpYear = "" , creditCardNumber = "" , creditCardType = "" ,
-                                                 digitPin = "", emailAddress = "", eveningPhone = "", firstName = "",
-                                                 ftvehicleList = null, lastName = "", maskedNumber = "",
-                                                 password = "", replenishmentAmount = null, securityCode = "",
-                                                 smsOption = "Y", stateType = "", tcAccepted = "Y",
-                                                 thresholdAmount = null, transactionAmount = null, zipCode1 = "", enable = false)
+        requestModel = CreateAccountRequestModel(
+            referenceId = 0, securityCd = 0, accountType = "", tcAccepted = "Y", firstName = "",
+            lastName = "", address1 = "", city = "", stateType = "", countryType = "",
+            zipCode1 = "", emailAddress = "", cellPhone = "", eveningPhone = "", smsOption = "Y",
+            password = "", digitPin = "", companyName = "", fein = "", nonRevenueOption = "",
+            ftvehicleList = null, creditCardType = "", creditCardNumber = "", maskedNumber = "", creditCExpMonth = "",
+            creditCExpYear = "", securityCode = "", cardFirstName = "", cardMiddleName = "", cardLastName = "",
+            billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
+            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "")
 
-
-
-
-       binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
-       loader = LoaderDialog()
-       loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     override fun initCtrl() {

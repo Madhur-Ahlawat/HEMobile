@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.account.CreateAccountNonVehicleModel
+import com.heandroid.data.model.account.NonUKVehicleModel
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -33,7 +33,7 @@ class CreateAccountVehicleListFragment: BaseFragment<FragmentCreateAccountVehicl
     private var isAccountVehicle: Boolean? = false
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.createAccountList
-    private var createAccountNonVehicleModel: CreateAccountNonVehicleModel? = null
+    private var nonUKVehicleModel: NonUKVehicleModel? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =  FragmentCreateAccountVehicleListBinding.inflate(inflater,container, false)
 
@@ -48,12 +48,12 @@ class CreateAccountVehicleListFragment: BaseFragment<FragmentCreateAccountVehicl
         binding.rvVehiclesList.adapter = mAdapter
 
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
-        createAccountNonVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
+        nonUKVehicleModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_NON_UK)
 
             if(isAccountVehicle == true){
                 setAdapter(true)
             }else {
-                setAdapter(true, createAccountNonVehicleModel?.plateCountry)
+                setAdapter(true, nonUKVehicleModel?.plateCountry)
             }
     }
 
@@ -93,7 +93,7 @@ class CreateAccountVehicleListFragment: BaseFragment<FragmentCreateAccountVehicl
                         R.id.action_makePaymentAddVehicleFragment_to_CreateAccountVehicleDetailsFragment,
                         bundle
                     )
-                } else if (createAccountNonVehicleModel?.isFromCreateNonVehicleAccount == true) {
+                } else if (nonUKVehicleModel?.isFromCreateNonVehicleAccount == true) {
                     val bundle = Bundle()
                     bundle.putBoolean("isNonUKVehicleUpdating", true)
                     bundle.putParcelable(
@@ -127,14 +127,14 @@ class CreateAccountVehicleListFragment: BaseFragment<FragmentCreateAccountVehicl
             }
             else if(isAccountVehicle == true && vehicle == "Non-UK"){
                 val plateResponse = PlateInfoResponse()
-                plateResponse.number = createAccountNonVehicleModel?.vehiclePlate.toString()
+                plateResponse.number = nonUKVehicleModel?.vehiclePlate.toString()
                 plateResponse.country = vehicle
 
                 val vehicleInfo = VehicleInfoResponse()
-                vehicleInfo.color = createAccountNonVehicleModel?.vehicleColor
-                vehicleInfo.make = createAccountNonVehicleModel?.vehicleMake
-                vehicleInfo.model = createAccountNonVehicleModel?.vehicleModel
-                vehicleInfo.vehicleClassDesc = createAccountNonVehicleModel?.plateTypeDesc
+                vehicleInfo.color = nonUKVehicleModel?.vehicleColor
+                vehicleInfo.make = nonUKVehicleModel?.vehicleMake
+                vehicleInfo.model = nonUKVehicleModel?.vehicleModel
+                vehicleInfo.vehicleClassDesc = nonUKVehicleModel?.plateTypeDesc
 
                 val vehicleRes = VehicleResponse(PlateInfoResponse(),plateResponse, vehicleInfo, false, 0, 0.0 )
                 if(vehicleList?.contains(vehicleRes)==false)

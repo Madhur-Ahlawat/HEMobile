@@ -44,7 +44,7 @@ data class LoginResponse(
 
     @SerializedName("jti")
     private var jti: String,
-    
+
     @SerializedName("accountType")
     var accountType: String,
 

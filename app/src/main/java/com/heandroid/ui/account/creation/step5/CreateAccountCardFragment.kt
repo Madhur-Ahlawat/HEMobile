@@ -22,31 +22,33 @@ import com.heandroid.data.repository.auth.CreateAccountRespository
 import com.heandroid.databinding.FragmentCreateAccountCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.CardNumberFormatterTextWatcher
-import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.util.*
 
 @AndroidEntryPoint
-class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(), View.OnClickListener {
+class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>(),
+    View.OnClickListener {
 
     private val viewModel: CreateAccountPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
     private var model: CreateAccountRequestModel? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCreateAccountCardBinding = FragmentCreateAccountCardBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCreateAccountCardBinding =
+        FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager, "")
 
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
@@ -55,32 +57,39 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     override fun initCtrl() {
         binding.apply {
-            btnPay.setOnClickListener(this@CreateAccountCardFragment)
+            btnConfirm.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
         }
     }
 
     override fun observer() {
-        observe(viewModel.createAccount, ::handleCreateAccountResponse)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnPay -> {
-                model?.creditCExpYear=model?.creditCExpYear?.replace("/","")
-                when(model?.planType){
-                    Constants.PAYG ->  model?.smsOption=null
+            R.id.btn_confirm -> {
+                model?.creditCExpYear = model?.creditCExpYear?.replace("/", "")
+                when (model?.planType) {
+                    Constants.PAYG -> model?.smsOption = null
                 }
-                loader?.show(requireActivity().supportFragmentManager,"")
-                viewModel.createAccount(model)
+//                loader?.show(requireActivity().supportFragmentManager,"")
+                Logg.logging("CreateAccountStep5", "models $model")
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, binding.model)
+
+                findNavController().navigate(R.id.action_cardFragment_to_detailsCheckFrag, bundle)
+
             }
         }
     }
 
     private val progressListener = object : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
             view?.loadUrl("file:///android_asset/NMI.html")
             return true
         }
@@ -99,14 +108,15 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             if (check) {
                 if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
                 else binding.tvPaymentAmount.visible()
-               // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+                // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
 
                 binding.webview.gone()
                 binding.mcvContainer.visible()
-                val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
-                Log.e("cardDetails",responseModel.toString())
+                val responseModel: CardResponseModel =
+                    Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                Log.e("cardDetails", responseModel.toString())
                 model?.creditCExpMonth = responseModel.card.exp.substring(0, 2)
-                model?.creditCExpYear = "/"+responseModel.card.exp.substring(2, 4)
+                model?.creditCExpYear =  responseModel.card.exp.substring(2, 4)
                 model?.maskedNumber = responseModel.card.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card.type.uppercase(Locale.ROOT)
@@ -144,18 +154,17 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
                 }
 
-                binding.tieName.setText(responseModel.check.name?:"")
+                binding.tieName.setText(responseModel.check.name ?: "")
                 binding.tieCVV.setText("***")
 
 
-
                 // NMI we are no
-                model?.cardStateType="HE"
-                model?.cardCity="GUILDFORD"
-                model?.cardZipCode="GU1 4LZ"
+                model?.cardStateType = "HE"
+                model?.cardCity = "GUILDFORD"
+                model?.cardZipCode = "GU1 4LZ"
 
-                model?.billingAddressLine1=model?.address1
-                model?.billingAddressLine2=null
+                model?.billingAddressLine1 = model?.address1
+                model?.billingAddressLine2 = null
 
                 binding.model = model
             }
@@ -163,24 +172,5 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         }
     }
 
-    private fun handleCreateAccountResponse(status: Resource<CreateAccountResponseModel?>?) {
-        try {
-            loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    status.data?.accountType = model?.accountType
-
-                    val bundle = Bundle()
-                    bundle.putParcelable("response", status.data)
-                    findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
-                }
-
-                is Resource.DataError -> { showError(binding.root, status.errorMsg) }
-                else -> {}
-            }
-
-        } catch (e: Exception) {
-        }
-    }
 
 }

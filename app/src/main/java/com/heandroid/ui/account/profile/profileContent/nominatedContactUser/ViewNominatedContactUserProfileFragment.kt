@@ -99,7 +99,7 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
-                        if(status?.equals("500")) ErrorUtil.showError(binding.root, message)
+                        if(status?.equals("500") == true) ErrorUtil.showError(binding.root, message)
                         else
                         {binding.model= this
                         setProfileView()}
