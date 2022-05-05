@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
@@ -34,9 +35,9 @@ class ViewBusinessAccountProfileFragment : BaseFragment<FragmentViewBusinessAcco
 
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager,"")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
        // (requireActivity() as ProfileActivity).setHeaderTitle("Your details")
     }
@@ -61,7 +62,7 @@ class ViewBusinessAccountProfileFragment : BaseFragment<FragmentViewBusinessAcco
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
         try {
-            //  loader?.dismiss()
+             loader?.dismiss()
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {

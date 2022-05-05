@@ -241,7 +241,9 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                     accountType==Constants.PERSONAL_ACCOUNT && !isSecondaryUser->{
                         findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
                     }
-
+                    accountType==Constants.BUSINESS_ACCOUNT && !isSecondaryUser->{
+                        findNavController().navigate(R.id.action_pinFragment_to_viewBusinessAccountProfile)
+                    }
                     else->{
                         findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
                     }

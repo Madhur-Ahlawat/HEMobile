@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
@@ -14,6 +15,7 @@ import com.heandroid.databinding.FragmentViewNominatedContactUserProfileBinding
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.toolbar
@@ -27,7 +29,7 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
 
     private val viewModel : ProfileViewModel by viewModels()
     private val nominatedcontactViewModel : NominatedContactListViewModel by viewModels()
-   // private var loader: LoaderDialog? = null
+    private var loader: LoaderDialog? = null
    val list: MutableList<SecondaryAccountData?> = ArrayList()
 
     @Inject
@@ -39,9 +41,9 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
     )= FragmentViewNominatedContactUserProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager,"")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
         nominatedcontactViewModel.nominatedContactList()
        // (requireActivity() as ProfileActivity).setHeaderTitle("Your details")
@@ -95,7 +97,7 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
         try {
-           // loader?.dismiss()
+            loader?.dismiss()
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
