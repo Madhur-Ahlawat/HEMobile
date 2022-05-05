@@ -47,7 +47,7 @@ data class AccountInformation(
     val vehicleListSearch: String?,
     val ananymous: Boolean,
     val businessName: String?,
-    val fein: String?,  // company reg no.
+    var fein: String?,  // company reg no.
     val accSubType: String?,
     val ncId: String=""
 ) : Parcelable

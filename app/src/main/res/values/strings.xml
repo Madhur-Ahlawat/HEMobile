@@ -728,6 +728,7 @@
     <string name="company_name">Company Name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
     <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_profile_updated_successfully">Profile updated successfully</string>
     <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
     <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
     <string name="str_priority">Priority</string>

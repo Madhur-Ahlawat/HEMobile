@@ -20,7 +20,7 @@ data class PersonalInformation(
     val city: String,
     val country: String,
     val countryType: String?,
-    val customerName: String,  // company name
+    var customerName: String,  // company name
     val daytimePhone: String?,
     var emailAddress: String,
     val emailCount: String,

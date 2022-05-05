@@ -10,9 +10,11 @@ import com.heandroid.R
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewNominatedContactUserProfileBinding
 import com.heandroid.databinding.FragmentViewPrimaryUserAccountProfileBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
@@ -37,6 +39,7 @@ class ViewPrimaryUserAccountProfileFragment : BaseFragment<FragmentViewPrimaryUs
 //        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 //        loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
+      //  (requireActivity() as ProfileActivity).setHeaderTitle("Account holder profile")
     }
 
     override fun initCtrl() {

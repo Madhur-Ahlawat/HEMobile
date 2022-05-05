@@ -20,11 +20,19 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.hideKeyboard
+import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnClickListener {
+
+    @Inject
+    lateinit var  sessionManager: SessionManager
+    private var accountType : String = Constants.PERSONAL_ACCOUNT
+    private var isSecondaryUser : Boolean = false
+
 
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
@@ -33,6 +41,10 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
         FragmentProfilePinBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
+        isSecondaryUser = sessionManager.getSecondaryUser()
+
         binding.enable = false
         binding.enable = true
         binding.data = arguments?.getParcelable(Constants.DATA)
@@ -99,7 +111,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
         hideKeyboard()
         when (v?.id) {
             R.id.btnSave -> {
-                loader?.show(requireActivity().supportFragmentManager, "")
+               loader?.show(requireActivity().supportFragmentManager, "")
                 updateUserProfile()
 
             }
@@ -112,6 +124,66 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     }
 
     private fun updateUserProfile() {
+        when  {
+            ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT ->
+            { updateStandardUserProfile() }
+            !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT ->
+            { updateBusinessUserProfile() }
+
+            isSecondaryUser && accountType ==Constants.PERSONAL_ACCOUNT->{
+                updateNominatedContactUserProfile()
+            }
+            isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT->{
+               updateNominatedBusinessUserProfile()
+            }
+            else->{ updatePaygUserProfile() }
+        }
+    }
+
+    private fun updatePaygUserProfile() {
+
+
+    }
+
+    private fun updateNominatedBusinessUserProfile() {
+
+    }
+
+    private fun updateNominatedContactUserProfile() {
+        // use
+    }
+
+    private fun updateBusinessUserProfile() {
+        binding.data?.run {
+            var request = UpdateProfileRequest(
+                firstName = personalInformation?.firstName,
+                lastName = personalInformation?.lastName,
+                addressLine1 = personalInformation?.addressLine1,
+                addressLine2 = personalInformation?.addressLine2,
+                city = personalInformation?.city,
+                state = personalInformation?.state,
+                zipCode = personalInformation?.zipcode,
+                zipCodePlus = personalInformation?.zipCodePlus,
+                country = personalInformation?.country,
+                emailAddress = personalInformation?.emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
+                phoneCell = personalInformation?.phoneNumber ?: "",
+                phoneDay = personalInformation?.phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                fein=accountInformation?.fein,
+                businessName = personalInformation?.customerName
+            )
+
+            viewModel.updateUserDetails(request)
+        }
+
+
+    }
+
+    private fun updateStandardUserProfile() {
 
         binding.data?.personalInformation?.run {
             var request = UpdateProfileRequest(
@@ -160,10 +232,23 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
+       loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
+                requireActivity().showToast(getString(R.string.str_profile_updated_successfully))
+                when{
+                    accountType==Constants.PERSONAL_ACCOUNT && !isSecondaryUser->{
+                        findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
+                    }
+                    accountType==Constants.BUSINESS_ACCOUNT && !isSecondaryUser->{
+                        findNavController().navigate(R.id.action_pinFragment_to_viewBusinessAccountProfile)
+                    }
+                    else->{
+                        findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
+                    }
+                }
+
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)

@@ -67,6 +67,31 @@
         <action
             android:id="@+id/action_pinFragment_to_updatePasswordSuccessfulFragment"
             app:destination="@id/updatePasswordSuccessfulFragment" />
+
+
+        <action
+            android:id="@+id/action_pinFragment_to_viewProfileFragment"
+            app:destination="@id/viewProfile"
+            app:popUpTo="@id/viewProfile"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_pinFragment_to_viewBusinessAccountProfile"
+            app:destination="@id/viewBusinessAccountProfileFragment"
+            app:popUpTo="@id/viewBusinessAccountProfileFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_pinFragment_to_viewPaygAccountProfile"
+            app:destination="@id/viewPayGAccountProfileFragment"
+            app:popUpTo="@id/viewPayGAccountProfileFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_pinFragment_to_viewNominatedAccountProfile"
+            app:destination="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 

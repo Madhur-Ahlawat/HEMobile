@@ -9,10 +9,12 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewPaygAccountUserBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -50,6 +52,7 @@ class ViewPAYGAccountAdditionalDetailsFragment : BaseFragment<FragmentViewPaygAc
         }
 
         viewModel.accountDetail()
+       // (requireActivity() as ProfileActivity).setHeaderTitle("Additional details (optional)")
     }
 
     override fun initCtrl() {
