@@ -77,4 +77,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         navController.graph = oldGraph
     }
 
+
+    fun setHeaderTitle(title:String)
+    {
+        title?.let {
+
+            binding.tvYourDetailLabel.text = title
+        }
+    }
 }

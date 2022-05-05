@@ -1,5 +1,7 @@
 package com.heandroid.utils.common
 
+import android.text.TextUtils
+import android.view.TextureView
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.ErrorResponseModel
@@ -17,6 +19,10 @@ object ResponseHandler {
         else {
             try{
                 val errorResponse = Gson().fromJson(response?.errorBody()?.string(),ErrorResponseModel::class.java)
+                if(TextUtils.isEmpty(errorResponse.message))
+                {
+                    return Resource.DataError(errorResponse.exception)
+                }
                 return Resource.DataError(errorResponse.message)
             }catch (e: Exception) {
                return Resource.DataError(e.message)

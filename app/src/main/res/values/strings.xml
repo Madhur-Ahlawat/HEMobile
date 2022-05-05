@@ -695,5 +695,6 @@
     <string name="company_name">Company Name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
     <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_profile_updated_successfully">Profile updated successfully</string>
 </resources>
 
