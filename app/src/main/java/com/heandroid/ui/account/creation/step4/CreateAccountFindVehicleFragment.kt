@@ -1,8 +1,6 @@
 package com.heandroid.ui.account.creation.step4
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +32,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var loader: LoaderDialog? = null
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
     private var nonUKVehicleModel: NonUKVehicleModel? = null
-    private var time = (1 * 1000).toLong()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -54,6 +51,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
+        // This has to be add later
+       // requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
 
         binding.apply {
             addVrmInput.onTextChanged {
@@ -72,12 +71,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.continue_btn -> {
-
-                binding.continueBtn.isEnabled = false
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.continueBtn.isEnabled = true
-                }, time)
 
                 var country = "UK"
                 if (binding.addVrmInput.text.toString().isNotEmpty()) {
@@ -108,8 +101,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
            if(country == "UK")
                 findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleUKListFragment, bundle)
-             else
+             else {
+
                getVehicleDataFromDVRM()
+           }
     }
 
     private fun standardAccountVehicle(country: String) {
@@ -119,7 +114,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
             bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
             bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
-            findNavController().navigate(R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment, bundle)
+            findNavController().navigate(
+                R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment,
+                bundle
+            )
         } else {
             val nonVehicleModel = NonUKVehicleModel()
             nonVehicleModel.plateCountry = "Non-UK"
@@ -186,10 +184,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             is Resource.Success -> {
 
                 // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
+                requestModel?.classType = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
+
                 nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
                 nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
                 nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
-                nonUKVehicleModel?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

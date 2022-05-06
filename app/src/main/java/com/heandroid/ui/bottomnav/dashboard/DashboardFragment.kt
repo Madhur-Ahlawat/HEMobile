@@ -26,7 +26,6 @@ import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
@@ -34,9 +33,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private val dashboardViewModel: DashboardViewModel  by  viewModels()
 
     private var loader: LoaderDialog? = null
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -190,7 +186,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     var accountDetails = it
-                  //  sessionManager.setAccountType(accountDetails.accountInformation.type)
                     setAccountDetailsView(accountDetails)
                 }
             }
@@ -212,7 +207,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             tvTopUpType.text = data.accountInformation.accountFinancialstatus
             tvAccountType.text =  data.accountInformation.type
             //tvAccountStatus.text =  data.accountInformation.type
-
         }
     }
 

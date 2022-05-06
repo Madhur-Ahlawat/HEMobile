@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.os.Build.VERSION_CODES
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
@@ -18,7 +17,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import java.lang.reflect.Field;
 
 object Utils {
 
@@ -167,27 +165,6 @@ object Utils {
         }
         return "Password not matched"
 
-    }
-
-    fun getVersionName(): String {
-        val fields: Array<Field> = VERSION_CODES::class.java.fields
-        var versionNumber = "1"
-        for (field in fields) {
-            var fieldValue = -1
-            try {
-                fieldValue = field.getInt(Any())
-            } catch (e: IllegalArgumentException) {
-                e.printStackTrace()
-            } catch (e: IllegalAccessException) {
-                e.printStackTrace()
-            } catch (e: NullPointerException) {
-                e.printStackTrace()
-            }
-            if (fieldValue == Build.VERSION.SDK_INT) {
-                versionNumber = fieldValue.toString()
-            }
-        }
-        return versionNumber
     }
 
 

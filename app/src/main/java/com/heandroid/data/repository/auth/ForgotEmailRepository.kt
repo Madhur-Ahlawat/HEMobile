@@ -10,4 +10,5 @@ class ForgotEmailRepository @Inject constructor(private val apiService: ApiServi
 
     suspend fun forgotEmail(model: ForgotEmailModel?) = apiService.forgotEmail(BuildConfig.AGENCY_ID,model)
 
+
 }

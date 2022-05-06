@@ -93,15 +93,8 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 TextUtils.isEmpty(businessMobNo.text?.toString()) -> setError(businessMobNo, "Please enter the mobile number")
                 Utils.mobileNumber(businessMobNo.text?.toString()) == "Password not matched" -> setError(businessMobNo, "Please enter valid mobile number (0-9, +)")
                 else -> {
-
-                    model?.companyName = companyName.text.toString()
-                    model?.firstName = firstName.text.toString()
-                    model?.lastName = lastName.text.toString()
-                    model?.cellPhone = businessMobNo.text.toString()
-                    model?.fein = "100000002"
-
                     val bundle = Bundle()
-                    bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
                     findNavController().navigate(R.id.action_personalDetailsEntryFragment_to_postcodeFragment, bundle)
                 }
             }
@@ -120,6 +113,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 model?.enable = true
                 binding.businessAccountParent.visible()
                 binding.personalAccountParent.gone()
+
             }
             else -> {
                 binding.tvPersonaleInfo.text = "Personal Info"

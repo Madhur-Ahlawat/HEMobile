@@ -28,6 +28,6 @@ data class UpdateProfileRequest(
     @SerializedName("referenceId") val referenceId: String?=null,
     @SerializedName("securityCode") val securityCode: String?=null,
     @SerializedName("businessName") val businessName: String?=null,
-    @SerializedName("fein") var fein: String?=null,
+    @SerializedName("fein") val fein: String?=null,
 
-    )
+)

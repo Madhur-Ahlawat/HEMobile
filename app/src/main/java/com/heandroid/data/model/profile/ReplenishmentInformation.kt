@@ -19,4 +19,3 @@ data class ReplenishmentInformation(
     val type: String?,
     val violationBalance: String
 ) : Parcelable
-

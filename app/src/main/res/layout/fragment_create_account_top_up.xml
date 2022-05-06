@@ -144,6 +144,7 @@
                 android:visibility="gone"
                 android:background="@color/color_EFEFEF">
 
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvYesDes"
                     android:layout_width="wrap_content"

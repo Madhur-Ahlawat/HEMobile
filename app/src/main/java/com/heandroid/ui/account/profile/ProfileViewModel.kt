@@ -136,6 +136,16 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
         }
     }
 
-
+    fun updateUserProfileDetailsApi(request: UpdateProfileRequest)
+    {
+        viewModelScope.launch {
+            try {
+                _updateUserProfileDataApiVal.postValue(success(repository.updateUserProfileApiCall(request), errorManager))
+            }catch (e: Exception)
+            {
+                _updateUserProfileDataApiVal.postValue(ResponseHandler.failure(e));
+            }
+        }
+    }
 
 }

@@ -70,12 +70,12 @@ class ContactDartChargeViewModel @Inject constructor(private val repository: Con
         }
     }
 
-    fun getCaseSubCategoriesList(cat:String) {
+    fun getCaseSubCategoriesList() {
         viewModelScope.launch {
             try {
                 _getCaseSubCategoriesListVal.postValue(
                     ResponseHandler.success(
-                        repository.getCaseSubCategoriesList(cat),
+                        repository.getCaseSubCategoriesList(),
                         errorManager
                     )
                 )

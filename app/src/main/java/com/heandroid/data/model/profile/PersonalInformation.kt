@@ -20,7 +20,7 @@ data class PersonalInformation(
     val city: String,
     val country: String,
     val countryType: String?,
-    var customerName: String,  // company name
+    val customerName: String,
     val daytimePhone: String?,
     var emailAddress: String,
     val emailCount: String,
@@ -60,4 +60,3 @@ data class PersonalInformation(
     val zipCodePlus: String,
     var zipcode: String
 ) : Parcelable
-

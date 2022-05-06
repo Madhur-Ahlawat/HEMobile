@@ -97,10 +97,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveRefreshToken(response.data?.refreshToken ?: "")
-            setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
-            isSecondaryUser(response.data?.isSecondary ?: false)
-            //saveAccountNumber(response.data?.user_name?:"")
-            saveAccountType(response.data?.accountType ?: "")
+
+//            saveAccountNumber(response.data?.user_name?:"")
         }
         requireActivity().startNormalActivity(HomeActivityMain::class.java)
     }

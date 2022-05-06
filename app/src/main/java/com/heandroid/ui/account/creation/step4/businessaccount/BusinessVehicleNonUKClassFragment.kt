@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
-import com.heandroid.data.model.account.NonUKVehicleModel
 import com.heandroid.databinding.FragmentBusinessVehicleNonUkDetailsBinding
 import com.heandroid.ui.account.creation.step4.businessaccount.dialog.AddBusinessVehicleListener
 import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAddConfirmDialog
@@ -25,7 +24,6 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
     View.OnClickListener, AddBusinessVehicleListener {
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NonUKVehicleModel?= null
     private var mClassType = ""
 
     override fun getFragmentBinding(
@@ -36,7 +34,6 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.vehicleRegNum.text = getString(R.string.vehicle_reg_num, requestModel?.vehicleNo)
-        nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
 
         binding.classARadioButton.isChecked = true
         mClassType = "1"
@@ -148,15 +145,13 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
     override fun onAddClick() {
         binding.apply {
 
-            nonUKVehicleModel?.apply {
-                vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-                vehicleGroup = groupName.text.toString()
-            }
+            requestModel?.classType = VehicleClassTypeConverter.toClassName(mClassType)
 
             val bundle = Bundle()
             bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA,  nonUKVehicleModel)
+            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA,  arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA))
             findNavController().navigate(R.id.action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment, bundle)
+
         }
     }
 }

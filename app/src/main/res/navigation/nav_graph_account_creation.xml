@@ -343,6 +343,8 @@
 
     </fragment>
 
+
+
     <fragment
         android:id="@+id/businessNonUKClassFragment"
         android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleNonUKClassFragment"
@@ -362,8 +364,8 @@
         tools:layout="@layout/fragment_business_vehicle_detail">
 
         <action
-            android:id="@+id/action_businessVehicleDetailFragment_to_paymentSummaryScreen"
-            app:destination="@id/paymentSummaryFragment" />
+            android:id="@+id/action_businessVehicleDetailFragment_to_choosePaymentFragment"
+            app:destination="@id/choosePaymentFragment" />
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
@@ -371,19 +373,25 @@
 
     </fragment>
 
-    <!-- Step 5 -->
 
-    <fragment
-        android:id="@+id/paymentSummaryFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountPaymentSummaryFragment"
-        android:label="Payment Summary Screen"
-        tools:layout="@layout/fragment_create_account_payment_summary">
+    <!--<fragment
+        android:id="@+id/showVehicleDetailsFragment"
+        android:name="com.heandroid.ui.account.creation.step4.CreateAccountVehicleDetailsFragment"
+        android:label="ShowVehicleDetailsFragment"
+        tools:layout="@layout/fragment_create_account_vehicle_details">
+        <action
+            android:id="@+id/action_showVehicleDetailsFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
 
         <action
-            android:id="@+id/action_paymentSummaryScreen_to_choosePaymentScreen"
-            app:destination="@+id/choosePaymentFragment"/>
+            android:id="@+id/action_showVehicleDetailsFragment_to_accountVehiclePaymentFragment"
+            app:destination="@id/accountVehiclePaymentFragment" />
+
     </fragment>
 
+    -->
+
+    <!-- Step 5 -->
     <fragment
         android:id="@+id/choosePaymentFragment"
         android:name="com.heandroid.ui.account.creation.step5.CreateAccountChoosePaymentFragment"
@@ -410,5 +418,6 @@
         android:name="com.heandroid.ui.account.creation.step5.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
+
 
 </navigation>

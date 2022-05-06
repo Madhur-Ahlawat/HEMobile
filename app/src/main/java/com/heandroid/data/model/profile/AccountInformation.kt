@@ -44,13 +44,5 @@ data class AccountInformation(
     val transponderListSearch: String?,
     val type: String?,
     val vehicleListCount: String?,
-    val vehicleListSearch: String?,
-    val ananymous: Boolean,
-    val businessName: String?,
-    var fein: String?,  // company reg no.
-    val accSubType: String?,
-    val ncId: String=""
+    val vehicleListSearch: String?
 ) : Parcelable
-
-
-

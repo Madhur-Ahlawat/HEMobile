@@ -42,6 +42,7 @@ class BusinessVehicleNonUKMakeFragment: BaseFragment<FragmentBusinessVehicleNonU
         }
 
         binding.nextBtnBusiness.setOnClickListener(this@BusinessVehicleNonUKMakeFragment)
+
     }
 
     override fun observer() {

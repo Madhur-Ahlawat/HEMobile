@@ -15,6 +15,4 @@ data class CreateAccountVehicleModel (
     var vehiclePlate: String?,
     var vehicleYear: String?,
     var vehicleStateType: String?,
-    var vehicleClassDesc: String?,
-    var vehicleGroup: String?
 ) : Parcelable

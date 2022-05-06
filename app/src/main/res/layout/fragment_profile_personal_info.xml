@@ -92,67 +92,6 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilBusinessName"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="Company name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieCompanyName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:text="@={data.personalInformation.customerName}"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilRegNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="Company registration number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilBusinessName">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieRegNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:text="@={data.accountInformation.fein}"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilFirstName"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
@@ -164,7 +103,7 @@
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilRegNo">
+                    app:layout_constraintTop_toTopOf="parent">
 
 
                     <com.google.android.material.textfield.TextInputEditText

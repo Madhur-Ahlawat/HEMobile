@@ -9,7 +9,7 @@ data class TransactionHistoryDownloadRequest(
     @SerializedName("endDate") var endDate: String? = "",
     @SerializedName("startIndex") var startIndex: String = "0",
     @SerializedName("transactionType") var transactionType: String = "",
-    @SerializedName("plateNumber") var plateNumber: String? = "",
+    @SerializedName("plateNumber") val plateNumber: String? = "",
     @SerializedName("downloadType") var downloadType: String = ""
 
 )
