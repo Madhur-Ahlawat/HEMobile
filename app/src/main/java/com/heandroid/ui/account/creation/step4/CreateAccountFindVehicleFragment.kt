@@ -51,8 +51,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
-        // This has to be add later
-       // requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
 
         binding.apply {
             addVrmInput.onTextChanged {
@@ -81,10 +79,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
                     requestModel?.countryType = country
 
-                    when (requestModel?.accountType) {
+                    businessAccountVehicle(country)
+                  /*  when (requestModel?.accountType) {
                         BUSINESS_ACCOUNT -> businessAccountVehicle(country)
                         else -> standardAccountVehicle(country)
-                    }
+                    } */
                 } else {
                     requireContext().showToast("Please enter your vehicle number")
                 }
