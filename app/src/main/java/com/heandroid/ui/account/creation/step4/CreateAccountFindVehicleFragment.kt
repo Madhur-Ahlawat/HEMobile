@@ -1,6 +1,8 @@
 package com.heandroid.ui.account.creation.step4
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var loader: LoaderDialog? = null
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
     private var nonUKVehicleModel: NonUKVehicleModel? = null
+    private var time = (1 * 1000).toLong()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -51,8 +54,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
-        // This has to be add later
-       // requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
 
         binding.apply {
             addVrmInput.onTextChanged {
@@ -71,6 +72,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.continue_btn -> {
+
+                binding.continueBtn.isEnabled = false
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.continueBtn.isEnabled = true
+                }, time)
 
                 var country = "UK"
                 if (binding.addVrmInput.text.toString().isNotEmpty()) {
