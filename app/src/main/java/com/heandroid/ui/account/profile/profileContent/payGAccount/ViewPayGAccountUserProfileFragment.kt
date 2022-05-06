@@ -13,6 +13,7 @@ import com.heandroid.databinding.FragmentViewPaygAccountUserBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import javax.inject.Inject
@@ -35,6 +36,7 @@ class ViewPayGAccountUserProfileFragment :  BaseFragment<FragmentViewPaygAccount
 //        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 //        loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
+      //  requireActivity().toolbar("Your details")
     }
 
     override fun initCtrl() {

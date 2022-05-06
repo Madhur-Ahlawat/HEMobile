@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewBusinessAccountProfileBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -16,6 +18,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -32,10 +35,11 @@ class ViewBusinessAccountProfileFragment : BaseFragment<FragmentViewBusinessAcco
 
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager,"")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
+       // (requireActivity() as ProfileActivity).setHeaderTitle("Your details")
     }
 
     override fun initCtrl() {
@@ -51,14 +55,14 @@ class ViewBusinessAccountProfileFragment : BaseFragment<FragmentViewBusinessAcco
             R.id.btnEditDetail -> {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.DATA,binding.model)
-                findNavController().navigate(R.id.action_viewProfile_to_personalInfoFragment,bundle)
+                findNavController().navigate(R.id.action_viewBusinessAccountProfile_to_UpdatePersonalInfo,bundle)
             }
         }
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
         try {
-            //  loader?.dismiss()
+             loader?.dismiss()
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {

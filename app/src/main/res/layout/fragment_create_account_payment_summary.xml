@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-
-
-        <variable
-            name="model"
-            type="com.heandroid.data.model.account.CreateAccountRequestModel" />
-
-
-    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,66 +9,66 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
-            app:layout_constraintGuide_begin="@dimen/_12sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glEnd"
-            app:layout_constraintGuide_end="@dimen/_12sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTop"
-            app:layout_constraintGuide_begin="@dimen/_9sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_9sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"
-            app:layout_constraintGuide_end="@dimen/_9sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_9sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/email_address"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toTopOf="@+id/glTop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:lineSpacingExtra="@dimen/_100sdp"
             android:text="@string/str_email_address"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_16ssp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEmailAddress"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/email_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_2sdp"
             android:fontFamily="@font/roboto_regular"
-            android:lineHeight="@dimen/_21sdp"
             android:text="@string/email"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/email_address" />
 
         <LinearLayout
-            app:layout_constraintEnd_toEndOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@id/email_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/email_address">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/change_email"
@@ -90,7 +77,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="Change"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/_16ssp" />
+                android:textSize="@dimen/_14ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -104,50 +91,50 @@
 
 
         <View
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/tvEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/color_B8B8B8" />
+            android:background="@color/color_B8B8B8"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/tvEmailAddress" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/account_type"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/roboto_bold"
             android:lineSpacingExtra="@dimen/_100sdp"
             android:text="@string/account_type"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_16ssp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_account_type"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/account_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_2sdp"
             android:fontFamily="@font/roboto_regular"
-            android:lineHeight="@dimen/_21sdp"
-            android:text="@string/str_personal_pre_pay_account"
+            android:text="@string/personal_pre_pay_account"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/account_type" />
 
         <LinearLayout
-            app:layout_constraintEnd_toEndOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@id/account_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/account_type">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/change_account"
@@ -156,7 +143,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="Change"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/_16ssp" />
+                android:textSize="@dimen/_14ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -169,49 +156,48 @@
         </LinearLayout>
 
         <View
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/tv_account_type"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/color_B8B8B8" />
+            android:background="@color/color_B8B8B8"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/tv_account_type" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/registration_no"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tv_account_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/roboto_bold"
             android:lineSpacingExtra="@dimen/_100sdp"
             android:text="@string/str_reg_num"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_16ssp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_type" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_registration_number"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/registration_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_2sdp"
             android:fontFamily="@font/roboto_regular"
-            android:lineHeight="@dimen/_21sdp"
-            android:text="@string/vehicle_reg_number"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/registration_no" />
 
         <LinearLayout
-            app:layout_constraintEnd_toEndOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@id/registration_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/registration_no">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/change_reg_no"
@@ -220,7 +206,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="Change"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/_16ssp" />
+                android:textSize="@dimen/_14ssp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -234,91 +220,118 @@
 
         <View
             android:id="@+id/reg_view"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/tv_registration_number"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/color_B8B8B8" />
+            android:background="@color/color_B8B8B8"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/tv_registration_number" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/payment_amount"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tv_registration_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/roboto_bold"
             android:lineSpacingExtra="@dimen/_100sdp"
             android:text="@string/payment_amount"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_16ssp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tv_registration_number" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
-            app:layout_constraintEnd_toEndOf="@+id/glEnd"
-            app:layout_constraintTop_toBottomOf="@id/reg_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/payment_amount" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/ten"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_16ssp" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/payment_amount">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/change_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Change"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:src="@drawable/ic_chevron_right_24px" />
+
+        </LinearLayout>
         <View
             android:id="@+id/view_payment"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@id/amount"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/color_B8B8B8" />
+            android:background="@color/color_B8B8B8"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/payment_amount" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_payment"
             android:layout_width="418dp"
             android:layout_height="165dp"
             android:layout_marginTop="@dimen/_30sdp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+            android:padding="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_payment">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pay_button"
-                app:cornerRadius="@dimen/_6sdp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/green"
                 android:fontFamily="@font/roboto_medium"
-                android:text="@string/pay"
+                android:text="@string/proceed_to_pay"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_16ssp" />
+                android:textSize="@dimen/_14ssp"
+                app:cornerRadius="@dimen/_6sdp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/green"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_48sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/roboto_medium"
                 android:includeFontPadding="true"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/green"
-                android:textSize="@dimen/_16ssp" />
+                android:textSize="@dimen/_14ssp"
+                app:strokeColor="@color/green" />
 
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
 </layout>
+

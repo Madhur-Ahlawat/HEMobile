@@ -728,6 +728,7 @@
     <string name="company_name">Company Name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
     <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_profile_updated_successfully">Profile updated successfully</string>
     <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
     <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
     <string name="str_priority">Priority</string>
@@ -767,5 +768,6 @@
     <string name="unallocated_vehicle_desc1">All unallocated vehicles registered to the account are displayed below.</string>
     <string name="unallocated_vehicle_desc2">Manually Select up to 20 vehicles at one time which are required to be added to the selected group and click on Add vehicles to group button. For more than 20 vehicles, use the Bulk upload vehicles button.</string>
     <string name="add_vehicle_to_group">Add vehicle to %s</string>
+    <string name="proceed_to_pay">Proceed to pay</string>
 </resources>
 
