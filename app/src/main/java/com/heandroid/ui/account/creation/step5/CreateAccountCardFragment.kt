@@ -6,24 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.CreateAccountResponseModel
 import com.heandroid.data.model.payment.CardResponseModel
-import com.heandroid.data.repository.auth.CreateAccountRespository
 import com.heandroid.databinding.FragmentCreateAccountCardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
-import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +30,6 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     private val viewModel: CreateAccountPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
-
     private var model: CreateAccountRequestModel? = null
 
     override fun getFragmentBinding(
@@ -57,29 +50,25 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
     override fun initCtrl() {
         binding.apply {
-            btnConfirm.setOnClickListener(this@CreateAccountCardFragment)
+            btnPay.setOnClickListener(this@CreateAccountCardFragment)
             webview.webViewClient = progressListener
             webview.webChromeClient = consoleListener
         }
     }
 
     override fun observer() {
+        observe(viewModel.createAccount, ::handleCreateAccountResponse)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btn_confirm -> {
-                model?.creditCExpYear = model?.creditCExpYear?.replace("/", "")
-                when (model?.planType) {
-                    Constants.PAYG -> model?.smsOption = null
+            R.id.btnPay -> {
+                model?.creditCExpYear=model?.creditCExpYear?.replace("/","")
+                when(model?.planType){
+                    Constants.PAYG ->  model?.smsOption=null
                 }
-//                loader?.show(requireActivity().supportFragmentManager,"")
-                Logg.logging("CreateAccountStep5", "models $model")
-                val bundle = Bundle()
-                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, binding.model)
-
-                findNavController().navigate(R.id.action_cardFragment_to_detailsCheckFrag, bundle)
-
+                loader?.show(requireActivity().supportFragmentManager,"")
+                viewModel.createAccount(model)
             }
         }
     }
@@ -99,6 +88,29 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             loader?.dismiss()
         }
 
+    }
+
+    private fun handleCreateAccountResponse(status: Resource<CreateAccountResponseModel?>?) {
+        try {
+            loader?.dismiss()
+            when (status) {
+                is Resource.Success -> {
+                    status.data?.accountType = model?.accountType
+
+                    val bundle = Bundle()
+                    bundle.putParcelable("response", status.data)
+                    findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
+                }
+
+                is Resource.DataError -> {
+                    showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
+            }
+
+        } catch (e: Exception) {
+        }
     }
 
     private val consoleListener = object : WebChromeClient() {

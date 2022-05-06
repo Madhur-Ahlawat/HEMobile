@@ -1,6 +1,8 @@
 package com.heandroid.ui.account.creation.step4.businessaccount
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
+    var time = (1 * 1000).toLong()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleFindUkBinding.inflate(inflater, container, false)
@@ -60,6 +63,12 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.findVehicleBusiness -> {
+                binding.findVehicleBusiness.isEnabled = false
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.findVehicleBusiness.isEnabled = true
+                }, time)
+
                 loader?.show(requireActivity().supportFragmentManager, "")
                 isObserverBack = true
                 getVehicleDataFromDVRM()
