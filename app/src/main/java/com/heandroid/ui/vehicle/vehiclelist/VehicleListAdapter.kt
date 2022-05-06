@@ -16,7 +16,8 @@ import com.heandroid.utils.DateUtils
 
 class VehicleListAdapter(
     private val mContext: Context,
-    private val onItemClick: ItemClickListener? = null
+    private val onItemClick: ItemClickListener? = null,
+    var isBusinessAccount : Boolean = false
 ) : RecyclerView.Adapter<VehicleListAdapter.VrmHeaderViewHolder>() {
 
     private var vehicleList: List<VehicleResponse?> = mutableListOf()
@@ -31,7 +32,7 @@ class VehicleListAdapter(
         private val mRecyclerView: RecyclerView = itemView.findViewById(R.id.recycler_view)
 //        val cardViewTop: MaterialCardView = itemView.findViewById(R.id.cardview_top)
 
-        fun setView(context: Context, vehicleItem: VehicleResponse?) {
+        fun setView(context: Context, vehicleItem: VehicleResponse?, isBusinessAccount: Boolean) {
             vrmNoTxt.text = vehicleItem?.plateInfo?.number
 //            arrowImg.animate().rotation(180f).start()
 
@@ -46,7 +47,7 @@ class VehicleListAdapter(
             val mList = ArrayList<VehicleTitleAndSub>()
             mList.clear()
 
-            for (i in 0..5) {
+            for (i in 0..7) {
                 when (i) {
 
                     0 -> {
@@ -75,6 +76,16 @@ class VehicleListAdapter(
                         val mem2 = VehicleTitleAndSub("DateAdded", DateUtils.convertDateFormat(vehicleItem?.vehicleInfo?.effectiveStartDate,1))
                         mList.add(mem2)
                     }
+                    6 -> {
+                        val mem2 = VehicleTitleAndSub("Notes", vehicleItem?.plateInfo?.vehicleComments)
+                        mList.add(mem2)
+                    }
+                    7 -> {
+                        if (isBusinessAccount) {
+                            val mem2 = VehicleTitleAndSub("Group name", vehicleItem?.vehicleInfo?.groupName)
+                            mList.add(mem2)
+                        }
+                    }
                 }
             }
             val mAdapter = VehicleDetailsAdapter(context)
@@ -92,7 +103,7 @@ class VehicleListAdapter(
 
     override fun onBindViewHolder(holder: VrmHeaderViewHolder, position: Int) {
         vehicleList[position]?.let {
-            holder.setView(mContext, it)
+            holder.setView(mContext, it, isBusinessAccount)
         }
 
         holder.arrowImg.setOnClickListener {

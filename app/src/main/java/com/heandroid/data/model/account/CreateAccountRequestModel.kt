@@ -46,6 +46,5 @@ data class CreateAccountRequestModel(
     var transactionAmount: String?,
     var planType: String?,
     var enable : Boolean?,
-    var classType : String?,
     var vehicleNo: String?
     ) : Parcelable

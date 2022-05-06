@@ -86,6 +86,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.btnAction -> {
 
                 if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
+                    binding.switchViewBusiness.gone()
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }
@@ -95,7 +96,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     )
 
                 } else {
-
+                    binding.switchViewBusiness.visible()
                     var country = "UK"
                     country = if (!binding.switchViewBusiness.isChecked) {
                         "Non-UK"
@@ -103,6 +104,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         "UK"
                     }
                     model?.countryType = country
+
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }

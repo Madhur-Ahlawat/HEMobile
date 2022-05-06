@@ -43,7 +43,29 @@ data class LoginResponse(
     private var lastName: String,
 
     @SerializedName("jti")
-    private var jti: String
+    private var jti: String,
+
+    @SerializedName("accountType")
+    var accountType: String,
+
+    @SerializedName("isSecondary")
+    var isSecondary: Boolean,
+
+    @SerializedName("accountNumber")
+    var accountNumber: Int,
+
+    @SerializedName("isPasswordCompliant")
+    var isPasswordCompliant : Boolean,
+
+    @SerializedName("isPasswordExpired")
+    var isPasswordExpired:Boolean,
+
+    @SerializedName("Permission")
+    var Permission: String,
+
+    @SerializedName("require2FA")
+    var require2FA:Boolean,
+
 )
 
 data class LogOutResp(val success: String)

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.heandroid.data.model.profile.ProfileDetailModel" />
+
+    </data>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlCompanyName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/company_name"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCompanyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{model.personalInformation.customerName}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlCompanyRegNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlCompanyName">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/company_reg_no"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCompanyRegNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{model.accountInformation.fein}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlFirstName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlCompanyRegNo">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="First name"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{model.personalInformation.firstName}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/viewFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlFirstName"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlFirstName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlLastName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlFirstName">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Last name"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{model.personalInformation.lastName}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/viewLastName"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlLastName"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlLastName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlEmailId"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlLastName">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/str_email_address"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmailId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{model.personalInformation.emailAddress}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/viewEmailId"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlEmailId"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlEmailId"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlMobileNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:paddingStart="16dp"
+                android:background="@color/white"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlEmailId">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/str_mobile_number"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvModelNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:inputType="number"
+                    android:text="@{model.accountInformation.number}"
+                    android:textColor="#474747"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/viewModelNo"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlMobileNo"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlMobileNo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/rlPassword"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlMobileNo">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPasswordPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:inputType="textPassword"
+                    android:text="@{model.accountInformation.password}"
+                    android:textColor="#474747"
+                    android:textSize="33dp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/viewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlPassword"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/rlAdditionalDetails"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlPassword">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/str_additional_details"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imvViewAdditionalData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+
+            <View
+                android:id="@+id/viewAccountHolder"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_alignBottom="@+id/rlPassword"
+                android:background="@color/color_EFEFEF"
+                app:layout_constraintBottom_toBottomOf="@+id/rlPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditDetail"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:backgroundTint="@color/btn_color"
+                android:gravity="center"
+                android:text="@string/edit_details"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toTopOf="@+id/glBottom"
+                app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/glStart" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glStart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glEnd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glBottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/_11sdp" />
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

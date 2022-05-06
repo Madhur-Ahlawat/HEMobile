@@ -23,8 +23,6 @@ class CreateAccountPaymentViewModel @Inject constructor(private val repository: 
     private val _createAccount = MutableLiveData<Resource<CreateAccountResponseModel?>?>()
     val createAccount : LiveData<Resource<CreateAccountResponseModel?>?> get()  = _createAccount
 
-
-
     fun createAccount(model: CreateAccountRequestModel?) {
         viewModelScope.launch {
             try {

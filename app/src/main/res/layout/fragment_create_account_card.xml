@@ -4,21 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-
-
         <variable
             name="model"
             type="com.heandroid.data.model.account.CreateAccountRequestModel" />
-
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <WebView
             android:id="@+id/webview"
@@ -229,11 +222,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </com.google.android.material.card.MaterialCardView>
-
-
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPay"
@@ -241,7 +230,7 @@
             android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@color/green"
             android:gravity="center"
-            android:text="Pay"
+            android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
@@ -273,14 +262,12 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="@dimen/_11sdp" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

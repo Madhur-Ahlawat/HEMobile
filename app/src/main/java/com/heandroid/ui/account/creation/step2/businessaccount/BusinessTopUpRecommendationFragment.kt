@@ -51,6 +51,9 @@ class BusinessTopUpRecommendationFragment :
         when(view?.id){
             R.id.continue_business_topup -> {
                 requestModel?.thresholdAmount = binding.topUpAmountFalls.text.toString()
+                requestModel?.replenishmentAmount = binding.topUpAmount.text.toString()
+                requestModel?.transactionAmount = binding.topUpAmount.text.toString()
+
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,requestModel)
                 findNavController().navigate(R.id.action_businessPrePayAutoTopUpFragment_to_personalDetailsEntryFragment, bundle)

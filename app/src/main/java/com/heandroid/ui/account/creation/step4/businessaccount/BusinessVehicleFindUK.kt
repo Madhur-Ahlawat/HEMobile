@@ -1,6 +1,8 @@
 package com.heandroid.ui.account.creation.step4.businessaccount
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,12 +27,12 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
 
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
+    var time = (1 * 1000).toLong()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleFindUkBinding.inflate(inflater, container, false)
@@ -42,7 +44,6 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
         binding.vehicleNumber.text = requestModel?.vehicleNo
         binding.countryBusiness.text = requestModel?.countryType
 
@@ -62,6 +63,12 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.findVehicleBusiness -> {
+                binding.findVehicleBusiness.isEnabled = false
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.findVehicleBusiness.isEnabled = true
+                }, time)
+
                 loader?.show(requireActivity().supportFragmentManager, "")
                 isObserverBack = true
                 getVehicleDataFromDVRM()
@@ -117,11 +124,13 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
             is Resource.Success -> {
 
               // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-               requestModel?.classType = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
-               nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
-               nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
-               nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
+               val nonUKVehicleModel = NonUKVehicleModel()
+               nonUKVehicleModel.vehicleMake = retrieveVehicle?.vehicleMake
+               nonUKVehicleModel.vehicleModel = retrieveVehicle?.vehicleModel
+               nonUKVehicleModel.vehicleColor = retrieveVehicle?.vehicleColor
+               nonUKVehicleModel.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
+
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

@@ -29,11 +29,12 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
 
         binding.apply {
             regNum.text = requestModel?.vehicleNo
-            vehicleClass.text = requestModel?.classType
+            vehicleClass.text = nonUKVehicleModel?.vehicleClassDesc
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
             countryRegistration.text = requestModel?.countryType
+            groupName.text = nonUKVehicleModel?.vehicleGroup
         }
     }
 
@@ -55,7 +56,9 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
                         requestModel?.countryType,
                         "STANDARD", vehicleColor, "",
                         vehicleMake, vehicleModel,
-                        requestModel?.vehicleNo, "2022", "HE")
+                        requestModel?.vehicleNo, "2022", "HE",
+                        VehicleClassTypeConverter.toClassCode(vehicleClassDesc),
+                        vehicleGroup)
 
                     vehicleList.add(accountVehicleModel)
                     requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
@@ -63,11 +66,13 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_choosePaymentFragment, bundle)
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen, bundle)
             }
 
             R.id.notVehicle -> {
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment)
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment, bundle)
             }
         }
     }
