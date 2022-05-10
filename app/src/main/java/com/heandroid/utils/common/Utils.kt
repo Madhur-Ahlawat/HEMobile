@@ -78,7 +78,7 @@ object Utils {
 
     }
 
-    fun getDirection(entry: String?): String? {
+    fun getDirection(entry: String?): String {
         return when (entry) {
             "N" -> "NORTHBOUND"
             "S" -> "SOUTHBOUND"
