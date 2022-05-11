@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="saveBtnModel"
+            type="Boolean" />
+
+        <variable
             name="vehicleData"
             type="com.heandroid.data.model.vehicle.VehicleResponse" />
     </data>
@@ -18,7 +22,7 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/editDetailsBtn"
+            app:layout_constraintBottom_toTopOf="@+id/saveBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -361,67 +365,43 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/changeGroupLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:padding="@dimen/_10sdp"
-                        android:paddingHorizontal="@dimen/_10sdp">
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="1dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/changeGroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:lineSpacingExtra="@dimen/_5sdp"
-                            android:text="@string/vehicle_details_group_desc"
-                            android:textColor="@color/color_3C3C4399"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/crossingHistoryLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/white">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:text="@string/crossing_history"
+                            android:text="@string/change_group"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp"
+                            android:textSize="@dimen/_13ssp"
                             android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:gravity="center"
-                            android:src="@drawable/ic_right"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15ssp" />
-
-                        <View
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/color_C4C4C4" />
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/changeGroup"
+                            app:boxStrokeColor="@color/grey_two"
+                            app:boxStrokeWidthFocused="1dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                            <AutoCompleteTextView
+                                android:id="@+id/spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none"
+                                android:text="Select"/>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp" />
+                        android:layout_height="@dimen/_200sdp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -429,22 +409,41 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/editDetailsBtn"
+            android:id="@+id/saveBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:backgroundTint="@color/btn_color"
-            android:text="@string/str_edit_vehicle_details"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="@string/str_save"
+            android:backgroundTint="@{saveBtnModel==true?@color/btn_color:@color/color_C9C9C9}"
+            android:clickable="@{saveBtnModel}"
+            android:textColor="@{saveBtnModel==false?@color/color_7D7D7D:@color/white}"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_4sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/createNewGroupBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createNewGroupBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:backgroundTint="@color/color_F5F5F5"
+            android:includeFontPadding="true"
+            android:text="@string/create_vehicle_group"
+            android:textAllCaps="false"
+            android:textColor="@color/btn_color"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/btn_color" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
