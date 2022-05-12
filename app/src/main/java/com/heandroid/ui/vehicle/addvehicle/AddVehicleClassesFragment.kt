@@ -27,10 +27,11 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     AddVehicleListener {
 
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-    private var mVehicleDetails: VehicleResponse?=null
+    private var mVehicleDetails: VehicleResponse? = null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
     private var isFromPaymentScreen = false
+    private var mScreeType = 0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,6 +44,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
         isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
+        }
 
         binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
 
@@ -122,26 +126,28 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     val vehicleData = mVehicleDetails
                     vehicleData?.apply {
-                        vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+                        vehicleInfo?.vehicleClassDesc =
+                            VehicleClassTypeConverter.toClassName(mClassType)
                         vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
                     }
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, vehicleData)
-                      //  putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+                        //  putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
 
-                        putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
+                        putInt(
+                            Constants.VEHICLE_SCREEN_KEY,
+                            Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
+                        )
                     }
                     findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
                     return@setOnClickListener
-                }
-                else {
+                } else {
                     VehicleAddConfirmDialog.newInstance(
                         mVehicleDetails,
                         this
                     ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
                 }
-            }
-            else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
+            } else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
                 Snackbar.make(
                     binding.classAView,
                     "Please select the checkbox",
@@ -207,9 +213,12 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, vehicleData)
-            putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_ADD)
+            putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
         }
-        findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
+        findNavController().navigate(
+            R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment,
+            bundle
+        )
     }
 
 }

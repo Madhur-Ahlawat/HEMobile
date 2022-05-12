@@ -28,10 +28,15 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     override fun observer() {
     }
 
+    private var mScreeType = 0
     override fun init() {
         binding.model = false
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
         isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
+
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
+        }
 
         binding.title.text = getString(
             R.string.vehicle_reg_num,
@@ -68,6 +73,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                     binding.modelInputEditText.text.toString().trim()
 
                 val bundle = Bundle().apply {
+
+                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+
                     putParcelable(Constants.DATA, mVehicleDetails)
                     putBoolean(Constants.PAYMENT_PAGE, isFromPaymentScreen)
                 }
