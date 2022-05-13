@@ -43,7 +43,14 @@
         android:id="@+id/vehicleGroupVehicleDetailsFragment"
         android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupVehicleDetailsFragment"
         android:label="VehicleGroupVehicleDetailsFragment"
-        tools:layout="@layout/fragment_group_vehicle_detail"/>
+        tools:layout="@layout/fragment_group_vehicle_detail">
+        <action
+            android:id="@+id/action_vehicleGroupVehicleDetailsFragment_to_vehicleGroupVehicleEditDetailsFragment"
+            app:destination="@id/vehicleGroupVehicleEditDetailsFragment" />
+        <action
+            android:id="@+id/action_vehicleGroupVehicleDetailsFragment_to_vehicleGroupCrossingHistoryFragment"
+            app:destination="@id/vehicleGroupCrossingHistoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/vehicleGroupAddVehicleFragment"
         android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupAddVehicleFragment"
@@ -55,4 +62,23 @@
             app:popUpToInclusive="true"
             app:popUpTo="@id/vehicleGroupFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/vehicleGroupVehicleEditDetailsFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupVehicleEditDetailsFragment"
+        android:label="VehicleGroupVehicleEditDetailsFragment"
+        tools:layout="@layout/fragment_group_vehicle_edit_detail">
+        <action
+            android:id="@+id/action_vehicleGroupVehicleEditDetailsFragment_to_createAndRenameVehicleGroupFragment"
+            app:destination="@id/createAndRenameVehicleGroupFragment" />
+        <action
+            android:id="@+id/action_vehicleGroupVehicleEditDetailsFragment_to_vehicleGroupFragment"
+            app:destination="@id/vehicleGroupFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/vehicleGroupFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleGroupCrossingHistoryFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupCrossingHistoryFragment"
+        android:label="VehicleGroupCrossingHistoryFragment"
+        tools:layout="@layout/fragment_vehicle_group_crossing_history"/>
 </navigation>

@@ -773,5 +773,9 @@
     <string name="add_your_card">We are unable to add your card, please contact your bank for details. In the meanime you can try again with a different debit or credit card</string>
     <string name="retry">Retry</string>
     <string name="not_now">Not now</string>
+    <string name="unallocated_vehicle">Unallocated vehicles</string>
+    <string name="change_group">Change group</string>
+    <string name="select_group">Select group</string>
+    <string name="back_to_vehicles_list">Back to vehicle detail</string>
 </resources>
 

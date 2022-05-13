@@ -44,8 +44,10 @@ class VehicleGroupVehiclesAdapter(
             holder.binding.cbVehicleGroup.isChecked = checkedList.contains(vehicleList[holder.absoluteAdapterPosition]?.plateInfo?.number)
             holder.binding.mainLayout.setOnClickListener {
                 if (fragment is VehicleGroupFragment) {
+                    fragment.vehicleGroup
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, vehicleItem)
+                        putParcelable(Constants.VEHICLE_GROUP, fragment.vehicleGroup)
                     }
                     fragment.findNavController().navigate(
                         R.id.action_vehicleGroupFragment_to_vehicleGroupVehicleDetailsFragment,

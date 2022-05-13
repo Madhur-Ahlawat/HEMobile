@@ -287,6 +287,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
 
                 }
                 resource.data?.transactionList?.transaction?.let {
+                    binding.nextBtnModel = selectedPosition != noOfPages
+                    binding.prevBtnModel = selectedPosition != 1
                     if (it.isNotEmpty()) {
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)

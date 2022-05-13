@@ -39,6 +39,12 @@ class VehicleGroupNamesAdapter(
     override fun onBindViewHolder(holder: FilterVehicleNamesHolder, position: Int) {
         val vehicleItem = vehicleList[position]
         vehicleItem?.let { item ->
+            if (item.groupName.equals(
+                    fragment.requireContext().getString(R.string.unallocated_vehicle), true
+                ) && item.groupId.isEmpty()
+            ) {
+                holder.binding.cbVehicleGroup.isEnabled = false
+            }
             holder.setView(vehicleItem.groupName)
             holder.binding.cbVehicleGroup.isChecked = checkedGroups.contains(vehicleItem.groupName)
             holder.binding.mainLayout.setOnClickListener {

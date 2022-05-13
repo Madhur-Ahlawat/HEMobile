@@ -1,7 +1,6 @@
 package com.heandroid.ui.vehicle.vehiclegroup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.*
 import com.heandroid.databinding.FragmentVehicleGroupMngmtBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
@@ -146,15 +143,18 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
                         } else {
                             binding.tvNoGroups.visible()
                             binding.rvVehicleGroupList.gone()
+                            setVehicleListAdapter(null)
                         }
                     }
                 }
                 is Resource.DataError -> {
                     binding.tvNoGroups.visible()
                     binding.rvVehicleGroupList.gone()
+                    setVehicleListAdapter(null)
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
+                    setVehicleListAdapter(null)
                 }
             }
             isGetList = false
@@ -162,8 +162,14 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
 
     }
 
-    private fun setVehicleListAdapter(list: List<VehicleGroupResponse?>) {
-        groupsAdapter = VehicleGroupNamesAdapter(this, list)
+    private fun setVehicleListAdapter(list: List<VehicleGroupResponse?>?) {
+        val unAllocatedGroup = VehicleGroupResponse("", getString(R.string.unallocated_vehicle), "0")
+        val totalList = mutableListOf<VehicleGroupResponse?>()
+        totalList.add(unAllocatedGroup)
+        list?.let {
+            totalList.addAll(list)
+        }
+        groupsAdapter = VehicleGroupNamesAdapter(this, totalList)
         binding.rvVehicleGroupList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
