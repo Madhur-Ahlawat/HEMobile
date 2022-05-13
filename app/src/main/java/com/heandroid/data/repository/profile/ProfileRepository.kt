@@ -16,4 +16,5 @@ class ProfileRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun updatePassword(model: UpdateAccountPassword?)= apiService.updatePassword(model)
     suspend fun updateProfile(model: UpdateProfileRequest)= apiService.updateProfileData(model)
     suspend fun updateAccountPin(model: AccountPinChangeModel)= apiService.updateAccountPin(model)
+    suspend fun getNominatedContactList()=apiService.getNominatedUserList()
 }

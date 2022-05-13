@@ -288,4 +288,7 @@ interface ApiService {
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
     suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+
+    @GET(SECONDARY_ACCOUNT)
+    suspend fun getNominatedUserList(): Response<NominatedContactRes?>?
 }

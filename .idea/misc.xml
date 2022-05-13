@@ -54,7 +54,18 @@
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_logout.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_card.xml" value="0.1" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_make_off_payment_receipt.xml" value="0.1" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_password_update.xml" value="0.161231884057971" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_personal_info.xml" value="0.1" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_profile_confirm_email.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_profile_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_profile_pin.xml" value="0.203125" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_nominated_profile_postcode.xml" value="0.203125" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_personal_details_entry.xml" value="0.25" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_confirm_email.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_email_verification.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_password_successful.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_password_update.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_personal_info.xml" value="0.14719202898550723" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_pin.xml" value="0.14719202898550723" />
         <entry key="..\:/Users/abhilasha.chauhan/AndroidStudioProjects/HE-MAPP-Android/app/src/main/res/layout/fragment_profile_postcode.xml" value="0.1" />
