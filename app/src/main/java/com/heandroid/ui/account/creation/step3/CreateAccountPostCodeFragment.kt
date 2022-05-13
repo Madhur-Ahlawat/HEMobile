@@ -52,9 +52,15 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         accountType()
 
         when(model?.planType){
-            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
-            BUSINESS_ACCOUNT -> { binding.tvLabel.text=getString(R.string.business_prepay_account) }
-            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+            PAYG ->{
+                binding.switchViewBusiness.gone()
+                binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            BUSINESS_ACCOUNT -> {
+                binding.switchViewBusiness.visible()
+                binding.tvLabel.text=getString(R.string.business_prepay_account) }
+            else ->{
+                binding.switchViewBusiness.gone()
+                binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
 
         loader = LoaderDialog()
@@ -86,6 +92,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.btnAction -> {
 
                 if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
+                    binding.switchViewBusiness.gone()
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }
@@ -95,7 +102,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     )
 
                 } else {
-
+                    binding.switchViewBusiness.visible()
                     var country = "UK"
                     country = if (!binding.switchViewBusiness.isChecked) {
                         "Non-UK"
@@ -103,6 +110,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         "UK"
                     }
                     model?.countryType = country
+
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }

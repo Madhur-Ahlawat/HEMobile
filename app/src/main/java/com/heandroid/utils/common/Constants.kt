@@ -133,5 +133,6 @@ object Constants {
     const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
+    const val VEHICLE_GROUP = "vehicle_group"
 
 }

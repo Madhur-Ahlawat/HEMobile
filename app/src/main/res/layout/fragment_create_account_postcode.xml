@@ -136,7 +136,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="normal"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:thumbTint="@color/green"

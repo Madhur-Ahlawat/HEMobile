@@ -66,7 +66,7 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_choosePaymentFragment, bundle)
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen, bundle)
             }
 
             R.id.notVehicle -> {

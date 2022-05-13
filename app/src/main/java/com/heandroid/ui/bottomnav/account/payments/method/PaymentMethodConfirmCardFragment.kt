@@ -102,9 +102,6 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
                                 expYear="20$expYear"
                                 default=null
                             }
-
-
-
                             viewModel.saveNewCard(binding.model)
                         }
                     }
@@ -119,7 +116,7 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        binding?.model?.default=isChecked
+        binding.model?.default=isChecked
     }
 
 
