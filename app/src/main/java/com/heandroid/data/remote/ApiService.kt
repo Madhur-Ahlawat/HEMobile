@@ -320,4 +320,6 @@ interface ApiService {
     ): Response<OneOfPaymentModelResponse?>?
 
 
+    @GET(DOWNLOAD_VRM_VEHICLE_LIST)
+    suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
 }
