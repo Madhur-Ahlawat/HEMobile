@@ -69,6 +69,9 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isFilterVehicleResponse = true
+        dateRangeModel =
+        PaymentDateRangeModel(filterType = Constants.PAYMENT_FILTER_SPECIFIC,
+            DateUtils.lastPriorDate(-30), DateUtils.currentDate(), "")
         paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, paymentHistoryListData)
         paginationNumberAdapter =
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
@@ -166,14 +169,14 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 checkFilterApplyBtn()
             }
             R.id.clearAllDateRange -> {
-                dateRangeModel.startDate = null
-                dateRangeModel.endDate = null
+                dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
+                dateRangeModel.endDate = DateUtils.currentDate()
                 binding.rbDateRange.isChecked = false
                 checkFilterApplyBtn()
             }
             R.id.clearAllSpecificDate -> {
-                dateRangeModel.startDate = null
-                dateRangeModel.endDate = null
+                dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
+                dateRangeModel.endDate = DateUtils.currentDate()
                 binding.rbSpecificDay.isChecked = false
                 checkFilterApplyBtn()
             }
@@ -241,8 +244,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun callFilterPaymentHistoryData() {
-        dateRangeModel.startDate = null
-        dateRangeModel.endDate = null
+        dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
+        dateRangeModel.endDate = DateUtils.currentDate()
         if (binding.rbSpecificDay.isChecked) {
             dateRangeModel.startDate =
                 DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
