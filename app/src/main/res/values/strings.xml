@@ -769,6 +769,10 @@
     <string name="unallocated_vehicle_desc2">Manually Select up to 20 vehicles at one time which are required to be added to the selected group and click on Add vehicles to group button. For more than 20 vehicles, use the Bulk upload vehicles button.</string>
     <string name="add_vehicle_to_group">Add vehicle to %s</string>
     <string name="proceed_to_pay">Proceed to pay</string>
+    <string name="card_details">There is problem</string>
+    <string name="add_your_card">We are unable to add your card, please contact your bank for details. In the meanime you can try again with a different debit or credit card</string>
+    <string name="retry">Retry</string>
+    <string name="not_now">Not now</string>
     <string name="unallocated_vehicle">Unallocated vehicles</string>
     <string name="change_group">Change group</string>
     <string name="select_group">Select group</string>
