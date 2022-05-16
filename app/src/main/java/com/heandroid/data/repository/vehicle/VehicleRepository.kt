@@ -47,4 +47,6 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun getSearchVehicleForGroupApiCall(vehicleGroup: String, plateNumber: String) =
         apiService.getSearchVehiclesForGroup(vehicleGroup, plateNumber)
 
+    suspend fun getDownloadVehicleList(type: String?)  = apiService.getDownloadVehicleList(type)
+
 }

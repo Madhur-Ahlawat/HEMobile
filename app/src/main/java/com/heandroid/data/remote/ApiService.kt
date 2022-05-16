@@ -288,4 +288,7 @@ interface ApiService {
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
     suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+
+    @GET(DOWNLOAD_VRM_VEHICLE_LIST)
+    suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
 }
