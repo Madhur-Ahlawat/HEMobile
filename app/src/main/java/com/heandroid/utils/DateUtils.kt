@@ -86,7 +86,7 @@ object DateUtils {
             val postFormatter = SimpleDateFormat("dd MMM yyyy")
             return postFormatter.format(dateObj)
         } catch (e: Exception) {
-            return "03/01/2020"
+            return currentDate()!!
         }
     }
 

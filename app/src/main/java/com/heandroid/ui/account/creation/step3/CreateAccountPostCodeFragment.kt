@@ -156,7 +156,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         spnAddress.setSpinnerAdapter(addressList)
                         spnAddress.onItemSelectedListener = spinnerListener
 
-
                         btnFindAddress.gone()
                         tilAddress.visible()
                         model?.zipCode1=binding.tiePostCode.text.toString()
