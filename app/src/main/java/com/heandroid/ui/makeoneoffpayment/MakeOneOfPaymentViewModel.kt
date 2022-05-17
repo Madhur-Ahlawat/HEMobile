@@ -11,6 +11,7 @@ import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
+import com.heandroid.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.heandroid.data.repository.makeoneofpayments.MakeOneOfPaymentRepo
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.base.BaseViewModel
@@ -18,6 +19,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +30,9 @@ class MakeOneOfPaymentViewModel @Inject constructor(private val repository: Make
     private val _getCrossingDetails = MutableLiveData<Resource<CrossingDetailsModelsResponse?>?>()
     val getCrossingDetails: LiveData<Resource<CrossingDetailsModelsResponse?>?> get() = _getCrossingDetails
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _whereToReceivePaymentReceipt = MutableLiveData<Resource<ResponseBody?>?>()
+    val whereToReceivePaymentReceipt: LiveData<Resource<ResponseBody?>?> get() = _whereToReceivePaymentReceipt
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _oneOfPaymentsPay = MutableLiveData<Resource<OneOfPaymentModelResponse?>?>()
@@ -83,6 +88,15 @@ class MakeOneOfPaymentViewModel @Inject constructor(private val repository: Make
             )
         }
         return ret
+    }
+    fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest) {
+        viewModelScope.launch {
+            try{
+                _whereToReceivePaymentReceipt.postValue(ResponseHandler.success(repository.whereToReceivePaymentReceipt(request),errorManager))
+            }catch (e: Exception) {
+                _whereToReceivePaymentReceipt.postValue(ResponseHandler.failure(e))
+            }
+        }
     }
 
 
