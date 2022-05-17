@@ -41,7 +41,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         list = arguments?.getParcelableArrayList<VehicleResponse?>(Constants.DATA)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        Logg.logging("testing"," MakeOffPaymentCrossingFragment list  $list")
+        Logg.logging("testing", " MakeOffPaymentCrossingFragment list  $list")
 
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
@@ -56,6 +56,8 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
             totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount ?: 0.0))
         }
 
+        Logg.logging("testing", " MakeOffPaymentCrossingFragment list  $list")
+
         val model = CrossingDetailsModelsRequest(
             list!![0]?.newPlateInfo!!.number,
             list!![0]?.vehicleInfo?.vehicleClassDesc!!,
@@ -63,8 +65,11 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
             list!![0]?.vehicleInfo!!.make!!,
             list!![0]?.vehicleInfo!!.model!!
         )
+        Logg.logging("testing", " MakeOffPaymentCrossingFragment model  $model")
 
         viewModel.getCrossingDetails(model)
+
+
     }
 
     override fun initCtrl() {
@@ -75,7 +80,8 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         observe(viewModel.getCrossingDetails, ::getUnSettledCrossings)
 
     }
-    private  lateinit var adapter:MakeOffPaymentCrossingAdapter
+
+    private lateinit var adapter: MakeOffPaymentCrossingAdapter
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
 
@@ -84,27 +90,48 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                 resource.data?.let {
                     loader?.dismiss()
                     it?.let {
-                        for (i in list?.indices!!) {
-                            val futureCrossingAmount =
-                                (list?.get(i)?.price?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
+
+                        //   (list?.get(i)?.price?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
 //                        val payableCrossingAmount = (list?.get(i)?.price ?: 0.0).times(
 //                            list?.get(i)?.quantity?.toDouble() ?: 0.0
 //                        )
-                            val payableCrossingAmount = (it.unSettledTrips.toInt()).times(
-                                it.chargingRate.toInt()
-                            )
 
-                            totalPrice = totalPrice?.plus(
-                                payableCrossingAmount.plus(
-                                    futureCrossingAmount ?: 0.0
-                                )
-                            )
-                        }
+                        /*
+                           val futureCrossingAmount =it.customerClassRate.toInt().times(0)
+
+                         val payableCrossingAmount = (it.unSettledTrips.toInt()).times(
+                              it.customerClassRate.toInt()
+                          )
+
+                      list?.get(0)?.classRate = it.customerClassRate.toDouble()
+                      list?.get(0)?.pastQuantity = it.unSettledTrips.toInt()
+
+                          totalPrice = totalPrice?.plus(
+                              payableCrossingAmount.plus(
+                                  futureCrossingAmount
+                              )
+//                            )
+*/
                         binding.tvTotalPaymentAmount.text =
                             requireActivity().getString(R.string.price, " $totalPrice")
                         binding.rvCrossing.layoutManager = LinearLayoutManager(requireActivity())
                         adapter = MakeOffPaymentCrossingAdapter(requireActivity(), list, this)
                         binding.rvCrossing.adapter = adapter
+
+                        val futureCrossingAmount =
+                            (list?.get(0)?.classRate ?: 0.0).times(list?.get(0)?.futureQuantity!!)
+
+                        val payableCrossingAmount = (list?.get(0)?.classRate
+                            ?: 0.0).times(list?.get(0)?.pastQuantity?.toDouble() ?: 0.0)
+
+                        val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)
+                        totalPrice = mTempPrice
+
+                        binding.tvTotalPaymentAmount.text =
+                            requireActivity().getString(R.string.price, " $totalPrice")
+                        list?.get(0)?.price = totalPrice
+                        adapter.notifyItemChanged(0)
+
 
                     }
                 }
@@ -127,23 +154,30 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     }
 
     private fun updateQuantity(position: Int, quantity: Int) {
-        list?.get(position)?.futureQuantity = (list?.get(position)?.futureQuantity ?: 0) + (quantity)
-        val futureCrossingAmount = (list?.get(position)?.price ?: 0.0) * (quantity)
-        val payableCrossingAmount = (list?.get(position)?.price ?: 0.0) * (quantity)
-        totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount))
-        adapter.notifyItemChanged(position)
+        list?.get(position)?.futureQuantity =
+            (list?.get(position)?.futureQuantity ?: 0) + (quantity)
+
+        val futureCrossingAmount =
+            (list?.get(position)?.classRate ?: 0.0).times(list?.get(position)?.futureQuantity!!)
+
+        val payableCrossingAmount = (list?.get(position)?.classRate
+            ?: 0.0).times(list?.get(position)?.pastQuantity?.toDouble() ?: 0.0)
+
+        val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)
+        totalPrice = mTempPrice
 
         binding.tvTotalPaymentAmount.text =
             requireActivity().getString(R.string.price, " $totalPrice")
+        list?.get(position)?.price = totalPrice
+        adapter.notifyItemChanged(position)
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
                 val bundle = Bundle()
-
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-
                 bundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
                 findNavController().navigate(
                     R.id.action_makeOneOffPaymentCrossingFragment_to_makeOffPaymentReceiptFragment,

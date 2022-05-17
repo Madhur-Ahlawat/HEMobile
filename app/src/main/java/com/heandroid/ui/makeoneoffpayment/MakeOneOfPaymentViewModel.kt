@@ -1,14 +1,18 @@
 package com.heandroid.ui.makeoneoffpayment
 
+import android.util.Patterns
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.heandroid.R
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
+import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
 import com.heandroid.data.repository.makeoneofpayments.MakeOneOfPaymentRepo
+import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
@@ -63,5 +67,23 @@ class MakeOneOfPaymentViewModel @Inject constructor(private val repository: Make
             }
         }
     }
+
+    fun validationEmail(model: String?, model2: String,type:Int): Pair<Boolean, String> {
+        var ret = Pair(true, "")
+        if (model?.isEmpty() == true && model2.isEmpty()) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_email))
+        else if(model!=model2)
+            ret =
+                Pair(false, BaseApplication.INSTANCE.getString(R.string.error_confirm_mail))
+        else if(type==0) {
+             if (!Patterns.EMAIL_ADDRESS.matcher(model).matches()) ret = Pair(
+                false, BaseApplication.INSTANCE.getString(
+                    R.string.error_valid_email
+                )
+            )
+        }
+        return ret
+    }
+
 
 }

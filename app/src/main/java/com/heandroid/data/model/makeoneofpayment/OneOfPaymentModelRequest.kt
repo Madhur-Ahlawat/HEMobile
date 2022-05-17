@@ -25,7 +25,12 @@ data class PaymentTypeInfo(
     val emailAddress: String,
     val phoneNum: String,
     val billingAddressLine: String,
-    val billingAddressLine2: String
+    val billingAddressLine2: String,
+    val city: String,
+    val state: String,
+    val country: String,
+    val zipcode: String,
+    val zipCode2: String
 ):Parcelable
 
 @Parcelize
@@ -44,9 +49,7 @@ data class VehicleList(
     val customerClassRate: String,
     val accountNumber: String,
     val pendingTxnCount: String,
-    val chargingRate: String,
-    val city: String,
-    val state: String, val country: String, val zipcode: String, val zipCode2: String
+    val chargingRate: String
 ):Parcelable
 
 
