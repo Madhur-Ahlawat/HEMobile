@@ -94,7 +94,7 @@ android {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def nav_version = "2.4.2"
+        def nav_version = "2.3.5"
 
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -192,7 +192,7 @@ android {
         // for testing fragment
         debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
-         androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+        // androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     }
 
