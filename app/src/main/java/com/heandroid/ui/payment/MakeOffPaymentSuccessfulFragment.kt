@@ -48,12 +48,13 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
         mPaymentResp = arguments?.getParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP)
         loader?.show(requireActivity().supportFragmentManager, "")
         val mSelection = PaymentReceiptDeliveryTypeSelectionRequest(
-            "1-92567879",  //"mPaymentResp?.refrenceNumber!!",
+            mPaymentResp?.refrenceNumber!!,
             arguments?.getString(Constants.OPTIONS_TYPE, "Email")!!
         )
         viewModel.whereToReceivePaymentReceipt(mSelection)
         binding.tvEmail.text = "$mEmail"
         binding.tvAmount.text = "£ ${list[0].price}"
+        binding.tvReceiptNo.text = "${mPaymentResp?.refrenceNumber!!}"
         binding.rgOptions.setOnCheckedChangeListener(this)
 
     }
@@ -79,6 +80,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
                             "testing",
                             " MakeOffPaymentSuccessfulFragment success it  $it"
                         )
+
 
                     }
                 }
