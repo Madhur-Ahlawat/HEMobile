@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
+import com.heandroid.data.model.account.RetrievePlateInfoDetails
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
@@ -45,9 +46,21 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     private fun getVehicleDataFromDVRM() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true)) {
+            loader?.show(requireActivity().supportFragmentManager, "")
+            viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID)
+        } else {
+            val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(
+                mVehicleDetails?.newPlateInfo?.number,
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc,
+                mVehicleDetails?.vehicleInfo?.make,
+                mVehicleDetails?.vehicleInfo?.model,
+                mVehicleDetails?.vehicleInfo?.color
+            )
+            val it = VehicleInfoDetails(mRetrievePlateInfoDetails)
+            setAdapter(it)
 
-        viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID)
+        }
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
@@ -95,7 +108,10 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
 
-                findNavController().navigate(R.id.action_addVehicleDoneFragment_to_vehicleListFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_addVehicleDoneFragment_to_vehicleListFragment,
+                    bundle
+                )
             } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList(Constants.DATA, ArrayList(mList))
@@ -110,8 +126,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
     private fun setAdapter(details: VehicleInfoDetails) {
         mList.clear()
-        Logg.logging("testing","mScreeType  $mScreeType")
-        Logg.logging("testing","details  $details")
+        Logg.logging("testing", "mScreeType  $mScreeType")
+        Logg.logging("testing", "details  $details")
 
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
             val plateInfoResp = PlateInfoResponse(
@@ -139,7 +155,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
             val mVehicleResponse1 =
                 VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp, true)
-            Logg.logging("testing","mVehicleResponse1  $mVehicleResponse1")
+            Logg.logging("testing", "mVehicleResponse1  $mVehicleResponse1")
             mList.add(mVehicleResponse1)
         } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
             val plateInfoResp = PlateInfoResponse(

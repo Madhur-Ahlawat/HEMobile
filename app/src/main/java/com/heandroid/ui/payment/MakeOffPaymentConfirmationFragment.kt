@@ -64,10 +64,10 @@ class MakeOffPaymentConfirmationFragment :
     }
 
     override fun observer() {
-        observe(viewModel.oneOfPaymentsPay, ::getUnSettledCrossings)
+        observe(viewModel.oneOfPaymentsPay, ::oneOfPaymentPay)
     }
 
-    private fun getUnSettledCrossings(resource: Resource<OneOfPaymentModelResponse?>?) {
+    private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
 
         when (resource) {
             is Resource.Success -> {
@@ -82,6 +82,7 @@ class MakeOffPaymentConfirmationFragment :
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
                         mBundle.putString(Constants.EMAIL, mEmail)
+                        mBundle.putString(Constants.OPTIONS_TYPE,arguments?.getString(Constants.OPTIONS_TYPE))
                         mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
                         findNavController().navigate(
                             R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
