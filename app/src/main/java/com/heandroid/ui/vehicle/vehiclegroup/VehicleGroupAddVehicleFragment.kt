@@ -147,48 +147,42 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
                                 vehicleResponseList.add(vehicle)
                             }
                         }
-                        setVehicleListAdapter()
-                    } else {
-                        searchVehicleNumber?.let {
-                            binding.apply {
-                                rvVehicleList.gone()
-                                paginationLayout.gone()
-                                tvNoVehicles.visible()
-                                tvNoVehicles.text = getString(R.string.no_vehicles_found, it)
-                            }
-                        } ?: run {
-                            binding.apply {
-                                rvVehicleList.gone()
-                                paginationLayout.gone()
-                                tvNoVehicles.visible()
-                                tvNoVehicles.text = getString(R.string.str_no_vehicles)
-                            }
+                        if (vehicleResponseList.isEmpty()) {
+                            handleVehicleData()
+                        } else {
+                            setVehicleListAdapter()
                         }
+                    } else {
+                        handleVehicleData()
                     }
                 }
             }
             is Resource.DataError -> {
-                searchVehicleNumber?.let {
-                    binding.apply {
-                        rvVehicleList.gone()
-                        paginationLayout.gone()
-                        tvNoVehicles.visible()
-                        tvNoVehicles.text = getString(R.string.no_vehicles_found, it)
-                    }
-                } ?: run {
-                    binding.apply {
-                        rvVehicleList.gone()
-                        paginationLayout.gone()
-                        tvNoVehicles.visible()
-                        tvNoVehicles.text = getString(R.string.str_no_vehicles)
-                    }
-                }
+                handleVehicleData()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
             }
         }
         searchVehicleNumber = null
+    }
+
+    private fun handleVehicleData() {
+        searchVehicleNumber?.let {
+            binding.apply {
+                rvVehicleList.gone()
+                paginationLayout.gone()
+                tvNoVehicles.visible()
+                tvNoVehicles.text = getString(R.string.no_vehicles_found, it)
+            }
+        } ?: run {
+            binding.apply {
+                rvVehicleList.gone()
+                paginationLayout.gone()
+                tvNoVehicles.visible()
+                tvNoVehicles.text = getString(R.string.str_no_vehicles)
+            }
+        }
     }
 
     private fun setVehicleListAdapter() {
@@ -216,6 +210,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
                     checkedVehicleList[0]?.let {
                         val request = it.apply {
                             newPlateInfo = plateInfo
+                            vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
                             newPlateInfo?.vehicleGroup = vehicleGroup?.groupName.toString()
                         }
                         loader?.show(requireActivity().supportFragmentManager, "")

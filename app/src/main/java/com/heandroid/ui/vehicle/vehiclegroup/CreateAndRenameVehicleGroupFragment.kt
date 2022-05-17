@@ -50,6 +50,8 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
         if (isCreate) {
             binding.tvVehicleGroup.text = getString(R.string.create_vehicle_group)
             binding.continueBtn.text = getString(R.string.create_vehicle_group)
+        } else {
+            binding.edVehicleGroup.setText(vehicleGroup?.groupName)
         }
     }
 

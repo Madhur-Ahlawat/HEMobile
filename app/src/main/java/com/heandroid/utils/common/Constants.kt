@@ -2,15 +2,17 @@ package com.heandroid.utils.common
 
 object Constants {
 
-    const val NOMINATED_ACCOUNT= "NOMINATED"
-    const  val PENDING_STATUS ="PENDING"
+    const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
+    const val OPTIONS_TYPE = "Options_type"
+    const val NOMINATED_ACCOUNT = "NOMINATED"
+    const val PENDING_STATUS = "PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"
     const val COUNTRY_TYPE_NON_UK = "NON UK"
     const val CASE_COMMENTS_KEY = "case_comments_key"
-    const val CASES_CATEGORY ="cases_category"
-    const val CASES_SUB_CATEGORY ="cases_sub_category"
+    const val CASES_CATEGORY = "cases_category"
+    const val CASES_SUB_CATEGORY = "cases_sub_category"
     const val PAYG = "PAYG"
     const val PAYMENT_HISTORY = "payment_history"
     const val PAYMENT_METHOD = "payment_method"
@@ -132,5 +134,6 @@ object Constants {
     const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
+    const val VEHICLE_GROUP = "vehicle_group"
 
 }

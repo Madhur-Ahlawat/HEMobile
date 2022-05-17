@@ -321,6 +321,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/groupLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
                         android:layout_marginTop="1dp"

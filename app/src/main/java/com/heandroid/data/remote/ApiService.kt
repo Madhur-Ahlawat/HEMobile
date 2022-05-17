@@ -24,6 +24,10 @@ import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsRequest
+import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelRequest
+import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
@@ -185,7 +189,10 @@ interface ApiService {
     suspend fun getCaseCategoriesList(@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
 
     @GET(GET_CASE_ENQUIRIES_SUB_CATEGORY)
-    suspend fun getCaseSubCategoriesList(@Path("category") category:String?,@Query("agencyId") agencyId: String? = AGENCY_ID): Response<List<CaseCategoriesModel?>?>?
+    suspend fun getCaseSubCategoriesList(
+        @Path("category") category: String?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<List<CaseCategoriesModel?>?>?
 
     @POST(CREATE_NEW_CASE)
     suspend fun createNewCase(
@@ -217,32 +224,40 @@ interface ApiService {
 
 
     @HTTP(method = "DELETE", path = SAVED_CARD_LIST, hasBody = true)
-    suspend fun deleteCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
-                           @Body model: PaymentMethodDeleteModel?) : Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun deleteCard(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: PaymentMethodDeleteModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
 
 
     @POST(EDIT_CARD)
-    suspend fun editDefaultCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
-                                @Body model : PaymentMethodEditModel?) : Response<PaymentMethodEditResponse?>?
+    suspend fun editDefaultCard(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: PaymentMethodEditModel?
+    ): Response<PaymentMethodEditResponse?>?
 
 
     @POST(SAVED_CARD_LIST)
-    suspend fun savedNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
-                             @Body model : AddCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun savedNewCard(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: AddCardModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
 
 
     @POST(PAYMENT_WITH_NEW_CARD)
-    suspend fun paymentWithNewCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
-                                   @Body model : PaymentWithNewCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
-
-
+    suspend fun paymentWithNewCard(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: PaymentWithNewCardModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
 
     @POST(PAYMENT_WITH_EXISTING_CARD)
-    suspend fun paymentWithExistingCard(@Query("agencyId") agencyId: String? = AGENCY_ID,
-                                        @Body model : PaymentWithExistingCardModel?) : Response<PaymentMethodDeleteResponseModel?>?
+    suspend fun paymentWithExistingCard(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: PaymentWithExistingCardModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
-    suspend fun getThresholdValuePayment() :Response<AccountGetThresholdResponse?>?
+    suspend fun getThresholdValuePayment(): Response<AccountGetThresholdResponse?>?
 
     @PUT(UPDATE_ACCOUNT_BALANCE)
     suspend fun updateThresholdValue(@Body request: AccountTopUpUpdateThresholdRequest?): Response<AccountTopUpUpdateThresholdResponse?>?
@@ -251,7 +266,7 @@ interface ApiService {
     suspend fun whereToReceivePaymentReceipt(@Body request: PaymentReceiptDeliveryTypeSelectionRequest): Response<ResponseBody?>?
 
     @GET(ACCOUNT_DETAIL)
-    suspend fun getUserProfileData() : Response<ProfileDetailModel?>?
+    suspend fun getUserProfileData(): Response<ProfileDetailModel?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateProfileData(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
@@ -260,11 +275,15 @@ interface ApiService {
     suspend fun updateAccountPin(@Body request: AccountPinChangeModel): Response<EmptyApiResponse?>?
 
     @POST(VALID_VEHICLE_CHECK)
-    suspend fun validVehicleCheck(@Body request: ValidVehicleCheckRequest?, @Query("agencyId") agencyId: Int?)
-                                  :Response<String?>?
+    suspend fun validVehicleCheck(
+        @Body request: ValidVehicleCheckRequest?,
+        @Query("agencyId") agencyId: Int?
+    )
+            : Response<String?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
-    suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest) : Response<EmptyApiResponse?>?
+    suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
+
     @GET(VEHICLE_GROUP)
     suspend fun getVehicleGroupList(): Response<List<VehicleGroupResponse?>?>?
 
@@ -281,11 +300,26 @@ interface ApiService {
     suspend fun getVehiclesListOfGroup(@Path("vehicleGroup") vehicleGroup: String?): Response<List<VehicleResponse?>?>?
 
     @GET(VEHICLE_GROUP_VEHICLE_LIST_SEARCH)
-    suspend fun getSearchVehiclesForGroup(@Path("vehicleGroup") vehicleGroup: String?, @Path("plateNumber") plateNumber: String?): Response<List<VehicleResponse?>?>?
+    suspend fun getSearchVehiclesForGroup(
+        @Path("vehicleGroup") vehicleGroup: String?,
+        @Path("plateNumber") plateNumber: String?
+    ): Response<List<VehicleResponse?>?>?
 
     @GET(ACCOUNT_SETTINGS)
-    suspend fun getAccountSettings():Response<AccountResponse?>?
+    suspend fun getAccountSettings(): Response<AccountResponse?>?
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
-    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+    suspend fun updateCommunicationPrefs(@Body model: CommunicationPrefsRequestModel): Response<CommunicationPrefsResp?>?
+
+    @POST(GET_CROSSING_DETAILS)
+    suspend fun getCrossingDetails(@Body model: CrossingDetailsModelsRequest): Response<CrossingDetailsModelsResponse?>?
+
+    @POST(ONE_OF_PAYMENTS_PAY)
+    suspend fun oneOfPaymentsPay(
+        @Body model: OneOfPaymentModelRequest?, @Query("agencyId") agencyId: String? = AGENCY_ID,
+    ): Response<OneOfPaymentModelResponse?>?
+
+
+    @GET(DOWNLOAD_VRM_VEHICLE_LIST)
+    suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
 }
