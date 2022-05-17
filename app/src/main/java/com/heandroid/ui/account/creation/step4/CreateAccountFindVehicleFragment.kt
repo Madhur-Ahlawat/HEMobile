@@ -88,8 +88,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
                     requestModel?.countryType = country
 
-                    businessAccountVehicle(country)
-
+                    when (requestModel?.accountType) {
+                        BUSINESS_ACCOUNT -> businessAccountVehicle(country)
+                        else -> standardAccountVehicle(country)
+                    }
                 } else {
                     requireContext().showToast("Please enter your vehicle number")
                 }
@@ -108,6 +110,30 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleUKListFragment, bundle)
              else
                getVehicleDataFromDVRM()
+    }
+
+    private fun standardAccountVehicle(country: String) {
+        if (country == "UK") {
+            isAccountVehicle = true
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+            bundle.putBoolean("IsAccountVehicle", isAccountVehicle)
+            bundle.putString("VehicleNo", binding.addVrmInput.text.toString())
+            findNavController().navigate(R.id.action_findYourVehicleFragment_to_createAccountVehicleListFragment, bundle)
+        } else {
+            val nonVehicleModel = NonUKVehicleModel()
+            nonVehicleModel.plateCountry = "Non-UK"
+            nonVehicleModel.vehiclePlate = binding.addVrmInput.text.toString()
+            nonVehicleModel.isFromCreateNonVehicleAccount = true
+            val bundle = Bundle()
+            bundle.putParcelable(
+                Constants.CREATE_ACCOUNT_DATA,
+                arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+            )
+
+            bundle.putParcelable(Constants.CREATE_ACCOUNT_NON_UK, nonVehicleModel)
+            findNavController().navigate(R.id.action_findYourVehicleFragment_to_callNonUkVehicleAddFragment, bundle)
+        }
     }
 
     private fun getVehicleDataFromDVRM() {

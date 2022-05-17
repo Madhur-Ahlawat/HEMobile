@@ -52,15 +52,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         accountType()
 
         when(model?.planType){
-            PAYG ->{
-                binding.switchViewBusiness.gone()
-                binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
-            BUSINESS_ACCOUNT -> {
-                binding.switchViewBusiness.visible()
-                binding.tvLabel.text=getString(R.string.business_prepay_account) }
-            else ->{
-                binding.switchViewBusiness.gone()
-                binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+            PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+            BUSINESS_ACCOUNT -> { binding.tvLabel.text=getString(R.string.business_prepay_account) }
+            else ->{ binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
         }
 
         loader = LoaderDialog()
@@ -155,6 +149,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
                         spnAddress.setSpinnerAdapter(addressList)
                         spnAddress.onItemSelectedListener = spinnerListener
+
 
                         btnFindAddress.gone()
                         tilAddress.visible()

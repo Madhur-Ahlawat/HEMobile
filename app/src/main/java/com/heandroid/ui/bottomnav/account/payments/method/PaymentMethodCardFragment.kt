@@ -81,6 +81,7 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
             super.onPageFinished(view, url)
             loader?.dismiss()
         }
+
     }
 
     private val consoleListener = object : WebChromeClient() {
@@ -126,8 +127,6 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
                         } }
                 }
 
-            }else {
-                findNavController().navigate(R.id.action_paymentMethodCardFragment_to_paymentMethodErrorFragment)
             }
             return true
         }

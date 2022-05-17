@@ -131,13 +131,14 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                nonUKVehicleModel.vehicleColor = retrieveVehicle?.vehicleColor
                nonUKVehicleModel.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
 
+
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                isObserverBack = false
 
                 findNavController().navigate(R.id.action_businessUKListFragment_to_businessVehicleDetailFragment, bundle)
             }
+
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)

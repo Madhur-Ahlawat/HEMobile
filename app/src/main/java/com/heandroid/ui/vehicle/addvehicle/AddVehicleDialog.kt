@@ -12,7 +12,6 @@ import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.DialogAddVehicleBinding
 import com.heandroid.ui.base.BaseDialog
-import com.heandroid.utils.DateUtils
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.openKeyboardForced
 import com.heandroid.utils.extn.showToast
@@ -76,7 +75,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
                     VehicleInfoResponse(
                         "", "", "",
                         "", "", "",
-                        "", "", DateUtils.convertDateFormat(DateUtils.currentDate(),0)
+                        "", "", ""
                     )
 
                 val mVehicleResponse =

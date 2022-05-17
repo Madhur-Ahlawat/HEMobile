@@ -47,9 +47,6 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
-    private val _vehicleVRMDownloadVal = MutableLiveData<Resource<ResponseBody?>?>()
-    val vehicleVRMDownloadVal: LiveData<Resource<ResponseBody?>?> get() = _vehicleVRMDownloadVal
-
     fun addVehicleApi(request: VehicleResponse?) {
         viewModelScope.launch {
             try {
@@ -136,16 +133,6 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
                 )
             } catch (e: Exception) {
                 _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
-            }
-        }
-    }
-
-    fun downloadVehicleList(type:String?) {
-        viewModelScope.launch {
-            try{
-                _vehicleVRMDownloadVal.postValue(ResponseHandler.success(repository.getDownloadVehicleList(type),errorManager))
-            }catch (e: Exception) {
-                _vehicleVRMDownloadVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

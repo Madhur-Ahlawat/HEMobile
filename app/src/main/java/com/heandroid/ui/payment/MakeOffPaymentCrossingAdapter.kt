@@ -43,8 +43,7 @@ class MakeOffPaymentCrossingAdapter(private val context: Context?,
                 }
                 binding.tvAmount.text=context?.getString(R.string.price,""+price)
                 binding.tvVehicleNo.text=plateInfo?.number
-                binding.tvFutureCrossingQty.text=futureQuantity.toString()
-              binding.tvCrossingQty.text = pastQuantity.toString()
+                binding.tvFutureCrossingQty.text=quantity.toString()
                 binding.cvMain.setOnClickListener(this@MyViewHolder)
                 binding.ivAdd.setOnClickListener(this@MyViewHolder)
                 binding.ivMinus.setOnClickListener(this@MyViewHolder)
@@ -60,7 +59,7 @@ class MakeOffPaymentCrossingAdapter(private val context: Context?,
 
                 R.id.ivAdd ->{ listner?.onAdd(absoluteAdapterPosition) }
                 R.id.ivMinus ->{
-                    if((list?.get(absoluteAdapterPosition)?.futureQuantity?:0)>0)
+                    if((list?.get(absoluteAdapterPosition)?.quantity?:0)>0)
                     listner?.onMinus(absoluteAdapterPosition) }
             }
         }

@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView"
             android:layout_width="0dp"
@@ -24,9 +25,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilOptionEmail"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            style="@style/Widget.HeMobile.TextInputLayoutDrop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/str_email"
+            android:textColorHint="@color/black"
             android:focusableInTouchMode="false"
             android:focusable="false"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -34,19 +37,8 @@
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
 
 
-            <AutoCompleteTextView
-                android:id="@+id/mailSmsDropDown"
-                android:layout_width="match_parent"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_13ssp"
-                android:drawableRight="@drawable/ic_vector_drop"
-                android:layout_height="@dimen/_40sdp"
-                android:inputType="none" />
 
-<!--
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieOptionEmail"
                 android:layout_width="match_parent"
@@ -60,7 +52,8 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/_13ssp" />
--->
+
+
 
         </com.google.android.material.textfield.TextInputLayout>
 

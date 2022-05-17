@@ -69,9 +69,6 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isFilterVehicleResponse = true
-        dateRangeModel =
-        PaymentDateRangeModel(filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-            DateUtils.lastPriorDate(-30), DateUtils.currentDate(), "")
         paymentHistoryAdapter = AccountPaymentHistoryAdapter(this, paymentHistoryListData)
         paginationNumberAdapter =
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
@@ -169,14 +166,14 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 checkFilterApplyBtn()
             }
             R.id.clearAllDateRange -> {
-                dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
-                dateRangeModel.endDate = DateUtils.currentDate()
+                dateRangeModel.startDate = null
+                dateRangeModel.endDate = null
                 binding.rbDateRange.isChecked = false
                 checkFilterApplyBtn()
             }
             R.id.clearAllSpecificDate -> {
-                dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
-                dateRangeModel.endDate = DateUtils.currentDate()
+                dateRangeModel.startDate = null
+                dateRangeModel.endDate = null
                 binding.rbSpecificDay.isChecked = false
                 checkFilterApplyBtn()
             }
@@ -244,8 +241,8 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     }
 
     private fun callFilterPaymentHistoryData() {
-        dateRangeModel.startDate = DateUtils.lastPriorDate(-30)
-        dateRangeModel.endDate = DateUtils.currentDate()
+        dateRangeModel.startDate = null
+        dateRangeModel.endDate = null
         if (binding.rbSpecificDay.isChecked) {
             dateRangeModel.startDate =
                 DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
@@ -290,8 +287,6 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
 
                 }
                 resource.data?.transactionList?.transaction?.let {
-                    binding.nextBtnModel = selectedPosition != noOfPages
-                    binding.prevBtnModel = selectedPosition != 1
                     if (it.isNotEmpty()) {
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)

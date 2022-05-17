@@ -106,9 +106,6 @@ fun EditText.openKeyboard() {
     )
 }
 
-fun String.addCharAtIndex(char: Char, index: Int) =
-    StringBuilder(this).apply { insert(index, char) }.toString()
-
 /**
  * To open the key board.
  */
