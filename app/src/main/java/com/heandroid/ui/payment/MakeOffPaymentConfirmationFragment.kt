@@ -148,8 +148,17 @@ class MakeOffPaymentConfirmationFragment :
                     "testing",
                     " MakeOffPaymentConfirmationFragment onPay oneOfPayModelReq  $oneOfPayModelReq"
                 )
+                val mBundle = Bundle()
+//                mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
+                mBundle.putString(Constants.EMAIL, mEmail)
+                mBundle.putString(Constants.OPTIONS_TYPE,arguments?.getString(Constants.OPTIONS_TYPE))
+                mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
+                findNavController().navigate(
+                    R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
+                    mBundle
+                )
 
-                viewModel.oneOfPaymentsPay(oneOfPayModelReq)
+              //  viewModel.oneOfPaymentsPay(oneOfPayModelReq)
             }
         }
     }

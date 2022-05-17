@@ -112,7 +112,8 @@ class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBindin
                     name = responseModel.check.name,
                     expiry = responseModel.card.exp.addCharAtIndex('/', 2), cvv = "***"
                 )
-binding.tieCardNo.setText(responseModel.card.number)
+                val maskedNo = "${responseModel.card.number}"
+                binding.tieCardNo.setText(maskedNo)
                 Logg.logging("testing", "  binding.model  ${binding.model}")
                 Logg.logging("testing", "  binding.model.cardNo  ${binding.model?.cardNo!!}")
 
