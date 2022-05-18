@@ -2,10 +2,11 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val NOMINATED_ACCOUNT_DATA = "nominee_data"
+    const val NOMINATED_ACCOUNT= "NOMINATED"
+    const val PENDING_STATUS ="PENDING"
     const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
     const val OPTIONS_TYPE = "Options_type"
-    const val NOMINATED_ACCOUNT = "NOMINATED"
-    const val PENDING_STATUS = "PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"

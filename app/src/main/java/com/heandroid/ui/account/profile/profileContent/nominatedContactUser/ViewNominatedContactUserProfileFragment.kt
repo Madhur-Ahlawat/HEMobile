@@ -28,8 +28,8 @@ import javax.inject.Inject
 class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNominatedContactUserProfileBinding>(), View.OnClickListener{
 
     private val viewModel : ProfileViewModel by viewModels()
-    private val nominatedcontactViewModel : NominatedContactListViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var ncId : String =""
    val list: MutableList<SecondaryAccountData?> = ArrayList()
 
     @Inject
@@ -45,7 +45,7 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager,"")
         viewModel.accountDetail()
-        nominatedcontactViewModel.nominatedContactList()
+       // viewModel.getNominatedContacts()
        // (requireActivity() as ProfileActivity).setHeaderTitle("Your details")
     }
 
@@ -57,24 +57,43 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
 
     override fun observer() {
         observe(viewModel.accountDetail,::handleAccountDetail)
-        observe(nominatedcontactViewModel.contactList ,::handleNominatedContactData)
+        observe(viewModel.getNominatedContactsApiVal ,::handleNominatedContactData)
+
     }
 
     private fun handleNominatedContactData(status: Resource<NominatedContactRes?>?) {
-        when (status) {
-            is Resource.Success -> {
+        try {
 
-                if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
-                    list.clear()
-                    list.addAll(status.data?.secondaryAccountDetailsType?.secondaryAccountList!!)
-                   // list.filter { x -> x. ==   }
-                } else {
 
+            loader?.dismiss()
+            when (status) {
+                is Resource.Success -> {
+
+                    if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
+                        list.clear()
+                        list.addAll(status.data?.secondaryAccountDetailsType?.secondaryAccountList!!)
+                        for (item in list)
+                        {
+                            if(item?.secAccountRowId.equals(ncId))
+                            {
+                                binding.nominated=item
+                            }
+
+                        }
+//                        list.filter { x -> x?.secAccountRowId == ncId  }
+
+                    } else {
+
+                    }
+                }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
+        }
+        catch (e:Exception)
+        {
+           ErrorUtil.showError(binding.root, e.message)
         }
     }
 
@@ -82,6 +101,7 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
         when(v?.id){
             R.id.btnEditDetail -> {
                 val bundle = Bundle()
+                bundle.putParcelable(Constants.NOMINATED_ACCOUNT_DATA,binding.nominated)
                 bundle.putParcelable(Constants.DATA,binding.model)
                 findNavController().navigate(R.id.action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo,bundle)
             }
@@ -101,10 +121,15 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {
-                        if(status?.equals("500") == true) ErrorUtil.showError(binding.root, message)
+                        if(status.equals("500")) ErrorUtil.showError(binding.root, message)
                         else
-                        {binding.model= this
-                        setProfileView()}
+                        {
+                            // fetch nominated user data
+                            ncId = status.data.accountInformation?.ncId ?:""
+                            viewModel.getNominatedContacts()
+                            binding.model= this
+//                            setProfileView()
+                        }
                     }
                 }
                 is  Resource.DataError ->{

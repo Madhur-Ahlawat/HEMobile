@@ -102,9 +102,9 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         navController = Navigation.findNavController(this, R.id.fragmentContainerPayment)
         val oldGraph = navController.graph
         when (type) {
-            PAYMENT_HISTORY -> oldGraph.startDestination = R.id.accountPaymentHistoryFragment
-            PAYMENT_METHOD -> oldGraph.startDestination = R.id.paymentMethodFragment
-            PAYMENT_TOP_UP -> oldGraph.startDestination = R.id.paymentTopUpFragment
+            PAYMENT_HISTORY ->   oldGraph.setStartDestination(R.id.accountPaymentHistoryFragment)
+            PAYMENT_METHOD ->  oldGraph.setStartDestination(R.id.paymentMethodFragment)
+            PAYMENT_TOP_UP ->   oldGraph.setStartDestination(R.id.paymentTopUpFragment)
         }
         navController.graph = oldGraph
 

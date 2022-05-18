@@ -27,6 +27,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val SECURITY_CODE_OBJ="security_code_obj"
         const val IS_USER_LOGIN="is_user_login"
         const val IS_SECONDARY="is_secondary_user"
+        const val NC_ID= "nc_id"
     }
 
     /**
@@ -149,6 +150,16 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
 
     fun getSecondaryUser() : Boolean{
         return prefs.getBoolean(IS_SECONDARY ,false)
+    }
+
+    fun setNCId(type: String?) {
+        val editor = prefs.edit()
+        editor.putString(NC_ID,type)
+        editor.apply()
+    }
+
+    fun getNCId() : String?{
+        return prefs.getString(NC_ID ,null)
     }
 
 
