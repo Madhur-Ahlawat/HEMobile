@@ -94,7 +94,7 @@ android {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def nav_version = "2.4.2"
+        def nav_version = "2.3.5"
 
 
 
@@ -108,7 +108,7 @@ android {
         implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
         implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
         implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
-        implementation 'androidx.navigation:navigation-testing:2.4.2'
+        implementation "androidx.navigation:navigation-testing:$nav_version"
 
         testImplementation 'junit:junit:4.13.2'
         androidTestImplementation 'androidx.test.ext:junit:1.1.3'
