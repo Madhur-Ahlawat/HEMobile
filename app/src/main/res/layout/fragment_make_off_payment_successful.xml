@@ -8,7 +8,6 @@
         android:layout_height="match_parent">
 
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView"
             android:layout_width="wrap_content"
@@ -169,7 +168,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="Vehicle list (5)"
+                android:text="Vehicle list (1)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
@@ -188,8 +187,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
             <View
@@ -276,7 +273,7 @@
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/btn_disable"
+            android:backgroundTint="@color/btn_color"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
