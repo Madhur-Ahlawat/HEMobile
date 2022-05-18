@@ -115,7 +115,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
             binding.apply {
                 Logg.logging("MakePayMent", " calling inside ")
-
                 rvVehiclesList.gone()
                 noVehiclesAdded.visible()
                 addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
