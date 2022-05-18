@@ -8,8 +8,12 @@ import androidx.core.content.ContextCompat
 import com.heandroid.R
 import com.heandroid.databinding.VehicleAddConformBinding
 import com.heandroid.ui.base.BaseDialog
+import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 
 class BusinessAddConfirmDialog: BaseDialog<VehicleAddConformBinding>() {
+
+
+
     override fun getDialogBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -18,6 +22,8 @@ class BusinessAddConfirmDialog: BaseDialog<VehicleAddConformBinding>() {
     override fun init() {
         dialog?.setCanceledOnTouchOutside(false)
       //  binding.subTitle.text = resources.getString(R.string.str_do_you_want_the_below)
+        binding.subTitle.text = keySubTitle
+        binding.title.text = keyTitle
     }
 
     override fun initCtrl() {
@@ -41,11 +47,16 @@ class BusinessAddConfirmDialog: BaseDialog<VehicleAddConformBinding>() {
     companion object {
 
         private var mListener: AddBusinessVehicleListener? = null
+        var keyTitle = "KEY_TITLE"
+        var keySubTitle = "KEY_SUBTITLE"
 
-        fun newInstance(listener: AddBusinessVehicleListener): BusinessAddConfirmDialog {
+        fun newInstance(title: String, subTitle: String,  listener: AddBusinessVehicleListener): BusinessAddConfirmDialog {
+
             val args = Bundle()
             mListener = listener
             val fragment = BusinessAddConfirmDialog()
+            keyTitle = title
+            keySubTitle = subTitle
             fragment.arguments = args
             return fragment
         }

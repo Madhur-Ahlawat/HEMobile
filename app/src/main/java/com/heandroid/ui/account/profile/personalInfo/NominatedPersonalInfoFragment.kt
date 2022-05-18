@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.profile.ProfileUpdateEmailModel
+import com.heandroid.databinding.FragmentNominatedPersonalInfoBinding
 import com.heandroid.databinding.FragmentProfilePersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBinding>(),
+class NominatedPersonalInfoFragment : BaseFragment<FragmentNominatedPersonalInfoBinding>(),
     View.OnClickListener {
 
     @Inject
@@ -28,12 +29,12 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
     private var isSecondary: Boolean = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentProfilePersonalInfoBinding.inflate(inflater, container, false)
+        FragmentNominatedPersonalInfoBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = true
+        binding.nominated = arguments?.getParcelable(Constants.NOMINATED_ACCOUNT_DATA)
         binding.data = arguments?.getParcelable(Constants.DATA)
-
         accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
         isSecondary = sessionManager.getSecondaryUser()
         setView()
@@ -82,33 +83,34 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
             R.id.btnAction -> {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.DATA, binding.data)
+                bundle.putParcelable(Constants.NOMINATED_ACCOUNT_DATA, binding.nominated)
                 findNavController().navigate(
-                    R.id.action_personalInfoFragment_to_postCodeFragment,
+                    R.id.action_nominatedPersonalInfoFragment_to_nominatedPostCodeFragment,
                     bundle
                 )
             }
             R.id.btnChangeEmail -> {
                 val bundle = Bundle()
-                binding.data?.personalInformation?.run {
+                binding.nominated?.run {
                     bundle.putParcelable(
                         Constants.DATA, ProfileUpdateEmailModel(
                             referenceId = null,
                             securityCode = null,
-                            addressLine1 = addressLine1,
-                            addressLine2 = addressLine2,
-                            city = city,
-                            country = country,
+                            addressLine1 = null,
+                            addressLine2 = null,
+                            city = null,
+                            country = null,
                             emailAddress = emailAddress,
-                            phoneCell = cellPhone,
-                            phoneDay = phoneDay,
-                            phoneEvening = eveningPhone,
-                            phoneFax = fax,
-                            primaryEmailStatus = primaryEmailStatus,
-                            primaryEmailUniqueID = pemailUniqueCode,
+                            phoneCell = phoneNumber,
+                            phoneDay = phoneNumber,
+                            phoneEvening = null,
+                            phoneFax = null,
+                            primaryEmailStatus = null,
+                            primaryEmailUniqueID = null,
                             smsOption = "Y",
-                            state = state,
-                            zipCode = zipcode,
-                            zipCodePlus = zipCodePlus
+                            state = null,
+                            zipCode = null,
+                            zipCodePlus = null
                         )
                     )
 

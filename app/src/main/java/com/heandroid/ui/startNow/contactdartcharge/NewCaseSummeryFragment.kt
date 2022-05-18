@@ -135,26 +135,24 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
-                var loggedInUser = !TextUtils.isEmpty(sessionManager.fetchAuthToken())
+                var loggedInUser = (sessionManager.getLoggedInUser())
                 if (loggedInUser) {
-                    val newCaseReq = CreateNewCaseReq(
-                        //  fname = if (loggedInUser) "" else fName,
-                        // lname = if (loggedInUser) "" else lName,
-                        //   eid = if (loggedInUser) "" else emailId,
-                        //    phoneNo = if (loggedInUser) "" else telephoneNo,
-                        fname = "",
-                        lname = "",
-                        eid = "",
-                        phoneNo = "",
-                        accountNo = "100312803",
-                        otherDetails = mComment,
-                        mSubCat,//SUB
-                        mCat,//CAT
-                        mList,
-                        "ENU"
-                    )
-                    loader?.show(requireActivity().supportFragmentManager, "Loader")
-                    viewModel.createNewCase(newCaseReq)
+                    mModel?.run {
+                        val newCaseReq = CreateNewCaseReq(
+                            fname = if (loggedInUser) "" else fName,
+                            lname = if (loggedInUser) "" else lName,
+                            eid = if (loggedInUser) "" else emailId,
+                            phoneNo = if (loggedInUser) "" else telephoneNo,
+                            accountNo = "",
+                            otherDetails = mComment,
+                            mSubCat,//SUB
+                            mCat,//CAT
+                            mList,
+                            "ENU"
+                        )
+                        loader?.show(requireActivity().supportFragmentManager, "Loader")
+                        viewModel.createNewCase(newCaseReq)
+                    }
                 } else {
                     val newCaseReq = CreateNewCaseReq(
                         mModel!!.fName,

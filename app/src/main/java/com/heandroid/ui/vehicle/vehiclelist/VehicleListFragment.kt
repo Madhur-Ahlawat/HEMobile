@@ -40,17 +40,16 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     ItemClickListener, AddVehicleListener, RemoveVehicleListener, DownloadFilterDialogListener {
 
     private var mList: ArrayList<VehicleResponse?> = ArrayList()
-    private lateinit var mAdapter: VehicleListAdapter
+    private lateinit var mAdapter: VehicleManagementListAdapter
     private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var isAccountVehicle: Boolean? = false
-    private var pos: Int = 0
     private var isBusinessAccount = false
     @Inject
     lateinit var sessionManager: SessionManager
-    private var currentPos: Int = 0
     private var selectionType: String = Constants.PDF
     private var isDownload = false
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleListBinding.inflate(inflater, container, false)
@@ -180,19 +179,19 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private fun handleDownloadVehicleListData(resource: Resource<ResponseBody?>?) {
 
         if(isDownload){
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.let {
-                        callCoroutines(resource.data)
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            callCoroutines(resource.data)
+                        }
+                    }
+                    is Resource.DataError -> {
+                        requireContext().showToast("failed to download the document")
+                    }
+                    else -> {
+
                     }
                 }
-                is Resource.DataError -> {
-                    requireContext().showToast("failed to download the document")
-                }
-                else -> {
-
-                }
-            }
             isDownload = false
         }
 
@@ -200,8 +199,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
         this.mList = mList
-        mAdapter = VehicleListAdapter(requireContext(), this, isBusinessAccount)
+        mAdapter = VehicleManagementListAdapter(requireContext())
         mAdapter.setList(mList)
+
         binding.rvVehicleList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)

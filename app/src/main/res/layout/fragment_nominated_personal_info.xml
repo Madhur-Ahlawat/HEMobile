@@ -4,13 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="nominated"
+            type="com.heandroid.data.model.nominatedcontacts.SecondaryAccountData" />
 
         <variable
             name="enable"
             type="Boolean" />
+
         <variable
             name="data"
             type="com.heandroid.data.model.profile.ProfileDetailModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,6 +147,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
                         android:maxLength="50"
+                        android:editable="false"
                         android:text="@={data.accountInformation.fein}"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -173,7 +179,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
                         android:maxLength="50"
-                        android:text="@={data.personalInformation.firstName}"
+                        android:text="@={nominated.firstName}"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
@@ -203,8 +209,8 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
                         android:maxLength="50"
-                        android:text="@={data.personalInformation.lastName}"
-
+                        android:text="@={nominated.lastName}"
+android:editable="false"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
@@ -234,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:text="@={data.personalInformation.emailAddress}"
+                        android:text="@={nominated.emailAddress}"
 
                         android:maxLength="45"
                         android:singleLine="true"
@@ -268,7 +274,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:inputType="number"
-                        android:text="@={data.personalInformation.eveningPhone}"
+                        android:text="@={nominated.phoneNumber}"
                         android:maxLength="10"
                         android:singleLine="true"
                         android:textColor="@color/black"

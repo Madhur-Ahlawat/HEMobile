@@ -99,7 +99,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             isSecondaryUser(response.data?.isSecondary ?: false)
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
-
             sessionManager.setLoggedInUser(true)
         }
         requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {

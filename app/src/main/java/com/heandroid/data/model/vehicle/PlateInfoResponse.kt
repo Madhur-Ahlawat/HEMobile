@@ -18,8 +18,7 @@ data class PlateInfoResponse(
     @SerializedName("vehicleComments")
     var vehicleComments: String="",
     @SerializedName("planName")
-    var planName: String="",
-
+    var planName: String=""
 
 ):Serializable
 
