@@ -8,7 +8,6 @@
         <variable
             name="enable"
             type="Boolean" />
-
         <variable
             name="data"
             type="com.heandroid.data.model.profile.ProfileDetailModel" />

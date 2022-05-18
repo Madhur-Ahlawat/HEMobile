@@ -5,6 +5,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+import java.io.Serializable
+
+
 @Parcelize
 data class VehicleResponse(
 
@@ -19,8 +22,10 @@ data class VehicleResponse(
 
     var isExpanded: Boolean? = false,
 
-    var quantity : Int? =0,
-    var price : Double? =0.0,
+    var futureQuantity: Int? = 0,
+    var pastQuantity: Int? = 1,
+    var price: Double? = 0.0,
+    var classRate: Double? = 2.5
 
 ) : Parcelable
 

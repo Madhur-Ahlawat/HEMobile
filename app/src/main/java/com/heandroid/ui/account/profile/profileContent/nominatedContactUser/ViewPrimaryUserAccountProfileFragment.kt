@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
@@ -13,6 +14,7 @@ import com.heandroid.databinding.FragmentViewPrimaryUserAccountProfileBinding
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,16 +30,17 @@ class ViewPrimaryUserAccountProfileFragment : BaseFragment<FragmentViewPrimaryUs
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    private var loader: LoaderDialog? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     )= FragmentViewPrimaryUserAccountProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager,"")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager,"")
+        binding.model=arguments?.getParcelable(Constants.DATA)
         viewModel.accountDetail()
       //  (requireActivity() as ProfileActivity).setHeaderTitle("Account holder profile")
     }
@@ -62,7 +65,7 @@ class ViewPrimaryUserAccountProfileFragment : BaseFragment<FragmentViewPrimaryUs
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
         try {
-            // loader?.dismiss()
+             loader?.dismiss()
             when(status){
                 is  Resource.Success -> {
                     status.data?.run {

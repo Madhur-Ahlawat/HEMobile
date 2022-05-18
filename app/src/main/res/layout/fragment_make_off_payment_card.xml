@@ -90,13 +90,15 @@
                     app:layout_constraintTop_toTopOf="parent">
 
 
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tieCardNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:maxLength="19"
+                        android:focusableInTouchMode="false"
+                        android:focusable="false"
                         android:editable="false"
                         android:text="@{model.cardNo}"
                         android:singleLine="true"
@@ -104,8 +106,8 @@
                         android:textSize="@dimen/_13ssp" />
 
 
-                </com.google.android.material.textfield.TextInputLayout>
 
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilExpiryDate"

@@ -19,7 +19,6 @@ import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicleBinding>(),
@@ -30,6 +29,8 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
     private var isFromOneOfPayment: Boolean? = false
+    private var mScreeType = 0
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,6 +47,10 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
 
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
+        }
+
         isFromOneOfPayment = arguments?.getBoolean(Constants.PAYMENT_ONE_OFF)
 
         setAdapter()
@@ -54,9 +59,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     override fun initCtrl() {
         binding.addVehicleBtn.setOnClickListener(this)
         binding.findVehicle.setOnClickListener(this)
-    }
 
-    override fun observer() {
     }
 
     override fun onClick(v: View?) {
@@ -70,9 +73,25 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
             }
             R.id.findVehicle -> {
+                val bundle = Bundle()
+                bundle.putInt(
+                    Constants.VEHICLE_SCREEN_KEY,
+                    mScreeType
+                )
+                bundle.putParcelable(
+                    Constants.DATA,
+                    mVDetails
+                )
 
+                findNavController().navigate(
+                    R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
+                    bundle
+                )
             }
         }
+    }
+
+    override fun observer() {
     }
 
     private fun setAdapter() {
@@ -96,7 +115,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
             binding.apply {
                 Logg.logging("MakePayMent", " calling inside ")
-
                 rvVehiclesList.gone()
                 noVehiclesAdded.visible()
                 addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
@@ -111,18 +129,29 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         }
     }
 
+    private lateinit var mVDetails: VehicleResponse
+
     override fun onAddClick(details: VehicleResponse) {
         addDialog?.dismiss()
+        mVDetails = details
+        if (details.plateInfo?.country == "UK") {
+            vehicleList?.add(details)
+            setAdapter()
 
-        setAdapter()
-        val bundle = Bundle().apply {
-            putParcelable(Constants.DATA, details)
-            putBoolean(Constants.PAYMENT_PAGE, true)
+        } else {
+            val bundle = Bundle().apply {
+                putParcelable(Constants.DATA, details)
+
+                putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+
+                putBoolean(Constants.PAYMENT_PAGE, true)
+            }
+            findNavController().navigate(
+                R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
+                bundle
+            )
         }
-        findNavController().navigate(
-            R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
-            bundle
-        )
+
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {

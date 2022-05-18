@@ -75,10 +75,10 @@ class LandingActivity : BaseActivity<Any?>() {
         oldGraph.addArgument(Constants.TYPE, NavArgument.Builder().setDefaultValue(intent.extras).build())
         navController.graph = oldGraph.apply {
             when (screenType) {
-                START_NOW_SCREEN -> startDestination = R.id.startNow
-                LANDING_SCREEN -> startDestination = R.id.landingFragment
-                LOGOUT_SCREEN -> startDestination = R.id.logoutFragment
-                SESSION_TIME_OUT-> startDestination = R.id.sessionTimeOutFragment
+                START_NOW_SCREEN -> setStartDestination(R.id.startNow)
+                LANDING_SCREEN ->  setStartDestination(R.id.landingFragment)
+                LOGOUT_SCREEN ->   setStartDestination(R.id.logoutFragment)
+                SESSION_TIME_OUT-> setStartDestination(R.id.sessionTimeOutFragment)
             }
         }
 

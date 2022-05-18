@@ -1,5 +1,9 @@
 package com.heandroid.data.model.payment
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class BillingInfo(
     val address1: String?,
     val address2: String?,
@@ -10,4 +14,4 @@ data class BillingInfo(
     val phone: String?,
     val postalCode: String?,
     val state: String?
-)
+):Parcelable

@@ -2,6 +2,8 @@ package com.heandroid.hiltTesting.login
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -46,12 +48,23 @@ class LoginTestFragment {
 
     @Test
     fun clickToForgotEmailFragment(){
-        val navController = mock(NavController::class.java)
+         // val navController = mock(NavController::class.java)
+        // Create a TestNavHostController
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext())
+
         launchFragmentInHiltContainer<ForgotEmailFragment> {
+            navController.setGraph(R.navigation.navigation_auth)
             Navigation.setViewNavController(requireView(),navController)
         }
         onView(withId(R.id.tv_forgot_username)).perform(click())
         verify(navController).navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+        //action_loginFragment_to_forgotEmailFragment
+
+
+//        // Verify that performing a click changes the NavController’s state
+//        onView(ViewMatchers.withId(R.id.play_btn)).perform(ViewActions.click())
+//        assertThat(navController.currentDestination?.id).isEqualTo(R.id.in_game)
     }
 
 

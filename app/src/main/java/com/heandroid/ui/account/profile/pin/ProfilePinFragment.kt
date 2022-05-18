@@ -12,12 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.UpdateProfileRequest
+import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
 import com.heandroid.data.model.profile.AccountPinChangeModel
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentProfilePinBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationViewModel
+import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.showToast
@@ -29,13 +32,14 @@ import javax.inject.Inject
 class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnClickListener {
 
     @Inject
-    lateinit var  sessionManager: SessionManager
-    private var accountType : String = Constants.PERSONAL_ACCOUNT
-    private var isSecondaryUser : Boolean = false
+    lateinit var sessionManager: SessionManager
+    private var accountType: String = Constants.PERSONAL_ACCOUNT
+    private var isSecondaryUser: Boolean = false
 
 
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private val nominatedContactViewModel: NominatedInvitationViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentProfilePinBinding.inflate(inflater, container, false)
@@ -47,7 +51,11 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
         binding.enable = false
         binding.enable = true
-        binding.data = arguments?.getParcelable(Constants.DATA)
+        if (sessionManager.getSecondaryUser()) {
+            // binding.nominated = arguments?.getParcelable(Constants.DATA)
+        } else {
+            binding.data = arguments?.getParcelable(Constants.DATA)
+        }
         // binding.data?.personalInformation?.confirmPassword=binding.data?.accountInformation?.password
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -111,7 +119,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
         hideKeyboard()
         when (v?.id) {
             R.id.btnSave -> {
-               loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, "")
                 updateUserProfile()
 
             }
@@ -124,19 +132,20 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     }
 
     private fun updateUserProfile() {
-        when  {
-            ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT ->
-            { updateStandardUserProfile() }
-            !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT ->
-            { updateBusinessUserProfile() }
-
-            isSecondaryUser && accountType ==Constants.PERSONAL_ACCOUNT->{
-                updateNominatedContactUserProfile()
+        when {
+            !isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
+                updateStandardUserProfile()
             }
-            isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT->{
-               updateNominatedBusinessUserProfile()
+            !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {
+                updateBusinessUserProfile()
             }
-            else->{ updatePaygUserProfile() }
+            isSecondaryUser -> {
+               // updateAccountHolderByNominated()
+                updateStandardUserProfile()
+            }
+            else -> {
+                updatePaygUserProfile()
+            }
         }
     }
 
@@ -145,13 +154,33 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
     }
 
-    private fun updateNominatedBusinessUserProfile() {
+    private fun updateAccountHolderByNominated() {
+        binding.data?.personalInformation?.run {
+            var request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneNumber ?: "",
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = ""
+            )
+
+            viewModel.updateUserDetails(request)
+        }
 
     }
 
-    private fun updateNominatedContactUserProfile() {
-        // use
-    }
 
     private fun updateBusinessUserProfile() {
         binding.data?.run {
@@ -173,7 +202,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
-                fein=accountInformation?.fein,
+                fein = accountInformation?.fein,
                 businessName = personalInformation?.customerName
             )
 
@@ -232,19 +261,23 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
 
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-       loader?.dismiss()
+        loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
                 requireActivity().showToast(getString(R.string.str_profile_updated_successfully))
-                when{
-                    accountType==Constants.PERSONAL_ACCOUNT && !isSecondaryUser->{
+                when {
+                    accountType == Constants.PERSONAL_ACCOUNT && !isSecondaryUser -> {
                         findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
                     }
-                    accountType==Constants.BUSINESS_ACCOUNT && !isSecondaryUser->{
+                    accountType == Constants.BUSINESS_ACCOUNT && !isSecondaryUser -> {
                         findNavController().navigate(R.id.action_pinFragment_to_viewBusinessAccountProfile)
                     }
-                    else->{
+
+                    isSecondaryUser -> {
+                        findNavController().navigate(R.id.action_pinFragment_to_viewNominatedPrimaryProfileFragment)
+                    }
+                    else -> {
                         findNavController().navigate(R.id.action_pinFragment_to_viewProfileFragment)
                     }
                 }

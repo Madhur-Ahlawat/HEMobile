@@ -9,6 +9,7 @@ import com.heandroid.data.model.account.UpdateProfileRequest
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
+import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.data.model.profile.*
 import com.heandroid.data.repository.profile.ProfileRepository
 import com.heandroid.ui.base.BaseApplication
@@ -52,6 +53,10 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateUserProfileDataApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
     val updateUserProfileDataApiVal : LiveData<Resource<EmptyApiResponse?>?> get()  = _updateUserProfileDataApiVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _getNominatedContactsApiVal = MutableLiveData<Resource<NominatedContactRes?>?>()
+    val getNominatedContactsApiVal : LiveData<Resource<NominatedContactRes?>?> get()  = _getNominatedContactsApiVal
 
     fun updateAccountPin(request: AccountPinChangeModel) {
         viewModelScope.launch {
@@ -137,5 +142,13 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     }
 
 
-
+    fun getNominatedContacts() {
+        viewModelScope.launch {
+            try {
+                _getNominatedContactsApiVal.postValue(success(repository.getNominatedContactList(), errorManager))
+            } catch (e: Exception) {
+                _getNominatedContactsApiVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
 }

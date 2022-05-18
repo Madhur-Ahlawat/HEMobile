@@ -20,7 +20,6 @@
     </fragment>
 
 
-
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
         android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
@@ -59,7 +58,6 @@
             android:id="@+id/action_makeOneOffPaymentCrossingFragment_to_makeOffPaymentReceiptFragment"
             app:destination="@id/makeOffPaymentReceiptFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/makeOffPaymentReceiptFragment"

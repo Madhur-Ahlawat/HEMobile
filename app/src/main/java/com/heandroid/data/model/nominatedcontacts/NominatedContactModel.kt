@@ -15,12 +15,14 @@ data class SecondaryAccountDetailsType(@SerializedName("secondarAccountDetails")
 
 @Parcelize
 data class SecondaryAccountData(
-    @SerializedName("secAccountRowId") val secAccountRowId: String,
-    @SerializedName("emailAddress") val emailAddress: String,
-    @SerializedName("accountStatus") val accountStatus: String,
-    @SerializedName("firstName") val firstName: String,
-    @SerializedName("lastName") val lastName: String,
-    @SerializedName("phoneNumber") val phoneNumber: String,
+    @SerializedName("secAccountRowId") var secAccountRowId: String,
+    @SerializedName("emailAddress") var emailAddress: String,
+    @SerializedName("accountStatus") var accountStatus: String,
+    @SerializedName("firstName") var firstName: String,
+    @SerializedName("lastName") var lastName: String,
+    @SerializedName("phoneNumber") var phoneNumber: String,
+    @SerializedName("securityCode") var securityCode:String?,
+    @SerializedName("referenceId") var referenceId:String?,
     var mPermissionLevel: String? = "-",
     var isExpanded: Boolean = false
 ) : Parcelable

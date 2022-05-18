@@ -131,7 +131,7 @@
                         android:focusable="false"
                         android:editable="false"
                         android:singleLine="true"
-                        android:text="@{model.creditCExpMonth +`\\`+ model.creditCExpYear}"
+                        android:text="@{model.creditCExpMonth +`//`+ model.creditCExpYear}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
@@ -178,8 +178,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:boxStrokeColor="@color/color_00703C"
-
-
                     android:hint="@string/card_security_code"
                     app:helperText="@string/hint_cvv"
                     app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
