@@ -12,7 +12,20 @@
         <action
             android:id="@+id/action_vehicleListFragment_to_addVehicleDetailsFragment"
             app:destination="@id/addVehicleDetailsFragment" />
+
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleManagementDetailFragment"
+            app:destination="@+id/vehicleManagementDetailFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/vehicleManagementDetailFragment"
+        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListManagementDetailFragment"
+        android:label="VehicleManagementDetail"
+        tools:layout="@layout/fragment_vehicle_list_management_detail">
+
+    </fragment>
+
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
         android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
