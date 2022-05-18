@@ -47,6 +47,10 @@
         <action
             android:id="@+id/action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment"
             app:destination="@id/makeOneOffPaymentCrossingFragment" />
+        <action
+            android:id="@+id/action_addVehicleDoneFragment_to_addVehicleDetailsFragment"
+            app:destination="@id/addVehicleDetailsFragment" />
+
     </fragment>
 
     <fragment

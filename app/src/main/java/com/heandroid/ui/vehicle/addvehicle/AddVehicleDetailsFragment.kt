@@ -10,6 +10,7 @@ import com.heandroid.databinding.FragmentAddVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.DATA
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import java.nio.BufferUnderflowException
@@ -18,7 +19,6 @@ import java.nio.BufferUnderflowException
 class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
     private var mVehicleDetails: VehicleResponse? = null
-    private var isFromPaymentScreen = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,11 +32,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     override fun init() {
         binding.model = false
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
-        isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
 
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
+        Logg.logging("testing", " AddVehicleDetailsFragment mScreeType  $mScreeType")
 
         binding.title.text = getString(
             R.string.vehicle_reg_num,
@@ -77,7 +77,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
 
                     putParcelable(Constants.DATA, mVehicleDetails)
-                    putBoolean(Constants.PAYMENT_PAGE, isFromPaymentScreen)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)
 

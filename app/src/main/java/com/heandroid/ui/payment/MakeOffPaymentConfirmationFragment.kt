@@ -80,7 +80,6 @@ class MakeOffPaymentConfirmationFragment :
                             "testing",
                             " MakeOffPaymentConfirmationFragment success it  $it"
                         )
-
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
                         mBundle.putString(Constants.EMAIL, mEmail)
@@ -115,7 +114,6 @@ class MakeOffPaymentConfirmationFragment :
                     R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
                     mBundle
                 )
-
             }
         }
 
