@@ -16,24 +16,29 @@ import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAd
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
 import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VehicleListManagementDetailFragment :
     BaseFragment<FragmentVehicleListManagementDetailBinding>(), View.OnClickListener,
     AddBusinessVehicleListener {
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     private var rowItem: VehicleResponse? = null
     private var isChangeBtn: Boolean = true
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var isBusinessAccount = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleListManagementDetailBinding.inflate(inflater, container, false)
@@ -59,6 +64,17 @@ class VehicleListManagementDetailFragment :
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        sessionManager.fetchAccountType()?.let {
+            if (it == Constants.BUSINESS_ACCOUNT) {
+                isBusinessAccount = true
+            }
+        }
+        if (isBusinessAccount) {
+            binding.notesParent.gone()
+        } else {
+            binding.notesParent.visible()
+        }
     }
 
     override fun initCtrl() {
@@ -73,11 +89,12 @@ class VehicleListManagementDetailFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
 
-            R.id.removeVehicle ->{
+            R.id.removeVehicle -> {
                 BusinessAddConfirmDialog.newInstance(
                     resources.getString(R.string.add_vehicle),
                     rowItem?.plateInfo?.number.toString(),
-                    this@VehicleListManagementDetailFragment)
+                    this@VehicleListManagementDetailFragment
+                )
                     .show(childFragmentManager, VehicleAddConfirmDialog.TAG)
             }
 
@@ -87,44 +104,12 @@ class VehicleListManagementDetailFragment :
                     binding.changeVehicle.text = resources.getString(R.string.add)
                     isChangeBtn = false
                 } else {
-
-                    if(TextUtils.isEmpty(binding.make.text.toString())){
-                        Toast.makeText(context,  "Please enter vehicle make", Toast.LENGTH_SHORT).show()
-                    } else if(TextUtils.isEmpty(binding.model.text.toString())){
-                        Toast.makeText(context,  "Please enter vehicle model", Toast.LENGTH_SHORT).show()
-                    }else if(TextUtils.isEmpty(binding.color.text.toString())){
-                        Toast.makeText(context,  "Please enter vehicle color", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(TextUtils.isEmpty(binding.vehicleClass.text.toString())){
-                        Toast.makeText(context,  "Please enter vehicle class C or D", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        val plateInfo = PlateInfoResponseManagement()
-                        plateInfo.number = binding.regNum.text.toString()
-                        plateInfo.country = binding.countryMarker.text.toString()
-                        plateInfo.vehicleGroup = rowItem?.plateInfo?.vehicleGroup.toString()
-                        plateInfo.state = rowItem?.plateInfo?.state.toString()
-                        plateInfo.type = rowItem?.plateInfo?.type.toString()
-                        plateInfo.vehicleComments = rowItem?.plateInfo?.vehicleComments.toString()
-
-                        val vehicleInfo = VehicleInfoResponseManagement()
-                        vehicleInfo.make = binding.make.text.toString()
-                        vehicleInfo.model = binding.model.text.toString()
-                        vehicleInfo.year = rowItem?.vehicleInfo?.year
-                        vehicleInfo.rowId = rowItem?.vehicleInfo?.rowId
-                        vehicleInfo.typeDescription = rowItem?.vehicleInfo?.typeDescription
-                        vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassCode(binding.vehicleClass.text.toString())
-                        vehicleInfo.color = binding.color.text.toString()
-
-                        loader?.show(requireActivity().supportFragmentManager, "")
-
-                        val request = VehicleListManagementEditRequest(plateInfo, vehicleInfo)
-                        vehicleMgmtViewModel.updateVehicleVRMData(request)
-                    }
+                    vehicleDetailsValidation()
                 }
             }
         }
     }
+
 
     private fun vehicleEditTextState() {
         binding.apply {
@@ -133,18 +118,60 @@ class VehicleListManagementDetailFragment :
             make.isEnabled = true
             make.isFocusable = true
             make.isFocusableInTouchMode = true
+            make.requestFocus()
 
             model.isEnabled = true
             model.isFocusable = true
             model.isFocusableInTouchMode = true
+            model.requestFocus()
 
             color.isEnabled = true
             color.isFocusable = true
             color.isFocusableInTouchMode = true
+            color.requestFocus()
 
             edtNote.isEnabled = true
             edtNote.isFocusable = true
             edtNote.isFocusableInTouchMode = true
+            edtNote.requestFocus()
+        }
+    }
+
+    private fun vehicleDetailsValidation() {
+        when {
+            TextUtils.isEmpty(binding.make.text.toString()) ->
+                Toast.makeText(context, "Please enter vehicle make", Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(binding.model.text.toString()) ->
+                Toast.makeText(context, "Please enter vehicle model", Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(binding.color.text.toString()) ->
+                Toast.makeText(context, "Please enter vehicle color", Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(binding.vehicleClass.text.toString()) ->
+                Toast.makeText(context, "Please enter vehicle class C or D", Toast.LENGTH_SHORT)
+                    .show()
+            else -> {
+                val plateInfo = PlateInfoResponseManagement()
+                plateInfo.number = binding.regNum.text.toString()
+                plateInfo.country = binding.countryMarker.text.toString()
+                plateInfo.vehicleGroup = rowItem?.plateInfo?.vehicleGroup.toString()
+                plateInfo.state = rowItem?.plateInfo?.state.toString()
+                plateInfo.type = rowItem?.plateInfo?.type.toString()
+                plateInfo.vehicleComments = binding.edtNote.text.toString()
+
+                val vehicleInfo = VehicleInfoResponseManagement()
+                vehicleInfo.make = binding.make.text.toString()
+                vehicleInfo.model = binding.model.text.toString()
+                vehicleInfo.year = rowItem?.vehicleInfo?.year
+                vehicleInfo.rowId = rowItem?.vehicleInfo?.rowId
+                vehicleInfo.typeDescription = rowItem?.vehicleInfo?.typeDescription
+                vehicleInfo.vehicleClassDesc =
+                    VehicleClassTypeConverter.toClassCode(binding.vehicleClass.text.toString())
+                vehicleInfo.color = binding.color.text.toString()
+
+                loader?.show(requireActivity().supportFragmentManager, "")
+
+                val request = VehicleListManagementEditRequest(plateInfo, vehicleInfo)
+                vehicleMgmtViewModel.updateVehicleVRMData(request)
+            }
         }
     }
 
@@ -170,7 +197,7 @@ class VehicleListManagementDetailFragment :
 
         when (resource) {
             is Resource.Success -> {
-                Toast.makeText(context,  "Vehicle details updated", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Vehicle details updated", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
             is Resource.DataError -> {
