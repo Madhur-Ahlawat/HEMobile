@@ -27,6 +27,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         const val SECURITY_CODE_OBJ="security_code_obj"
         const val IS_USER_LOGIN="is_user_login"
         const val IS_SECONDARY="is_secondary_user"
+        const val LOGGED_IN_USER="logged_in_user"
     }
 
     /**
@@ -151,5 +152,14 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         return prefs.getBoolean(IS_SECONDARY ,false)
     }
 
+    fun setLoggedInUser(loggedIn: Boolean) {
+        val editor = prefs.edit()
+        editor.putBoolean(LOGGED_IN_USER,loggedIn)
+        editor.apply()
+    }
+
+    fun getLoggedInUser() : Boolean{
+        return prefs.getBoolean(LOGGED_IN_USER ,false)
+    }
 
 }

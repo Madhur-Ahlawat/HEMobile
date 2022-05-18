@@ -76,10 +76,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                     if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
                         launchIntent(status)
                     } else {
+                        launchSubmitComplaint(status)
 
-                        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java){
-                            putInt(Constants.FROM_LOGIN_TO_CASES,Constants.FROM_LOGIN_TO_CASES_VALUE)
-                        }
                     }
                 }
                 is Resource.DataError -> {
@@ -93,7 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         }
     }
 
-    private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+    private fun launchSubmitComplaint(response: Resource.Success<LoginResponse?>) {
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveRefreshToken(response.data?.refreshToken ?: "")
@@ -101,34 +99,51 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             isSecondaryUser(response.data?.isSecondary ?: false)
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
+
+            sessionManager.setLoggedInUser(true)
         }
-        requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+            putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
+
+        }
     }
 
+        private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+            sessionManager.run {
+                saveAuthToken(response.data?.accessToken ?: "")
+                saveRefreshToken(response.data?.refreshToken ?: "")
+                setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
+                isSecondaryUser(response.data?.isSecondary ?: false)
+                //saveAccountNumber(response.data?.user_name?:"")
+                saveAccountType(response.data?.accountType ?: "")
+            }
+            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_login -> {
 
-                hideKeyboard()
-                val validation = viewModel.validation(binding.model)
-                if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
-                    viewModel.login(binding.model)
-                } else {
-                    showError(binding.root, validation.second)
+        override fun onClick(v: View?) {
+            when (v?.id) {
+                R.id.btn_login -> {
+
+                    hideKeyboard()
+                    val validation = viewModel.validation(binding.model)
+                    if (validation.first) {
+                        loader?.show(requireActivity().supportFragmentManager, "")
+                        viewModel.login(binding.model)
+                    } else {
+                        showError(binding.root, validation.second)
+                    }
+                }
+
+                R.id.tv_forgot_username -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+                }
+                R.id.tv_forgot_password -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
                 }
             }
-
-            R.id.tv_forgot_username -> {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
-            }
-            R.id.tv_forgot_password -> {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-            }
         }
-    }
 
-}
+    }
 
 

@@ -1,5 +1,6 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,21 @@ import com.heandroid.data.model.contactdartcharge.CreateNewCaseResp
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     View.OnClickListener {
     private val viewModel: ContactDartChargeViewModel by viewModels()
     private var loader: LoaderDialog? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -75,7 +81,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             rlCategoryVal.text = arguments?.getString(Constants.CASES_CATEGORY)
             rlSubCategoryVal.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
             rlCommentsVal.text = arguments?.getString(Constants.CASE_COMMENTS_KEY)
-            rlTransactionVal.text = "1 April 2022 03:30"
+            rlTransactionVal.text = DateUtils.currentDate()//"1 April 2022 03:30"
         }
     }
 
@@ -129,20 +135,42 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
-                val newCaseReq = CreateNewCaseReq(
-                    mModel!!.fName,
-                    mModel.lName,
-                    mModel.emailId,
-                    mModel.telephoneNo,
-                    "",
-                    mComment,
-                    "OTHER",//SUB
-                    "WEB",//CAT
-                    mList,
-                    "ENU"
-                )
-                loader?.show(requireActivity().supportFragmentManager, "Loader")
-                viewModel.createNewCase(newCaseReq)
+                var loggedInUser = !TextUtils.isEmpty(sessionManager.fetchAuthToken())
+                if (loggedInUser) {
+                    val newCaseReq = CreateNewCaseReq(
+                        //  fname = if (loggedInUser) "" else fName,
+                        // lname = if (loggedInUser) "" else lName,
+                        //   eid = if (loggedInUser) "" else emailId,
+                        //    phoneNo = if (loggedInUser) "" else telephoneNo,
+                        fname = "",
+                        lname = "",
+                        eid = "",
+                        phoneNo = "",
+                        accountNo = "100312803",
+                        otherDetails = mComment,
+                        mSubCat,//SUB
+                        mCat,//CAT
+                        mList,
+                        "ENU"
+                    )
+                    loader?.show(requireActivity().supportFragmentManager, "Loader")
+                    viewModel.createNewCase(newCaseReq)
+                } else {
+                    val newCaseReq = CreateNewCaseReq(
+                        mModel!!.fName,
+                        mModel.lName,
+                        mModel.emailId,
+                        mModel.telephoneNo,
+                        "",
+                        mComment,
+                        "OTHER",//SUB
+                        "WEB",//CAT
+                        mList,
+                        "ENU"
+                    )
+                    loader?.show(requireActivity().supportFragmentManager, "Loader")
+                    viewModel.createNewCase(newCaseReq)
+                }
             }
             else -> {
             }
