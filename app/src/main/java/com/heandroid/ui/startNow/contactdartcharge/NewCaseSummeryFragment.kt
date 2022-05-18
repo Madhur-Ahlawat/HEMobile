@@ -137,12 +137,12 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
 
                 var loggedInUser = (sessionManager.getLoggedInUser())
                 if (loggedInUser) {
-                    mModel?.run {
+
                         val newCaseReq = CreateNewCaseReq(
-                            fname = if (loggedInUser) "" else fName,
-                            lname = if (loggedInUser) "" else lName,
-                            eid = if (loggedInUser) "" else emailId,
-                            phoneNo = if (loggedInUser) "" else telephoneNo,
+                            fname = "",//if (loggedInUser) "" else mModel?.fName,
+                            lname ="",// if (loggedInUser) "" else lName,
+                            eid = "",//if (loggedInUser) "" else emailId,
+                            phoneNo = "",//if (loggedInUser) "" else telephoneNo,
                             accountNo = "",
                             otherDetails = mComment,
                             mSubCat,//SUB
@@ -152,7 +152,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                         )
                         loader?.show(requireActivity().supportFragmentManager, "Loader")
                         viewModel.createNewCase(newCaseReq)
-                    }
+
                 } else {
                     val newCaseReq = CreateNewCaseReq(
                         mModel!!.fName,
