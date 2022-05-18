@@ -777,5 +777,6 @@
     <string name="change_group">Change group</string>
     <string name="select_group">Select group</string>
     <string name="back_to_vehicles_list">Back to vehicle detail</string>
+    <string name="add_vehicle">Do you want to cancel adding the vehicles?</string>
 </resources>
 

@@ -291,4 +291,7 @@ interface ApiService {
 
     @GET(DOWNLOAD_VRM_VEHICLE_LIST)
     suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
+
+    @PUT(VEHICLE_VRM_EDIT)
+    suspend fun updateVehicleListManagement(@Body request: VehicleListManagementEditRequest?): Response<String?>
 }

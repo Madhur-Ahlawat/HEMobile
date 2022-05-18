@@ -106,7 +106,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
 
         fun newInstance(
             title: String,
-            subTitle: String,
+            subTitle: String?,
             listener: AddVehicleListener
         ): AddVehicleDialog {
             val args = Bundle()

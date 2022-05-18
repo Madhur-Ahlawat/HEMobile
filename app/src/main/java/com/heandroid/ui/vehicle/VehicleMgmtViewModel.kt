@@ -9,6 +9,7 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
+import com.heandroid.data.model.vehicle.VehicleListManagementEditRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
 import com.heandroid.ui.base.BaseViewModel
@@ -49,6 +50,9 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
 
     private val _vehicleVRMDownloadVal = MutableLiveData<Resource<ResponseBody?>?>()
     val vehicleVRMDownloadVal: LiveData<Resource<ResponseBody?>?> get() = _vehicleVRMDownloadVal
+
+    private val _vehicleListManagementEditVal = MutableLiveData<Resource<String?>?>()
+    val vehicleListManagementEditVal: LiveData<Resource<String?>?> get() = _vehicleListManagementEditVal
 
     fun addVehicleApi(request: VehicleResponse?) {
         viewModelScope.launch {
@@ -146,6 +150,16 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
                 _vehicleVRMDownloadVal.postValue(ResponseHandler.success(repository.getDownloadVehicleList(type),errorManager))
             }catch (e: Exception) {
                 _vehicleVRMDownloadVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun updateVehicleVRMData(request: VehicleListManagementEditRequest) {
+        viewModelScope.launch {
+            try{
+                _vehicleListManagementEditVal.postValue(ResponseHandler.success(repository.updateVehicleListManagement(request), errorManager))
+            }catch (e: Exception){
+                _vehicleListManagementEditVal.postValue(ResponseHandler.failure(e))
             }
         }
     }
