@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_navigation_graph"
-    app:startDestination="@id/viewProfile">
+    app:startDestination="@id/viewNominatedUserAccountProfileFragment">
 
     <fragment
         android:id="@+id/viewProfile"
@@ -92,6 +92,12 @@
             app:destination="@id/viewNominatedUserAccountProfileFragment"
             app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_pinFragment_to_viewNominatedPrimaryProfileFragment"
+            app:destination="@id/viewPrimaryAccountUserProfileFragment"
+            app:popUpTo="@id/viewPrimaryAccountUserProfileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 
@@ -161,7 +167,7 @@
         tools:layout="@layout/fragment_view_nominated_contact_user_profile">
         <action
             android:id="@+id/action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo"
-            app:destination="@id/personalInfoFragment" />
+            app:destination="@id/nominatedPersonalInfoFragment" />
         <action
             android:id="@+id/action_viewNominatedContactUserProfile_to_viewPrimaryAccountHolderProfile"
             app:destination="@id/viewPrimaryAccountUserProfileFragment" />
@@ -196,5 +202,44 @@
         <action
             android:id="@+id/action_viewPaygAdditionalDetails_to_UpdatePersonalInfo"
             app:destination="@id/personalInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nominatedPersonalInfoFragment"
+        android:name="com.heandroid.ui.account.profile.personalInfo.NominatedPersonalInfoFragment"
+        tools:layout="@layout/fragment_nominated_personal_info">
+        <action
+            android:id="@+id/action_nominatedPersonalInfoFragment_to_nominatedPostCodeFragment"
+            app:destination="@id/nominatedPostCodeFragment" />
+        <action
+            android:id="@+id/action_personalInfoFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nominatedPostCodeFragment"
+        android:name="com.heandroid.ui.account.profile.postcode.NominatedProfilePostCodeFragment"
+        tools:layout="@layout/fragment_nominated_profile_postcode">
+<action
+    android:id="@+id/action_nominatedPostcodeFragment_to_nominatedPasswordFragment"
+    app:destination="@id/nominatedProfilePasswordFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nominatedPinFragment"
+        android:name="com.heandroid.ui.account.profile.pin.NominatedProfilePinFragment"
+        tools:layout="@layout/fragment_nominated_profile_pin">
+        <action
+            android:id="@+id/action_nominatedPinFragment_to_viewNominatedAccountProfile"
+            app:destination="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nominatedProfilePasswordFragment"
+        android:name="com.heandroid.ui.account.profile.password.NominatedProfilePasswordFragment"
+        tools:layout="@layout/fragment_nominated_profile_password">
+        <action
+            android:id="@+id/action_nominatedPasswordFragment_to_nominatedPinFragment"
+            app:destination="@id/nominatedPinFragment"/>
     </fragment>
 </navigation>

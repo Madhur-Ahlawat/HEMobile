@@ -32,10 +32,10 @@ class ContactDartChargeActivity : BaseActivity<Any?>() {
 
         if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
 
-            navGraph.startDestination = R.id.caseHistoryDartChargeFragment
+            navGraph.setStartDestination(R.id.caseHistoryDartChargeFragment)
 
         } else {
-            navGraph.startDestination = R.id.contactDartCharge
+            navGraph.setStartDestination(R.id.contactDartCharge)
 
         }
 

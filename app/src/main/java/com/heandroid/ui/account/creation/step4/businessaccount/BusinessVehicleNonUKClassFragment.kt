@@ -77,7 +77,7 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
                 binding.apply {
                     when {
                         cbDeclare.isChecked && mClassType.isNotEmpty() ->
-                            BusinessAddConfirmDialog.newInstance(this@BusinessVehicleNonUKClassFragment).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+                            BusinessAddConfirmDialog.newInstance(resources.getString(R.string.str_do_you_want_the_below), "",this@BusinessVehicleNonUKClassFragment).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
 
                         !cbDeclare.isChecked && mClassType.isNotEmpty() ->
                             Snackbar.make(classAView, "Please select the checkbox", Snackbar.LENGTH_LONG).show()

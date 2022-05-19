@@ -10,6 +10,9 @@
         <variable
             name="model"
             type="com.heandroid.data.model.profile.ProfileDetailModel" />
+        <variable
+            name="nominated"
+            type="com.heandroid.data.model.nominatedcontacts.SecondaryAccountData" />
 
     </data>
 
@@ -127,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="@{model.personalInformation.firstName}"
+                    android:text="@{nominated.firstName}"
                     android:textColor="#474747"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -174,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="@{model.personalInformation.lastName}"
+                    android:text="@{nominated.lastName}"
                     android:textColor="#474747"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -222,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="@{model.personalInformation.emailAddress}"
+                    android:text="@{nominated.emailAddress}"
                     android:textColor="#474747"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -259,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Model number"
+                    android:text="Mobile number"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -271,7 +274,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:inputType="number"
-                    android:text="@{model.accountInformation.number}"
+                    android:text="@{nominated.phoneNumber}"
                     android:textColor="#474747"
                     android:textSize="16sp"
                     android:textStyle="normal" />

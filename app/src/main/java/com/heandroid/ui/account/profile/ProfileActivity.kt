@@ -1,5 +1,6 @@
 package com.heandroid.ui.account.profile
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.heandroid.R
@@ -59,30 +60,33 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         Utils.sessionExpired(this)
     }
     private fun setFragmentInView() {
-        var oldGraph = navController.graph
+        var navGraph = navController.graph
+
         when  {
-          ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT ->
-           { oldGraph.startDestination = R.id.viewProfile }
+          ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT -> {// oldGraph.startDestination = R.id.viewProfile }
+              navGraph.setStartDestination(R.id.viewProfile)
+              var startDestId = R.id.viewProfile
+              navGraph.apply {
+                  setStartDestination(startDestId);
+              }
+
+          }
            !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT ->
-           { oldGraph.startDestination = R.id.viewBusinessAccountProfileFragment }
+           {
+               navGraph.setStartDestination(R.id.viewBusinessAccountProfileFragment)
+           }
 
             isSecondaryUser && accountType ==Constants.PERSONAL_ACCOUNT->{
-                oldGraph.startDestination = R.id.viewNominatedUserAccountProfileFragment
+                navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
             isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT->{
-                oldGraph.startDestination = R.id.viewNominatedUserAccountProfileFragment
+                Log.d("nomi","nated")
+                navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
-         else->{ oldGraph.startDestination = R.id.viewPayGAccountProfileFragment }
+         else->{   navGraph.setStartDestination(R.id.viewPayGAccountProfileFragment) }
         }
-        navController.graph = oldGraph
+        navController.graph = navGraph
     }
 
 
-    fun setHeaderTitle(title:String)
-    {
-        title?.let {
-
-            binding.tvYourDetailLabel.text = title
-        }
-    }
-}
+   }

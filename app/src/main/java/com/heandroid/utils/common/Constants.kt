@@ -7,6 +7,11 @@ object Constants {
     const val OPTIONS_TYPE = "Options_type"
     const val NOMINATED_ACCOUNT = "NOMINATED"
     const val PENDING_STATUS = "PENDING"
+    const val NOMINATED_ACCOUNT_DATA = "nominee_data"
+    const val NOMINATED_ACCOUNT= "NOMINATED"
+    const val PENDING_STATUS ="PENDING"
+    const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
+    const val OPTIONS_TYPE = "Options_type"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"
@@ -137,5 +142,7 @@ object Constants {
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
     const val VEHICLE_GROUP = "vehicle_group"
+    const val VEHICLE_ROW_ITEM = "Vehicle_Row_Item"
+
 
 }
