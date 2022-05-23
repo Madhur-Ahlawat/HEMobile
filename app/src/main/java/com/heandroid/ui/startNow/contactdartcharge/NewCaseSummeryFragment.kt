@@ -129,6 +129,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
+/*
                 val newCaseReq = CreateNewCaseReq(
                     mModel!!.fName,
                     mModel.lName,
@@ -138,6 +139,19 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                     mComment,
                     "OTHER",//SUB
                     "WEB",//CAT
+                    mList,
+                    "ENU"
+                )
+*/
+                val newCaseReq = CreateNewCaseReq(
+                    mModel!!.fName,
+                    mModel.lName,
+                    mModel.emailId,
+                    mModel.telephoneNo,
+                    "",
+                    mComment,
+                    mSubCat,
+                    mCat,
                     mList,
                     "ENU"
                 )

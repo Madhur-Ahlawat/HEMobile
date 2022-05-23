@@ -55,7 +55,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                     "NewCaseCategoryFrag",
                     "categoryDropdown position  ${position}  parent $parent  view $view  id  $id"
                 )
-                mSelCat = parent.getItemAtPosition(position) as String
+                mSelCat = mCatListName[position]
                 Logg.logging(
                     "NewCaseCategoryFrag",
                     "categoryDropdown mSelCat  ${mSelCat} "
@@ -64,7 +64,8 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                 viewModel.getCaseSubCategoriesList(mSelCat)
             }
             subCategoryDropdown.setOnItemClickListener { parent, view, position, id ->
-                mSelSubCat = parent.getItemAtPosition(position) as String
+//                mSelSubCat = parent.getItemAtPosition(position) as String
+                mSelSubCat = mSubCatListName[position]
                 checkButton()
             }
         }
@@ -85,19 +86,22 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
         observe(viewModel.getCaseSubCategoriesListVal, ::handleCaseSubCategoryData)
     }
 
+    private val mCatListName = ArrayList<String>()
+    private val mSubCatListName = ArrayList<String>()
 
     private fun handleCaseCategoryData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                resource.data?.let {
+                resource.data?.let { it ->
                     if (it.isNotEmpty()) {
                         binding.categoryDropdown.setText("Select")
 
                         val mList = ArrayList<String>()
-
-                        it.forEach {
-                            mList.add(it!!.name!!)
+                        mCatListName.clear()
+                        it.forEach { data ->
+                            mList.add(data?.value!!)
+                            mCatListName.add(data.name!!)
                         }
 
                         val mAdapter =
@@ -106,6 +110,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                                 android.R.layout.simple_dropdown_item_1line,
                                 mList
                             )
+
                         binding.categoryDropdown.setAdapter(mAdapter)
                         Logg.logging("NewCaseCategoryFrag", "list data $it ")
                     } else {
@@ -130,9 +135,10 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                         Logg.logging("NewCaseSubCategoryFrag", "list data $it ")
                         val mSubList = ArrayList<String>()
                         binding.subCategoryDropdown.setText("Select")
-
-                        it.forEach {
-                            mSubList.add(it!!.value!!)
+                        mSubCatListName.clear()
+                        it.forEach { data ->
+                            mSubList.add(data?.value!!)
+                            mSubCatListName.add(data.name!!)
                         }
 
                         val mAdapter1 =
