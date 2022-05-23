@@ -54,7 +54,6 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
             R.id.btnContinue -> {
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
-                bundle.putBoolean(Constants.PAYMENT_ONE_OFF, true)
                 findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment, bundle)
 //                findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment)
             }

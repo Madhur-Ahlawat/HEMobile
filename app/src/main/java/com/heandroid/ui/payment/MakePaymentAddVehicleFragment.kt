@@ -28,7 +28,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private var addDialog: AddVehicleDialog? = null
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
-    private var isFromOneOfPayment: Boolean? = false
     private var mScreeType = 0
 
     override fun getFragmentBinding(
@@ -50,7 +49,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             mScreeType = it
         }
 
-        isFromOneOfPayment = arguments?.getBoolean(Constants.PAYMENT_ONE_OFF)
 
         setAdapter()
     }
@@ -143,7 +141,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
 
                 putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
 
-                putBoolean(Constants.PAYMENT_PAGE, true)
             }
             findNavController().navigate(
                 R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,

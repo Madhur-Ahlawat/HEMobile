@@ -70,9 +70,13 @@ class LandingActivity : BaseActivity<Any?>() {
 
     private fun loadFragment() {
         navController.setGraph(R.navigation.nav_graph_landing,intent.extras)
-        val oldGraph = navController.graph
+        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
+        val inflater = navHostFragment.navController.navInflater
+        val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
+
         if(intent.extras!=null)
         oldGraph.addArgument(Constants.TYPE, NavArgument.Builder().setDefaultValue(intent.extras).build())
+
         navController.graph = oldGraph.apply {
             when (screenType) {
                 START_NOW_SCREEN -> setStartDestination(R.id.startNow)
