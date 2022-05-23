@@ -31,7 +31,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private var isFromOneOfPayment: Boolean? = false
     private var mScreeType = 0
 
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

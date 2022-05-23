@@ -142,6 +142,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
                     return@setOnClickListener
                 } else {
+                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     VehicleAddConfirmDialog.newInstance(
                         mVehicleDetails,
                         this
@@ -178,7 +179,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             plateInfo?.state = "HE"
             plateInfo?.type = "STANDARD"
             plateInfo?.vehicleGroup = ""
-            plateInfo?.vehicleComments = "new Vehicle"
+            plateInfo?.vehicleComments = ""
             plateInfo?.planName = ""
             vehicleInfo?.year = "2022"
             vehicleInfo?.typeId = null
