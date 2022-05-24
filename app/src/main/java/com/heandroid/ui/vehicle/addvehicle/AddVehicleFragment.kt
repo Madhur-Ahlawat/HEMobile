@@ -17,9 +17,7 @@ import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.VehicleHelper
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
-import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -69,6 +67,7 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(),
                 addDialog = AddVehicleVRMDialog.newInstance(
                     getString(R.string.str_title),
                     getString(R.string.str_sub_title),
+                    false,
                     this
                 )
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)

@@ -125,14 +125,17 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         private const val KEY_TITLE = "KEY_TITLE"
         private const val KEY_SUBTITLE = "KEY_SUBTITLE"
         private var mListener: AddVehicleListener? = null
+        var isMakePayment = true
 
         fun newInstance(
             title: String,
             subTitle: String?,
+            isMakePaymentScreen: Boolean,
             listener: AddVehicleListener
         ): AddVehicleVRMDialog {
             val args = Bundle()
             mListener = listener
+            isMakePayment = isMakePaymentScreen
             args.putString(KEY_TITLE, title)
             args.putString(KEY_SUBTITLE, subTitle)
             val fragment = AddVehicleVRMDialog()
@@ -181,8 +184,24 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                 }
 
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
                     isObserverBack = false
+
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+
+                    if(isMakePayment) {
+
+                        val plateInfoResponse = PlateInfoResponse()
+                        plateInfoResponse.country = "Non-UK"
+                        plateInfoResponse.number = binding.addVrmInput.text.toString()
+
+                        val details = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
+
+                        val bundle = Bundle().apply {
+                            putParcelable(Constants.DATA, details)
+                        }
+                        findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
+                    }
+                    else
                     findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleDetailsFragment)
                 }
             }

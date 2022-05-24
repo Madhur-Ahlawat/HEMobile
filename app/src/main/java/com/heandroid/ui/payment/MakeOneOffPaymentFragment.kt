@@ -47,15 +47,15 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     }
 
     override fun observer() {
-
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
                 findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment, bundle)
-//                findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment)
+//              findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makeOneOffPaymentCrossingFragment)
             }
         }
     }
