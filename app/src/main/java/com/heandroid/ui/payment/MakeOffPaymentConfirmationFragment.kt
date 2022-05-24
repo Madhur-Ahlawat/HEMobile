@@ -133,8 +133,7 @@ class MakeOffPaymentConfirmationFragment :
                     list[0].vehicleInfo!!.model!!,
                     list[0].vehicleInfo?.vehicleClassDesc!!,
                     list[0].newPlateInfo!!.country,
-                    (list[0].pastQuantity!!.toDouble()
-                        .times(list[0].classRate!!.toDouble())).toString(),
+                    list[0].pendingDues!!.toString(),
                     list[0].futureQuantity.toString(),
                     (list[0].futureQuantity!!.toDouble()
                         .times(list[0].classRate!!.toDouble())).toString(),
@@ -154,13 +153,13 @@ class MakeOffPaymentConfirmationFragment :
                     number = mEmail
                 }
                 val paymentTypeInfo = PaymentTypeInfo(
-                    mModel!!.card.type,
-                    mModel!!.card.number,
-                    mModel!!.token,
-                    mModel!!.card.exp.subSequence(0, 2).toString(),
-                    "20${mModel!!.card.exp.subSequence(2, 4)}",
+                    mModel!!.card?.type!!,
+                    mModel!!.card?.number!!,
+                    mModel!!.token!!,
+                    mModel!!.card?.exp?.subSequence(0, 2).toString(),
+                    "20${mModel!!.card?.exp?.subSequence(2, 4)}",
                     list[0].price.toString(),
-                    mModel!!.check.name!!,
+                    mModel!!.check?.name!!,
                     "",
                     mail,
                     number, "", "", "", "", "", "", ""

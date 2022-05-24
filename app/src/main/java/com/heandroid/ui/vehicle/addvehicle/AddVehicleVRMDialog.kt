@@ -191,7 +191,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                     if(isMakePayment) {
 
                         val plateInfoResponse = PlateInfoResponse()
-                        plateInfoResponse.country = "Non-UK"
+                        plateInfoResponse.country = country
                         plateInfoResponse.number = binding.addVrmInput.text.toString()
 
                         val details = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())

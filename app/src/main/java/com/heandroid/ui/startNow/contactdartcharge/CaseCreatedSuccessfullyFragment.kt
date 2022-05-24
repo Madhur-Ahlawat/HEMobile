@@ -49,7 +49,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
                 )
             }
             R.id.go_to_start_menu -> {
-                requireActivity().finish()
+
             }
             else -> {
             }
@@ -57,6 +57,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
 
     }
+
 
 
 }

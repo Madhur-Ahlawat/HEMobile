@@ -62,7 +62,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         } else {
             val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(
                 mVehicleDetails?.newPlateInfo?.number,
-                mVehicleDetails?.vehicleInfo?.vehicleClassDesc,
+                VehicleClassTypeConverter.toClassCode(mVehicleDetails?.vehicleInfo?.vehicleClassDesc),
                 mVehicleDetails?.vehicleInfo?.make,
                 mVehicleDetails?.vehicleInfo?.model,
                 mVehicleDetails?.vehicleInfo?.color

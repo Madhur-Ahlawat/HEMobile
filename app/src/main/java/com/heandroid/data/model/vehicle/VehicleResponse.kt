@@ -25,7 +25,8 @@ data class VehicleResponse(
     var futureQuantity: Int? = 0,
     var pastQuantity: Int? = 0,
     var price: Double? = 0.0,
-    var classRate: Double? = 0.0
+    var classRate: Double? = 0.0,
+    var pendingDues:Double?=0.0
 
 ) : Parcelable
 

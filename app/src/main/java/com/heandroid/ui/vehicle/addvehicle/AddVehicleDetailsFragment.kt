@@ -37,6 +37,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
             mScreeType = it
         }
         Logg.logging("testing", " AddVehicleDetailsFragment mScreeType  $mScreeType")
+        Logg.logging("testing", " AddVehicleDetailsFragment mVehicleDetails  $mVehicleDetails")
 
         binding.title.text = getString(
             R.string.vehicle_reg_num,

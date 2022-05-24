@@ -93,21 +93,21 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
 
                 cardModel = AddCardModel(addressLine1 = "", addressLine2 = "", bankRoutingNumber = "",
-                                         cardNumber = responseModel.token, cardType =  responseModel.card.type.uppercase(Locale.ROOT), city = "",
+                                         cardNumber = responseModel.token, cardType =  responseModel.card?.type?.uppercase(Locale.ROOT), city = "",
                                          country = "", customerVaultId = null, easyPay = "Y",
-                                         expMonth = responseModel.card.exp.substring(0, 2), expYear = responseModel.card.exp.substring(2, 4), firstName = "",
-                                         middleName = "",lastName = "", maskedCardNumber = responseModel.card.number,
+                                         expMonth = responseModel.card?.exp?.substring(0, 2), expYear = responseModel.card?.exp?.substring(2, 4), firstName = "",
+                                         middleName = "",lastName = "", maskedCardNumber = responseModel.card?.number,
                                          paymentType = "card", primaryCard = "N", state = "",
                                          zipcode1 = "", zipcode2 = "",cvv=null)
 
                 binding.apply {
                     tieCardNo.setText( cardModel?.maskedCardNumber?:"")
                     tieExpiryDate.setText("${cardModel?.expMonth}/${cardModel?.expYear}")
-                    tieName.setText( responseModel.check.name?:"")
+                    tieName.setText( responseModel.check?.name?:"")
                     tieCVV.setText("***")
                 }
 
-                val fullName: List<String?>? = responseModel.check.name?.split(" ")
+                val fullName: List<String?>? = responseModel.check?.name?.split(" ")
                 when (fullName?.size) {
                     1 -> { cardModel?.run {
                             firstName = fullName[0]

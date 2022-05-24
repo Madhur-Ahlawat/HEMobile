@@ -5,9 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Wallet(
-    val billingInfo: BillingInfo,
+    val billingInfo: BillingInfo?=null,
     val cardDetails: String?=null,
     val cardNetwork: String?=null,
     val email: String?=null,
-    val shippingInfo: ShippingInfo
+    val shippingInfo: ShippingInfo?=null
 ):Parcelable

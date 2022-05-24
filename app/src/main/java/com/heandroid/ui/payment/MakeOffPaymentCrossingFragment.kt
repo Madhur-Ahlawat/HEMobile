@@ -56,7 +56,9 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
             val futureCrossingAmount =
                 (list?.get(i)?.classRate?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
             val payableCrossingAmount =
-                (list?.get(i)?.classRate ?: 0.0).times(list?.get(i)?.pastQuantity?.toDouble() ?: 0.0)
+                (list?.get(i)?.classRate ?: 0.0).times(
+                    list?.get(i)?.pastQuantity?.toDouble() ?: 0.0
+                )
             totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount ?: 0.0))
         }
 
@@ -85,6 +87,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     }
 
     private lateinit var adapter: MakeOffPaymentCrossingAdapter
+    private var payableCrossingAmount=0.0
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
 
@@ -94,9 +97,9 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                     loader?.dismiss()
                     it.let {
 
-//                        list?.get(0)?.classRate = it.customerClassRate.toDouble()
-                        list!![0]?.classRate =
-                            VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())
+                        list?.get(0)?.classRate = it.customerClassRate.toDouble()
+//                        list!![0]?.classRate =
+//                            VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())
 
                         list?.get(0)?.pastQuantity = it.unSettledTrips.toInt()
 
@@ -109,8 +112,10 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                         val futureCrossingAmount =
                             (list?.get(0)?.classRate ?: 0.0).times(list?.get(0)?.futureQuantity!!)
 
-                        val payableCrossingAmount = (list?.get(0)?.classRate
-                            ?: 0.0).times(list?.get(0)?.pastQuantity?.toDouble() ?: 0.0)
+//                        val payableCrossingAmount = (list?.get(0)?.classRate
+//                            ?: 0.0).times(list?.get(0)?.pastQuantity?.toDouble() ?: 0.0)
+                         payableCrossingAmount = it.unPaidAmt.toDouble()
+                        list?.get(0)?.pendingDues = payableCrossingAmount
 
                         val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)
                         totalPrice = mTempPrice
@@ -147,8 +152,8 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         val futureCrossingAmount =
             (list?.get(position)?.classRate ?: 0.0).times(list?.get(position)?.futureQuantity!!)
 
-        val payableCrossingAmount = (list?.get(position)?.classRate
-            ?: 0.0).times(list?.get(position)?.pastQuantity?.toDouble() ?: 0.0)
+//        val payableCrossingAmount = (list?.get(position)?.classRate
+//            ?: 0.0).times(list?.get(position)?.pastQuantity?.toDouble() ?: 0.0)
 
         val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)
         totalPrice = mTempPrice
