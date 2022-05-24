@@ -109,6 +109,8 @@ object Constants {
     const val PAYMENT_PAGE = "payment page"
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
+    const val MAX_VEHICLE_SIZE_ONE_OFF_PAY = 1
+
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
     const val AGENCY_ID = 18

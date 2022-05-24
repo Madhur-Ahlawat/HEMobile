@@ -72,7 +72,7 @@
             android:textColor="@color/color_7D7D7D"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

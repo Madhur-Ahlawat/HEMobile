@@ -193,21 +193,18 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
             loader?.show(requireActivity().supportFragmentManager, "")
             vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
-
-        }
+    }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
-
                 navigateToAddVehicleDoneScreen()
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
             else -> {
-
             }
         }
     }
