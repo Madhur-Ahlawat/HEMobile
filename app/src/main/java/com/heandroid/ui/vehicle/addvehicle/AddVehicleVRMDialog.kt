@@ -198,6 +198,8 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
 
                         val bundle = Bundle().apply {
                             putParcelable(Constants.DATA, details)
+                            putInt(Constants.VEHICLE_SCREEN_KEY, 3)
+
                         }
                         findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
                     }
