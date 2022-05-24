@@ -75,7 +75,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                 val bundle = Bundle().apply {
 
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-
                     putParcelable(Constants.DATA, mVehicleDetails)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)

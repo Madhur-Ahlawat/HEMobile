@@ -71,6 +71,8 @@
     <color name="E5E5E5">#E5E5E5</color>
     <color name="color_009CDE">#009CDE</color>
     <color name="line_grey">#B8B8B8</color>
+    <color name="switch_disable">#c8c8c8</color>
+
 
 
 </resources>
