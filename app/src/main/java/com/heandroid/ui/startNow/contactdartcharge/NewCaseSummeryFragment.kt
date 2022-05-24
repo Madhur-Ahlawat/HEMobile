@@ -35,7 +35,6 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         Logg.logging(
             "NewCaseSummeryFragment",
             "bundle data CaseProvideDetailsModel ${
@@ -75,7 +74,8 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             rlCategoryVal.text = arguments?.getString(Constants.CASES_CATEGORY)
             rlSubCategoryVal.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
             rlCommentsVal.text = arguments?.getString(Constants.CASE_COMMENTS_KEY)
-            rlTransactionVal.text = "1 April 2022 03:30"
+            rlTransactionVal.text = Utils.currentDateAndTime()
+
         }
     }
 
@@ -128,6 +128,8 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                 val mCat = arguments?.getString(Constants.CASES_CATEGORY)
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
+
+/*
                 val newCaseReq = CreateNewCaseReq(
                     mModel!!.fName,
                     mModel.lName,
@@ -140,6 +142,37 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                     mList,
                     "ENU"
                 )
+*/
+                val newCaseReq: CreateNewCaseReq?
+                if (mModel == null) {
+                    newCaseReq = CreateNewCaseReq(
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        mComment,
+                        mSubCat,
+                        mCat,
+                        mList,
+                        "ENU"
+                    )
+
+                } else {
+                    newCaseReq = CreateNewCaseReq(
+                        mModel?.fName,
+                        mModel?.lName,
+                        mModel?.emailId,
+                        mModel?.telephoneNo,
+                        "",
+                        mComment,
+                        mSubCat,
+                        mCat,
+                        mList,
+                        "ENU"
+                    )
+
+                }
                 loader?.show(requireActivity().supportFragmentManager, "Loader")
                 viewModel.createNewCase(newCaseReq)
             }

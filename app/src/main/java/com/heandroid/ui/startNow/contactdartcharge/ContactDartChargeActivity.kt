@@ -7,6 +7,7 @@ import com.heandroid.databinding.ActivityContactDartChargeBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,18 +29,17 @@ class ContactDartChargeActivity : BaseActivity<Any?>() {
         intent?.apply {
             mValue = getIntExtra(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_CASES_TO_CASES_VALUE)
         }
-        var navGraph = navController.graph
+
+        val inflater = navHostFragment.navController.navInflater
+        val oldGraph = inflater.inflate(R.navigation.nav_graph_contact_dart_charge)
 
         if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-
-            navGraph.startDestination = R.id.caseHistoryDartChargeFragment
-
+            oldGraph.setStartDestination(R.id.caseHistoryDartChargeFragment)
         } else {
-            navGraph.startDestination = R.id.contactDartCharge
-
+            oldGraph.setStartDestination(R.id.contactDartCharge)
         }
 
-        navController.graph = navGraph
+        navController.graph = oldGraph
 
     }
 

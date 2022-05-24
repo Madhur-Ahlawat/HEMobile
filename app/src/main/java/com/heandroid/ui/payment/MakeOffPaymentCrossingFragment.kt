@@ -17,6 +17,7 @@ import com.heandroid.databinding.FragmentMakeOffPaymentCrossingBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
+import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,11 +49,14 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         }
         loader?.show(requireActivity().supportFragmentManager, "")
 
+        list!![0]?.classRate =
+            VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())
+
         for (i in list?.indices!!) {
             val futureCrossingAmount =
-                (list?.get(i)?.price?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
+                (list?.get(i)?.classRate?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
             val payableCrossingAmount =
-                (list?.get(i)?.price ?: 0.0).times(list?.get(i)?.pastQuantity?.toDouble() ?: 0.0)
+                (list?.get(i)?.classRate ?: 0.0).times(list?.get(i)?.pastQuantity?.toDouble() ?: 0.0)
             totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount ?: 0.0))
         }
 
@@ -68,7 +72,6 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         Logg.logging("testing", " MakeOffPaymentCrossingFragment model  $model")
 
         viewModel.getCrossingDetails(model)
-
 
     }
 
@@ -89,29 +92,14 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
             is Resource.Success -> {
                 resource.data?.let {
                     loader?.dismiss()
-                    it?.let {
+                    it.let {
 
-                        //   (list?.get(i)?.price?.times(list?.get(i)?.futureQuantity?.toDouble() ?: 0.0))
-//                        val payableCrossingAmount = (list?.get(i)?.price ?: 0.0).times(
-//                            list?.get(i)?.quantity?.toDouble() ?: 0.0
-//                        )
+//                        list?.get(0)?.classRate = it.customerClassRate.toDouble()
+                        list!![0]?.classRate =
+                            VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())
 
-                        /*
-                           val futureCrossingAmount =it.customerClassRate.toInt().times(0)
+                        list?.get(0)?.pastQuantity = it.unSettledTrips.toInt()
 
-                         val payableCrossingAmount = (it.unSettledTrips.toInt()).times(
-                              it.customerClassRate.toInt()
-                          )
-
-                      list?.get(0)?.classRate = it.customerClassRate.toDouble()
-                      list?.get(0)?.pastQuantity = it.unSettledTrips.toInt()
-
-                          totalPrice = totalPrice?.plus(
-                              payableCrossingAmount.plus(
-                                  futureCrossingAmount
-                              )
-//                            )
-*/
                         binding.tvTotalPaymentAmount.text =
                             requireActivity().getString(R.string.price, " $totalPrice")
                         binding.rvCrossing.layoutManager = LinearLayoutManager(requireActivity())
@@ -131,7 +119,6 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                             requireActivity().getString(R.string.price, " $totalPrice")
                         list?.get(0)?.price = totalPrice
                         adapter.notifyItemChanged(0)
-
 
                     }
                 }

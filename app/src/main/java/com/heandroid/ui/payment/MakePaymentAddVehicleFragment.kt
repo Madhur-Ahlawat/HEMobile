@@ -14,6 +14,7 @@ import com.heandroid.databinding.FragmentMakePaymentAddVehicleBinding
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
+import com.heandroid.ui.vehicle.addvehicle.AddVehicleVRMDialog
 import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
@@ -25,12 +26,11 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     View.OnClickListener, AddVehicleListener, ItemClickListener {
 
     private lateinit var mAdapter: AddedVehicleListAdapter
-    private var addDialog: AddVehicleDialog? = null
+    private var addDialog: AddVehicleVRMDialog? = null
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
-    private var isFromOneOfPayment: Boolean? = false
     private var mScreeType = 0
-
+    var isMakePaymentScreen = true
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -51,8 +51,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             mScreeType = it
         }
 
-        isFromOneOfPayment = arguments?.getBoolean(Constants.PAYMENT_ONE_OFF)
-
         setAdapter()
     }
 
@@ -65,12 +63,15 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.addVehicleBtn -> {
-                addDialog = AddVehicleDialog.newInstance(
+
+                addDialog = AddVehicleVRMDialog.newInstance(
                     getString(R.string.str_title),
                     getString(R.string.str_sub_title),
+                    isMakePaymentScreen,
                     this
                 )
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
+
             }
             R.id.findVehicle -> {
                 val bundle = Bundle()
@@ -115,7 +116,6 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
             binding.apply {
                 Logg.logging("MakePayMent", " calling inside ")
-
                 rvVehiclesList.gone()
                 noVehiclesAdded.visible()
                 addVehiclesTxt.text = getString(R.string.str_add_vehicle_to_account)
@@ -138,21 +138,16 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         if (details.plateInfo?.country == "UK") {
             vehicleList?.add(details)
             setAdapter()
-
         } else {
             val bundle = Bundle().apply {
                 putParcelable(Constants.DATA, details)
-
                 putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-
-                putBoolean(Constants.PAYMENT_PAGE, true)
             }
             findNavController().navigate(
                 R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
                 bundle
             )
         }
-
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {

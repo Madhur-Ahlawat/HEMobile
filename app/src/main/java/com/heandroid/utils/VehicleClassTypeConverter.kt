@@ -37,4 +37,22 @@ object VehicleClassTypeConverter {
         }
     }
 
+    fun toClassPrice(className: String): Double {
+        return when (className) {
+            "A" -> {
+                0.0
+            }
+            "B" -> {
+                2.5
+            }
+            "C" -> {
+                3.0
+            }
+            else -> {
+                6.0
+            }
+        }
+    }
+
+
 }

@@ -1,13 +1,12 @@
 package com.heandroid.data.repository.vehicle
 
 
+import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
-import com.heandroid.data.model.vehicle.AddDeleteVehicleGroup
-import com.heandroid.data.model.vehicle.DeleteVehicleRequest
-import com.heandroid.data.model.vehicle.RenameVehicleGroup
-import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.data.model.vehicle.*
 import com.heandroid.data.remote.ApiService
+import retrofit2.Response
 import javax.inject.Inject
 
 class VehicleRepository @Inject constructor(private val apiService: ApiService) {
@@ -48,5 +47,9 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
         apiService.getSearchVehiclesForGroup(vehicleGroup, plateNumber)
 
     suspend fun getDownloadVehicleList(type: String?)  = apiService.getDownloadVehicleList(type)
+
+    suspend fun updateVehicleListManagement(request: VehicleListManagementEditRequest?) = apiService.updateVehicleListManagement(request)
+    suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) = apiService.getAccountFindVehicle(vehicleNumber, agencyId)
+    suspend fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) = apiService.validVehicleCheck(vehicleValidReqModel, agencyId)
 
 }

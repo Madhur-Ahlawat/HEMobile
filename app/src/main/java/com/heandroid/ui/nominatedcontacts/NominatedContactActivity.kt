@@ -43,8 +43,8 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
 
         navController = findNavController(R.id.fragmentContainerView)
         val oldGraph = navController.graph
-        if (intent.getIntExtra("count", 0) > 0) oldGraph.startDestination = R.id.ncListFragment
-        else oldGraph.startDestination = R.id.ncNoListFragment
+        if (intent.getIntExtra("count", 0) > 0)   oldGraph.setStartDestination( R.id.ncListFragment)
+        else  oldGraph.setStartDestination(R.id.ncNoListFragment)
         navController.graph = oldGraph
     }
 

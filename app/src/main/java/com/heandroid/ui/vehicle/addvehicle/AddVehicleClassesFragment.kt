@@ -30,7 +30,6 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private var mVehicleDetails: VehicleResponse? = null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
-    private var isFromPaymentScreen = false
     private var mScreeType = 0
 
     override fun getFragmentBinding(
@@ -43,10 +42,10 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
-        isFromPaymentScreen = arguments?.getBoolean(Constants.PAYMENT_PAGE, false) == true
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
+        Logg.logging("testing", " AddVehicleClassesFragment mScreeType  $mScreeType")
 
         binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
 
@@ -120,9 +119,15 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
 
         binding.continueButton.setOnClickListener {
+            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked")
+            Logg.logging("testing", " AddVehicleClassesFragment continueButton  mScreeType $mScreeType")
+            Logg.logging("testing", " AddVehicleClassesFragment continueButton mClassType $mClassType")
+            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked binding.classVehicleCheckbox.isChecked ${binding.classVehicleCheckbox.isChecked}")
 
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                if (isFromPaymentScreen) {
+                Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked  if called" )
+
+                if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
                     mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     val vehicleData = mVehicleDetails
                     vehicleData?.apply {
@@ -132,16 +137,16 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                     }
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, vehicleData)
-                        //  putParcelable(Constants.CREATE_ACCOUNT_DATA,arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
-
+                        putInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY,Constants.UK_VEHICLE_DATA_NOT_FOUND)
                         putInt(
                             Constants.VEHICLE_SCREEN_KEY,
                             Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
                         )
                     }
-                    findNavController().navigate(R.id.addVehicleDoneFragment, bundle)
+                    findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
                     return@setOnClickListener
                 } else {
+                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     VehicleAddConfirmDialog.newInstance(
                         mVehicleDetails,
                         this
@@ -178,22 +183,24 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             plateInfo?.state = "HE"
             plateInfo?.type = "STANDARD"
             plateInfo?.vehicleGroup = ""
-            plateInfo?.vehicleComments = "new Vehicle"
+            plateInfo?.vehicleComments = ""
             plateInfo?.planName = ""
             vehicleInfo?.year = "2022"
             vehicleInfo?.typeId = null
             vehicleInfo?.typeDescription = "REGULAR"
-            vehicleInfo?.effectiveStartDate = "" //Utils.currentDateAndTime()
+            vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
 
-        loader?.show(requireActivity().supportFragmentManager, "")
-        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
-    }
+            loader?.show(requireActivity().supportFragmentManager, "")
+            vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
+
+        }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
+
                 navigateToAddVehicleDoneScreen()
             }
             is Resource.DataError -> {

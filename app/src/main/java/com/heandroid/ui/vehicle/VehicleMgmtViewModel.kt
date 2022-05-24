@@ -5,10 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.ValidVehicleCheckRequest
+import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
+import com.heandroid.data.model.vehicle.VehicleListManagementEditRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
 import com.heandroid.ui.base.BaseViewModel
@@ -49,6 +52,15 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
 
     private val _vehicleVRMDownloadVal = MutableLiveData<Resource<ResponseBody?>?>()
     val vehicleVRMDownloadVal: LiveData<Resource<ResponseBody?>?> get() = _vehicleVRMDownloadVal
+
+    private val _vehicleListManagementEditVal = MutableLiveData<Resource<String?>?>()
+    val vehicleListManagementEditVal: LiveData<Resource<String?>?> get() = _vehicleListManagementEditVal
+
+    private val findVehicleMutData = MutableLiveData<Resource<VehicleInfoDetails?>?>()
+    val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
+
+    private val validVehicleMutData = MutableLiveData<Resource<String?>?>()
+    val validVehicleLiveData: LiveData<Resource<String?>?> get() = validVehicleMutData
 
     fun addVehicleApi(request: VehicleResponse?) {
         viewModelScope.launch {
@@ -149,5 +161,51 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
             }
         }
     }
+
+    fun updateVehicleVRMData(request: VehicleListManagementEditRequest) {
+        viewModelScope.launch {
+            try{
+                _vehicleListManagementEditVal.postValue(ResponseHandler.success(repository.updateVehicleListManagement(request), errorManager))
+            }catch (e: Exception){
+                _vehicleListManagementEditVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
+        viewModelScope.launch {
+            try {
+                findVehicleMutData.setValue(
+                    ResponseHandler.success(
+                        repository.getVehicleDetail(
+                            vehicleNumber,
+                            agencyId
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                findVehicleMutData.setValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) {
+
+        viewModelScope.launch {
+            try{
+                validVehicleMutData.setValue(
+                    ResponseHandler.success(
+                        repository.validVehicleCheck(
+                            vehicleValidReqModel, agencyId)
+                        , errorManager
+                    ))
+
+            }catch (e: Exception) {
+                validVehicleMutData.setValue(ResponseHandler.failure(e))
+            }
+        }
+
+    }
+
 
 }

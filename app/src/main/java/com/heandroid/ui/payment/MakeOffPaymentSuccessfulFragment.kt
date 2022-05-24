@@ -3,6 +3,7 @@ package com.heandroid.ui.payment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,11 +17,14 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
 
 @AndroidEntryPoint
-class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSuccessfulBinding>() {
+class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSuccessfulBinding>(),
+    RadioGroup.OnCheckedChangeListener {
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -43,15 +47,28 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
         list = arguments?.getParcelableArrayList(Constants.DATA)!!
         mPaymentResp = arguments?.getParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP)
         loader?.show(requireActivity().supportFragmentManager, "")
-        val mSelection = PaymentReceiptDeliveryTypeSelectionRequest(mPaymentResp?.refrenceNumber!!,arguments?.getString(Constants.OPTIONS_TYPE,"Email")!!)
+        val mSelection = PaymentReceiptDeliveryTypeSelectionRequest(
+            "1-73827y48",
+            arguments?.getString(Constants.OPTIONS_TYPE, "Email")!!
+        )
         viewModel.whereToReceivePaymentReceipt(mSelection)
+        binding.tvEmail.text = "$mEmail"
+        binding.tvAmount.text = "£ ${list[0].price}"
+        binding.tvReceiptNo.text = "1-83648374jhf"
+        binding.rgOptions.setOnCheckedChangeListener(this)
 
     }
 
-    override fun initCtrl() {}
+    override fun initCtrl() {
+        binding.btnContinue.setOnClickListener {
+            activity?.finish()
+
+        }
+    }
 
     override fun observer() {
         observe(viewModel.whereToReceivePaymentReceipt, ::receipt)
+
     }
 
     private fun receipt(resource: Resource<ResponseBody?>?) {
@@ -65,6 +82,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
                             " MakeOffPaymentSuccessfulFragment success it  $it"
                         )
 
+
                     }
                 }
             }
@@ -73,6 +91,34 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
 
                 loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+        }
+
+    }
+
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+
+        Logg.logging(
+            "testing",
+            " MakeOffPaymentSuccessfulFragment onCheckedChanged rbCreateAccount"
+        )
+
+        when (group?.checkedRadioButtonId) {
+
+            R.id.rbCreateAccount -> {
+                Logg.logging(
+                    "testing",
+                    " MakeOffPaymentSuccessfulFragment rbCreateAccount"
+                )
+
+
+            }
+            R.id.rbMakePayment -> {
+                Logg.logging(
+                    "testing",
+                    " MakeOffPaymentSuccessfulFragment success rbMakePayment"
+                )
+
             }
         }
 

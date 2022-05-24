@@ -32,6 +32,7 @@ class MakeOffPaymentConfirmationFragment :
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var mOptionsType = ""
 
 
     override fun getFragmentBinding(
@@ -49,6 +50,7 @@ class MakeOffPaymentConfirmationFragment :
         }
 
         mEmail = arguments?.getString(Constants.EMAIL)!!
+        mOptionsType = arguments?.getString(Constants.OPTIONS_TYPE)!!
         list = arguments?.getParcelableArrayList<VehicleResponse>(Constants.DATA)!!
         mModel = arguments?.getParcelable(Constants.PAYMENT_DATA)
         binding.rvVechileList.layoutManager = LinearLayoutManager(requireActivity())
@@ -78,11 +80,13 @@ class MakeOffPaymentConfirmationFragment :
                             "testing",
                             " MakeOffPaymentConfirmationFragment success it  $it"
                         )
-
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
                         mBundle.putString(Constants.EMAIL, mEmail)
-                        mBundle.putString(Constants.OPTIONS_TYPE,arguments?.getString(Constants.OPTIONS_TYPE))
+                        mBundle.putString(
+                            Constants.OPTIONS_TYPE,
+                            arguments?.getString(Constants.OPTIONS_TYPE)
+                        )
                         mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
                         findNavController().navigate(
                             R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
@@ -97,11 +101,26 @@ class MakeOffPaymentConfirmationFragment :
 
                 loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+
+                val mBundle = Bundle()
+//                mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
+                mBundle.putString(Constants.EMAIL, mEmail)
+                mBundle.putString(
+                    Constants.OPTIONS_TYPE,
+                    arguments?.getString(Constants.OPTIONS_TYPE)
+                )
+                mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
+                findNavController().navigate(
+                    R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
+                    mBundle
+                )
             }
         }
 
     }
 
+    private var number =""
+    private var mail = ""
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -114,18 +133,26 @@ class MakeOffPaymentConfirmationFragment :
                     list[0].vehicleInfo!!.model!!,
                     list[0].vehicleInfo?.vehicleClassDesc!!,
                     list[0].newPlateInfo!!.country,
-                    "0",
+                    (list[0].pastQuantity!!.toDouble()
+                        .times(list[0].classRate!!.toDouble())).toString(),
                     list[0].futureQuantity.toString(),
-                    "10",
+                    (list[0].futureQuantity!!.toDouble()
+                        .times(list[0].classRate!!.toDouble())).toString(),
                     list[0].vehicleInfo!!.color!!,
                     list[0].classRate.toString(),
+                    list[0].vehicleInfo?.vehicleClassDesc!!,
+                    list[0].classRate.toString(),
                     "",
-                    "",
-                    "",
-                    "0",
-                    ""
+                    list[0].pastQuantity.toString(),
+                    list[0].classRate.toString()
                 )
 
+                if(mOptionsType.equals("Email",true)){
+                    mail = mEmail
+                }
+                else{
+                    number = mEmail
+                }
                 val paymentTypeInfo = PaymentTypeInfo(
                     mModel!!.card.type,
                     mModel!!.card.number,
@@ -135,8 +162,8 @@ class MakeOffPaymentConfirmationFragment :
                     list[0].price.toString(),
                     mModel!!.check.name!!,
                     "",
-                    mEmail,
-                    "", "", "", "", "", "", "", ""
+                    mail,
+                    number, "", "", "", "", "", "", ""
                 )
                 val mVehicleList = ArrayList<VehicleList>()
                 mVehicleList.clear()
@@ -148,8 +175,7 @@ class MakeOffPaymentConfirmationFragment :
                     "testing",
                     " MakeOffPaymentConfirmationFragment onPay oneOfPayModelReq  $oneOfPayModelReq"
                 )
-
-                viewModel.oneOfPaymentsPay(oneOfPayModelReq)
+                  viewModel.oneOfPaymentsPay(oneOfPayModelReq)
             }
         }
     }

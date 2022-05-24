@@ -18,18 +18,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBinding>(), View.OnClickListener {
+class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBinding>(),
+    View.OnClickListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private var accountType : String = Constants.PERSONAL_ACCOUNT
-    private var isSecondary:Boolean = false
+    private var accountType: String = Constants.PERSONAL_ACCOUNT
+    private var isSecondary: Boolean = false
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)=FragmentProfilePersonalInfoBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfilePersonalInfoBinding.inflate(inflater, container, false)
+
     override fun init() {
-        binding.enable=true
-        binding.data=arguments?.getParcelable(Constants.DATA)
+        binding.enable = true
+        binding.data = arguments?.getParcelable(Constants.DATA)
 
         accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
         isSecondary = sessionManager.getSecondaryUser()
@@ -39,30 +42,29 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
 
     private fun setView() {
 
-        when(accountType)
-        {
-            Constants.PERSONAL_ACCOUNT->{
+        when (accountType) {
+            Constants.PERSONAL_ACCOUNT -> {
                 // hide business account view
-                if(!isSecondary){
+                if (!isSecondary) {
+                    binding.tilBusinessName.gone()
+                    binding.tilRegNo.gone()
+                } else {
+                    // nominated user
                     binding.tilBusinessName.gone()
                     binding.tilRegNo.gone()
                 }
 
-                else
-                {
-                    // nominated user
-                }
-
             }
 
-            Constants.BUSINESS_ACCOUNT->{
+            Constants.BUSINESS_ACCOUNT -> {
                 // show business account view
-                if(!isSecondary) {
+                if (!isSecondary) {
                     binding.tilBusinessName.visible()
                     binding.tilRegNo.visible()
-                }
-                else{
+                } else {
                     // nominated user
+                    binding.tilBusinessName.visible()
+                    binding.tilRegNo.visible()
                 }
             }
         }
@@ -72,28 +74,51 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
         binding.btnAction.setOnClickListener(this)
         binding.btnChangeEmail.setOnClickListener(this)
     }
+
     override fun observer() {}
     override fun onClick(v: View?) {
         hideKeyboard()
-        when(v?.id){
+        when (v?.id) {
             R.id.btnAction -> {
-                val bundle= Bundle()
-                bundle.putParcelable(Constants.DATA,binding.data)
-                findNavController().navigate(R.id.action_personalInfoFragment_to_postCodeFragment,bundle)
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.DATA, binding.data)
+                findNavController().navigate(
+                    R.id.action_personalInfoFragment_to_postCodeFragment,
+                    bundle
+                )
             }
-            R.id.btnChangeEmail ->{
+            R.id.btnChangeEmail -> {
                 val bundle = Bundle()
                 binding.data?.personalInformation?.run {
-                   bundle.putParcelable(Constants.DATA, ProfileUpdateEmailModel(referenceId = null,securityCode = null,addressLine1 = addressLine1, addressLine2 = addressLine2, city = city,
-                                                                                country = country, emailAddress = emailAddress, phoneCell = cellPhone,
-                                                                                phoneDay = phoneDay, phoneEvening = eveningPhone, phoneFax = fax,
-                                                                                primaryEmailStatus = primaryEmailStatus, primaryEmailUniqueID = pemailUniqueCode, smsOption = "Y",
-                                                                                state = state, zipCode = zipcode, zipCodePlus = zipCodePlus))
+                    bundle.putParcelable(
+                        Constants.DATA, ProfileUpdateEmailModel(
+                            referenceId = null,
+                            securityCode = null,
+                            addressLine1 = addressLine1,
+                            addressLine2 = addressLine2,
+                            city = city,
+                            country = country,
+                            emailAddress = emailAddress,
+                            phoneCell = cellPhone,
+                            phoneDay = phoneDay,
+                            phoneEvening = eveningPhone,
+                            phoneFax = fax,
+                            primaryEmailStatus = primaryEmailStatus,
+                            primaryEmailUniqueID = pemailUniqueCode,
+                            smsOption = "Y",
+                            state = state,
+                            zipCode = zipcode,
+                            zipCodePlus = zipCodePlus
+                        )
+                    )
 
 //                 bundle.putParcelable(Constants.DATA, ProfileUpdateEmailModel(referenceId = null,securityCode = null,emailAddress = emailAddress,
 //                                                                                 primaryEmailStatus = primaryEmailStatus, primaryEmailUniqueID = pemailUniqueCode, smsOption = "Y"))
                 }
-                findNavController().navigate(R.id.action_personalInfoFragment_to_emailFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_personalInfoFragment_to_emailFragment,
+                    bundle
+                )
 
             }
         }

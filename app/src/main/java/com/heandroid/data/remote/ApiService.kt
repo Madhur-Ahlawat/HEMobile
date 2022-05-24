@@ -91,7 +91,6 @@ interface ApiService {
     @GET(VEHICLE)
     suspend fun getVehicleData(): Response<List<VehicleResponse?>?>?
 
-
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?
 
@@ -309,7 +308,10 @@ interface ApiService {
     suspend fun getAccountSettings(): Response<AccountResponse?>?
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
-    suspend fun updateCommunicationPrefs(@Body model: CommunicationPrefsRequestModel): Response<CommunicationPrefsResp?>?
+    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+
+    @GET(SECONDARY_ACCOUNT)
+    suspend fun getNominatedUserList(): Response<NominatedContactRes?>?
 
     @POST(GET_CROSSING_DETAILS)
     suspend fun getCrossingDetails(@Body model: CrossingDetailsModelsRequest): Response<CrossingDetailsModelsResponse?>?
@@ -322,4 +324,7 @@ interface ApiService {
 
     @GET(DOWNLOAD_VRM_VEHICLE_LIST)
     suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
+
+    @PUT(VEHICLE_VRM_EDIT)
+    suspend fun updateVehicleListManagement(@Body request: VehicleListManagementEditRequest?): Response<String?>
 }

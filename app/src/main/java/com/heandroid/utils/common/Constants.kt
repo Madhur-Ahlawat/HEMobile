@@ -2,10 +2,12 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val UK_VEHICLE_DATA_NOT_FOUND_KEY =  "uk_vehicle_data_not_found_key"
     const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
     const val OPTIONS_TYPE = "Options_type"
-    const val NOMINATED_ACCOUNT = "NOMINATED"
-    const val PENDING_STATUS = "PENDING"
+    const val NOMINATED_ACCOUNT_DATA = "nominee_data"
+    const val NOMINATED_ACCOUNT= "NOMINATED"
+    const val PENDING_STATUS ="PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"
@@ -25,7 +27,9 @@ object Constants {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val FILE_NAMES_KEY = " file_names_key"
+    const val UK_VEHICLE_DATA_NOT_FOUND =1007
+
+        const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
@@ -117,7 +121,6 @@ object Constants {
     const val PCN_RESOLVE_URL =
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
-    const val PAYMENT_ONE_OFF = "PaymentOneOff"
 
     const val CHOOSE_FILE_1 = "Choose_first_file"
     const val CHOOSE_FILE_2 = "Choose_second_file"
@@ -135,5 +138,7 @@ object Constants {
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
     const val VEHICLE_GROUP = "vehicle_group"
+    const val VEHICLE_ROW_ITEM = "Vehicle_Row_Item"
+
 
 }
