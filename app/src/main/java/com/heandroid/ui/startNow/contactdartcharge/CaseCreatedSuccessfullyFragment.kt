@@ -32,6 +32,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             rlCaseNoVal.text = arguments?.getString(Constants.CASE_NUMBER)
             rlDateVal.text = Utils.currentDateAndTime()
+            emailConformationTxt.text  = getString(R.string.str_email_conformation,arguments?.getString(Constants.LAST_NAME))
         }
     }
 

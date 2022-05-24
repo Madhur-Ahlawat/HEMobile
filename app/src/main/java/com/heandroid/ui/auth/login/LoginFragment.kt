@@ -73,14 +73,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
-                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
-                        launchIntent(status)
-                    } else {
+                    launchIntent(status)
 
-                        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java){
-                            putInt(Constants.FROM_LOGIN_TO_CASES,Constants.FROM_LOGIN_TO_CASES_VALUE)
-                        }
-                    }
                 }
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
@@ -94,16 +88,30 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
             isSecondaryUser(response.data?.isSecondary ?: false)
+
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
 
         }
-        requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+
+            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        } else {
+            requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+                putInt(
+                    Constants.FROM_LOGIN_TO_CASES,
+                    Constants.FROM_LOGIN_TO_CASES_VALUE
+                )
+                putString(Constants.LAST_NAME,response.data?.user_name?:"")
+            }
+
+        }
     }
 
 
