@@ -71,13 +71,10 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     }
 
     private fun onClickPersonalAccountValidation() {
-        if (binding.tieFullName.text.toString().contains(" ")) {
-            binding.model?.firstName = binding.tieFullName.text.toString().split(" ")[0]
-            binding.model?.lastName = binding.tieFullName.text.toString().split(" ")[1]
-        } else {
-            binding.model?.firstName = binding.tieFullName.text.toString()
-            binding.model?.lastName = ""
-        }
+        binding.model?.firstName = binding.tieFullName.text.toString()
+        binding.model?.lastName = binding.tieLastName.text.toString()
+        binding.model?.cellPhone = binding.tieMobileNo.text.toString()
+
         val bundle = Bundle()
         bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
         findNavController().navigate(

@@ -585,7 +585,7 @@
     <string name="str_transaction">Transaction</string>
     <string name="str_Your_enquiry_submitted">"Your enquiry has been submitted successfully "</string>
     <string name="str_we_will_get_back_to_you">* We will get back to you with in 7 working days</string>
-    <string name="str_email_conformation">* We will send an email confirmation to cherukuru13@gmail.com post verification</string>
+    <string name="str_email_conformation">* We will send an email confirmation to %1$s! post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">case number</string>

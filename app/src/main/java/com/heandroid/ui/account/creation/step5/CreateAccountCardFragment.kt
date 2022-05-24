@@ -65,7 +65,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             R.id.btnPay -> {
                 Logg.logging("testing", " CreateAccountCardFragment model?.planType ${model?.planType}")
 
-                model?.creditCExpYear=model?.creditCExpYear?.replace("/","")
+                model?.creditCExpYear="20${model?.creditCExpYear?.replace("/","")}"
                 Logg.logging("testing", " CreateAccountCardFragment model?.creditCExpYear ${model?.creditCExpYear}")
 
                 when(model?.planType){
