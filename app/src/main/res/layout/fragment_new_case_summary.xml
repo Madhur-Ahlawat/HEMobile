@@ -183,7 +183,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:text="290133534 -02 March 2021 - 04:00PM"
+                    android:text="02 March 2021 - 04:00PM"
                     android:textColor="@color/color_626262"
                     android:textSize="@dimen/_11ssp"
                     android:textStyle="normal"

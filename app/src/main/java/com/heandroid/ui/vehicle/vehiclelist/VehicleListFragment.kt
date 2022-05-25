@@ -56,10 +56,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun init() {
 
-        val buttonVisibility = arguments?.getBoolean(Constants.DATA, false) == true
+        val buttonVisibility = requireActivity().intent?.getBooleanExtra(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,false)//getBoolean(Constants.DATA, false) == true
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
 
-        if (buttonVisibility) {
+        if (buttonVisibility!!) {
             binding.addVehicleBtn.gone()
             binding.removeVehicleBtn.gone()
         }

@@ -5,13 +5,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ShippingInfo(
-    val address1: String,
-    val address2: String,
-    val city: String,
-    val country: String,
-    val firstName: String,
-    val lastName: String,
-    val phone: String,
-    val postalCode: String,
-    val state: String
+    val address1: String?=null,
+    val address2: String?=null,
+    val city: String?=null,
+    val country: String?=null,
+    val firstName: String?=null,
+    val lastName: String?=null,
+    val phone: String?=null,
+    val postalCode: String?=null,
+    val state: String?=null
 ):Parcelable

@@ -91,7 +91,6 @@ interface ApiService {
     @GET(VEHICLE)
     suspend fun getVehicleData(): Response<List<VehicleResponse?>?>?
 
-
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?
 

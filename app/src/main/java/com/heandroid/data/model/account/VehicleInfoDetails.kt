@@ -9,7 +9,7 @@ data class VehicleInfoDetails(
 ) : Parcelable
 
 @Parcelize
-class RetrievePlateInfoDetails(
+data class RetrievePlateInfoDetails(
     val plateNumber: String?,
     val vehicleClass: String?,
     val vehicleMake: String?,

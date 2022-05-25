@@ -41,7 +41,6 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         Logg.logging(
             "NewCaseSummeryFragment",
             "bundle data CaseProvideDetailsModel ${
@@ -81,7 +80,7 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             rlCategoryVal.text = arguments?.getString(Constants.CASES_CATEGORY)
             rlSubCategoryVal.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
             rlCommentsVal.text = arguments?.getString(Constants.CASE_COMMENTS_KEY)
-            rlTransactionVal.text = DateUtils.currentDate()//"1 April 2022 03:30"
+            rlTransactionVal.text = Utils.currentDateAndTime()
         }
     }
 
@@ -100,10 +99,18 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                             R.id.action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment,
                             arguments?.apply {
                                 putString(Constants.CASE_NUMBER, it.srNumber)
-                                putString(
-                                    Constants.LAST_NAME,
-                                    arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.lName
-                                )
+                                if (mModel == null) {
+                                    putString(
+                                        Constants.LAST_NAME,
+                                        requireActivity().intent.getStringExtra(Constants.LAST_NAME)
+                                    )
+                                } else {
+                                    putString(
+                                        Constants.LAST_NAME,
+                                        arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.emailId
+                                    )
+
+                                }
                             }
                         )
                     } else {
@@ -122,53 +129,52 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     }
 
     private val mList = mutableListOf<String>()
-
+    private var mModel: CaseProvideDetailsModel? = null
     override fun onClick(it: View?) {
 
         when (it?.id) {
 
             R.id.btnNext -> {
 
-                val mModel =
-                    arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
+                mModel =
+                    arguments?.getParcelable(Constants.CASES_PROVIDE_DETAILS_KEY)
                 val mCat = arguments?.getString(Constants.CASES_CATEGORY)
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
                 var loggedInUser = (sessionManager.getLoggedInUser())
-                if (loggedInUser) {
-
-                        val newCaseReq = CreateNewCaseReq(
-                            fname = "",//if (loggedInUser) "" else mModel?.fName,
-                            lname ="",// if (loggedInUser) "" else lName,
-                            eid = "",//if (loggedInUser) "" else emailId,
-                            phoneNo = "",//if (loggedInUser) "" else telephoneNo,
-                            accountNo = "",
-                            otherDetails = mComment,
-                            mSubCat,//SUB
-                            mCat,//CAT
-                            mList,
-                            "ENU"
-                        )
-                        loader?.show(requireActivity().supportFragmentManager, "Loader")
-                        viewModel.createNewCase(newCaseReq)
-
-                } else {
-                    val newCaseReq = CreateNewCaseReq(
-                        mModel!!.fName,
-                        mModel.lName,
-                        mModel.emailId,
-                        mModel.telephoneNo,
+                val newCaseReq: CreateNewCaseReq?
+                if (mModel == null) {
+                    newCaseReq = CreateNewCaseReq(
+                        "",
+                        "",
+                        "",
+                        "",
                         "",
                         mComment,
-                        "OTHER",//SUB
-                        "WEB",//CAT
+                        mSubCat,
+                        mCat,
                         mList,
                         "ENU"
                     )
-                    loader?.show(requireActivity().supportFragmentManager, "Loader")
-                    viewModel.createNewCase(newCaseReq)
+
+                } else {
+                    newCaseReq = CreateNewCaseReq(
+                        mModel?.fName,
+                        mModel?.lName,
+                        mModel?.emailId,
+                        mModel?.telephoneNo,
+                        "",
+                        mComment,
+                        mSubCat,
+                        mCat,
+                        mList,
+                        "ENU"
+                    )
+
                 }
+                loader?.show(requireActivity().supportFragmentManager, "Loader")
+                viewModel.createNewCase(newCaseReq)
             }
             else -> {
             }

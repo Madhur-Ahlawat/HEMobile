@@ -1,6 +1,7 @@
 package com.heandroid.ui.bottomnav.dashboard
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.vehicle.VehicleMgmtActivity
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.startNormalActivity
@@ -63,13 +65,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     override fun initCtrl() {
         binding.tvViewVehicle.setOnClickListener {
-            val bundle = Bundle().apply {
-                putBoolean(Constants.DATA, true)
-            }
-            findNavController().navigate(
-                R.id.action_dashBoardFragment_to_vehicleListFragment2,
-                bundle
-            )
+//            val bundle = Bundle().apply {
+//                putBoolean(Constants.DATA, true)
+//            }
+            startActivity(Intent(requireContext(), VehicleMgmtActivity::class.java).apply {
+                putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_LIST)
+                putExtra(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,true)
+            })
+
+//            findNavController().navigate(
+//                R.id.action_dashBoardFragment_to_vehicleListFragment2,
+//                bundle
+//            )
         }
         binding.crossingsView.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment)
@@ -95,7 +102,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        Log.e("count", "---> " + it.transactionList?.count ?: "")
+                        Log.e("Testing", "--->dashboard data " + it.transactionList)
+                        Log.e("Testing", "--->dashboard " + it.transactionList?.transaction?.size ?: "")
                         // todo getting api count as null, so showing count as 0
                         it.transactionList?.count?.let { count ->
                             binding.tvCrossingCount.text =
@@ -142,6 +150,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
             endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
         )
+        Log.e("Testing", "--->DashBoardFragment request $request")
+
         dashboardViewModel.crossingHistoryApiCall(request)
     }
 
@@ -206,12 +216,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun setAccountDetailsView(data: AccountResponse)
     {
         binding.apply{
-            tvAvailableBalance.text = "£ "+data.replenishmentInformation.currentBalance
+            tvAvailableBalance.text = "${data.replenishmentInformation.currentBalance}"
             tvAccountNumber.text = data.accountInformation.number
             tvAccountStatus.text =  data.accountInformation.accountStatus
             tvTopUpType.text = data.accountInformation.accountFinancialstatus
             tvAccountType.text =  data.accountInformation.type
-            //tvAccountStatus.text =  data.accountInformation.type
+            tvAccountStatus.text =  data.accountInformation.type
 
         }
     }

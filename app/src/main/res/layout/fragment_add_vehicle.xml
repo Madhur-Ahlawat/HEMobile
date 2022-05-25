@@ -1,45 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="addButton"
+            type="Boolean" />
+        <variable
+            name="findButton"
+            type="Boolean" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/color_E5E5E5">
+        android:background="@color/light_grey"
+        android:padding="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/addVehicleTv"
+            android:id="@+id/add_vehicles_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="start"
             android:text="@string/str_add_vehicle_to_account"
             android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVehiclesList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:listitem="@layout/adapter_vehicles_row"
+            tools:itemCount="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/add_upto_five_vehicles"
+            app:layout_constraintTop_toBottomOf="@+id/no_vehicles_added" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/no_vehicles_added"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="start"
+            android:text="@string/str_no_vehicles_added_txt"
+            android:textColor="@color/color_7D7D7D"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_vehicles_txt" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/add_upto_five_vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/str_add_upto_five_vehicles"
+            android:textColor="@color/color_7D7D7D"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addVehicleBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/green"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:text="@string/str_add_vehicle"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:backgroundTint="@{addButton==true?@color/white:@color/color_C9C9C9}"
+            android:clickable="@{addButton}"
+            android:textColor="@{addButton==true?@color/green:@color/color_7D7D7D}"
+            app:iconTint="@{addButton==true?@color/green:@color/color_7D7D7D}"
+            app:strokeColor="@{addButton==true?@color/green:@color/color_7D7D7D}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:icon="@drawable/ic_baseline_add_24"
             app:iconGravity="textStart"
-            app:iconTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/findVehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeWidth="@dimen/_1sdp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/findVehicle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@{findButton==true?@color/btn_color:@color/color_C9C9C9}"
+            android:clickable="@{findButton}"
+            android:textColor="@{findButton==false?@color/color_7D7D7D:@color/white}"
+            android:text="@string/str_find_vehicle"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -8,6 +8,7 @@ import com.heandroid.R
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +31,8 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             checkEnquiryStatus.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             rlCaseNoVal.text = arguments?.getString(Constants.CASE_NUMBER)
-            rlDateVal.text = "April 1 2022 03:34"
+            rlDateVal.text = Utils.currentDateAndTime()
+            emailConformationTxt.text  = getString(R.string.str_email_conformation,arguments?.getString(Constants.LAST_NAME))
         }
     }
 
@@ -47,7 +49,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
                 )
             }
             R.id.go_to_start_menu -> {
-                requireActivity().finish()
+
             }
             else -> {
             }
@@ -55,6 +57,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
 
     }
+
 
 
 }

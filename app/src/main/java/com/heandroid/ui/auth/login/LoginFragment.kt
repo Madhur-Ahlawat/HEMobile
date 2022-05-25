@@ -97,6 +97,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
             isSecondaryUser(response.data?.isSecondary ?: false)
+
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
             sessionManager.setLoggedInUser(true)
@@ -105,6 +106,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
 
         }
+
     }
 
         private fun launchIntent(response: Resource.Success<LoginResponse?>) {
@@ -116,7 +118,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 //saveAccountNumber(response.data?.user_name?:"")
                 saveAccountType(response.data?.accountType ?: "")
             }
-            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+//            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+            if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+
+                requireActivity().startNormalActivity(HomeActivityMain::class.java)
+            } else {
+                requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+                    putInt(
+                        Constants.FROM_LOGIN_TO_CASES,
+                        Constants.FROM_LOGIN_TO_CASES_VALUE
+                    )
+                    putString(Constants.LAST_NAME,response.data?.user_name?:"")
+                }
+
+            }
         }
 
 

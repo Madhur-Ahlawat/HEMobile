@@ -65,7 +65,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
             R.id.btnPay -> {
                 Logg.logging("testing", " CreateAccountCardFragment model?.planType ${model?.planType}")
 
-                model?.creditCExpYear=model?.creditCExpYear?.replace("/","")
+                model?.creditCExpYear="20${model?.creditCExpYear?.replace("/","")}"
                 Logg.logging("testing", " CreateAccountCardFragment model?.creditCExpYear ${model?.creditCExpYear}")
 
                 when(model?.planType){
@@ -134,15 +134,15 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 val responseModel: CardResponseModel =
                     Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails", responseModel.toString())
-                model?.creditCExpMonth = responseModel.card.exp.subSequence(0, 2).toString()
-                model?.creditCExpYear =  responseModel.card.exp.subSequence(2, 4).toString()
-                model?.maskedNumber = responseModel.card.number
+                model?.creditCExpMonth = responseModel.card?.exp?.subSequence(0, 2).toString()
+                model?.creditCExpYear =  responseModel.card?.exp?.subSequence(2, 4).toString()
+                model?.maskedNumber = responseModel.card?.number
                 model?.creditCardNumber = responseModel.token
-                model?.creditCardType = responseModel.card.type.uppercase(Locale.ROOT)
-                model?.securityCode = responseModel.card.hash
+                model?.creditCardType = responseModel.card?.type?.uppercase(Locale.ROOT)
+                model?.securityCode = responseModel.card?.hash
 
 
-                val fullName: List<String?>? = responseModel.check.name?.split(" ")
+                val fullName: List<String?>? = responseModel.check?.name?.split(" ")
 
                 when (fullName?.size) {
 
@@ -173,7 +173,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
                 }
 
-                binding.tieName.setText(responseModel.check.name ?: "")
+                binding.tieName.setText(responseModel.check?.name ?: "")
                 binding.tieCVV.setText("***")
 
 

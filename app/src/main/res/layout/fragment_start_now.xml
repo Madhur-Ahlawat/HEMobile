@@ -156,7 +156,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1sdp"
             android:background="@color/white"
-            android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_crossing_service_update">
@@ -187,7 +186,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1sdp"
             android:background="@color/white"
-            android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_contact_dart_charge">
@@ -219,7 +217,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1sdp"
             android:background="@color/white"
-            android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_understand_charges_fines_lyt">

@@ -2,11 +2,12 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val UK_VEHICLE_DATA_NOT_FOUND_KEY =  "uk_vehicle_data_not_found_key"
+    const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
+    const val OPTIONS_TYPE = "Options_type"
     const val NOMINATED_ACCOUNT_DATA = "nominee_data"
     const val NOMINATED_ACCOUNT= "NOMINATED"
     const val PENDING_STATUS ="PENDING"
-    const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
-    const val OPTIONS_TYPE = "Options_type"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"
@@ -26,7 +27,9 @@ object Constants {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val FILE_NAMES_KEY = " file_names_key"
+    const val UK_VEHICLE_DATA_NOT_FOUND =1007
+
+        const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
@@ -89,6 +92,7 @@ object Constants {
     const val VEHICLE_SCREEN_TYPE_HISTORY = 4
     const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val FROM_DASHBOARD_TO_VEHICLE_LIST = "com_heandroid_dashboard_to_vehiclelist"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
     const val SHOW_SCREEN = "show_screen"
     const val ABOUT_SERVICE = "about_service"
@@ -106,6 +110,8 @@ object Constants {
     const val PAYMENT_PAGE = "payment page"
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
+    const val MAX_VEHICLE_SIZE_ONE_OFF_PAY = 1
+
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
     const val AGENCY_ID = 18
@@ -118,7 +124,6 @@ object Constants {
     const val PCN_RESOLVE_URL =
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
-    const val PAYMENT_ONE_OFF = "PaymentOneOff"
 
     const val CHOOSE_FILE_1 = "Choose_first_file"
     const val CHOOSE_FILE_2 = "Choose_second_file"

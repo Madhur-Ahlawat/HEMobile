@@ -585,7 +585,7 @@
     <string name="str_transaction">Transaction</string>
     <string name="str_Your_enquiry_submitted">"Your enquiry has been submitted successfully "</string>
     <string name="str_we_will_get_back_to_you">* We will get back to you with in 7 working days</string>
-    <string name="str_email_conformation">* We will send an email confirmation to cherukuru13@gmail.com post verification</string>
+    <string name="str_email_conformation">* We will send an email confirmation to %1$s! post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">case number</string>
@@ -620,7 +620,7 @@
     <string name="vehicle_reg_num">Vehicle registration number: %s</string>
     <string name="country_reg">Country of registration %s</string>
     <string name="txt_view_crossings">View crossings</string>
-    <string name="txt_view_crossing"><![CDATA[View crossing >]]></string>
+    <string name="txt_view_crossing"><![CDATA[View crossing ]]></string>
     <string name="str_account_type">Account type</string>
     <string name="str_cases_and_enquiries">Cases and enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do</string>

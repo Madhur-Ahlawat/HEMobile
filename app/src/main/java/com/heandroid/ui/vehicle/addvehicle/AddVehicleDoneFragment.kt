@@ -46,16 +46,31 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     private fun getVehicleDataFromDVRM() {
-        if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true)) {
+        Logg.logging(
+            "Testing",
+            "AddVehicleDoneFragment getVehicleDataFromDVRM mVehicleDetails ${mVehicleDetails}"
+        )
+        val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
+
+        if (mVehicleDetails?.newPlateInfo?.country.equals(
+                "UK",
+                true
+            ) && mUKVehicleDataNotFound == 0
+        ) {
             loader?.show(requireActivity().supportFragmentManager, "")
             viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID)
         } else {
             val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(
                 mVehicleDetails?.newPlateInfo?.number,
-                mVehicleDetails?.vehicleInfo?.vehicleClassDesc,
+                VehicleClassTypeConverter.toClassCode(mVehicleDetails?.vehicleInfo?.vehicleClassDesc),
                 mVehicleDetails?.vehicleInfo?.make,
                 mVehicleDetails?.vehicleInfo?.model,
                 mVehicleDetails?.vehicleInfo?.color
+            )
+
+            Logg.logging(
+                "Testing",
+                "AddVehicleDoneFragment mRetrievePlateInfoDetails ${mRetrievePlateInfoDetails}"
             )
             val it = VehicleInfoDetails(mRetrievePlateInfoDetails)
             setAdapter(it)
@@ -64,6 +79,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
+        Logg.logging("Testing", "AddVehicleDoneFragment  apiResponseDVRM")
 
         when (resource) {
             is Resource.Success -> {
@@ -71,10 +87,27 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                     loader?.dismiss()
                     setAdapter(it)
                 }
+                Logg.logging("Testing", "AddVehicleDoneFragment  apiResponseDVRM Success called")
+
             }
             is Resource.DataError -> {
                 loader?.dismiss()
+                Logg.logging(
+                    "Testing",
+                    "AddVehicleDoneFragment  apiResponseDVRM DataError called mVehicleDetails $mVehicleDetails"
+                )
+
+                val bundle = Bundle().apply {
+                    putParcelable(Constants.DATA, mVehicleDetails)
+                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                }
+
+                findNavController().navigate(
+                    R.id.action_addVehicleDoneFragment_to_addVehicleDetailsFragment,
+                    bundle
+                )
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+
             }
         }
 
@@ -88,6 +121,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
+        Logg.logging("testing", " AddVehicleDoneFragment mScreeType  $mScreeType")
 
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
             binding.tickLayout.visible()
