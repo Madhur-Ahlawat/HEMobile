@@ -11,6 +11,7 @@ import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.AdapterVehicleManagementListBinding
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Logg
 
 class VehicleManagementListAdapter(private val mContext: Context):  RecyclerView.Adapter<VehicleManagementListAdapter.VrmNameViewHolder>(),
     View.OnClickListener {
@@ -35,8 +36,8 @@ class VehicleManagementListAdapter(private val mContext: Context):  RecyclerView
                 val pos: Int = holder.bindingAdapterPosition
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.VEHICLE_ROW_ITEM, vehicleList[pos])
+                Logg.logging("Testing"," vehicleList[pos] ${vehicleList[pos]}  ")
                 it.findNavController().navigate(R.id.action_vehicleListFragment_to_vehicleManagementDetailFragment, bundle)
-
             }
         }
     }
