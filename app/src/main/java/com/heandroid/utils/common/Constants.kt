@@ -92,6 +92,7 @@ object Constants {
     const val VEHICLE_SCREEN_TYPE_HISTORY = 4
     const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val FROM_DASHBOARD_TO_VEHICLE_LIST = "com_heandroid_dashboard_to_vehiclelist"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
     const val SHOW_SCREEN = "show_screen"
     const val ABOUT_SERVICE = "about_service"
