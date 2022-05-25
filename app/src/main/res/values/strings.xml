@@ -370,7 +370,7 @@
     <string name="delete">Delete</string>
     <string name="sure_wants_logout">Are you sure wants to logout?</string>
     <string name="logout">Logout</string>
-    <string name="forgot_email"><u>Forgot email?</u></string>
+    <string name="forgot_email"><u>Forgot your registered email address?</u></string>
     <string name="please_select_one_mode_for_password">Please select one mode for password recovery</string>
     <string name="error_email">Please enter email address</string>
     <string name="error_valid_email">Please enter valid email address</string>
