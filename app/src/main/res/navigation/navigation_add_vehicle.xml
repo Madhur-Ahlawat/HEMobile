@@ -33,6 +33,10 @@
             app:destination="@id/addVehicleDoneFragment"
             app:popUpTo="@+id/addVehicleDetailsFragment"
             app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_addVehicleClassesFragment_to_addVehicleFragment"
+            app:destination="@id/addVehicleFragment" />
     </fragment>
     <fragment
         android:id="@+id/addVehicleDoneFragment"
