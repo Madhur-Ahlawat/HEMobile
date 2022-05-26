@@ -39,6 +39,7 @@ object Constants {
     const val PASSWORD = "password"
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
+    const val STATUS_TERMINATED = "TERMINATED"
 
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
