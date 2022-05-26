@@ -2,6 +2,8 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val FROM_DASHBOARD_TO_CROSSING_HISTORY=1001
+    const val FROM="from"
     const val UK_VEHICLE_DATA_NOT_FOUND_KEY =  "uk_vehicle_data_not_found_key"
     const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
     const val OPTIONS_TYPE = "Options_type"

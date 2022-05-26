@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,6 +64,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
     private var isDownload = false
     private var isCrossingHistory = false
     private var crossingHistoryAdapter: CrossingHistoryAdapter? = null
+    private var fromWhere: Int = -1
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -76,7 +78,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         request =
             CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
         isCrossingHistory = true
-        viewModel.crossingHistoryApiCall(request)
+
     }
 
 
@@ -88,6 +90,23 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         binding.tvNoCrossing.gone()
         binding.progressBar.visible()
         binding.tvDownload.visible()
+
+        fromWhere = arguments?.getInt(Constants.FROM) ?: -1
+        if (fromWhere == Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY) {
+            // find 90 days crossing history
+
+            val request = CrossingHistoryRequest(
+                startIndex = 1,
+                count = 1,
+                transactionType = Constants.TOLL_TRANSACTION,
+                searchDate = Constants.TRANSACTION_DATE,
+                startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
+                endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
+            )
+            viewModel.crossingHistoryApiCall(request)
+        } else {
+            viewModel.crossingHistoryApiCall(request)
+        }
     }
 
     override fun initCtrl() {
@@ -177,7 +196,11 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         lifecycleScope.launch(Dispatchers.IO) {
 
             val ret = async {
-                return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
+                return@async StorageHelper.writeResponseBodyToDisk(
+                    requireActivity(),
+                    selectionType,
+                    body
+                )
             }.await()
 
             if (ret) {
@@ -243,7 +266,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 }
             }
             R.id.tvFilter -> {
-                val model = DateRangeModel (
+                val model = DateRangeModel(
                     dateRangeModel?.type,
                     DateUtils.convertDateToDate(dateRangeModel?.from ?: ""),
                     DateUtils.convertDateToDate(dateRangeModel?.to ?: ""),

@@ -14,27 +14,29 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class SessionManager @Inject constructor (@ApplicationContext context: Context) {
-       private var prefs: SharedPreferences = context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)
+class SessionManager @Inject constructor(@ApplicationContext context: Context) {
+    private var prefs: SharedPreferences =
+        context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)
 
     companion object {
         const val USER_TOKEN = "user_token"
         const val Refresh_TOKEN = "refresh_token"
-        const val ACCOUNT_NUMBER="account_number"
-        const val ACCOUNT_TYPE="account_type"
-        const val SECURITY_CODE="security_code"
-        const val SESSION_TIME="session_time"
-        const val SECURITY_CODE_OBJ="security_code_obj"
-        const val IS_USER_LOGIN="is_user_login"
-        const val IS_SECONDARY="is_secondary_user"
-        const val NC_ID= "nc_id"
+        const val ACCOUNT_NUMBER = "account_number"
+        const val ACCOUNT_TYPE = "account_type"
+        const val SECURITY_CODE = "security_code"
+        const val SESSION_TIME = "session_time"
+        const val SECURITY_CODE_OBJ = "security_code_obj"
+        const val IS_USER_LOGIN = "is_user_login"
+        const val IS_SECONDARY = "is_secondary_user"
+        const val LOGGED_IN_USER = "logged_in_user"
+        const val NC_ID = "nc_id"
     }
 
     /**
      * Function to save auth token
      */
     fun saveAuthToken(token: String?) {
-        Log.d("Session Manager::",token?:"")
+        Log.d("Session Manager::", token ?: "")
         // todo use scope variable
         val editor = prefs.edit()
         editor.putString(USER_TOKEN, token)
@@ -45,7 +47,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
      * Function to save auth token
      */
     fun saveRefreshToken(token: String) {
-        Log.d("Session Manager::",token)
+        Log.d("Session Manager::", token)
         val editor = prefs.edit()
         editor.putString(Refresh_TOKEN, token)
         editor.apply()
@@ -66,31 +68,34 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
     }
 
     fun saveAccountNumber(accountNumber: String) {
-        Log.d("Session Manager::",accountNumber)
+        Log.d("Session Manager::", accountNumber)
         val editor = prefs.edit()
         editor.putString(ACCOUNT_NUMBER, accountNumber)
         editor.apply()
     }
+
     fun fetchAccountNumber(): String? {
         return prefs.getString(ACCOUNT_NUMBER, null)
     }
 
     fun saveCode(code: String) {
-        Log.d("Session Manager::",code)
+        Log.d("Session Manager::", code)
         val editor = prefs.edit()
         editor.putString(SECURITY_CODE, code)
         editor.apply()
     }
+
     fun fetchCode(): String? {
         return prefs.getString(SECURITY_CODE, null)
     }
 
     fun saveAccountType(accountType: String) {
-        Log.d("Session Manager::",accountType)
+        Log.d("Session Manager::", accountType)
         val editor = prefs.edit()
         editor.putString(ACCOUNT_TYPE, accountType)
         editor.apply()
     }
+
     fun fetchAccountType(): String? {
         return prefs.getString(ACCOUNT_TYPE, null)
     }
@@ -99,7 +104,7 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
         val editor = prefs.edit()
         val gson = Gson()
         val jsonString = gson.toJson(myObject)
-        editor.putString( SECURITY_CODE_OBJ, jsonString)
+        editor.putString(SECURITY_CODE_OBJ, jsonString)
         editor.commit()
     }
 
@@ -110,11 +115,11 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
 
     fun setSessionTime(code: Long?) {
         val editor = prefs.edit()
-        editor.putLong(SESSION_TIME, code?:0L)
+        editor.putLong(SESSION_TIME, code ?: 0L)
         editor.apply()
     }
 
-    fun getSessionTime() : Long{
+    fun getSessionTime(): Long {
         return prefs.getLong(SESSION_TIME, 0L)
     }
 
@@ -134,32 +139,42 @@ class SessionManager @Inject constructor (@ApplicationContext context: Context) 
 
     fun setAccountType(type: String?) {
         val editor = prefs.edit()
-        editor.putString(ACCOUNT_TYPE,type)
+        editor.putString(ACCOUNT_TYPE, type)
         editor.apply()
     }
 
-    fun getAccountType() : String?{
-        return prefs.getString(ACCOUNT_TYPE ,null)
+    fun getAccountType(): String? {
+        return prefs.getString(ACCOUNT_TYPE, null)
     }
 
     fun isSecondaryUser(isSecondaryUser: Boolean) {
         val editor = prefs.edit()
-        editor.putBoolean(IS_SECONDARY,isSecondaryUser)
+        editor.putBoolean(IS_SECONDARY, isSecondaryUser)
         editor.apply()
     }
 
-    fun getSecondaryUser() : Boolean{
-        return prefs.getBoolean(IS_SECONDARY ,false)
+    fun getSecondaryUser(): Boolean {
+        return prefs.getBoolean(IS_SECONDARY, false)
+    }
+
+    fun setLoggedInUser(loggedIn: Boolean) {
+        val editor = prefs.edit()
+        editor.putBoolean(LOGGED_IN_USER, loggedIn)
+        editor.apply()
+    }
+
+    fun getLoggedInUser(): Boolean {
+        return prefs.getBoolean(LOGGED_IN_USER, false)
     }
 
     fun setNCId(type: String?) {
         val editor = prefs.edit()
-        editor.putString(NC_ID,type)
+        editor.putString(NC_ID, type)
         editor.apply()
     }
 
-    fun getNCId() : String?{
-        return prefs.getString(NC_ID ,null)
+    fun getNCId(): String? {
+        return prefs.getString(NC_ID, null)
     }
 
 
