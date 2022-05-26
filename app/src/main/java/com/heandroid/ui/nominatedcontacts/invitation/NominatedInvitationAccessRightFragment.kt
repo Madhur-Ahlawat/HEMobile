@@ -39,15 +39,8 @@ class NominatedInvitationAccessRightFragment :
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
 
         binding.model = arguments?.getParcelable("data")
-        if (arguments?.getBoolean("edit") == true) viewModel.updateSecondaryAccountData(
-            arguments?.getParcelable(
-                "data"
-            )
-        )
-        else viewModel.createAccount(arguments?.getParcelable("data"))
     }
 
     override fun initCtrl() {
@@ -68,8 +61,19 @@ class NominatedInvitationAccessRightFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnInvite -> {
-                if (binding.rbRead.isChecked or binding.rbWrite.isChecked) updateAccessRight()
-                else showError(binding.root, "Please select access right")
+                if (binding.rbRead.isChecked or binding.rbWrite.isChecked) {
+                    loader?.show(requireActivity().supportFragmentManager, "")
+
+                    if (arguments?.getBoolean("edit") == true) viewModel.updateSecondaryAccountData(
+                        arguments?.getParcelable(
+                            "data"
+                        )
+                    )
+                    else viewModel.createAccount(arguments?.getParcelable("data"))
+
+                } else {
+                    showError(binding.root, "Please select access right")
+                }
 
             }
             R.id.btnCancel -> {
@@ -105,11 +109,9 @@ class NominatedInvitationAccessRightFragment :
                         findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
                         showError(binding.root, status.data?.message)
                     } else {
-                        if (status.data?.success == false) showError(
-                            binding.root,
-                            status.data?.message
-                        )
                         accountId = status.data?.secondaryAccountId ?: ""
+                        updateAccessRight()
+
                     }
 
                 }

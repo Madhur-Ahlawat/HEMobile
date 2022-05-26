@@ -73,8 +73,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
-                    launchIntent(status)
+                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+                        launchIntent(status)
+                    } else {
+                        launchSubmitComplaint(status)
 
+                    }
                 }
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
@@ -87,8 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         }
     }
 
-    private fun launchIntent(response: Resource.Success<LoginResponse?>) {
-
+    private fun launchSubmitComplaint(response: Resource.Success<LoginResponse?>) {
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveRefreshToken(response.data?.refreshToken ?: "")
@@ -97,47 +100,64 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
+            sessionManager.setLoggedInUser(true)
+        }
+        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+            putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
 
         }
-        if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
 
-            requireActivity().startNormalActivity(HomeActivityMain::class.java)
-        } else {
-            requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
-                putInt(
-                    Constants.FROM_LOGIN_TO_CASES,
-                    Constants.FROM_LOGIN_TO_CASES_VALUE
-                )
-                putString(Constants.LAST_NAME,response.data?.user_name?:"")
-            }
-
-        }
     }
 
+        private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+            sessionManager.run {
+                saveAuthToken(response.data?.accessToken ?: "")
+                saveRefreshToken(response.data?.refreshToken ?: "")
+                setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
+                isSecondaryUser(response.data?.isSecondary ?: false)
+                //saveAccountNumber(response.data?.user_name?:"")
+                saveAccountType(response.data?.accountType ?: "")
+            }
+//            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+            if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_login -> {
+                requireActivity().startNormalActivity(HomeActivityMain::class.java)
+            } else {
+                requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+                    putInt(
+                        Constants.FROM_LOGIN_TO_CASES,
+                        Constants.FROM_LOGIN_TO_CASES_VALUE
+                    )
+                    putString(Constants.LAST_NAME,response.data?.user_name?:"")
+                }
 
-                hideKeyboard()
-                val validation = viewModel.validation(binding.model)
-                if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
-                    viewModel.login(binding.model)
-                } else {
-                    showError(binding.root, validation.second)
+            }
+        }
+
+
+        override fun onClick(v: View?) {
+            when (v?.id) {
+                R.id.btn_login -> {
+
+                    hideKeyboard()
+                    val validation = viewModel.validation(binding.model)
+                    if (validation.first) {
+                        loader?.show(requireActivity().supportFragmentManager, "")
+                        viewModel.login(binding.model)
+                    } else {
+                        showError(binding.root, validation.second)
+                    }
+                }
+
+                R.id.tv_forgot_username -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+                }
+                R.id.tv_forgot_password -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
                 }
             }
-
-            R.id.tv_forgot_username -> {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
-            }
-            R.id.tv_forgot_password -> {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-            }
         }
-    }
 
-}
+    }
 
 

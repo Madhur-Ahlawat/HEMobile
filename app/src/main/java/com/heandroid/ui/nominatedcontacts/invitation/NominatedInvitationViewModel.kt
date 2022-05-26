@@ -29,7 +29,6 @@ class NominatedInvitationViewModel @Inject constructor(private val repository: N
     val createAccount : LiveData<Resource<CreateAccountResponseModel?>?> get()  = _createAccount
 
 
-
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateAccount = MutableLiveData<Resource<ResponseBody?>?>()
     val updateAccount : LiveData<Resource<ResponseBody?>?> get()  = _updateAccount
@@ -77,7 +76,7 @@ class NominatedInvitationViewModel @Inject constructor(private val repository: N
     fun validationFullName(model: CreateAccountRequestModel?): Pair<Boolean,String>{
         var ret= Pair(true,"")
         if(model?.firstName?.isEmpty()==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.error_first_name))
-        else if(model?.firstName?.isEmpty()==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.error_last_name))
+        else if(model?.lastName?.isEmpty()==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.error_last_name))
         return ret
     }
 

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.heandroid.R
 import com.heandroid.data.model.account.ThresholdAmountApiResponse
@@ -14,6 +15,7 @@ import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdReques
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.heandroid.databinding.FragmentAccountTopupPaymentBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -25,12 +27,16 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     View.OnClickListener {
 
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
+    private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
 
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
         getThresholdAmount()
     }
 
@@ -44,10 +50,13 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun getThresholdAmount() {
+        loader?.show(requireActivity().supportFragmentManager, "")
+
         viewModel.getThresholdAmount()
     }
 
     private fun getThresholdApiResponse(resource: Resource<AccountGetThresholdResponse?>?) {
+        loader?.dismiss()
         try {
             when (resource) {
                 is Resource.Success -> {
@@ -90,12 +99,16 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
+       loader?.dismiss()
         try {
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.apply {
                         if (statusCode == "0") {
+                            ErrorUtil.showError(binding.root, "Threshold amount updated successfully")
+
                             requireActivity().finish()
+
                         }
                     }
                 }
@@ -142,6 +155,8 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                                         thresholdAmount.toString(),
                                         customerAmount.toString()
                                     )
+                                    loader?.show(requireActivity().supportFragmentManager, "")
+
                                     viewModel.updateThresholdAmount(request)
                                 }
                             }
