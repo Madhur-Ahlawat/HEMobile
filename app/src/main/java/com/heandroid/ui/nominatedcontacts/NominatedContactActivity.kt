@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.databinding.ActivityNominatedContactsBinding
@@ -41,8 +42,12 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
         setContentView(binding.root)
         toolbar(getString(R.string.str_nominated_contacts))
 
-        navController = findNavController(R.id.fragmentContainerView)
-        val oldGraph = navController.graph
+        val navHostFragment =
+            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
+        val inflater = navHostFragment.navController.navInflater
+        val oldGraph = inflater.inflate(R.navigation.nav_graph_nominated_contacts)
+
+        navController = navHostFragment.navController
         if (intent.getIntExtra("count", 0) > 0)   oldGraph.setStartDestination( R.id.ncListFragment)
         else  oldGraph.setStartDestination(R.id.ncNoListFragment)
         navController.graph = oldGraph
