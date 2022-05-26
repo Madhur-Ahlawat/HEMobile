@@ -79,7 +79,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 //            )
         }
         binding.crossingsView.setOnClickListener {
-            findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment)
+            val bundle = Bundle()
+            bundle.putInt(Constants.FROM,Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
+            findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment, bundle)
         }
 
         binding.tvManualTopUp.setOnClickListener {
