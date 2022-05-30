@@ -30,7 +30,7 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(),
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
     private var mScreeType = 0
-    private lateinit var mVDetails: VehicleResponse
+    private var mVDetails: VehicleResponse? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -44,15 +44,22 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
+        }
+
+        mVDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
+
+        if(mVDetails!= null){
+            vehicleList?.add(mVDetails)
+        }
+
         mAdapter = AddedVehicleListAdapter(this)
         mAdapter.setList(vehicleList)
         binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
 
-        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
-            mScreeType = it
-        }
         setAdapter()
     }
 
@@ -77,7 +84,12 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(),
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 bundle.putParcelable(Constants.DATA, mVDetails)
 
-                findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
+                if(mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD){
+                    findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleSuccessFragment)
+                }else {
+                    findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
+                }
+
             }
         }
     }
