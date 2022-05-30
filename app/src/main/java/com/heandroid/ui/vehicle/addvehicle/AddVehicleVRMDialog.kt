@@ -192,7 +192,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     plateInfoResponse = PlateInfoResponse()
-                    plateInfoResponse!!.country = "Non-UK"
+                    plateInfoResponse!!.country = country
                     plateInfoResponse!!.number = binding.addVrmInput.text.toString()
 
                     vehicleResponse = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
