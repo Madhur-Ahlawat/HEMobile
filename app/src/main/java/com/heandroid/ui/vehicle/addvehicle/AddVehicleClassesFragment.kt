@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,14 +11,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
-import com.heandroid.data.model.vehicle.PlateInfoResponse
-import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.utils.DateUtils
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
@@ -181,7 +177,6 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     override fun observer() {
         observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
         observe(vehicleMgmtViewModel.validVehicleLiveData, ::apiResponseValidVehicle)
-
     }
 
     override fun onAddClick(details: VehicleResponse) {
@@ -261,5 +256,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             }
         }
     }
-
 }
+
+
+

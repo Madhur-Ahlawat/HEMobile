@@ -779,5 +779,6 @@
     <string name="back_to_vehicles_list">Back to vehicle detail</string>
     <string name="add_vehicle">Do you want to cancel adding the vehicles?</string>
     <string name="error_confirm_mail">Please check confirm mail</string>
+    <string name="add_below_vehicle">Do you want to add below vehicles to the vehicle list?</string>
 </resources>
 

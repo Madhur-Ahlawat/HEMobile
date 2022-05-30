@@ -45,6 +45,51 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         observe(viewModel.findVehicleLiveData, ::apiResponseDVRM)
     }
 
+    override fun init() {
+        mVehicleDetails = arguments?.getParcelable(Constants.DATA)
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
+            mScreeType = it
+        }
+        Logg.logging("testing", " AddVehicleDoneFragment mScreeType  $mScreeType")
+
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+            binding.tickLayout.visible()
+            binding.tvYourVehicle.gone()
+            binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
+            binding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
+        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
+            binding.tickLayout.gone()
+            binding.tvYourVehicle.visible()
+        }
+
+        getVehicleDataFromDVRM()
+    }
+
+    override fun initCtrl() {
+        binding.conformBtn.setOnClickListener {
+            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+                val bundle = Bundle()
+                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+
+                findNavController().navigate(
+                    R.id.action_addVehicleDoneFragment_to_vehicleListFragment,
+                    bundle
+                )
+            } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList(Constants.DATA, ArrayList(mList))
+                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                findNavController().navigate(
+                    R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment,
+                    bundle
+                )
+            }
+        }
+    }
+
     private fun getVehicleDataFromDVRM() {
         Logg.logging(
             "Testing",
@@ -52,11 +97,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         )
         val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
 
-        if (mVehicleDetails?.newPlateInfo?.country.equals(
-                "UK",
-                true
-            ) && mUKVehicleDataNotFound == 0
-        ) {
+        if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true) && mUKVehicleDataNotFound == 0) {
             loader?.show(requireActivity().supportFragmentManager, "")
             viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID)
         } else {
@@ -111,51 +152,6 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             }
         }
 
-    }
-
-    override fun init() {
-        mVehicleDetails = arguments?.getParcelable(Constants.DATA)
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
-            mScreeType = it
-        }
-        Logg.logging("testing", " AddVehicleDoneFragment mScreeType  $mScreeType")
-
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-            binding.tickLayout.visible()
-            binding.tvYourVehicle.gone()
-            binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
-            binding.conformBtn.text = getString(R.string.str_back_to_vehicles_list)
-        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
-            binding.tickLayout.gone()
-            binding.tvYourVehicle.visible()
-        }
-
-        getVehicleDataFromDVRM()
-    }
-
-    override fun initCtrl() {
-        binding.conformBtn.setOnClickListener {
-            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-                val bundle = Bundle()
-                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-
-                findNavController().navigate(
-                    R.id.action_addVehicleDoneFragment_to_vehicleListFragment,
-                    bundle
-                )
-            } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
-                val bundle = Bundle()
-                bundle.putParcelableArrayList(Constants.DATA, ArrayList(mList))
-                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-                findNavController().navigate(
-                    R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment,
-                    bundle
-                )
-            }
-        }
     }
 
     private fun setAdapter(details: VehicleInfoDetails) {

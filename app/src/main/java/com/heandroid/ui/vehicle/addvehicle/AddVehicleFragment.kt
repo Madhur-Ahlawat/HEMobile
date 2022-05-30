@@ -84,7 +84,12 @@ class AddVehicleFragment : BaseFragment<FragmentAddVehicleBinding>(),
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 bundle.putParcelable(Constants.DATA, mVDetails)
 
-                findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
+                if(mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD){
+                    findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleSuccessFragment)
+                }else {
+                    findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
+                }
+
             }
         }
     }
