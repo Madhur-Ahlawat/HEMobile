@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.databinding.FragmentCreateAccountPersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.BUSINESS_ACCOUNT
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.PAYG
@@ -71,16 +72,92 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     }
 
     private fun onClickPersonalAccountValidation() {
-        binding.model?.firstName = binding.tieFullName.text.toString()
-        binding.model?.lastName = binding.tieLastName.text.toString()
-        binding.model?.cellPhone = binding.tieMobileNo.text.toString()
 
-        val bundle = Bundle()
-        bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
-        findNavController().navigate(
-            R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
-            bundle
-        )
+        if(model?.planType == Constants.PAYG){
+            binding.apply {
+
+                when {
+                    TextUtils.isEmpty(tieFullName.text?.toString()) -> setError(
+                        tieFullName,
+                        "Please fill the first name"
+                    )
+                    tieFullName.text?.toString()?.length!! < 2 -> setError(
+                        tieFullName,
+                        "Please enter valid name"
+                    )
+                    TextUtils.isEmpty(tieLastName.text?.toString()) -> setError(
+                        tieLastName,
+                        "Please fill the last name"
+                    )
+                    tieLastName.text?.toString()?.length!! < 2 -> setError(
+                        tieLastName,
+                        "Please enter valid last name"
+                    )
+                    else -> {
+
+                        binding.model?.firstName = binding.tieFullName.text.toString()
+                        binding.model?.lastName = binding.tieLastName.text.toString()
+                        binding.model?.cellPhone = binding.tieMobileNo.text.toString()
+
+
+                        val bundle = Bundle()
+                        bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                        findNavController().navigate(
+                            R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
+                            bundle
+                        )
+                    }
+                }
+            }
+
+        }else{
+            binding.apply {
+
+                when {
+                    TextUtils.isEmpty(tieFullName.text?.toString()) -> setError(
+                        tieFullName,
+                        "Please fill the first name"
+                    )
+                    tieFullName.text?.toString()?.length!! < 2 -> setError(
+                        tieFullName,
+                        "Please enter valid name"
+                    )
+                    TextUtils.isEmpty(tieLastName.text?.toString()) -> setError(
+                        tieLastName,
+                        "Please fill the last name"
+                    )
+                    tieLastName.text?.toString()?.length!! < 2 -> setError(
+                        tieLastName,
+                        "Please enter valid last name"
+                    )
+                    TextUtils.isEmpty(tieMobileNo.text.toString()) -> setError(
+                        tieMobileNo,
+                        "Please enter the mobile number"
+                    )
+                    Utils.mobileNumber(tieMobileNo.text.toString()) == "Password not matched" -> setError(
+                        tieMobileNo,
+                        "Please enter valid mobile number (0-9, +)"
+                    )
+                    else -> {
+
+                        binding.model?.firstName = binding.tieFullName.text.toString()
+                        binding.model?.lastName = binding.tieLastName.text.toString()
+                        binding.model?.cellPhone = binding.tieMobileNo.text.toString()
+
+
+                        val bundle = Bundle()
+                        bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                        findNavController().navigate(
+                            R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
+                            bundle
+                        )
+                    }
+                }
+            }
+
+        }
+
+
     }
 
     private fun onClickBusinessAccountValidation() {

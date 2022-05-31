@@ -103,20 +103,6 @@ class MakeOffPaymentConfirmationFragment :
 
                 loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-
-/*
-                val mBundle = Bundle()
-                mBundle.putString(Constants.EMAIL, mEmail)
-                mBundle.putString(
-                    Constants.OPTIONS_TYPE,
-                    arguments?.getString(Constants.OPTIONS_TYPE)
-                )
-                mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
-                findNavController().navigate(
-                    R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
-                    mBundle
-                )
-*/
             }
         }
 

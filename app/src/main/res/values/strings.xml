@@ -557,7 +557,7 @@
     <string name="underline_postcode"><u>Postcode</u></string>
     <string name="password">Password</string>
     <string name="underline_password"><u>Password</u></string>
-    <string name="mobile_telephone">Mobile telephone number (optional)</string>
+    <string name="mobile_telephone">Mobile telephone number</string>
     <string name="evening_number">Evening number (optional)</string>
     <string name="find_address">Find address</string>
     <string name="cap_pin"> PIN </string>
