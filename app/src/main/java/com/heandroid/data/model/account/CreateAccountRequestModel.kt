@@ -19,10 +19,14 @@ data class CreateAccountRequestModel(
     var zipCode1: String?,
     var emailAddress: String?,
     var cellPhone: String?,
+    var cellPhoneCountryCode: String?,
     var eveningPhone: String?,
+    var eveningPhoneCountryCode:String?,
     var smsOption: String?,
     var password: String?,
     var digitPin: String?,
+    var correspDeliveryMode :String?,
+    var correspDeliveryFrequency:String?,
     var companyName: String?,
     var fein: String?,
     var nonRevenueOption: String?,
@@ -45,6 +49,8 @@ data class CreateAccountRequestModel(
     var replenishmentAmount: String?,
     var transactionAmount: String?,
     var planType: String?,
-    var enable : Boolean?,
-    var vehicleNo: String?
-    ) : Parcelable
+    var enable: Boolean?,
+    var vehicleNo: String?,
+    var mNoOfVehicles: String?,
+    var mNoOfCrossings: String?
+) : Parcelable

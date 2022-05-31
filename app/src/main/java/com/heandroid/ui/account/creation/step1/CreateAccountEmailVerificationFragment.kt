@@ -37,12 +37,13 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
         requestModel = CreateAccountRequestModel(
             referenceId = 0, securityCd = 0, accountType = "", tcAccepted = "Y", firstName = "",
             lastName = "", address1 = "", city = "", stateType = "", countryType = "",
-            zipCode1 = "", emailAddress = "", cellPhone = "", eveningPhone = "", smsOption = "Y",
-            password = "", digitPin = "", companyName = "", fein = "", nonRevenueOption = "",
+            zipCode1 = "", emailAddress = "", cellPhone = "",cellPhoneCountryCode = "+44", eveningPhone = "",eveningPhoneCountryCode = "+44", smsOption = "Y",
+            password = "", digitPin = "",correspDeliveryMode = "EMAIL",correspDeliveryFrequency = "MONTHLY", companyName = "", fein = "", nonRevenueOption = "",
             ftvehicleList = null, creditCardType = "", creditCardNumber = "", maskedNumber = "", creditCExpMonth = "",
             creditCExpYear = "", securityCode = "", cardFirstName = "", cardMiddleName = "", cardLastName = "",
             billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
-            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "")
+            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "",mNoOfVehicles = "",mNoOfCrossings = ""
+        )
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()

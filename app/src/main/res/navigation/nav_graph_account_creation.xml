@@ -104,6 +104,11 @@
             android:id="@+id/action_businessPrePayAutoTopUpFragment_to_personalDetailsEntryFragment"
             app:destination="@id/personalDetailsEntryFragment" />
 
+        <action
+            android:id="@+id/action_businessPrePayAutoTopUpFragment_to_paymentSummaryScreen"
+            app:destination="@id/paymentSummaryFragment" />
+
+
     </fragment>
     <!-- Step 3 -->
 
@@ -292,6 +297,12 @@
         <action
             android:id="@+id/action_paymentSummaryScreen_to_choosePaymentScreen"
             app:destination="@+id/choosePaymentFragment"/>
+
+
+        <action
+            android:id="@+id/action_paymentSummaryScreen_to_business_prepay_autotopupfragment"
+            app:destination="@+id/businessPrePayAutoTopUpFragment"/>
+
     </fragment>
 
     <fragment
