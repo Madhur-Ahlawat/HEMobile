@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT = "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT"
     const val FROM_DASHBOARD_TO_CROSSING_HISTORY=1001
     const val FROM="from"
     const val UK_VEHICLE_DATA_NOT_FOUND_KEY =  "uk_vehicle_data_not_found_key"
@@ -30,8 +31,10 @@ object Constants {
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
     const val UK_VEHICLE_DATA_NOT_FOUND =1007
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
 
-        const val FILE_NAMES_KEY = " file_names_key"
+
+    const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
