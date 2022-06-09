@@ -3,7 +3,9 @@ package com.heandroid.ui.vehicle
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.account.VehicleInfoDetails
@@ -14,7 +16,6 @@ import com.heandroid.data.model.vehicle.DeleteVehicleRequest
 import com.heandroid.data.model.vehicle.VehicleListManagementEditRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +24,11 @@ import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
-class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRepository) :
-    BaseViewModel() {
+class VehicleMgmtViewModel @Inject constructor(
+    private val repository: VehicleRepository,
+    val errorManager: ErrorManager
+) :
+    ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _addVehicleApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
@@ -137,7 +141,8 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
             }
         }
     }
-    fun deleteVehicleApi(deleteVehicleRequest : DeleteVehicleRequest) {
+
+    fun deleteVehicleApi(deleteVehicleRequest: DeleteVehicleRequest) {
         viewModelScope.launch {
             try {
                 _deleteVehicleApiVal.postValue(
@@ -152,11 +157,17 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
         }
     }
 
-    fun downloadVehicleList(type:String?) {
+    fun downloadVehicleList(type: String?) {
         viewModelScope.launch {
-            try{
-                _vehicleVRMDownloadVal.postValue(ResponseHandler.success(repository.getDownloadVehicleList(type),errorManager))
-            }catch (e: Exception) {
+            try {
+                _vehicleVRMDownloadVal.postValue(
+                    ResponseHandler.success(
+                        repository.getDownloadVehicleList(
+                            type
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
                 _vehicleVRMDownloadVal.postValue(ResponseHandler.failure(e))
             }
         }
@@ -164,9 +175,15 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
 
     fun updateVehicleVRMData(request: VehicleListManagementEditRequest) {
         viewModelScope.launch {
-            try{
-                _vehicleListManagementEditVal.postValue(ResponseHandler.success(repository.updateVehicleListManagement(request), errorManager))
-            }catch (e: Exception){
+            try {
+                _vehicleListManagementEditVal.postValue(
+                    ResponseHandler.success(
+                        repository.updateVehicleListManagement(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
                 _vehicleListManagementEditVal.postValue(ResponseHandler.failure(e))
             }
         }
@@ -192,15 +209,16 @@ class VehicleMgmtViewModel @Inject constructor(private val repository: VehicleRe
     fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) {
 
         viewModelScope.launch {
-            try{
+            try {
                 validVehicleMutData.setValue(
                     ResponseHandler.success(
                         repository.validVehicleCheck(
-                            vehicleValidReqModel, agencyId)
-                        , errorManager
-                    ))
+                            vehicleValidReqModel, agencyId
+                        ), errorManager
+                    )
+                )
 
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 validVehicleMutData.setValue(ResponseHandler.failure(e))
             }
         }

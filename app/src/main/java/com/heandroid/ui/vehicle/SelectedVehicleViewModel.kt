@@ -3,22 +3,24 @@ package com.heandroid.ui.vehicle
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.data.repository.vehicle.VehicleRepository
-import com.heandroid.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectedVehicleViewModel @Inject constructor(private val repository: VehicleRepository) :
-    BaseViewModel() {
+class SelectedVehicleViewModel @Inject constructor(
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _selectedVehicleResponse = MutableLiveData<VehicleResponse?>()
     val selectedVehicleResponse: LiveData<VehicleResponse?> get() = _selectedVehicleResponse
 
     fun setSelectedVehicleResponse(details: VehicleResponse?) {
-        _selectedVehicleResponse.value= details
+        _selectedVehicleResponse.value = details
     }
 
 }

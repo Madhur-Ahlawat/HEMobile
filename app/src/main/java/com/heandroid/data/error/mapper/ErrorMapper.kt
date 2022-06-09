@@ -3,10 +3,8 @@ package com.heandroid.data.error.mapper
 import android.content.Context
 import com.heandroid.R
 import com.heandroid.data.error.*
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class ErrorMapper @Inject constructor(@ApplicationContext val context: Context) : ErrorMapperSource {
+class ErrorMapper (val context: Context) : ErrorMapperSource {
 
     override fun getErrorString(errorId: Int): String {
         return context.getString(errorId)

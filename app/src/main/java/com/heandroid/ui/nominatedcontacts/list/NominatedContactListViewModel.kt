@@ -3,10 +3,11 @@ package com.heandroid.ui.nominatedcontacts.list
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.data.repository.nominatedcontacts.NominatedContactsRepo
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
@@ -17,8 +18,11 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class NominatedContactListViewModel @Inject constructor(private val repo: NominatedContactsRepo) :
-    BaseViewModel() {
+
+class NominatedContactListViewModel @Inject constructor(
+    private val repo: NominatedContactsRepo,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _contactList = MutableLiveData<Resource<NominatedContactRes?>?>()
