@@ -18,6 +18,7 @@ import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.accountstatements.AccountStatementActivity
 import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.NominatedContactActivity
@@ -57,6 +58,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             logOutLyt.setOnClickListener(this@AccountFragment)
             rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             nominatedContactsLyt.setOnClickListener(this@AccountFragment)
+            rlAccountStatement.setOnClickListener(this@AccountFragment)
         }
 
     }
@@ -96,7 +98,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                     )
                     putString(Constants.LAST_NAME,"Test")
                 }
+            }
 
+            R.id.rl_account_statement -> {
+                requireActivity().startNewActivity(AccountStatementActivity::class.java)
             }
 
             R.id.log_out_lyt -> {
@@ -112,8 +117,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
 
         }
     }
-
-
 
     private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
         try {

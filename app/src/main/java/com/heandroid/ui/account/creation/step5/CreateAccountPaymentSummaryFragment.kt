@@ -33,6 +33,7 @@ class CreateAccountPaymentSummaryFragment: BaseFragment<FragmentCreateAccountPay
     override fun initCtrl() {
         binding.payButton.setOnClickListener(this@CreateAccountPaymentSummaryFragment)
         binding.changeAmount.setOnClickListener(this@CreateAccountPaymentSummaryFragment)
+        binding.changeRegNo.setOnClickListener(this@CreateAccountPaymentSummaryFragment)
     }
 
     override fun observer() {
@@ -50,8 +51,13 @@ class CreateAccountPaymentSummaryFragment: BaseFragment<FragmentCreateAccountPay
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY)
                 findNavController().navigate(R.id.action_paymentSummaryScreen_to_business_prepay_autotopupfragment, bundle)
-
             }
+            R.id.change_reg_no -> {
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                findNavController().navigate(R.id.action_paymentSummaryScreen_to_createAccountFindVehicleFragment, bundle)
+            }
+
         }
     }
 }
