@@ -303,6 +303,9 @@
             android:id="@+id/action_paymentSummaryScreen_to_business_prepay_autotopupfragment"
             app:destination="@+id/businessPrePayAutoTopUpFragment"/>
 
+        <action
+            android:id="@+id/action_paymentSummaryScreen_to_createAccountFindVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"/>
     </fragment>
 
     <fragment
