@@ -25,11 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private var model : CreateAccountRequestModel?=null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPersonalSetupBinding.inflate(inflater, container, false)
 
     override fun init() {
         model=arguments?.getParcelable(CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
         binding.enable = false
     }
@@ -60,6 +64,9 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
                 if(binding.mrbPrePay.isChecked || binding.mrbPayG.isChecked){
                      val bundle = Bundle()
                      bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
+                    isEditAccountType?.let {
+                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
                      findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
                 }
                 else { showError(binding.root,getString(R.string.select_account_type)) }

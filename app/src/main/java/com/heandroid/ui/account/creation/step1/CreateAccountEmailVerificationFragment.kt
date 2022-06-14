@@ -29,6 +29,7 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var requestModel : CreateAccountRequestModel? =null
+    private var isEditEmail : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
@@ -44,6 +45,13 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
             billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
             thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "",mNoOfVehicles = "",mNoOfCrossings = ""
         )
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
+            isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
+        }
+
+        if (arguments?.containsKey(CREATE_ACCOUNT_DATA) == true) {
+            requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
+        }
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()
@@ -72,6 +80,9 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
                     requestModel?.referenceId=resource.data.referenceId.toLongOrNull()
                     val bundle = Bundle().apply {
                         putParcelable(CREATE_ACCOUNT_DATA,requestModel)
+                        isEditEmail?.let {
+                            putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY)
+                        }
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
                 }

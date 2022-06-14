@@ -31,12 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPosswordBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = false
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
         when(model?.planType) {
@@ -80,6 +84,9 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                 }
                 val bundle = Bundle().apply {
                     putParcelable(Constants.CREATE_ACCOUNT_DATA,model)
+                    isEditAccountType?.let {
+                        putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
                 }
                 findNavController().navigate(R.id.action_createAccoutPasswordFragment_to_createAccoutPinFragment, bundle)
             }

@@ -22,12 +22,16 @@ class BusinessPrePayAutoTopUpFragment : BaseFragment<FragmentBusinessPrepayAutoT
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessPrepayAutoTopupBinding.inflate(inflater, container, false)
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
 
     }
 
@@ -64,6 +68,9 @@ class BusinessPrePayAutoTopUpFragment : BaseFragment<FragmentBusinessPrepayAutoT
                 requestModel?.mNoOfVehicles = noOfVehicle
                 requestModel?.mNoOfCrossings = noOfCrossing
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                isEditAccountType?.let {
+                    bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                }
                 findNavController().navigate(
                     R.id.action_businessPrePayAutoTopUpFragment_to_businessTopUpRecommendationFragment,
                     bundle
