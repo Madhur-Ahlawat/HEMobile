@@ -14,6 +14,8 @@ import com.heandroid.databinding.FragmentBusinessVehicleDetailBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 
 class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailBinding>(),
     View.OnClickListener {
@@ -35,6 +37,14 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
             countryRegistration.text = requestModel?.countryType
             groupName.text = nonUKVehicleModel?.vehicleGroup
+        }
+
+        if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
+            binding.groupNameLayout.visible()
+            binding.groupNameDesc.visible()
+        } else {
+            binding.groupNameLayout.gone()
+            binding.groupNameDesc.gone()
         }
     }
 

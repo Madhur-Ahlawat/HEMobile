@@ -20,6 +20,7 @@ class BusinessTopUpRecommendationFragment :
     private var requestModel: CreateAccountRequestModel? = null
     private var noOfCrossings: String? = null
     private var noOfVehicle: String? = null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessTopUpRecommendationBinding.inflate(inflater, container, false)
@@ -28,6 +29,9 @@ class BusinessTopUpRecommendationFragment :
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         noOfVehicle = arguments?.getString(Constants.NO_OF_VEHICLE_BUSINESS)
         noOfCrossings = arguments?.getString(Constants.NO_OF_CROSSING_BUSINESS)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         binding.isEnable = true
         calculateAndUpdateUI()
     }
@@ -57,6 +61,9 @@ class BusinessTopUpRecommendationFragment :
                     arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, 0)
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                isEditAccountType?.let {
+                    bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                }
 
                 if (mCode == Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY) {
                     findNavController().navigate(

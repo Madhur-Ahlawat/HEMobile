@@ -30,6 +30,7 @@
     <string name="account_number_">Account number</string>
     <string name="account_status">Account status:</string>
     <string name="account_type">Account type:</string>
+    <string name="account_type_for_summary">Account type</string>
     <string name="top_up_method">Top up Type:</string>
     <string name="txt_dashboard">Dashboard</string>
     <string name="txt_vehicle_class"><b>Class</b> : %1$s</string>
@@ -787,5 +788,7 @@
     <string name="period">Period</string>
     <string name="monthly_csv_format">Monthly account statements - CSV request</string>
     <string name="annual_account_summary">Annual account summaries</string>
+    <string name="str_selected_stage">You have selected</string>
 </resources>
+
 

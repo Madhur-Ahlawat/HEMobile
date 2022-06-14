@@ -28,12 +28,16 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         model?.firstName = ""
         model?.lastName = ""
         model?.cellPhone = ""
@@ -102,6 +106,9 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
                         val bundle = Bundle()
                         bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                        isEditAccountType?.let {
+                            bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                        }
                         findNavController().navigate(
                             R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
                             bundle
@@ -147,6 +154,9 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
                         val bundle = Bundle()
                         bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
+                        isEditAccountType?.let {
+                            bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                        }
                         findNavController().navigate(
                             R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
                             bundle
@@ -206,6 +216,9 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
                     val bundle = Bundle()
                     bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
+                    isEditAccountType?.let {
+                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
                     findNavController().navigate(
                         R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
                         bundle

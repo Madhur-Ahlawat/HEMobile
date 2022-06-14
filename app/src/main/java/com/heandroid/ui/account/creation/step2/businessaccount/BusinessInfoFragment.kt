@@ -18,6 +18,8 @@ class BusinessInfoFragment : BaseFragment<FragmentBusinessInfoBinding>(),
     View.OnClickListener{
 
     private var requestModel : CreateAccountRequestModel?=null
+    private var isEditAccountType : Int? = null
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -26,6 +28,9 @@ class BusinessInfoFragment : BaseFragment<FragmentBusinessInfoBinding>(),
 
     override fun init() {
         requestModel=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
     }
 
     override fun initCtrl() {
@@ -41,6 +46,9 @@ class BusinessInfoFragment : BaseFragment<FragmentBusinessInfoBinding>(),
            R.id.continue_business -> {
                val bundle = Bundle()
                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,requestModel)
+               isEditAccountType?.let {
+                   bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+               }
                findNavController().navigate(R.id.action_businessInfoFragment_to_businessPrepayInfoFragment, bundle)
 
            }

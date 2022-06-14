@@ -31,12 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPinBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = false
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
         when(model?.planType){
@@ -89,10 +93,15 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 val bundle = Bundle().apply {
                     putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                 }
-                when(model?.planType){
-                    PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
-                    Constants.BUSINESS_ACCOUNT -> { findNavController().navigate(R.id.action_createAccountPinFragment_to_businessVehicleTitleFragment, bundle) }
-                    else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
+                isEditAccountType?.let {
+                    findNavController().navigate(R.id.action_createAccoutPinFragment_to_paymentSummaryFragment, bundle)
+
+                } ?: run {
+                    when(model?.planType){
+                        PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
+                        Constants.BUSINESS_ACCOUNT -> { findNavController().navigate(R.id.action_createAccountPinFragment_to_businessVehicleTitleFragment, bundle) }
+                        else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
+                    }
                 }
             }
         }
