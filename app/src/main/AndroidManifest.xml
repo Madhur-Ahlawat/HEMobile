@@ -17,9 +17,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite"
-            android:exported="false" />
+            android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name=".ui.startNow.StartNowBaseActivity"
             android:launchMode="singleTop"
@@ -80,6 +80,10 @@
 
         <activity
             android:name=".ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileWhite" />
+        <activity
+            android:name=".ui.bottomnav.account.accountstatements.AccountStatementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
 

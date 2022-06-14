@@ -44,11 +44,11 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -66,11 +66,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@color/white"
                     app:boxStrokeColor="@color/grey_two"
+                    android:layout_marginTop="@dimen/_10sdp"
                     app:boxStrokeWidthFocused="1dp"
                     app:errorEnabled="false"
                     app:hintEnabled="false"
@@ -96,21 +94,18 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view"
+                    android:theme="@style/SCBSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:checked="true"
                     android:text="@string/str_country_of_registraion"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="normal"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_reg_no"
-                    app:thumbTint="@color/green"
-                    app:trackTint="#04CF71"
                     app:useMaterialThemeColors="false" />
 
             </LinearLayout>
@@ -121,8 +116,8 @@
             android:id="@+id/continue_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{isEnable}"
             android:text="@string/str_continue"

@@ -30,6 +30,7 @@
     <string name="account_number_">Account number</string>
     <string name="account_status">Account status:</string>
     <string name="account_type">Account type:</string>
+    <string name="account_type_for_summary">Account type</string>
     <string name="top_up_method">Top up Type:</string>
     <string name="txt_dashboard">Dashboard</string>
     <string name="txt_vehicle_class"><b>Class</b> : %1$s</string>
@@ -780,5 +781,14 @@
     <string name="add_vehicle">Do you want to cancel adding the vehicles?</string>
     <string name="error_confirm_mail">Please check confirm mail</string>
     <string name="add_below_vehicle">Do you want to add below vehicles to the vehicle list?</string>
+    <string name="str_account_statements">Account Statements</string>
+    <string name="monthly_account_statement">Monthly account statements</string>
+    <string name="choose_pdf_file">choose the year and the period you require, and select Download for the pdf file</string>
+    <string name="year">Year</string>
+    <string name="period">Period</string>
+    <string name="monthly_csv_format">Monthly account statements - CSV request</string>
+    <string name="annual_account_summary">Annual account summaries</string>
+    <string name="str_selected_stage">You have selected</string>
 </resources>
+
 

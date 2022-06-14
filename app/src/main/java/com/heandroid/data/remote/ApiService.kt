@@ -2,12 +2,8 @@ package com.heandroid.data.remote
 
 import com.heandroid.BuildConfig.*
 import com.heandroid.data.model.EmptyApiResponse
-import com.heandroid.data.model.account.AccountResponse
-import com.heandroid.data.model.account.ThresholdAmountApiResponse
-import com.heandroid.data.model.account.ValidVehicleCheckRequest
-import com.heandroid.data.model.account.UpdateProfileRequest
+import com.heandroid.data.model.account.*
 import com.heandroid.data.model.webstatus.WebSiteStatus
-import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.accountpayment.*
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
@@ -31,6 +27,8 @@ import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.nominatedcontacts.*
+import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
+import com.heandroid.data.model.nominatedcontacts.CreateAccountResponseModel
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.payment.*
 import com.heandroid.data.model.profile.*
@@ -327,4 +325,7 @@ interface ApiService {
 
     @PUT(VEHICLE_VRM_EDIT)
     suspend fun updateVehicleListManagement(@Body request: VehicleListManagementEditRequest?): Response<String?>
+
+    @GET(ACCOUNT_STATEMENT)
+    suspend fun getAccountStatements():Response<AccountStatementResponse?>
 }
