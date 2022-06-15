@@ -327,5 +327,5 @@ interface ApiService {
     suspend fun updateVehicleListManagement(@Body request: VehicleListManagementEditRequest?): Response<String?>
 
     @GET(ACCOUNT_STATEMENT)
-    suspend fun getAccountStatements():Response<AccountStatementResponse?>
+    suspend fun getAccountStatements():Response<List<StatementListModel?>?>
 }
