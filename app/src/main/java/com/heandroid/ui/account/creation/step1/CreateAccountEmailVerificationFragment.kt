@@ -38,7 +38,6 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
 
     override fun init() {
 
-        Logg.logging("AccountCreation","testing  email ${requireActivity().intent?.getStringExtra(Constants.EMAIL)?:""}")
         binding.etEmail.setText(requireActivity().intent?.getStringExtra(Constants.EMAIL)?:"",TextView.BufferType.EDITABLE)
 
         requestModel = CreateAccountRequestModel(
