@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.EmailValidationModel
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentCreateAccountEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -22,6 +24,7 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.logging.Logger
 
 @AndroidEntryPoint
 class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
@@ -34,6 +37,9 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        Logg.logging("AccountCreation","testing  email ${requireActivity().intent?.getStringExtra(Constants.EMAIL)?:""}")
+        binding.etEmail.setText(requireActivity().intent?.getStringExtra(Constants.EMAIL)?:"",TextView.BufferType.EDITABLE)
 
         requestModel = CreateAccountRequestModel(
             referenceId = 0, securityCd = 0, accountType = "", tcAccepted = "Y", firstName = "",

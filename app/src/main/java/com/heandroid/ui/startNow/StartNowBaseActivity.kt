@@ -54,9 +54,15 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
         val oldGraph = inflater.inflate(R.navigation.nav_graph_start_now)
 
         when (screenType) {
-            Constants.ABOUT_SERVICE -> {  oldGraph.setStartDestination(R.id.aboutService) }
-            Constants.CROSSING_SERVICE_UPDATE -> {   oldGraph.setStartDestination(R.id.crossingUpdate) }
-            Constants.CONTACT_DART_CHARGES -> {   oldGraph.setStartDestination(R.id.contactDartCharge) }
+            Constants.ABOUT_SERVICE -> {
+                oldGraph.startDestination = R.id.aboutService
+            }
+            Constants.CROSSING_SERVICE_UPDATE -> {
+                oldGraph.startDestination = R.id.crossingUpdate
+            }
+            Constants.CONTACT_DART_CHARGES -> {
+                oldGraph.startDestination = R.id.contactDartCharge
+            }
 
         }
         navController.graph = oldGraph
