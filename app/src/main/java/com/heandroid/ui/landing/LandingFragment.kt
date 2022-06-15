@@ -62,6 +62,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 VehicleHelper.list?.clear()
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = CREATE_ACCOUNT
+
             }
 
             R.id.rbMakeOffPayment -> {
@@ -82,6 +83,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = CHECK_FOR_PAID
             }
+
             R.id.rbViewCharges -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = VIEW_CHARGES

@@ -24,15 +24,15 @@ import com.heandroid.data.model.payment.PaymentMethodDeleteResponseModel
 import com.heandroid.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentSuccessfulBinding
+import com.heandroid.ui.account.creation.controller.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.*
-import com.heandroid.utils.extn.gone
-import com.heandroid.utils.extn.showToast
-import com.heandroid.utils.extn.visible
+import com.heandroid.utils.extn.*
+import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
 import java.io.File
@@ -75,7 +75,22 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
 
     override fun initCtrl() {
         binding.btnContinue.setOnClickListener {
-            activity?.finish()
+            requireActivity().finish()
+
+            if(mType) {
+
+                requireActivity().openActivityWithData(CreateAccountActivity::class.java) {
+                    putParcelableArrayList(Constants.DATA, ArrayList(list))
+                    putString(Constants.EMAIL,mEmail)
+                }
+            }else{
+                requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java){
+                    putParcelableArrayList(Constants.DATA, ArrayList(list))
+                    putString(Constants.EMAIL,mEmail)
+
+                }
+
+            }
         }
         binding.downloadReceipt.setOnClickListener(this@MakeOffPaymentSuccessfulFragment)
     }
@@ -109,6 +124,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
         }
 
     }
+    private var mType = true
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
 
@@ -124,14 +140,14 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
                     "testing",
                     " MakeOffPaymentSuccessfulFragment rbCreateAccount"
                 )
-
-
+                mType = true
             }
             R.id.rbMakePayment -> {
                 Logg.logging(
                     "testing",
                     " MakeOffPaymentSuccessfulFragment success rbMakePayment"
                 )
+                mType= false
 
             }
         }
