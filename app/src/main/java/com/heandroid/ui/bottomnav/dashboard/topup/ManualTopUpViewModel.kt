@@ -3,15 +3,15 @@ package com.heandroid.ui.bottomnav.dashboard.topup
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.payment.PaymentMethodDeleteResponseModel
-import com.heandroid.data.repository.auth.LoginRepository
 import com.heandroid.data.repository.manualtopup.ManualTopUpRepository
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
@@ -20,16 +20,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ManualTopUpViewModel @Inject constructor(private val repository: ManualTopUpRepository): BaseViewModel()  {
+class ManualTopUpViewModel @Inject constructor(
+    private val repository: ManualTopUpRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _paymentWithNewCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
-    val paymentWithNewCard : LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get()  = _paymentWithNewCard
+    private val _paymentWithNewCard =
+        MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val paymentWithNewCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _paymentWithNewCard
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _paymentWithExistingCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
-    val paymentWithExistingCard : LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get()  = _paymentWithExistingCard
+    private val _paymentWithExistingCard =
+        MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val paymentWithExistingCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _paymentWithExistingCard
 
 
     fun paymentWithNewCard(model: PaymentWithNewCardModel?) {
@@ -54,10 +59,12 @@ class ManualTopUpViewModel @Inject constructor(private val repository: ManualTop
     }
 
 
-    fun validation(model: String?): Pair<Boolean,String> {
-        var ret= Pair(true,"")
-        if(model?.isEmpty()==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.enter_amount_top_up))
-        if(model?.equals("0")==true) ret=Pair(false, BaseApplication.INSTANCE.getString(R.string.validation_manual_top_up))
+    fun validation(model: String?): Pair<Boolean, String> {
+        var ret = Pair(true, "")
+        if (model?.isEmpty() == true) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.enter_amount_top_up))
+        if (model?.equals("0") == true) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.validation_manual_top_up))
         return ret
     }
 }

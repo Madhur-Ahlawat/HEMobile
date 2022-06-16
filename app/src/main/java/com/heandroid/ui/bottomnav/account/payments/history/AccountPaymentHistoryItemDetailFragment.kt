@@ -48,12 +48,16 @@ class AccountPaymentHistoryItemDetailFragment :
             downloadReceiptBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
             backBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
         }
-        (requireActivity() as AccountPaymentActivity).hideTabLayout()
+        if(requireActivity() is AccountPaymentActivity) {
+            (requireActivity() as AccountPaymentActivity).hideTabLayout()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        (requireActivity() as AccountPaymentActivity).showTabLayout()
+        if(requireActivity() is AccountPaymentActivity) {
+            (requireActivity() as AccountPaymentActivity).showTabLayout()
+        }
     }
 
     override fun onClick(v: View?) {

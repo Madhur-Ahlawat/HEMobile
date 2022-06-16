@@ -3,13 +3,14 @@ package com.heandroid.ui.auth.forgot.email
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.data.repository.auth.ForgotEmailRepository
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ForgotEmailViewModel @Inject constructor(private val repository: ForgotEmailRepository) :
-    BaseViewModel() {
+class ForgotEmailViewModel @Inject constructor(
+    private val repository: ForgotEmailRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _forgotEmail = MutableLiveData<Resource<ForgotEmailResponseModel?>?>()
@@ -27,7 +30,12 @@ class ForgotEmailViewModel @Inject constructor(private val repository: ForgotEma
     fun forgotEmail(model: ForgotEmailModel?) {
         viewModelScope.launch {
             try {
-                _forgotEmail.postValue(ResponseHandler.success(repository.forgotEmail(model), errorManager))
+                _forgotEmail.postValue(
+                    ResponseHandler.success(
+                        repository.forgotEmail(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _forgotEmail.postValue(ResponseHandler.failure(e))
             }

@@ -5,6 +5,8 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'androidx.navigation.safeargs'
 
+apply from: '../jacoco.gradle'
+
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
@@ -28,7 +30,21 @@ android {
         }
     }
     testOptions {
-        unitTests.returnDefaultValues = true
+        animationsDisabled true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+                excludes = ['jdk.internal.*']
+                excludes = ["*"]
+            }
+        }
     }
 
     buildTypes {
@@ -39,7 +55,7 @@ android {
         }
 
         debug {
-            debuggable true
+            testCoverageEnabled true
         }
 
 
@@ -86,17 +102,15 @@ android {
     }
 
     // to understand error meaning
-    configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.0'
-    }
+//    configurations.all {
+//        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.0'
+//    }
 
     dependencies {
 
         def daggerHiltVersion = '2.40.5'
         def hiltLifeCycleVersion = '1.0.0-alpha03'
         def nav_version = "2.3.5"
-
-
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         implementation 'androidx.core:core-ktx:1.7.0'
@@ -131,8 +145,6 @@ android {
         implementation 'com.squareup.okhttp3:okhttp:4.9.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
-
-        implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
         implementation 'org.conscrypt:conscrypt-android:2.4.0'
 
         // Annotation processor
@@ -195,6 +207,44 @@ android {
         debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
         // androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+        // For Robolectric tests.
+        //Unit test
+        testImplementation 'org.robolectric:robolectric:4.4'
+        //UI test
+        androidTestImplementation 'org.robolectric:robolectric:4.4'
+        def fragment_version = "1.3.0-alpha06"
+        debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
+        def test_version = "1.2.0"
+        androidTestImplementation "androidx.test:core-ktx:$test_version"
+
+        def espressoTestVersion = '3.4.0'
+        def hamcrestVersion = '1.3'
+        def coroutinesVersion = '1.2.1'
+        def androidXTestCoreVersion = '1.4.0'
+        def androidXTestExtKotlinRunnerVersion = '1.1.1'
+        def mockitoTestVersion = '2.13.0'
+
+        // AndroidX Test - JVM testing
+        testImplementation 'androidx.test.ext:junit-ktx:1.1.3'
+        testImplementation "androidx.test.espresso:espresso-core:$espressoTestVersion"
+        testImplementation "androidx.test.espresso:espresso-contrib:$espressoTestVersion"
+
+        testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+        testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+
+        testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+        testImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
+        testImplementation "org.mockito:mockito-inline:$mockitoTestVersion"
+
+        def mockk_version = "1.10.0"
+        testImplementation "io.mockk:mockk:$mockk_version"
+
+        def nav_test_version = "2.3.5"
+
+        androidTestImplementation "androidx.navigation:navigation-testing:$nav_test_version"
+        implementation "androidx.navigation:navigation-testing:$nav_test_version"
 
     }
 

@@ -3,10 +3,11 @@ package com.heandroid.ui.startNow.contactdartcharge
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.repository.contactdartcharge.ContactDartChargeRepository
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,10 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactDartChargeViewModel @Inject constructor(private val repository: ContactDartChargeRepository) :
-    BaseViewModel() {
+class ContactDartChargeViewModel @Inject constructor(
+    private val repository: ContactDartChargeRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _caseHistoryApiVal = MutableLiveData<Resource<CaseEnquiryHistoryResponse?>?>()
@@ -70,7 +73,7 @@ class ContactDartChargeViewModel @Inject constructor(private val repository: Con
         }
     }
 
-    fun getCaseSubCategoriesList(cat:String) {
+    fun getCaseSubCategoriesList(cat: String) {
         viewModelScope.launch {
             try {
                 _getCaseSubCategoriesListVal.postValue(
@@ -100,7 +103,7 @@ class ContactDartChargeViewModel @Inject constructor(private val repository: Con
         }
     }
 
-    fun uploadFileApi(data : MultipartBody.Part) {
+    fun uploadFileApi(data: MultipartBody.Part) {
         viewModelScope.launch {
             try {
                 _uploadFileVal.postValue(

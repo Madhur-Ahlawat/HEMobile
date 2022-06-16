@@ -23,9 +23,11 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
 
     override fun onResume() {
         super.onResume()
-        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
-        toolbar.findViewById<TextView>(R.id.btn_login).visible()
-        requireActivity().setRightButtonText(getString(R.string.contact_us))
+        if (requireActivity() is LandingActivity) {
+            val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+            toolbar.findViewById<TextView>(R.id.btn_login).visible()
+            requireActivity().setRightButtonText(getString(R.string.contact_us))
+        }
 
     }
 
@@ -47,7 +49,7 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
         v?.let {
             when (v.id) {
                 R.id.btnStart -> {
-                    (requireActivity() as LandingActivity).openLandingFragment()
+                    startNewScreen()
                 }
 
                 R.id.btnSignin -> {
@@ -69,6 +71,12 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
                     // do nothing
                 }
             }
+        }
+    }
+
+    private fun startNewScreen() {
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).openLandingFragment()
         }
     }
 

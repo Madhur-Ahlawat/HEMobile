@@ -3,13 +3,14 @@ package com.heandroid.ui.auth.login
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.repository.auth.LoginRepository
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
@@ -18,11 +19,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val repository: LoginRepository):BaseViewModel()  {
+class LoginViewModel @Inject constructor(
+    private val repository: LoginRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _login = MutableLiveData<Resource<LoginResponse?>?>()
-    val login : LiveData<Resource<LoginResponse?>?> get()  = _login
+    val login: LiveData<Resource<LoginResponse?>?> get() = _login
 
 
 //    /** Error handling as UI **/
@@ -38,18 +42,21 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
     fun login(model: LoginModel?) {
         viewModelScope.launch {
             try {
-                _login.postValue(success(repository.login(model),errorManager))
+                _login.postValue(success(repository.login(model), errorManager))
             } catch (e: Exception) {
                 _login.postValue(failure(e))
             }
-            }
         }
+    }
 
-    fun validation(model: LoginModel?): Pair<Boolean,String> {
-        var ret= Pair(true,"")
-        if(model?.value?.isEmpty()==true && model.password?.isEmpty()==true) ret=Pair(false,BaseApplication.INSTANCE.getString(R.string.txt_error_username_password))
-        else if(model?.value?.isEmpty()==true) ret= Pair(false,BaseApplication.INSTANCE.getString(R.string.txt_error_username))
-        else if(model?.password?.isEmpty()==true) ret= Pair(false,BaseApplication.INSTANCE.getString(R.string.txt_error_password))
+    fun validation(model: LoginModel?): Pair<Boolean, String> {
+        var ret = Pair(true, "")
+        if (model?.value?.isEmpty() == true && model.password?.isEmpty() == true) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_username_password))
+        else if (model?.value?.isEmpty() == true) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_username))
+        else if (model?.password?.isEmpty() == true) ret =
+            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_password))
         return ret
     }
 
