@@ -41,7 +41,7 @@ steps:
   - script: ./gradlew jacocoTestReport
 
   - task: PublishTestResults@2
-      condition: succeededOrFailed()
+  
     inputs:
         testResultsFormat: 'JUnit'
         # testResultsFiles: '**/test/TEST-*.xml'
@@ -49,7 +49,7 @@ steps:
         displayName: "Publish Test Results"
 
 - task: PublishCodeCoverageResults@1
-   condition: succeededOrFailed()
+
      inputs:
      codeCoverageTool: 'Jacoco'
      summaryFileLocation: 
