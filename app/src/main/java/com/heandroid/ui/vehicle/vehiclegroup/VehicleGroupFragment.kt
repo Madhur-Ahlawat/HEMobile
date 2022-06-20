@@ -43,10 +43,27 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     private var noOfPages = 1
     private var selectedPosition = 1
     private var isRemoved = false
+    private var isReloadVehicleData = false
+    private var isGetVehicleListData = false
+
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleGroupBinding.inflate(inflater, container, false)
+
+    override fun onResume() {
+        super.onResume()
+        if (isReloadVehicleData) {
+            binding.progressBar.visible()
+            binding.tvNoVehicles.gone()
+            binding.rvVehicleList.gone()
+            checkedVehicleList.clear()
+            vehicleResponseList.clear()
+            getVehiclesData()
+            isReloadVehicleData = false
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,20 +72,24 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        paginationNumberAdapter =
-            AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
+//        paginationNumberAdapter =
+//            AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
 
         vehiclesAdapter = VehicleGroupVehiclesAdapter(this, vehicleResponseList)
+        getVehiclesData()
+    }
+
+    private fun getVehiclesData() {
         vehicleGroup?.let {
             if (it.groupName.equals(getString(R.string.unallocated_vehicle), true)
                 && it.groupId.isEmpty()
             ) {
                 vehicleMgmtViewModel.getVehicleInformationApi()
             } else {
+                isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)
             }
         }
-
     }
 
     override fun init() {
@@ -89,7 +110,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 binding.bulkUploadBtn.gone()
             }
         }
-        binding.paginationLayout.visible()
+//        binding.paginationLayout.visible()
         binding.progressBar.visible()
         binding.tvNoVehicles.gone()
         binding.rvVehicleList.apply {
@@ -97,12 +118,12 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
             setHasFixedSize(true)
             adapter = vehiclesAdapter
         }
-        paginationLinearLayoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.paginationNumberRecyclerView.apply {
-            layoutManager = paginationLinearLayoutManager
-            adapter = paginationNumberAdapter
-        }
+//        paginationLinearLayoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.paginationNumberRecyclerView.apply {
+//            layoutManager = paginationLinearLayoutManager
+//            adapter = paginationNumberAdapter
+//        }
         checkButtons()
     }
 
@@ -116,7 +137,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     }
 
     override fun observer() {
-        observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdatedVehicle)
+        observe(vehicleMgmtViewModel.removeVehiclesFromGroupApiVal, ::handleUpdatedVehicle)
         observe(vehicleGroupMgmtViewModel.vehicleListVal, ::handleVehicleListData)
         observe(vehicleGroupMgmtViewModel.searchVehicleVal, ::handleVehicleListData)
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleUnallocatedVehicleListData)
@@ -134,7 +155,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 resource.data?.let {
                     if (!it.isNullOrEmpty()) {
                         it.forEach { vehicle ->
-                            if (vehicle?.plateInfo?.vehicleGroup.isNullOrEmpty()) {
+                            if (vehicle?.vehicleInfo?.groupName.isNullOrEmpty()) {
                                 vehicleResponseList.add(vehicle)
                             }
                         }
@@ -164,10 +185,11 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
         if(isRemoved) {
             when (resource) {
                 is Resource.Success -> {
-                    requireActivity().showToast("vehicle removed successfully")
+                    requireActivity().showToast("vehicle(s) removed successfully")
                     getVehicleListData()
                 }
                 is Resource.DataError -> {
+                    getVehicleListData()
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
@@ -179,31 +201,35 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     }
 
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
-        binding.progressBar.gone()
-        binding.tvNoVehicles.gone()
-        binding.rvVehicleList.visible()
-        checkedVehicleList.clear()
-        vehicleResponseList.clear()
-        checkButtons()
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let {
-                    if (!it.isNullOrEmpty()) {
-                        vehicleResponseList.addAll(it)
-                        setVehicleListAdapter()
-                    } else {
-                        handleVehicleData()
+        if (isGetVehicleListData) {
+            binding.progressBar.gone()
+            binding.tvNoVehicles.gone()
+            binding.rvVehicleList.visible()
+            checkedVehicleList.clear()
+            vehicleResponseList.clear()
+            checkButtons()
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        if (!it.isNullOrEmpty()) {
+                            vehicleResponseList.addAll(it)
+                            setVehicleListAdapter()
+                        } else {
+                            handleVehicleData()
+                        }
                     }
                 }
+                is Resource.DataError -> {
+                    handleVehicleData()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+                    handleVehicleData()
+                }
             }
-            is Resource.DataError -> {
-                handleVehicleData()
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-            else -> {
-                handleVehicleData()
-            }
+            isGetVehicleListData = false
         }
+
         searchVehicleNumber = null
     }
 
@@ -211,14 +237,14 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
         searchVehicleNumber?.let {
             binding.apply {
                 rvVehicleList.gone()
-                paginationLayout.gone()
+//                paginationLayout.gone()
                 tvNoVehicles.visible()
                 tvNoVehicles.text = getString(R.string.no_vehicles_found, it)
             }
         } ?: run {
             binding.apply {
                 rvVehicleList.gone()
-                paginationLayout.gone()
+//                paginationLayout.gone()
                 tvNoVehicles.visible()
                 tvNoVehicles.text = getString(R.string.str_no_vehicles)
             }
@@ -242,6 +268,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
             ) {
                 vehicleMgmtViewModel.getVehicleInformationApi()
             } else {
+                isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)
             }
         }
@@ -257,6 +284,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 ).show(childFragmentManager, "")
             }
             R.id.addVehicleBtn -> {
+                isReloadVehicleData = true
                 vehicleGroup?.let {
                     val bundle = Bundle().apply {
                         putParcelable(Constants.DATA, it)
@@ -268,19 +296,10 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 }
             }
             R.id.removeVehicleBtn -> {
-                if (checkedVehicleList.size > 1) {
-                    requireActivity().showToast("multiple vehicles cant be removed, it is in dev")
-                } else if (checkedVehicleList.size == 1) {
+                if (checkedVehicleList.size >= 1) {
                     isRemoved = true
-                    checkedVehicleList[0]?.let {
-                        val request = it.apply {
-                            newPlateInfo = plateInfo
-                            vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
-                            newPlateInfo?.vehicleGroup = ""
-                        }
-                        loader?.show(requireActivity().supportFragmentManager, "")
-                        vehicleMgmtViewModel.updateVehicleApi(request)
-                    }
+                    loader?.show(requireActivity().supportFragmentManager, "")
+                    vehicleMgmtViewModel.removeVehiclesFromGroup(checkedVehicleList)
                 }
             }
             R.id.bulkUploadBtn -> {

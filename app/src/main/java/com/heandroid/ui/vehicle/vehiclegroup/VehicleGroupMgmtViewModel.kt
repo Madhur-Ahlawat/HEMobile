@@ -11,7 +11,7 @@ import com.heandroid.data.repository.vehicle.VehicleRepository
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -91,17 +91,45 @@ class VehicleGroupMgmtViewModel @Inject constructor(
         }
     }
 
-    fun deleteVehicleGroupApi(deleteVehicleGroupRequest: AddDeleteVehicleGroup) {
+    fun deleteVehicleGroupApi(list : ArrayList<VehicleGroupResponse>) {
+        var successCount = 0
         viewModelScope.launch {
-            try {
-                _deleteVehicleGroupApiVal.postValue(
-                    ResponseHandler.success(
-                        repository.deleteVehicleGroupApiCall(deleteVehicleGroupRequest),
-                        errorManager
-                    )
-                )
-            } catch (e: Exception) {
-                _deleteVehicleGroupApiVal.postValue(ResponseHandler.failure(e))
+            withContext(Dispatchers.IO) {
+                try {
+                    coroutineScope {
+                        list.forEach { vehicleGroup ->
+                            delay(500)
+                            launch {
+                                val apiResponse =
+                                    repository.deleteVehicleGroupApiCall(AddDeleteVehicleGroup((vehicleGroup.groupName)))
+                                if (apiResponse != null) {
+                                    if (apiResponse.isSuccessful) {
+                                        successCount++
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (successCount == list.size) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.Success(VehicleGroupMngmtResponse(true, "", "200"))
+                        )
+                    } else if (successCount == 0 && list.size == 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Failed to delete vehicle group")
+                        )
+                    } else if (successCount == 0 && list.size > 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Failed to delete all vehicle groups")
+                        )
+                    } else if (successCount < list.size && list.size > 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Few vehicle group(s) failed to delete.")
+                        )
+                    }
+                } catch (e: Exception) {
+                    _deleteVehicleGroupApiVal.postValue(ResponseHandler.failure(e))
+                }
             }
         }
     }

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_header">
@@ -14,14 +17,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_use_this_service"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_38sdp"
-            android:textColor="@color/black"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_56sdp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/str_use_this_service_to"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,11 +30,12 @@
             android:id="@+id/tv_guideline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="@dimen/_14ssp"
-            android:textColor="@color/black"
-            android:layout_marginHorizontal="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_use_service_guideline"
+            android:textColor="@color/black"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_use_this_service" />
@@ -42,15 +44,15 @@
             android:id="@+id/tv_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="normal"
-            android:textSize="@dimen/_13ssp"
-            android:textColor="@color/login_blue_border"
-            android:layout_marginVertical="@dimen/_8sdp"
             android:layout_marginHorizontal="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
             android:text="@string/str_learn_about_"
+            android:textColor="@color/login_blue_border"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_guideline"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_guideline" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

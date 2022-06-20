@@ -90,7 +90,10 @@ class VehicleGroupVehicleEditDetailsFragment :
 
             }
             R.id.createNewGroupBtn -> {
-                findNavController().navigate(R.id.action_vehicleGroupVehicleEditDetailsFragment_to_createAndRenameVehicleGroupFragment)
+                val bundle = Bundle().apply {
+                    putBoolean(Constants.IS_CREATE_VEHICLE_GROUP, true)
+                }
+                findNavController().navigate(R.id.action_vehicleGroupVehicleEditDetailsFragment_to_createAndRenameVehicleGroupFragment, bundle)
             }
         }
     }

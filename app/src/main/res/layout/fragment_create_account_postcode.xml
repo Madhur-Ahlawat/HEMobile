@@ -125,7 +125,7 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view_business"
-                    android:theme="@style/SCBSwitch"
+                    android:theme="@style/ToggleSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"

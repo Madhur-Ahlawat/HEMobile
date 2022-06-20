@@ -166,7 +166,7 @@
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@{model.enable==false?@color/txt_disable:@color/white}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"

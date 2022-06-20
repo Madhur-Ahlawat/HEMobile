@@ -60,6 +60,10 @@ class VehicleGroupVehiclesAdapter(
             holder.binding.cbVehicleGroup.setOnClickListener {
                 makeButton(holder)
             }
+            holder.binding.vehicleGroupLayout.setOnClickListener {
+                holder.binding.cbVehicleGroup.isChecked = !holder.binding.cbVehicleGroup.isChecked
+                makeButton(holder)
+            }
         }
     }
 

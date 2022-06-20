@@ -213,10 +213,10 @@
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
     <string name="str_use_this_service_to">Use this service to</string>
-    <string name="str_use_service_guideline"><li>pay for crossings </li>
-        \n <li>pay or challenge a penalty charge notice (PCN)</li>
-        \n <li>create and manage an account</li>
-        \n <li>check payment for crossings</li>
+    <string name="str_use_service_guideline"> <li> pay for crossings.</li>
+        \n <li> pay or challenge a penalty charge notice (PCN).</li>
+        \n <li> create and manage an account.</li>
+        \n <li> check payment for crossings.</li>
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>

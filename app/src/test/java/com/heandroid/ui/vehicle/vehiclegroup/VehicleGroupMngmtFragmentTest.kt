@@ -61,7 +61,7 @@ class VehicleGroupMngmtFragmentTest {
         hiltRule.inject()
     }
 
-   // @Test
+    @Test
     fun `test vehicle group management screen visibility`() {
         val v1 = VehicleGroupResponse("", "", "")
         val v2 = VehicleGroupResponse("", "", "")
@@ -79,13 +79,13 @@ class VehicleGroupMngmtFragmentTest {
 
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size +1
             )
         }
     }
 
 
-   // @Test
+    @Test
     fun `test vehicle group management screen visibility for no groups`() {
         val list = listOf<VehicleGroupResponse>()
         every { viewModel.getVehicleGroupListApiVal } returns vehicleGroupList
@@ -100,7 +100,7 @@ class VehicleGroupMngmtFragmentTest {
 
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size +1
             )
         }
     }
@@ -120,7 +120,7 @@ class VehicleGroupMngmtFragmentTest {
         }
     }
 
-    //@Test
+    @Test
     fun `test create new vehicle group screen navigation`() {
         val list = listOf<VehicleGroupResponse>()
         every { viewModel.getVehicleGroupListApiVal } returns vehicleGroupList
@@ -136,7 +136,7 @@ class VehicleGroupMngmtFragmentTest {
 
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size +1
             )
             onView(withId(R.id.createVehicleGroupBtn)).perform(ViewActions.click())
 //            Mockito.verify(navController)
@@ -144,7 +144,7 @@ class VehicleGroupMngmtFragmentTest {
         }
     }
 
-   // @Test
+    //@Test
     fun `test delete vehicle group for success`() {
         val v1 = VehicleGroupResponse("123", "Group1", "10")
         val v2 = VehicleGroupResponse("456", "Group2", "30")
@@ -163,12 +163,12 @@ class VehicleGroupMngmtFragmentTest {
 
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size +1
             )
             onView(withId(R.id.rvVehicleGroupList))
                 .perform(
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
+                        1, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
                     )
                 )
 
@@ -198,7 +198,7 @@ class VehicleGroupMngmtFragmentTest {
         }
     }
 
-   // @Test
+    @Test
     fun `test delete vehicle group for unknown error`() {
         val v1 = VehicleGroupResponse("123", "Group1", "10")
         val v2 = VehicleGroupResponse("456", "Group2", "30")
@@ -218,12 +218,12 @@ class VehicleGroupMngmtFragmentTest {
             shadowOf(getMainLooper()).idle()
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size+1
             )
             onView(withId(R.id.rvVehicleGroupList))
                 .perform(
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
+                        1, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
                     )
                 )
 
@@ -247,7 +247,7 @@ class VehicleGroupMngmtFragmentTest {
         }
     }
 
-    //@Test
+    @Test
     fun `test rename vehicle group for next screen navigation`() {
         val v1 = VehicleGroupResponse("123", "Group1", "10")
         val v2 = VehicleGroupResponse("456", "Group2", "30")
@@ -266,12 +266,12 @@ class VehicleGroupMngmtFragmentTest {
 
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleGroupList).adapter?.itemCount,
-                list.size
+                list.size+1
             )
             onView(withId(R.id.rvVehicleGroupList))
                 .perform(
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
+                        1, BaseActions.clickOnViewChild(R.id.cbVehicleGroup)
                     )
                 )
 

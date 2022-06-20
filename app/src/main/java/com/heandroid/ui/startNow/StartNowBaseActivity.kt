@@ -55,13 +55,13 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
 
         when (screenType) {
             Constants.ABOUT_SERVICE -> {
-                oldGraph.startDestination = R.id.aboutService
+                oldGraph.setStartDestination(R.id.aboutService)
             }
             Constants.CROSSING_SERVICE_UPDATE -> {
-                oldGraph.startDestination = R.id.crossingUpdate
+                oldGraph.setStartDestination(R.id.crossingUpdate)
             }
             Constants.CONTACT_DART_CHARGES -> {
-                oldGraph.startDestination = R.id.contactDartCharge
+                oldGraph.setStartDestination(R.id.contactDartCharge)
             }
 
         }

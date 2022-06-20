@@ -90,9 +90,7 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
             }
 
             R.id.deleteVehicleGroupBtn -> {
-                if (checkedGroupsList.size > 1) {
-                    requireActivity().showToast("multiple groups delete api not implemented")
-                } else {
+                if (checkedGroupsList.size >= 1) {
                     DeleteVehicleGroupDialog.newInstance(
                         getString(R.string.str_title),
                         getString(R.string.str_sub_title),
@@ -111,17 +109,18 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
 
     private fun handleDeleteVehicle(resource: Resource<VehicleGroupMngmtResponse?>?) {
         loader?.dismiss()
+        checkedGroupsList.clear()
+        vehicleGroupResponseList.clear()
+        checkButtons()
         if (isDelete) {
             when (resource) {
                 is Resource.Success -> {
-                    checkedGroupsList.clear()
-                    vehicleGroupResponseList.clear()
                     groupsAdapter.notifyDataSetChanged()
-                    checkButtons()
-                    requireContext().showToast("vehicle Group deleted successfully")
+                    requireContext().showToast("vehicle Group(s) deleted successfully")
                     getVehicleGroupList()
                 }
                 is Resource.DataError -> {
+                    getVehicleGroupList()
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
@@ -163,7 +162,7 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
     }
 
     private fun setVehicleListAdapter(list: List<VehicleGroupResponse?>?) {
-        val unAllocatedGroup = VehicleGroupResponse("", getString(R.string.unallocated_vehicle), "0")
+        val unAllocatedGroup = VehicleGroupResponse("", getString(R.string.unallocated_vehicle), "null")
         val totalList = mutableListOf<VehicleGroupResponse?>()
         totalList.add(unAllocatedGroup)
         list?.let {
@@ -210,12 +209,9 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
     }
 
     override fun onDeleteClick() {
-        if (checkedGroupsList.size == 1) {
-            isDelete = true
-            loader?.show(requireActivity().supportFragmentManager, "")
-            val request = AddDeleteVehicleGroup(checkedGroupsList[0].groupName)
-            vehicleGroupMgmtViewModel.deleteVehicleGroupApi(request)
-        }
+        isDelete = true
+        loader?.show(requireActivity().supportFragmentManager, "")
+        vehicleGroupMgmtViewModel.deleteVehicleGroupApi(checkedGroupsList)
     }
 
     private fun getVehicleGroupList() {
