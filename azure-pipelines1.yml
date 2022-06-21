@@ -42,6 +42,6 @@ steps:
 
   - task: PublishCodeCoverageResults@1
       inputs:
-      codeCoverageTool: 'Jacoco'
+      codeCoverageTool: 'JaCoCo'
       summaryFileLocation:
         '**/coverage/report/html/index.html'
