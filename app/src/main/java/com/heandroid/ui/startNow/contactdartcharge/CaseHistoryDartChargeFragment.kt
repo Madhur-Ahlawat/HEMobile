@@ -3,6 +3,8 @@ package com.heandroid.ui.startNow.contactdartcharge
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -42,7 +44,10 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
-        Logg.logging("CaseHistoryDartChargeFragment","mValue ${(requireActivity() as ContactDartChargeActivity).mValue}")
+        Logg.logging(
+            "CaseHistoryDartChargeFragment",
+            "mValue ${(requireActivity() as ContactDartChargeActivity).mValue}"
+        )
         if ((requireActivity() as ContactDartChargeActivity).mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             binding.btnGoStart.gone()
             getCaseHistoryData()
@@ -68,10 +73,31 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
 
     }
 
+
+    private fun openFilterDrawer() {
+        val drawer: DrawerLayout = binding.drawerLayout
+        if (!drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.openDrawer(GravityCompat.END)
+        } else {
+            drawer.closeDrawers()
+        }
+    }
+
+    fun isFilterDrawerOpen(): Boolean {
+        val drawer: DrawerLayout = binding.drawerLayout
+        return drawer.isDrawerOpen(GravityCompat.END)
+    }
+
+    fun closeFilterDrawer() {
+        binding.drawerLayout.closeDrawers()
+    }
+
+
     override fun initCtrl() {
         binding.apply {
             btnGoStart.setOnClickListener(this@CaseHistoryDartChargeFragment)
             btnRaiseNewQuery.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            tvFilter.setOnClickListener(this@CaseHistoryDartChargeFragment)
         }
     }
 
@@ -123,7 +149,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                         binding.emptyDataMessage.gone()
                         showDataInView(it)
                     } else {
-                    //    getCaseHistoryData()
+                        //    getCaseHistoryData()
                         binding.emptyDataMessage.visible()
                     }
                 }
@@ -153,6 +179,9 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                 }
                 R.id.btnRaiseNewQuery -> {
                     findNavController().navigate(R.id.action_caseHistoryDartChargeFragment_to_newCaseCategoryFragment)
+                }
+                R.id.tvFilter -> {
+                    openFilterDrawer()
                 }
                 else -> {
                 }

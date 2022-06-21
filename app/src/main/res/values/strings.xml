@@ -791,6 +791,8 @@
     <string name="str_selected_stage">You have selected</string>
     <string name="choose_csv_file">For your monthly account statement in a CSV format, choose the year and the period you require and select Submit</string>
     <string name="choose_annual_account">To request an annual summary, choose the year you require and select Submit. Annual account summaries can be requested one at a time</string>
+    <string name="str_filter_sort_underline">Filter/Sort</string>
+    <string name="str_by_case_no">By case number</string>
 </resources>
 
 
