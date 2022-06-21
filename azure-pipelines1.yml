@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- code_review_development
+  - code_review_development
 
 pool:
   vmImage: 'macOS-latest'
@@ -23,33 +23,25 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
 
-  - script: ./gradlew jacocoTestReport
+  - task: CopyFiles@2
+    inputs:
+      Contents: '**/*.apk'
+      TargetFolder:  '$(build.artifactStagingDirectory)'
 
-  - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test/TEST-*.xml'
-        searchFolder: $(System.DefaultWorkingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'HE-MAPP-ANDROID'
+      publishLocation: 'Container'
+
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+      
+  - script: ./gradlew jacocoTestReport
 
   - task: PublishCodeCoverageResults@1
       inputs:
       codeCoverageTool: 'Jacoco'
       summaryFileLocation:
         '**/coverage/report/html/index.html'
-
-  - task: CopyFiles@2
-    inputs:
-        Contents: '**/*.apk'
-        TargetFolder:  '$(build.artifactStagingDirectory)'
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'HE-MAPP-ANDROID'
-          publishLocation: 'Container'
-      
-  - task: Bash@3
-    inputs:
-      filePath: 'bash_script'
-     
-
