@@ -42,6 +42,5 @@ steps:
 
   - task: PublishCodeCoverageResults@1
       inputs:
-      codeCoverageTool: 'JaCoCo'
-      summaryFileLocation:
-        '**/coverage/report/html/index.html'
+        codeCoverageTool: 'JaCoCo'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/app/build/coverage/report/html/index.html'
