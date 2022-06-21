@@ -27,6 +27,21 @@ steps:
         testResultsFormat: 'JUnit'
         testResultsFiles: '**/coverage/report/html/index.html'
         searchFolder: $(System.DefaultWorkingDirectory)
+
+  - script: ./gradlew jacocoTestReport
+
+  - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test/TEST-*.xml'
+        searchFolder: $(System.DefaultWorkingDirectory)
+
+  - task: PublishCodeCoverageResults@1
+      inputs:
+      codeCoverageTool: 'Jacoco'
+      summaryFileLocation:
+        '**/coverage/report/html/index.html'
+        
   - task: CopyFiles@2
     inputs:
         Contents: '**/*.apk'
