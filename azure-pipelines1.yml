@@ -22,11 +22,6 @@ steps:
       gradleOptions: '-Xmx3072m'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
-  - task: PublishTestResults@2
-    inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/coverage/report/html/index.html'
-        searchFolder: $(System.DefaultWorkingDirectory)
 
   - script: ./gradlew jacocoTestReport
 
@@ -41,7 +36,7 @@ steps:
       codeCoverageTool: 'Jacoco'
       summaryFileLocation:
         '**/coverage/report/html/index.html'
-        
+
   - task: CopyFiles@2
     inputs:
         Contents: '**/*.apk'
