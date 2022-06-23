@@ -73,12 +73,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
-                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+//                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
                         launchIntent(status)
-                    } else {
-                        launchSubmitComplaint(status)
+//                    } else {
+//                        launchSubmitComplaint(status)
 
-                    }
+//                    }
                 }
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
@@ -100,7 +100,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
-            sessionManager.setLoggedInUser(true)
+            setLoggedInUser(true)
         }
         requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
             putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
@@ -117,8 +117,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 isSecondaryUser(response.data?.isSecondary ?: false)
                 //saveAccountNumber(response.data?.user_name?:"")
                 saveAccountType(response.data?.accountType ?: "")
+               setLoggedInUser(true)
+
             }
-//            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+/*
             if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
 
                 requireActivity().startNormalActivity(HomeActivityMain::class.java)
@@ -132,6 +135,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 }
 
             }
+*/
         }
 
 

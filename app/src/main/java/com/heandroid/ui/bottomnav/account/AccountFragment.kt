@@ -29,6 +29,7 @@ import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.openActivityWithData
+import com.heandroid.utils.extn.openActivityWithDataBack
 import com.heandroid.utils.extn.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -91,7 +92,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.rl_case_and_enquiry -> {
-                requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE

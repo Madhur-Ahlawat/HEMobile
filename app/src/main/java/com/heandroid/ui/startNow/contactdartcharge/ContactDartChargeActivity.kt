@@ -45,10 +45,12 @@ class ContactDartChargeActivity : BaseActivity<Any?>() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+/*
         if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             finish()
             startNormalActivity(HomeActivityMain::class.java)
         }
+*/
     }
 
     override fun observeViewModel() {}
