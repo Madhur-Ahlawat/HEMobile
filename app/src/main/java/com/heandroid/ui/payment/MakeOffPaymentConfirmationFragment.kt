@@ -19,6 +19,8 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class MakeOffPaymentConfirmationFragment :
@@ -101,19 +103,6 @@ class MakeOffPaymentConfirmationFragment :
 
                 loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-
-                val mBundle = Bundle()
-//                mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
-                mBundle.putString(Constants.EMAIL, mEmail)
-                mBundle.putString(
-                    Constants.OPTIONS_TYPE,
-                    arguments?.getString(Constants.OPTIONS_TYPE)
-                )
-                mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
-                findNavController().navigate(
-                    R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
-                    mBundle
-                )
             }
         }
 
@@ -133,8 +122,7 @@ class MakeOffPaymentConfirmationFragment :
                     list[0].vehicleInfo!!.model!!,
                     list[0].vehicleInfo?.vehicleClassDesc!!,
                     list[0].newPlateInfo!!.country,
-                    (list[0].pastQuantity!!.toDouble()
-                        .times(list[0].classRate!!.toDouble())).toString(),
+                    list[0].pendingDues!!.toString(),
                     list[0].futureQuantity.toString(),
                     (list[0].futureQuantity!!.toDouble()
                         .times(list[0].classRate!!.toDouble())).toString(),
@@ -149,18 +137,19 @@ class MakeOffPaymentConfirmationFragment :
 
                 if(mOptionsType.equals("Email",true)){
                     mail = mEmail
+
                 }
                 else{
                     number = mEmail
                 }
                 val paymentTypeInfo = PaymentTypeInfo(
-                    mModel!!.card.type,
-                    mModel!!.card.number,
-                    mModel!!.token,
-                    mModel!!.card.exp.subSequence(0, 2).toString(),
-                    "20${mModel!!.card.exp.subSequence(2, 4)}",
+                    mModel!!.card?.type!!.uppercase(Locale.ROOT),
+                    mModel!!.card?.number!!,
+                    mModel!!.token!!,
+                    mModel!!.card?.exp?.subSequence(0, 2).toString(),
+                    "20${mModel!!.card?.exp?.subSequence(2, 4)}",
                     list[0].price.toString(),
-                    mModel!!.check.name!!,
+                    mModel!!.check?.name!!,
                     "",
                     mail,
                     number, "", "", "", "", "", "", ""

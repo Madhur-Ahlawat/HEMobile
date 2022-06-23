@@ -21,27 +21,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/cbVehicleGroup"
+            <LinearLayout
+                android:id="@+id/vehicleGroupLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbVehicleGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVehicleGroupName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lo62 NRO"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="L062 NRO"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cbVehicleGroup"
+                app:layout_constraintStart_toEndOf="@id/vehicleGroupLayout"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView

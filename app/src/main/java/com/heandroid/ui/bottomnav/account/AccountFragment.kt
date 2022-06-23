@@ -18,13 +18,18 @@ import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.account.accountstatements.AccountStatementActivity
 import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.NominatedContactActivity
 import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
+import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.openActivityWithData
+import com.heandroid.utils.extn.openActivityWithDataBack
 import com.heandroid.utils.extn.startNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,9 +39,12 @@ import java.lang.Exception
 class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener {
 
     private val viewModel: NominatedContactListViewModel by viewModels()
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
@@ -49,14 +57,16 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             payment.setOnClickListener(this@AccountFragment)
             rlAccount.setOnClickListener(this@AccountFragment)
             logOutLyt.setOnClickListener(this@AccountFragment)
+            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             nominatedContactsLyt.setOnClickListener(this@AccountFragment)
+            rlAccountStatement.setOnClickListener(this@AccountFragment)
         }
 
     }
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.contactList,::handleContactListResponse)
+            observe(viewModel.contactList, ::handleContactListResponse)
         }
     }
 
@@ -76,14 +86,28 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.nominated_contacts_lyt -> {
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager, "")
                 viewModel.nominatedContactList()
 
             }
 
+            R.id.rl_case_and_enquiry -> {
+                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+                    putInt(
+                        Constants.FROM_LOGIN_TO_CASES,
+                        Constants.FROM_LOGIN_TO_CASES_VALUE
+                    )
+                    putString(Constants.LAST_NAME,"Test")
+                }
+            }
+
+            R.id.rl_account_statement -> {
+                requireActivity().startNewActivity(AccountStatementActivity::class.java)
+            }
+
             R.id.log_out_lyt -> {
                 val dialog = LogoutDialog()
-                Bundle().run{
+                Bundle().run {
                     putString("title", getString(R.string.logout))
                     putString("desc", getString(R.string.sure_wants_logout))
                     dialog.arguments = this
@@ -95,22 +119,28 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         }
     }
 
-    private fun handleContactListResponse(status: Resource<NominatedContactRes?>?){
-        try{
-        loader?.dismiss()
-        when(status){
-            is Resource.Success -> {
-               Intent(requireActivity(), NominatedContactActivity::class.java).run {
-                     flags= Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                     putExtra("count",status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size?:0)
-                    startActivity(this)
-                }
+    private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
+        try {
+            loader?.dismiss()
+            when (status) {
+                is Resource.Success -> {
+                    Intent(requireActivity(), NominatedContactActivity::class.java).run {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                        putExtra(
+                            "count",
+                            status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size
+                                ?: 0
+                        )
+                        startActivity(this)
+                    }
 
+                }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
-            is Resource.DataError ->{
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-        }}catch (e: Exception){}
+        } catch (e: Exception) {
+        }
     }
 
 

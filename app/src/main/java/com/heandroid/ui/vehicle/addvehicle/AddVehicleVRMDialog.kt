@@ -41,6 +41,9 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
     var country = "UK"
     private var isObserverBack = false
+    private var plateInfoResponse: PlateInfoResponse? = null
+    private var vehicleResponse: VehicleResponse? = null
+
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?) =
         DialogAddVehicleBinding.inflate(inflater, container, false)
@@ -188,21 +191,27 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
 
                     ErrorUtil.showError(binding.root, resource.errorMsg)
 
+                    plateInfoResponse = PlateInfoResponse()
+                    plateInfoResponse!!.country = country
+                    plateInfoResponse!!.number = binding.addVrmInput.text.toString()
+
+                    vehicleResponse = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
+
                     if(isMakePayment) {
 
-                        val plateInfoResponse = PlateInfoResponse()
-                        plateInfoResponse.country = "Non-UK"
-                        plateInfoResponse.number = binding.addVrmInput.text.toString()
-
-                        val details = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
-
                         val bundle = Bundle().apply {
-                            putParcelable(Constants.DATA, details)
+                            putParcelable(Constants.DATA, vehicleResponse)
+                            putInt(Constants.VEHICLE_SCREEN_KEY, 3)
                         }
                         findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
                     }
-                    else
-                    findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleDetailsFragment)
+                    else {
+                        val bundle = Bundle().apply {
+                            putParcelable(Constants.DATA, vehicleResponse)
+                            putInt(Constants.VEHICLE_SCREEN_KEY, 2)
+                        }
+                        findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleDetailsFragment, bundle)
+                    }
                 }
             }
         }

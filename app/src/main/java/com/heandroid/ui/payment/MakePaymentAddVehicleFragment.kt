@@ -75,19 +75,10 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
             }
             R.id.findVehicle -> {
                 val bundle = Bundle()
-                bundle.putInt(
-                    Constants.VEHICLE_SCREEN_KEY,
-                    mScreeType
-                )
-                bundle.putParcelable(
-                    Constants.DATA,
-                    mVDetails
-                )
+                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                bundle.putParcelable(Constants.DATA, mVDetails)
 
-                findNavController().navigate(
-                    R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment,
-                    bundle
-                )
+                findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
             }
         }
     }
@@ -105,10 +96,10 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         if (vehicleList?.isNotEmpty() == true) {
             setBtnActivated()
         }
-        if (vehicleList?.size ?: 0 < Constants.MAX_VEHICLE_SIZE) {
-            setAddBtnActivated()
-        } else {
+        if (vehicleList?.size ?: 0 >= Constants.MAX_VEHICLE_SIZE_ONE_OFF_PAY) {
             setAddBtnDisabled()
+        } else {
+            setAddBtnActivated()
         }
     }
 
@@ -135,6 +126,9 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     override fun onAddClick(details: VehicleResponse) {
         addDialog?.dismiss()
         mVDetails = details
+
+        vehicleList?.clear()
+
         if (details.plateInfo?.country == "UK") {
             vehicleList?.add(details)
             setAdapter()

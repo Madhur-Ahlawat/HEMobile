@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/tool_bar_lyt"
+            layout="@layout/tool_bar_with_title_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/glTop" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/monthlyAccountStatement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:text="@string/monthly_account_statement"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdfTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/choose_pdf_file"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@+id/monthlyAccountStatement" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/yearPdf"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/year"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/pdfTitleText" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/periodPdf"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/period"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/yearPdf"
+            app:layout_constraintTop_toBottomOf="@+id/pdfTitleText" />
+
+        <Spinner
+            android:id="@+id/spYearPdf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey_one"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/yearPdf" />
+
+        <Spinner
+            android:id="@+id/spPeriodPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:backgroundTint="@color/grey_one"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/yearPdf"
+            app:layout_constraintTop_toBottomOf="@+id/periodPdf" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/downloadPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_25ssp"
+            android:background="@drawable/button_shadow"
+            android:text="@string/download"
+            android:textAllCaps="false"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@+id/pdfTitleText" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/monthlyCsvFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:text="@string/monthly_csv_format"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/spPeriodPdf" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/csvTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/choose_csv_file"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/monthlyCsvFormat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/yearCsv"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/year"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/csvTitleText" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/periodCsv"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/period"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/yearCsv"
+            app:layout_constraintTop_toBottomOf="@+id/csvTitleText" />
+
+        <Spinner
+            android:id="@+id/spYearCsv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey_one"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/yearCsv" />
+
+        <Spinner
+            android:id="@+id/spPeriodCsv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:backgroundTint="@color/grey_one"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/yearCsv"
+            app:layout_constraintTop_toBottomOf="@+id/periodCsv" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/downloadCsv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/button_shadow"
+            android:text="@string/str_submit"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@+id/csvTitleText" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/annualAccountSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:text="@string/annual_account_summary"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/spPeriodCsv" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/accountTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/choose_annual_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/annualAccountSummary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/yearAccount"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/year"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/accountTitleText" />
+
+        <Spinner
+            android:id="@+id/spYearAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey_one"
+            android:overlapAnchor="false"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toBottomOf="@+id/yearAccount" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submitAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_25ssp"
+            android:background="@drawable/button_shadow"
+            android:text="@string/str_submit"
+            android:textAllCaps="false"
+            android:layout_marginStart="@dimen/_35ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintLeft_toRightOf="@+id/yearAccount"
+            app:layout_constraintTop_toBottomOf="@+id/accountTitleText" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_16sdp" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.98084813" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

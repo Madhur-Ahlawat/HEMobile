@@ -18,6 +18,7 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.openKeyboard
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,11 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentCreateRenameVehicleGroupBinding.inflate(inflater, container, false)
+
+    override fun onResume() {
+        super.onResume()
+        binding.edVehicleGroup.openKeyboard()
+    }
 
     override fun init() {
         binding.btnModel = false
@@ -58,7 +64,9 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
     override fun initCtrl() {
         binding.apply {
             edVehicleGroup.onTextChanged {
-                binding.btnModel = edVehicleGroup.text.toString().trim().isNotEmpty()
+                binding.btnModel = edVehicleGroup.text.toString().trim()
+                    .isNotEmpty() && edVehicleGroup.text.toString()
+                    .trim() != vehicleGroup?.groupName
             }
             cancelBtn.setOnClickListener(this@CreateAndRenameVehicleGroupFragment)
             continueBtn.setOnClickListener(this@CreateAndRenameVehicleGroupFragment)
@@ -106,26 +114,30 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.continueBtn -> {
-                if (isCreate) {
-                    val request =
-                        AddDeleteVehicleGroup(binding.edVehicleGroup.text.toString().trim())
-                    loader?.show(requireActivity().supportFragmentManager, "")
-                    vehicleGroupMgmtViewModel.addVehicleGroupApi(request)
-                } else {
-                    vehicleGroup?.let {
-                        val request = RenameVehicleGroup(
-                            it.groupId,
-                            binding.edVehicleGroup.text.toString().trim()
-                        )
-                        loader?.show(requireActivity().supportFragmentManager, "")
-                        vehicleGroupMgmtViewModel.renameVehicleGroupApi(request)
-                    }
-
-                }
+                clickNext()
             }
             R.id.cancelBtn -> {
                 findNavController().popBackStack()
             }
+        }
+    }
+
+    private fun clickNext() {
+        if (isCreate) {
+            val request =
+                AddDeleteVehicleGroup(binding.edVehicleGroup.text.toString().trim())
+            loader?.show(requireActivity().supportFragmentManager, "")
+            vehicleGroupMgmtViewModel.addVehicleGroupApi(request)
+        } else {
+            vehicleGroup?.let {
+                val request = RenameVehicleGroup(
+                    it.groupId,
+                    binding.edVehicleGroup.text.toString().trim()
+                )
+                loader?.show(requireActivity().supportFragmentManager, "")
+                vehicleGroupMgmtViewModel.renameVehicleGroupApi(request)
+            }
+
         }
     }
 }

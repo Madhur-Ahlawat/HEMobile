@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/full_name"
+                    android:hint="@string/first_name"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,6 +156,34 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tieLastNameLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/last_name"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilFullName">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilMobileNo"
                     style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="0dp"
@@ -167,7 +195,7 @@
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilFullName">
+                    app:layout_constraintTop_toBottomOf="@+id/tieLastNameLayout">
 
 
                     <com.google.android.material.textfield.TextInputEditText

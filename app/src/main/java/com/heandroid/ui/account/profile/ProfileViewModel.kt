@@ -3,8 +3,10 @@ package com.heandroid.ui.account.profile
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.account.UpdateProfileRequest
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -13,7 +15,6 @@ import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.data.model.profile.*
 import com.heandroid.data.repository.profile.ProfileRepository
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import com.heandroid.utils.common.ResponseHandler.success
@@ -23,8 +24,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val repository: ProfileRepository) :
-    BaseViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val repository: ProfileRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
@@ -44,24 +47,29 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateAccountPinApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
-    val updateAccountPinApiVal : LiveData<Resource<EmptyApiResponse?>?> get()  = _updateAccountPinApiVal
+    val updateAccountPinApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _updateAccountPinApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateProfileApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
-    val updateProfileApiVal : LiveData<Resource<EmptyApiResponse?>?> get()  = _updateProfileApiVal
+    val updateProfileApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _updateProfileApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateUserProfileDataApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
-    val updateUserProfileDataApiVal : LiveData<Resource<EmptyApiResponse?>?> get()  = _updateUserProfileDataApiVal
+    val updateUserProfileDataApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _updateUserProfileDataApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getNominatedContactsApiVal = MutableLiveData<Resource<NominatedContactRes?>?>()
-    val getNominatedContactsApiVal : LiveData<Resource<NominatedContactRes?>?> get()  = _getNominatedContactsApiVal
+    val getNominatedContactsApiVal: LiveData<Resource<NominatedContactRes?>?> get() = _getNominatedContactsApiVal
 
     fun updateAccountPin(request: AccountPinChangeModel) {
         viewModelScope.launch {
             try {
-                _updateAccountPinApiVal.postValue(success(repository.updateAccountPin(request), errorManager))
+                _updateAccountPinApiVal.postValue(
+                    success(
+                        repository.updateAccountPin(request),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _updateAccountPinApiVal.postValue(ResponseHandler.failure(e))
             }
@@ -78,7 +86,7 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
         }
     }
 
-    fun emailValidationForUpdatation(model : ProfileUpdateEmailModel?){
+    fun emailValidationForUpdatation(model: ProfileUpdateEmailModel?) {
         viewModelScope.launch {
             try {
                 _emailValidation.postValue(
@@ -134,7 +142,12 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     fun updateUserDetails(request: UpdateProfileRequest) {
         viewModelScope.launch {
             try {
-                _updateProfileApiVal.postValue(success(repository.updateProfile(request), errorManager))
+                _updateProfileApiVal.postValue(
+                    success(
+                        repository.updateProfile(request),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _updateProfileApiVal.postValue(ResponseHandler.failure(e))
             }
@@ -145,7 +158,12 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     fun getNominatedContacts() {
         viewModelScope.launch {
             try {
-                _getNominatedContactsApiVal.postValue(success(repository.getNominatedContactList(), errorManager))
+                _getNominatedContactsApiVal.postValue(
+                    success(
+                        repository.getNominatedContactList(),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _getNominatedContactsApiVal.postValue(ResponseHandler.failure(e))
             }

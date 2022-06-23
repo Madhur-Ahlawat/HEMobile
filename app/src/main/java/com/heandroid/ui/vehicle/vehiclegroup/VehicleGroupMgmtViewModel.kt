@@ -3,27 +3,26 @@ package com.heandroid.ui.vehicle.vehiclegroup
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.heandroid.data.model.EmptyApiResponse
-import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
-import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.vehicle.*
 import com.heandroid.data.repository.vehicle.VehicleRepository
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
-class VehicleGroupMgmtViewModel @Inject constructor(private val repository: VehicleRepository) :
-    BaseViewModel() {
+class VehicleGroupMgmtViewModel @Inject constructor(
+    private val repository: VehicleRepository,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _getVehicleGroupListApiVal = MutableLiveData<Resource<List<VehicleGroupResponse?>?>?>()
+    private val _getVehicleGroupListApiVal =
+        MutableLiveData<Resource<List<VehicleGroupResponse?>?>?>()
     val getVehicleGroupListApiVal: LiveData<Resource<List<VehicleGroupResponse?>?>?> get() = _getVehicleGroupListApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -92,17 +91,45 @@ class VehicleGroupMgmtViewModel @Inject constructor(private val repository: Vehi
         }
     }
 
-    fun deleteVehicleGroupApi(deleteVehicleGroupRequest: AddDeleteVehicleGroup) {
+    fun deleteVehicleGroupApi(list : ArrayList<VehicleGroupResponse>) {
+        var successCount = 0
         viewModelScope.launch {
-            try {
-                _deleteVehicleGroupApiVal.postValue(
-                    ResponseHandler.success(
-                        repository.deleteVehicleGroupApiCall(deleteVehicleGroupRequest),
-                        errorManager
-                    )
-                )
-            } catch (e: Exception) {
-                _deleteVehicleGroupApiVal.postValue(ResponseHandler.failure(e))
+            withContext(Dispatchers.IO) {
+                try {
+                    coroutineScope {
+                        list.forEach { vehicleGroup ->
+                            delay(500)
+                            launch {
+                                val apiResponse =
+                                    repository.deleteVehicleGroupApiCall(AddDeleteVehicleGroup((vehicleGroup.groupName)))
+                                if (apiResponse != null) {
+                                    if (apiResponse.isSuccessful) {
+                                        successCount++
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (successCount == list.size) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.Success(VehicleGroupMngmtResponse(true, "", "200"))
+                        )
+                    } else if (successCount == 0 && list.size == 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Failed to delete vehicle group")
+                        )
+                    } else if (successCount == 0 && list.size > 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Failed to delete all vehicle groups")
+                        )
+                    } else if (successCount < list.size && list.size > 1) {
+                        _deleteVehicleGroupApiVal.postValue(
+                            Resource.DataError("Few vehicle group(s) failed to delete.")
+                        )
+                    }
+                } catch (e: Exception) {
+                    _deleteVehicleGroupApiVal.postValue(ResponseHandler.failure(e))
+                }
             }
         }
     }

@@ -9,7 +9,6 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mainLayout"
         android:background="@color/white"
-        android:backgroundTint="@color/white"
         android:elevation="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_2sdp"
         android:layout_width="match_parent"
@@ -19,31 +18,38 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/cbVehicleGroup"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
-                android:button="@drawable/select_checkbox"
+            <LinearLayout
+                android:id="@+id/vehicleGroupLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbVehicleGroup"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:button="@drawable/select_checkbox"
+                    android:padding="@dimen/_10sdp" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVehicleGroupName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:text="Group A"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cbVehicleGroup"
+                app:layout_constraintStart_toEndOf="@id/vehicleGroupLayout"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

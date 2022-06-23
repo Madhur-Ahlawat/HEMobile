@@ -107,29 +107,34 @@ class VehicleHistoryVehicleDetailsFragment :
     }
 
     private fun handleUpdateVehicleResponse(response: Resource<EmptyApiResponse?>?) {
-        try{
-        loader?.dismiss()
-        when (response) {
-            is Resource.Success -> {
-                requireContext().showToast("Vehicle is updated successfully")
-                setBtnDisabled()
-                mVehicleDetails?.let {
-                    it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
+        try {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            when (response) {
+                is Resource.Success -> {
+                    requireContext().showToast("Vehicle is updated successfully")
+                    setBtnDisabled()
+                    mVehicleDetails?.let {
+                        it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
+                    }
+                }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
+                else -> {
+                    // do nothing
                 }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
-            }
-            else -> {
-                // do nothing
-            }
-        }}catch (e: Exception){}
+        } catch (e: Exception) {
+        }
     }
 
     private fun setDataToView() {
         mVehicleDetails?.let { response ->
             binding.vehicleData = response
-            binding.addedDate.text = DateUtils.convertDateFormat(response.vehicleInfo?.effectiveStartDate,1)
+            binding.addedDate.text =
+                DateUtils.convertDateFormat(response.vehicleInfo?.effectiveStartDate, 1)
         }
     }
 

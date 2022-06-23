@@ -35,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcodeBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog? = null
+    private var isEditAccountType : Int? = null
 
     private val viewModel : CreateAccountPostCodeViewModel by viewModels()
     private var model : CreateAccountRequestModel? =null
@@ -47,6 +48,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     override fun init() {
         binding.enable=false
         model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
         binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
 
         accountType()
@@ -96,6 +100,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }
+                    isEditAccountType?.let {
+                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
                     findNavController().navigate(
                         R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
                         bundle
@@ -113,6 +120,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
+                        isEditAccountType?.let {
+                            putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                        }
                     }
                     findNavController().navigate(
                         R.id.action_postcodeFragment_to_createAccoutPasswordFragment,

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.google.android.material.button.MaterialButton
 
@@ -104,6 +105,16 @@ fun EditText.openKeyboard() {
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
         this, InputMethodManager.SHOW_IMPLICIT
     )
+}
+
+fun EditText.onDone(callback: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            callback.invoke()
+            true
+        }
+        false
+    }
 }
 
 fun String.addCharAtIndex(char: Char, index: Int) =

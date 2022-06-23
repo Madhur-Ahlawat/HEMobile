@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.EmailValidationModel
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentCreateAccountEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -22,6 +24,7 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.logging.Logger
 
 @AndroidEntryPoint
 class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
@@ -29,20 +32,31 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var requestModel : CreateAccountRequestModel? =null
+    private var isEditEmail : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
 
+        binding.etEmail.setText(requireActivity().intent?.getStringExtra(Constants.EMAIL)?:"",TextView.BufferType.EDITABLE)
+
         requestModel = CreateAccountRequestModel(
             referenceId = 0, securityCd = 0, accountType = "", tcAccepted = "Y", firstName = "",
             lastName = "", address1 = "", city = "", stateType = "", countryType = "",
-            zipCode1 = "", emailAddress = "", cellPhone = "", eveningPhone = "", smsOption = "Y",
-            password = "", digitPin = "", companyName = "", fein = "", nonRevenueOption = "",
+            zipCode1 = "", emailAddress = "", cellPhone = "",cellPhoneCountryCode = "+44", eveningPhone = "",eveningPhoneCountryCode = "+44", smsOption = "Y",
+            password = "", digitPin = "",correspDeliveryMode = "EMAIL",correspDeliveryFrequency = "MONTHLY", companyName = "", fein = "", nonRevenueOption = "",
             ftvehicleList = null, creditCardType = "", creditCardNumber = "", maskedNumber = "", creditCExpMonth = "",
             creditCExpYear = "", securityCode = "", cardFirstName = "", cardMiddleName = "", cardLastName = "",
             billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
-            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "")
+            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "",mNoOfVehicles = "",mNoOfCrossings = ""
+        )
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
+            isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
+        }
+
+        if (arguments?.containsKey(CREATE_ACCOUNT_DATA) == true) {
+            requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
+        }
 
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         loader = LoaderDialog()
@@ -71,6 +85,9 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
                     requestModel?.referenceId=resource.data.referenceId.toLongOrNull()
                     val bundle = Bundle().apply {
                         putParcelable(CREATE_ACCOUNT_DATA,requestModel)
+                        isEditEmail?.let {
+                            putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY)
+                        }
                     }
                     findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
                 }

@@ -3,12 +3,13 @@ package com.heandroid.ui.bottomnav.account.payments.history
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,10 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountPaymentHistoryViewModel @Inject constructor(private val repo: AccountPaymentHistoryRepo) :
-    BaseViewModel() {
+class AccountPaymentHistoryViewModel @Inject constructor(
+    private val repo: AccountPaymentHistoryRepo,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val accountPaymentMutLiveData =

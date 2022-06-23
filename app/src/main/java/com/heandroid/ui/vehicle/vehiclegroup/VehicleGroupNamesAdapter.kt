@@ -61,6 +61,13 @@ class VehicleGroupNamesAdapter(
             holder.binding.cbVehicleGroup.setOnClickListener {
                 makeButton(holder, item.groupId)
             }
+            holder.binding.vehicleGroupLayout.setOnClickListener {
+                if (holder.binding.cbVehicleGroup.isEnabled) {
+                    holder.binding.cbVehicleGroup.isChecked =
+                        !holder.binding.cbVehicleGroup.isChecked
+                    makeButton(holder, item.groupId)
+                }
+            }
         }
     }
 

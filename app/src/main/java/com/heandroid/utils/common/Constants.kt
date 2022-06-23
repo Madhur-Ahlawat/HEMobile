@@ -2,6 +2,11 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT = "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT"
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL = "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL"
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE = "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE"
+    const val FROM_DASHBOARD_TO_CROSSING_HISTORY=1001
+    const val FROM="from"
     const val UK_VEHICLE_DATA_NOT_FOUND_KEY =  "uk_vehicle_data_not_found_key"
     const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_respp"
     const val OPTIONS_TYPE = "Options_type"
@@ -28,8 +33,12 @@ object Constants {
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
     const val UK_VEHICLE_DATA_NOT_FOUND =1007
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY = 1009
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY = 1010
 
-        const val FILE_NAMES_KEY = " file_names_key"
+
+    const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
 
@@ -39,6 +48,7 @@ object Constants {
     const val PASSWORD = "password"
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
+    const val STATUS_TERMINATED = "TERMINATED"
 
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
@@ -92,6 +102,7 @@ object Constants {
     const val VEHICLE_SCREEN_TYPE_HISTORY = 4
     const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val FROM_DASHBOARD_TO_VEHICLE_LIST = "com_heandroid_dashboard_to_vehiclelist"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
     const val SHOW_SCREEN = "show_screen"
     const val ABOUT_SERVICE = "about_service"
@@ -109,6 +120,8 @@ object Constants {
     const val PAYMENT_PAGE = "payment page"
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
+    const val MAX_VEHICLE_SIZE_ONE_OFF_PAY = 1
+
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
     const val AGENCY_ID = 18

@@ -33,6 +33,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var requestModel : CreateAccountRequestModel? =null
+    private var isEditEmail : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
 
@@ -40,6 +41,9 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
+            isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
+        }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -100,8 +104,19 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     private fun loadFragment() {
         requestModel?.securityCd = binding.etCode.text.toString().trim().toLongOrNull()
         val bundle = Bundle()
-        bundle.putParcelable(CREATE_ACCOUNT_DATA,requestModel)
-        findNavController().navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,bundle)
+        bundle.putParcelable(CREATE_ACCOUNT_DATA, requestModel)
+        isEditEmail?.let {
+            findNavController().navigate(
+                R.id.action_confirmEmailFragment_to_paymentSummaryFragment,
+                bundle
+            )
+        } ?: run {
+            findNavController().navigate(
+                R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment,
+                bundle
+            )
+        }
+
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {

@@ -72,7 +72,7 @@
             android:textColor="@color/color_7D7D7D"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -85,7 +85,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:text="@string/str_add_vehicle"
             android:textAllCaps="false"
-            android:backgroundTint="@{addButton==true?@color/white:@color/color_C9C9C9}"
+            android:backgroundTint="@{addButton==true?@color/light_grey:@color/color_C9C9C9}"
             android:clickable="@{addButton}"
             android:textColor="@{addButton==true?@color/green:@color/color_7D7D7D}"
             app:iconTint="@{addButton==true?@color/green:@color/color_7D7D7D}"

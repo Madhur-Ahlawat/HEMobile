@@ -4,17 +4,17 @@ import android.util.Patterns
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
+import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
-import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
 import com.heandroid.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.heandroid.data.repository.makeoneofpayments.MakeOneOfPaymentRepo
 import com.heandroid.ui.base.BaseApplication
-import com.heandroid.ui.base.BaseViewModel
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +23,10 @@ import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
-class MakeOneOfPaymentViewModel @Inject constructor(private val repository: MakeOneOfPaymentRepo) :
-    BaseViewModel() {
+class MakeOneOfPaymentViewModel @Inject constructor(
+    private val repository: MakeOneOfPaymentRepo,
+    val errorManager: ErrorManager
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getCrossingDetails = MutableLiveData<Resource<CrossingDetailsModelsResponse?>?>()
@@ -73,15 +75,15 @@ class MakeOneOfPaymentViewModel @Inject constructor(private val repository: Make
         }
     }
 
-    fun validationEmail(model: String?, model2: String,type:Int): Pair<Boolean, String> {
+    fun validationEmail(model: String?, model2: String, type: Int): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (model?.isEmpty() == true && model2.isEmpty()) ret =
             Pair(false, BaseApplication.INSTANCE.getString(R.string.error_email))
-        else if(model!=model2)
+        else if (model != model2)
             ret =
                 Pair(false, BaseApplication.INSTANCE.getString(R.string.error_confirm_mail))
-        else if(type==0) {
-             if (!Patterns.EMAIL_ADDRESS.matcher(model).matches()) ret = Pair(
+        else if (type == 0) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(model).matches()) ret = Pair(
                 false, BaseApplication.INSTANCE.getString(
                     R.string.error_valid_email
                 )
@@ -89,11 +91,18 @@ class MakeOneOfPaymentViewModel @Inject constructor(private val repository: Make
         }
         return ret
     }
+
     fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest) {
         viewModelScope.launch {
-            try{
-                _whereToReceivePaymentReceipt.postValue(ResponseHandler.success(repository.whereToReceivePaymentReceipt(request),errorManager))
-            }catch (e: Exception) {
+            try {
+                _whereToReceivePaymentReceipt.postValue(
+                    ResponseHandler.success(
+                        repository.whereToReceivePaymentReceipt(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
                 _whereToReceivePaymentReceipt.postValue(ResponseHandler.failure(e))
             }
         }

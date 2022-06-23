@@ -1,5 +1,6 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,21 @@ import com.heandroid.data.model.contactdartcharge.CreateNewCaseResp
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     View.OnClickListener {
     private val viewModel: ContactDartChargeViewModel by viewModels()
     private var loader: LoaderDialog? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -75,7 +81,6 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             rlSubCategoryVal.text = arguments?.getString(Constants.CASES_SUB_CATEGORY)
             rlCommentsVal.text = arguments?.getString(Constants.CASE_COMMENTS_KEY)
             rlTransactionVal.text = Utils.currentDateAndTime()
-
         }
     }
 
@@ -94,10 +99,18 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                             R.id.action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment,
                             arguments?.apply {
                                 putString(Constants.CASE_NUMBER, it.srNumber)
-                                putString(
-                                    Constants.LAST_NAME,
-                                    arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.lName
-                                )
+                                if (mModel == null) {
+                                    putString(
+                                        Constants.LAST_NAME,
+                                        requireActivity().intent.getStringExtra(Constants.LAST_NAME)
+                                    )
+                                } else {
+                                    putString(
+                                        Constants.LAST_NAME,
+                                        arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)!!.emailId
+                                    )
+
+                                }
                             }
                         )
                     } else {
@@ -116,33 +129,20 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     }
 
     private val mList = mutableListOf<String>()
-
+    private var mModel: CaseProvideDetailsModel? = null
     override fun onClick(it: View?) {
 
         when (it?.id) {
 
             R.id.btnNext -> {
 
-                val mModel =
-                    arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
+                mModel =
+                    arguments?.getParcelable(Constants.CASES_PROVIDE_DETAILS_KEY)
                 val mCat = arguments?.getString(Constants.CASES_CATEGORY)
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
-/*
-                val newCaseReq = CreateNewCaseReq(
-                    mModel!!.fName,
-                    mModel.lName,
-                    mModel.emailId,
-                    mModel.telephoneNo,
-                    "",
-                    mComment,
-                    "OTHER",//SUB
-                    "WEB",//CAT
-                    mList,
-                    "ENU"
-                )
-*/
+                var loggedInUser = (sessionManager.getLoggedInUser())
                 val newCaseReq: CreateNewCaseReq?
                 if (mModel == null) {
                     newCaseReq = CreateNewCaseReq(

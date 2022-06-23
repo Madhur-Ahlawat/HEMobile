@@ -37,6 +37,13 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.vehicleRegNum.text = getString(R.string.vehicle_reg_num, requestModel?.vehicleNo)
         nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
+        if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
+            binding.groupNameLayout.visible()
+            binding.groupNameTitle.visible()
+        } else {
+            binding.groupNameLayout.gone()
+            binding.groupNameTitle.gone()
+        }
 
         binding.classARadioButton.isChecked = true
         mClassType = "1"

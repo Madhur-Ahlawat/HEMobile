@@ -7,14 +7,19 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySuccessBinding>(),
     View.OnClickListener {
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     override fun getFragmentBinding(
@@ -32,6 +37,18 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             rlCaseNoVal.text = arguments?.getString(Constants.CASE_NUMBER)
             rlDateVal.text = Utils.currentDateAndTime()
+            emailConformationTxt.text  = getString(R.string.str_email_conformation,arguments?.getString(Constants.LAST_NAME))
+            if(sessionManager.getLoggedInUser()){
+              checkEnquiryStatus.gone()
+                goToStartMenu.visible()
+                goToStartMenu.text = getString(R.string.str_go_to_account_management)
+            }else{
+                checkEnquiryStatus.visible()
+                goToStartMenu.visible()
+                goToStartMenu.text = getString(R.string.str_go_to_start_menu)
+
+
+            }
         }
     }
 
@@ -42,13 +59,22 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
             R.id.check_enquiry_status -> {
 //                findNavController().navigate(R.id.action)
-                findNavController().navigate(
-                    R.id.action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment,
-                    arguments
-                )
+                if(sessionManager.getLoggedInUser()){
+                    requireActivity().finish()
+                }else{
+                    findNavController().navigate(
+                        R.id.action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment,
+                        arguments
+                    )
+
+                }
+
             }
             R.id.go_to_start_menu -> {
-                requireActivity().finish()
+                if(sessionManager.getLoggedInUser()) {
+                    requireActivity().finish()
+//                    requireActivity().startNormalActivity(HomeActivityMain::class.java)
+                }
             }
             else -> {
             }
@@ -56,6 +82,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
 
     }
+
 
 
 }

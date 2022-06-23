@@ -15,12 +15,16 @@ class BusinessPrePayInfoFragment : BaseFragment<FragmentBusinessPrepayInfoBindin
     View.OnClickListener {
 
     private var requestModel : CreateAccountRequestModel?=null
+    private var isEditAccountType : Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)
     = FragmentBusinessPrepayInfoBinding.inflate(inflater, container, false)
 
     override fun init() {
         requestModel=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
+            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+        }
     }
 
     override fun initCtrl() {
@@ -36,6 +40,9 @@ class BusinessPrePayInfoFragment : BaseFragment<FragmentBusinessPrepayInfoBindin
             R.id.continue_business -> {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,requestModel)
+                isEditAccountType?.let {
+                    bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                }
                 findNavController().navigate(R.id.action_business_prepayInfoFragment_to_business_prepay_autotopupfragment ,bundle)
 
             }

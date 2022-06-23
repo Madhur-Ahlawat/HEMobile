@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
@@ -176,9 +176,11 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
 
     override fun observer() {
         observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
+        observe(vehicleMgmtViewModel.validVehicleLiveData, ::apiResponseValidVehicle)
     }
 
     override fun onAddClick(details: VehicleResponse) {
+
         mVehicleDetails?.apply {
             plateInfo?.state = "HE"
             plateInfo?.type = "STANDARD"
@@ -191,23 +193,27 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
 
+        if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD) {
+            val vehicleValidReqModel = ValidVehicleCheckRequest(
+                details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
+                "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
+            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
+        }else {
             loader?.show(requireActivity().supportFragmentManager, "")
             vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
-
         }
+    }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
-
                 navigateToAddVehicleDoneScreen()
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
             else -> {
-
             }
         }
     }
@@ -228,4 +234,29 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         )
     }
 
+    private fun apiResponseValidVehicle(resource: Resource<String?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when(resource) {
+            is Resource.Success -> {
+                val bundle = Bundle().apply {
+                    putParcelable(Constants.DATA, mVehicleDetails)
+                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                }
+                findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleFragment, bundle)
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+                val bundle = Bundle().apply {
+                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                }
+                findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleFragment, bundle)
+            }
+        }
+    }
 }
+
+
+

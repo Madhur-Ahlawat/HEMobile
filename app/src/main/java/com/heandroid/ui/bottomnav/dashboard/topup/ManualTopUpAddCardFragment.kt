@@ -106,21 +106,21 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                 val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("payment token ",responseModel.toString())
                 cardModel= PaymentWithNewCardModel(transactionAmount = arguments?.getString("amount"),
-                                                   cardType = responseModel.card.type.uppercase(Locale.ROOT), cardNumber = responseModel.token,
-                                                   cvv=responseModel.card.hash, expMonth = responseModel.card.exp.substring(0, 2),
-                                                   expYear = "20${responseModel.card.exp.substring(2, 4)}" , saveCard = "Y", useAddressCheck = "N",
-                                                   bankRoutingNumber = "", paymentType = "card", maskedNumber =  responseModel.card.number,
+                                                   cardType = responseModel.card?.type?.uppercase(Locale.ROOT), cardNumber = responseModel.token,
+                                                   cvv=responseModel.card?.hash, expMonth = responseModel.card?.exp?.substring(0, 2),
+                                                   expYear = "20${responseModel.card?.exp?.substring(2, 4)}" , saveCard = "Y", useAddressCheck = "N",
+                                                   bankRoutingNumber = "", paymentType = "card", maskedNumber =  responseModel.card?.number,
                                                    firstName = "", middleName = "", lastName = "", primaryCard = "N", easyPay = "Y")
 
 
                 binding.apply {
                     tieCardNo.setText( cardModel?.maskedNumber?:"")
                     tieExpiryDate.setText("${cardModel?.expMonth}/${cardModel?.expYear}")
-                    tieName.setText( responseModel.check.name?:"")
+                    tieName.setText( responseModel.check?.name?:"")
                     tieCVV.setText("***")
                 }
 
-                val fullName: List<String?>? = responseModel.check.name?.split(" ")
+                val fullName: List<String?>? = responseModel.check?.name?.split(" ")
                 when (fullName?.size) {
                     1 -> { cardModel?.run {
                         firstName = fullName[0]

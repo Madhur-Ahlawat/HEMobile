@@ -13,6 +13,10 @@
             android:id="@+id/action_addVehicleFragment_to_addVehicleDetailsFragment"
             app:destination="@id/addVehicleDetailsFragment" />
 
+        <action
+            android:id="@+id/action_addVehicleFragment_to_addVehicleSuccessFragment"
+            app:destination="@+id/addVehicleSuccessFragment"/>
+
     </fragment>
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
@@ -33,6 +37,10 @@
             app:destination="@id/addVehicleDoneFragment"
             app:popUpTo="@+id/addVehicleDetailsFragment"
             app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_addVehicleClassesFragment_to_addVehicleFragment"
+            app:destination="@id/addVehicleFragment" />
     </fragment>
     <fragment
         android:id="@+id/addVehicleDoneFragment"
@@ -45,6 +53,13 @@
             app:popUpTo="@+id/add_vehicle_nav_graph"
             app:popUpToInclusive="true"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/addVehicleSuccessFragment"
+        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleSuccessFragment"
+        android:label="AddVehicleSuccessFragment"
+        tools:layout="@layout/fragment_add_vehicle_success" />
+
     <fragment
         android:id="@+id/vehicleListFragment"
         android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"

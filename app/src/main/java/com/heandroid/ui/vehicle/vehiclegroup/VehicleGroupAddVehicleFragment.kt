@@ -73,7 +73,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
         vehicleGroup?.let {
             binding.addVehicleToGroup.text = getString(R.string.add_vehicle_to_group, it.groupName)
         }
-        binding.paginationLayout.visible()
+//        binding.paginationLayout.visible()
         binding.progressBar.visible()
         binding.tvNoVehicles.gone()
         binding.rvVehicleList.apply {
@@ -101,7 +101,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
     }
 
     override fun observer() {
-        observe(vehicleMgmtViewModel.updateVehicleApiVal, ::handleUpdatedVehicle)
+        observe(vehicleMgmtViewModel.addVehiclesToGroupApiVal, ::handleUpdatedVehicle)
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
         observe(
             vehicleGroupMgmtViewModel.searchVehicleVal,
@@ -113,18 +113,22 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                requireActivity().showToast("vehicle added successfully")
-                vehicleGroup?.let {
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.DATA, it)
-                    }
-                    findNavController().navigate(
-                        R.id.action_vehicleGroupAddVehicleFragment_to_vehicleGroupFragment,
-                        bundle
-                    )
-                }
+                requireActivity().showToast("vehicle(s) added successfully")
+                loader?.show(requireActivity().supportFragmentManager, "")
+                vehicleMgmtViewModel.getVehicleInformationApi()
+//                vehicleGroup?.let {
+//                    val bundle = Bundle().apply {
+//                        putParcelable(Constants.DATA, it)
+//                    }
+//                    findNavController().navigate(
+//                        R.id.action_vehicleGroupAddVehicleFragment_to_vehicleGroupFragment,
+//                        bundle
+//                    )
+//                }
             }
             is Resource.DataError -> {
+                loader?.show(requireActivity().supportFragmentManager, "")
+                vehicleMgmtViewModel.getVehicleInformationApi()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
@@ -143,7 +147,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
                         checkedVehicleList.clear()
                         vehicleResponseList.clear()
                         it.forEach { vehicle ->
-                            if (vehicle?.plateInfo?.vehicleGroup.isNullOrEmpty()){
+                            if (vehicle?.vehicleInfo?.groupName.isNullOrEmpty()){
                                 vehicleResponseList.add(vehicle)
                             }
                         }
@@ -171,14 +175,14 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
         searchVehicleNumber?.let {
             binding.apply {
                 rvVehicleList.gone()
-                paginationLayout.gone()
+//                paginationLayout.gone()
                 tvNoVehicles.visible()
                 tvNoVehicles.text = getString(R.string.no_vehicles_found, it)
             }
         } ?: run {
             binding.apply {
                 rvVehicleList.gone()
-                paginationLayout.gone()
+//                paginationLayout.gone()
                 tvNoVehicles.visible()
                 tvNoVehicles.text = getString(R.string.str_no_vehicles)
             }
@@ -204,18 +208,9 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 //                ).show(childFragmentManager, "")
             }
             R.id.addVehicleBtn -> {
-                if (checkedVehicleList.size > 1) {
-                    requireActivity().showToast("multiple vehicles cant be added, it is in dev")
-                } else if (checkedVehicleList.size == 1) {
-                    checkedVehicleList[0]?.let {
-                        val request = it.apply {
-                            newPlateInfo = plateInfo
-                            vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
-                            newPlateInfo?.vehicleGroup = vehicleGroup?.groupName.toString()
-                        }
-                        loader?.show(requireActivity().supportFragmentManager, "")
-                        vehicleMgmtViewModel.updateVehicleApi(request)
-                    }
+                if (checkedVehicleList.size >= 1) {
+                    loader?.show(requireActivity().supportFragmentManager, "")
+                    vehicleMgmtViewModel.addVehiclesToGroup(checkedVehicleList, vehicleGroup)
                 }
             }
             R.id.cancelBtn -> {

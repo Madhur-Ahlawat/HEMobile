@@ -125,12 +125,12 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view_business"
+                    android:theme="@style/ToggleSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@color/white"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:checked="true"
                     android:text="@string/str_country_of_registraion"
                     android:textColor="@color/black"
@@ -139,8 +139,6 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:thumbTint="@color/green"
-                    app:trackTint="#04CF71"
                     app:useMaterialThemeColors="false" />
 
                 <com.google.android.material.textfield.TextInputLayout

@@ -15,6 +15,7 @@ import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.databinding.FragmentNominatedContactListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -184,6 +185,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
+
                     showError(binding.root, "Contact Removed Successfully")
                     Log.v(
                         "ListFrag",
@@ -269,7 +271,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             }
 
             "Remove" -> {
-                Log.v("ListFrag", " onItemClick Resend called data $data  type $type   ")
+                Log.v("ListFrag", " onItemClick Remove called data $data  type $type   ")
 
                 loader?.show(requireActivity().supportFragmentManager, "")
                 selectedPosition = pos
@@ -279,8 +281,11 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                         val model =
                             TerminateRequestModel(
                                 it.secAccountRowId,
-                                "TERMINATED",
-                                data.phoneNumber
+                                Constants.STATUS_TERMINATED,
+                                data.phoneNumber,
+                                data.emailAddress,
+                                data.firstName,
+                                data.lastName
                             )
                         viewModel.terminateNominatedContact(model)
                     }

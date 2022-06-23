@@ -27,6 +27,11 @@
         <action
             android:id="@+id/action_confirmEmailFragment_to_accountTypeSelectionFragment"
             app:destination="@id/accountTypeSelectionFragment" />
+        <action
+            android:id="@+id/action_confirmEmailFragment_to_paymentSummaryFragment"
+            app:destination="@id/paymentSummaryFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/paymentSummaryFragment"/>
     </fragment>
 
 
@@ -104,6 +109,11 @@
             android:id="@+id/action_businessPrePayAutoTopUpFragment_to_personalDetailsEntryFragment"
             app:destination="@id/personalDetailsEntryFragment" />
 
+        <action
+            android:id="@+id/action_businessPrePayAutoTopUpFragment_to_paymentSummaryScreen"
+            app:destination="@id/paymentSummaryFragment" />
+
+
     </fragment>
     <!-- Step 3 -->
 
@@ -156,6 +166,9 @@
         <action
             android:id="@+id/action_createAccountPinFragment_to_businessVehicleTitleFragment"
             app:destination="@+id/businessVehicleTitleFragment" />
+        <action
+            android:id="@+id/action_createAccoutPinFragment_to_paymentSummaryFragment"
+            app:destination="@id/paymentSummaryFragment" />
 
     </fragment>
 
@@ -290,8 +303,24 @@
         tools:layout="@layout/fragment_create_account_payment_summary">
 
         <action
+            android:id="@+id/action_paymentSummaryFragment_to_emailVerification"
+            app:destination="@id/emailVerification" />
+
+        <action
             android:id="@+id/action_paymentSummaryScreen_to_choosePaymentScreen"
             app:destination="@+id/choosePaymentFragment"/>
+
+
+        <action
+            android:id="@+id/action_paymentSummaryScreen_to_business_prepay_autotopupfragment"
+            app:destination="@+id/businessPrePayAutoTopUpFragment"/>
+
+        <action
+            android:id="@+id/action_paymentSummaryScreen_to_createAccountFindVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"/>
+        <action
+            android:id="@+id/action_paymentSummaryFragment_to_accountTypeSelectionFragment"
+            app:destination="@id/accountTypeSelectionFragment" />
     </fragment>
 
     <fragment

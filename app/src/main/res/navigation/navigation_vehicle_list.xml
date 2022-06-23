@@ -15,7 +15,7 @@
 
         <action
             android:id="@+id/action_vehicleListFragment_to_vehicleManagementDetailFragment"
-            app:destination="@+id/vehicleManagementDetailFragment" />
+            app:destination="@id/vehicleManagementDetailFragment" />
     </fragment>
 
     <fragment

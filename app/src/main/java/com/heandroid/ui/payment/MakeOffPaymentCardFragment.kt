@@ -105,12 +105,12 @@ class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBindin
                     Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 mModel = responseModel
                 Logg.logging("testing", "  Card Data  $mModel")
-                Logg.logging("testing", "  responseModel.card.number  ${responseModel.card.number}")
+                Logg.logging("testing", "  responseModel.card.number  ${responseModel.card?.number}")
 
                 binding.model = CardModel(
-                    cardNo = responseModel.card.number,
-                    name = responseModel.check.name,
-                    expiry = responseModel.card.exp.addCharAtIndex('/', 2), cvv = "***"
+                    cardNo = responseModel.card?.number,
+                    name = responseModel.check?.name,
+                    expiry = responseModel.card?.exp?.addCharAtIndex('/', 2), cvv = "***"
                 )
                 Logg.logging("testing", "  binding.model  ${binding.model}")
                 Logg.logging("testing", "  binding.model.cardNo  ${binding.model?.cardNo!!}")

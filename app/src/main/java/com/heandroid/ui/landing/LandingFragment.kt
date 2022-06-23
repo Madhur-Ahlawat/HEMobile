@@ -37,9 +37,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
     override fun onResume() {
         super.onResume()
-        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
-        toolbar.findViewById<TextView>(R.id.btn_login).visible()
-        requireActivity().setRightButtonText(getString(R.string.login))
+        if (requireActivity() is LandingActivity) {
+            val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
+            toolbar.findViewById<TextView>(R.id.btn_login).visible()
+            requireActivity().setRightButtonText(getString(R.string.login))
+        }
     }
 
     override fun init() {
@@ -60,6 +62,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 VehicleHelper.list?.clear()
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = CREATE_ACCOUNT
+
             }
 
             R.id.rbMakeOffPayment -> {
@@ -80,6 +83,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = CHECK_FOR_PAID
             }
+
             R.id.rbViewCharges -> {
                 binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
                 binding.model?.selectType = VIEW_CHARGES
