@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+
                     android:padding="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,9 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
-                        app:buttonTint="@color/bottomActiveColor"
+                        android:enabled="false"
+                        android:checked="false"
+                        app:buttonTint="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

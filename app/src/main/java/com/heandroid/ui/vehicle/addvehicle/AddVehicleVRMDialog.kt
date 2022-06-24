@@ -103,12 +103,17 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                     binding.addVehicleBtn.isEnabled = true
                 }, time)
 
-                loader?.show(requireActivity().supportFragmentManager, "")
-                isObserverBack = true
-                getVehicleDataFromDVRM()
+                if (country == "UK") {
+                    loader?.show(requireActivity().supportFragmentManager, "")
+                    isObserverBack = true
+                    getVehicleDataFromDVRM()
+
+                } else {
+                    setNavigation()
+                }
 
             } else {
-                requireContext().showToast(   "Please enter your vehicle number")
+                requireContext().showToast("Please enter your vehicle number")
             }
         }
 
@@ -178,11 +183,16 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         if (loader?.isVisible == true)
             loader?.dismiss()
 
-        if(isObserverBack) {
+        if (isObserverBack) {
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails)
+                        retrieveVehicle = resource.data.retrievePlateInfoDetails
+
+                        if (isMakePayment)
+                            setVrmDetails()
+                        else
+                            checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails)
                     }
                 }
 
@@ -190,39 +200,53 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                     isObserverBack = false
 
                     ErrorUtil.showError(binding.root, resource.errorMsg)
-
-                    plateInfoResponse = PlateInfoResponse()
-                    plateInfoResponse!!.country = country
-                    plateInfoResponse!!.number = binding.addVrmInput.text.toString()
-
-                    vehicleResponse = VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
-
-                    if(isMakePayment) {
-
-                        val bundle = Bundle().apply {
-                            putParcelable(Constants.DATA, vehicleResponse)
-                            putInt(Constants.VEHICLE_SCREEN_KEY, 3)
-                        }
-                        findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment, bundle)
-                    }
-                    else {
-                        val bundle = Bundle().apply {
-                            putParcelable(Constants.DATA, vehicleResponse)
-                            putInt(Constants.VEHICLE_SCREEN_KEY, 2)
-                        }
-                        findNavController().navigate(R.id.action_addVehicleFragment_to_addVehicleDetailsFragment, bundle)
-                    }
+                    setNavigation()
                 }
             }
         }
     }
 
+    private fun setNavigation() {
+        plateInfoResponse = PlateInfoResponse()
+        plateInfoResponse!!.country = country
+        plateInfoResponse!!.number = binding.addVrmInput.text.toString()
+
+        vehicleResponse =
+            VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
+
+        if (isMakePayment) {
+
+            val bundle = Bundle().apply {
+                putParcelable(Constants.DATA, vehicleResponse)
+                putInt(Constants.VEHICLE_SCREEN_KEY, 3)
+            }
+            findNavController().navigate(
+                R.id.action_makePaymentAddVehicleFragment_to_addVehicleDetailsFragment,
+                bundle
+            )
+        } else {
+            val bundle = Bundle().apply {
+                putParcelable(Constants.DATA, vehicleResponse)
+                putInt(Constants.VEHICLE_SCREEN_KEY, 2)
+            }
+            findNavController().navigate(
+                R.id.action_addVehicleFragment_to_addVehicleDetailsFragment,
+                bundle
+            )
+        }
+
+    }
+
     private fun checkForDuplicateVehicle(plateInfo: RetrievePlateInfoDetails) {
-        retrieveVehicle = plateInfo
         plateInfo.apply {
             val vehicleValidReqModel = ValidVehicleCheckRequest(
                 plateNumber, country, "STANDARD",
-                "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE")
+                "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE"
+            )
+//            val vehicleValidReqModel = ValidVehicleCheckRequest(
+//                plateNumber, country, "",
+//                "", vehicleModel, vehicleMake, vehicleColor, "", ""
+//            )
             viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
         }
     }
@@ -231,25 +255,12 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when(resource) {
+        when (resource) {
             is Resource.Success -> {
 
                 // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
 
-                val plateInfoResp = PlateInfoResponse(
-                    binding.addVrmInput.text.toString().trim(),
-                    country, "", "",
-                    "", "", ""
-                )
-                val vehicleInfoResp = VehicleInfoResponse(
-                    retrieveVehicle?.vehicleMake, retrieveVehicle?.vehicleModel, "", "",
-                    "", "", retrieveVehicle?.vehicleColor,
-                    VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!),
-                    DateUtils.convertDateFormat(DateUtils.currentDate(),0))
-
-                val mVehicleResponse = VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp)
-
-                mListener?.onAddClick(mVehicleResponse)
+                setVrmDetails()
             }
 
             is Resource.DataError -> {
@@ -259,5 +270,24 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         }
     }
 
+    private fun setVrmDetails() {
+
+        val plateInfoResp = PlateInfoResponse(
+            binding.addVrmInput.text.toString().trim(),
+            country, "", "",
+            "", "", ""
+        )
+        val vehicleInfoResp = VehicleInfoResponse(
+            retrieveVehicle?.vehicleMake, retrieveVehicle?.vehicleModel, "", "",
+            "", "", retrieveVehicle?.vehicleColor,
+            VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!),
+            DateUtils.convertDateFormat(DateUtils.currentDate(), 0)
+        )
+
+        val mVehicleResponse =
+            VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp)
+
+        mListener?.onAddClick(mVehicleResponse)
+    }
 
 }

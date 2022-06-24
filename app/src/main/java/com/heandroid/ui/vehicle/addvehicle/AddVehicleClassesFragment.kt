@@ -55,6 +55,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     override fun initCtrl() {
+        binding.classADesc.visible()
+
+/*
         binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.apply {
@@ -69,6 +72,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                 mClassType = "1"
             }
         }
+*/
 
         binding.classBRadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
