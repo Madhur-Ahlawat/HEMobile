@@ -495,7 +495,7 @@
     <string name="view_all_vehicles"><u>View all vehicles</u></string>
 
     <string name="str_payment_des1">You have made since 6 am yesterday morning.</string>
-    <string name="str_payment_des2">You are planning to make for next 12 months are valid for same time period.</string>
+    <string name="str_payment_des2">You are planning to make for next 12 months.</string>
     <string name="str_payment_des3">You can add only 5 vehicle.</string>
     <string name="internal_server_error">Internal server error</string>
     <string name="too_many_login_attempt">You have incorrectly logged in too many times and your account is suspended for a few minutes.</string>

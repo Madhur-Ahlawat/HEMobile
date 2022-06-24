@@ -26,8 +26,8 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     override fun init() {
         val arr = arrayListOf(
             requireContext().getString(R.string.str_payment_des1),
-            requireContext().getString(R.string.str_payment_des2),
-            requireContext().getString(R.string.str_payment_des3)
+            requireContext().getString(R.string.str_payment_des2)
+            //requireContext().getString(R.string.str_payment_des3)
         )
 
         val bulletGap = dp(10).toInt()
