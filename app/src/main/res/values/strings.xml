@@ -794,6 +794,29 @@
     <string name="str_filter_sort_underline">Filter/Sort</string>
     <string name="str_by_case_no">By case number</string>
     <string name="str_go_to_account_management">Go to account management page</string>
+    <string name="str_after_u_have_made_one_of_txt">After you\'ve made a one off payment, you can check which crossings you\'ve paid for</string>
+    <string name="str_please_note_it_can_take">Please note it can take up to one day for your payment to be matched to crossings</string>
+    <string name="str_payment_reference_number">Payment reference number</string>
+    <string name="str_if_have_paid_by_web_or_phone_txt">"If you've paid by web or phone, this is the HD number on your receipt. If you've paid through payzone, this is the TXN number "</string>
+    <string name="str_payment_ref_number_error_mess">Please enter valid payment reference number</string>
+    <string name="str_please_enter_valid_vrm_number">Pease enter valid vrm number</string>
+    <string name="str_used_crossings">Used Crossings</string>
+    <string name="str_un_used_crossings_txt">UnUsed Crossings</string>
+    <string name="str_crossing_id">Crossing ID</string>
+    <string name="str_number">Number</string>
+    <string name="str_crossing">Crossing</string>
+    <string name="txt_time">Time</string>
+    <string name="str_number_plate">Number Plate</string>
+    <string name="str_trip">Trip</string>
+    <string name="str_expiry_date">Expiry date</string>
+    <string name="str_change_vehicle">Change Vehicle</string>
+    <string name="str_enter_the_number_plate_you_wish">Enter the number plate you wish to associate to this payment</string>
+    <string name="str_confirm_if_u_wish_to_associate_vehicle_no">Confirm if wish to associate vehicle number plate %s to your payment reference: %s</string>
+    <string name="str_your_change_to_ref_no_made">Your change to reference number  %s have been made successfully %s</string>
+    <string name="str_make_another_change">Make another change</string>
+    <string name="str_date_changed">Date changed</string>
+    <string name="str_UK">UK</string>
+    <string name="str_non_uk">Non UK</string>
 </resources>
 
 

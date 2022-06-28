@@ -13,7 +13,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_line_vertical1"
         android:layout_width="@dimen/_1sdp"
@@ -35,8 +34,8 @@
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         app:layout_constraintBottom_toBottomOf="@+id/header"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_8sdp"
         app:layout_constraintTop_toTopOf="@+id/header"
         app:srcCompat="@drawable/ic_back_grey" />
 
@@ -47,10 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         android:textSize="@dimen/_17ssp"
         android:textColor="@color/color_D8000000"
-        android:text="@string/str_communication"
+        android:text="@string/str_check_for_paid_crossing"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/header"
         app:layout_constraintEnd_toStartOf="@+id/guide_line_vertical2"
