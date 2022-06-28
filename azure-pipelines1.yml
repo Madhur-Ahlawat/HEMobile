@@ -22,11 +22,22 @@ steps:
       gradleOptions: '-Xmx3072m'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
+
+  - script: ./gradlew jacocoTestReport
+
   - task: PublishTestResults@2
     inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test/TEST-*.xml'
+        testResultsFiles: '**/build/reports/tests/**/index.html'
         searchFolder: $(System.DefaultWorkingDirectory)
+        
+  - task:  PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: JaCoCo
+      summaryFileLocation:  '$(System.DefaultWorkingDirectory)/**/build/coverage/report/html/index.html'
+      pathToSources: '$(System.DefaultWorkingDirectory)/**/app/src/main/java/'
+
+
   - task: CopyFiles@2
     inputs:
         Contents: '**/*.apk'
