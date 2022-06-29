@@ -14,6 +14,7 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.databinding.FragmentForgotPasswordBinding
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -39,7 +40,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     override fun init() {
         sessionManager.clearAll()
 
-        requireActivity().toolbar(getString(R.string.str_password_recovery))
+        if (requireActivity() is AuthActivity) {
+            requireActivity().toolbar(getString(R.string.str_password_recovery))
+        }
         binding.model= ConfirmOptionModel(identifier = "", zipCode = "",enable = false)
         loader= LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -63,9 +66,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("1054")==true) {
-                    showError(binding.root,status.data?.message)
+                    showError(binding.root,status.data.message)
                 } else {
-                    binding?.root?.post {
+                    binding.root.post {
                         val bundle = Bundle()
                         bundle.putParcelable(Constants.OPTIONS, status.data)
                         findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle)
@@ -79,14 +82,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         when(v?.id){
             R.id.btn_next -> {
                 hideKeyboard()
-                val validation=viewModel.validation(binding.model)
-                if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager,"")
-                    sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
-                    viewModel.confirmOptionForForgot(binding.model)
-                }else{
-                    showError(binding.root,validation.second)
-                }
+                loader?.show(requireActivity().supportFragmentManager,"")
+                sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
+                viewModel.confirmOptionForForgot(binding.model)
             }
         }
     }

@@ -1,17 +1,22 @@
 package com.heandroid.ui.account.creation.step1
 
+import android.os.Bundle
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
-import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.utils.BaseActions
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
+import com.heandroid.utils.data.DataFile
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -20,12 +25,11 @@ import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
@@ -34,6 +38,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@MediumTest
 class CreateAccountEmailVerificationFragmentTest {
 
     @get:Rule
@@ -45,7 +50,7 @@ class CreateAccountEmailVerificationFragmentTest {
 
     private val emailVerification = MutableLiveData<Resource<EmailVerificationResponse?>?>()
 
-    private val navController: NavController = Mockito.mock(NavController::class.java)
+    private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
     @Before
     fun init() {
@@ -57,6 +62,8 @@ class CreateAccountEmailVerificationFragmentTest {
         every { viewModel.emailVerificationApiVal } returns emailVerification
 
         launchFragmentInHiltContainer<CreateAccountEmailVerificationFragment> {
+            navController.setGraph(R.navigation.nav_graph_account_creation)
+            navController.setCurrentDestination(R.id.emailVerification)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvVerification)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -71,8 +78,10 @@ class CreateAccountEmailVerificationFragmentTest {
                     EmailVerificationResponse
                         ("0", "99890", "success", "12345")
                 )
-//            Mockito.verify(navController)
-//                .navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment, bun)
+            Assert.assertEquals(
+                navController.currentDestination?.id,
+                R.id.confirmEmailFragment
+            )
         }
     }
 

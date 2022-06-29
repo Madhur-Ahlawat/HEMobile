@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.ui.loader.ErrorDialog
@@ -19,7 +20,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Rule
@@ -36,6 +37,7 @@ import org.robolectric.annotation.LooperMode
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@MediumTest
 class StartNowFragmentTest {
 
     @get:Rule
@@ -46,7 +48,6 @@ class StartNowFragmentTest {
     val viewModel = mockk<WebSiteServiceViewModel>(relaxed = true)
 
     private val webService = MutableLiveData<Resource<WebSiteStatus?>>()
-
 
     private lateinit var navController: NavController
 
@@ -73,19 +74,20 @@ class StartNowFragmentTest {
         }
     }
 
-    //@Test
+    @Test
     fun `test start now screen visibility for maintenance`() {
         every { viewModel.webServiceLiveData } returns webService
-        webService.postValue(
-            Resource.Success(
-                WebSiteStatus(
-                    "LIVE",
-                    "This is title for maintenance", "This is description for maintenance",
-                    "", "", ""
+
+        launchFragmentInHiltContainer<StartNowFragment> {
+            webService.postValue(
+                Resource.Success(
+                    WebSiteStatus(
+                        "LIVE",
+                        "This is title for maintenance", "This is description for maintenance",
+                        "", "", ""
+                    )
                 )
             )
-        )
-        launchFragmentInHiltContainer<StartNowFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
             onView(withId(R.id.rl_about_service)).check(matches(isDisplayed()))
@@ -108,7 +110,7 @@ class StartNowFragmentTest {
         )
         launchFragmentInHiltContainer<StartNowFragment> {
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)

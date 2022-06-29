@@ -1,4 +1,4 @@
-package com.heandroid.ui.makeoneoffpayment
+package com.heandroid.ui.payment
 
 import android.util.Patterns
 import androidx.annotation.VisibleForTesting

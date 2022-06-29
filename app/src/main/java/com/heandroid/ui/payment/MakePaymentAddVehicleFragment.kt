@@ -124,7 +124,9 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private lateinit var mVDetails: VehicleResponse
 
     override fun onAddClick(details: VehicleResponse) {
-        addDialog?.dismiss()
+        if (addDialog?.isVisible == true) {
+            addDialog?.dismiss()
+        }
         mVDetails = details
 
         vehicleList?.clear()

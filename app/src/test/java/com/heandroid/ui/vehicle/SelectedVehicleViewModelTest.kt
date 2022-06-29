@@ -1,6 +1,7 @@
 package com.heandroid.ui.vehicle
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.MediumTest
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
+@MediumTest
 class SelectedVehicleViewModelTest {
 
     private var selectedVehicleViewModel: SelectedVehicleViewModel? = null

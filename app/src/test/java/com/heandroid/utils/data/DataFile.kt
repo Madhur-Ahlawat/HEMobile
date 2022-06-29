@@ -5,11 +5,26 @@ import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
+import com.heandroid.data.model.makeoneofpayment.*
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.notification.AlertMessage
 
 object DataFile {
+
+    fun getOneOfPaymentModelRequest() : OneOfPaymentModelRequest {
+        val list = FtVehicleList(arrayListOf())
+        val paymentInfo = PaymentTypeInfo(     "", "", "", "",
+            "", "", "", "", "",
+            "", "", "", "", "", "", "", "")
+        return OneOfPaymentModelRequest(list, paymentInfo)
+    }
+
+    fun getCrossingDetailsResponse() = CrossingDetailsModelsResponse(
+        "", "", "", "",
+        "", "", "", "", "",
+        "", "", ""
+    )
 
     fun getAccountResponse(): AccountResponse {
         val accountInformation = AccountInformation(
@@ -189,7 +204,7 @@ object DataFile {
         false
     )
 
-    fun getCreateAccountRequestModel() : CreateAccountRequestModel {
+    fun getCreateAccountRequestModel(): CreateAccountRequestModel {
         return CreateAccountRequestModel(
             0L, 0L, "",
             "", "", "", "",
@@ -204,7 +219,7 @@ object DataFile {
             "", "", "",
             "", "", "",
             "", "", false,
-            "", "10", ""
+            "", "10", "100"
         )
     }
 }

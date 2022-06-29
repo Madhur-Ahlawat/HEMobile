@@ -34,6 +34,7 @@ android {
             includeAndroidResources = true
         }
         unitTests.all {
+            maxHeapSize = "2g"
             jvmArgs '-noverify'
         }
         unitTests.all {
@@ -114,7 +115,6 @@ android {
         implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
         implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
         implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
-        implementation "androidx.navigation:navigation-testing:$nav_version"
 
         // Architectural Components
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -192,6 +192,7 @@ android {
 
         // Navigation testing
         implementation "androidx.navigation:navigation-testing:$nav_test_version"
+        testImplementation "androidx.navigation:navigation-testing:$nav_test_version"
         androidTestImplementation "androidx.navigation:navigation-testing:$nav_test_version"
 
         // For mocking

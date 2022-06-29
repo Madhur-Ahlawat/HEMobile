@@ -8,6 +8,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.LargeTest
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
@@ -39,6 +40,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@LargeTest
 class VehicleHistoryListFragmentTest {
 
     @get:Rule

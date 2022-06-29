@@ -1,6 +1,7 @@
 package com.heandroid.ui.viewcharges
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.MediumTest
 import androidx.test.filters.SmallTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
@@ -33,7 +34,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-@SmallTest
+@MediumTest
 class ViewChargeViewModelTest {
 
     private val unknownException = "unknown exception"

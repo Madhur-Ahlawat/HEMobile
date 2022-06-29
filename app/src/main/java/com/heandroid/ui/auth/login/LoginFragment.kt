@@ -1,9 +1,9 @@
 package com.heandroid.ui.auth.login
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,18 +11,16 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.databinding.FragmentLoginBinding
-import com.heandroid.ui.auth.controller.AuthActivity
-import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.openActivityWithData
 import com.heandroid.utils.extn.startNormalActivity
 import com.heandroid.utils.extn.toolbar
@@ -34,7 +32,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
-
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -50,7 +47,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     override fun init() {
-        binding.model = LoginModel(value = "", password = "")
+        binding.model = LoginModel(value = "", password = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -60,6 +57,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         binding.apply {
             tvForgotUsername.setOnClickListener(this@LoginFragment)
             tvForgotPassword.setOnClickListener(this@LoginFragment)
+            edtEmail.doAfterTextChanged { checkButton() }
+            edtPwd.doAfterTextChanged { checkButton() }
             btnLogin.setOnClickListener(this@LoginFragment)
         }
     }
@@ -74,7 +73,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             when (status) {
                 is Resource.Success -> {
 //                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
-                        launchIntent(status)
+                    launchIntent(status)
 //                    } else {
 //                        launchSubmitComplaint(status)
 
@@ -109,18 +108,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
     }
 
-        private fun launchIntent(response: Resource.Success<LoginResponse?>) {
-            sessionManager.run {
-                saveAuthToken(response.data?.accessToken ?: "")
-                saveRefreshToken(response.data?.refreshToken ?: "")
-                setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
-                isSecondaryUser(response.data?.isSecondary ?: false)
-                //saveAccountNumber(response.data?.user_name?:"")
-                saveAccountType(response.data?.accountType ?: "")
-               setLoggedInUser(true)
+    private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+        sessionManager.run {
+            saveAuthToken(response.data?.accessToken ?: "")
+            saveRefreshToken(response.data?.refreshToken ?: "")
+            setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
+            isSecondaryUser(response.data?.isSecondary ?: false)
+            //saveAccountNumber(response.data?.user_name?:"")
+            saveAccountType(response.data?.accountType ?: "")
+            setLoggedInUser(true)
 
-            }
-            requireActivity().startNormalActivity(HomeActivityMain::class.java)
+        }
+        requireActivity().startNormalActivity(HomeActivityMain::class.java)
 /*
             if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
 
@@ -136,32 +135,42 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
             }
 */
-        }
+    }
 
 
-        override fun onClick(v: View?) {
-            when (v?.id) {
-                R.id.btn_login -> {
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_login -> {
+                hideKeyboard()
+                loader?.show(requireActivity().supportFragmentManager, "")
+                viewModel.login(binding.model)
+            }
 
-                    hideKeyboard()
-                    val validation = viewModel.validation(binding.model)
-                    if (validation.first) {
-                        loader?.show(requireActivity().supportFragmentManager, "")
-                        viewModel.login(binding.model)
-                    } else {
-                        showError(binding.root, validation.second)
-                    }
-                }
-
-                R.id.tv_forgot_username -> {
-                    findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
-                }
-                R.id.tv_forgot_password -> {
-                    findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-                }
+            R.id.tv_forgot_username -> {
+                findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+            }
+            R.id.tv_forgot_password -> {
+                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
             }
         }
-
     }
+
+    private fun checkButton() {
+        if (binding.edtEmail.length() > 0 && binding.edtPwd.length() > 0) {
+            binding.model = LoginModel(
+                value = binding.edtEmail.text.toString(),
+                password = binding.edtPwd.text.toString(),
+                enable = true
+            )
+        } else {
+            binding.model = LoginModel(
+                value = binding.edtEmail.text.toString(),
+                password = binding.edtPwd.text.toString(),
+                enable = false
+            )
+        }
+    }
+
+}
 
 

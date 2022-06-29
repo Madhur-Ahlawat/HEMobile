@@ -1,6 +1,7 @@
 package com.heandroid.ui.bottomnav.dashboard
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
@@ -42,7 +43,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-@MediumTest
+@LargeTest
 class DashboardViewModelTest {
 
     private var dashboardViewModel: DashboardViewModel? = null

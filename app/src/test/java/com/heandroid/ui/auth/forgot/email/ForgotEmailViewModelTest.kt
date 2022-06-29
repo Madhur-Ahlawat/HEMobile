@@ -12,9 +12,9 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,13 +60,15 @@ class ForgotEmailViewModelTest {
     fun init() {
         MockitoAnnotations.initMocks(this)
         hiltRule.inject()
-        forgotEmailViewModel = ForgotEmailViewModel(repository, errorManager)
+        forgotEmailViewModel = ForgotEmailViewModel(
+            repository, errorManager,
+        )
     }
 
 
     @Test
     fun `test reset password api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(forgotEmailResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(forgotEmailResponse.code()).thenReturn(200)
             val resp = ForgotEmailResponseModel("")
@@ -84,7 +86,7 @@ class ForgotEmailViewModelTest {
 
     @Test
     fun `test reset password api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(forgotEmailResponse.isSuccessful).thenReturn(false)
@@ -109,6 +111,19 @@ class ForgotEmailViewModelTest {
                 )
                 assertEquals(
                     message, it.forgotEmail.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test masking user name`() {
+        runTest {
+            val userName = "developer"
+            val ans = "de*****er"
+            forgotEmailViewModel?.let {
+                assertEquals(
+                    it.loadUserName(userName).toString(), ans
                 )
             }
         }

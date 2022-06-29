@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -57,11 +56,11 @@
             android:id="@+id/tvPersonaleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/underline_personal_info"
             android:layout_marginTop="17dp"
+            android:text="@string/underline_personal_info"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -106,335 +105,331 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPassword"
             app:layout_constraintStart_toEndOf="@+id/tvPassword" />
 
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcvContainer"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginTop="15dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/btnAction"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvPersonaleInfo">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/personalAccountParent"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFullName"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvContainer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/first_name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_marginTop="15dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="5dp">
 
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieFullName"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/personalAccountParent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        android:paddingBottom="@dimen/_20sdp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilFullName"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/first_name"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tieFullName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tieLastNameLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/last_name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilFullName">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieLastName"
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tieLastNameLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/last_name"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tilFullName">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tieLastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilMobileNo"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="16dp"
+                            android:hint="@string/mobile_telephone"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tieLastNameLayout">
+
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tieMobileNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:text="@={model.cellPhone}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilEveningNo"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="26dp"
+                            android:hint="@string/evening_number"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tilMobileNo">
+
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tieEveningNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:text="@={model.eveningPhone}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/businessAccountParent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_20sdp"
+                        android:visibility="visible">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/companyNameLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/company_name"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/companyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMobileNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/mobile_telephone"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tieLastNameLayout">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieMobileNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:text="@={model.cellPhone}"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/companyRegLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/company_reg_number"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/companyNameLayout">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/companyRegNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="15"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEveningNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="26dp"
-                    android:hint="@string/evening_number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilMobileNo">
+                        </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/firstNameLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/first_name"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/companyRegLayout">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieEveningNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:text="@={model.eveningPhone}"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/firstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/lastNameLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/last_name"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/firstNameLayout">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/lastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPersonName"
+                                android:maxLength="50"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/businessAccountParent"
-                android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/businessMobNoLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="16dp"
+                            android:hint="@string/str_mobile_number"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/companyNameLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/company_name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/businessMobNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="15"
+                                android:singleLine="true"
+                                android:text="@={model.cellPhone}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/companyName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/AlternateNoLayout"
+                            style="@style/Widget.HeMobile.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:hint="@string/alternative_number"
+                            app:boxStrokeColor="@color/color_00703C"
+                            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/businessMobNoLayout">
 
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/alternateNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLength="15"
+                                android:singleLine="true"
+                                android:text="@={model.cellPhone}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_13ssp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/companyRegLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/company_reg_number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/companyNameLayout">
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/companyRegNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:maxLength="15"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/firstNameLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/first_name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/companyRegLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/firstName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lastNameLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/last_name"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/firstNameLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/lastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/businessMobNoLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/str_mobile_number"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/businessMobNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:text="@={model.cellPhone}"
-                        android:maxLength="15"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/AlternateNoLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/alternative_number"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/businessMobNoLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/alternateNo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:text="@={model.cellPhone}"
-                        android:maxLength="15"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-        </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAction"
@@ -450,11 +445,8 @@
             android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -463,14 +455,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glEnd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_12sdp" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTop"
@@ -479,15 +469,12 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="@dimen/_11sdp" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

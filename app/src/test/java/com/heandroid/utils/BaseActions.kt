@@ -5,10 +5,6 @@ import android.text.SpannableString
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
-import android.widget.HorizontalScrollView
-import android.widget.ListView
-import android.widget.ScrollView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
 import androidx.test.espresso.action.ScrollToAction
@@ -27,6 +23,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matchers.anyOf
+import android.os.Bundle
+import android.widget.*
 
 
 object BaseActions {
@@ -211,6 +209,49 @@ object BaseActions {
 
         companion object {
             private val TAG = ScrollToAction::class.java.simpleName
+        }
+    }
+
+    fun equalBundles(one: Bundle?, two: Bundle?): Boolean {
+        one?.let {
+            two?.let {
+                if (one.size() != two.size()) return false
+                val setOne: MutableSet<String> = HashSet(one.keySet())
+                setOne.addAll(two.keySet())
+                var valueOne: Any?
+                var valueTwo: Any?
+                for (key in setOne) {
+                    if (!one.containsKey(key) || !two.containsKey(key)) return false
+                    valueOne = one[key]
+                    valueTwo = two[key]
+                    if (valueOne is Bundle && valueTwo is Bundle &&
+                        !equalBundles(valueOne, valueTwo)
+                    ) {
+                        return false
+                    } else if (valueOne == null) {
+                        if (valueTwo != null) return false
+                    } else if (valueOne != valueTwo) return false
+                }
+                return true
+            }
+        }
+        return false
+    }
+
+    fun forceTypeText(text: String): ViewAction {
+        return object : ViewAction {
+            override fun getDescription(): String {
+                return "force type text"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return allOf(isEnabled())
+            }
+
+            override fun perform(uiController: UiController?, view: View?) {
+                (view as? EditText)?.append(text)
+                uiController?.loopMainThreadUntilIdle()
+            }
         }
     }
 }

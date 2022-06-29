@@ -42,18 +42,6 @@ class ForgotEmailViewModel @Inject constructor(
         }
     }
 
-
-    fun validation(model: ForgotEmailModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (model?.accountNumber?.isEmpty() == true && model.zipCode?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_account_zip))
-        else if (model?.accountNumber?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_account_number))
-        else if (model?.zipCode?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_zip_code))
-        return ret
-    }
-
     fun loadUserName(username: String): StringBuffer {
         val buffer = StringBuffer()
         for (i in username.indices) {

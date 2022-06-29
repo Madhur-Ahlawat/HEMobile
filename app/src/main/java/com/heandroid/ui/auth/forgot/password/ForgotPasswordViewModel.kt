@@ -1,6 +1,6 @@
 package com.heandroid.ui.auth.forgot.password
 
-import android.text.TextUtils
+import android.app.Application
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.R
 import com.heandroid.data.error.errorUsecase.ErrorManager
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
-import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.heandroid.data.model.auth.forgot.password.*
 import com.heandroid.data.repository.auth.ForgotPasswordRepository
-import com.heandroid.ui.base.BaseApplication
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
@@ -27,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
     private val repository: ForgotPasswordRepository,
-    val errorManager: ErrorManager
+    val errorManager: ErrorManager,
+    val application: Application
 ) : ViewModel() {
 
     @Inject
@@ -93,21 +88,10 @@ class ForgotPasswordViewModel @Inject constructor(
         }
     }
 
-
-    fun validation(model: ConfirmOptionModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (TextUtils.isEmpty(model?.identifier)) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_email))
-        else if (TextUtils.isEmpty(model?.zipCode)) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_postal_code))
-        return ret
-    }
-
-
     fun checkPassword(model: ResetPasswordModel?): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (model?.newPassword?.equals(model.confirmPassword) == false) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_password_not_match))
+            Pair(false, application.getString(R.string.error_password_not_match))
         return ret
     }
 

@@ -9,6 +9,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.LargeTest
 import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
@@ -47,6 +48,7 @@ import org.robolectric.shadows.ShadowInstrumentation.getInstrumentation
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@LargeTest
 class VehicleHistoryVehicleDetailsFragmentTest {
 
     @get:Rule

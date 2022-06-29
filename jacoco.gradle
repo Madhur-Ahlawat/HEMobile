@@ -14,7 +14,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDevDebugUnitTest']) {
         xml.enabled = true
         html.enabled = true
         html.destination file("${project.buildDir}/coverage/report/html")
-        xml.destination file("${project.buildDir}/coverage/report/xml")
+        xml.destination file("${project.buildDir}/coverage/report/testReport.xml")
     }
 
     def fileFilter = [

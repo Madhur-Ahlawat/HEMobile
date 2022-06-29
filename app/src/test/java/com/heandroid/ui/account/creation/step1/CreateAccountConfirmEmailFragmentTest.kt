@@ -3,17 +3,22 @@ package com.heandroid.ui.account.creation.step1
 import android.os.Bundle
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
-import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.utils.BaseActions
 import com.heandroid.utils.BaseActions.forceClick
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
@@ -26,8 +31,9 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,13 +42,13 @@ import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
-import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowToast
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@MediumTest
 class CreateAccountConfirmEmailFragmentTest {
 
     @get:Rule
@@ -55,7 +61,7 @@ class CreateAccountConfirmEmailFragmentTest {
     private val emailVerification = MutableLiveData<Resource<EmailVerificationResponse?>?>()
     private val confirmEmailVerification = MutableLiveData<Resource<EmptyApiResponse?>?>()
 
-    private val navController: NavController = Mockito.mock(NavController::class.java)
+    private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
     private lateinit var bundle: Bundle
 
@@ -94,7 +100,7 @@ class CreateAccountConfirmEmailFragmentTest {
             onView(withId(R.id.tvVerification)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             Shadows.shadowOf(Looper.getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 onView(withId(R.id.tvResend)).check(matches(isDisplayed()))
                     .perform(forceClick())
                 Shadows.shadowOf(Looper.getMainLooper()).idle()
@@ -118,7 +124,7 @@ class CreateAccountConfirmEmailFragmentTest {
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-            runBlockingTest {
+            runTest {
                 onView(withId(R.id.tvResend)).check(matches(isDisplayed()))
                     .perform(forceClick())
                 Shadows.shadowOf(Looper.getMainLooper()).idle()
@@ -133,17 +139,29 @@ class CreateAccountConfirmEmailFragmentTest {
         every { viewModel.confirmEmailApiVal } returns confirmEmailVerification
 
         launchFragmentInHiltContainer<CreateAccountConfirmEmailFragment>(bundle) {
+            navController.setGraph(R.navigation.nav_graph_account_creation)
+            navController.setCurrentDestination(R.id.confirmEmailFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvVerification)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             onView(withId(R.id.etCode)).check(matches(isDisplayed()))
-                .perform(ViewActions.typeText("test@test.com"))
-            onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
-            val emptyApiResponse = Mockito.mock(EmptyApiResponse::class.java)
-            confirmEmailVerification.value = Resource.Success(emptyApiResponse)
-//            Mockito.verify(navController)
-//                .navigate(R.id.action_confirmEmailFragment_to_accountTypeSelectionFragment, bun)
+                .perform(
+                    ViewActions.clearText(),
+                    ViewActions.typeText("1234")
+                )
+
+            runTest {
+                delay(500)
+                closeSoftKeyboard()
+                onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
+                    .perform(ViewActions.click())
+                    .perform(forceClick())
+                confirmEmailVerification.value = Resource.Success(EmptyApiResponse(200, ""))
+                assertEquals(
+                    navController.currentDestination?.id,
+                    R.id.accountTypeSelectionFragment
+                )
+            }
         }
     }
 
@@ -158,7 +176,7 @@ class CreateAccountConfirmEmailFragmentTest {
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             onView(withId(R.id.etCode)).check(matches(isDisplayed()))
                 .perform(ViewActions.typeText("test@test.com"))
-            runBlockingTest {
+            runTest {
                 Shadows.shadowOf(Looper.getMainLooper()).idle()
                 onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
                     .perform(ViewActions.click())

@@ -31,13 +31,6 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
         binding.enable = true
         binding.btnContine.setOnClickListener(this)
         binding.rgPaymentOptions.setOnCheckedChangeListener(this)
-        val model =arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA)
-
-        binding.btnContine.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(CREATE_ACCOUNT_DATA,model)
-            findNavController().navigate(R.id.action_choosePaymentFragment_to_cardFragment, bundle)
-        }
     }
 
     override fun initCtrl() {}

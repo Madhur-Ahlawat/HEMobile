@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.databinding.FragmentForgotEmailBinding
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -38,7 +39,9 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
 
     override fun init() {
         sessionManager.clearAll()
-        requireActivity().toolbar(getString(R.string.txt_recovery_username))
+        if (requireActivity() is AuthActivity) {
+            requireActivity().toolbar(getString(R.string.txt_recovery_username))
+        }
         binding.model= ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
         loader= LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -62,13 +65,8 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
             when(v.id){
                 R.id.btn_next -> {
                     hideKeyboard()
-                    val validation=viewModel.validation(binding.model)
-                    if(validation.first){
-                        loader?.show(requireActivity().supportFragmentManager,"")
-                        viewModel.forgotEmail(binding.model)
-                    }else {
-                        showError(binding.root,validation.second)
-                    }
+                    loader?.show(requireActivity().supportFragmentManager,"")
+                    viewModel.forgotEmail(binding.model)
                 }
 
                 R.id.btn_login -> { requireActivity().onBackPressed() }

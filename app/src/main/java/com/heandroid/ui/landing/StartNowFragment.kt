@@ -77,6 +77,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             is Resource.Success -> {
                 resource.data?.apply {
                     if (state == "LIVE" && title != null) {
+                        binding.maintainanceLyt.visible()
                         binding.maintainanceTitle.text = title
                         if (message != null)
                             binding.maintainanceDesc.text = message

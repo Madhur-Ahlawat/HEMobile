@@ -17,155 +17,163 @@
             android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/business_prepay_account"
-            android:textColor="@color/black"
             android:layout_marginStart="@dimen/_10ssp"
             android:layout_marginTop="@dimen/_10ssp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/roboto_bold"
-            android:textStyle="bold" />
+            android:text="@string/business_prepay_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvStep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_marginEnd="@dimen/_10ssp"
             android:text="@string/step_2_of_5"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
-            android:layout_marginTop="@dimen/_10ssp"
-            android:layout_marginEnd="@dimen/_10ssp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10ssp"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabel"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30ssp"
-                android:text="@string/initial_deposit_account"
-                android:textColor="@color/black"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7ssp"
-                android:text="@string/initial_payment"
-                android:textColor="@color/grey_two"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:text="@string/str_auto_top_up"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7ssp"
-                android:text="@string/auto_top_up_funds"
-                android:textColor="@color/grey_two"
-                android:textSize="@dimen/_14ssp"
-                android:fontFamily="@font/roboto_regular"
-                android:textStyle="normal"
-                android:visibility="visible" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:text="@string/how_many_vehicle"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilConfirmPassword"
-                style="@style/Widget.HeMobile.TextInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/no_of_vehicle"
-                app:boxStrokeColor="@color/color_00703C"
-                app:endIconDrawable="@drawable/ic_screenshot__121__2">
+                android:layout_margin="@dimen/_10ssp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/no_of_vehicle"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/initial_deposit_account"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/initial_payment"
+                    android:textColor="@color/grey_two"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/str_auto_top_up"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/auto_top_up_funds"
+                    android:textColor="@color/grey_two"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:text="@string/how_many_vehicle"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilConfirmPassword"
+                    style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:singleLine="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/no_of_vehicle"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/no_of_vehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/how_many_crossing"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:text="@string/how_many_crossing"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                android:fontFamily="@font/roboto_regular"
-                android:textStyle="normal" />
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="normal" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/crossings"
-                style="@style/Widget.HeMobile.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/crossings"
-                app:boxStrokeColor="@color/color_00703C"
-                app:endIconDrawable="@drawable/ic_screenshot__121__2">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/no_of_crossings"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/crossings"
+                    style="@style/Widget.HeMobile.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/crossings"
+                    app:boxStrokeColor="@color/color_00703C"
+                    app:endIconDrawable="@drawable/ic_screenshot__121__2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/no_of_crossings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/continue_business_topup"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginBottom="60dp"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/_20ssp"
-                android:text="@string/str_continue"
-                android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
-                android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
-                android:enabled="@{isEnable}"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/continue_business_topup"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_20ssp"
+                    android:layout_marginBottom="60dp"
+                    android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+                    android:enabled="@{isEnable}"
+                    android:gravity="center"
+                    android:text="@string/str_continue"
+                    android:textAllCaps="false"
+                    android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

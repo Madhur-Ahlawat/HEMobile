@@ -12,6 +12,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -63,7 +64,7 @@ class ProfileViewModelTest {
 
     @Test
     fun `test reset password api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(profileDetailResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(profileDetailResponse.code()).thenReturn(200)
             val resp = ProfileDetailModel(
@@ -84,7 +85,7 @@ class ProfileViewModelTest {
 
     @Test
     fun `test reset password api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(profileDetailResponse.isSuccessful).thenReturn(false)

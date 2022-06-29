@@ -14,6 +14,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.LargeTest
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
@@ -53,6 +55,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@MediumTest
 class VehicleGroupVehicleDetailsFragmentTest {
 
     @get:Rule

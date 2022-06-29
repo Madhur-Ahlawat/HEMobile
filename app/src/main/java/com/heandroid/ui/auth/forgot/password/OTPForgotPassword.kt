@@ -42,9 +42,9 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
         loader?.show(requireActivity().supportFragmentManager,"")
 
         data = arguments?.getParcelable("data")
-        viewModel.requestOTP(data)
         binding.isEnable=false
         loadUI()
+        viewModel.requestOTP(data)
     }
 
 

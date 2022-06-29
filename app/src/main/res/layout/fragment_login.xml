@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -35,10 +34,10 @@
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:text="@={model.value}"
-                android:singleLine="true"
                 android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:text="@={model.value}"
                 android:textColor="@color/color_000000"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,25 +61,25 @@
             style="@style/Widget.HeMobile.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:errorEnabled="true"
-            android:hint="@string/str_password"
-            app:passwordToggleEnabled="true"
-            android:textColorHint="@color/color_CBCBCB"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_username">
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/str_password"
+            android:textColorHint="@color/color_CBCBCB"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_username"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_pwd"
-                android:textSize="@dimen/_14ssp"
-                android:textColor="@color/color_000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-
-                android:singleLine="true"
                 android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+
                 android:text="@={model.password}"
+                android:textColor="@color/color_000000"
+                android:textSize="@dimen/_14ssp"
 
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,49 +89,50 @@
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13ssp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/str_forgot_your_password"
             android:textColor="@color/color_1D70B8"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_pwd"
-          android:text="@string/str_forgot_your_password" />
+            app:layout_constraintTop_toBottomOf="@+id/tf_pwd" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
             style="@style/Theme.Button"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/btn_color"
-            android:text="@string/txt_login"
-            android:textSize="@dimen/_16ssp"
-            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_37sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_37sdp"
+            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:enabled="@{model.enable}"
             android:padding="@dimen/_7sdp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/txt_login"
+            android:textAllCaps="false"
+            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dont_have_acnt"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login"
             app:srcCompat="@drawable/ic_dont_have_acnt" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tv_create_account"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_30sdp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login"
             app:srcCompat="@drawable/ic_create_acnt" />

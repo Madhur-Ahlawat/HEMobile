@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.FragmentMakeOffPaymentReceiptBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.showToast

@@ -40,11 +40,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     ItemClickListener, AddVehicleListener, RemoveVehicleListener, DownloadFilterDialogListener {
 
     private var mList: ArrayList<VehicleResponse?> = ArrayList()
-    private lateinit var mAdapter: VehicleManagementListAdapter
+    private lateinit var mAdapter: VehicleListAdapter
     private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var isAccountVehicle: Boolean? = false
     private var isBusinessAccount = false
+
     @Inject
     lateinit var sessionManager: SessionManager
     private var selectionType: String = Constants.PDF
@@ -56,7 +57,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun init() {
 
-        val buttonVisibility = requireActivity().intent?.getBooleanExtra(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,false)//getBoolean(Constants.DATA, false) == true
+        val buttonVisibility = requireActivity().intent?.getBooleanExtra(
+            Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,
+            false
+        )//getBoolean(Constants.DATA, false) == true
         isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
 
         if (buttonVisibility!!) {
@@ -64,7 +68,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             binding.removeVehicleBtn.gone()
         }
         sessionManager.fetchAccountType()?.let {
-            if (it == Constants.BUSINESS_ACCOUNT){
+            if (it == Constants.BUSINESS_ACCOUNT) {
                 isBusinessAccount = true
             }
         }
@@ -112,7 +116,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                     )
                 } else {
                     if (mList.isEmpty()) {
-                        requireContext().showToast("No vehicle to download")
+                        requireContext().showToast("No vehicles to download")
                     } else {
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this@VehicleListFragment)
@@ -199,7 +203,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
         this.mList = mList
-        mAdapter = VehicleManagementListAdapter(requireContext())
+        mAdapter = VehicleListAdapter(requireContext(), this, isBusinessAccount)
         mAdapter.setList(mList)
 
         binding.rvVehicleList.apply {
@@ -276,7 +280,11 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         lifecycleScope.launch(Dispatchers.IO) {
 
             val ret = async {
-                return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
+                return@async StorageHelper.writeResponseBodyToDisk(
+                    requireActivity(),
+                    selectionType,
+                    body
+                )
             }.await()
 
             if (ret) {

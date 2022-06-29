@@ -7,6 +7,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.utils.BaseActions.forceClick
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -28,6 +29,7 @@ import org.robolectric.annotation.LooperMode
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@MediumTest
 class LandingFragmentTest {
 
     @get:Rule

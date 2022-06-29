@@ -1,7 +1,7 @@
 package com.heandroid.ui.websiteservice
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.filters.SmallTest
+import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.webstatus.WebSiteStatus
@@ -34,7 +34,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-@SmallTest
+@MediumTest
 class WebSiteServiceViewModelTest {
     private val webSiteStatus: WebSiteStatus =
         WebSiteStatus("", "", "", "", "", "")

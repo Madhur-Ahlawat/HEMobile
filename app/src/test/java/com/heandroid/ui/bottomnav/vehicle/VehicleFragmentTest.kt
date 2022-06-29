@@ -4,6 +4,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.common.ConstantsTest
@@ -25,6 +26,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@MediumTest
 class VehicleFragmentTest {
 
     @get:Rule

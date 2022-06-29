@@ -3,6 +3,7 @@ package com.heandroid.ui.startNow
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -20,6 +21,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@MediumTest
 class AboutServiceFragmentTest {
 
     @get:Rule
@@ -35,11 +37,11 @@ class AboutServiceFragmentTest {
         launchFragmentInHiltContainer<AboutServiceFragment> {
             Espresso.onView(ViewMatchers.withId(R.id.tv_use_this_service))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            Espresso.onView(ViewMatchers.withId(R.id.tv_guideline))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             Espresso.onView(ViewMatchers.withId(R.id.tv_link))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         }
     }
-
-
-
 
 }

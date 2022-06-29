@@ -16,7 +16,6 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentConfirmationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*

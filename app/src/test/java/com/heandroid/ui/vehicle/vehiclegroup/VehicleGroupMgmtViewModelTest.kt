@@ -1,6 +1,7 @@
 package com.heandroid.ui.vehicle.vehiclegroup
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
@@ -34,7 +35,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-@MediumTest
+@LargeTest
 class VehicleGroupMgmtViewModelTest {
 
     private val groupVehicleRequest: VehicleGroupResponse =

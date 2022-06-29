@@ -42,7 +42,7 @@ class CreateAccountPaymentSummaryFragment: BaseFragment<FragmentCreateAccountPay
             binding.paymentLayout.gone()
             binding.prePayAmountLayout.gone()
         } else if (requestModel?.accountType == Constants.PERSONAL_ACCOUNT
-            && requestModel?.planType == null){
+            && requestModel?.planType.isNullOrEmpty()){
             binding.paymentLayout.gone()
             binding.prePayAmountLayout.visible()
         }

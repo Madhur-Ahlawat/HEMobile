@@ -19,7 +19,9 @@ class CrossingServiceUpdatesFragment : BaseFragment<FragmentCrosssingServiceUpda
     }
 
     override fun init() {
-        requireActivity().toolbar(getString(R.string.str_crossing_service_update))
+        if (requireActivity() is StartNowBaseActivity) {
+            requireActivity().toolbar(getString(R.string.str_crossing_service_update))
+        }
     }
 
     override fun initCtrl() {

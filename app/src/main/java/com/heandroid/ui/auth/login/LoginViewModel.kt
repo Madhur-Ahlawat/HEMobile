@@ -5,12 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.heandroid.R
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.auth.forgot.email.LoginModel
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.repository.auth.LoginRepository
-import com.heandroid.ui.base.BaseApplication
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler.failure
 import com.heandroid.utils.common.ResponseHandler.success
@@ -47,17 +45,6 @@ class LoginViewModel @Inject constructor(
                 _login.postValue(failure(e))
             }
         }
-    }
-
-    fun validation(model: LoginModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (model?.value?.isEmpty() == true && model.password?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_username_password))
-        else if (model?.value?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_username))
-        else if (model?.password?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.txt_error_password))
-        return ret
     }
 
 }

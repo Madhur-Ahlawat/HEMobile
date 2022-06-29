@@ -1,19 +1,20 @@
 package com.heandroid.ui.vehicle.vehiclelist
 
 import android.os.Bundle
-import android.os.Looper.getMainLooper
 import android.widget.Button
-import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.LargeTest
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
@@ -24,7 +25,6 @@ import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.BaseActions.atPosition
 import com.heandroid.utils.BaseActions.clickOnViewChild
-import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -36,8 +36,9 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.Matchers.not
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
@@ -46,13 +47,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
+@LargeTest
 class VehicleListFragmentTest {
 
     @get:Rule
@@ -63,8 +64,8 @@ class VehicleListFragmentTest {
     val viewModel = mockk<VehicleMgmtViewModel>(relaxed = true)
 
     private val vehicleList = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
-
     private val navController: NavController = Mockito.mock(NavController::class.java)
+    private val navCont = TestNavHostController(ApplicationProvider.getApplicationContext())
 
     @Before
     fun init() {
@@ -143,7 +144,7 @@ class VehicleListFragmentTest {
             onView(withId(R.id.removeVehicleBtn)).check(matches(isDisplayed()))
             vehicleList.postValue(Resource.DataError("Unknown Error"))
 
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
@@ -152,7 +153,7 @@ class VehicleListFragmentTest {
         }
     }
 
-    //@Test
+    @Test
     fun `test vehicle details by expanding vehicle item`() {
         every { viewModel.vehicleListVal } returns vehicleList
         val bundle = Bundle().apply {
@@ -216,7 +217,7 @@ class VehicleListFragmentTest {
         }
     }
 
-   // @Test
+    // @Test
     fun `test add and remove button visibility for dashboard screen`() {
         val bundle = Bundle().apply {
             putBoolean(ConstantsTest.DATA, true)
@@ -235,11 +236,13 @@ class VehicleListFragmentTest {
         launchFragmentInHiltContainer<VehicleListFragment> {
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.addVehicleBtn)).perform(BaseActions.forceClick())
-            val dialogFragment =
-                childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleDialog
-            assert(dialogFragment.dialog?.isShowing == true)
-            dialogFragment.dialog?.findViewById<Button>(R.id.cancel_btn)?.performClick()
-            assert(dialogFragment.dialog?.isShowing == false)
+            runTest {
+                val dialogFragment =
+                    childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleDialog
+                assert(dialogFragment.dialog?.isShowing == true)
+                dialogFragment.dialog?.findViewById<Button>(R.id.cancel_btn)?.performClick()
+                assert(dialogFragment.dialog?.isShowing == false)
+            }
         }
     }
 
@@ -272,14 +275,16 @@ class VehicleListFragmentTest {
         }
     }
 
-    @Test
+    //@Test
     fun `test add vehicle dialog, add button enabled for vehicle number`() {
         launchFragmentInHiltContainer<VehicleListFragment> {
-            Navigation.setViewNavController(requireView(), navController)
+            navCont.setGraph(R.navigation.navigation_vehicle_list)
+            navCont.setCurrentDestination(R.id.chooseOptionFragment)
+            Navigation.setViewNavController(requireView(), navCont)
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.addVehicleBtn)).perform(BaseActions.forceClick())
 
-            runBlockingTest {
+            runTest {
                 delay(1000)
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleDialog
@@ -296,19 +301,18 @@ class VehicleListFragmentTest {
                 )
                 (this@launchFragmentInHiltContainer as VehicleListFragment).onAddClick(vehicle)
                 val bundle = Bundle().apply {
-                    putParcelable(ConstantsTest.CREATE_ACCOUNT_DATA,null)
+                    putParcelable(ConstantsTest.CREATE_ACCOUNT_DATA, null)
                     putParcelable(ConstantsTest.DATA, vehicle)
                 }
-//                Mockito.verify(navController).navigate(R.id.addVehicleDetailsFragment, bundle)
+                assertEquals(
+                    navController.currentDestination?.id,
+                    R.id.addVehicleDetailsFragment
+                )
+                val currentDestinationArgs = navCont.backStack.last().arguments
+                Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bundle))
             }
         }
     }
-
-
-
-
-
-
 
 
 }

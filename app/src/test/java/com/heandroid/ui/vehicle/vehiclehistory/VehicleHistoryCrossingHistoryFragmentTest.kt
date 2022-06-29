@@ -9,6 +9,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.filters.LargeTest
 import com.heandroid.R
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
@@ -50,6 +51,7 @@ import org.robolectric.annotation.LooperMode
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@LargeTest
 class VehicleHistoryCrossingHistoryFragmentTest {
 
     @get:Rule

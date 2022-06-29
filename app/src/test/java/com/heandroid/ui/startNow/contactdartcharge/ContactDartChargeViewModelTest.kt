@@ -1,6 +1,7 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
@@ -12,7 +13,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.junit.Assert.*
@@ -32,7 +33,7 @@ import javax.inject.Inject
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 @ExperimentalCoroutinesApi
-@MediumTest
+@LargeTest
 class ContactDartChargeViewModelTest {
 
     private val caseEnquiryHistoryRequest: CaseEnquiryHistoryRequest =
@@ -86,7 +87,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case history api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseHistoryListResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseHistoryListResponse.code()).thenReturn(200)
             val request1 = DataFile.getServiceRequest("123")
@@ -112,7 +113,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case history api call for success no history`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseHistoryListResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseHistoryListResponse.code()).thenReturn(200)
             val resp = CaseEnquiryHistoryResponse(null, "", "")
@@ -130,7 +131,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case history api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(caseHistoryListResponse.isSuccessful).thenReturn(false)
@@ -161,7 +162,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case categories api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseCategoriesListResponse?.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseCategoriesListResponse?.code()).thenReturn(200)
             val request1 = CaseCategoriesModel("123", "")
@@ -185,7 +186,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case categories api call for success no categories list`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseCategoriesListResponse?.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseCategoriesListResponse?.code()).thenReturn(200)
             val list = listOf<CaseCategoriesModel>( )
@@ -203,7 +204,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case categories api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(caseCategoriesListResponse?.isSuccessful).thenReturn(false)
@@ -234,7 +235,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case sub categories api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseSubCategoriesListResponse?.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseSubCategoriesListResponse?.code()).thenReturn(200)
             val request1 = CaseCategoriesModel("123", "")
@@ -258,7 +259,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case sub categories api call for success no categories list`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(caseSubCategoriesListResponse?.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(caseSubCategoriesListResponse?.code()).thenReturn(200)
             val list = listOf<CaseCategoriesModel>( )
@@ -276,7 +277,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test get list of case sub categories api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(caseSubCategoriesListResponse?.isSuccessful).thenReturn(false)
@@ -307,7 +308,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test create new case api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(createNewCaseResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(createNewCaseResponse.code()).thenReturn(200)
             val res = CreateNewCaseResp("", "", "", "", "")
@@ -325,7 +326,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test create new case api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(createNewCaseResponse.isSuccessful).thenReturn(false)
@@ -356,7 +357,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test upload file api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(uploadFileResponseModel.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(uploadFileResponseModel.code()).thenReturn(200)
             val res = UploadFileResponseModel(true, "", "", "")
@@ -377,7 +378,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test upload file api call for failure`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(uploadFileResponseModel.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(uploadFileResponseModel.code()).thenReturn(200)
             val res = UploadFileResponseModel(false, "", "", "")
@@ -398,7 +399,7 @@ class ContactDartChargeViewModelTest {
 
     @Test
     fun `test upload file api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(uploadFileResponseModel.isSuccessful).thenReturn(false)

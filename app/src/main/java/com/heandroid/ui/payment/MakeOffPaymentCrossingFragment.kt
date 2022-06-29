@@ -9,14 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentCrossingBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.makeoneoffpayment.MakeOneOfPaymentViewModel
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
