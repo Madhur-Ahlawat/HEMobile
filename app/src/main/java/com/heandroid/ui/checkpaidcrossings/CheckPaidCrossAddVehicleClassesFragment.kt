@@ -129,7 +129,7 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
            val mVrmDetailsDvla =
                arguments?.getParcelable<VehicleInfoDetails?>(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)!!
            mVrmDetailsDvla.retrievePlateInfoDetails.vehicleClass = VehicleClassTypeConverter.toClassName(mClassType)
-           arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS,arguments)
+           arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS,mVrmDetailsDvla)
            findNavController().navigate(
                R.id.action_addVehicleClassesFragment_to_checkPaidCrossingChangeVrm,
                arguments
