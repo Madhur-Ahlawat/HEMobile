@@ -78,17 +78,17 @@ class CheckPaidCrossFragmentConformChangeVrm :
                     arguments?.getParcelable<VehicleInfoDetails?>(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)!!
 
                 val mTransferInfo = TransferInfo(
-                    index.toString(),
+                    "1",
                     mVrmDetailsDvla.retrievePlateInfoDetails.plateNumber!!,
                     "HE",
                     country!!,
                     mVrmDetailsDvla.retrievePlateInfoDetails.vehicleClass!!,
                     mVrmDetailsDvla.retrievePlateInfoDetails.vehicleMake!!,
                     mVrmDetailsDvla.retrievePlateInfoDetails.vehicleModel!!,
-                    "2022"
+                    ""
                 )
                 val mBalRequest =
-                    BalanceTransferRequest(mDataVrmRef.vrm!!,country!! , mTransferInfo)
+                    BalanceTransferRequest(mDataVrmRef.vrm!!,mData.plateCountry , mTransferInfo)
                 loader?.show(requireActivity().supportFragmentManager, "")
 
                 viewModel.balanceTransfer(mBalRequest)

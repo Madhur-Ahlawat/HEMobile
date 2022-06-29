@@ -91,12 +91,17 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
                 resource.data?.let { data ->
                     Logg.logging("UsedCharges", " data $data ")
                     data.forEach {
+                        var bounds = if (it?.exitDirection.equals("S"))
+                            "SouthBound"
+                        else
+                            "NorthBound"
+
                         val model = UsedChargesModel(
-                            "2400Uh",
+                            it!!.lookupKey,
                             it?.plateNumber!!,
-                            crossingDate = "1 April 2023",
-                            it?.exitTime,
-                            "South Bound"
+                            crossingDate = DateUtils.convertDateFormat(it!!.entryDate,0),
+                            it?.exitTime, bounds
+
                         )
                         mList.add(model)
 

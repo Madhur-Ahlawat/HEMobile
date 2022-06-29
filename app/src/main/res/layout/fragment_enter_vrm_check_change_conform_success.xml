@@ -48,7 +48,7 @@
                     android:textStyle="bold" />
 
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/regNum"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
@@ -84,7 +84,7 @@
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"

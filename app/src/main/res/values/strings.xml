@@ -812,7 +812,7 @@
     <string name="str_change_vehicle">Change Vehicle</string>
     <string name="str_enter_the_number_plate_you_wish">Enter the number plate you wish to associate to this payment</string>
     <string name="str_confirm_if_u_wish_to_associate_vehicle_no">Confirm if wish to associate vehicle number plate %s to your payment reference: %s</string>
-    <string name="str_your_change_to_ref_no_made">Your change to reference number  %s have been made successfully %s</string>
+    <string name="str_your_change_to_ref_no_made">Your change to reference number  %s have been made successfully</string>
     <string name="str_make_another_change">Make another change</string>
     <string name="str_date_changed">Date changed</string>
     <string name="str_UK">UK</string>
