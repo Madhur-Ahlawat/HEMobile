@@ -11,6 +11,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
+import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
@@ -25,11 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>(){
 
-    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-    private var mVehicleDetails: VehicleResponse? = null
     private var loader: LoaderDialog? = null
     private var mClassType = ""
-    private var mScreeType = 0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,17 +40,29 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        Logg.logging("testing", " AddVehicleClassesFragment mScreeType  $mScreeType")
-
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+        vrm = arguments?.getString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED)!!
+        exists = arguments?.getBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)!!
+        binding.title.text = "Vehicle registration number: $vrm"
 
         binding.classARadioButton.isChecked = true
         mClassType = "1"
         binding.classADesc.visible()
     }
+    private var exists: Boolean? = null
+    private var vrm = ""
 
     override fun initCtrl() {
         binding.classADesc.visible()
+
+        val mData =
+            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)!!
+        val mDataVrmRef =
+            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)!!
+        val index =
+            arguments?.getInt("Index")
+        val country =
+            arguments?.getString(Constants.COUNTRY_TYPE)
+
 
 /*
         binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
@@ -112,7 +124,19 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
                 mClassType = "4"
             }
         }
+       binding.continueButton.setOnClickListener {
+           arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS,true)
+           val mVrmDetailsDvla =
+               arguments?.getParcelable<VehicleInfoDetails?>(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)!!
+           mVrmDetailsDvla.retrievePlateInfoDetails.vehicleClass = VehicleClassTypeConverter.toClassName(mClassType)
+           arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS,arguments)
+           findNavController().navigate(
+               R.id.action_addVehicleClassesFragment_to_checkPaidCrossingChangeVrm,
+               arguments
+           )
 
+
+       }
 
     }
 

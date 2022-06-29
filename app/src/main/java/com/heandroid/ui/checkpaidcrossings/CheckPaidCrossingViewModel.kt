@@ -94,6 +94,15 @@ class CheckPaidCrossingViewModel @Inject constructor(
             }
         }
     }
+    fun balanceTransfer(model: BalanceTransferRequest?) {
+        viewModelScope.launch {
+            try {
+                _balanceTransfer.postValue(success(repository.balanceTransfer(model), errorManager))
+            } catch (e: Exception) {
+                _balanceTransfer.postValue(failure(e))
+            }
+        }
+    }
 
     fun resetPassword(model: BalanceTransferRequest?) {
         viewModelScope.launch {

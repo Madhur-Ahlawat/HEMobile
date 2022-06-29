@@ -42,7 +42,6 @@
         android:name="com.heandroid.ui.checkpaidcrossings.UnUsedChargesFragment"
         tools:layout="@layout/fragment_unused_charges">
 
-
         <action
             android:id="@+id/action_unUsedCharges_to_enterVrmFragment"
             app:destination="@id/enterVrmFragment" />
@@ -90,6 +89,7 @@
             android:id="@+id/action_addVehicleClassesFragment_to_checkPaidCrossingChangeVrm"
             app:destination="@id/checkPaidCrossingChangeVrm" />
 
+
     </fragment>
 
     <fragment
@@ -99,6 +99,11 @@
         <action
             android:id="@+id/action_checkPaidCrossingChangeVrm_to_addVehicleDetailsFragment"
             app:destination="@id/addVehicleDetailsFragment" />
+
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConform"
+            app:destination="@id/checkPaidCrossingChangeVrmConform" />
+
 
     </fragment>
     <fragment

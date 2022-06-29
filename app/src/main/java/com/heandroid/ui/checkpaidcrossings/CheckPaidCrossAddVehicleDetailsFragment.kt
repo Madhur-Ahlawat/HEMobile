@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
+import com.heandroid.data.model.account.RetrievePlateInfoDetails
+import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDetailsBinding
 import com.heandroid.ui.base.BaseFragment
@@ -19,6 +23,9 @@ import java.nio.BufferUnderflowException
 class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
     private var mVehicleDetails: VehicleResponse? = null
+    private var exists: Boolean? = null
+    private var vrm = ""
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -31,15 +38,26 @@ class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleD
     override fun init() {
         binding.model = false
 
+        val mData =
+            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)!!
+        val mDataVrmRef =
+            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)!!
+        val index =
+            arguments?.getInt("Index")
+        val country =
+            arguments?.getString(Constants.COUNTRY_TYPE)
+        vrm = arguments?.getString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED)!!
+        exists = arguments?.getBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)!!
+
 
         binding.title.text = getString(
             R.string.vehicle_reg_num,
-            mVehicleDetails?.plateInfo?.number
-        )//"Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
+            vrm
+        )
         binding.subTitle.text = getString(
             R.string.country_reg,
-            mVehicleDetails?.plateInfo?.country
-        )//"Country of registration ${mVehicleDetails?.plateInfo?.country}"
+            country
+        )
     }
 
     override fun initCtrl() {
@@ -59,12 +77,9 @@ class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleD
                 && binding.colorInputEditText.text.toString().trim().isNotEmpty()
             ) {
 
-                mVehicleDetails?.vehicleInfo?.color =
-                    binding.colorInputEditText.text.toString().trim()
-                mVehicleDetails?.vehicleInfo?.make =
-                    binding.makeInputEditText.text.toString().trim()
-                mVehicleDetails?.vehicleInfo?.model =
-                    binding.modelInputEditText.text.toString().trim()
+                val mPlateInfo = RetrievePlateInfoDetails(vrm,"",binding.makeInputEditText.text.toString().trim(),binding.modelInputEditText.text.toString().trim(),binding.colorInputEditText.text.toString().trim())
+                val mVrmDetailsDvla =VehicleInfoDetails(mPlateInfo)
+                    arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS,mVrmDetailsDvla)
 
                 findNavController().navigate(R.id.addVehicleClassesFragment, arguments)
 

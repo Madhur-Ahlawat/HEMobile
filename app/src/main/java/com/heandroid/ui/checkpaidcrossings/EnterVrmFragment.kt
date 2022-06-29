@@ -24,6 +24,7 @@ import com.heandroid.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnClickListener {
@@ -32,28 +33,35 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
 
     private var loader: LoaderDialog? = null
 
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+    private var authToken = ""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentEnterVrmCheckBinding =
         FragmentEnterVrmCheckBinding.inflate(inflater, container, false)
 
-    private var country="UK"
+    private var country = "UK"
     override fun init() {
 
         binding.model = EnterVrmOptionsModel(vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        authToken = sessionManager.fetchAuthToken()!!
+        sessionManager.clearAll()
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
 
-            when(checkedId){
+            when (checkedId) {
 
-                R.id.uk->{
+                R.id.uk -> {
                     country = "UK"
                 }
 
-                R.id.non_uk->{
+                R.id.non_uk -> {
                     country = "NON UK"
                 }
 
@@ -113,15 +121,19 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
-        Logg.logging("Testing", "AddVehicleDoneFragment  apiResponseDVRM")
+        Logg.logging("TestingEnterVrm", "AddVehicleDoneFragment  apiResponseDVRM")
         loader?.dismiss()
+        sessionManager.saveAuthToken(authToken)
 
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
                     arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS, it)
                     arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, true)
-                    arguments?.putString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED, binding?.model?.vrm!!)
+                    arguments?.putString(
+                        Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
+                        binding?.model?.vrm!!
+                    )
                     arguments?.putString(Constants.COUNTRY_TYPE, country)
                     findNavController().navigate(
                         R.id.action_enterVrmFragment_to_checkPaidCrossingChangeVrm,
@@ -143,7 +155,10 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
                     "AddVehicleDoneFragment  apiResponseDVRM DataError called mVehicleDetails "
                 )
                 arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)
-                arguments?.putString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED, binding.model?.vrm!!)
+                arguments?.putString(
+                    Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
+                    binding.model?.vrm!!
+                )
                 arguments?.putString(Constants.COUNTRY_TYPE, country)
 
                 findNavController().navigate(
