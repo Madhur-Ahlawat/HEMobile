@@ -5,15 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class VehicleInfoDetails(
-    val retrievePlateInfoDetails: RetrievePlateInfoDetails
+    var retrievePlateInfoDetails: RetrievePlateInfoDetails
 ) : Parcelable
 
 @Parcelize
 data class RetrievePlateInfoDetails(
-    val plateNumber: String?,
-    val vehicleClass: String?,
-    val vehicleMake: String?,
-    val vehicleModel: String?,
-    val vehicleColor: String?
+    var plateNumber: String?,
+    var vehicleClass: String?,
+    var vehicleMake: String?,
+    var vehicleModel: String?,
+    var vehicleColor: String?
 ) : Parcelable {
 }

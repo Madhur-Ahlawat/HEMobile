@@ -11,6 +11,7 @@ import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.data.model.auth.forgot.password.*
 import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.checkpaidcrossings.*
 import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
 import com.heandroid.data.model.contactdartcharge.*
@@ -306,7 +307,7 @@ interface ApiService {
     suspend fun getAccountSettings(): Response<AccountResponse?>?
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
-    suspend fun updateCommunicationPrefs(@Body model :CommunicationPrefsRequestModel):Response<CommunicationPrefsResp?>?
+    suspend fun updateCommunicationPrefs(@Body model: CommunicationPrefsRequestModel): Response<CommunicationPrefsResp?>?
 
     @GET(SECONDARY_ACCOUNT)
     suspend fun getNominatedUserList(): Response<NominatedContactRes?>?
@@ -321,11 +322,26 @@ interface ApiService {
 
 
     @GET(DOWNLOAD_VRM_VEHICLE_LIST)
-    suspend fun getDownloadVehicleList(@Query("type") type: String?) : Response<ResponseBody?>?
+    suspend fun getDownloadVehicleList(@Query("type") type: String?): Response<ResponseBody?>?
 
     @PUT(VEHICLE_VRM_EDIT)
     suspend fun updateVehicleListManagement(@Body request: VehicleListManagementEditRequest?): Response<String?>
 
     @GET(ACCOUNT_STATEMENT)
-    suspend fun getAccountStatements():Response<List<StatementListModel?>?>
+    suspend fun getAccountStatements(): Response<List<StatementListModel?>?>
+
+    @POST(BALANCE_TRANSFER)
+    suspend fun balanceTransfer(@Body request: BalanceTransferRequest?): Response<BalanceTransferResponse?>
+
+
+    @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
+    suspend fun loginWithRefAndPlateNumber(
+        @Body request: CheckPaidCrossingsRequest?,
+        @Query("Value") value: Boolean? = true,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<CheckPaidCrossingsResponse?>
+
+    @POST(GET_TOLL_TRANSACTIONS)
+    suspend fun getTollTransactions(@Body request: UsedTollTransactionsRequest?): Response<List<UsedTollTransactionResponse?>?>
+
 }

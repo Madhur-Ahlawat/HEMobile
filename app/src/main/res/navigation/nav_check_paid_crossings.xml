@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_check_paid_crossings"
+    app:startDestination="@id/crossingCheck">
+
+
+    <fragment
+        android:id="@+id/crossingCheck"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_paid_crossing_check">
+
+        <action
+            android:id="@+id/action_crossingCheck_to_checkChargesOption"
+            app:destination="@id/checkChargesOption" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/checkChargesOption"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidOptionsFragment"
+        tools:layout="@layout/fragment_used_unused_options">
+
+        <action
+            android:id="@+id/action_checkChargesOption_to_unUsedCharges"
+            app:destination="@id/unUsedCharges" />
+
+
+        <action
+            android:id="@+id/action_checkChargesOption_to_usedCharges"
+            app:destination="@id/usedCharges" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/unUsedCharges"
+        android:name="com.heandroid.ui.checkpaidcrossings.UnUsedChargesFragment"
+        tools:layout="@layout/fragment_unused_charges">
+
+        <action
+            android:id="@+id/action_unUsedCharges_to_enterVrmFragment"
+            app:destination="@id/enterVrmFragment" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/usedCharges"
+        android:name="com.heandroid.ui.checkpaidcrossings.UsedChargesFragment"
+        tools:layout="@layout/fragment_used_charges">
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/enterVrmFragment"
+        android:name="com.heandroid.ui.checkpaidcrossings.EnterVrmFragment"
+        tools:layout="@layout/fragment_enter_vrm_check">
+
+        <action
+            android:id="@+id/action_enterVrmFragment_to_checkPaidCrossingChangeVrm"
+            app:destination="@id/checkPaidCrossingChangeVrm" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/addVehicleDetailsFragment"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossAddVehicleDetailsFragment"
+        tools:layout="@layout/fragment_add_vehicle_details">
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
+            app:destination="@id/addVehicleClassesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addVehicleClassesFragment"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossAddVehicleClassesFragment"
+        tools:layout="@layout/fragment_add_vehicle_classes">
+
+        <action
+            android:id="@+id/action_addVehicleClassesFragment_to_checkPaidCrossingChangeVrm"
+            app:destination="@id/checkPaidCrossingChangeVrm" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkPaidCrossingChangeVrm"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentChangeVrm"
+        tools:layout="@layout/fragment_check_paid_crossing_change_vrm">
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrm_to_addVehicleDetailsFragment"
+            app:destination="@id/addVehicleDetailsFragment" />
+
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConform"
+            app:destination="@id/checkPaidCrossingChangeVrmConform" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/checkPaidCrossingChangeVrmConform"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrm"
+        tools:layout="@layout/fragment_enter_vrm_check_change_conform">
+
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrmConform_to_checkPaidCrossingChangeVrmConformSuccess"
+            app:destination="@id/checkPaidCrossingChangeVrmConformSuccess" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/checkPaidCrossingChangeVrmConformSuccess"
+        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrmSuccessFull"
+        tools:layout="@layout/fragment_enter_vrm_check_change_conform_success">
+
+    </fragment>
+
+
+</navigation>

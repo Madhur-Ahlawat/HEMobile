@@ -15,6 +15,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.landing.LandingModel
 import com.heandroid.databinding.FragmentLandingBinding
+import com.heandroid.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.heandroid.ui.account.creation.controller.CreateAccountActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.futureModule.InProgressActivity
@@ -106,7 +107,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
                 when (binding.model?.selectType) {
                    VIEW_CHARGES -> { requireActivity().startNewActivity(ViewChargesActivity::class.java) }
                    ONE_OFF_PAYMENT -> { requireActivity().startNewActivity(MakeOffPaymentActivity::class.java) }
-                   CHECK_FOR_PAID -> { requireActivity().startNormalActivity(InProgressActivity::class.java) }
+                   CHECK_FOR_PAID -> { requireActivity().startNormalActivity(
+                       CheckPaidCrossingActivity::class.java) }
                    RESOLVE_PENALTY -> { openUrlInWebBrowser() }
                    CREATE_ACCOUNT-> { requireActivity().startNormalActivity(CreateAccountActivity::class.java) }
                    else -> { requireActivity().startNormalActivity(InProgressActivity::class.java) }
