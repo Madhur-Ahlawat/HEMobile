@@ -2,7 +2,6 @@ package com.heandroid.ui.auth.forgot.email
 
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -10,7 +9,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.MediumTest
 import com.heandroid.R
-import com.heandroid.data.model.auth.forgot.email.ForgotEmailModel
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
@@ -29,7 +27,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
@@ -49,8 +46,6 @@ class ForgotEmailFragmentTest {
     val viewModel = mockk<ForgotEmailViewModel>(relaxed = true)
 
     private val forgotEmailLiveData = MutableLiveData<Resource<ForgotEmailResponseModel?>?>()
-
-    private val navController: NavController = Mockito.mock(NavController::class.java)
 
     @Before
     fun init() {

@@ -28,22 +28,23 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnClickListener {
 
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
 
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
 
-    private val viewModel : ForgotEmailViewModel by viewModels()
+    private val viewModel: ForgotEmailViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
-        if (requireActivity() is AuthActivity) {
-            requireActivity().toolbar(getString(R.string.txt_recovery_username))
-        }
-        binding.model= ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
-        loader= LoaderDialog()
+        requireActivity().toolbar(getString(R.string.txt_recovery_username))
+        binding.model = ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
+        loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
@@ -57,45 +58,60 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     }
 
     override fun observer() {
-        observe(viewModel.forgotEmail,::handleForgotEmail)
+        observe(viewModel.forgotEmail, ::handleForgotEmail)
     }
 
     override fun onClick(v: View?) {
         v?.let {
-            when(v.id){
+            when (v.id) {
                 R.id.btn_next -> {
                     hideKeyboard()
-                    loader?.show(requireActivity().supportFragmentManager,"")
+                    loader?.show(requireActivity().supportFragmentManager, "")
                     viewModel.forgotEmail(binding.model)
                 }
 
-                R.id.btn_login -> { requireActivity().onBackPressed() }
+                R.id.btn_login -> {
+                    requireActivity().onBackPressed()
+                }
             }
         }
 
     }
 
-    private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?){
-        try{loader?.dismiss()
+    private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
                 binding.llEnterDetails.visibility = GONE
                 binding.llUsername.visibility = VISIBLE
                 loadData(status)
             }
-            is Resource.DataError -> { showError(binding.root, status.errorMsg) }
-            else -> {}
-
-        }}catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun loadData(status: Resource.Success<ForgotEmailResponseModel?>) {
-        val username=viewModel.loadUserName(status.data?.userName?:"")
+        val username = viewModel.loadUserName(status.data?.userName ?: "")
         binding.tvUsername.text = username.toString()
     }
 
     private fun isEnable() {
-        if(binding.edtAccountNumber.length()>0 && binding.edtPostCode.length()>0) binding.model = ForgotEmailModel(enable = true, accountNumber = binding.edtAccountNumber.text.toString(), zipCode = binding.edtPostCode.text.toString())
-        else binding.model = ForgotEmailModel(enable = false, accountNumber = binding.edtAccountNumber.text.toString(), zipCode = binding.edtPostCode.text.toString())
+        if (binding.edtAccountNumber.length() > 0 && binding.edtPostCode.length() > 0) binding.model =
+            ForgotEmailModel(
+                enable = true,
+                accountNumber = binding.edtAccountNumber.text.toString(),
+                zipCode = binding.edtPostCode.text.toString()
+            )
+        else binding.model = ForgotEmailModel(
+            enable = false,
+            accountNumber = binding.edtAccountNumber.text.toString(),
+            zipCode = binding.edtPostCode.text.toString()
+        )
     }
 }

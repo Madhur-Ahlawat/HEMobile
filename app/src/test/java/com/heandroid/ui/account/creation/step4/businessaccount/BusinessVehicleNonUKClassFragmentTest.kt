@@ -87,7 +87,11 @@ class BusinessVehicleNonUKClassFragmentTest {
             navController.setCurrentDestination(R.id.businessNonUKClassFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
+            onView(withId(R.id.classB_RadioButton)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
             onView(withId(R.id.classA_RadioButton)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.cbDeclare)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
@@ -275,6 +279,57 @@ class BusinessVehicleNonUKClassFragmentTest {
             }
             val currentDestinationArgs = navController.backStack.last().arguments
             Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
+        }
+    }
+
+    @Test
+    fun `test business vehicle non uk screen, test confirm dialog dismiss`() {
+        bundle = Bundle().apply {
+            putParcelable(
+                ConstantsTest.CREATE_ACCOUNT_DATA,
+                DataFile.getCreateAccountRequestModel().apply {
+                    accountType = Constants.BUSINESS_ACCOUNT
+                }
+            )
+            putParcelable(
+                ConstantsTest.NON_UK_VEHICLE_DATA,
+                NonUKVehicleModel()
+            )
+        }
+        launchFragmentInHiltContainer<BusinessVehicleNonUKClassFragment>(bundle) {
+            navController.setGraph(R.navigation.nav_graph_account_creation)
+            navController.setCurrentDestination(R.id.businessNonUKClassFragment)
+            Navigation.setViewNavController(requireView(), navController)
+            onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
+            onView(withId(R.id.cbDeclare)).perform(BaseActions.betterScrollTo())
+                .perform(BaseActions.forceClick())
+            runTest {
+                onView(withId(R.id.groupName)).check(matches(isDisplayed()))
+                    .perform(ViewActions.clearText(), ViewActions.typeText("group name"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+            }
+            onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
+                .perform(BaseActions.forceClick())
+
+            runTest {
+                val dialogFragment =
+                    childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
+                assert(dialogFragment.dialog?.isShowing == true)
+                onView(withId(R.id.cancel_btn)).inRoot(RootMatchers.isDialog())
+                    .perform(ViewActions.click())
+            }
+
+            onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
+                .perform(BaseActions.forceClick())
+
+            runTest {
+                val dialogFragment =
+                    childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
+                assert(dialogFragment.dialog?.isShowing == true)
+                onView(withId(R.id.ivClose)).inRoot(RootMatchers.isDialog())
+                    .perform(BaseActions.forceClick())
+            }
         }
     }
 }

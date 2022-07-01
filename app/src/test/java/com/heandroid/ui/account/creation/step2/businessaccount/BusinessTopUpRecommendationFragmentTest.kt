@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -20,6 +21,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -163,6 +166,16 @@ class BusinessTopUpRecommendationFragmentTest {
             onView(withId(R.id.topUpAmount)).check(matches(isDisplayed()))
             onView(withId(R.id.topUpAmountFalls)).check(matches(isDisplayed()))
             onView(withId(R.id.topUpCalculateRecommend)).check(matches(isDisplayed()))
+            runTest {
+                onView(withId(R.id.topUpAmount)).check(matches(isDisplayed()))
+                    .perform(ViewActions.clearText(), BaseActions.forceTypeText("20"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.topUpAmountFalls)).check(matches(isDisplayed()))
+                    .perform(ViewActions.clearText(), BaseActions.forceTypeText("10"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+            }
             onView(withId(R.id.continue_business_topup))
                 .perform(ViewActions.scrollTo())
                 .check(matches(isDisplayed()))
@@ -175,9 +188,9 @@ class BusinessTopUpRecommendationFragmentTest {
                 putParcelable(
                     ConstantsTest.CREATE_ACCOUNT_DATA,
                     DataFile.getCreateAccountRequestModel().apply {
-                        thresholdAmount = (10 * 100).toString()
-                        replenishmentAmount = (10 * 100 * 2).toString()
-                        transactionAmount = (10 * 100 * 2).toString()
+                        thresholdAmount = (10).toString()
+                        replenishmentAmount = (20).toString()
+                        transactionAmount = (20).toString()
                     }
                 )
             }

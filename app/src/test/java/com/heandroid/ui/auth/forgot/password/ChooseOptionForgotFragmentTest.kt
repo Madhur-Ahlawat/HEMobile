@@ -1,6 +1,8 @@
 package com.heandroid.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -11,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
+import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -18,6 +21,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -70,18 +74,23 @@ class ChooseOptionForgotFragmentTest {
             navController.setGraph(R.navigation.navigation_auth)
             navController.setCurrentDestination(R.id.chooseOptionFragment)
             Navigation.setViewNavController(requireView(), navController)
-
             onView(withId(R.id.enter_details_txt)).check(matches(isDisplayed()))
+            onView(withId(R.id.continue_btn)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            runTest {
+                val dialogFragment =
+                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                assert(dialogFragment.dialog?.isShowing == true)
+                dialogFragment.dialog?.findViewById<TextView>(R.id.btnOk)?.performClick()
+            }
             onView(withId(R.id.post_mail_radio_btn)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.email_radio_btn)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.text_message_radio_btn)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
-
             onView(withId(R.id.continue_btn)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
-
             Assert.assertEquals(
                 navController.currentDestination?.id,
                 R.id.otpFragment

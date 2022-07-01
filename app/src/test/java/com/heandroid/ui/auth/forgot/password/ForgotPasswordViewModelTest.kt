@@ -9,6 +9,7 @@ import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.auth.forgot.password.*
 import com.heandroid.data.repository.auth.ForgotPasswordRepository
 import com.heandroid.ui.vehicle.TestErrorResponseModel
+import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -40,12 +41,16 @@ class ForgotPasswordViewModelTest {
     private val resetPasswordRequest = ResetPasswordModel("", "", "", "", false)
     private val otpRequest = RequestOTPModel("", "")
     private val confirmOptionRequest = ConfirmOptionModel("", "", false)
+    private val unknownException = "unknown exception"
 
     @Mock
     private lateinit var responseBody: ResponseBody
 
     @Mock
     private lateinit var repository: ForgotPasswordRepository
+
+    @Mock
+    private lateinit var session: SessionManager
 
     @Mock
     private lateinit var resetPasswordResponse: Response<ForgotPasswordResponseModel?>
@@ -71,7 +76,8 @@ class ForgotPasswordViewModelTest {
         hiltRule.inject()
         forgotPasswordViewModel = ForgotPasswordViewModel(
             repository,
-            errorManager, getInstrumentation().targetContext as Application
+            errorManager, getInstrumentation().targetContext as Application,
+            session
         )
     }
 
@@ -127,6 +133,25 @@ class ForgotPasswordViewModelTest {
     }
 
     @Test
+    fun `test reset password api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.resetPassword(resetPasswordRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            forgotPasswordViewModel?.let {
+                it.resetPassword(resetPasswordRequest)
+                assertEquals(
+                    null, it.resetPassword.value?.data
+                )
+                assertEquals(
+                    unknownException, it.resetPassword.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
     fun `test confirm option api call for success`() {
         runTest {
             Mockito.lenient().`when`(confirmOptionResponse.isSuccessful).thenReturn(true)
@@ -141,7 +166,7 @@ class ForgotPasswordViewModelTest {
             forgotPasswordViewModel?.let {
                 it.confirmOptionForForgot(confirmOptionRequest)
                 assertEquals(
-                    null, it.confirmOption.value?.data
+                    resp, it.confirmOption.value?.data
                 )
             }
         }
@@ -175,6 +200,25 @@ class ForgotPasswordViewModelTest {
                 assertEquals(
                     "Network error, could get data,please try again!",
                     it.confirmOption.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test confirm option api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.confirmOptionForForgot(confirmOptionRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            forgotPasswordViewModel?.let {
+                it.confirmOptionForForgot(confirmOptionRequest)
+                assertEquals(
+                    null, it.confirmOption.value?.data
+                )
+                assertEquals(
+                    unknownException, it.confirmOption.value?.errorMsg
                 )
             }
         }
@@ -225,6 +269,25 @@ class ForgotPasswordViewModelTest {
                 )
                 assertEquals(
                     message, it.otp.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test otp api api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.requestOTP(otpRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            forgotPasswordViewModel?.let {
+                it.requestOTP(otpRequest)
+                assertEquals(
+                    null, it.otp.value?.data
+                )
+                assertEquals(
+                    unknownException, it.otp.value?.errorMsg
                 )
             }
         }

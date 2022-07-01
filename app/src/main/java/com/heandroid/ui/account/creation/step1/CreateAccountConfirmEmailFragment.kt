@@ -28,14 +28,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
 @AndroidEntryPoint
-class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConfirmEmailBinding>(), View.OnClickListener {
+class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConfirmEmailBinding>(),
+    View.OnClickListener {
 
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
-    private var requestModel : CreateAccountRequestModel? =null
-    private var isEditEmail : Int? = null
+    private var requestModel: CreateAccountRequestModel? = null
+    private var isEditEmail: Int? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
         requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
@@ -65,40 +67,68 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.btnAction -> { confirmEmailCode() }
-            R.id.tvResend -> { sendEmailVerificationRequest() }
+            R.id.btnAction -> {
+                confirmEmailCode()
+            }
+            R.id.tvResend -> {
+                sendEmailVerificationRequest()
+            }
         }
     }
 
     private fun sendEmailVerificationRequest() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, requestModel?.emailAddress?:"")
+        val request = EmailVerificationRequest(
+            Constants.EMAIL_SELECTION_TYPE,
+            requestModel?.emailAddress ?: ""
+        )
         createAccountViewModel.emailVerificationApi(request)
     }
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request = ConfirmEmailRequest(requestModel?.referenceId?.toString()?:"", requestModel?.emailAddress?:"", binding.etCode.text.toString().trim())
+        val request = ConfirmEmailRequest(
+            requestModel?.referenceId?.toString() ?: "",
+            requestModel?.emailAddress ?: "",
+            binding.etCode.text.toString().trim()
+        )
         createAccountViewModel.confirmEmailApi(request)
     }
 
 
     private fun isEnable() {
-        if (binding.etCode.text.toString().trim().isNotEmpty()) binding.model = EmailValidationModel(enable = true, email = requestModel?.emailAddress?:"", code = binding.etCode.text.toString())
-        else binding.model = EmailValidationModel(enable = false, email = requestModel?.emailAddress?:"", code = binding.etCode.text.toString())
+        if (binding.etCode.text.toString().trim().isNotEmpty()) binding.model =
+            EmailValidationModel(
+                enable = true,
+                email = requestModel?.emailAddress ?: "",
+                code = binding.etCode.text.toString()
+            )
+        else binding.model = EmailValidationModel(
+            enable = false,
+            email = requestModel?.emailAddress ?: "",
+            code = binding.etCode.text.toString()
+        )
     }
 
 
     private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
-        try {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
-                if(resource.data?.status?.equals("500")==true) showError(binding.root,resource.data.message)
+                if (resource.data?.status?.equals("500") == true) showError(
+                    binding.root,
+                    resource.data.message
+                )
                 else loadFragment()
             }
-            is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
-        }}catch (e: Exception) {  }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun loadFragment() {
@@ -120,15 +150,19 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
-                    requireContext().showToast("code sent successfully")
-                    requestModel?.referenceId = resource.data?.referenceId?.toLongOrNull()
-                }
-                is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
+        }
+        when (resource) {
+            is Resource.Success -> {
+                requireContext().showToast("code sent successfully")
+                requestModel?.referenceId = resource.data?.referenceId?.toLongOrNull()
             }
-        } catch (e:Exception) { }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 }

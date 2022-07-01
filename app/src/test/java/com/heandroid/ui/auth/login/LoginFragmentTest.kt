@@ -127,14 +127,14 @@ class LoginFragmentTest {
                     .perform(ViewActions.clearText(), ViewActions.typeText("100313904"))
                 Espresso.closeSoftKeyboard()
                 delay(500)
-                onView(withId(R.id.edt_email)).check(matches(isDisplayed()))
+                onView(withId(R.id.edt_pwd)).check(matches(isDisplayed()))
                     .perform(ViewActions.clearText(), ViewActions.typeText("Welcome1"))
                 Espresso.closeSoftKeyboard()
                 delay(500)
             }
             onView(withId(R.id.btn_login)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
-            loginLiveData.postValue(Resource.Success(DataFile.getLoginResponse()))
+            loginLiveData.value = Resource.Success(DataFile.getLoginResponse())
 
         }
     }
@@ -152,7 +152,7 @@ class LoginFragmentTest {
                     .perform(ViewActions.clearText(), ViewActions.typeText("100313904"))
                 Espresso.closeSoftKeyboard()
                 delay(500)
-                onView(withId(R.id.edt_email)).check(matches(isDisplayed()))
+                onView(withId(R.id.edt_pwd)).check(matches(isDisplayed()))
                     .perform(ViewActions.clearText(), ViewActions.typeText("Welcome1"))
                 Espresso.closeSoftKeyboard()
                 delay(500)

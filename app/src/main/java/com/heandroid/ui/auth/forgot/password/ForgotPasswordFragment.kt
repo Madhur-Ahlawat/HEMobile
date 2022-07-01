@@ -30,21 +30,22 @@ import javax.inject.Inject
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), View.OnClickListener {
 
     @Inject
-    lateinit var sessionManager : SessionManager
-    private var loader: LoaderDialog?=null
+    lateinit var sessionManager: SessionManager
+    private var loader: LoaderDialog? = null
 
-    private val viewModel : ForgotPasswordViewModel by viewModels()
+    private val viewModel: ForgotPasswordViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotPasswordBinding = FragmentForgotPasswordBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentForgotPasswordBinding =
+        FragmentForgotPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
-
-        if (requireActivity() is AuthActivity) {
-            requireActivity().toolbar(getString(R.string.str_password_recovery))
-        }
-        binding.model= ConfirmOptionModel(identifier = "", zipCode = "",enable = false)
-        loader= LoaderDialog()
+        requireActivity().toolbar(getString(R.string.str_password_recovery))
+        binding.model = ConfirmOptionModel(identifier = "", zipCode = "", enable = false)
+        loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
@@ -56,42 +57,60 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
 
     override fun observer() {
         lifecycleScope.launch {
-          observe(viewModel.confirmOption,::handleConfirmOptionResponse)
+            observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
         }
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
-        try{
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.statusCode?.equals("1054")==true) {
-                    showError(binding.root,status.data.message)
+                if (status.data?.statusCode?.equals("1054") == true) {
+                    showError(binding.root, status.data.message)
                 } else {
                     binding.root.post {
                         val bundle = Bundle()
                         bundle.putParcelable(Constants.OPTIONS, status.data)
-                        findNavController().navigate(R.id.action_forgotPasswordFragment_to_chooseOptionFragment, bundle)
+                        findNavController().navigate(
+                            R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
+                            bundle
+                        )
                     }
                 }
             }
-            is Resource.DataError -> { showError(binding.root,status.errorMsg) }
-        }}catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
+
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btn_next -> {
                 hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager, "")
                 sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
                 viewModel.confirmOptionForForgot(binding.model)
             }
         }
     }
 
-    private fun isEnable(){
-        if(binding.edtEmail.length()>0 && binding.edtPostcode.length()>0) binding.model = ConfirmOptionModel(enable = true, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
-        else binding.model = ConfirmOptionModel(enable = false, identifier = binding.edtEmail.text.toString(), zipCode = binding.edtPostcode.text.toString())
+    private fun isEnable() {
+        if (binding.edtEmail.length() > 0 && binding.edtPostcode.length() > 0) binding.model =
+            ConfirmOptionModel(
+                enable = true,
+                identifier = binding.edtEmail.text.toString(),
+                zipCode = binding.edtPostcode.text.toString()
+            )
+        else binding.model = ConfirmOptionModel(
+            enable = false,
+            identifier = binding.edtEmail.text.toString(),
+            zipCode = binding.edtPostcode.text.toString()
+        )
     }
 
 }

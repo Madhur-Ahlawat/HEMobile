@@ -27,28 +27,72 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.logging.Logger
 
 @AndroidEntryPoint
-class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
+class CreateAccountEmailVerificationFragment :
+    BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
-    private var requestModel : CreateAccountRequestModel? =null
-    private var isEditEmail : Int? = null
+    private var requestModel: CreateAccountRequestModel? = null
+    private var isEditEmail: Int? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
 
-        binding.etEmail.setText(requireActivity().intent?.getStringExtra(Constants.EMAIL)?:"",TextView.BufferType.EDITABLE)
+        binding.etEmail.setText(
+            requireActivity().intent?.getStringExtra(Constants.EMAIL) ?: "",
+            TextView.BufferType.EDITABLE
+        )
 
         requestModel = CreateAccountRequestModel(
-            referenceId = 0, securityCd = 0, accountType = "", tcAccepted = "Y", firstName = "",
-            lastName = "", address1 = "", city = "", stateType = "", countryType = "",
-            zipCode1 = "", emailAddress = "", cellPhone = "",cellPhoneCountryCode = "+44", eveningPhone = "",eveningPhoneCountryCode = "+44", smsOption = "Y",
-            password = "", digitPin = "",correspDeliveryMode = "EMAIL",correspDeliveryFrequency = "MONTHLY", companyName = "", fein = "", nonRevenueOption = "",
-            ftvehicleList = null, creditCardType = "", creditCardNumber = "", maskedNumber = "", creditCExpMonth = "",
-            creditCExpYear = "", securityCode = "", cardFirstName = "", cardMiddleName = "", cardLastName = "",
-            billingAddressLine1 = "", billingAddressLine2 = "", cardCity = "", cardStateType = "", cardZipCode = "",
-            thresholdAmount = null, replenishmentAmount = null, transactionAmount = null, planType = null, enable = false, vehicleNo = "",mNoOfVehicles = "",mNoOfCrossings = ""
+            referenceId = 0,
+            securityCd = 0,
+            accountType = "",
+            tcAccepted = "Y",
+            firstName = "",
+            lastName = "",
+            address1 = "",
+            city = "",
+            stateType = "",
+            countryType = "",
+            zipCode1 = "",
+            emailAddress = "",
+            cellPhone = "",
+            cellPhoneCountryCode = "+44",
+            eveningPhone = "",
+            eveningPhoneCountryCode = "+44",
+            smsOption = "Y",
+            password = "",
+            digitPin = "",
+            correspDeliveryMode = "EMAIL",
+            correspDeliveryFrequency = "MONTHLY",
+            companyName = "",
+            fein = "",
+            nonRevenueOption = "",
+            ftvehicleList = null,
+            creditCardType = "",
+            creditCardNumber = "",
+            maskedNumber = "",
+            creditCExpMonth = "",
+            creditCExpYear = "",
+            securityCode = "",
+            cardFirstName = "",
+            cardMiddleName = "",
+            cardLastName = "",
+            billingAddressLine1 = "",
+            billingAddressLine2 = "",
+            cardCity = "",
+            cardStateType = "",
+            cardZipCode = "",
+            thresholdAmount = null,
+            replenishmentAmount = null,
+            transactionAmount = null,
+            planType = null,
+            enable = false,
+            vehicleNo = "",
+            mNoOfVehicles = "",
+            mNoOfCrossings = ""
         )
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
             isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
@@ -76,45 +120,61 @@ class CreateAccountEmailVerificationFragment : BaseFragment<FragmentCreateAccoun
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-       try{
-       loader?.dismiss()
-       when (resource) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
             is Resource.Success -> {
-                if(resource.data?.statusCode?.equals("0")==true) {
+                if (resource.data?.statusCode?.equals("0") == true) {
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
-                    requestModel?.referenceId=resource.data.referenceId.toLongOrNull()
+                    requestModel?.referenceId = resource.data.referenceId.toLongOrNull()
                     val bundle = Bundle().apply {
-                        putParcelable(CREATE_ACCOUNT_DATA,requestModel)
+                        putParcelable(CREATE_ACCOUNT_DATA, requestModel)
                         isEditEmail?.let {
-                            putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY)
+                            putInt(
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY
+                            )
                         }
                     }
-                    findNavController().navigate(R.id.action_emailVerification_to_confirmEmailFragment, bundle)
+                    findNavController().navigate(
+                        R.id.action_emailVerification_to_confirmEmailFragment,
+                        bundle
+                    )
+                } else {
+                    showError(binding.root, resource.data?.message)
                 }
-                else{ showError(binding.root,resource.data?.message) }
             }
-            is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
-      }}catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+
+            }
+        }
     }
 
 
     override fun onClick(v: View?) {
-       when (v?.id) {
-           R.id.btn_action -> {
-               hideKeyboard()
-               sendEmailVerificationRequest()
-           }
-       }
+        when (v?.id) {
+            R.id.btn_action -> {
+                hideKeyboard()
+                sendEmailVerificationRequest()
+            }
+        }
     }
 
     private fun sendEmailVerificationRequest() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email?:"")
+        val request =
+            EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
         createAccountViewModel.emailVerificationApi(request)
     }
 
     private fun isEnable() {
-        if (Utils.isEmailValid(binding.etEmail.text.toString())) binding.model = EmailValidationModel(enable = true , email = binding.etEmail.text.toString(), "")
-        else binding.model = EmailValidationModel(enable = false, email = binding.etEmail.text.toString(), "")
+        if (Utils.isEmailValid(binding.etEmail.text.toString())) binding.model =
+            EmailValidationModel(enable = true, email = binding.etEmail.text.toString(), "")
+        else binding.model =
+            EmailValidationModel(enable = false, email = binding.etEmail.text.toString(), "")
     }
 }

@@ -37,6 +37,7 @@ class ForgotEmailViewModelTest {
     private var forgotEmailViewModel: ForgotEmailViewModel? = null
 
     private val forgotEmailRequest = ForgotEmailModel(false, "", "")
+    private val unknownException = "unknown exception"
 
     @Mock
     private lateinit var responseBody: ResponseBody
@@ -67,7 +68,7 @@ class ForgotEmailViewModelTest {
 
 
     @Test
-    fun `test reset password api call for success`() {
+    fun `test forgot email api call for success`() {
         runTest {
             Mockito.lenient().`when`(forgotEmailResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(forgotEmailResponse.code()).thenReturn(200)
@@ -85,7 +86,7 @@ class ForgotEmailViewModelTest {
     }
 
     @Test
-    fun `test reset password api call for unknown error`() {
+    fun `test forgot email api call for unknown error`() {
         runTest {
             val status = 403
             val message = "Unknown error"
@@ -111,6 +112,55 @@ class ForgotEmailViewModelTest {
                 )
                 assertEquals(
                     message, it.forgotEmail.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test forgot email api call for unknown error Exception`() {
+        runTest {
+            val status = 403
+            val message = ""
+            Mockito.lenient().`when`(forgotEmailResponse.isSuccessful).thenReturn(false)
+            val testValidData = TestErrorResponseModel(
+                error = message,
+                exception = "exception",
+                message = message,
+                status = status,
+                errorCode = status,
+                timestamp = ""
+            )
+            val jsonString: String = Gson().toJson(testValidData)
+            Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
+            Mockito.lenient().`when`(forgotEmailResponse.errorBody()).thenReturn(responseBody)
+            Mockito.`when`(repository.forgotEmail(forgotEmailRequest)).thenReturn(forgotEmailResponse)
+            forgotEmailViewModel?.let {
+                it.forgotEmail(forgotEmailRequest)
+                assertEquals(
+                    null, it.forgotEmail.value?.data
+                )
+                assertEquals(
+                    "exception", it.forgotEmail.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test forgot email api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.forgotEmail(forgotEmailRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            forgotEmailViewModel?.let {
+                it.forgotEmail(forgotEmailRequest)
+                assertEquals(
+                    null, it.forgotEmail.value?.data
+                )
+                assertEquals(
+                    unknownException, it.forgotEmail.value?.errorMsg
                 )
             }
         }

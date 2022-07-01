@@ -14,6 +14,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -38,6 +39,8 @@ class LoginViewModelTest {
     private var loginViewModel: LoginViewModel? = null
 
     private val loginRequest = LoginModel("", "")
+
+    private val unknownException = "unknown exception"
 
     @Mock
     private lateinit var responseBody: ResponseBody
@@ -67,7 +70,7 @@ class LoginViewModelTest {
 
     @Test
     fun `test login api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(loginResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(loginResponse.code()).thenReturn(200)
             val resp = DataFile.getLoginResponse()
@@ -85,7 +88,7 @@ class LoginViewModelTest {
 
     @Test
     fun `test login api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(loginResponse.isSuccessful).thenReturn(false)
@@ -110,6 +113,25 @@ class LoginViewModelTest {
                 )
                 assertEquals(
                     message, it.login.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test login api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.login(loginRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            loginViewModel?.let {
+                it.login(loginRequest)
+                assertEquals(
+                    null, it.login.value?.data
+                )
+                assertEquals(
+                    unknownException, it.login.value?.errorMsg
                 )
             }
         }

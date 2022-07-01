@@ -22,11 +22,9 @@ import javax.inject.Inject
 class ForgotPasswordViewModel @Inject constructor(
     private val repository: ForgotPasswordRepository,
     val errorManager: ErrorManager,
-    val application: Application
+    val application: Application,
+    val sessionManager: SessionManager
 ) : ViewModel() {
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _confirmOption = MutableLiveData<Resource<ConfirmOptionResponseModel?>?>()

@@ -68,26 +68,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
+        }
+        when (status) {
+            is Resource.Success -> {
 //                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
-                    launchIntent(status)
+                launchIntent(status)
 //                    } else {
 //                        launchSubmitComplaint(status)
 
 //                    }
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
-                else -> {
-
-                }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
         }
+
     }
 
     private fun launchSubmitComplaint(response: Resource.Success<LoginResponse?>) {

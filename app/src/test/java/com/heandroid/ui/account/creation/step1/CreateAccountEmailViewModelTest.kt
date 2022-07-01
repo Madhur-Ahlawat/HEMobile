@@ -53,6 +53,8 @@ class CreateAccountEmailViewModelTest {
     @Inject
     lateinit var errorManager: ErrorManager
 
+    private val unknownException = "unknown exception"
+
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -86,7 +88,7 @@ class CreateAccountEmailViewModelTest {
     }
 
     @Test
-    fun `test update communication prefs api call for unknown error`() {
+    fun `test email verification api call for unknown error`() {
         runTest {
             val request = EmailVerificationRequest("", "")
             val status = 403
@@ -113,6 +115,26 @@ class CreateAccountEmailViewModelTest {
                 )
                 assertEquals(
                     message, it.emailVerificationApiVal.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test email verification api call for unknown exception`() {
+        runTest {
+            val request = EmailVerificationRequest("", "")
+            Mockito.`when`(repository.emailVerificationApiCall(request))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            createAccountEmailViewModel?.let {
+                it.emailVerificationApi(request)
+                assertEquals(
+                    null, it.emailVerificationApiVal.value?.data
+                )
+                assertEquals(
+                    unknownException, it.emailVerificationApiVal.value?.errorMsg
                 )
             }
         }
@@ -165,6 +187,26 @@ class CreateAccountEmailViewModelTest {
                 )
                 assertEquals(
                     message, it.confirmEmailApiVal.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test confirm email api call for unknown exception`() {
+        runTest {
+            val request = ConfirmEmailRequest("", "", "")
+            Mockito.`when`(repository.confirmEmailApiCall(request))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            createAccountEmailViewModel?.let {
+                it.confirmEmailApi(request)
+                assertEquals(
+                    null, it.confirmEmailApiVal.value?.data
+                )
+                assertEquals(
+                    unknownException, it.confirmEmailApiVal.value?.errorMsg
                 )
             }
         }

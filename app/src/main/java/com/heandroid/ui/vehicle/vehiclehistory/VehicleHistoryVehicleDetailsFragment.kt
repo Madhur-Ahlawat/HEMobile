@@ -107,26 +107,21 @@ class VehicleHistoryVehicleDetailsFragment :
     }
 
     private fun handleUpdateVehicleResponse(response: Resource<EmptyApiResponse?>?) {
-        try {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            when (response) {
-                is Resource.Success -> {
-                    requireContext().showToast("Vehicle is updated successfully")
-                    setBtnDisabled()
-                    mVehicleDetails?.let {
-                        it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
-                    }
-                }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, response.errorMsg)
-                }
-                else -> {
-                    // do nothing
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (response) {
+            is Resource.Success -> {
+                requireContext().showToast("Vehicle updated successfully")
+                setBtnDisabled()
+                mVehicleDetails?.let {
+                    it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+            else -> { }
         }
     }
 
