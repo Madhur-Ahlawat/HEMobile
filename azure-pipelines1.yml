@@ -25,7 +25,7 @@ steps:
   - task: PublishTestResults@2
     inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test/TEST-*.xml'
+        testResultsFiles: '**/testDevDebugUnitTest/TEST-*.xml'
         searchFolder: $(System.DefaultWorkingDirectory)
   - task: CopyFiles@2
     inputs:
