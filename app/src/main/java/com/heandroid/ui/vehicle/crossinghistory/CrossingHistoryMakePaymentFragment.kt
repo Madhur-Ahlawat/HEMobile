@@ -32,7 +32,7 @@ class CrossingHistoryMakePaymentFragment :
             arguments?.getParcelable<CrossingHistoryItem?>(Constants.DATA)?.run {
 
                 crossingDate.text = DateUtils.convertDateFormat(transactionDate, 0)
-                crossingTime.text = DateUtils.convertTimeFormat(exitTime, 0)
+                crossingTime.text = DateUtils.convertTimeFormat(exitTime!!, 0)
                 direction.text = getDirection(exitDirection)
                 vehicle.text = plateNumber
                 transactionId.text = transactionNumber
@@ -41,7 +41,7 @@ class CrossingHistoryMakePaymentFragment :
                 status.changeTextColor(R.color.color_10403C)
                 status.changeBackgroundColor(R.color.color_CCE2D8)
 
-                loadMakePaymentStatus(prepaid)
+                loadMakePaymentStatus(prepaid!!)
             }
         }
     }

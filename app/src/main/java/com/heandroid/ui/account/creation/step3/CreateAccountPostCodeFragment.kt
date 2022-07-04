@@ -155,10 +155,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     var list : MutableList<String>? = null
                     for(address : DataAddress in mainList){
                         list = ArrayList()
-                        list.add(address.town)
-                        list.add(address.street)
-                        list.add(address.locality)
-                        list.add(address.country)
+                        list.add(address.town!!)
+                        list.add(address.street!!)
+                        list.add(address.locality!!)
+                        list.add(address.country!!)
                         addressList.add(TextUtils.join(",", list))
                     }
                     binding.apply {

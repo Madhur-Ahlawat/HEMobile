@@ -139,7 +139,7 @@ class VehicleGroupMgmtViewModel @Inject constructor(
             try {
                 _vehicleListVal.postValue(
                     ResponseHandler.success(
-                        repository.getVehicleListOfGroupApiCall(vehicleGroup.groupName),
+                        repository.getVehicleListOfGroupApiCall(vehicleGroup.groupName!!),
                         errorManager
                     )
                 )

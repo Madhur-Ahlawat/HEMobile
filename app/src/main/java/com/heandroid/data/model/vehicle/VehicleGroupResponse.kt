@@ -6,8 +6,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class VehicleGroupResponse(
-    @SerializedName("groupId") var groupId: String,
-    @SerializedName("groupName") var groupName: String,
+    @SerializedName("groupId") var groupId: String?,
+    @SerializedName("groupName") var groupName: String?,
     @SerializedName("numberOfVehicles") var numberOfVehicles: String?
 ) : Parcelable
 

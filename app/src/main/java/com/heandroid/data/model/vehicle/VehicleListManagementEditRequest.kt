@@ -9,12 +9,12 @@ data class VehicleListManagementEditRequest(
 )
 
 data class PlateInfoResponseManagement(
-    var number : String ="",
-    var country :String = "UK",
-    var vehicleGroup: String="",
-    var state:String="",
-    var type: String="STANDARD",
-    var vehicleComments: String="",
+    var number : String? ="",
+    var country :String? = "UK",
+    var vehicleGroup: String?="",
+    var state:String?="",
+    var type: String?="STANDARD",
+    var vehicleComments: String?="",
 )
 
 data class VehicleInfoResponseManagement(

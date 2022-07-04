@@ -126,7 +126,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             when(resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails)
+                        checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails!!)
                     }
                 }
 

@@ -150,7 +150,7 @@ class VehicleGroupCrossingHistoryFragment :
                         val response = resource.data
                         totalCount = response.transactionList?.transaction?.size ?: 0
                         if (response.transactionList != null) {
-                            list?.addAll(response.transactionList.transaction)
+                            list?.addAll(response.transactionList.transaction!!)
                         }
                         isLoading = false
 

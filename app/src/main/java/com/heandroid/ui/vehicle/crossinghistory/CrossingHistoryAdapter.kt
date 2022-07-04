@@ -58,7 +58,7 @@ class CrossingHistoryAdapter(
         fun bind(data: CrossingHistoryItem?) {
             data?.run {
                 binding.apply {
-                    tvDate.text = "${DateUtils.convertDateFormat(transactionDate,0)}, ${DateUtils.convertTimeFormat(exitTime,0)}"
+                    tvDate.text = "${DateUtils.convertDateFormat(transactionDate,0)}, ${DateUtils.convertTimeFormat(exitTime!!,0)}"
                     tvVrm.text = plateNumber
                     tvDirection.text = getDirection(exitDirection)
                     tvStatus.text = tranSettleStatus

@@ -6,19 +6,19 @@ import java.io.Serializable
 data class PlateInfoResponse(
 
     @SerializedName("number")
-    var number : String ="",
+    var number : String? ="",
     @SerializedName("country")
-    var country :String = "UK",
+    var country :String? = "UK",
     @SerializedName("state")
-    var state:String="",
+    var state:String?="",
     @SerializedName("type")
-    var type: String="STANDARD",
+    var type: String?="STANDARD",
     @SerializedName("vehicleGroup")
-    var vehicleGroup: String="",
+    var vehicleGroup: String?="",
     @SerializedName("vehicleComments")
-    var vehicleComments: String="",
+    var vehicleComments: String?="",
     @SerializedName("planName")
-    var planName: String=""
+    var planName: String?=""
 
 ):Serializable
 

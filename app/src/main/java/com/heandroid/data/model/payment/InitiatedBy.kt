@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class InitiatedBy(
-    val isTrusted: Boolean
+    val isTrusted: Boolean?
 ):Parcelable

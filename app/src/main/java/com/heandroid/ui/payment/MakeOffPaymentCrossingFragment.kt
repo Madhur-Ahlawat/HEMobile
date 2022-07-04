@@ -95,11 +95,11 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                     loader?.dismiss()
                     it.let {
 
-                        list?.get(0)?.classRate = it.customerClassRate.toDouble()
+                        list?.get(0)?.classRate = it.customerClassRate?.toDouble()
 //                        list!![0]?.classRate =
 //                            VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())
 
-                        list?.get(0)?.pastQuantity = it.unSettledTrips.toInt()
+                        list?.get(0)?.pastQuantity = it.unSettledTrips?.toInt()
 
                         binding.tvTotalPaymentAmount.text =
                             requireActivity().getString(R.string.price, " $totalPrice")
@@ -112,7 +112,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
 
 //                        val payableCrossingAmount = (list?.get(0)?.classRate
 //                            ?: 0.0).times(list?.get(0)?.pastQuantity?.toDouble() ?: 0.0)
-                         payableCrossingAmount = it.unPaidAmt.toDouble()
+                         payableCrossingAmount = it.unPaidAmt!!.toDouble()
                         list?.get(0)?.pendingDues = payableCrossingAmount
 
                         val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)

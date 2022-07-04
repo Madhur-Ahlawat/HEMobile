@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class EmailVerificationRequest(
-    val selectionType: String,
-    val selectionValues: String
+    val selectionType: String?,
+    val selectionValues: String?
 ) : Parcelable

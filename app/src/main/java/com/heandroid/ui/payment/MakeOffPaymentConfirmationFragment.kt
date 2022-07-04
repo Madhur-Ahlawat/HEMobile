@@ -116,11 +116,11 @@ class MakeOffPaymentConfirmationFragment :
                 loader?.show(requireActivity().supportFragmentManager, "")
 
                 val vehicleList = VehicleList(
-                    list[0].newPlateInfo!!.number,
+                    list[0].newPlateInfo!!.number!!,
                     list[0].vehicleInfo!!.make!!,
                     list[0].vehicleInfo!!.model!!,
                     list[0].vehicleInfo?.vehicleClassDesc!!,
-                    list[0].newPlateInfo!!.country,
+                    list[0].newPlateInfo!!.country!!,
                     list[0].pendingDues!!.toString(),
                     list[0].futureQuantity.toString(),
                     (list[0].futureQuantity!!.toDouble()

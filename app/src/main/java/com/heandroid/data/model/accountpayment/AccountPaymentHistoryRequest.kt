@@ -7,5 +7,5 @@ data class AccountPaymentHistoryRequest(
     var startDate: String? = null,
     var endDate: String? = null,
     val plateNumber: String? = "",
-    var sortOrder: String = "DESC"
+    var sortOrder: String? = "DESC"
 )

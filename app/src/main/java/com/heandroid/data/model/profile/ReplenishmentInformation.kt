@@ -7,16 +7,16 @@ import kotlinx.parcelize.Parcelize
 data class ReplenishmentInformation(
     val automaticReplenishmentThreshold: String?,
     val cashMode: String?,
-    val currentBalance: String,
+    val currentBalance: String?,
     val lastReplenishedAmount: String?,
-    val lastReplenishedDate: String,
-    val maximumBalance: String,
-    val reBillPayType: String,
-    val replenishAmount: String,
-    val replenishThreshold: String,
+    val lastReplenishedDate: String?,
+    val maximumBalance: String?,
+    val reBillPayType: String?,
+    val replenishAmount: String?,
+    val replenishThreshold: String?,
     val suggestedReplenishmentAmount: String?,
-    val tollBalance: String,
+    val tollBalance: String?,
     val type: String?,
-    val violationBalance: String
+    val violationBalance: String?
 ) : Parcelable
 

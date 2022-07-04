@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AddDeleteVehicleGroup(
-    var groupName: String
+    var groupName: String?
 ) : Parcelable
 

@@ -153,7 +153,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         Log.e("Testing", "--->CrossingHistoryFragment count $totalCount")
 
                         if (response.transactionList != null) {
-                            list?.addAll(response.transactionList.transaction)
+                            list?.addAll(response.transactionList?.transaction!!)
                         }
                         isLoading = false
 //                    isLoading = list?.size?:0 != totalCount

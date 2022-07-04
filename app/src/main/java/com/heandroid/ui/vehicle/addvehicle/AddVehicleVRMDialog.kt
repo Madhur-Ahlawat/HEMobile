@@ -192,7 +192,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                         if (isMakePayment)
                             setVrmDetails()
                         else
-                            checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails)
+                            checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails!!)
                     }
                 }
 

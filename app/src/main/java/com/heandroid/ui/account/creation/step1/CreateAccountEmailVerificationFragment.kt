@@ -127,7 +127,7 @@ class CreateAccountEmailVerificationFragment :
             is Resource.Success -> {
                 if (resource.data?.statusCode?.equals("0") == true) {
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
-                    requestModel?.referenceId = resource.data.referenceId.toLongOrNull()
+                    requestModel?.referenceId = resource.data.referenceId?.toLongOrNull()
                     val bundle = Bundle().apply {
                         putParcelable(CREATE_ACCOUNT_DATA, requestModel)
                         isEditEmail?.let {

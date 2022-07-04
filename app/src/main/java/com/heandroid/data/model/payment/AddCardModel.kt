@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AddCardModel(
-    var addressLine1: String??,
+    var addressLine1: String?,
     var addressLine2: String?,
     val bankRoutingNumber: String?,
     val cardNumber: String?,

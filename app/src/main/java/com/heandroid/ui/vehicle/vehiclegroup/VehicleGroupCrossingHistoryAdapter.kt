@@ -34,7 +34,7 @@ class VehicleGroupCrossingHistoryAdapter(
             data?.run {
                 binding.apply {
                     date.text = DateUtils.convertDateFormat(transactionDate,0)
-                    time.text = DateUtils.convertTimeFormat(exitTime,0)
+                    time.text = DateUtils.convertTimeFormat(exitTime!!,0)
                     direction.text = getDirection(exitDirection)
                 }
             }

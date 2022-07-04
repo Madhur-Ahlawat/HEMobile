@@ -5,66 +5,66 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
     @SerializedName("status_code")
-    var statusCode: Int,
+    var statusCode: Int?,
 
     @SerializedName("access_token")
-    var accessToken: String,
+    var accessToken: String?,
 
     @SerializedName("token_type")
-    private var tokenType: String,
+    private var tokenType: String?,
 
     @SerializedName("refresh_token")
-    var refreshToken: String,
+    var refreshToken: String?,
 
 
     @SerializedName("user_name")
-    var user_name: String,
+    var user_name: String?,
 
 
     @SerializedName("expires_in")
-    private var expiresIn: Int,
+    private var expiresIn: Int?,
 
     @SerializedName("scope")
-    private var scope: String,
+    private var scope: String?,
 
     @SerializedName("AgencyId")
-    private var agencyID: Int,
+    private var agencyID: Int?,
 
     @SerializedName("BrokerId")
-    private var brokerID: Int,
+    private var brokerID: Int?,
 
     @SerializedName("InternalAgencyId")
-    private var internalAgencyID: Int,
+    private var internalAgencyID: Int?,
 
     @SerializedName("FirstName")
-    private var firstName: String,
+    private var firstName: String?,
 
     @SerializedName("LastName")
-    private var lastName: String,
+    private var lastName: String?,
 
     @SerializedName("jti")
-    private var jti: String,
+    private var jti: String?,
 
     @SerializedName("accountType")
-    var accountType: String,
+    var accountType: String?,
 
     @SerializedName("isSecondary")
-    var isSecondary: Boolean,
+    var isSecondary: Boolean?,
 
     @SerializedName("accountNumber")
-    var accountNumber: Int,
+    var accountNumber: Int?,
 
     @SerializedName("isPasswordCompliant")
-    var isPasswordCompliant : Boolean,
+    var isPasswordCompliant : Boolean?,
 
     @SerializedName("isPasswordExpired")
-    var isPasswordExpired:Boolean,
+    var isPasswordExpired:Boolean?,
 
     @SerializedName("Permission")
-    var Permission: String,
+    var Permission: String?,
 
     @SerializedName("require2FA")
-    var require2FA:Boolean,
+    var require2FA:Boolean?,
 
 )
 

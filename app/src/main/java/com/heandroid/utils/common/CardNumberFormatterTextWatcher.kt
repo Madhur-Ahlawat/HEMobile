@@ -41,7 +41,7 @@ open class CardNumberFormatterTextWatcher  : TextWatcher{
             s.replace(0, s.length, current, 0, current.length)
 
             for (p  in listOfPattern) {
-                if (s.toString().matches(Regex(p.pattern)) ) {
+                if (s.toString().matches(Regex(p.pattern!!)) ) {
                     Log.e("cardype",p.type?:"")
                     break
                 }

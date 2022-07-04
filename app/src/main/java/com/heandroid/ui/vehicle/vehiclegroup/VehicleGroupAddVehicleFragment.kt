@@ -251,7 +251,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             searchVehicleNumber = plateNumber
             vehicleGroup?.let {
                 vehicleGroupMgmtViewModel.getSearchVehiclesForGroup(
-                    it.groupName,
+                    it.groupName!!,
                     plateNumber
                 )
             }

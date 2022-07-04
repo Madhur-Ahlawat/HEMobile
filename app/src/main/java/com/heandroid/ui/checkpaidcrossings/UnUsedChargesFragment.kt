@@ -44,7 +44,7 @@ class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(),
             arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)!!
         val mList = mutableListOf<UnUsedChargesModel?>()
         mList.clear()
-        for (value in 1..mData.unusedTrip.toInt()) {
+        for (value in 1..mData.unusedTrip!!.toInt()) {
             mList.add(UnUsedChargesModel(value, mDataVrmRef.vrm!!))
         }
 

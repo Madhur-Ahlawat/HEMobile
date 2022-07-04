@@ -45,7 +45,7 @@ class CheckPaidCrossFragmentConformChangeVrm :
 
         binding.topTxt.text = getString(
             R.string.str_confirm_if_u_wish_to_associate_vehicle_no,
-            mVrmDetailsDvla.retrievePlateInfoDetails.plateNumber,
+            mVrmDetailsDvla.retrievePlateInfoDetails!!.plateNumber,
             mDataVrmRef.ref!!
         )
     }
@@ -79,16 +79,16 @@ class CheckPaidCrossFragmentConformChangeVrm :
 
                 val mTransferInfo = TransferInfo(
                     "1",
-                    mVrmDetailsDvla.retrievePlateInfoDetails.plateNumber!!,
+                    mVrmDetailsDvla.retrievePlateInfoDetails?.plateNumber!!,
                     "HE",
                     country!!,
-                    mVrmDetailsDvla.retrievePlateInfoDetails.vehicleClass!!,
-                    mVrmDetailsDvla.retrievePlateInfoDetails.vehicleMake!!,
-                    mVrmDetailsDvla.retrievePlateInfoDetails.vehicleModel!!,
+                    mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleClass!!,
+                    mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleMake!!,
+                    mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleModel!!,
                     ""
                 )
                 val mBalRequest =
-                    BalanceTransferRequest(mDataVrmRef.vrm!!,mData.plateCountry , mTransferInfo)
+                    BalanceTransferRequest(mDataVrmRef.vrm!!,mData?.plateCountry!! , mTransferInfo)
                 loader?.show(requireActivity().supportFragmentManager, "")
 
                 viewModel.balanceTransfer(mBalRequest)

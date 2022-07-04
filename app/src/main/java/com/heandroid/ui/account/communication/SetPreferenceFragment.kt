@@ -209,8 +209,8 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                             if (it.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
                                 Logg.logging("TestingData", "  receiptId  loop if ")
 
-                                receiptId = it.id
-                                mCat = it.category
+                                receiptId = it?.id!!
+                                mCat = it?.category!!
                                 mReceiptModel = it
                                 if (it.mailFlag.equals("Y", true)) {
                                     binding.rbEmail.isChecked = true

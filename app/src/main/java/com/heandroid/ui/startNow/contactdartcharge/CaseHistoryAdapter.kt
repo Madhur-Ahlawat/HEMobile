@@ -57,7 +57,7 @@ class CaseHistoryAdapter(
                 binding.apply {
                     caseNumber.text = id
                     caseDate.text = created
-                    getStatusForCases(status, tvStatus)
+                    getStatusForCases(status!!, tvStatus)
                 }
             }
         }

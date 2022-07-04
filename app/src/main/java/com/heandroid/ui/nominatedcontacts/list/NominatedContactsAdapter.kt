@@ -39,7 +39,7 @@ class NominatedContactsAdapter(private val mContext: Context,
 
             binding.rightsStr.text = contact.mPermissionLevel
 
-            if (contact.isExpanded) {
+            if (contact?.isExpanded!!) {
                 binding.arrowImg.animate().rotation(180f).start()
                 binding.bottomDetailsLyt.visible()
             } else {
@@ -67,8 +67,8 @@ class NominatedContactsAdapter(private val mContext: Context,
 
             val accList = secAccountList?.get(position)
 
-            accList?.isExpanded = !accList!!.isExpanded
-            listener.onItemClick("open", accList!!, position, accList!!.isExpanded)
+            accList?.isExpanded = !accList!!.isExpanded!!
+            listener.onItemClick("open", accList!!, position, accList.isExpanded!!)
 
             secAccountList?.get(position)?.isExpanded = accList.isExpanded
             notifyItemChanged(position)

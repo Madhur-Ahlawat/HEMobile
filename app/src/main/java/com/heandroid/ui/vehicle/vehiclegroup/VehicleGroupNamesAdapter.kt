@@ -41,12 +41,12 @@ class VehicleGroupNamesAdapter(
         vehicleItem?.let { item ->
             if (item.groupName.equals(
                     fragment.requireContext().getString(R.string.unallocated_vehicle), true
-                ) && item.groupId.isEmpty()
+                ) && item.groupId!!.isEmpty()
             ) {
                 holder.binding.cbVehicleGroup.isEnabled = false
             }
-            holder.setView(vehicleItem.groupName)
-            holder.binding.cbVehicleGroup.isChecked = checkedGroups.contains(vehicleItem.groupName)
+            holder.setView(vehicleItem.groupName!!)
+            holder.binding.cbVehicleGroup.isChecked = checkedGroups.contains(vehicleItem.groupName!!)
             holder.binding.mainLayout.setOnClickListener {
                 if (fragment is VehicleGroupMngmtFragment) {
                     val bundle = Bundle().apply {
@@ -59,13 +59,13 @@ class VehicleGroupNamesAdapter(
                 }
             }
             holder.binding.cbVehicleGroup.setOnClickListener {
-                makeButton(holder, item.groupId)
+                makeButton(holder, item.groupId!!)
             }
             holder.binding.vehicleGroupLayout.setOnClickListener {
                 if (holder.binding.cbVehicleGroup.isEnabled) {
                     holder.binding.cbVehicleGroup.isChecked =
                         !holder.binding.cbVehicleGroup.isChecked
-                    makeButton(holder, item.groupId)
+                    makeButton(holder, item.groupId!!)
                 }
             }
         }

@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ReplenishmentInformation (
 
-	@SerializedName("type") val type : String,
-	@SerializedName("automaticReplenishmentThreshold") val automaticReplenishmentThreshold : Int,
-	@SerializedName("lastReplenishedDate") val lastReplenishedDate : String,
-	@SerializedName("lastReplenishedAmount") val lastReplenishedAmount : Double,
-	@SerializedName("suggestedReplenishmentAmount") val suggestedReplenishmentAmount : String,
+	@SerializedName("type") val type : String?,
+	@SerializedName("automaticReplenishmentThreshold") val automaticReplenishmentThreshold : Int?,
+	@SerializedName("lastReplenishedDate") val lastReplenishedDate : String?,
+	@SerializedName("lastReplenishedAmount") val lastReplenishedAmount : Double?,
+	@SerializedName("suggestedReplenishmentAmount") val suggestedReplenishmentAmount : String?,
 	@SerializedName("tollBalance") val tollBalance: String?,
 	@SerializedName ("violationBalance") val violationBalance: String?,
 	@SerializedName("currentBalance") val currentBalance: String?,

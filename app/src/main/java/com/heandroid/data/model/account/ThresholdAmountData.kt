@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ThresholdAmountData(
-    @SerializedName("thresholdAmount") val thresholdAmount: String,
-    @SerializedName("customerAmount") val customerAmount: String,
+    @SerializedName("thresholdAmount") val thresholdAmount: String?,
+    @SerializedName("customerAmount") val customerAmount: String?,
 ) : Parcelable

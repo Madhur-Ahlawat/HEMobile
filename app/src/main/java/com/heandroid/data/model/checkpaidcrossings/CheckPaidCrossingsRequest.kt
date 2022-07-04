@@ -4,29 +4,29 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CheckPaidCrossingsRequest(val referenceNumber: String, val plateNumber: String) :
+data class CheckPaidCrossingsRequest(val referenceNumber: String?, val plateNumber: String?) :
     Parcelable
 
 
 @Parcelize
 data class CheckPaidCrossingsResponse(
-    val accountNo: String,
-    val accountTypeCd: String,
-    val accountType: String,
-    val accountActStatus: String,
-    val accountStatusCd: String,
-    val plateCountry: String,
-    val unusedTrip: String,
-    val expirationDate: String
+    val accountNo: String?,
+    val accountTypeCd: String?,
+    val accountType: String?,
+    val accountActStatus: String?,
+    val accountStatusCd: String?,
+    val plateCountry: String?,
+    val unusedTrip: String?,
+    val expirationDate: String?
 ) : Parcelable
 
 
 @Parcelize
 data class UsedTollTransactionsRequest(
-    val startIndex: String="0",
-    val transactionType: String="TOLL",
-    val count: String="5",
-    val sortColumn: String="POSTED_DATE"
+    val startIndex: String?="0",
+    val transactionType: String?="TOLL",
+    val count: String?="5",
+    val sortColumn: String?="POSTED_DATE"
 ) : Parcelable
 
 

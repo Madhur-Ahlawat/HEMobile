@@ -218,12 +218,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun setAccountDetailsView(data: AccountResponse)
     {
         binding.apply{
-            tvAvailableBalance.text = "${data.replenishmentInformation.currentBalance}"
-            tvAccountNumber.text = data.accountInformation.number
-            tvAccountStatus.text =  data.accountInformation.accountStatus
-            tvTopUpType.text = data.accountInformation.accountFinancialstatus
-            tvAccountType.text =  data.accountInformation.type
-            tvAccountStatus.text =  data.accountInformation.type
+            tvAvailableBalance.text = "${data.replenishmentInformation?.currentBalance}"
+            tvAccountNumber.text = data.accountInformation?.number
+            tvAccountStatus.text =  data.accountInformation?.accountStatus
+            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
+            tvAccountType.text =  data.accountInformation?.type
+            tvAccountStatus.text =  data.accountInformation?.type
 
         }
     }
@@ -236,7 +236,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     var thresholdAmountData = it.thresholdAmountVo
-                    stViewBalance(thresholdAmountData)
+                    stViewBalance(thresholdAmountData!!)
                 }
             }
             is Resource.DataError -> {

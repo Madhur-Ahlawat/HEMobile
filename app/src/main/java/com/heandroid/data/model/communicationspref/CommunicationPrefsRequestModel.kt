@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CommunicationPrefsRequestModel(val categoryList:ArrayList<CommunicationPrefsRequestModelList>):Parcelable
+data class CommunicationPrefsRequestModel(val categoryList:ArrayList<CommunicationPrefsRequestModelList>?):Parcelable

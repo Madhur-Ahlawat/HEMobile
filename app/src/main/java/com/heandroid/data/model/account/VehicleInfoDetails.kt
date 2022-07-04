@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class VehicleInfoDetails(
-    var retrievePlateInfoDetails: RetrievePlateInfoDetails
+    var retrievePlateInfoDetails: RetrievePlateInfoDetails?
 ) : Parcelable
 
 @Parcelize

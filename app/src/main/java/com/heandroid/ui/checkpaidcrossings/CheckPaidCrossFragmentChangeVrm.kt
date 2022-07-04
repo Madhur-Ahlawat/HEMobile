@@ -58,10 +58,10 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
                 regNum.text = vrm
                 countryMarker.text = country
                 vehicleClass.text =
-                    VehicleClassTypeConverter.toClassCode(mVrmDetailsDvla.retrievePlateInfoDetails.vehicleClass)
-                make.text = mVrmDetailsDvla.retrievePlateInfoDetails.vehicleMake
-                model.text = mVrmDetailsDvla.retrievePlateInfoDetails.vehicleModel
-                color.text = mVrmDetailsDvla.retrievePlateInfoDetails.vehicleColor
+                    VehicleClassTypeConverter.toClassCode(mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleClass)
+                make.text = mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleMake
+                model.text = mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleModel
+                color.text = mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleColor
 
                 changeVehicle.text = getString(R.string.str_continue)
                 removeVehicle.gone()

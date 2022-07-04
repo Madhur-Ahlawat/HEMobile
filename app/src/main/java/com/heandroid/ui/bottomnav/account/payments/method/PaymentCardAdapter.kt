@@ -35,8 +35,8 @@ class PaymentCardAdapter(private val context: Context?,var list : MutableList<Ca
         fun bind(data: CardListResponseModel?) {
             data?.run {
               binding.apply {
-                  rbDefaultMethod.isChecked=check
-                  val spannableString = if(bankAccount) SpannableString(bankAccountType+"\n"+ bankAccountNumber) else SpannableString(cardType+"\n"+ cardNumber)
+                  rbDefaultMethod.isChecked=check!!
+                  val spannableString = if(bankAccount!!) SpannableString(bankAccountType+"\n"+ bankAccountNumber) else SpannableString(cardType+"\n"+ cardNumber)
                   spannableString?.setSpan( ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.txt_disable)), spannableString.length-(cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                   rbDefaultMethod.text = spannableString
               }
