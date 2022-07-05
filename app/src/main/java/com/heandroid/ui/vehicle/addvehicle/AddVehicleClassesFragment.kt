@@ -201,7 +201,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             val vehicleValidReqModel = ValidVehicleCheckRequest(
                 details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
                 "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
-            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
+            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }else {
             loader?.show(requireActivity().supportFragmentManager, "")
             vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)

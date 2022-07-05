@@ -175,7 +175,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     }
 
     private fun getVehicleDataFromDVRM() {
-        viewModel.getVehicleData(binding.addVrmInput.text.toString().trim(), Constants.AGENCY_ID)
+        viewModel.getVehicleData(binding.addVrmInput.text.toString().trim(), Constants.AGENCY_ID.toInt())
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
@@ -247,7 +247,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
 //                plateNumber, country, "",
 //                "", vehicleModel, vehicleMake, vehicleColor, "", ""
 //            )
-            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
+            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }
     }
 

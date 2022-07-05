@@ -113,7 +113,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun getVehicleDataFromDVRM() {
         loader?.show(requireActivity().supportFragmentManager, "")
         isObserverBack = true
-        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID)
+        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
@@ -148,7 +148,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             val vehicleValidReqModel = ValidVehicleCheckRequest(
                 plateNumber, requestModel?.countryType, "STANDARD",
                 "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE")
-            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
+            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }
     }
 

@@ -14,6 +14,8 @@ import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.checkpaidcrossings.*
 import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
+import com.heandroid.data.model.communicationspref.SearchProcessParamsModelReq
+import com.heandroid.data.model.communicationspref.SearchProcessParamsModelResp
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -35,6 +37,7 @@ import com.heandroid.data.model.payment.*
 import com.heandroid.data.model.profile.*
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.*
+import com.heandroid.utils.common.Constants.AGENCY_ID
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -47,7 +50,7 @@ interface ApiService {
     suspend fun login(
         @Field("client_id") clientId: String? = CLIENT_ID,
         @Field("grant_type") grant_type: String? = GRANT_TYPE,
-        @Field("agencyID") agencyID: String? = AGENCY_ID,
+        @Field("agencyID") agencyID: String? = AGENCY_ID.toString(),
         @Field("client_secret") client_secret: String? = CLIENT_SECRET,
         @Field("value") value: String?,
         @Field("password") password: String?,
@@ -142,13 +145,13 @@ interface ApiService {
 
     @POST(EMAIL_VERIFICATION_REQUEST)
     suspend fun sendEmailVerification(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID.toString(),
         @Body request: EmailVerificationRequest?
     ): Response<EmailVerificationResponse?>?
 
     @POST(CONFIRM_EMAIL_VERIFICATION)
     suspend fun confirmEmailVerification(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID.toString(),
         @Body request: ConfirmEmailRequest?
     ): Response<EmptyApiResponse?>?
 
@@ -158,13 +161,13 @@ interface ApiService {
 
     @POST(CREATE_ACCOUNT)
     suspend fun createAccount(
-        @Query("agencyId") agencyId: String = AGENCY_ID,
+        @Query("agencyId") agencyId: String = AGENCY_ID.toString(),
         @Body model: com.heandroid.data.model.account.CreateAccountRequestModel?
     ): Response<com.heandroid.data.model.account.CreateAccountResponseModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(
-        @Query("agencyId") agencyId: String = AGENCY_ID,
+        @Query("agencyId") agencyId: String = AGENCY_ID.toString(),
         @Query("search") postCode: String
     ): Response<List<DataAddress>>
 
@@ -223,21 +226,21 @@ interface ApiService {
 
     @HTTP(method = "DELETE", path = SAVED_CARD_LIST, hasBody = true)
     suspend fun deleteCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID.toString(),
         @Body model: PaymentMethodDeleteModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
 
     @POST(EDIT_CARD)
     suspend fun editDefaultCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID.toString(),
         @Body model: PaymentMethodEditModel?
     ): Response<PaymentMethodEditResponse?>?
 
 
     @POST(SAVED_CARD_LIST)
     suspend fun savedNewCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID.toString(),
         @Body model: AddCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
@@ -280,7 +283,7 @@ interface ApiService {
             : Response<String?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
-    suspend fun updateUserProfileApi(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
+    suspend fun updateAccountSettingPrefs(@Body request: UpdateProfileRequest): Response<EmptyApiResponse?>?
 
     @GET(VEHICLE_GROUP)
     suspend fun getVehicleGroupList(): Response<List<VehicleGroupResponse?>?>?
@@ -333,6 +336,9 @@ interface ApiService {
     @POST(BALANCE_TRANSFER)
     suspend fun balanceTransfer(@Body request: BalanceTransferRequest?): Response<BalanceTransferResponse?>
 
+    @POST(SEARCH_PROCESS_PARAMETERS)
+    suspend fun searchProcessParameters(@Query("agencyId") agencyId: String? = AGENCY_ID,@Body request: SearchProcessParamsModelReq?): Response<SearchProcessParamsModelResp?>
+
 
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
@@ -343,5 +349,7 @@ interface ApiService {
 
     @POST(GET_TOLL_TRANSACTIONS)
     suspend fun getTollTransactions(@Body request: UsedTollTransactionsRequest?): Response<List<UsedTollTransactionResponse?>?>
+
+
 
 }
