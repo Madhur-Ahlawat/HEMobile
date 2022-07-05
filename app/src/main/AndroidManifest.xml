@@ -15,6 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.landing.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
             android:exported="false"
@@ -23,19 +35,13 @@
         <activity
             android:name=".ui.startNow.StartNowBaseActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.auth.controller.AuthActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.landing.LandingActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.vehicle.VehicleMgmtActivity"
             android:screenOrientation="portrait"
@@ -77,7 +83,6 @@
             android:name=".ui.bottomnav.account.payments.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
-
         <activity
             android:name=".ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity"
             android:screenOrientation="portrait"

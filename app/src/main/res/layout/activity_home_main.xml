@@ -37,6 +37,7 @@
             app:item_padding="@dimen/_6sdp"
             app:animation_duration="300"
             app:scale_percent="5"
+            android:elevation="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:background="@color/white"
             android:layout_height="wrap_content"

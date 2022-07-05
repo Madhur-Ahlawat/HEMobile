@@ -61,6 +61,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
     def envConfig
@@ -129,9 +130,6 @@ android {
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
-
-        // For Image processing
-        implementation "io.coil-kt:coil:0.9.5"
 
         // Java Security Provider
         implementation 'org.conscrypt:conscrypt-android:2.4.0'

@@ -99,18 +99,17 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
-            style="@style/Theme.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_44sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_37sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{model.enable}"
-            android:padding="@dimen/_7sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
             android:text="@string/txt_login"
             android:textAllCaps="false"
             android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
