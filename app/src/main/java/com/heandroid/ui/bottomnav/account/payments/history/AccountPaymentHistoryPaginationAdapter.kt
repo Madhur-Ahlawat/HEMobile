@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.databinding.ItemPaginationNumberBinding
-import hilt_aggregated_deps._com_heandroid_ui_account_profile_postcode_ProfilePostCodeFragment_GeneratedInjector
 
 class AccountPaymentHistoryPaginationAdapter(
     val fragment: Fragment,
-    var pageCount: Int,
+    private var pageCount: Int,
     private var selectedPos : Int
 ) : RecyclerView.Adapter<AccountPaymentHistoryPaginationAdapter.PaginationNumberViewHolder>() {
 

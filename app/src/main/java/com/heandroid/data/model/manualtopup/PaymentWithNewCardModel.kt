@@ -24,9 +24,9 @@ data class PaymentWithNewCardModel(
     val paymentType: String?,
     val primaryCard: String?,
     val saveCard: String?,
-    var state: String="",
+    var state: String?="",
     val transactionAmount: String?,
-    val useAddressCheck: String="N",
-    var zipcode1: String="",
-    var zipcode2: String=""
+    val useAddressCheck: String?="N",
+    var zipcode1: String?="",
+    var zipcode2: String?=""
 ) : Parcelable

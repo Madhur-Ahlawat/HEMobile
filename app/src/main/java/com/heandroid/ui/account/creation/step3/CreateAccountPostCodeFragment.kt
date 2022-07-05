@@ -41,7 +41,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private var model : CreateAccountRequestModel? =null
 
     private var addressList : MutableList<String> = ArrayList()
-    private var mainList : MutableList<DataAddress> = ArrayList()
+    private var mainList : MutableList<DataAddress?> = ArrayList()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
 
@@ -143,23 +143,25 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         }
     }
 
-    private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
+    private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
         try {
             loader?.dismiss()
             when (response) {
                 is Resource.Success -> {
 
                     addressList.clear()
-                    mainList= response.data?.toMutableList()?:ArrayList()
-                    addressList?.add(0,"Select Address")
+                    mainList= response.data?.toMutableList() ?: ArrayList()
+                    addressList.add(0,"Select Address")
                     var list : MutableList<String>? = null
-                    for(address : DataAddress in mainList){
+                    for(address : DataAddress? in mainList){
                         list = ArrayList()
-                        list.add(address.town!!)
-                        list.add(address.street!!)
-                        list.add(address.locality!!)
-                        list.add(address.country!!)
-                        addressList.add(TextUtils.join(",", list))
+                        address?.let {
+                            list.add(address.town!!)
+                            list.add(address.street!!)
+                            list.add(address.locality!!)
+                            list.add(address.country!!)
+                            addressList.add(TextUtils.join(",", list))
+                        }
                     }
                     binding.apply {
 
@@ -194,7 +196,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             if (position == 0) return
 
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
-            mainList[position-1].run {
+            mainList[position-1]?.run {
                 model?.countryType="UK"
                 model?.city=town
                 model?.stateType="HE"

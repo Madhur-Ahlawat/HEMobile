@@ -17,4 +17,4 @@ data class ThresholdAmountValue(
     @SerializedName("customerAmount") val customerAmount: String?,
     @SerializedName("suggestedAmount") val suggestedAmount: String?,
     @SerializedName("suggestedThresholdAmount") val suggestedThresholdAmount: String?,
-    ) : Parcelable
+) : Parcelable

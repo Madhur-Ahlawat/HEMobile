@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvMain"
@@ -37,8 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:fontFamily="@font/roboto_bold"
-                android:lineHeight="@dimen/_22sdp"
-                android:text="ID2908211234"
+                tools:text="ID2908211234"
                 android:textColor="@color/color_009CDE"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"

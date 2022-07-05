@@ -30,7 +30,8 @@ data class CrossingHistoryItem(
     @SerializedName("entryDirection") val entryDirection: String?,
     @SerializedName("exitDirection") val exitDirection: String?,
     @SerializedName("plateNumber") val plateNumber: String?,
-    @SerializedName("rebillPaymentType") val rebillPaymentType:String?,
-    @SerializedName("tranSettleStatus") val tranSettleStatus:String?,
-    @SerializedName("paymentSource") val paymentSource:String?) : Parcelable
+    @SerializedName("rebillPaymentType") val rebillPaymentType: String?,
+    @SerializedName("tranSettleStatus") val tranSettleStatus: String?,
+    @SerializedName("paymentSource") val paymentSource: String?
+) : Parcelable
 

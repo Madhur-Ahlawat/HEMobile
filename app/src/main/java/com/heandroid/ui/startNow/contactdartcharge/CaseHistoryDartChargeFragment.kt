@@ -163,7 +163,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         }
     }
 
-    private fun showDataInView(list: List<ServiceRequest>) {
+    private fun showDataInView(list: List<ServiceRequest?>) {
         mAdapter = CaseHistoryAdapter(this, list)
         binding.rvCaseHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCaseHistory.setHasFixedSize(true)

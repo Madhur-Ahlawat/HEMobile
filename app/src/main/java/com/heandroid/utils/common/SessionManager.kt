@@ -105,7 +105,7 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
         val gson = Gson()
         val jsonString = gson.toJson(myObject)
         editor.putString(SECURITY_CODE_OBJ, jsonString)
-        editor.commit()
+        editor.apply()
     }
 
     fun clearAll() {

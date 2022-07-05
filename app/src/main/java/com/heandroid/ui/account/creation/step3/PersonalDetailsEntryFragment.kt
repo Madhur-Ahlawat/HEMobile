@@ -217,20 +217,21 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
     }
 
-    private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
+    private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
         try {
             loader?.dismiss()
             when (response) {
                 is Resource.Success -> {
                     Log.d("dataFound", "True")
-                    response?.data?.let {
-                        var addressItem = it[0]
-                        accountModelRequesstModel.address =
-                            "${addressItem.town} , ${addressItem.street} ,  ${addressItem.locality} , ${addressItem.country}"
+                    response.data?.let {
+                        val addressItem = it[0]
+                        addressItem?.let {
+                            accountModelRequesstModel.address =
+                                "${addressItem.town} , ${addressItem.street} ,  ${addressItem.locality} , ${addressItem.country}"
+                        }
                         binding.tvAddress.text = accountModelRequesstModel.address
                     }
                     binding.apply {
-
                         btnFindAddress.gone()
                         tvAddress.visible()
                     }
@@ -238,6 +239,9 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
                 }
                 is Resource.DataError -> {
                     ErrorUtil.showError(binding.root, response.errorMsg)
+                }
+                else -> {
+
                 }
             }
         } catch (e: Exception) {

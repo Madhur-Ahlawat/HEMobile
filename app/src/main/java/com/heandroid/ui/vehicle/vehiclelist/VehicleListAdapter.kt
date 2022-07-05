@@ -17,7 +17,7 @@ import com.heandroid.utils.DateUtils
 class VehicleListAdapter(
     private val mContext: Context,
     private val onItemClick: ItemClickListener? = null,
-    var isBusinessAccount : Boolean = false
+    private var isBusinessAccount : Boolean = false
 ) : RecyclerView.Adapter<VehicleListAdapter.VrmHeaderViewHolder>() {
 
     private var vehicleList: List<VehicleResponse?> = mutableListOf()

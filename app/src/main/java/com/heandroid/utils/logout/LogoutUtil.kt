@@ -1,11 +1,10 @@
 package com.heandroid.utils.logout
 
 import android.os.CountDownTimer
-import android.util.Log
 import com.heandroid.ui.base.BaseApplication
 
 object LogoutUtil {
-    var timer: CountDownTimer? = null
+    private var timer: CountDownTimer? = null
     var LOGOUT_TIME : Long= 1000 * 12000
     private var listner: LogoutListener?=null
 

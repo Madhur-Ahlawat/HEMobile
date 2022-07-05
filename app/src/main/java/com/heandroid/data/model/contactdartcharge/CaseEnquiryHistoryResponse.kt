@@ -10,7 +10,7 @@ data class CaseEnquiryHistoryResponse(
 )
 
 data class ServiceRequestList(
-    val serviceRequest: List<ServiceRequest>?,
+    val serviceRequest: List<ServiceRequest?>?,
     val count: String?
 )
 
@@ -22,8 +22,8 @@ data class ServiceRequest(
     val category: String?,
     val subcategory: String?,
     val description: String?,
-    val fileList: List<String>?,
-    val fileUploadList: List<String>?,
+    val fileList: List<String?>?,
+    val fileUploadList: List<String?>?,
     val date: String?,
     val response: String?
 ) : Parcelable

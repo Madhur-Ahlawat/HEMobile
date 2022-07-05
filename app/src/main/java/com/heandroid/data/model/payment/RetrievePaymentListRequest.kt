@@ -1,4 +1,4 @@
-package com.heandroid.model
+package com.heandroid.data.model.payment
 
 import com.google.gson.annotations.SerializedName
 

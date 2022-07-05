@@ -324,7 +324,7 @@
                     android:inputType="textPassword"
                     android:text="@{model.accountInformation.password}"
                     android:textColor="#474747"
-                    android:textSize="33dp"
+                    android:textSize="@dimen/_25ssp"
                     android:textStyle="normal" />
 
 

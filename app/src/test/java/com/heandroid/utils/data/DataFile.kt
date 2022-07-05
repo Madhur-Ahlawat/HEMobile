@@ -150,7 +150,7 @@ object DataFile {
             0, 0, 0,
             "", "", "", "",
             false, 1, false,
-            false, "", false
+            isPasswordExpired = false, Permission = "", require2FA = false
         )
     }
 

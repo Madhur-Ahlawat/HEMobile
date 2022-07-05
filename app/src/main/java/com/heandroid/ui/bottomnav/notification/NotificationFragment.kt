@@ -107,7 +107,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         binding.filterTxt.gone()
 
     }
-    var mTotalList = ArrayList<NotificationModel>()
+    private var mTotalList = ArrayList<NotificationModel>()
 
     override fun initCtrl() {
     }
@@ -375,7 +375,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     }
 
-    var mNotificationAdapter: NotificationTypeAdapter? = null
+    private var mNotificationAdapter: NotificationTypeAdapter? = null
     override fun onLongClick(notificationModel: NotificationModel, pos: Int) {
     }
 

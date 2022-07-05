@@ -15,7 +15,7 @@ import com.heandroid.listener.NotificationItemClick
 class NotificationTypeAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var notificationList: List<NotificationModel> = mutableListOf()
+    private var notificationList: List<NotificationModel> = mutableListOf()
     var mListener: NotificationItemClick? = null
 
     companion object {

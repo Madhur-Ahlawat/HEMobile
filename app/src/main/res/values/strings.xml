@@ -142,7 +142,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_add_vehicle">Add vehicle</string>
     <string name="str_add_vehicles">Add vehicles</string>
-    <string name="str_add_upto_five_vehicles">You can add upto five vehicles</string>
+    <string name="str_add_upto_five_vehicles">You can add up to five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
     <string name="str_country_of_registraion">Country of registration UK</string>
     <string name="str_find_vehicle">Find your vehicle</string>
@@ -403,7 +403,7 @@
     <string name="post_mail">Post Mail - %1$s</string>
     <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate Contact</string>
-    <string name="str_u_can_nominate_upto_five_users">You can nominate upto 5 users for your account</string>
+    <string name="str_u_can_nominate_upto_five_users">You can nominate up to 5 users for your account</string>
     <string name="str_mobile_number_optional">Mobile number (optional)</string>
     <string name="str_invite_nominated_contact_title">Invite nominated contact</string>
     <string name="str_contact">Contact</string>
@@ -575,11 +575,11 @@
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Select category</string>
     <string name="str_select_sub_category">Select sub-category</string>
-    <string name="str_please_provide_additional_information_txt">please provide additonal information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
+    <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
     <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
     <string name="str_upload_file">Upload file(Optional)</string>
-    <string name="str_upto_four_files_uploaded">* Upto 4 files can be uploaded</string>
+    <string name="str_upto_four_files_uploaded">* Up to 4 files can be uploaded</string>
     <string name="str_file_size_may_be">* File size may be 8mb each</string>
     <string name="str_permitted_file_types_are_doc_docx_xls">* Permitted files types are doc/docx, xls/xlsx,pdf,jpg,bmp,tiff,csv.</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
@@ -642,7 +642,7 @@
                 \n\u25CF 1 lowercase letter
                 \n\u25CF 1 number
                 \n\u25CF 1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
-    <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsucessfully</string>
+    <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsuccessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
     <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
     <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>

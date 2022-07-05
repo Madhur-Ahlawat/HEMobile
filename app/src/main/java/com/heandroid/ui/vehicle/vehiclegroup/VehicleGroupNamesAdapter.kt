@@ -21,7 +21,7 @@ class VehicleGroupNamesAdapter(
 ) :
     RecyclerView.Adapter<VehicleGroupNamesAdapter.FilterVehicleNamesHolder>() {
 
-    var checkedGroups: ArrayList<String> = ArrayList()
+    private var checkedGroups: ArrayList<String> = ArrayList()
 
     class FilterVehicleNamesHolder(var binding: ItemVehicleGroupNameBinding) :
         RecyclerView.ViewHolder(binding.root) {

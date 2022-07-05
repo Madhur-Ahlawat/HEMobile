@@ -1,7 +1,10 @@
 package com.heandroid.data.model.makeoneofpayment
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class OneOfPaymentModelResponse(val status: Int?, val refrenceNumber: String?):Parcelable
+data class OneOfPaymentModelResponse(
+    val status: Int?,
+    val refrenceNumber: String?
+) : Parcelable

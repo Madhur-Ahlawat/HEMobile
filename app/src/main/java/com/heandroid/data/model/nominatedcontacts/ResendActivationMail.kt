@@ -8,4 +8,7 @@ data class ResendActivationMail(
     @SerializedName("reCalcDate") val reDate: String?
 )
 
-data class ResendRespModel(val message: String?, val status: String?)
+data class ResendRespModel(
+    val message: String?,
+    val status: String?
+)

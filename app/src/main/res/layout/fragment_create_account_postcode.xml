@@ -46,7 +46,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information"
             android:textColor="#626262"
-            android:textSize="14dp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvLabel" />
