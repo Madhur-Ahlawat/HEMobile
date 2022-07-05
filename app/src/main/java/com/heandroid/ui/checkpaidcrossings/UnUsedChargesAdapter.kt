@@ -22,7 +22,7 @@ class UnUsedChargesAdapter(
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(list?.get(position))
         holder.binding.changeVehicle.setOnClickListener {
-            listener.clickChange(list?.get(position)!!.trip)
+            list?.get(position)?.trip?.let { it1 -> listener.clickChange(it1) }
         }
     }
 

@@ -3,7 +3,6 @@ package com.heandroid.data.model.account
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
 data class CreateAccountVehicleModel (
     var plateCountry: String?,

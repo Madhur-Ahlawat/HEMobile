@@ -62,21 +62,23 @@ class CheckPaidCrossingViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = repository.loginWithRefAndPlateNumber(model)
-                if (response.isSuccessful) {
-                    val serverToken =
-                        response?.headers()?.get("Authorization")?.split("Bearer ")?.get(1)
-                    Logg.logging("CheckpaidCrossi","serverToken ${serverToken}")
+                response?.let {
+                    if (response.isSuccessful) {
+                        val serverToken =
+                            response.headers().get("Authorization")?.split("Bearer ")?.get(1)
+                        Logg.logging("CheckpaidCrossi","serverToken ${serverToken}")
 
-                    sessionManager.saveAuthToken(serverToken ?: "")
-                    _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
-                } else {
-                    _loginWithRefAndPlateNumber.postValue(
-                        Resource.DataError(
-                            errorManager.getError(
-                                response?.code() ?: 0
-                            ).description
+                        sessionManager.saveAuthToken(serverToken ?: "")
+                        _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
+                    } else {
+                        _loginWithRefAndPlateNumber.postValue(
+                            Resource.DataError(
+                                errorManager.getError(
+                                    response.code()
+                                ).description
+                            )
                         )
-                    )
+                    }
                 }
             } catch (e: Exception) {
                 _loginWithRefAndPlateNumber.postValue(failure(e))
@@ -141,7 +143,7 @@ class CheckPaidCrossingViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                findVehicleMutData.setValue(ResponseHandler.failure(e))
+                findVehicleMutData.setValue(failure(e))
             }
         }
     }

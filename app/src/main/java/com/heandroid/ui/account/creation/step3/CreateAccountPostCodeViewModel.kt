@@ -22,8 +22,8 @@ class CreateAccountPostCodeViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _addresses = MutableLiveData<Resource<List<DataAddress>?>?>()
-    val addresses: LiveData<Resource<List<DataAddress>?>?> get() = _addresses
+    private val _addresses = MutableLiveData<Resource<List<DataAddress?>?>?>()
+    val addresses: LiveData<Resource<List<DataAddress?>?>?> get() = _addresses
 
     fun fetchAddress(search: String) {
         viewModelScope.launch {

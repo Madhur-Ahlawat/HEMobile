@@ -30,7 +30,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private var loader: LoaderDialog? = null
     private var vehicleList = VehicleHelper.list
     private var mScreeType = 0
-    var isMakePaymentScreen = true
+    private var isMakePaymentScreen = true
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

@@ -11,7 +11,7 @@ class FilterVehicleNamesAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FilterVehicleNamesAdapter.FilterVehicleNamesHolder>() {
 
     var vehicleList: List<VehicleResponse?> = mutableListOf()
-    var checkedPos = -1
+    private var checkedPos = -1
 
     fun setList(list: ArrayList<VehicleResponse?>) {
         list.let {

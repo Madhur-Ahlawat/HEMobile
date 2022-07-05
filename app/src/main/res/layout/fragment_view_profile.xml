@@ -396,7 +396,7 @@
                     android:inputType="numberPassword"
                     android:text="@{model.personalInformation.securityPin}"
                     android:textColor="#474747"
-                    android:textSize="33dp"
+                    android:textSize="@dimen/_25ssp"
                     android:textStyle="normal" />
 
 
@@ -445,7 +445,7 @@
                     android:inputType="textPassword"
                     android:text="@{model.accountInformation.password}"
                     android:textColor="#474747"
-                    android:textSize="33dp"
+                    android:textSize="@dimen/_25ssp"
                     android:textStyle="normal" />
 
 

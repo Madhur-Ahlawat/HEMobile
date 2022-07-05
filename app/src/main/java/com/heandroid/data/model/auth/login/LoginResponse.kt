@@ -16,10 +16,8 @@ data class LoginResponse(
     @SerializedName("refresh_token")
     var refreshToken: String?,
 
-
     @SerializedName("user_name")
     var user_name: String?,
-
 
     @SerializedName("expires_in")
     private var expiresIn: Int?,
@@ -55,17 +53,16 @@ data class LoginResponse(
     var accountNumber: Int?,
 
     @SerializedName("isPasswordCompliant")
-    var isPasswordCompliant : Boolean?,
+    var isPasswordCompliant: Boolean?,
 
     @SerializedName("isPasswordExpired")
-    var isPasswordExpired:Boolean?,
+    var isPasswordExpired: Boolean?,
 
     @SerializedName("Permission")
     var Permission: String?,
 
     @SerializedName("require2FA")
-    var require2FA:Boolean?,
-
+    var require2FA: Boolean?,
 )
 
 data class LogOutResp(val success: String)

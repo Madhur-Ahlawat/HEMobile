@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(), View.OnClickListener {
     private val viewModel : CreateAccountPostCodeViewModel by viewModels()
     private var addressList : MutableList<String> = ArrayList()
-    private var mainList : MutableList<DataAddress> = ArrayList()
+    private var mainList : MutableList<DataAddress?> = ArrayList()
     private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)= FragmentProfilePostcodeBinding.inflate(inflater,container,false)
@@ -81,7 +81,7 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(), 
         }
     }
 
-    private fun handleAddressApiResponse(response: Resource<List<DataAddress>?>?) {
+    private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
         try {
             loader?.dismiss()
             when (response) {
@@ -89,8 +89,10 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(), 
                     addressList.clear()
                     mainList= response.data?.toMutableList()?:ArrayList()
                     addressList?.add(0,"Select Address")
-                    for(address : DataAddress in mainList){
-                        addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
+                    for(address : DataAddress? in mainList){
+                        address?.let {
+                            addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
+                        }
                     }
                     binding.apply {
                         spnAddress.setSpinnerAdapter(addressList)

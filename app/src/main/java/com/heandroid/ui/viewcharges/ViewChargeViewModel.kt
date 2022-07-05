@@ -22,8 +22,8 @@ class ViewChargeViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _tollRates = MutableLiveData<Resource<List<TollRatesResp>?>?>()
-    val tollRates: LiveData<Resource<List<TollRatesResp>?>?> get() = _tollRates
+    private val _tollRates = MutableLiveData<Resource<List<TollRatesResp?>?>?>()
+    val tollRates: LiveData<Resource<List<TollRatesResp?>?>?> get() = _tollRates
 
     fun tollRates() {
         viewModelScope.launch {

@@ -36,7 +36,7 @@ data class PersonalInformation(
     val mobileAlerts: String?,
     var password: String?,
     var confirmPassword: String?,
-    val pemailUniqueCode: String,
+    val pemailUniqueCode: String?,
     val phoneDay: String?,
     val phoneLandLine: String?,
     val phoneNumber: String?,

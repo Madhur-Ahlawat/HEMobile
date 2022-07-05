@@ -156,7 +156,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.accessRights?.accessVo?.isNotEmpty() == true) {
-                        if (status.data.accessRights.accessVo[0].value.equals(
+                        if (status.data.accessRights.accessVo[0]?.value.equals(
                                 "READ",
                                 true
                             )

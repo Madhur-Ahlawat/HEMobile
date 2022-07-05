@@ -117,7 +117,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
         binding.btnSave.setOnClickListener {
 
             if (communicationPref.isNotEmpty()) {
-                val mList = ArrayList<CommunicationPrefsRequestModelList>()
+                val mList = ArrayList<CommunicationPrefsRequestModelList?>()
 
                 eMailFlag = if (communicationPref == Constants.EMAIL) {
                     "Y"
@@ -206,7 +206,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                         res.data?.accountInformation?.communicationPreferences?.forEach {
                             Logg.logging("TestingData", "  receiptId loop ")
 
-                            if (it.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
+                            if (it?.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
                                 Logg.logging("TestingData", "  receiptId  loop if ")
 
                                 receiptId = it?.id!!

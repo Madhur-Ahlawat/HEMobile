@@ -4,4 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ConfirmOptionModel(var identifier: String?,var zipCode: String?,var enable: Boolean): Parcelable
+data class ConfirmOptionModel(
+    var identifier: String?,
+    var zipCode: String?,
+    var enable: Boolean
+) : Parcelable

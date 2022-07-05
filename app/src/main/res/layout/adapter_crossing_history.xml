@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 <com.google.android.material.card.MaterialCardView
     android:id="@+id/cvMain"
@@ -36,17 +37,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/roboto_regular"
-            android:lineHeight="@dimen/_21sdp"
-            android:text="01 Aug 2021, 12:37"
+            tools:text="01 Aug 2021, 12:37"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintEnd_toStartOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tv_vrm" />
 
 
         <LinearLayout
+            android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -95,7 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_2sdp"
             android:fontFamily="@font/roboto_regular"
-            android:lineHeight="@dimen/_21sdp"
             android:text="Southbound"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/_12ssp"

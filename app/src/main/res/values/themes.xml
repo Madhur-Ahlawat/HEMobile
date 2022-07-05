@@ -1,4 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="Theme.HEMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -14,7 +20,6 @@
         <item name="backgroundColor">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
-
 
 
     <style name="Theme.HEMobileWhite" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -58,22 +63,16 @@
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="Theme.MaterialButton" parent="Widget.MaterialComponents.Button">
-
-        <item name="backgroundTint">@color/btn_selector</item>
-    </style>
-
     <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
         </item>
         <item name="hintTextColor">@color/grey_two</item>
         <item name="boxStrokeColor">@color/grey_two</item>
-
     </style>
 
-
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText</item>
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
+        </item>
         <item name="hintTextColor">@color/black</item>
         <item name="boxStrokeColor">@color/black</item>
 
@@ -109,6 +108,14 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="background">@drawable/button_shadow</item>
+        <item name="colorButtonNormal">@color/grey_two</item>
+        <item name="colorControlActivated">@color/btn_color</item>
+        <item name="backgroundTint">@color/color_C9C9C9</item>
+        <item name="android:height">@dimen/_40sdp</item>
+    </style>
+
 
     <style name="formInputLayoutNormal" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@android:color/transparent</item>
@@ -139,6 +146,5 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#000000</item>
     </style>
-
 
 </resources>

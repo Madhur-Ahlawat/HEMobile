@@ -1,11 +1,8 @@
 package com.heandroid.data.model.vehicle
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-
-import java.io.Serializable
 
 
 @Parcelize
@@ -26,7 +23,7 @@ data class VehicleResponse(
     var pastQuantity: Int? = 0,
     var price: Double? = 0.0,
     var classRate: Double? = 0.0,
-    var pendingDues:Double?=0.0
+    var pendingDues: Double? = 0.0
 
 ) : Parcelable
 

@@ -22,10 +22,10 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
 
-    private val viewModel : ViewChargeViewModel by viewModels()
+    private val viewModel: ViewChargeViewModel by viewModels()
 
     private lateinit var binding: ActivityViewChargesBinding
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
 
 
     override fun initViewBinding() {
@@ -35,18 +35,18 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(supportFragmentManager,"")
+        loader?.show(supportFragmentManager, "")
         viewModel.tollRates()
     }
 
 
     override fun observeViewModel() {
         lifecycleScope.launch {
-            observe(viewModel.tollRates,::handleTollRateResponse)
+            observe(viewModel.tollRates, ::handleTollRateResponse)
         }
     }
 
-    private fun handleTollRateResponse(status: Resource<List<TollRatesResp>?>?) {
+    private fun handleTollRateResponse(status: Resource<List<TollRatesResp?>?>?) {
         loader?.dismiss()
         when (status) {
             is Resource.Success -> {
@@ -54,10 +54,15 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                 binding.titleCard.visible()
                 binding.recyclerView.apply {
                     layoutManager = LinearLayoutManager(this@ViewChargesActivity)
-                    adapter = TollRateAdapter(this@ViewChargesActivity,status.data)
+                    adapter = TollRateAdapter(this@ViewChargesActivity, status.data)
                 }
             }
-            is Resource.DataError -> { ErrorUtil.showError(binding.root, status.errorMsg) }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+
+            }
         }
     }
 

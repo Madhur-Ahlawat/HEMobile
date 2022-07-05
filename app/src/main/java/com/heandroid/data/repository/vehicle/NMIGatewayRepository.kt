@@ -7,5 +7,4 @@ import javax.inject.Named
 
 class NMIGatewayRepository@Inject  constructor(
     @Named(Constants.NMI)
-    private val nmiService: ApiService) {
-}
+    private val nmiService: ApiService)

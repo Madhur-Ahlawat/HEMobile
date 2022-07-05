@@ -22,7 +22,8 @@ data class FinancialInformation(
     @SerializedName("editCardExpMonth") val editCardExpMonth: Int?,
     @SerializedName("editCardExpYear") val editCardExpYear: Int?,
     @SerializedName("maskedNumber") val maskedNumber: String?,
-    @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?=null,
-    @SerializedName("availablePayments") val availablePayments: ArrayList<AvailablePaymentsModel>? = null
+    @SerializedName("paymentTypeInfo") val paymentTypeInfo: String? = null,
+    @SerializedName("availablePayments") val availablePayments
+    : ArrayList<AvailablePaymentsModel?>? = null
 
 ) : Parcelable

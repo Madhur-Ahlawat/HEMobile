@@ -6,16 +6,16 @@ import android.view.WindowManager
 
 object DeviceMatrix {
 
-    const val SCREENSIZE_SMALL = "small"
-    const val SCREENSIZE_LARGE = "large"
+    private const val SCREENSIZE_SMALL = "small"
+    private const val SCREENSIZE_LARGE = "large"
 
     const val DEFAULT_DEVICE_RATIO = 1.78f
 
     var width: Int = 0
     var height: Int = 0
-    var screenSize = SCREENSIZE_SMALL
-    var deviceRatio = 0f
-    var deviceInch = 0f
+    private var screenSize = SCREENSIZE_SMALL
+    private var deviceRatio = 0f
+    private var deviceInch = 0f
 
 
     fun initDeviceMetrics(context: Context) {
