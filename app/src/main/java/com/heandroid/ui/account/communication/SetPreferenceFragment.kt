@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.AccountResponse
-import com.heandroid.data.model.communicationspref.CommunicationPrefsModel
-import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
-import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModelList
-import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
+import com.heandroid.data.model.account.UpdateProfileRequest
+import com.heandroid.data.model.communicationspref.*
 import com.heandroid.databinding.FragmentSelectCommunicationPreferenceBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -39,17 +38,6 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
 
     private var receiptId: String = ""
 
-
-    private fun setButtonClickListener() {
-
-        binding.btnSave.setOnClickListener {
-        }
-
-        binding.btnCancel.setOnClickListener {
-        }
-
-    }
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -61,12 +49,13 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
         communicationPrefsViewModel.getAccountSettingsPrefs()
+        val mSearchModel = SearchProcessParamsModelReq("SIGNUP", "ENU", "FEES", "MAIL")
+        communicationPrefsViewModel.searchProcessParameters(mSearchModel)
     }
 
     private var eMailFlag = ""
     private var smsFlag = ""
     override fun initCtrl() {
-        setButtonClickListener()
         binding.rbEmail.isChecked = true
         communicationPref = Constants.EMAIL
         binding.rgCommunicationPref.setOnCheckedChangeListener { group, checkedId ->
@@ -92,7 +81,6 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             binding.numberTextInput.visible()
             binding.changeImg.gone()
         }
-
         binding.rgAnswer.setOnCheckedChangeListener { group, checkedId ->
 
             when (checkedId) {
@@ -121,13 +109,13 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
 
                 eMailFlag = if (communicationPref == Constants.EMAIL) {
                     "Y"
-                }else{
+                } else {
                     "N"
                 }
 
-                smsFlag = if(adviseOnText == Constants.YES){
+                smsFlag = if (adviseOnText == Constants.YES) {
                     "Y"
-                }else{
+                } else {
                     "N"
                 }
 
@@ -136,7 +124,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     mReceiptModel.category,
                     mReceiptModel.oneMandatory,
                     mReceiptModel.defEmail,
-                    eMailFlag ,
+                    eMailFlag,
                     mReceiptModel.mailFlag,
                     mReceiptModel.defSms,
                     smsFlag,
@@ -148,8 +136,30 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                 mList.add(mListModel)
                 val model = CommunicationPrefsRequestModel(mList)
                 loader?.show(requireActivity().supportFragmentManager, "")
+                Logg.logging(
+                    "NewApi",
+                    "personalInformation ${mAccountResp.personalInformation}"
+                )
 
                 communicationPrefsViewModel.updateCommunicationPrefs(model)
+                val mAccountModelReq = UpdateProfileRequest(
+                    addressLine1 = mAccountResp.personalInformation?.addressLine1!!,
+                    addressLine2 = mAccountResp.personalInformation?.addressLine2!!,
+                    city = mAccountResp.personalInformation?.city!!,
+                    state = "HE",
+                    zipCode = mAccountResp.personalInformation?.zipCode!!,
+                    zipCodePlus = mAccountResp.personalInformation?.zipCodePlus!!,
+                    country = mAccountResp.personalInformation?.country!!,
+                    emailAddress = mAccountResp.personalInformation?.emailAddress!!,
+                    primaryEmailStatus = mAccountResp.personalInformation?.primaryEmailStatus!!,
+                    primaryEmailUniqueID = mAccountResp.personalInformation?.pemailUniqueCode!!,
+                    phoneCell = mAccountResp.personalInformation?.cellPhone,
+                    phoneDay = mAccountResp.personalInformation?.phoneDay,
+                    phoneFax = mAccountResp.personalInformation?.fax,
+                    smsOption = smsFlag,
+                    phoneEvening = mAccountResp.personalInformation?.eveningPhone,correspDeliveryMode = "EMAIL",correspDeliveryFrequency = "MONTHLY"
+                )
+                communicationPrefsViewModel.updateAccountSettingsPrefs(mAccountModelReq)
             } else {
 
             }
@@ -170,8 +180,66 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             communicationPrefsViewModel.updateCommunicationPrefs,
             ::updateCommunicationSettingsPrefs
         )
+        observe(communicationPrefsViewModel.searchProcessParameters, ::searchProcessParameters)
+        observe(communicationPrefsViewModel.updateAccountSettingPrefs, ::updateAccountSettingPrefs)
     }
 
+    private fun updateAccountSettingPrefs(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+
+        when (resource) {
+
+            is Resource.Success -> {
+
+                resource.let {
+                    Logg.logging(
+                        "NewApi",
+                        "updateAccountSettingPrefs ${it.data}"
+                    )
+
+                }
+            }
+
+            is Resource.DataError -> {
+                Logg.logging(
+                    "NewApi",
+                    "updateAccountSettingPrefs ${resource.errorMsg}"
+                )
+
+            }
+        }
+
+    }
+
+    private fun searchProcessParameters(resource: Resource<SearchProcessParamsModelResp?>?) {
+
+        when (resource) {
+
+            is Resource.Success -> {
+                resource.let {
+                    Logg.logging(
+                        "NewApi",
+                        "SearchProcessParameters ${it.data}"
+                    )
+                    binding.agreeCheckBox.text = getString(R.string.str_i_agree_txt,it.data)
+
+                }
+
+            }
+
+            is Resource.DataError -> {
+                Logg.logging(
+                    "NewApi",
+                    "SearchProcessParameters ${resource.data}  message ${resource.errorMsg}"
+                )
+
+            }
+        }
+
+
+    }
+
+    lateinit var mAccountResp: AccountResponse
     private var mCat: String = ""
     private fun getCommunicationSettingsPref(resource: Resource<AccountResponse?>?) {
         loader?.dismiss()
@@ -188,7 +256,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                             "TestingData",
                             "res.data?.personalInformation ${res.data?.personalInformation}"
                         )
-
+                        mAccountResp = res.data!!
                         if (res.data?.personalInformation?.countryType.equals(
                                 Constants.COUNTRY_TYPE_UK,
                                 true

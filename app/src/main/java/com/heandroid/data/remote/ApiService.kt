@@ -308,7 +308,7 @@ interface ApiService {
     ): Response<String?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
-    suspend fun updateUserProfileApi(
+    suspend fun updateAccountSettingPrefs(
         @Body request: UpdateProfileRequest?
     ): Response<EmptyApiResponse?>?
 
@@ -360,7 +360,7 @@ interface ApiService {
     @POST(ONE_OF_PAYMENTS_PAY)
     suspend fun oneOfPaymentsPay(
         @Body model: OneOfPaymentModelRequest?,
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<OneOfPaymentModelResponse?>?
 
     @GET(DOWNLOAD_VRM_VEHICLE_LIST)
@@ -380,6 +380,12 @@ interface ApiService {
     suspend fun balanceTransfer(
         @Body request: BalanceTransferRequest?
     ): Response<BalanceTransferResponse?>?
+
+    @POST(SEARCH_PROCESS_PARAMETERS)
+    suspend fun searchProcessParameters(
+        @Body request: SearchProcessParamsModelReq?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<SearchProcessParamsModelResp?>?
 
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(

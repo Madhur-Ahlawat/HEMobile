@@ -21,7 +21,7 @@ data class PersonalInformation(
     @SerializedName("zipCodePlus") val zipCodePlus: String?,
     @SerializedName("country") val country: String?,
     @SerializedName("daytimePhone") val daytimePhone: String?,
-    @SerializedName("cellPhone") val cellPhone: String?,
+    @SerializedName("cellPhone") val cellPhone: String?=null,
     @SerializedName("eveningPhone") val eveningPhone: String?,
     @SerializedName("fax") val fax: String?,
     @SerializedName("emailAddress") val emailAddress: String?,
