@@ -13,6 +13,7 @@ data class AccountInformation(
     @SerializedName("openViolationCount") val openViolationCount: Int?,
     @SerializedName("challengeQuestion") val challengeQuestion: String?,
     @SerializedName("challengeAnswer") val challengeAnswer: String?,
+    @SerializedName("password") val password:String?,
     @SerializedName("memberSince") val memberSince: String?,
     @SerializedName("fee") val fee: String?,
     @SerializedName("deliveryType") val deliveryType: String?,
@@ -31,6 +32,7 @@ data class AccountInformation(
     @SerializedName("showSuspendedInfo") val showSuspendedInfo: String?,
     @SerializedName("transactionSearchLimit") val transactionSearchLimit: String?,
     @SerializedName("stmtDelivaryMethod") val stmtDelivaryMethod: String?,
+    @SerializedName("stmtDelivaryInterval") val stmtDelivaryInterval:String?,
     @SerializedName("accountType") val accountType: String?,
     @SerializedName("minPaymentBalance") val minPaymentBalance: String?,
     @SerializedName("securityPin") val securityPin: String?,
@@ -43,6 +45,10 @@ data class AccountInformation(
     @SerializedName("languagePref") val languagePref: String?,
     @SerializedName("communicationPreferences") val communicationPreferences
             : ArrayList<CommunicationPrefsModel?>? = null,
+    @SerializedName("businessName") val businessName:String?,
+    @SerializedName("fein") val fein:String,
+    @SerializedName("smsOption") val smsOption:String,
+    @SerializedName("accSubType") val accSubType:String,
     @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?,
     @SerializedName("stmtDelivaryType") val stmtDelivaryType: String?
 ) : Parcelable

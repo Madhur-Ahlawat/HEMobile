@@ -99,7 +99,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
         if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true) && mUKVehicleDataNotFound == 0) {
             loader?.show(requireActivity().supportFragmentManager, "")
-            viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID)
+            viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID.toInt())
         } else {
             val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(
                 mVehicleDetails?.newPlateInfo?.number,

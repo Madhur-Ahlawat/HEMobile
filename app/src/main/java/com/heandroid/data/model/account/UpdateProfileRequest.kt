@@ -24,6 +24,8 @@ data class UpdateProfileRequest(
     @SerializedName("phoneFax") val phoneFax: String?=null,
     @SerializedName("smsOption") val smsOption: String?=null,
     @SerializedName("phoneEvening") val phoneEvening: String?=null,
+    @SerializedName("correspDeliveryMode") val correspDeliveryMode:String?=null,
+    @SerializedName("correspDeliveryFrequency") val correspDeliveryFrequency:String?=null,
     @SerializedName("emailSwap") val emailSwap: String?=null,
     @SerializedName("referenceId") val referenceId: String?=null,
     @SerializedName("securityCode") val securityCode: String?=null,

@@ -77,7 +77,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     }
 
     private fun getVehicleDataFromDVRM() {
-        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID)
+        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
@@ -112,7 +112,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
             val vehicleValidReqModel = ValidVehicleCheckRequest(
                 plateNumber, requestModel?.countryType, "STANDARD",
                 "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE")
-            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID)
+            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }
     }
 

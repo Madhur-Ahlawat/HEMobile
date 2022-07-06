@@ -111,7 +111,7 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
                 val validation = viewModel.validationEnterVrm(binding.model)
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, "")
-                    viewModel.getVehicleData(binding.model?.vrm, Constants.AGENCY_ID)
+                    viewModel.getVehicleData(binding.model?.vrm, Constants.AGENCY_ID.toInt())
                 } else {
                     ErrorUtil.showError(binding.root, validation.second)
                 }

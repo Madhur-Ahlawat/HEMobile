@@ -14,6 +14,8 @@ import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.checkpaidcrossings.*
 import com.heandroid.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.heandroid.data.model.communicationspref.CommunicationPrefsResp
+import com.heandroid.data.model.communicationspref.SearchProcessParamsModelReq
+import com.heandroid.data.model.communicationspref.SearchProcessParamsModelResp
 import com.heandroid.data.model.contactdartcharge.*
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -35,6 +37,7 @@ import com.heandroid.data.model.payment.*
 import com.heandroid.data.model.profile.*
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.*
+import com.heandroid.utils.common.Constants.AGENCY_ID
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -305,7 +308,7 @@ interface ApiService {
     ): Response<String?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
-    suspend fun updateUserProfileApi(
+    suspend fun updateAccountSettingPrefs(
         @Body request: UpdateProfileRequest?
     ): Response<EmptyApiResponse?>?
 
@@ -357,7 +360,7 @@ interface ApiService {
     @POST(ONE_OF_PAYMENTS_PAY)
     suspend fun oneOfPaymentsPay(
         @Body model: OneOfPaymentModelRequest?,
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<OneOfPaymentModelResponse?>?
 
     @GET(DOWNLOAD_VRM_VEHICLE_LIST)
@@ -378,6 +381,12 @@ interface ApiService {
         @Body request: BalanceTransferRequest?
     ): Response<BalanceTransferResponse?>?
 
+    @POST(SEARCH_PROCESS_PARAMETERS)
+    suspend fun searchProcessParameters(
+        @Body request: SearchProcessParamsModelReq?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<SearchProcessParamsModelResp?>?
+
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
@@ -389,5 +398,7 @@ interface ApiService {
     suspend fun getTollTransactions(
         @Body request: UsedTollTransactionsRequest?
     ): Response<List<UsedTollTransactionResponse?>?>?
+
+
 
 }
