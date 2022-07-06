@@ -14,17 +14,18 @@ class AuthActivity : BaseActivity<Any?>() {
 
     private lateinit var binding: ActivityAuthBinding
 
-     var value = Constants.NORMAL_LOGIN_FLOW_CODE
+    var value = Constants.NORMAL_LOGIN_FLOW_CODE
 
     override fun initViewBinding() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-         value = intent?.getIntExtra(Constants.FROM_DART_CHARGE_FLOW, Constants.NORMAL_LOGIN_FLOW_CODE)!!
-        Logg.logging("AuthActivity", " value $value  ")
+        value = intent?.getIntExtra(
+            Constants.FROM_DART_CHARGE_FLOW,
+            Constants.NORMAL_LOGIN_FLOW_CODE
+        ) ?: Constants.NORMAL_LOGIN_FLOW_CODE
     }
 
     override fun observeViewModel() {}
-
 
 
 }

@@ -9,10 +9,10 @@
         android:name="com.heandroid.ui.landing.StartNowFragment"
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now">
-<!--        <action-->
-<!--            android:id="@+id/action_landing_screen"-->
-<!--            app:destination="@+id/landingFragment" />-->
 
+        <action
+            android:id="@+id/action_startNow_to_landingFragment"
+            app:destination="@id/landingFragment" />
     </fragment>
 
     <fragment
@@ -28,17 +28,17 @@
         android:name="com.heandroid.ui.landing.LogoutFragment"
         android:label="@string/str_log_out"
         tools:layout="@layout/fragment_logout">
+        <action
+            android:id="@+id/action_logoutFragment_to_startNow"
+            app:destination="@id/startNow"
+            app:popUpTo="@id/nav_graph_landing"
+            app:popUpToInclusive="true" />
     </fragment>
 
-
-   <fragment
-    android:id="@+id/sessionTimeOutFragment"
-    android:name="com.heandroid.ui.landing.SessionExpireFragment"
-    android:label="@string/str_session_time_out"
-    tools:layout="@layout/fragment_session_expire">
-</fragment>
-
-
-
+    <fragment
+        android:id="@+id/sessionTimeOutFragment"
+        android:name="com.heandroid.ui.landing.SessionExpireFragment"
+        android:label="@string/str_session_time_out"
+        tools:layout="@layout/fragment_session_expire" />
 
 </navigation>

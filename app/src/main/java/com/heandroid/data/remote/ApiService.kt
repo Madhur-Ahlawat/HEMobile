@@ -400,5 +400,4 @@ interface ApiService {
     ): Response<List<UsedTollTransactionResponse?>?>?
 
 
-
 }

@@ -46,9 +46,9 @@ data class AccountInformation(
     @SerializedName("communicationPreferences") val communicationPreferences
             : ArrayList<CommunicationPrefsModel?>? = null,
     @SerializedName("businessName") val businessName:String?,
-    @SerializedName("fein") val fein:String,
-    @SerializedName("smsOption") val smsOption:String,
-    @SerializedName("accSubType") val accSubType:String,
+    @SerializedName("fein") val fein:String?,
+    @SerializedName("smsOption") val smsOption:String?,
+    @SerializedName("accSubType") val accSubType:String?,
     @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?,
     @SerializedName("stmtDelivaryType") val stmtDelivaryType: String?
 ) : Parcelable

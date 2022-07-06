@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.data.model.webstatus.WebSiteStatus
@@ -113,16 +114,12 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
 
                 R.id.tv_crossing_service_updates,
                 R.id.rl_crossing_service_update -> {
-
                     screenType = Constants.CROSSING_SERVICE_UPDATE
                     startServicesActivity()
-
                 }
 
                 R.id.btn_start_now -> {
-                    // navigate to create account user and make one off payment  screen fragment
-                    (requireActivity() as LandingActivity).openLandingFragment()
-
+                    findNavController().navigate(R.id.action_startNow_to_landingFragment)
                 }
             }
         }

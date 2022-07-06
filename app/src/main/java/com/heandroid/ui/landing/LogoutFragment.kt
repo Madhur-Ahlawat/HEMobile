@@ -1,16 +1,17 @@
 package com.heandroid.ui.landing
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.heandroid.R
 import com.heandroid.databinding.FragmentLogoutBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.setRightButtonText
+import com.heandroid.utils.extn.startNewActivityByClearingStack
 import com.heandroid.utils.extn.visible
 
 class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListener {
@@ -49,34 +50,17 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
         v?.let {
             when (v.id) {
                 R.id.btnStart -> {
-                    startNewScreen()
+                    findNavController().navigate(R.id.action_logoutFragment_to_startNow)
                 }
 
                 R.id.btnSignin -> {
-                    requireActivity().finish()
-
-                    Intent(requireActivity(), AuthActivity::class.java).apply {
-                        addFlags(
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                                    Intent.FLAG_ACTIVITY_NEW_TASK
-                        )
-                        requireActivity().startActivity(this)
-                        requireActivity().finish()
-                    }
-
+                    requireActivity().startNewActivityByClearingStack(AuthActivity::class.java)
                 }
 
                 else -> {
                     // do nothing
                 }
             }
-        }
-    }
-
-    private fun startNewScreen() {
-        if (requireActivity() is LandingActivity) {
-            (requireActivity() as LandingActivity).openLandingFragment()
         }
     }
 

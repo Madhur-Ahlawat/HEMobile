@@ -159,7 +159,7 @@ object Utils {
     fun mobileNumber(mobNo: String?) : String {
         val regexPattern =
             "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
-        var match: Matcher
+        val match: Matcher
         val pattern = Pattern.compile(regexPattern)
         match = pattern.matcher(mobNo)
         if(match.find()){

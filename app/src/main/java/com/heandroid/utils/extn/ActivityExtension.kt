@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import com.heandroid.R
 
-fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
+fun <A : Activity> Activity.startNewActivityByClearingStack(activity: Class<A>) {
     Intent(this, activity).run {
-        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(this)
     }
 }
@@ -20,19 +21,15 @@ fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle.()
         putExtras(Bundle().apply(extras))
         startActivity(this)
         finish()
-
     }
-
 }
+
 fun <A : Activity> Activity.openActivityWithDataBack(it: Class<A>, extras: Bundle.() -> Unit = {}) {
     Intent(this, it).run {
         putExtras(Bundle().apply(extras))
         startActivity(this)
-
     }
-
 }
-
 
 fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
     Intent(this, activity).run {
@@ -61,5 +58,4 @@ fun Activity.customToolbar(title: String?) {
 fun Activity.setRightButtonText(title: String) {
     val btnRight = findViewById<AppCompatTextView>(R.id.btn_login)
     btnRight.text = title
-
 }

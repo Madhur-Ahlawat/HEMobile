@@ -41,80 +41,68 @@ class LandingActivity : BaseActivity<Any?>() {
     private var screenType: String = ""
     private lateinit var binding: ActivityLandingBinding
 
-
     override fun initViewBinding() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
+        loadFragment()
+    }
 
-        if(checkSession()) loadFragment()
-
+    override fun onResume() {
+        super.onResume()
         initCtrl()
     }
 
     private fun initCtrl() {
         binding.toolBarLyt.btnLogin.setOnClickListener {
-            when(screenType)
-            {
-                LANDING_SCREEN, START_NOW_SCREEN->{ startIntent(AuthActivity::class.java) }
-                LOGOUT_SCREEN->{ startIntent(InProgressActivity::class.java) }
-                else ->{ startIntent(AuthActivity::class.java) }
+            when (screenType) {
+                LANDING_SCREEN, START_NOW_SCREEN -> {
+                    startIntent(AuthActivity::class.java)
+                }
+                LOGOUT_SCREEN -> {
+                    if (binding.toolBarLyt.btnLogin.text.toString()
+                            .trim().contains(getString(R.string.contact_us))
+                    ) {
+                        startIntent(InProgressActivity::class.java)
+                    } else
+                        startIntent(AuthActivity::class.java)
+                }
+                else -> {
+                    startIntent(AuthActivity::class.java)
+                }
             }
-
         }
     }
 
     override fun observeViewModel() {}
 
     private fun loadFragment() {
-        navController.setGraph(R.navigation.nav_graph_landing,intent.extras)
-        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
+        navController.setGraph(R.navigation.nav_graph_landing, intent.extras)
+        val navHostFragment =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
         val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
 
-        if(intent.extras!=null)
-        oldGraph.addArgument(Constants.TYPE, NavArgument.Builder().setDefaultValue(intent.extras).build())
+        if (intent.extras != null)
+            oldGraph.addArgument(
+                Constants.TYPE,
+                NavArgument.Builder().setDefaultValue(intent.extras).build()
+            )
 
         navController.graph = oldGraph.apply {
             when (screenType) {
                 START_NOW_SCREEN -> setStartDestination(R.id.startNow)
-                LANDING_SCREEN ->  setStartDestination(R.id.landingFragment)
-                LOGOUT_SCREEN ->   setStartDestination(R.id.logoutFragment)
-                SESSION_TIME_OUT-> setStartDestination(R.id.sessionTimeOutFragment)
+                LANDING_SCREEN -> setStartDestination(R.id.landingFragment)
+                LOGOUT_SCREEN -> setStartDestination(R.id.logoutFragment)
+                SESSION_TIME_OUT -> setStartDestination(R.id.sessionTimeOutFragment)
             }
         }
-
     }
 
-
-    fun openLandingFragment() {
-        screenType = LANDING_SCREEN
-        loadFragment()
-    }
-
-    private fun checkSession() : Boolean{
-        return if(sessionManager.fetchAuthToken()!=null){
-            Log.e("current time",Calendar.getInstance().timeInMillis.toString())
-            Log.e("save time",sessionManager.getSessionTime().toString())
-            if(Calendar.getInstance().timeInMillis-sessionManager.getSessionTime()<LogoutUtil.LOGOUT_TIME){
-                startActivity(Intent(this, HomeActivityMain::class.java)
-                              .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK))
-
-                false
-            }else{
-                sessionManager.clearAll()
-                true
-            }
-
-        }else true
-    }
-
-    private fun <A: Activity> startIntent(activity: Class<A>) {
+    private fun <A : Activity> startIntent(activity: Class<A>) {
         Intent(this, activity).run {
             putExtra(Constants.SHOW_SCREEN, screenType)
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
     }

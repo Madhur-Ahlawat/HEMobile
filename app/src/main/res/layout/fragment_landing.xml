@@ -60,10 +60,10 @@
                 android:id="@+id/rbCreateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="0dp"
                 android:text="@string/str_create_account"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -79,11 +79,10 @@
                 android:id="@+id/rbMakeOffPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:lineSpacingExtra="6dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="0dp"
                 android:text="@string/str_make_one_of_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -99,10 +98,10 @@
                 android:id="@+id/rbResolvePenalty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="0dp"
                 android:text="@string/str_resolve_penalty_charge"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -119,10 +118,10 @@
                 android:id="@+id/rbCheckForPaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="0dp"
                 android:text="@string/str_check_for_paid_crossing"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -138,10 +137,10 @@
                 android:id="@+id/rbViewCharges"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="0dp"
                 android:text="@string/str_view_charges"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -152,26 +151,24 @@
                 android:layout_height="1.5dp"
                 android:background="@color/color_EFEFEF" />
 
-
         </RadioGroup>
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_44sdp"
             android:backgroundTint="@{model.enable==false?@color/btn_disable:@color/green}"
             android:enabled="@{model.enable}"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@{model.enable==false?@color/txt_disable:@color/white}"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -180,14 +177,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glEnd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_12sdp" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTop"
@@ -196,14 +191,12 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/_11sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="@dimen/_11sdp" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

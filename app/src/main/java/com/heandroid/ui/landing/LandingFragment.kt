@@ -32,9 +32,13 @@ import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener,
+    RadioGroup.OnCheckedChangeListener {
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLandingBinding  = FragmentLandingBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentLandingBinding = FragmentLandingBinding.inflate(inflater, container, false)
 
     override fun onResume() {
         super.onResume()
@@ -46,7 +50,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
     }
 
     override fun init() {
-      binding.model= LandingModel(enable = false)
+        binding.model = LandingModel(enable = false)
     }
 
 
@@ -55,7 +59,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         binding.btnContinue.setOnClickListener(this@LandingFragment)
     }
 
-    override fun observer() { }
+    override fun observer() {}
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
@@ -68,7 +72,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
 
             R.id.rbMakeOffPayment -> {
                 VehicleHelper.list?.clear()
-                val spannableString = SpannableString(getString(R.string.str_make_one_of_payment_continue))
+                val spannableString =
+                    SpannableString(getString(R.string.str_make_one_of_payment_continue))
                 val boldSpan = StyleSpan(Typeface.BOLD)
                 spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 binding.rbMakeOffPayment.text = spannableString
@@ -104,17 +109,32 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         v?.let {
             when (v.id) {
                 R.id.btnContinue -> {
-                when (binding.model?.selectType) {
-                   VIEW_CHARGES -> { requireActivity().startNewActivity(ViewChargesActivity::class.java) }
-                   ONE_OFF_PAYMENT -> { requireActivity().startNewActivity(MakeOffPaymentActivity::class.java) }
-                   CHECK_FOR_PAID -> { requireActivity().startNormalActivity(
-                       CheckPaidCrossingActivity::class.java) }
-                   RESOLVE_PENALTY -> { openUrlInWebBrowser() }
-                   CREATE_ACCOUNT-> { requireActivity().startNormalActivity(CreateAccountActivity::class.java) }
-                   else -> { requireActivity().startNormalActivity(InProgressActivity::class.java) }
-              }
+                    when (binding.model?.selectType) {
+                        VIEW_CHARGES -> {
+                            requireActivity().startNormalActivity(ViewChargesActivity::class.java)
+                        }
+                        ONE_OFF_PAYMENT -> {
+                            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+                        }
+                        CHECK_FOR_PAID -> {
+                            requireActivity().startNormalActivity(
+                                CheckPaidCrossingActivity::class.java
+                            )
+                        }
+                        RESOLVE_PENALTY -> {
+                            openUrlInWebBrowser()
+                        }
+                        CREATE_ACCOUNT -> {
+                            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+                        }
+                        else -> {
+                            requireActivity().startNormalActivity(InProgressActivity::class.java)
+                        }
+                    }
+                }
             }
-        }}}
+        }
+    }
 
     private fun openUrlInWebBrowser() {
         val url = Constants.PCN_RESOLVE_URL

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.heandroid.R
@@ -13,10 +14,8 @@ import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.databinding.DialogLogoutBinding
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.ui.landing.LandingActivity
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.SessionManager
-import com.heandroid.utils.common.observe
+import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,10 +28,16 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private var loader: LoaderDialog? = null
 
-    override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): DialogLogoutBinding = DialogLogoutBinding.inflate(inflater,container,false)
+    override fun getDialogBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): DialogLogoutBinding = DialogLogoutBinding.inflate(inflater, container, false)
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.tvTitle.text = arguments?.getString("title")
         binding.tvDes.text = arguments?.getString("desc")
     }
@@ -57,31 +62,35 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
             }
             R.id.tvLogout -> {
                 binding.tvLogout.isEnabled = false
+                loader?.show(requireActivity().supportFragmentManager, "loader")
                 viewModel.logout()
             }
         }
     }
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
-        binding.tvLogout.isEnabled = true
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
                 openLogoutScreen()
             }
             is Resource.DataError -> {
                 dismiss()
-                Toast.makeText(requireContext(), "", Toast.LENGTH_LONG).show()
+                ErrorUtil.showError(binding.root, status.errorMsg)
             }
+            else -> {  }
         }
     }
 
     private fun openLogoutScreen() {
-//        requireActivity().finish()
         sessionManager.clearAll()
         dismiss()
         Intent(requireActivity(), LandingActivity::class.java).apply {
-            putExtra(Constants.SHOW_SCREEN,Constants.LOGOUT_SCREEN)
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
     }

@@ -20,12 +20,9 @@ import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.extn.hideKeyboard
-import com.heandroid.utils.extn.openActivityWithData
-import com.heandroid.utils.extn.startNormalActivity
-import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.heandroid.utils.extn.*
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener {
@@ -103,7 +100,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         }
         requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
             putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
-
         }
 
     }
@@ -119,22 +115,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             setLoggedInUser(true)
 
         }
-        requireActivity().startNormalActivity(HomeActivityMain::class.java)
-/*
-            if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
 
-                requireActivity().startNormalActivity(HomeActivityMain::class.java)
-            } else {
-                requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
-                    putInt(
-                        Constants.FROM_LOGIN_TO_CASES,
-                        Constants.FROM_LOGIN_TO_CASES_VALUE
-                    )
-                    putString(Constants.LAST_NAME,response.data?.user_name?:"")
-                }
+        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
 
-            }
-*/
+        /*      requireActivity().startNormalActivity(HomeActivityMain::class.java)
+
+                      if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
+
+                          requireActivity().startNormalActivity(HomeActivityMain::class.java)
+                      } else {
+                          requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
+                              putInt(
+                                  Constants.FROM_LOGIN_TO_CASES,
+                                  Constants.FROM_LOGIN_TO_CASES_VALUE
+                              )
+                              putString(Constants.LAST_NAME,response.data?.user_name?:"")
+                          }
+
+                      }
+          */
     }
 
 

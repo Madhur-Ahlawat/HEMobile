@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.databinding.FragmentAccountBinding
@@ -28,12 +25,10 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.extn.openActivityWithData
 import com.heandroid.utils.extn.openActivityWithDataBack
-import com.heandroid.utils.extn.startNewActivity
+import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener {
@@ -74,15 +69,15 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         when (v?.id) {
 
             R.id.profile -> {
-                requireActivity().startNewActivity(ProfileActivity::class.java)
+                requireActivity().startNormalActivity(ProfileActivity::class.java)
             }
 
             R.id.payment -> {
-                requireActivity().startNewActivity(AccountPaymentActivity::class.java)
+                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
             R.id.rl_account -> {
-                requireActivity().startNewActivity(CommunicationActivity::class.java)
+                requireActivity().startNormalActivity(CommunicationActivity::class.java)
             }
 
             R.id.nominated_contacts_lyt -> {
@@ -102,7 +97,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.rl_account_statement -> {
-                requireActivity().startNewActivity(AccountStatementActivity::class.java)
+                requireActivity().startNormalActivity(AccountStatementActivity::class.java)
             }
 
             R.id.log_out_lyt -> {

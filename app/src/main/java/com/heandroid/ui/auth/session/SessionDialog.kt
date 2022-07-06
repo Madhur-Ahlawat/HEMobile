@@ -17,7 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SessionDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
 
-    override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): DialogErrorBinding = DialogErrorBinding.inflate(inflater,container,false)
+    override fun getDialogBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): DialogErrorBinding = DialogErrorBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.tvMessage.text = getString(R.string.your_session_has_expired)
@@ -36,10 +39,12 @@ class SessionDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
             R.id.btnOk -> {
                 dismiss()
                 requireActivity().finish()
-                requireActivity().startActivity(Intent(context, LandingActivity::class.java)
-                                                .putExtra(Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT)
-                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                .putExtra(Constants.TYPE, Constants.LOGIN))
+                requireActivity().startActivity(
+                    Intent(context, LandingActivity::class.java)
+                        .putExtra(Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Constants.TYPE, Constants.LOGIN)
+                )
             }
         }
     }
