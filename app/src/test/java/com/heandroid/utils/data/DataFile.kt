@@ -37,6 +37,7 @@ object DataFile {
             "", "", "", "",
             "auto top-up", "", "", "",
             "", "", null, "",
+            null, "", "", "", "", "",
             ""
         )
         val financialInformation = FinancialInformation(
@@ -154,7 +155,7 @@ object DataFile {
         )
     }
 
-    fun getCrossingHistoryItem(number: String, status: String = "Y"): CrossingHistoryItem {
+    fun getCrossingHistoryItem(number: String, status: String = "Y"): CrossingHistoryItem? {
         return CrossingHistoryItem(
             "",
             "01012022",
@@ -199,9 +200,9 @@ object DataFile {
         "",
         0,
         "",
-        false,
-        false,
-        false
+        isRead = false,
+        iSel = false,
+        isSelectListItem = false
     )
 
     fun getCreateAccountRequestModel(): CreateAccountRequestModel {

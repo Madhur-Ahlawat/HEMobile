@@ -316,7 +316,7 @@ class DashboardViewModelTest {
         runBlockingTest {
             Mockito.lenient().`when`(crossingResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(crossingResponse.code()).thenReturn(200)
-            val crossingList = mutableListOf<CrossingHistoryItem>()
+            val crossingList = mutableListOf<CrossingHistoryItem?>()
             val crossingHistoryResponseData = CrossingHistoryResponse(crossingList, "")
             val crossingHistoryResponse =
                 CrossingHistoryApiResponse(crossingHistoryResponseData, "", "")

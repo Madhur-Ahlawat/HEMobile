@@ -119,7 +119,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
         launchFragmentInHiltContainer<VehicleHistoryCrossingHistoryFragment> {
             onView(withId(R.id.linearLayout)).check(matches(isDisplayed()))
 
-            val list = mutableListOf<CrossingHistoryItem>()
+            val list = mutableListOf<CrossingHistoryItem?>()
             val crossingHistoryResponseData = CrossingHistoryResponse(list, "")
             val crossingHistoryResponse =
                 CrossingHistoryApiResponse(crossingHistoryResponseData, "", "")
@@ -191,9 +191,9 @@ class VehicleHistoryCrossingHistoryFragmentTest {
         launchFragmentInHiltContainer<VehicleHistoryCrossingHistoryFragment> {
             onView(withId(R.id.linearLayout)).check(matches(isDisplayed()))
 
-            val list = mutableListOf<CrossingHistoryItem>()
+            val list = mutableListOf<CrossingHistoryItem?>()
             for (i  in 1 ..10) {
-                list.add(DataFile.getCrossingHistoryItem("ABCD$i"))
+                DataFile.getCrossingHistoryItem("ABCD$i")?.let { list.add(it) }
             }
             val crossingHistoryResponseData = CrossingHistoryResponse(list, "")
             val crossingHistoryResponse =

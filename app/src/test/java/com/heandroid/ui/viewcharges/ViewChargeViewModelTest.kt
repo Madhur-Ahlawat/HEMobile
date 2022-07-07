@@ -45,7 +45,7 @@ class ViewChargeViewModelTest {
     private lateinit var repository: ViewChargeRepository
 
     @Mock
-    private lateinit var response: Response<List<TollRatesResp>?>
+    private lateinit var response: Response<List<TollRatesResp?>?>
 
     @Mock
     private lateinit var responseBody: ResponseBody

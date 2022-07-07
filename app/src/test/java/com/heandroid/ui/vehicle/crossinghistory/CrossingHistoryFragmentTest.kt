@@ -89,7 +89,7 @@ class CrossingHistoryFragmentTest {
     @Test
     fun `test crossing history screen visibility for no crossings`() {
         every { viewModel.crossingHistoryVal } returns crossingHistoryLiveData
-        val crossingList = mutableListOf<CrossingHistoryItem>()
+        val crossingList = mutableListOf<CrossingHistoryItem?>()
         val crossingHistoryResponseData = CrossingHistoryResponse(crossingList, "")
         val crossingHistoryResponse =
             CrossingHistoryApiResponse(crossingHistoryResponseData, "", "")

@@ -56,7 +56,7 @@ class CreateAccountPostCodeFragmentTest {
     @JvmField
     val viewModel = mockk<CreateAccountPostCodeViewModel>(relaxed = true)
 
-    private val addressesLiveData = MutableLiveData<Resource<List<DataAddress>?>?>()
+    private val addressesLiveData = MutableLiveData<Resource<List<DataAddress?>?>?>()
 
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 

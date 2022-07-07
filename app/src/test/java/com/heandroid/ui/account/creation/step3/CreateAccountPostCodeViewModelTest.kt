@@ -43,7 +43,7 @@ class CreateAccountPostCodeViewModelTest {
     private lateinit var repository: AccountCreationRepository
 
     @Mock
-    private lateinit var addressesResponse: Response<List<DataAddress>>
+    private lateinit var addressesResponse: Response<List<DataAddress?>?>
 
     @Inject
     lateinit var errorManager: ErrorManager
