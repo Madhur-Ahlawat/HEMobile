@@ -41,3 +41,16 @@ steps:
   - task: Bash@3
     inputs:
       filePath: 'bash_script'
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '11'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+
+  - script: ./gradlew jacocoTestReport
+
+  - task: PublishTestResults@2
+    inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test/TEST-*.xml'
+        searchFolder: $(System.DefaultWorkingDirectory)
