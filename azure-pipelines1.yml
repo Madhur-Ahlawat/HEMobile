@@ -23,6 +23,21 @@ steps:
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
 
+  - task: CopyFiles@2
+    inputs:
+        Contents: '**/*.apk'
+        TargetFolder:  '$(build.artifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'HE-MAPP-ANDROID'
+          publishLocation: 'Container'
+
+  - task: Bash@3
+    inputs:
+      filePath: 'bash_script'
+
   - task: JavaToolInstaller@0
     inputs:
       versionSpec: '11'
@@ -42,18 +57,3 @@ steps:
         testResultsFormat: 'JUnit'
         testResultsFiles: '**/testDevDebugUnitTest/TEST-*.xml'
         searchFolder: $(System.DefaultWorkingDirectory)
-
-  - task: CopyFiles@2
-    inputs:
-        Contents: '**/*.apk'
-        TargetFolder:  '$(build.artifactStagingDirectory)'
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'HE-MAPP-ANDROID'
-          publishLocation: 'Container'
-
-  - task: Bash@3
-    inputs:
-      filePath: 'bash_script'
