@@ -85,7 +85,7 @@ class MakePaymentAddVehicleFragmentTest {
     @Test
     fun `test make payment add vehicle screen visibility`() {
         val bundle = Bundle().apply {
-            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
+            putInt(ConstantsTest.VEHICLE_SCREEN_KEY, 1)
         }
         launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
             onView(withId(R.id.add_vehicles_txt)).check(matches(isDisplayed()))
@@ -99,7 +99,7 @@ class MakePaymentAddVehicleFragmentTest {
     @Test
     fun `test make payment add vehicle screen, add vehicle for success`() {
         val bundle = Bundle().apply {
-            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
+            putInt(ConstantsTest.VEHICLE_SCREEN_KEY, 1)
         }
         launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_make_off_payment)
@@ -154,110 +154,110 @@ class MakePaymentAddVehicleFragmentTest {
         }
     }
 
-    //@Test
-    fun `test make payment add vehicle screen, add vehicle and remove vehicle`() {
-        val bundle = Bundle().apply {
-            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
-        }
-        launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
-            navController.setGraph(R.navigation.nav_graph_make_off_payment)
-            navController.setCurrentDestination(R.id.makePaymentAddVehicleFragment)
-            Navigation.setViewNavController(requireView(), navController)
-            onView(withId(R.id.add_vehicles_txt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rvVehiclesList)).check(matches(not(isDisplayed())))
-            onView(withId(R.id.findVehicle)).check(matches(isDisplayed()))
-            onView(withId(R.id.add_upto_five_vehicles)).check(matches(isDisplayed()))
-            onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
-            (this as MakePaymentAddVehicleFragment).onAddClick(
-                VehicleResponse(
-                    PlateInfoResponse(),
-                    PlateInfoResponse("1234", "UK"),
-                    VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
-                    false
-                )
-            )
-            this.onAddClick(
-                VehicleResponse(
-                    PlateInfoResponse(),
-                    PlateInfoResponse("4567", "UK"),
-                    VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
-                    false
-                )
-            )
-
-            runTest {
-                Assert.assertEquals(
-                    requireActivity().findViewById<RecyclerView>(R.id.rvVehiclesList).adapter?.itemCount,
-                    2
-                )
-                delay(500)
-                onView(withId(R.id.rvVehiclesList))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            0, BaseActions.clickOnViewChild(R.id.delete_img)
-                        )
-                    )
-                onView(withId(R.id.rvVehiclesList))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            0, BaseActions.clickOnViewChild(R.id.delete_img)
-                        )
-                    )
-
-                Assert.assertEquals(
-                    requireActivity().findViewById<RecyclerView>(R.id.rvVehiclesList).adapter?.itemCount,
-                    0
-                )
-            }
-        }
-    }
-
-    //@Test
-    fun `test make payment add vehicle screen, add vehicle navigate to next screen`() {
-        val bundle = Bundle().apply {
-            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
-        }
-        launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
-            navController.setGraph(R.navigation.nav_graph_make_off_payment)
-            navController.setCurrentDestination(R.id.makePaymentAddVehicleFragment)
-            Navigation.setViewNavController(requireView(), navController)
-            onView(withId(R.id.add_vehicles_txt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rvVehiclesList)).check(matches(not(isDisplayed())))
-            onView(withId(R.id.findVehicle)).check(matches(isDisplayed()))
-            onView(withId(R.id.add_upto_five_vehicles)).check(matches(isDisplayed()))
-            onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
-                .perform(click())
-
-            runTest {
-                val dialogFragment =
-                    childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleVRMDialog
-                assert(dialogFragment.dialog?.isShowing == true)
-                dialogFragment.dialog?.findViewById<Button>(R.id.switch_view)?.performClick()
-                onView(withId(R.id.add_vrm_input)).inRoot(isDialog())
-                    .perform(ViewActions.clearText(), ViewActions.typeText("N062 1234"))
-                Espresso.closeSoftKeyboard()
-                delay(500)
-                dialogFragment.dialog?.findViewById<Button>(R.id.add_vehicle_btn)?.performClick()
-                shadowOf(getMainLooper()).idle()
-                findVehicle.postValue(
-                    Resource.Success(
-                        VehicleInfoDetails(
-                            RetrievePlateInfoDetails(
-                                "", "", "", "", ""
-                            )
-                        )
-                    )
-                )
-                shadowOf(getMainLooper()).idle()
-                validVehicle.postValue(Resource.Success("yes"))
-                shadowOf(getMainLooper()).idle()
-            }
-            Assert.assertEquals(
-                navController.currentDestination?.id,
-                R.id.addVehicleDetailsFragment
-            )
-        }
-    }
+//    @Test
+//    fun `test make payment add vehicle screen, add vehicle and remove vehicle`() {
+//        val bundle = Bundle().apply {
+//            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
+//        }
+//        launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
+//            navController.setGraph(R.navigation.nav_graph_make_off_payment)
+//            navController.setCurrentDestination(R.id.makePaymentAddVehicleFragment)
+//            Navigation.setViewNavController(requireView(), navController)
+//            onView(withId(R.id.add_vehicles_txt)).check(matches(isDisplayed()))
+//            onView(withId(R.id.rvVehiclesList)).check(matches(not(isDisplayed())))
+//            onView(withId(R.id.findVehicle)).check(matches(isDisplayed()))
+//            onView(withId(R.id.add_upto_five_vehicles)).check(matches(isDisplayed()))
+//            onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
+//            (this as MakePaymentAddVehicleFragment).onAddClick(
+//                VehicleResponse(
+//                    PlateInfoResponse(),
+//                    PlateInfoResponse("1234", "UK"),
+//                    VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
+//                    false
+//                )
+//            )
+//            this.onAddClick(
+//                VehicleResponse(
+//                    PlateInfoResponse(),
+//                    PlateInfoResponse("4567", "UK"),
+//                    VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
+//                    false
+//                )
+//            )
+//
+//            runTest {
+//                Assert.assertEquals(
+//                    requireActivity().findViewById<RecyclerView>(R.id.rvVehiclesList).adapter?.itemCount,
+//                    2
+//                )
+//                delay(500)
+//                onView(withId(R.id.rvVehiclesList))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            0, BaseActions.clickOnViewChild(R.id.delete_img)
+//                        )
+//                    )
+//                onView(withId(R.id.rvVehiclesList))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            0, BaseActions.clickOnViewChild(R.id.delete_img)
+//                        )
+//                    )
+//
+//                Assert.assertEquals(
+//                    requireActivity().findViewById<RecyclerView>(R.id.rvVehiclesList).adapter?.itemCount,
+//                    0
+//                )
+//            }
+//        }
+//    }
+//
+//    @Test
+//    fun `test make payment add vehicle screen, add vehicle navigate to next screen`() {
+//        val bundle = Bundle().apply {
+//            putBoolean(ConstantsTest.PAYMENT_ONE_OFF, true)
+//        }
+//        launchFragmentInHiltContainer<MakePaymentAddVehicleFragment>(bundle) {
+//            navController.setGraph(R.navigation.nav_graph_make_off_payment)
+//            navController.setCurrentDestination(R.id.makePaymentAddVehicleFragment)
+//            Navigation.setViewNavController(requireView(), navController)
+//            onView(withId(R.id.add_vehicles_txt)).check(matches(isDisplayed()))
+//            onView(withId(R.id.rvVehiclesList)).check(matches(not(isDisplayed())))
+//            onView(withId(R.id.findVehicle)).check(matches(isDisplayed()))
+//            onView(withId(R.id.add_upto_five_vehicles)).check(matches(isDisplayed()))
+//            onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
+//                .perform(click())
+//
+//            runTest {
+//                val dialogFragment =
+//                    childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleVRMDialog
+//                assert(dialogFragment.dialog?.isShowing == true)
+//                dialogFragment.dialog?.findViewById<Button>(R.id.switch_view)?.performClick()
+//                onView(withId(R.id.add_vrm_input)).inRoot(isDialog())
+//                    .perform(ViewActions.clearText(), ViewActions.typeText("N062 1234"))
+//                Espresso.closeSoftKeyboard()
+//                delay(500)
+//                dialogFragment.dialog?.findViewById<Button>(R.id.add_vehicle_btn)?.performClick()
+//                shadowOf(getMainLooper()).idle()
+//                findVehicle.postValue(
+//                    Resource.Success(
+//                        VehicleInfoDetails(
+//                            RetrievePlateInfoDetails(
+//                                "", "", "", "", ""
+//                            )
+//                        )
+//                    )
+//                )
+//                shadowOf(getMainLooper()).idle()
+//                validVehicle.postValue(Resource.Success("yes"))
+//                shadowOf(getMainLooper()).idle()
+//            }
+//            Assert.assertEquals(
+//                navController.currentDestination?.id,
+//                R.id.addVehicleDetailsFragment
+//            )
+//        }
+//    }
 
 
 }
