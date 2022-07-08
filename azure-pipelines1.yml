@@ -22,11 +22,6 @@ steps:
       gradleOptions: '-Xmx3072m'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
-  - task: PublishTestResults@2
-    inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/testDevDebugUnitTest/TEST-*.xml'
-        searchFolder: $(System.DefaultWorkingDirectory)
 
   - task: JavaToolInstaller@0
     inputs:
@@ -41,13 +36,13 @@ steps:
      codeCoverageTool: 'JaCoCo'
      summaryFileLocation: '/Users/runner/work/1/s/app/build/coverage/report/testReport.xml'
      pathToSources: '/Users/runner/work/1/s/app/src/main/java/'
-
+     
   - task: PublishTestResults@2
     inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: '**/testDevDebugUnitTest/TEST-*.xml'
         searchFolder: $(System.DefaultWorkingDirectory)
-        
+
   - task: CopyFiles@2
     inputs:
         Contents: '**/*.apk'
@@ -58,7 +53,7 @@ steps:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'HE-MAPP-ANDROID'
           publishLocation: 'Container'
-      
+
   - task: Bash@3
     inputs:
       filePath: 'bash_script'
