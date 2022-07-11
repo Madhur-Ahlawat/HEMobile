@@ -34,7 +34,6 @@ import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnClickListener,
     ItemClickListener, AddVehicleListener, RemoveVehicleListener, DownloadFilterDialogListener {
@@ -43,7 +42,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private lateinit var mAdapter: VehicleListAdapter
     private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-    private var isAccountVehicle: Boolean? = false
     private var isBusinessAccount = false
 
     @Inject
@@ -57,13 +55,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun init() {
 
-        val buttonVisibility = requireActivity().intent?.getBooleanExtra(
+        val buttonVisibility = arguments?.getBoolean(
             Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,
             false
-        )//getBoolean(Constants.DATA, false) == true
-        isAccountVehicle = arguments?.getBoolean("IsAccountVehicle")
+        )
 
-        if (buttonVisibility!!) {
+        if (buttonVisibility == true) {
             binding.addVehicleBtn.gone()
             binding.removeVehicleBtn.gone()
         }

@@ -14,15 +14,14 @@ import com.heandroid.databinding.FragmentLoginBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import com.heandroid.utils.extn.*
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener {
@@ -70,12 +69,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         }
         when (status) {
             is Resource.Success -> {
-//                    if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
                 launchIntent(status)
-//                    } else {
-//                        launchSubmitComplaint(status)
-
-//                    }
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
@@ -83,23 +77,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             else -> {
 
             }
-        }
-
-    }
-
-    private fun launchSubmitComplaint(response: Resource.Success<LoginResponse?>) {
-        sessionManager.run {
-            saveAuthToken(response.data?.accessToken ?: "")
-            saveRefreshToken(response.data?.refreshToken ?: "")
-            setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
-            isSecondaryUser(response.data?.isSecondary ?: false)
-
-            //saveAccountNumber(response.data?.user_name?:"")
-            saveAccountType(response.data?.accountType ?: "")
-            setLoggedInUser(true)
-        }
-        requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
-            putInt(Constants.FROM_LOGIN_TO_CASES, Constants.FROM_LOGIN_TO_CASES_VALUE)
         }
 
     }
@@ -113,27 +90,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             //saveAccountNumber(response.data?.user_name?:"")
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
-
         }
-
         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-        /*      requireActivity().startNormalActivity(HomeActivityMain::class.java)
-
-                      if ((requireActivity() as AuthActivity).value == Constants.NORMAL_LOGIN_FLOW_CODE) {
-
-                          requireActivity().startNormalActivity(HomeActivityMain::class.java)
-                      } else {
-                          requireActivity().openActivityWithData(ContactDartChargeActivity::class.java) {
-                              putInt(
-                                  Constants.FROM_LOGIN_TO_CASES,
-                                  Constants.FROM_LOGIN_TO_CASES_VALUE
-                              )
-                              putString(Constants.LAST_NAME,response.data?.user_name?:"")
-                          }
-
-                      }
-          */
     }
 
 

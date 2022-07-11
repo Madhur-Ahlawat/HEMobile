@@ -32,6 +32,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     private var screenType: String = ""
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var isChecked = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -47,13 +48,17 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             toolbar.findViewById<TextView>(R.id.btn_login).visible()
             requireActivity().setRightButtonText(getString(R.string.login))
         }
+        isChecked = true
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader?.show(requireActivity().supportFragmentManager, "")
+        webServiceViewModel.checkServiceStatus()
     }
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
-        webServiceViewModel.tollRates()
     }
 
     override fun initCtrl() {
@@ -73,31 +78,36 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     }
 
     private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
-        loader?.dismiss()
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.apply {
-                    if (state == "LIVE" && title != null) {
-                        binding.maintainanceLyt.visible()
-                        binding.maintainanceTitle.text = title
-                        if (message != null)
-                            binding.maintainanceDesc.text = message
-                    } else {
-                        binding.maintainanceLyt.gone()
+        if (isChecked) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.apply {
+                        if (state != "LIVE" && title != null) {
+                            binding.maintainanceLyt.visible()
+                            binding.maintainanceTitle.text = title
+                            if (message != null)
+                                binding.maintainanceDesc.text = message
+                        } else {
+                            binding.maintainanceLyt.gone()
+                        }
                     }
                 }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+                    // do nothing
+                }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-            else -> {
-                // do nothing
-            }
+            isChecked = false
         }
+
     }
 
     override fun onClick(v: View?) {
-
         v?.let {
             when (v.id) {
                 R.id.tv_about_service,

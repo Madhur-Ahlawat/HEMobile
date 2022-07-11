@@ -48,7 +48,7 @@ class VehicleGroupMgmtViewModelTest {
         RenameVehicleGroup("", "")
 
     private val unknownException = "unknown exception"
-    private val connectivityException = "No Internet Connection"
+    private val connectivityException = "No Internet Connection found"
     private var vehicleGroupMgmtViewModel: VehicleGroupMgmtViewModel? = null
 
     @Mock

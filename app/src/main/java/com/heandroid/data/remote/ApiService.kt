@@ -85,7 +85,10 @@ interface ApiService {
     ): Response<ForgotPasswordResponseModel?>?
 
     @GET(VEHICLE)
-    suspend fun getVehicleData(): Response<List<VehicleResponse?>?>?
+    suspend fun getVehicleData(
+        @Query("startIndex") startIndex: String?,
+        @Query("count") count: String?
+    ): Response<List<VehicleResponse?>?>?
 
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?

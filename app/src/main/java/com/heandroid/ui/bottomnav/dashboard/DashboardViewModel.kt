@@ -16,7 +16,11 @@ import com.heandroid.data.repository.dashboard.DashBoardRepo
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -118,6 +122,55 @@ class DashboardViewModel @Inject constructor(
                 _thresholdAmountVal.postValue(ResponseHandler.failure(e))
             }
         }
+    }
+
+    fun getDashboardAllData(request: CrossingHistoryRequest) {
+        viewModelScope.launch {
+            coroutineScope {
+                val vehicleCountResponse: Response<List<VehicleResponse?>?>?
+                val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
+                val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
+                val overviewResponse: Response<AccountResponse?>?
+                val alertsResponse: Response<AlertMessageApiResponse?>?
+                val callVehicleCount = async { repository.getVehicleData() }
+                delay(100)
+                val callCrossingCount = async { repository.crossingHistoryApiCall(request) }
+                delay(100)
+                val callThreshold = async { repository.getThresholdAmountApiCAll() }
+                delay(100)
+                val callOverview = async { repository.getAccountDetailsApiCall() }
+                delay(100)
+                val callAlerts = async { repository.getAlertMessages() }
+                try {
+                    vehicleCountResponse = callVehicleCount.await()
+                    crossingCountResponse = callCrossingCount.await()
+                    thresholdAmountResponse = callThreshold.await()
+                    overviewResponse = callOverview.await()
+                    alertsResponse = callAlerts.await()
+                    if (vehicleCountResponse?.isSuccessful == true &&
+                        crossingCountResponse?.isSuccessful == true &&
+                        thresholdAmountResponse?.isSuccessful == true &&
+                        overviewResponse?.isSuccessful == true &&
+                        alertsResponse?.isSuccessful == true
+                    ) {
+                        _vehicleListVal.value = Resource.Success(vehicleCountResponse.body())
+                        _crossingHistoryVal.value = Resource.Success(crossingCountResponse.body())
+                        _thresholdAmountVal.value = Resource.Success(thresholdAmountResponse.body())
+                        _accountDetailsVal.value = Resource.Success(overviewResponse.body())
+                        _alertsVal.value = Resource.Success(alertsResponse.body())
+
+                    } else {
+                        _vehicleListVal.value =
+                            Resource.DataError("Something went wrong. Try again later")
+                    }
+                } catch (ex: Exception) {
+                    _vehicleListVal.value =
+                        Resource.DataError("Something went wrong. Try again later")
+                }
+
+            }
+        }
+
     }
 
 }

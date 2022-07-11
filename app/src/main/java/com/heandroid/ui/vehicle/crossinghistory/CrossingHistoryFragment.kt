@@ -76,7 +76,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         super.onCreate(savedInstanceState)
         crossingHistoryAdapter = CrossingHistoryAdapter(this, list)
         request =
-            CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = "ALL")
+            CrossingHistoryRequest(startIndex = startIndex, count = count, transactionType = Constants.ALL_TRANSACTION)
         isCrossingHistory = true
 
     }
@@ -98,7 +98,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
             val request = CrossingHistoryRequest(
                 startIndex = 1,
                 count = 1,
-                transactionType = Constants.TOLL_TRANSACTION,
+                transactionType = Constants.ALL_TRANSACTION,
                 searchDate = Constants.TRANSACTION_DATE,
                 startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
                 endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy

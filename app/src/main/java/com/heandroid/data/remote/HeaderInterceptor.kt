@@ -10,30 +10,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class HeaderInterceptor @Inject constructor(private val sessionManager: SessionManager) : Interceptor {
-
+class HeaderInterceptor @Inject constructor(
+    private val sessionManager: SessionManager
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
-       // requestBuilder.addHeader("ContentType", "application/x-www-form-urlencoded")
-
+        // requestBuilder.addHeader("ContentType", "application/x-www-form-urlencoded")
         // If token has been saved, add it to the request
         //var sessionManager = MyApplication.getContext()?.let { SessionManager(it) }
-
         val appVersion = getVersionName()
         val osVersion: String? = Build.VERSION.RELEASE
 
-        sessionManager?.let {
-            it.fetchAuthToken()?.let {
-                Log.d("Interceptor:", it)
-                var token = "Bearer $it"
-                Log.d("token : ", token)
-                requestBuilder.addHeader("Authorization", "Bearer $it")
-                requestBuilder.addHeader("User-Agent", "MobileApp-${appVersion}, Android-${osVersion}")
+        sessionManager.let {
+            it.fetchAuthToken()?.let { accessToken ->
+                requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                requestBuilder.addHeader(
+                    "User-Agent",
+                    "MobileApp-${appVersion}, Android-${osVersion}"
+                )
             }
         }
-
         return chain.proceed(requestBuilder.build())
     }
-
 }

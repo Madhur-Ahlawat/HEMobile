@@ -23,7 +23,7 @@
             android:gravity="start"
             android:text="@string/str_pay_dart_ford_crossing"
             android:textColor="@color/color_757575"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -34,7 +34,7 @@
             android:id="@+id/id_title_lyt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="start"
             android:text="@string/str_what_would_you_like_to_do"
             android:textColor="@color/black"
@@ -157,14 +157,14 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_44sdp"
+            android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@{model.enable==false?@color/btn_disable:@color/green}"
             android:enabled="@{model.enable}"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@{model.enable==false?@color/txt_disable:@color/white}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -189,7 +189,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_11sdp" />
+            app:layout_constraintGuide_begin="@dimen/_2sdp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"

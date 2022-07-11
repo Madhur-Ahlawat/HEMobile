@@ -24,7 +24,7 @@ class WebSiteServiceViewModel @Inject constructor(
     private val _webService = MutableLiveData<Resource<WebSiteStatus?>>()
     val webServiceLiveData: LiveData<Resource<WebSiteStatus?>> get() = _webService
 
-    fun tollRates() {
+    fun checkServiceStatus() {
         viewModelScope.launch {
             try {
                 _webService.postValue(

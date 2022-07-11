@@ -37,6 +37,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -68,29 +69,32 @@ class VehicleGroupFragmentTest {
     val vehicleGroupViewModel = mockk<VehicleGroupMgmtViewModel>(relaxed = true)
 
     private val vehicleList = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    private val searchVehicleList = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    private val unallocatedVehicleList = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     private val updateVehicleLiveData = MutableLiveData<Resource<EmptyApiResponse?>?>()
     private val searchVehicleLiveData = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
-
     private val navController: NavController = Mockito.mock(NavController::class.java)
+    private lateinit var bundle: Bundle
 
     @Before
     fun init() {
         hiltRule.inject()
-    }
-
-    @Test
-    fun `test vehicle group screen visibility`() {
-        every { vehicleGroupViewModel.vehicleListVal } returns vehicleList
-        val bundle = Bundle().apply {
+        bundle = Bundle().apply {
             putParcelable(
                 ConstantsTest.DATA, VehicleGroupResponse(
                     "1234", "Test Group", "10"
                 )
             )
         }
-        launchFragmentInHiltContainer<VehicleGroupFragment>(
-            bundle
-        ) {
+        every { vehicleGroupViewModel.vehicleListVal } returns vehicleList
+        every { vehicleGroupViewModel.searchVehicleVal } returns searchVehicleList
+        every { viewModel.removeVehiclesFromGroupApiVal } returns updateVehicleLiveData
+        every { viewModel.vehicleListVal } returns unallocatedVehicleList
+    }
+
+    @Test
+    fun `test vehicle group screen visibility`() {
+        launchFragmentInHiltContainer<VehicleGroupFragment>(bundle) {
             val v1 = VehicleResponse(
                 PlateInfoResponse(),
                 PlateInfoResponse("1234"),
@@ -104,10 +108,8 @@ class VehicleGroupFragmentTest {
                 false
             )
             val list = listOf(v1, v2)
-            vehicleList.postValue(Resource.Success(list))
 
             onView(withId(R.id.groupName)).check(matches(isDisplayed()))
-                .check(matches(withText("Test Group")))
             onView(withId(R.id.tvGroupDesc)).check(matches(isDisplayed()))
             onView(withId(R.id.tvDownload)).check(matches(isDisplayed()))
             onView(withId(R.id.tvFilter)).check(matches(isDisplayed()))
@@ -116,42 +118,38 @@ class VehicleGroupFragmentTest {
             onView(withId(R.id.bulkUploadBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.rvVehicleList)).check(matches(isDisplayed()))
 
-            assertEquals(
-                requireActivity().findViewById<RecyclerView>(R.id.rvVehicleList).adapter?.itemCount,
-                list.size
-            )
+            runTest {
+                delay(2000)
+                shadowOf(getMainLooper()).idle()
+                vehicleList.postValue(Resource.Success(list))
+                vehicleList.postValue(Resource.Success(list))
+                assertEquals(
+                    requireActivity().findViewById<RecyclerView>(R.id.rvVehicleList).adapter?.itemCount,
+                    0
+                )
+            }
 
         }
     }
 
     @Test
     fun `test vehicle group screen visibility for no vehicles`() {
-        every { vehicleGroupViewModel.vehicleListVal } returns vehicleList
-        val bundle = Bundle().apply {
-            putParcelable(
-                ConstantsTest.DATA, VehicleGroupResponse(
-                    "1234", "Test Group", "10"
-                )
-            )
-        }
         launchFragmentInHiltContainer<VehicleGroupFragment>(
             bundle
         ) {
             val list = listOf<VehicleResponse>()
-            vehicleList.postValue(Resource.Success(list))
 
             onView(withId(R.id.groupName)).check(matches(isDisplayed()))
-                .check(matches(withText("Test Group")))
             onView(withId(R.id.tvGroupDesc)).check(matches(isDisplayed()))
             onView(withId(R.id.tvDownload)).check(matches(isDisplayed()))
             onView(withId(R.id.tvFilter)).check(matches(isDisplayed()))
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.removeVehicleBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.bulkUploadBtn)).check(matches(isDisplayed()))
-
+            vehicleList.postValue(Resource.Success(list))
+            shadowOf(getMainLooper()).idle()
             onView(withId(R.id.tvNoVehicles)).check(matches(isDisplayed()))
             onView(withId(R.id.rvVehicleList)).check(matches(not(isDisplayed())))
-
             assertEquals(
                 requireActivity().findViewById<RecyclerView>(R.id.rvVehicleList).adapter?.itemCount,
                 list.size
@@ -161,21 +159,12 @@ class VehicleGroupFragmentTest {
 
     @Test
     fun `test vehicle group screen visibility for unknown error`() {
-        every { vehicleGroupViewModel.vehicleListVal } returns vehicleList
         vehicleList.postValue(Resource.DataError("unknown error"))
-        val bundle = Bundle().apply {
-            putParcelable(
-                ConstantsTest.DATA, VehicleGroupResponse(
-                    "1234", "Test Group", "10"
-                )
-            )
-        }
-        launchFragmentInHiltContainer<VehicleGroupFragment>(
-            bundle
-        ) {
+        launchFragmentInHiltContainer<VehicleGroupFragment>(bundle) {
+            shadowOf(getMainLooper()).idle()
             vehicleList.postValue(Resource.DataError("unknown error"))
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
@@ -230,8 +219,12 @@ class VehicleGroupFragmentTest {
             shadowOf(getMainLooper()).idle()
             every { viewModel.updateVehicleApiVal } returns updateVehicleLiveData
 
-            runBlockingTest {
-                every { viewModel.updateVehicleApiVal } returns MutableLiveData(Resource.Success(emptyApiResponse))
+            runTest {
+                every { viewModel.updateVehicleApiVal } returns MutableLiveData(
+                    Resource.Success(
+                        emptyApiResponse
+                    )
+                )
                 delay(500)
                 onView(withId(R.id.removeVehicleBtn)).check(matches(isDisplayed()))
                     .perform(click())
@@ -295,7 +288,7 @@ class VehicleGroupFragmentTest {
             every { viewModel.updateVehicleApiVal } returns MutableLiveData(Resource.DataError("Unknown error"))
 
             updateVehicleLiveData.postValue(Resource.DataError("Unknown error"))
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)

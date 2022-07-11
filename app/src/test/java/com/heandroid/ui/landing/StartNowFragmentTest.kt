@@ -60,7 +60,7 @@ class StartNowFragmentTest {
     @Test
     fun `test start now screen visibility for no maintenance`() {
         every { viewModel.webServiceLiveData } returns webService
-        webService.postValue(Resource.Success(WebSiteStatus("NOT LIVE", null, "", "", "", "")))
+        webService.postValue(Resource.Success(WebSiteStatus("LIVE", "", "", "", "", "")))
         launchFragmentInHiltContainer<StartNowFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
@@ -82,7 +82,7 @@ class StartNowFragmentTest {
             webService.postValue(
                 Resource.Success(
                     WebSiteStatus(
-                        "LIVE",
+                        "UNAVAILABLE",
                         "This is title for maintenance", "This is description for maintenance",
                         "", "", ""
                     )
@@ -103,12 +103,13 @@ class StartNowFragmentTest {
     @Test
     fun `test start now screen visibility for unknown error`() {
         every { viewModel.webServiceLiveData } returns webService
-        webService.postValue(
-            Resource.DataError(
-                "unknown error"
-            )
-        )
         launchFragmentInHiltContainer<StartNowFragment> {
+            shadowOf(getMainLooper()).idle()
+            webService.postValue(
+                Resource.DataError(
+                    "unknown error"
+                )
+            )
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =

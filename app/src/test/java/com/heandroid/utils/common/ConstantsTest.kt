@@ -2,15 +2,34 @@ package com.heandroid.utils.common
 
 object ConstantsTest {
 
-    const val NOMINATED_ACCOUNT= "NOMINATED"
-    const  val PENDING_STATUS ="PENDING"
+    const val SPLASH_TIME_OUT = 500L
+    const val COUNTRY_TYPE = "country_type"
+    const val CHECK_PAID_CROSSING_VRM_ENTERED = "CHECK_PAID_CROSSING_VRM_ENTERED"
+    const val CHECK_PAID_CROSSING_VRM_EXISTS = "CHECK_PAID_CROSSING_VRM_EXISTS"
+    const val CHECK_PAID_CROSSINGS_VRM_DETAILS = "CHECK_PAID_CROSSINGS_VRM_DETAILS"
+    const val CHECK_PAID_CHARGE_DATA_KEY = "from_check_paid_ref_data_to_check_list"
+    const val CHECK_PAID_REF_VRM_DATA_KEY = "from_check_paid_ref_data_to_ref_vrm"
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT =
+        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT"
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL =
+        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL"
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE =
+        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE"
+    const val FROM_DASHBOARD_TO_CROSSING_HISTORY = 1001
+    const val FROM = "from"
+    const val UK_VEHICLE_DATA_NOT_FOUND_KEY = "uk_vehicle_data_not_found_key"
+    const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_res"
+    const val OPTIONS_TYPE = "Options_type"
+    const val NOMINATED_ACCOUNT_DATA = "nominee_data"
+    const val NOMINATED_ACCOUNT = "NOMINATED"
+    const val PENDING_STATUS = "PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
 
     const val COUNTRY_TYPE_UK = "UK"
     const val COUNTRY_TYPE_NON_UK = "NON UK"
     const val CASE_COMMENTS_KEY = "case_comments_key"
-    const val CASES_CATEGORY ="cases_category"
-    const val CASES_SUB_CATEGORY ="cases_sub_category"
+    const val CASES_CATEGORY = "cases_category"
+    const val CASES_SUB_CATEGORY = "cases_sub_category"
     const val PAYG = "PAYG"
     const val PAYMENT_HISTORY = "payment_history"
     const val PAYMENT_METHOD = "payment_method"
@@ -23,6 +42,12 @@ object ConstantsTest {
     const val FROM_CASES_TO_CASES_VALUE = 1004
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
+    const val UK_VEHICLE_DATA_NOT_FOUND = 1007
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY = 1009
+    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY = 1010
+
+
     const val FILE_NAMES_KEY = " file_names_key"
 
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
@@ -33,6 +58,7 @@ object ConstantsTest {
     const val PASSWORD = "password"
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
+    const val STATUS_TERMINATED = "TERMINATED"
 
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
@@ -65,7 +91,7 @@ object ConstantsTest {
     const val MESSAGE_MODE = 2
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
-    const val DATA = "list"
+    const val DATA = "data"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val DATA2 = "list2"
     const val POST_MAIL = "post"
@@ -86,6 +112,7 @@ object ConstantsTest {
     const val VEHICLE_SCREEN_TYPE_HISTORY = 4
     const val VEHICLE_SCREEN_TYPE_CROSSING_HISTORY = 5
     const val VEHICLE_SCREEN_KEY = "com.heandroid.VehicleMgmtActivity.SCREEN"
+    const val FROM_DASHBOARD_TO_VEHICLE_LIST = "com_heandroid_dashboard_to_vehiclelist"
     const val VEHICLE_RESPONSE = "vehicle_api_resp"
     const val SHOW_SCREEN = "show_screen"
     const val ABOUT_SERVICE = "about_service"
@@ -103,9 +130,11 @@ object ConstantsTest {
     const val PAYMENT_PAGE = "payment page"
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
+    const val MAX_VEHICLE_SIZE_ONE_OFF_PAY = 1
+
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
-    const val AGENCY_ID = 18
+    const val AGENCY_ID = "18"
     const val FIND_VEHICLE_DATA = "FIND_VEHICLE_DATA"
     const val CASE_NUMBER = "case number"
     const val LAST_NAME = "last name"
@@ -115,7 +144,6 @@ object ConstantsTest {
     const val PCN_RESOLVE_URL =
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
-    const val PAYMENT_ONE_OFF = "PaymentOneOff"
 
     const val CHOOSE_FILE_1 = "Choose_first_file"
     const val CHOOSE_FILE_2 = "Choose_second_file"
@@ -132,5 +160,8 @@ object ConstantsTest {
     const val NO_OF_CROSSING_BUSINESS = "Number_of_crossing"
     const val NO_OF_VEHICLE_BUSINESS = "Number_of_vehicle"
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
+    const val VEHICLE_GROUP = "vehicle_group"
+    const val VEHICLE_ROW_ITEM = "Vehicle_Row_Item"
+
 
 }

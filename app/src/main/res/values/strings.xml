@@ -252,9 +252,10 @@
     <string name="str_notification">Notification</string>
     <string name="txt_view_notification">View all (2)</string>
     <string name="str_two_crossing">%s Crossings</string>
-    <string name="txt_your_crossing">Your crossing</string>
+    <string name="txt_your_crossings">Your crossings</string>
     <string name="str_two_vehicle">%s Vehicles</string>
     <string name="txt_your_vehicle">Your vehicle</string>
+    <string name="txt_your_vehicles">Your vehicles</string>
     <string name="txt_view_vehicles">View vehicles</string>
     <string name="txt_your_saving">Your saving</string>
     <string name="txt_account">Account</string>
@@ -281,7 +282,7 @@
     <string name="str_change_password">Change Password</string>
     <string name="str_edit_details">Edit details</string>
     <string name="str_save">Save</string>
-    <string name="txt_notification">Notification</string>
+    <string name="txt_notification">Notifications</string>
     <string name="str_communication_preferences">Communication preferences</string>
     <string name="str_set_preferences">Set preference</string>
     <string name="str_accnt_related_pref">Account related communication preference</string>
@@ -336,7 +337,7 @@
     <string name="str_new_vehicles_added_success">New vehicle added successfully</string>
     <string name="str_note">Vehicle description</string>
     <string name="str_notes">Notes</string>
-    <string name="crossing_hours">Your crossings can take up to XY \n hours to appear on your account</string>
+    <string name="crossing_hours">Your crossings can take up to 8 hours to appear on your account</string>
     <string name="download">Download</string>
     <string name="date_range">Date Range</string>
     <string name="last_30_days">Last 30 days</string>
@@ -621,7 +622,7 @@
     <string name="vehicle_reg_num">Vehicle registration number: %s</string>
     <string name="country_reg">Country of registration %s</string>
     <string name="txt_view_crossings">View crossings</string>
-    <string name="txt_view_crossing"><![CDATA[View crossing ]]></string>
+    <string name="txt_view_crossing">View crossing</string>
     <string name="str_account_type">Account type</string>
     <string name="str_cases_and_enquiries">Cases and enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do</string>

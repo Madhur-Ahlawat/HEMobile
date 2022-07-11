@@ -82,7 +82,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
     private fun getVehiclesData() {
         vehicleGroup?.let {
             if (it.groupName.equals(getString(R.string.unallocated_vehicle), true)
-                && it.groupId!!.isEmpty()
+                && it.groupId?.isEmpty() == true
             ) {
                 vehicleMgmtViewModel.getVehicleInformationApi()
             } else {
@@ -103,7 +103,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
         vehicleGroup?.let {
             binding.groupName.text = it.groupName
             if (it.groupName.equals(getString(R.string.unallocated_vehicle), true)
-                && it.groupId!!.isEmpty()
+                && it.groupId?.isEmpty() == true
             ) {
                 binding.removeVehicleBtn.gone()
                 binding.addVehicleBtn.gone()

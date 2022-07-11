@@ -53,7 +53,7 @@ class VehicleMgmtViewModelTest {
     private val successStatus = 200
     private val successMessage = "success"
     private val unknownException = "unknown exception"
-    private val connectivityException = "No Internet Connection"
+    private val connectivityException = "No Internet Connection found"
     private var vehicleMgmtViewModel: VehicleMgmtViewModel? = null
 
     @Mock

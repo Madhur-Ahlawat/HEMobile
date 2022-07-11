@@ -40,7 +40,7 @@ class WebSiteServiceViewModelTest {
         WebSiteStatus("", "", "", "", "", "")
 
     private val unknownException = "unknown exception"
-    private val connectivityException = "No Internet Connection"
+    private val connectivityException = "No Internet Connection found"
 
     private var webSiteServiceViewModel: WebSiteServiceViewModel? = null
 
@@ -81,7 +81,7 @@ class WebSiteServiceViewModelTest {
                 .thenReturn(webSiteStatus)
             Mockito.`when`(repository.webSiteServiceStatus()).thenReturn(response)
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     webSiteStatus, it.webServiceLiveData.value?.data
                 )
@@ -109,7 +109,7 @@ class WebSiteServiceViewModelTest {
             Mockito.lenient().`when`(response.errorBody()).thenReturn(responseBody)
             Mockito.`when`(repository.webSiteServiceStatus()).thenReturn(response)
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -139,7 +139,7 @@ class WebSiteServiceViewModelTest {
             Mockito.lenient().`when`(response.errorBody()).thenReturn(responseBody)
             Mockito.`when`(repository.webSiteServiceStatus()).thenReturn(response)
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -169,7 +169,7 @@ class WebSiteServiceViewModelTest {
             Mockito.lenient().`when`(response.errorBody()).thenReturn(responseBody)
             Mockito.`when`(repository.webSiteServiceStatus()).thenReturn(response)
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -190,7 +190,7 @@ class WebSiteServiceViewModelTest {
             Mockito.lenient().`when`(response.errorBody()).thenReturn(responseBody)
             Mockito.`when`(repository.webSiteServiceStatus()).thenReturn(response)
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -215,7 +215,7 @@ class WebSiteServiceViewModelTest {
                     throw NoConnectivityException()
                 }
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -234,7 +234,7 @@ class WebSiteServiceViewModelTest {
                     throw SocketTimeoutException()
                 }
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )
@@ -253,7 +253,7 @@ class WebSiteServiceViewModelTest {
                     throw Exception(unknownException)
                 }
             webSiteServiceViewModel?.let {
-                it.tollRates()
+                it.checkServiceStatus()
                 Assert.assertEquals(
                     null, it.webServiceLiveData.value?.data
                 )

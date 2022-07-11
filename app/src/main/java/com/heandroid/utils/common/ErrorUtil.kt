@@ -10,21 +10,27 @@ import com.heandroid.ui.loader.ErrorDialog
 
 object ErrorUtil {
 
-    fun showError(view: View?,message: String?){
-        try{
-
-            val dialog= ErrorDialog()
-            val bundle= Bundle()
-            bundle.putString("message",message)
-            dialog.arguments=bundle
+    fun showError(view: View?, message: String?) {
+        try {
+            val dialog = ErrorDialog()
+            val bundle = Bundle()
+            bundle.putString(Constants.DATA, message)
+            dialog.arguments = bundle
             dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
             when (view?.context) {
-                is AppCompatActivity -> dialog.show((view.context as AppCompatActivity).supportFragmentManager, "")
-                is ContextWrapper -> dialog.show((((view.context as ContextWrapper).baseContext) as AppCompatActivity).supportFragmentManager, "")
+                is AppCompatActivity -> dialog.show(
+                    (view.context as AppCompatActivity).supportFragmentManager,
+                    ""
+                )
+                is ContextWrapper -> dialog.show(
+                    (((view.context as ContextWrapper).baseContext)
+                            as AppCompatActivity).supportFragmentManager,
+                    ""
+                )
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
 
         }
     }

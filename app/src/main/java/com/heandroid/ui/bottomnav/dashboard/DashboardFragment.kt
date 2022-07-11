@@ -1,9 +1,6 @@
 package com.heandroid.ui.bottomnav.dashboard
 
-
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -23,7 +20,6 @@ import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.VehicleMgmtActivity
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.startNormalActivity
@@ -33,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private val dashboardViewModel: DashboardViewModel  by  viewModels()
+    private val dashboardViewModel: DashboardViewModel by viewModels()
 
     private var loader: LoaderDialog? = null
 
@@ -52,36 +48,39 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
-        dashboardViewModel.getVehicleInformationApi()
-        getCrossingData()
-        getNotificationData()
-        getAccountDetailsData()
-        dashboardViewModel.getThresholdAmountData()
+        getDashBoardAllData()
     }
 
-    private fun getNotificationData() {
-        dashboardViewModel.getAlertsApi()
+    private fun getDashBoardAllData() {
+        val request = CrossingHistoryRequest(
+            startIndex = 1,
+            count = 1,
+            transactionType = Constants.ALL_TRANSACTION,
+            searchDate = Constants.TRANSACTION_DATE,
+            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
+            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
+        )
+        dashboardViewModel.getDashboardAllData(request)
     }
+
 
     override fun initCtrl() {
         binding.tvViewVehicle.setOnClickListener {
-//            val bundle = Bundle().apply {
-//                putBoolean(Constants.DATA, true)
-//            }
-            startActivity(Intent(requireContext(), VehicleMgmtActivity::class.java).apply {
-                putExtra(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_LIST)
-                putExtra(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,true)
-            })
-
-//            findNavController().navigate(
-//                R.id.action_dashBoardFragment_to_vehicleListFragment2,
-//                bundle
-//            )
+            val bundle = Bundle().apply {
+                putBoolean(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST, true)
+            }
+            findNavController().navigate(
+                R.id.action_dashBoardFragment_to_vehicleListFragment2,
+                bundle
+            )
         }
         binding.crossingsView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt(Constants.FROM,Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
-            findNavController().navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment, bundle)
+            bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
+            findNavController().navigate(
+                R.id.action_dashBoardFragment_to_crossingHistoryFragment,
+                bundle
+            )
         }
 
         binding.tvManualTopUp.setOnClickListener {
@@ -98,27 +97,24 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        try {
-
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.let {
-                        Log.e("Testing", "--->dashboard data " + it.transactionList)
-                        Log.e("Testing", "--->dashboard " + it.transactionList?.transaction?.size ?: "")
-                        // todo getting api count as null, so showing count as 0
-                        it.transactionList?.count?.let { count ->
-                            binding.tvCrossingCount.text =
-                                getString(R.string.str_two_crossing, count)
-                        }
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    it.transactionList?.count?.let { count ->
+                        binding.tvCrossingCount.text =
+                            getString(R.string.str_two_crossing, count)
                     }
                 }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-                else -> {
-                }
-            }}catch (e: Exception){}
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun vehicleListResponse(status: Resource<List<VehicleResponse?>?>?) {
@@ -141,20 +137,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
             }
         }
-    }
-
-    private fun getCrossingData() {
-        val request = CrossingHistoryRequest(
-            startIndex = 1,
-            count = 1,
-            transactionType = Constants.TOLL_TRANSACTION,
-            searchDate = Constants.TRANSACTION_DATE,
-            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
-            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
-        )
-        Log.e("Testing", "--->DashBoardFragment request $request")
-
-        dashboardViewModel.crossingHistoryApiCall(request)
     }
 
     private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
@@ -187,14 +169,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-
-    private fun getAccountDetailsData()
-    {
-        dashboardViewModel.getAccountDetailsData()
-    }
-
-    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?)
-    {
+    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -202,7 +177,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     var accountDetails = it
-                  //  sessionManager.setAccountType(accountDetails.accountInformation.type)
+                    //  sessionManager.setAccountType(accountDetails.accountInformation.type)
                     setAccountDetailsView(accountDetails)
                 }
             }
@@ -215,15 +190,15 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    private fun setAccountDetailsView(data: AccountResponse)
-    {
-        binding.apply{
-            tvAvailableBalance.text = "${data.replenishmentInformation?.currentBalance}"
+    private fun setAccountDetailsView(data: AccountResponse) {
+        binding.apply {
+            tvAvailableBalance.text = data.replenishmentInformation?.currentBalance?.run {
+                get(0) + " " + drop(1)
+            }
             tvAccountNumber.text = data.accountInformation?.number
-            tvAccountStatus.text =  data.accountInformation?.accountStatus
+            tvAccountStatus.text = data.accountInformation?.accountStatus
             tvTopUpType.text = data.accountInformation?.accountFinancialstatus
-            tvAccountType.text =  data.accountInformation?.type
-            tvAccountStatus.text =  data.accountInformation?.type
+            tvAccountType.text = data.accountInformation?.type
 
         }
     }
@@ -235,8 +210,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         when (status) {
             is Resource.Success -> {
                 status.data?.let {
-                    var thresholdAmountData = it.thresholdAmountVo
-                    stViewBalance(thresholdAmountData!!)
+                    it.thresholdAmountVo?.let { amount ->
+                        stViewBalance(amount)
+                    }
                 }
             }
             is Resource.DataError -> {
@@ -250,8 +226,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
-        binding.apply{
-            tvTitle.text = requireActivity().getString(R.string.str_threshold_val_msg, thresholdAmountData.customerAmount, thresholdAmountData.thresholdAmount)
+        binding.apply {
+            tvTitle.text = requireActivity().getString(
+                R.string.str_threshold_val_msg,
+                thresholdAmountData.customerAmount,
+                thresholdAmountData.thresholdAmount
+            )
         }
     }
 

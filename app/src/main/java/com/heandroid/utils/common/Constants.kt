@@ -91,7 +91,7 @@ object Constants {
     const val MESSAGE_MODE = 2
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
-    const val DATA = "list"
+    const val DATA = "data"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val DATA2 = "list2"
     const val POST_MAIL = "post"

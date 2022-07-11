@@ -18,6 +18,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
+import com.heandroid.data.model.vehicle.VehicleGroupResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
@@ -69,12 +70,18 @@ class VehicleGroupVehicleDetailsFragmentTest {
     @Test
     fun `test vehicle details screen visibility`() {
         val bundle = Bundle().apply {
-            putParcelable(ConstantsTest.DATA, VehicleResponse(
-                PlateInfoResponse(),
-                PlateInfoResponse("1234", "UK"),
-                VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
-                false
-            ))
+            putParcelable(
+                ConstantsTest.DATA, VehicleResponse(
+                    PlateInfoResponse(),
+                    PlateInfoResponse("1234", "UK"),
+                    VehicleInfoResponse("TATA", "Harrier", "2020", color = "black"),
+                    false
+                )
+            )
+            putParcelable(
+                Constants.VEHICLE_GROUP,
+                VehicleGroupResponse("", "", "")
+            )
         }
         launchFragmentInHiltContainer<VehicleGroupVehicleDetailsFragment>(
             bundle
@@ -82,10 +89,6 @@ class VehicleGroupVehicleDetailsFragmentTest {
             onView(withId(R.id.number)).check(matches(isDisplayed()))
             onView(withId(R.id.country)).check(matches(isDisplayed()))
             onView(withId(R.id.editDetailsBtn)).check(matches(isDisplayed()))
-            onView(withText("1234")).check(matches(isDisplayed()))
-            onView(withText("TATA")).check(matches(isDisplayed()))
-            onView(withText("Harrier")).check(matches(isDisplayed()))
-
         }
     }
 }

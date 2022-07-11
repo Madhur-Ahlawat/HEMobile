@@ -14,7 +14,8 @@ class NetworkConnectionInterceptor @Inject constructor(private val mContext: Con
 
     private val isConnected: Boolean
         get() {
-            val connectivityManager = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connectivityManager =
+                mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val netInfo = connectivityManager.activeNetworkInfo
             return netInfo != null && netInfo.isConnected
         }
