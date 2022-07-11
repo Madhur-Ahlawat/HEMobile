@@ -53,10 +53,10 @@ object ApiModule {
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
-            .callTimeout(2, TimeUnit.MINUTES)
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+//            .readTimeout(10, TimeUnit.SECONDS)
+//            .writeTimeout(10, TimeUnit.SECONDS)
             .build()
     }
 

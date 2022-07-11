@@ -24,7 +24,6 @@ object ConstantsTest {
     const val NOMINATED_ACCOUNT = "NOMINATED"
     const val PENDING_STATUS = "PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
-
     const val COUNTRY_TYPE_UK = "UK"
     const val COUNTRY_TYPE_NON_UK = "NON UK"
     const val CASE_COMMENTS_KEY = "case_comments_key"
@@ -46,12 +45,8 @@ object ConstantsTest {
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY = 1009
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY = 1010
-
-
     const val FILE_NAMES_KEY = " file_names_key"
-
     const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
-
     const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
     const val PERSONAL_DETAILS = "personal_details"
     const val POST_CODE_ADDRESS = "post_code_address"
@@ -59,7 +54,6 @@ object ConstantsTest {
     const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
     const val STATUS_TERMINATED = "TERMINATED"
-
     const val TRANSACTION_DATE = "transaction_date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
@@ -118,7 +112,6 @@ object ConstantsTest {
     const val ABOUT_SERVICE = "about_service"
     const val CONTACT_DART_CHARGES = "contact_dart_charges"
     const val CROSSING_SERVICE_UPDATE = "crossing_service_update"
-
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
     const val PERSONAL_ACCOUNT = "PRIVATE"
@@ -131,7 +124,6 @@ object ConstantsTest {
     const val NMI = "nmi"
     const val MAX_VEHICLE_SIZE = 5
     const val MAX_VEHICLE_SIZE_ONE_OFF_PAY = 1
-
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
     const val AGENCY_ID = "18"
@@ -144,7 +136,6 @@ object ConstantsTest {
     const val PCN_RESOLVE_URL =
         "https://www.dartford-crossing-charge.service.gov.uk/PcnPayment/SearchMultiplePCN"
     const val CREATE_ACCOUNT_NON_UK = "CreateAccountNonUKModel"
-
     const val CHOOSE_FILE_1 = "Choose_first_file"
     const val CHOOSE_FILE_2 = "Choose_second_file"
     const val CHOOSE_FILE_3 = "Choose_third_file"
@@ -162,6 +153,16 @@ object ConstantsTest {
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
     const val VEHICLE_GROUP = "vehicle_group"
     const val VEHICLE_ROW_ITEM = "Vehicle_Row_Item"
-
+    const val ERROR_DIALOG = "error_dialog"
+    const val LOADER_DIALOG = "loader_dialog"
+    const val RETRY_DIALOG = "retry_dialog"
+    const val SESSION_DIALOG = "session_dialog"
+    const val LOGOUT_DIALOG = "logout_dialog"
+    const val SEARCH_VEHICLE_DIALOG = "search_vehicle_dialog"
+    const val DELETE_VEHICLE_GROUP_DIALOG = "delete_vehicle_group_dialog"
+    const val DATE_PICKER_DIALOG = "date_picker_dialog"
+    const val CROSSING_HISTORY_FILTER_DIALOG = "crossing_history_filter_dialog"
+    const val DOWNLOAD_FORMAT_SELECTION_DIALOG = "download_format_selection_dialog"
+    const val LIVE = "LIVE"
 
 }

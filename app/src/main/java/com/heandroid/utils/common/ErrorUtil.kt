@@ -21,12 +21,12 @@ object ErrorUtil {
             when (view?.context) {
                 is AppCompatActivity -> dialog.show(
                     (view.context as AppCompatActivity).supportFragmentManager,
-                    ""
+                    Constants.ERROR_DIALOG
                 )
                 is ContextWrapper -> dialog.show(
                     (((view.context as ContextWrapper).baseContext)
                             as AppCompatActivity).supportFragmentManager,
-                    ""
+                    Constants.ERROR_DIALOG
                 )
             }
 

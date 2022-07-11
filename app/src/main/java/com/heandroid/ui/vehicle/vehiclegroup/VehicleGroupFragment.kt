@@ -281,7 +281,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                     getString(R.string.str_title),
                     getString(R.string.str_sub_title),
                     this
-                ).show(childFragmentManager, "")
+                ).show(childFragmentManager, Constants.SEARCH_VEHICLE_DIALOG)
             }
             R.id.addVehicleBtn -> {
                 isReloadVehicleData = true
@@ -298,7 +298,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
             R.id.removeVehicleBtn -> {
                 if (checkedVehicleList.size >= 1) {
                     isRemoved = true
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     vehicleMgmtViewModel.removeVehiclesFromGroup(checkedVehicleList)
                 }
             }

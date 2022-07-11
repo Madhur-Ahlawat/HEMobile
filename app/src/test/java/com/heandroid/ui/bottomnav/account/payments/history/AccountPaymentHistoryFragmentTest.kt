@@ -22,6 +22,7 @@ import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions.forceClick
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -122,7 +123,7 @@ class AccountPaymentHistoryFragmentTest {
             shadowOf(getMainLooper()).idle()
             runBlockingTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

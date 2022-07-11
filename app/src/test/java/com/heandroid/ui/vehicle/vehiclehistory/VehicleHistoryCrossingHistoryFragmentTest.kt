@@ -21,6 +21,7 @@ import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -145,7 +146,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
             runBlockingTest {
                 delay(500)
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -177,7 +178,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
             runBlockingTest {
                 delay(500)
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as DownloadFormatSelectionFilterDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as DownloadFormatSelectionFilterDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

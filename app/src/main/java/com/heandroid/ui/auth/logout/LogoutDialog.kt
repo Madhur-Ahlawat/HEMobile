@@ -62,7 +62,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
             }
             R.id.tvLogout -> {
                 binding.tvLogout.isEnabled = false
-                loader?.show(requireActivity().supportFragmentManager, "loader")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.logout()
             }
         }

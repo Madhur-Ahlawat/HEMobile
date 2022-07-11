@@ -19,6 +19,7 @@ import com.heandroid.data.model.payment.*
 import com.heandroid.databinding.FragmentPaymentMethodBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -54,7 +55,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.saveCardList()
     }
 
@@ -85,7 +86,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
               }
           }
           R.id.btnDefault -> {
-              loader?.show(requireActivity().supportFragmentManager,"")
+              loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
               if(defaultCardModel?.bankAccount==true)
               viewModel.editDefaultCard(PaymentMethodEditModel(cardType = defaultCardModel?.bankAccountType?:"", easyPay = "Y", paymentType = "ach", primaryCard ="Y",rowId=defaultCardModel?.rowId?:"" ))
               else viewModel.editDefaultCard(PaymentMethodEditModel(cardType = defaultCardModel?.cardType?:"", easyPay = "Y", paymentType = "card", primaryCard ="Y",rowId=defaultCardModel?.rowId?:"" ))
@@ -93,7 +94,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
           }
           R.id.btnDelete ->{
               if(defaultCardModel?.primaryCard==false) {
-                  loader?.show(requireActivity().supportFragmentManager,"")
+                  loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                   viewModel.deleteCard(PaymentMethodDeleteModel(defaultCardModel?.rowId))
               } else {
                   showError(binding.root,"Primary card cann't be deleted")

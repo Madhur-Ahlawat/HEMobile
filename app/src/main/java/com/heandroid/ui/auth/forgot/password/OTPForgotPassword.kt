@@ -39,7 +39,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
     override fun init() {
         loader= LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
 
         data = arguments?.getParcelable("data")
         binding.isEnable=false
@@ -77,7 +77,7 @@ class OTPForgotPassword: BaseFragment<FragmentForgotOtpBinding>(), View.OnClickL
             }
 
             R.id.resend_txt -> {
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                 viewModel.requestOTP(data) }
         }
     }

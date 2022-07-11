@@ -41,7 +41,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
@@ -74,7 +74,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     Constants.BUSINESS_ACCOUNT ->{
                     }
                 }
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                 viewModel.createAccount(model)
             }
         }

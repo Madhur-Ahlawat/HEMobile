@@ -81,7 +81,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.nominated_contacts_lyt -> {
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.nominatedContactList()
 
             }
@@ -92,7 +92,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE
                     )
-                    putString(Constants.LAST_NAME,"Test")
+                    putString(Constants.LAST_NAME, "Test")
                 }
             }
 
@@ -108,7 +108,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                     dialog.arguments = this
                 }
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                dialog.show(requireActivity().supportFragmentManager, "Logout Dialog")
+                dialog.show(requireActivity().supportFragmentManager, Constants.LOGOUT_DIALOG)
             }
 
         }

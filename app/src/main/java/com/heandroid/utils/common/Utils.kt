@@ -116,7 +116,7 @@ object Utils {
             LogoutUtil.stopLogoutTimer()
             val dialog=SessionDialog()
             dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            dialog.show(context.supportFragmentManager,"")
+            dialog.show(context.supportFragmentManager,Constants.SESSION_DIALOG)
 
         }catch (e: Exception){}
     }

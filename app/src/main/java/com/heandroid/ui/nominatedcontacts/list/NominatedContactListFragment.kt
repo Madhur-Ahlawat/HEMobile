@@ -46,7 +46,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.nominatedContactList()
     }
 
@@ -255,7 +255,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
             "open" -> {
                 if (isExpanded) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     selectedPosition = pos
                     viewModel.getSecondaryRights(data.secAccountRowId!!)
                 }
@@ -263,7 +263,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
             "Resend" -> {
                 Log.v("ListFrag", " onItemClick Resend called data $data  type $type   ")
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                 val model = ResendActivationMail(data.secAccountRowId, "Y")
                 viewModel.resendActivationMailContacts(model)
@@ -273,7 +273,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             "Remove" -> {
                 Log.v("ListFrag", " onItemClick Remove called data $data  type $type   ")
 
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 selectedPosition = pos
 
                 data?.let {

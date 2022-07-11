@@ -89,7 +89,7 @@ class CheckPaidCrossFragmentConformChangeVrm :
                 )
                 val mBalRequest =
                     BalanceTransferRequest(mDataVrmRef.vrm!!,mData?.plateCountry!! , mTransferInfo)
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                 viewModel.balanceTransfer(mBalRequest)
             }

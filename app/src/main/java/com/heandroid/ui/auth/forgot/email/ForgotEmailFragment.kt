@@ -16,6 +16,7 @@ import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.SessionManager
@@ -66,7 +67,7 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
             when (v.id) {
                 R.id.btn_next -> {
                     hideKeyboard()
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.forgotEmail(binding.model)
                 }
 

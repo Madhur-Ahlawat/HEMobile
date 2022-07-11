@@ -165,7 +165,7 @@ class CreateAccountEmailVerificationFragment :
     }
 
     private fun sendEmailVerificationRequest() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request =
             EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
         createAccountViewModel.emailVerificationApi(request)

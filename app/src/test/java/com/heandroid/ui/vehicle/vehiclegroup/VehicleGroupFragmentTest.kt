@@ -25,6 +25,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.BaseActions
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -166,7 +167,7 @@ class VehicleGroupFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -290,7 +291,7 @@ class VehicleGroupFragmentTest {
             updateVehicleLiveData.postValue(Resource.DataError("Unknown error"))
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

@@ -16,6 +16,7 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
 import com.heandroid.utils.launchFragmentInHiltContainer
@@ -163,7 +164,7 @@ class LoginFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
 

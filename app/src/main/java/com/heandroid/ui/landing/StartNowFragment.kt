@@ -1,6 +1,7 @@
 package com.heandroid.ui.landing
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     private var screenType: String = ""
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var isChecked = false
+    private var isChecked = true
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -48,17 +49,15 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             toolbar.findViewById<TextView>(R.id.btn_login).visible()
             requireActivity().setRightButtonText(getString(R.string.login))
         }
-        isChecked = true
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        loader?.show(requireActivity().supportFragmentManager, "")
-        webServiceViewModel.checkServiceStatus()
     }
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (isChecked) {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            webServiceViewModel.checkServiceStatus()
+        }
     }
 
     override fun initCtrl() {
@@ -85,7 +84,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.apply {
-                        if (state != "LIVE" && title != null) {
+                        if (!state.equals(Constants.LIVE, true) && title != null) {
                             binding.maintainanceLyt.visible()
                             binding.maintainanceTitle.text = title
                             if (message != null)

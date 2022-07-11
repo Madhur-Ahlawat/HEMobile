@@ -132,7 +132,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             }
             R.id.btnFindAddress -> {
                 if(binding.tiePostCode.length()>0) {
-                    loader?.show(requireActivity().supportFragmentManager,"")
+                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                     viewModel.fetchAddress(binding.tiePostCode.text.toString())
                 }
                 else { showError(binding.root,getString(R.string.please_enter_postcode)) }

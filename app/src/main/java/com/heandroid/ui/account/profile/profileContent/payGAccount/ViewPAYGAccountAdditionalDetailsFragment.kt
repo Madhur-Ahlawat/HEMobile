@@ -36,7 +36,7 @@ class ViewPAYGAccountAdditionalDetailsFragment : BaseFragment<FragmentViewPaygAc
     override fun init() {
 //        loader = LoaderDialog()
 //        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager,"")
+//        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
 
         binding.apply {
             rlEmailId.gone()

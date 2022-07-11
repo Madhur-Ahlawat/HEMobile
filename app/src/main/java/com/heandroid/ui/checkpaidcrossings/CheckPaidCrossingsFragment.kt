@@ -69,7 +69,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
                 hideKeyboard()
                 val validation=viewModel.validation(binding.model)
                 if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager,"")
+                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                     val checkPaidCrossingReq = CheckPaidCrossingsRequest(binding.model?.ref!!,binding.model?.vrm!!)
                     viewModel.checkPaidCrossings(checkPaidCrossingReq)
                 }else{

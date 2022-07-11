@@ -126,7 +126,7 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
         if (isCreate) {
             val request =
                 AddDeleteVehicleGroup(binding.edVehicleGroup.text.toString().trim())
-            loader?.show(requireActivity().supportFragmentManager, "")
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             vehicleGroupMgmtViewModel.addVehicleGroupApi(request)
         } else {
             vehicleGroup?.let {
@@ -134,7 +134,7 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
                     it.groupId,
                     binding.edVehicleGroup.text.toString().trim()
                 )
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 vehicleGroupMgmtViewModel.renameVehicleGroupApi(request)
             }
 

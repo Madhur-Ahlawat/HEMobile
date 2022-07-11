@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -173,9 +174,9 @@ class CreateAndRenameVehicleGroupFragmentTest {
                 )
             )
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
 
@@ -247,9 +248,9 @@ class CreateAndRenameVehicleGroupFragmentTest {
                 )
             )
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

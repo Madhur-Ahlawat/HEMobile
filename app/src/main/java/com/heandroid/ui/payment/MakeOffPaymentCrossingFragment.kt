@@ -45,7 +45,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         list!![0]?.classRate =
             VehicleClassTypeConverter.toClassPrice(list!![0]?.vehicleInfo?.vehicleClassDesc.toString())

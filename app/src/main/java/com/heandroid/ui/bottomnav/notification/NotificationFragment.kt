@@ -36,7 +36,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.getAlertsApi(Constants.LANGUAGE)
         binding.priority.background =
             ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)

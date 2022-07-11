@@ -16,6 +16,7 @@ import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -134,7 +135,7 @@ class ForgotPasswordFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -170,7 +171,7 @@ class ForgotPasswordFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

@@ -240,7 +240,7 @@ class VehicleHistoryCrossingHistoryFragment :
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, "")
+                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
                 }
             }

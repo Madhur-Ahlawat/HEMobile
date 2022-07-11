@@ -69,7 +69,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
         binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val trans = UsedTollTransactionsRequest()
         viewModel.usedTollTransactions(trans)
 

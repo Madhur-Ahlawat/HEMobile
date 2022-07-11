@@ -16,6 +16,7 @@ import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRespon
 import com.heandroid.databinding.FragmentAccountTopupPaymentBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -50,7 +51,7 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun getThresholdAmount() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         viewModel.getThresholdAmount()
     }
@@ -155,7 +156,7 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                                         thresholdAmount.toString(),
                                         customerAmount.toString()
                                     )
-                                    loader?.show(requireActivity().supportFragmentManager, "")
+                                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                                     viewModel.updateThresholdAmount(request)
                                 }

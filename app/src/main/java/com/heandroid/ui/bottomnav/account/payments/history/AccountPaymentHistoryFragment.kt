@@ -150,7 +150,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, "")
+                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
                 }
             }
@@ -181,13 +181,13 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                 checkFilterApplyBtn()
             }
             R.id.edFrom -> {
-                DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager, "")
+                DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager, Constants.DATE_PICKER_DIALOG)
             }
             R.id.edTo -> {
-                DatePicker(binding.edTo).show(requireActivity().supportFragmentManager, "")
+                DatePicker(binding.edTo).show(requireActivity().supportFragmentManager, Constants.DATE_PICKER_DIALOG)
             }
             R.id.edSpecificDay -> {
-                DatePicker(binding.edSpecificDay).show(requireActivity().supportFragmentManager, "")
+                DatePicker(binding.edSpecificDay).show(requireActivity().supportFragmentManager, Constants.DATE_PICKER_DIALOG)
             }
             R.id.applyBtn -> {
                 binding.tvNoHistory.gone()

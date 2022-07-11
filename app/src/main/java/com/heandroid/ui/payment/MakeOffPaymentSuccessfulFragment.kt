@@ -58,7 +58,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
         mEmail = arguments?.getString(Constants.EMAIL)!!
         list = arguments?.getParcelableArrayList(Constants.DATA)!!
         mPaymentResp = arguments?.getParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP)
-//        loader?.show(requireActivity().supportFragmentManager, "")
+//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         binding.tvEmail.text = "$mEmail"
         binding.tvAmount.text = "£ ${list[0].price}"
         binding.tvReceiptNo.text = mPaymentResp?.refrenceNumber?:""

@@ -11,6 +11,7 @@ import com.heandroid.data.model.tollrates.ViewChargesResponse
 import com.heandroid.databinding.ActivityViewChargesBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -35,7 +36,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(supportFragmentManager, "")
+        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.tollRates()
     }
 

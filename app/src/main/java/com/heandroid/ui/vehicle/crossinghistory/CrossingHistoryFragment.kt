@@ -96,8 +96,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
             // find 90 days crossing history
 
             val request = CrossingHistoryRequest(
-                startIndex = 1,
-                count = 1,
+                startIndex = startIndex,
+                count = count,
                 transactionType = Constants.ALL_TRANSACTION,
                 searchDate = Constants.TRANSACTION_DATE,
                 startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
@@ -261,7 +261,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, "")
+                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
                 }
             }
@@ -275,7 +275,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                 val dialog = CrossingHistoryFilterDialog()
                 dialog.setDateWithListener(model, this)
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                dialog.show(requireActivity().supportFragmentManager, "")
+                dialog.show(requireActivity().supportFragmentManager, Constants.CROSSING_HISTORY_FILTER_DIALOG)
             }
         }
     }

@@ -24,6 +24,7 @@ import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.BaseActions.forceClick
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -174,7 +175,7 @@ class VehicleHistoryVehicleDetailsFragmentTest {
             runTest {
                 delay(500)
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

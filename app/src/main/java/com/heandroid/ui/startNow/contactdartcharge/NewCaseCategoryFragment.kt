@@ -44,13 +44,13 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
     }
 
     override fun initCtrl() {
-        loader?.show(requireActivity().supportFragmentManager, "Loader")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.getCaseCategoriesList()
 
         binding.apply {
             btnNext.setOnClickListener(this@NewCaseCategoryFragment)
             categoryDropdown.setOnItemClickListener { parent, view, position, id ->
-                loader?.show(requireActivity().supportFragmentManager, "Loader")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 Logg.logging(
                     "NewCaseCategoryFrag",
                     "categoryDropdown position  ${position}  parent $parent  view $view  id  $id"

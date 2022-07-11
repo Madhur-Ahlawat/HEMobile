@@ -74,7 +74,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
             observe(manualTopUpViewModel.paymentWithExistingCard,::handlePaymentWithExistingCardResponse)
         }
 
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
 
     }
 
@@ -90,7 +90,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
                     }
                     R.id.rbDirectDebit ->{ showError(binding.root,"Under Developement") }
                     else -> {
-                        loader?.show(requireActivity().supportFragmentManager,"")
+                        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                         val model=PaymentWithExistingCardModel(transactionAmount = arguments?.getString("amount"), cardType = "",
                                                                 cardNumber = "", cvv = "", rowId = defaultCardModel?.rowId,
                                                                 saveCard = "", useAddressCheck = "N", firstName = defaultCardModel?.firstName,

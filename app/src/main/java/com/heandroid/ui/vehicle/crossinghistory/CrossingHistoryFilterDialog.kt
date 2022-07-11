@@ -14,6 +14,7 @@ import com.heandroid.utils.DatePicker
 import com.heandroid.utils.DateUtils.convertDateToMonth
 import com.heandroid.utils.DateUtils.currentDate
 import com.heandroid.utils.DateUtils.lastPriorDate
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.ALL_TRANSACTION
 import com.heandroid.utils.common.Constants.TOLL_TRANSACTION
 import com.heandroid.utils.extn.isVisible
@@ -94,10 +95,10 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 dismiss()
             }
             R.id.edFrom -> {
-                DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager, "")
+                DatePicker(binding.edFrom).show(requireActivity().supportFragmentManager, Constants.DATE_PICKER_DIALOG)
             }
             R.id.edTo -> {
-                DatePicker(binding.edTo).show(requireActivity().supportFragmentManager, "")
+                DatePicker(binding.edTo).show(requireActivity().supportFragmentManager, Constants.DATE_PICKER_DIALOG)
             }
             R.id.btnApply -> {
                 dismiss()

@@ -59,7 +59,7 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, "")
+            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 binding?.nominated?.run {
                    var request =  ProfileUpdateEmailModel(
                        referenceId="",
@@ -87,7 +87,7 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
 
             R.id.tvResend ->{
                 binding.nominated?.referenceId=""
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.nominated?.emailAddress?:"")
                 viewModel.emailVerificationApi(request)
             }

@@ -18,6 +18,7 @@ import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -163,7 +164,7 @@ class CreateNewPasswordFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -200,7 +201,7 @@ class CreateNewPasswordFragmentTest {
                 .perform(ViewActions.click())
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -240,7 +241,7 @@ class CreateNewPasswordFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
