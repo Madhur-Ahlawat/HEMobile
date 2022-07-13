@@ -77,7 +77,7 @@ class CreateAccountTypeFragment : BaseFragment<FragmentCreateAccountTypeBinding>
                     findNavController().navigate(R.id.action_accountTypeSelectionFragment_to_personalTypeFragment,bundle)
                 }
                 BUSINESS_ACCOUNT -> {
-                    findNavController().navigate(R.id.action_personalTypeFragment_to_businssInfoFragment,bundle)
+                    findNavController().navigate(R.id.action_businessPrepayInfoFragment_to_businssInfoFragment,bundle)
                 }
                 else ->{ showError(binding.root,getString(R.string.in_progress)) }
             }

@@ -8,7 +8,7 @@ data class ValidVehicleCheckRequest(
     val plateNumber: String?,
     val vehicleCountry: String?,
     val plateTypedesc: String? = "STANDARD",
-    val vehicleYear: String? = "2022",
+    val vehicleYear: String? = "2021",
     val vehicleModel: String?,
     val vehicleMake: String?,
     val vehicleColor: String?,

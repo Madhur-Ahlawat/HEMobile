@@ -10,26 +10,26 @@
             android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_business_account"
-            android:textColor="@color/black"
             android:layout_marginStart="@dimen/_10ssp"
             android:layout_marginTop="@dimen/_10ssp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/roboto_bold"
-            android:textStyle="bold" />
+            android:text="@string/str_business_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvStep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_marginEnd="@dimen/_10ssp"
             android:text="@string/step_2_of_5"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
-            android:layout_marginTop="@dimen/_10ssp"
-            android:layout_marginEnd="@dimen/_10ssp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -37,20 +37,37 @@
             android:id="@+id/personal_account"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15ssp"
-            android:text="@string/str_business_account_intro"
-            android:textColor="@color/black"
             android:layout_marginHorizontal="15dp"
-            android:textSize="@dimen/_14ssp"
-            android:fontFamily="@font/roboto_regular"
-            android:textStyle="normal"
+            android:layout_marginTop="@dimen/_15ssp"
+            android:text="@string/str_to_set_up_a_business_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabel"
             app:layout_constraintVertical_bias="0.052" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/TvDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="@dimen/_15ssp"
+            android:text="@string/str_business_account_desc_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personal_account"
+            app:layout_constraintVertical_bias="0.052" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/continue_business"

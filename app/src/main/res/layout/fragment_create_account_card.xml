@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Top up amount: £10.00"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
@@ -131,7 +130,7 @@
                         android:focusable="false"
                         android:editable="false"
                         android:singleLine="true"
-                        android:text="@{model.creditCExpMonth +`//`+ model.creditCExpYear}"
+                        android:text="@{model.creditCExpMonth +`/`+ model.creditCExpYear}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 

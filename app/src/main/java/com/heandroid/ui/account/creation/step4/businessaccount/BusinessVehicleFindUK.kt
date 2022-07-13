@@ -45,7 +45,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.vehicleNumber.text = requestModel?.vehicleNo
-        binding.countryBusiness.text = requestModel?.countryType
+        binding.countryBusiness.text = requestModel?.plateCountryType
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

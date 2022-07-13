@@ -100,7 +100,7 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                     when(model?.planType){
                         PAYG ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle)  }
                         Constants.BUSINESS_ACCOUNT -> { findNavController().navigate(R.id.action_createAccountPinFragment_to_businessVehicleTitleFragment, bundle) }
-                        else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_createAccoutInfoFragment, bundle) }
+                        else ->{   findNavController().navigate(R.id.action_createAccoutPinFragment_to_findYourVehicleFragment, bundle) }
                     }
                 }
             }

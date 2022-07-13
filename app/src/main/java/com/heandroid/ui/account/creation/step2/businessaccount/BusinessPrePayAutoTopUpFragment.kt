@@ -29,6 +29,11 @@ class BusinessPrePayAutoTopUpFragment : BaseFragment<FragmentBusinessPrepayAutoT
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        if (requestModel?.accountType == Constants.PERSONAL_ACCOUNT)
+            binding.tvLabel.text = getString(R.string.str_personal_pre_pay_account)
+        else
+            binding.tvLabel.text = getString(R.string.str_business_prepay_account)
+
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
             isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }

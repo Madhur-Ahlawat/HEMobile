@@ -61,6 +61,30 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnAction -> {
+                if(binding.mrbPayG.isChecked){
+                    val bundle = Bundle()
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
+                    isEditAccountType?.let {
+                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
+
+                    findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
+
+
+                }else if(binding.mrbPrePay.isChecked){
+                    val bundle = Bundle()
+                    bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
+                    isEditAccountType?.let {
+                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    }
+
+                    findNavController().navigate(R.id.action_personalTypeFragment_to_businssInfoFragment, bundle)
+
+                } else {
+                    showError(binding.root,getString(R.string.select_account_type))
+                }
+
+/*
                 if(binding.mrbPrePay.isChecked || binding.mrbPayG.isChecked){
                      val bundle = Bundle()
                      bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
@@ -69,7 +93,7 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
                     }
                      findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
                 }
-                else { showError(binding.root,getString(R.string.select_account_type)) }
+*/
             }
         }
     }

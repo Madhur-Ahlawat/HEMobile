@@ -3,13 +3,15 @@ package com.heandroid.utils.extn
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
+import android.text.*
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import android.text.SpannableString
+import android.text.style.ClickableSpan
 import android.text.style.UnderlineSpan
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -45,8 +47,6 @@ fun TextView.changeTextColor(id: Int) {
 fun TextView.changeBackgroundColor(id: Int) {
     setBackgroundColor(ContextCompat.getColor(this.context, id))
 }
-
-
 
 
 fun View.visible() {
@@ -127,4 +127,38 @@ fun EditText.hideKeyboard() {
     val inputMethodManager =
         this.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
+}
+
+/**
+ * to highlight and underline some part of text and clickable
+ */
+fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+    val spannableString = SpannableString(this.text)
+    var startIndexOfLink = -1
+
+    for (link in links) {
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                Selection.setSelection((widget as TextView).text as Spannable, 0)
+                widget.invalidate()
+                link.second.onClick(widget)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = ds.linkColor
+                ds.isUnderlineText = true
+            }
+        }
+        startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndexOfLink,
+            startIndexOfLink + link.first.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+    }
+    this.movementMethod = LinkMovementMethod.getInstance()
+    this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }

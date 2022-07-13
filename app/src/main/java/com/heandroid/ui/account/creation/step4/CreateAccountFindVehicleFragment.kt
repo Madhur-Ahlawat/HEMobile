@@ -86,7 +86,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     } else {
                         "UK"
                     }
-                    requestModel?.countryType = country
+                    requestModel?.plateCountryType = country
 
                     businessAccountVehicle(country)
 
@@ -98,7 +98,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun businessAccountVehicle(country: String) {
-          requestModel?.countryType = country
+          requestModel?.plateCountryType = country
           requestModel?.vehicleNo = binding.addVrmInput.text.toString()
 
            val bundle = Bundle()
@@ -146,7 +146,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         retrieveVehicle = plateInfo
         plateInfo.apply {
             val vehicleValidReqModel = ValidVehicleCheckRequest(
-                plateNumber, requestModel?.countryType, "STANDARD",
+                plateNumber, requestModel?.plateCountryType, "STANDARD",
                 "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE")
             viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }

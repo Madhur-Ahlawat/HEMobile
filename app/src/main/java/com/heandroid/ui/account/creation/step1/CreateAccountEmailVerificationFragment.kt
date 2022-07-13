@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.EmailValidationModel
+import com.heandroid.data.model.account.UserNameCheckReq
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
@@ -55,7 +56,7 @@ class CreateAccountEmailVerificationFragment :
             address1 = "",
             city = "",
             stateType = "",
-            countryType = "",
+            countryType = "UK",
             zipCode1 = "",
             emailAddress = "",
             cellPhone = "",
@@ -69,7 +70,7 @@ class CreateAccountEmailVerificationFragment :
             correspDeliveryFrequency = "MONTHLY",
             companyName = "",
             fein = "",
-            nonRevenueOption = "",
+            nonRevenueOption = "Y",
             ftvehicleList = null,
             creditCardType = "",
             creditCardNumber = "",
@@ -92,7 +93,8 @@ class CreateAccountEmailVerificationFragment :
             enable = false,
             vehicleNo = "",
             mNoOfVehicles = "",
-            mNoOfCrossings = ""
+            mNoOfCrossings = "",
+            plateCountryType =""
         )
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
             isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
@@ -117,7 +119,32 @@ class CreateAccountEmailVerificationFragment :
 
     override fun observer() {
         observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+        observe(createAccountViewModel.userNameAvailabilityCheck, ::checkUserNameAvailable)
     }
+
+    private fun checkUserNameAvailable(resource: Resource<Boolean?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                loader?.show(requireActivity().supportFragmentManager, "")
+
+                val request =
+                    EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
+
+                createAccountViewModel.emailVerificationApi(request)
+
+            }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+    }
+
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
         if (loader?.isVisible == true) {
@@ -166,9 +193,7 @@ class CreateAccountEmailVerificationFragment :
 
     private fun sendEmailVerificationRequest() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        val request =
-            EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
-        createAccountViewModel.emailVerificationApi(request)
+        createAccountViewModel.userNameAvailabilityCheck(UserNameCheckReq(binding.model?.email?:""))
     }
 
     private fun isEnable() {

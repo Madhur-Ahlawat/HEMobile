@@ -27,7 +27,7 @@ class BusinessVehicleNonUKMakeFragment: BaseFragment<FragmentBusinessVehicleNonU
         nonUKVehicleModel = NonUKVehicleModel()
 
         binding.vehicleRegNum.text = getString(R.string.vehicle_reg_num, requestModel?.vehicleNo)
-        binding.countryRegistration.text = getString(R.string.country_reg, requestModel?.countryType)    }
+        binding.countryRegistration.text = getString(R.string.country_reg, requestModel?.plateCountryType)    }
 
     override fun initCtrl() {
 

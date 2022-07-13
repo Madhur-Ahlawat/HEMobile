@@ -24,6 +24,9 @@ class CreateAccountPaymentSummaryFragment: BaseFragment<FragmentCreateAccountPay
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+//        requestModel?.replenishmentAmount = requestModel?.replenishmentAmount+".0"
+//        requestModel?.transactionAmount = requestModel?.transactionAmount+".0"
+//        requestModel?.thresholdAmount = requestModel?.thresholdAmount+"
         binding.apply {
             tvEmailAddress.text = requestModel?.emailAddress
             tvAccountType.text = requestModel?.accountType

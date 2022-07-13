@@ -35,7 +35,7 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
-            countryRegistration.text = requestModel?.countryType
+            countryRegistration.text = requestModel?.plateCountryType
             groupName.text = nonUKVehicleModel?.vehicleGroup
         }
 
@@ -63,7 +63,7 @@ class BusinessVehicleDetailFragment: BaseFragment<FragmentBusinessVehicleDetailB
                 val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
                 nonUKVehicleModel?.apply {
                     val accountVehicleModel = CreateAccountVehicleModel(
-                        requestModel?.countryType,
+                        requestModel?.plateCountryType,
                         "STANDARD", vehicleColor, "",
                         vehicleMake, vehicleModel,
                         requestModel?.vehicleNo, "2022", "HE",

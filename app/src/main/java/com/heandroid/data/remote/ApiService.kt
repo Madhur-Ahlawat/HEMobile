@@ -403,4 +403,11 @@ interface ApiService {
     ): Response<List<UsedTollTransactionResponse?>?>?
 
 
+    @POST(USER_NAME_AVAILABILITY_CHECK)
+    suspend fun userNameAvailabilityCheck(
+        @Body request : UserNameCheckReq?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+        ): Response<Boolean?>?
+
+
 }

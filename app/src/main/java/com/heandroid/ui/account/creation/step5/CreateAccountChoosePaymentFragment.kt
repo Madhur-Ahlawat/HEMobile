@@ -22,15 +22,24 @@ import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountChoosePaymentBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+class CreateAccountChoosePaymentFragment :
+    BaseFragment<FragmentCreateAccountChoosePaymentBinding>(), View.OnClickListener,
+    RadioGroup.OnCheckedChangeListener {
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountChoosePaymentBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentCreateAccountChoosePaymentBinding.inflate(inflater, container, false)
 
     override fun init() {
+        Logg.logging(
+            "testing",
+            " CreateAccountChoosePaymentFragment init  called"
+        )
+
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
-        binding.enable = true
+        binding.enable = false
         binding.btnContine.setOnClickListener(this)
         binding.rgPaymentOptions.setOnCheckedChangeListener(this)
+
     }
 
     override fun initCtrl() {}
@@ -39,13 +48,37 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnContinue -> {
-                if(binding.rbDebitCard.isChecked){
+            R.id.btnContine -> {
+                Logg.logging(
+                    "testing",
+                    " CreateAccountChoosePaymentFragment btnContinue click called"
+                )
+
+                if (binding.rbDebitCard.isChecked) {
                     val bundle = Bundle()
-                    bundle.putParcelable(CREATE_ACCOUNT_DATA, arguments?.getParcelable(CREATE_ACCOUNT_DATA))
-                    findNavController().navigate(R.id.action_choosePaymentFragment_to_cardFragment, bundle)
-                }else{
-                   requireActivity().showToast(getString(R.string.please_select_option))
+                    Logg.logging(
+                        "testing",
+                        " CreateAccountChoosePaymentFragment btnContinue click inside 1 called"
+                    )
+
+                    bundle.putParcelable(
+                        CREATE_ACCOUNT_DATA,
+                        arguments?.getParcelable(CREATE_ACCOUNT_DATA)
+                    )
+                    Logg.logging(
+                        "testing",
+                        " CreateAccountChoosePaymentFragment btnContinue click inside 2 called arguments?.getParcelable(CREATE_ACCOUNT_DATA) ${
+                            arguments?.getParcelable<CreateAccountRequestModel>(CREATE_ACCOUNT_DATA) as
+                                    CreateAccountRequestModel
+                        }"
+                    )
+
+                    findNavController().navigate(
+                        R.id.action_choosePaymentFragment_to_cardFragment,
+                        bundle
+                    )
+                } else {
+                    requireActivity().showToast(getString(R.string.please_select_option))
                 }
             }
         }
@@ -53,7 +86,7 @@ class CreateAccountChoosePaymentFragment : BaseFragment<FragmentCreateAccountCho
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (group?.checkedRadioButtonId) {
-            R.id.rgPaymentOptions -> {
+            R.id.rbDebitCard -> {
                 binding.enable = true
             }
         }

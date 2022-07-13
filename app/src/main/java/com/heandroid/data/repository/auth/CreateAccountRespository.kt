@@ -1,6 +1,7 @@
 package com.heandroid.data.repository.auth
 
 import com.heandroid.data.model.account.CreateAccountRequestModel
+import com.heandroid.data.model.account.UserNameCheckReq
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
@@ -13,4 +14,5 @@ class CreateAccountRespository @Inject constructor(private val apiService: ApiSe
     suspend fun confirmEmailApiCall(requestParam: ConfirmEmailRequest?) = apiService.confirmEmailVerification(request=requestParam)
     suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) = apiService.getAccountFindVehicle(vehicleNumber, agencyId)
     suspend fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) = apiService.validVehicleCheck(vehicleValidReqModel, agencyId)
+    suspend fun userNameAvailabilityCheck(reqModel : UserNameCheckReq?)= apiService.userNameAvailabilityCheck(reqModel)
 }

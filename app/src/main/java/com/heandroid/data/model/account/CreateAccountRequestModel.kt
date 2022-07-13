@@ -52,5 +52,6 @@ data class CreateAccountRequestModel(
     var enable: Boolean?,
     var vehicleNo: String?,
     var mNoOfVehicles: String?,
-    var mNoOfCrossings: String?
+    var mNoOfCrossings: String?,
+    var plateCountryType:String?
 ) : Parcelable

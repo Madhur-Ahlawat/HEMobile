@@ -200,7 +200,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 model?.countryType="UK"
                 model?.city=town
                 model?.stateType="HE"
-                model?.zipCode1=postcode
+                model?.zipCode1=binding.tiePostCode.text.toString()
                 model?.address1=street
             }
 

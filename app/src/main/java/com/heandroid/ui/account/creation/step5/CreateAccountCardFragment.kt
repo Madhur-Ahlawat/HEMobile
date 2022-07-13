@@ -39,6 +39,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
+        Logg.logging("testing", " CreateAccountCardFragment init called")
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, "")
@@ -46,6 +48,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
+        Logg.logging("testing", " CreateAccountCardFragment init called")
+
     }
 
     override fun initCtrl() {
@@ -63,18 +67,24 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-                Logg.logging("testing", " CreateAccountCardFragment model?.planType ${model?.planType}")
+                Logg.logging(
+                    "testing",
+                    " CreateAccountCardFragment model?.planType ${model?.planType}"
+                )
 
-                model?.creditCExpYear="20${model?.creditCExpYear?.replace("/","")}"
-                Logg.logging("testing", " CreateAccountCardFragment model?.creditCExpYear ${model?.creditCExpYear}")
+                model?.creditCExpYear = "20${model?.creditCExpYear?.replace("/", "")}"
+                Logg.logging(
+                    "testing",
+                    " CreateAccountCardFragment model?.creditCExpYear ${model?.creditCExpYear}"
+                )
 
-                when(model?.planType){
-                    Constants.PAYG ->  model?.smsOption=null
+                when (model?.planType) {
+                    Constants.PAYG -> model?.smsOption = null
 
-                    Constants.BUSINESS_ACCOUNT ->{
+                    Constants.BUSINESS_ACCOUNT -> {
                     }
                 }
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager, "")
                 viewModel.createAccount(model)
             }
         }
@@ -106,7 +116,10 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
                     val bundle = Bundle()
                     bundle.putParcelable("response", status.data)
-                    findNavController().navigate(R.id.action_cardFragment_to_successfulFragment, bundle)
+                    findNavController().navigate(
+                        R.id.action_cardFragment_to_successfulFragment,
+                        bundle
+                    )
                 }
 
                 is Resource.DataError -> {
@@ -128,14 +141,14 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                 if (arguments?.getInt(Constants.PERSONAL_TYPE) == Constants.PERSONAL_TYPE_PAY_AS_U_GO) binding.tvPaymentAmount.invisible()
                 else binding.tvPaymentAmount.visible()
                 // Toast.makeText(context, url, Toast.LENGTH_LONG).show()
-
+                binding.tvPaymentAmount.text = "£ ${model?.transactionAmount}"
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel =
                     Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails", responseModel.toString())
                 model?.creditCExpMonth = responseModel.card?.exp?.subSequence(0, 2).toString()
-                model?.creditCExpYear =  responseModel.card?.exp?.subSequence(2, 4).toString()
+                model?.creditCExpYear = responseModel.card?.exp?.subSequence(2, 4).toString()
                 model?.maskedNumber = responseModel.card?.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card?.type?.uppercase(Locale.ROOT)
@@ -179,8 +192,8 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
 
                 // NMI we are no
                 model?.cardStateType = "HE"
-                model?.cardCity = "GUILDFORD"
-                model?.cardZipCode = "GU1 4LZ"
+                model?.cardCity = model?.city
+                model?.cardZipCode = model?.zipCode1
 
                 model?.billingAddressLine1 = model?.address1
                 model?.billingAddressLine2 = null

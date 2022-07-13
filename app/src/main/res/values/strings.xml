@@ -457,12 +457,13 @@
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
     <string name="str_verify_security_code">Verify security code</string>
-    <string name="send_security_code_msg">Security code has been sent to %s. If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s. \n If you haven’t received the security code, please re-check your email address and click resend security code</string>
     <string name="str_select_account_type">Select an account type</string>
     <string name="str_personal_account">Personal account</string>
     <string name="str_business_account">Business account</string>
-    <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Vehicle registration number you are registering \n\u25CF A debit or credit card</string>
-    <string name="str_business_account_desc">To create a business account you will need \n\u25CFVehicle registration number you are registering \n\u25CF A debit or credit card</string>
+    <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Details of which vehicle you are registering  \n\u25CF A debit or credit card  \n\u25CF Register for a personal account if your company is not registered with Companies house</string>
+    <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
+    <string name="str_business_account_desc_info">\n\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_prepay">Pre-pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
@@ -699,7 +700,7 @@
     <string name="business_prepay">Business Prepay Info</string>
     <string name="business_prepay_account">Business pre-pay account</string>
     <string name="initial_deposit_account">Initial deposit to your account</string>
-    <string name="initial_payment">You need to make an initial minimum amount of £10 to open your account</string>
+    <string name="initial_payment">The auto top-up amount must be a minimum of £ 10 and the low balance threshold must be a minimum of £ 5 to open your account</string>
     <string name="auto_top_up_funds">To top-up, funds will be added automatically to your account when the balance falls below the specified threshold</string>
     <string name="how_many_vehicle">How many <b>vehicles</b> do you plan to have on your account?</string>
     <string name="no_of_vehicle">Number of vehicle</string>
@@ -818,6 +819,8 @@
     <string name="str_date_changed">Date changed</string>
     <string name="str_UK">UK</string>
     <string name="str_non_uk">Non UK</string>
+    <string name="str_security_validation_duration_txt">The security code will be active for 20 minutes</string>
+    <string name="str_to_set_up_a_business_account">To setup a business pre-pay account, you will need:</string>
 </resources>
 
 

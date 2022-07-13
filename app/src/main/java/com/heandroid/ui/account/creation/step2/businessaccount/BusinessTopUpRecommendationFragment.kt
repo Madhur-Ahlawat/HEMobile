@@ -29,6 +29,11 @@ class BusinessTopUpRecommendationFragment :
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         noOfVehicle = arguments?.getString(Constants.NO_OF_VEHICLE_BUSINESS)
         noOfCrossings = arguments?.getString(Constants.NO_OF_CROSSING_BUSINESS)
+        if (requestModel?.accountType == Constants.PERSONAL_ACCOUNT)
+            binding.tvLabel.text = getString(R.string.str_personal_pre_pay_account)
+        else
+            binding.tvLabel.text = getString(R.string.str_business_prepay_account)
+
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
             isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
@@ -54,9 +59,9 @@ class BusinessTopUpRecommendationFragment :
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.continue_business_topup -> {
-                requestModel?.thresholdAmount = binding.topUpAmountFalls.text.toString()
-                requestModel?.replenishmentAmount = binding.topUpAmount.text.toString()
-                requestModel?.transactionAmount = binding.topUpAmount.text.toString()
+                requestModel?.thresholdAmount = "${binding.topUpAmountFalls.text.toString()}.00"
+                requestModel?.replenishmentAmount = "${binding.topUpAmount.text.toString()}.00"
+                requestModel?.transactionAmount = "${binding.topUpAmount.text.toString()}.00"
                 val mCode =
                     arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, 0)
                 val bundle = Bundle()

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.EmptyApiResponse
+import com.heandroid.data.model.account.UserNameCheckReq
 import com.heandroid.data.model.createaccount.ConfirmEmailRequest
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
@@ -27,6 +28,10 @@ class CreateAccountEmailViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _emailVerificationApiVal = MutableLiveData<Resource<EmailVerificationResponse?>?>()
     val emailVerificationApiVal: LiveData<Resource<EmailVerificationResponse?>?> get() = _emailVerificationApiVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _userNameAvailabilityCheck = MutableLiveData<Resource<Boolean?>?>()
+    val userNameAvailabilityCheck: LiveData<Resource<Boolean?>?> get() = _userNameAvailabilityCheck
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _confirmEmailApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
@@ -59,6 +64,20 @@ class CreateAccountEmailViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _confirmEmailApiVal.postValue(failure(e))
+            }
+        }
+    }
+    fun userNameAvailabilityCheck(request: UserNameCheckReq) {
+        viewModelScope.launch {
+            try {
+                _userNameAvailabilityCheck.postValue(
+                    success(
+                        repository.userNameAvailabilityCheck(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _userNameAvailabilityCheck.postValue(failure(e))
             }
         }
     }
