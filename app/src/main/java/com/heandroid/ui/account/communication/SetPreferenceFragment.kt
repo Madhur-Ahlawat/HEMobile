@@ -221,7 +221,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                         "NewApi",
                         "SearchProcessParameters ${it.data}"
                     )
-                    binding.agreeCheckBox.text = getString(R.string.str_i_agree_txt,it.data)
+                    binding.agreeCheckBox.text = getString(R.string.str_i_agree_txt,it.data?.value)
 
                 }
 

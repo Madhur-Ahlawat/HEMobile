@@ -63,8 +63,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         dashboardViewModel.getDashboardAllData(request)
     }
 
-
     override fun initCtrl() {
+
         binding.tvViewVehicle.setOnClickListener {
             val bundle = Bundle().apply {
                 putBoolean(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST, true)
@@ -73,6 +73,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 R.id.action_dashBoardFragment_to_vehicleListFragment2,
                 bundle
             )
+        }
+        binding.viewAllNotifi.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_dashBoardFragment_to_notificationFragment
+            )
+
         }
         binding.crossingsView.setOnClickListener {
             val bundle = Bundle()
@@ -227,11 +233,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
         binding.apply {
+/*
             tvTitle.text = requireActivity().getString(
                 R.string.str_threshold_val_msg,
                 thresholdAmountData.customerAmount,
                 thresholdAmountData.thresholdAmount
             )
+*/
         }
     }
 

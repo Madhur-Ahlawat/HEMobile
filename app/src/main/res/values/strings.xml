@@ -305,7 +305,7 @@
     <string name="str_in_order">In order</string>
     <string name="str_others">Others</string>
     <string name="str_high_priority">HIGH PRIORITY</string>
-    <string name="str_view_all">View all</string>
+    <string name="str_view_all"><U>View all(2)</U></string>
     <string name="str_high_priority_small">High priority</string>
     <string name="str_activate_msg_now">Activate text messaging now,</string>
     <string name="str_click_here">Click here</string>
@@ -821,6 +821,7 @@
     <string name="str_non_uk">Non UK</string>
     <string name="str_security_validation_duration_txt">The security code will be active for 20 minutes</string>
     <string name="str_to_set_up_a_business_account">To setup a business pre-pay account, you will need:</string>
+    <string name="str_you_have_new_notifications_to_view">You have new notifications to view</string>
 </resources>
 
 
