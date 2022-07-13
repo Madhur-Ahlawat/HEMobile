@@ -51,7 +51,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
         isAlready=false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
         binding.cbDefault.gone()
     }
@@ -74,7 +74,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
         when (v?.id) {
             R.id.btnAdd -> {
                 isAlready=true
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                 paymentViewModel.accountDetail()
             }
 

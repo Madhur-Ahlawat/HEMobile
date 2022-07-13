@@ -99,7 +99,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         when (v?.id) {
             R.id.btn_login -> {
                 hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.login(binding.model)
             }
 

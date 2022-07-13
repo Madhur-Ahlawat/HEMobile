@@ -92,7 +92,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         when (v?.id) {
             R.id.btn_next -> {
                 hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
                 viewModel.confirmOptionForForgot(binding.model)
             }

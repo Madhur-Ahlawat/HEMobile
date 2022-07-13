@@ -203,7 +203,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                 "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
             vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }else {
-            loader?.show(requireActivity().supportFragmentManager, "")
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
         }
     }

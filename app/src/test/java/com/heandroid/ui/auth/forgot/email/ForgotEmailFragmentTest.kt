@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -134,7 +135,7 @@ class ForgotEmailFragmentTest {
             Shadows.shadowOf(Looper.getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

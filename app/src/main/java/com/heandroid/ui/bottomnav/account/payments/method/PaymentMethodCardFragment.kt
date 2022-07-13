@@ -36,7 +36,7 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
         loader = LoaderDialog()
         BuildConfig.BASE_URL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
     }
 

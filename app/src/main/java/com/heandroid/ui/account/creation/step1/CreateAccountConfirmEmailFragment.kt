@@ -81,7 +81,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     }
 
     private fun sendEmailVerificationRequest() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
             Constants.EMAIL_SELECTION_TYPE,
             requestModel?.emailAddress ?: ""
@@ -90,7 +90,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     }
 
     private fun confirmEmailCode() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = ConfirmEmailRequest(
             requestModel?.referenceId?.toString() ?: "",
             requestModel?.emailAddress ?: "",

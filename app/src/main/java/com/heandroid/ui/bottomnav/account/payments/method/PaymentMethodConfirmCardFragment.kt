@@ -57,7 +57,7 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnSave ->{
-                loader?.show(requireActivity().supportFragmentManager,"")
+                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                 viewModel.accountDetail()
             }
         }

@@ -68,7 +68,7 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
             R.id.btnChange ->{
                 val validation=viewModel.checkPassword(binding.data)
                 if(validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager,"")
+                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                     viewModel.updatePassword(binding.data)
                 }else {
                     showError(binding.root, validation.second)

@@ -162,6 +162,16 @@ object Constants {
     const val IS_CREATE_VEHICLE_GROUP = "is this flow for delete"
     const val VEHICLE_GROUP = "vehicle_group"
     const val VEHICLE_ROW_ITEM = "Vehicle_Row_Item"
-
+    const val ERROR_DIALOG = "error_dialog"
+    const val LOADER_DIALOG = "loader_dialog"
+    const val RETRY_DIALOG = "retry_dialog"
+    const val SESSION_DIALOG = "session_dialog"
+    const val LOGOUT_DIALOG = "logout_dialog"
+    const val SEARCH_VEHICLE_DIALOG = "search_vehicle_dialog"
+    const val DELETE_VEHICLE_GROUP_DIALOG = "delete_vehicle_group_dialog"
+    const val DATE_PICKER_DIALOG = "date_picker_dialog"
+    const val CROSSING_HISTORY_FILTER_DIALOG = "crossing_history_filter_dialog"
+    const val DOWNLOAD_FORMAT_SELECTION_DIALOG = "download_format_selection_dialog"
+    const val LIVE = "LIVE"
 
 }

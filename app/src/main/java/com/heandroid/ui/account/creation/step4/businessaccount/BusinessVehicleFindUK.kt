@@ -69,7 +69,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                     binding.findVehicleBusiness.isEnabled = true
                 }, time)
 
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isObserverBack = true
                 getVehicleDataFromDVRM()
             }

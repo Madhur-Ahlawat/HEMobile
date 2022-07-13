@@ -47,7 +47,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         communicationPrefsViewModel.getAccountSettingsPrefs()
         val mSearchModel = SearchProcessParamsModelReq("SIGNUP", "ENU", "FEES", "MAIL")
         communicationPrefsViewModel.searchProcessParameters(mSearchModel)
@@ -135,7 +135,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
 
                 mList.add(mListModel)
                 val model = CommunicationPrefsRequestModel(mList)
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 Logg.logging(
                     "NewApi",
                     "personalInformation ${mAccountResp.personalInformation}"

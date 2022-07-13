@@ -39,17 +39,13 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
         FragmentCreateAccountCardBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Logg.logging("testing", " CreateAccountCardFragment init called")
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
-        Logg.logging("testing", " CreateAccountCardFragment init called")
-
     }
 
     override fun initCtrl() {
@@ -67,10 +63,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPay -> {
-                Logg.logging(
-                    "testing",
-                    " CreateAccountCardFragment model?.planType ${model?.planType}"
-                )
+                Logg.logging("testing", " CreateAccountCardFragment model?.planType ${model?.planType}")
 
                 model?.creditCExpYear = "20${model?.creditCExpYear?.replace("/", "")}"
                 Logg.logging(
@@ -78,13 +71,13 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     " CreateAccountCardFragment model?.creditCExpYear ${model?.creditCExpYear}"
                 )
 
-                when (model?.planType) {
-                    Constants.PAYG -> model?.smsOption = null
+                when(model?.planType){
+                    Constants.PAYG ->  model?.smsOption=null
 
-                    Constants.BUSINESS_ACCOUNT -> {
+                    Constants.BUSINESS_ACCOUNT ->{
                     }
                 }
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
                 viewModel.createAccount(model)
             }
         }
@@ -148,7 +141,7 @@ class CreateAccountCardFragment : BaseFragment<FragmentCreateAccountCardBinding>
                     Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
                 Log.e("cardDetails", responseModel.toString())
                 model?.creditCExpMonth = responseModel.card?.exp?.subSequence(0, 2).toString()
-                model?.creditCExpYear = responseModel.card?.exp?.subSequence(2, 4).toString()
+                model?.creditCExpYear =  responseModel.card?.exp?.subSequence(2, 4).toString()
                 model?.maskedNumber = responseModel.card?.number
                 model?.creditCardNumber = responseModel.token
                 model?.creditCardType = responseModel.card?.type?.uppercase(Locale.ROOT)

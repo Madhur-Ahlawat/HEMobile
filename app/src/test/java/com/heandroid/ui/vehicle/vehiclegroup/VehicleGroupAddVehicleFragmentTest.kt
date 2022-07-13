@@ -157,7 +157,7 @@ class VehicleGroupAddVehicleFragmentTest {
             shadowOf(getMainLooper()).idle()
             runBlockingTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

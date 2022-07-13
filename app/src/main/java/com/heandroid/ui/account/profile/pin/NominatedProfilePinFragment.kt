@@ -117,7 +117,7 @@ class NominatedProfilePinFragment : BaseFragment<FragmentNominatedProfilePinBind
         hideKeyboard()
         when (v?.id) {
             R.id.btnSave -> {
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 updateUserProfile()
 
             }
@@ -234,7 +234,7 @@ class NominatedProfilePinFragment : BaseFragment<FragmentNominatedProfilePinBind
 
 
     private fun changeAccountPin() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = AccountPinChangeModel(
             binding.tvPinOne.text.toString() +
                     binding.tvPinTwo.text.toString() +

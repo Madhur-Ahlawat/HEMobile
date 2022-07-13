@@ -89,7 +89,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun getVehicleListData() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         vehicleMgmtViewModel.getVehicleInformationApi()
     }
 
@@ -118,7 +118,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this@VehicleListFragment)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, "")
+                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
                 }
             }
@@ -234,7 +234,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     override fun onRemoveClick(selectedVehicleList: List<String?>) {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         vehicleMgmtViewModel.deleteVehicleApi(DeleteVehicleRequest(selectedVehicleList[0]))
     }
 

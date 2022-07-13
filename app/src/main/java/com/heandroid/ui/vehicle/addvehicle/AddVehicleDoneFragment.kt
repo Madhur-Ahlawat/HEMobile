@@ -98,7 +98,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
 
         if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true) && mUKVehicleDataNotFound == 0) {
-            loader?.show(requireActivity().supportFragmentManager, "")
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID.toInt())
         } else {
             val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(

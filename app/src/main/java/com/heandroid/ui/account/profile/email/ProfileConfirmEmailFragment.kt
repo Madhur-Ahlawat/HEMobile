@@ -59,13 +59,13 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, "")
+            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                                 viewModel.emailValidationForUpdatation(binding.data)
             }
 
             R.id.tvResend ->{
                 binding.data?.referenceId=""
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.data?.emailAddress?:"")
                 viewModel.emailVerificationApi(request)
             }

@@ -47,7 +47,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         binding.tvVehicleCount.text = getString(R.string.str_two_vehicle, "0")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         getDashBoardAllData()
     }
 

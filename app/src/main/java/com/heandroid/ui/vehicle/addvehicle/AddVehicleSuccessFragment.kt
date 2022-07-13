@@ -129,7 +129,7 @@ class AddVehicleSuccessFragment : BaseFragment<FragmentAddVehicleSuccessBinding>
 
     override fun onAddClick() {
         for (element in mList.indices) {
-            // loader?.show(requireActivity().supportFragmentManager, "")
+            // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             vehicleMgmtViewModel.addVehicleApi(mList[element])
         }
     }

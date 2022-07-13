@@ -39,7 +39,7 @@ class ViewPrimaryUserAccountProfileFragment : BaseFragment<FragmentViewPrimaryUs
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,"")
+        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
         binding.model=arguments?.getParcelable(Constants.DATA)
         viewModel.accountDetail()
       //  (requireActivity() as ProfileActivity).setHeaderTitle("Account holder profile")

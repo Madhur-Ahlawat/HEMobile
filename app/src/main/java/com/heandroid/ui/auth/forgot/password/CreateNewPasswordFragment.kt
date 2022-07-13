@@ -18,6 +18,7 @@ import com.heandroid.databinding.FragmentForgotCreateNewPasswordBinding
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -68,7 +69,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 hideKeyboard()
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.resetPassword(binding.model)
                 } else {
                     showError(binding.root, validation.second)

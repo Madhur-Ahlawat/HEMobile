@@ -104,7 +104,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                 }, time)
 
                 if (country == "UK") {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     isObserverBack = true
                     getVehicleDataFromDVRM()
 

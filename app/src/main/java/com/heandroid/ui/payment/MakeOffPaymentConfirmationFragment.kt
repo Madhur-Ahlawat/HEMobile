@@ -113,7 +113,7 @@ class MakeOffPaymentConfirmationFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnPayNow -> {
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                 val vehicleList = VehicleList(
                     list[0].newPlateInfo!!.number!!,

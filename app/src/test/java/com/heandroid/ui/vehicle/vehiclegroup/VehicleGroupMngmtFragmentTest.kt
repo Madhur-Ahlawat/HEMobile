@@ -17,6 +17,8 @@ import com.heandroid.data.model.vehicle.VehicleGroupMngmtResponse
 import com.heandroid.data.model.vehicle.VehicleGroupResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
+import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -116,7 +118,7 @@ class VehicleGroupMngmtFragmentTest {
             vehicleGroupList.postValue(Resource.DataError("Unknown error"))
             runBlockingTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }
@@ -232,7 +234,7 @@ class VehicleGroupMngmtFragmentTest {
             onView(withId(R.id.deleteVehicleGroupBtn)).perform(ViewActions.click())
             runBlockingTest {
                 val dialogFragment =
-                    childFragmentManager.findFragmentByTag("") as DeleteVehicleGroupDialog
+                    childFragmentManager.findFragmentByTag(ConstantsTest.DELETE_VEHICLE_GROUP_DIALOG) as DeleteVehicleGroupDialog
                 assert(dialogFragment.dialog?.isShowing == true)
                 dialogFragment.dialog?.findViewById<Button>(R.id.yesBtn)?.performClick()
                 assert(dialogFragment.dialog?.isShowing == false)
@@ -243,7 +245,7 @@ class VehicleGroupMngmtFragmentTest {
             shadowOf(getMainLooper()).idle()
             runBlockingTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

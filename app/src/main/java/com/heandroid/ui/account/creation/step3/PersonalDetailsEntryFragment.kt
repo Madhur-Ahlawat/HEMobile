@@ -212,7 +212,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
     // method to fetch address based on postal code
     private fun callApiTofetchAddress() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModelCreateAccountPostCode.fetchAddress(binding.edtPostCode.text.toString())
 
     }

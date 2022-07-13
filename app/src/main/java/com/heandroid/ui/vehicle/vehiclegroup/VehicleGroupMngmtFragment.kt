@@ -42,7 +42,7 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
 
         groupsAdapter = VehicleGroupNamesAdapter(this, vehicleGroupResponseList)
 
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         isGetList = true
         vehicleGroupMgmtViewModel.getVehicleGroupListApi()
     }
@@ -95,7 +95,7 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
                         getString(R.string.str_title),
                         getString(R.string.str_sub_title),
                         this
-                    ).show(childFragmentManager, "")
+                    ).show(childFragmentManager, Constants.DELETE_VEHICLE_GROUP_DIALOG)
                 }
             }
         }
@@ -210,12 +210,12 @@ class VehicleGroupMngmtFragment : BaseFragment<FragmentVehicleGroupMngmtBinding>
 
     override fun onDeleteClick() {
         isDelete = true
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         vehicleGroupMgmtViewModel.deleteVehicleGroupApi(checkedGroupsList)
     }
 
     private fun getVehicleGroupList() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         isGetList = true
         binding.tvNoGroups.gone()
         binding.rvVehicleGroupList.visible()

@@ -114,7 +114,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
         when (resource) {
             is Resource.Success -> {
                 requireActivity().showToast("vehicle(s) added successfully")
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 vehicleMgmtViewModel.getVehicleInformationApi()
 //                vehicleGroup?.let {
 //                    val bundle = Bundle().apply {
@@ -127,7 +127,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 //                }
             }
             is Resource.DataError -> {
-                loader?.show(requireActivity().supportFragmentManager, "")
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 vehicleMgmtViewModel.getVehicleInformationApi()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
@@ -205,11 +205,11 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 //                    getString(R.string.str_title),
 //                    getString(R.string.str_sub_title),
 //                    this
-//                ).show(childFragmentManager, "")
+//                ).show(childFragmentManager, Constants.SEARCH_VEHICLE_DIALOG)
             }
             R.id.addVehicleBtn -> {
                 if (checkedVehicleList.size >= 1) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     vehicleMgmtViewModel.addVehiclesToGroup(checkedVehicleList, vehicleGroup)
                 }
             }

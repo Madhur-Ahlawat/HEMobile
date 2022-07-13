@@ -11,6 +11,7 @@ import com.heandroid.R
 import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.websiteservice.WebSiteServiceViewModel
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -113,7 +114,7 @@ class StartNowFragmentTest {
             shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
             }
         }

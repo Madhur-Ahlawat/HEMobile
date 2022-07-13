@@ -53,7 +53,7 @@ class VehicleGroupVehicleEditDetailsFragment :
         binding.saveBtnModel = false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         vehicleGroupMgmtViewModel.getVehicleGroupListApi()
     }
 
@@ -84,7 +84,7 @@ class VehicleGroupVehicleEditDetailsFragment :
                             VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
                         newPlateInfo?.vehicleGroup = binding.spinner.text.toString()
                     }
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     vehicleMgmtViewModel.updateVehicleApi(request)
                 }
 

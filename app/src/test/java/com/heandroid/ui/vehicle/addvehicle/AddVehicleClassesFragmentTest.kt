@@ -238,7 +238,7 @@ class AddVehicleClassesFragmentTest {
             runBlockingTest {
                 delay(1000)
                 val dialogFragment2 =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment2.dialog?.isShowing == true)
             }
 

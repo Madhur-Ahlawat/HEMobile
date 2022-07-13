@@ -58,7 +58,7 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-           R.id.btn_action -> { loader?.show(requireActivity().supportFragmentManager, "")
+           R.id.btn_action -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                                  viewModel.emailVerificationApi(EmailVerificationRequest(selectionType = EMAIL_SELECTION_TYPE, selectionValues = binding.data?.emailAddress?:"")) }
        }
     }

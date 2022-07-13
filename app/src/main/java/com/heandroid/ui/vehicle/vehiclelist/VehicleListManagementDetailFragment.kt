@@ -116,7 +116,7 @@ class VehicleListManagementDetailFragment :
                         vehicleInfo.vehicleClassDesc = VehicleClassTypeConverter.toClassCode(binding.vehicleClass.text.toString())
                         vehicleInfo.color = binding.color.text.toString()
 
-                        loader?.show(requireActivity().supportFragmentManager, "")
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                         val request = VehicleListManagementEditRequest(plateInfo, vehicleInfo)
                         vehicleMgmtViewModel.updateVehicleVRMData(request)

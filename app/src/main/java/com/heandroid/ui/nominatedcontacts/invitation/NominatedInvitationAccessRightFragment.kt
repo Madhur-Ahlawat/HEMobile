@@ -12,6 +12,7 @@ import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.databinding.FragmentNominatedInvitationAccessRightBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
@@ -62,7 +63,7 @@ class NominatedInvitationAccessRightFragment :
         when (v?.id) {
             R.id.btnInvite -> {
                 if (binding.rbRead.isChecked or binding.rbWrite.isChecked) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                     if (arguments?.getBoolean("edit") == true) viewModel.updateSecondaryAccountData(
                         arguments?.getParcelable(
@@ -84,7 +85,7 @@ class NominatedInvitationAccessRightFragment :
 
     private fun updateAccessRight() {
         if (accountId?.isNotEmpty() == true) {
-            loader?.show(requireActivity().supportFragmentManager, "")
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             val permission = if (binding.rbRead.isChecked) "READ" else "READ-WRITE"
             val list = mutableListOf<UpdatePermissionModel?>()
             list.add(UpdatePermissionModel("Address", permission))

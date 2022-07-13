@@ -111,7 +111,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun getVehicleDataFromDVRM() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         isObserverBack = true
         viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
     }

@@ -60,7 +60,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
     }
 
     private fun getCaseHistoryApiData() {
-        loader?.show(requireActivity().supportFragmentManager, "")
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         lastName?.let { lastNa ->
             caseNumber?.let { caseNum ->
                 val request = CaseEnquiryHistoryRequest(

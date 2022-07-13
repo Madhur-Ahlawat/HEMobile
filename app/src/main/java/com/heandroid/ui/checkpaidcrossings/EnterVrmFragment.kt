@@ -110,7 +110,7 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
                 hideKeyboard()
                 val validation = viewModel.validationEnterVrm(binding.model)
                 if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.getVehicleData(binding.model?.vrm, Constants.AGENCY_ID.toInt())
                 } else {
                     ErrorUtil.showError(binding.root, validation.second)

@@ -16,6 +16,7 @@ import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -79,7 +80,7 @@ class ChooseOptionForgotFragmentTest {
                 .perform(BaseActions.forceClick())
             runTest {
                 val dialogFragment =
-                    requireActivity().supportFragmentManager.findFragmentByTag("") as ErrorDialog
+                    requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
                 dialogFragment.dialog?.findViewById<TextView>(R.id.btnOk)?.performClick()
             }
