@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true">
@@ -25,6 +26,8 @@
         android:id="@+id/badge_btn"
         android:text="2"
         android:textColor="@color/white"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:textSize="@dimen/_7ssp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/navigation_item_image"

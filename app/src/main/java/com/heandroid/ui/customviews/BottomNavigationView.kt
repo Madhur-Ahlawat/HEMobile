@@ -35,7 +35,7 @@ class BottomNavigationView @JvmOverloads constructor(
     /**
      * The item that is active and chosen
      */
-    private val navigationItems = arrayListOf<NavigationItem>()
+    val navigationItems = arrayListOf<NavigationItem>()
 
     /**
      * The item position that is active and chosen
@@ -158,12 +158,11 @@ class BottomNavigationView @JvmOverloads constructor(
             imageView.setImageDrawable(navigationItem.icon)
             textView.text = navigationItem.title
 
-            if (index == 2) {
-                badgeCountBtn.visibility = View.VISIBLE
-            } else {
-                badgeCountBtn.visibility = View.GONE
-
-            }
+//            if (index == 2) {
+//                badgeCountBtn.visibility = View.VISIBLE
+//            } else {
+//                badgeCountBtn.visibility = View.GONE
+//            }
 
             // Set navigation item's color. If it's pressed then color it with active color
             var navigationItemColor: Int

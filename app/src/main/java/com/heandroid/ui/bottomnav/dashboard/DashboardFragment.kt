@@ -1,8 +1,10 @@
 package com.heandroid.ui.bottomnav.dashboard
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,11 +20,14 @@ import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.startNormalActivity
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -75,12 +80,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             )
         }
         binding.viewAllNotifi.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_dashBoardFragment_to_notificationFragment
-            )
-
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain)
+                    .dataBinding.bottomNavigationView.setActiveNavigationIndex(2)
+            }
         }
-        binding.crossingsView.setOnClickListener {
+        binding.tvViewCrossings.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
             findNavController().navigate(
@@ -151,9 +156,28 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
         when (status) {
             is Resource.Success -> {
-                status.data?.let {
-                    var notificationList = it?.messageList as List<AlertMessage>
-                    setNotificationAdapter(notificationList)
+                status.data?.messageList?.let { alerts ->
+                    if (alerts.isNotEmpty()) {
+                        binding.notificationView.visible()
+                        binding.viewAllNotifi.text =
+                            getString(R.string.str_view_all, alerts.size.toString())
+                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+                        if (requireActivity() is HomeActivityMain) {
+                            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+                                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                badgeCountBtn.visible()
+                                badgeCountBtn.text = alerts.size.toString()
+                            }
+                        }
+                    } else {
+                        if (requireActivity() is HomeActivityMain) {
+                            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+                                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                badgeCountBtn.gone()
+                            }
+                        }
+                    }
+                    //setNotificationAdapter(it.messageList)
                 }
             }
             is Resource.DataError -> {
@@ -166,11 +190,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     }
 
-    private fun setNotificationAdapter(notificationList: List<AlertMessage>) {
-        var layoutMgr = LinearLayoutManager(requireActivity())
+    private fun setNotificationAdapter(notificationList: List<AlertMessage?>?) {
         binding.rvNotification.apply {
             adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
-            layoutManager = layoutMgr
+            layoutManager = LinearLayoutManager(requireActivity())
             setHasFixedSize(true)
         }
     }
@@ -182,9 +205,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         when (status) {
             is Resource.Success -> {
                 status.data?.let {
-                    var accountDetails = it
-                    //  sessionManager.setAccountType(accountDetails.accountInformation.type)
-                    setAccountDetailsView(accountDetails)
+                    setAccountDetailsView(it)
                 }
             }
             is Resource.DataError -> {
@@ -217,7 +238,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     it.thresholdAmountVo?.let { amount ->
-                        stViewBalance(amount)
+                        //stViewBalance(amount)
                     }
                 }
             }
@@ -233,14 +254,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
         binding.apply {
-/*
             tvTitle.text = requireActivity().getString(
                 R.string.str_threshold_val_msg,
                 thresholdAmountData.customerAmount,
                 thresholdAmountData.thresholdAmount
             )
-*/
         }
     }
-
 }

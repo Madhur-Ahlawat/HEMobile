@@ -64,15 +64,15 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
 
     override fun onStart() {
         super.onStart()
-        loadsession()
+        loadSession()
     }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        loadsession()
+        loadSession()
     }
 
-    private fun loadsession() {
+    private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }

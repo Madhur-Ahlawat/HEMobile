@@ -28,38 +28,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/str_account_summary"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notificationView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_80sdp"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
                     android:background="@color/color_FFE8E8">
 
                     <View
                         android:id="@+id/side_view"
-                        android:layout_width="@dimen/_10sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_height="@dimen/_40sdp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="@dimen/_6sdp"
+                        android:layout_height="0dp"
                         android:background="@color/color_E30000"
-                         />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
                         android:text="@string/str_you_have_new_notifications_to_view"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
-                        android:padding="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/view_all_notifi"
                         app:layout_constraintStart_toEndOf="@+id/side_view"
@@ -69,9 +71,9 @@
                         android:id="@+id/view_all_notifi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/str_view_all"
                         android:padding="@dimen/_10sdp"
-                        android:textColor="@color/blue"
+                        android:text="@string/str_view_all"
+                        android:textColor="@color/green"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +104,7 @@
                     android:id="@+id/rv_notification"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:visibility="gone">
@@ -113,7 +115,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/white"
                     android:padding="@dimen/_10sdp">
 
@@ -425,7 +427,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_crossing_count" />
 
                     <LinearLayout
-                        android:id="@+id/tv_view_notification"
+                        android:id="@+id/tv_view_crossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"

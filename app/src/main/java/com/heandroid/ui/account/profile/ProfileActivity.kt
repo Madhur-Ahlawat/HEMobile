@@ -42,15 +42,15 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
 
     override fun onStart() {
         super.onStart()
-        loadsession()
+        loadSession()
     }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        loadsession()
+        loadSession()
     }
 
-    private fun loadsession(){
+    private fun loadSession(){
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
@@ -60,12 +60,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         Utils.sessionExpired(this)
     }
     private fun setFragmentInView() {
-        var navGraph = navController.graph
+        val navGraph = navController.graph
 
         when  {
           ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT -> {// oldGraph.startDestination = R.id.viewProfile }
               navGraph.setStartDestination(R.id.viewProfile)
-              var startDestId = R.id.viewProfile
+              val startDestId = R.id.viewProfile
               navGraph.apply {
                   setStartDestination(startDestId);
               }

@@ -3,16 +3,21 @@ package com.heandroid.ui.vehicle.vehiclegroup
 import com.heandroid.R
 import com.heandroid.databinding.ActivityVehicleGroupMgmtBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.customToolbar
 import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>(), LogoutListener {
 
     private lateinit var binding: ActivityVehicleGroupMgmtBinding
+
+    @Inject
+    lateinit var sessionManager : SessionManager
 
     override fun initViewBinding() {
         binding = ActivityVehicleGroupMgmtBinding.inflate(layoutInflater)
@@ -22,17 +27,16 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
 
     override fun onStart() {
         super.onStart()
-        loadsession()
+        loadSession()
 
     }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        loadsession()
-
+        loadSession()
     }
 
-    private fun loadsession() {
+    private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
@@ -48,6 +52,7 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
     }
 
     override fun onLogout() {
+        sessionManager.clearAll()
         Utils.sessionExpired(this)
     }
 

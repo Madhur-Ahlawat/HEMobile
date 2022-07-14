@@ -305,7 +305,7 @@
     <string name="str_in_order">In order</string>
     <string name="str_others">Others</string>
     <string name="str_high_priority">HIGH PRIORITY</string>
-    <string name="str_view_all"><U>View all(2)</U></string>
+    <string name="str_view_all"><U>View all(%s)</U></string>
     <string name="str_high_priority_small">High priority</string>
     <string name="str_activate_msg_now">Activate text messaging now,</string>
     <string name="str_click_here">Click here</string>

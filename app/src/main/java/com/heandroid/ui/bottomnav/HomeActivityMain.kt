@@ -22,7 +22,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private lateinit var dataBinding: ActivityHomeMainBinding
+    lateinit var dataBinding: ActivityHomeMainBinding
     private lateinit var navController: NavController
 
     override fun initViewBinding() {

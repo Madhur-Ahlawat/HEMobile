@@ -92,7 +92,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE
                     )
-                    putString(Constants.LAST_NAME, "Test")
                 }
             }
 

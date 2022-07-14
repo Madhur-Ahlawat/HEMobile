@@ -17,9 +17,6 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
             app:destination="@id/crossingHistoryFragment" />
-        <action
-            android:id="@+id/action_dashBoardFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
 
     </fragment>
 

@@ -1,6 +1,7 @@
 package com.heandroid.utils.common
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -11,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.heandroid.R
 import com.heandroid.ui.auth.session.SessionDialog
 import com.heandroid.ui.base.BaseApplication
+import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.extn.changeBackgroundColor
 import com.heandroid.utils.extn.changeTextColor
 import com.heandroid.utils.logout.LogoutUtil
@@ -112,13 +114,12 @@ object Utils {
     }
 
     fun sessionExpired(context: AppCompatActivity) {
-        try{
-            LogoutUtil.stopLogoutTimer()
-            val dialog=SessionDialog()
-            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            dialog.show(context.supportFragmentManager,Constants.SESSION_DIALOG)
-
-        }catch (e: Exception){}
+        context.startActivity(
+            Intent(context, LandingActivity::class.java)
+                .putExtra(Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(Constants.TYPE, Constants.LOGIN)
+        )
     }
 
 
@@ -156,13 +157,13 @@ object Utils {
         return matcher.matches()
     }
 
-    fun mobileNumber(mobNo: String?) : String {
+    fun mobileNumber(mobNo: String?): String {
         val regexPattern =
             "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
         val match: Matcher
         val pattern = Pattern.compile(regexPattern)
         match = pattern.matcher(mobNo)
-        if(match.find()){
+        if (match.find()) {
             return "Password matched"
         }
         return "Password not matched"

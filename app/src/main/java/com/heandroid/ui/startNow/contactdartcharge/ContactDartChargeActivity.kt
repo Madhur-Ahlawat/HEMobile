@@ -5,18 +5,23 @@ import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityContactDartChargeBinding
 import com.heandroid.ui.base.BaseActivity
-import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.Logg
-import com.heandroid.utils.extn.startNormalActivity
+import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.common.Utils
+import com.heandroid.utils.logout.LogoutListener
+import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContactDartChargeActivity : BaseActivity<Any?>() {
+class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
 
     private lateinit var binding: ActivityContactDartChargeBinding
     var mValue = Constants.FROM_CASES_TO_CASES_VALUE
     private lateinit var navController: NavController
+
+    @Inject
+    lateinit var sessionManager : SessionManager
 
     override fun initViewBinding() {
         binding = ActivityContactDartChargeBinding.inflate(layoutInflater)
@@ -54,5 +59,29 @@ class ContactDartChargeActivity : BaseActivity<Any?>() {
     }
 
     override fun observeViewModel() {}
+
+    override fun onStart() {
+        super.onStart()
+        loadSession()
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession(){
+        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
+            LogoutUtil.stopLogoutTimer()
+            LogoutUtil.startLogoutTimer(this)
+        }
+    }
+
+    override fun onLogout() {
+        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
+            sessionManager.clearAll()
+            Utils.sessionExpired(this)
+        }
+    }
 
 }
