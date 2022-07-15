@@ -27,7 +27,7 @@ data class SecondaryAccountData(
     @SerializedName("securityCode") var securityCode: String?,
     @SerializedName("referenceId") var referenceId: String?,
     var mPermissionLevel: String? = "-",
-    var isExpanded: Boolean? = false
+    var isExpanded: Boolean = false
 ) : Parcelable
 
 

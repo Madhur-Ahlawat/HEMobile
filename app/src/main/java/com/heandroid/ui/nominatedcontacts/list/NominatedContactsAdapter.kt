@@ -11,9 +11,11 @@ import com.heandroid.utils.common.Logg
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 
-class NominatedContactsAdapter(private val mContext: Context,
-                               private var secAccountList: MutableList<SecondaryAccountData?>?,
-                               private val listener: NominatedContactListener) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
+class NominatedContactsAdapter(
+    private val mContext: Context,
+    private var secAccountList: MutableList<SecondaryAccountData?>?,
+    private val listener: NominatedContactListener
+) : RecyclerView.Adapter<NominatedContactsAdapter.VrmHeaderViewHolder>() {
 
 
     class VrmHeaderViewHolder(var binding: NominatedContactsAdapterBinding) :
@@ -38,8 +40,9 @@ class NominatedContactsAdapter(private val mContext: Context,
             }
 
             binding.rightsStr.text = contact.mPermissionLevel
+            Logg.logging("NominatedContactsAdapter", "contact.isExpanded ${contact.isExpanded}")
 
-            if (contact?.isExpanded!!) {
+            if (contact.isExpanded) {
                 binding.arrowImg.animate().rotation(180f).start()
                 binding.bottomDetailsLyt.visible()
             } else {
@@ -66,12 +69,13 @@ class NominatedContactsAdapter(private val mContext: Context,
         holder.binding.arrowTitleLyt.setOnClickListener {
 
             val accList = secAccountList?.get(position)
-
-            accList?.isExpanded = !accList!!.isExpanded!!
-            listener.onItemClick("open", accList!!, position, accList.isExpanded!!)
+            Logg.logging("NominatedContactsAdapter", "accList?.isExpanded ${accList?.isExpanded}")
+         accList?.isExpanded = !accList?.isExpanded!!
+            listener.onItemClick("open", accList!!, position, accList.isExpanded)
 
             secAccountList?.get(position)?.isExpanded = accList.isExpanded
             notifyItemChanged(position)
+
         }
 
         holder.binding.resendBtn.setOnClickListener {
@@ -107,6 +111,6 @@ class NominatedContactsAdapter(private val mContext: Context,
     }
 
     override fun getItemCount(): Int {
-        return secAccountList?.size?:0
+        return secAccountList?.size ?: 0
     }
 }

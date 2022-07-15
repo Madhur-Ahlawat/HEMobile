@@ -3,7 +3,7 @@ package com.heandroid.data.model.payment
 data class CardListResponseModel(
     val addressLine1: String?,
     val bankAccount: Boolean?,
-    var check : Boolean?=false,
+    var check : Boolean=false,
     val bankAccountNumber: String?,
     val bankAccountType: String?,
     val bankRoutingNumber: String?,
