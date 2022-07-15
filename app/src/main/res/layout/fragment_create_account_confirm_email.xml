@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/otpView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,29 +44,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvVerification">
 
+
             <TextView
                 android:id="@+id/tvTimerTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:drawableStart="@drawable/ic_warning"
-                android:drawablePadding="@dimen/_5sdp"
-                android:padding="@dimen/_10sdp"
+                android:drawableLeft="@drawable/ic_baseline_timer_24"
+                android:drawablePadding="@dimen/_10sdp"
                 android:text="@string/str_security_validation_duration_txt"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/_12ssp" />
-
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etCodeLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTimerTxt"
                 style="@style/Widget.HeMobile.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_below="@+id/tvTimerTxt"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:hint="@string/str_enter_security_code"
                 android:textColorHint="@color/color_CBCBCB"
                 app:boxStrokeColor="@color/color_00703C">
@@ -78,6 +80,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLength="6"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="@={model.code}"
                     android:textColor="@color/color_000000" />
@@ -85,20 +88,21 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvResend"
+                app:layout_constraintEnd_toEndOf="@id/etCodeLayout"
+                app:layout_constraintTop_toTopOf="@id/etCodeLayout"
+                app:layout_constraintBottom_toBottomOf="@id/etCodeLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textSize="@dimen/_12ssp"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/str_resend"
                 android:textColor="@color/color_00703C" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tvMsg"

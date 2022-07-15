@@ -1,6 +1,8 @@
 package com.heandroid.ui.account.creation.step4.businessaccount
 
 import android.os.Bundle
+import android.os.Looper.getMainLooper
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -14,16 +16,22 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import com.heandroid.R
 import com.heandroid.data.model.account.NonUKVehicleModel
+import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
 import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAddConfirmDialog
 import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
+import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
 import com.heandroid.utils.launchFragmentInHiltContainer
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
@@ -33,6 +41,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @ExperimentalCoroutinesApi
@@ -46,6 +55,12 @@ class BusinessVehicleNonUKClassFragmentTest {
     var hiltRule = HiltAndroidRule(this)
 
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+
+    @BindValue
+    @JvmField
+    val viewModel = mockk<CreateAccountVehicleViewModel>(relaxed = true)
+
+    private val validVehicle = MutableLiveData<Resource<String?>?>()
 
     private lateinit var bundle: Bundle
 
@@ -65,6 +80,7 @@ class BusinessVehicleNonUKClassFragmentTest {
                 NonUKVehicleModel()
             )
         }
+        every { viewModel.validVehicleLiveData } returns validVehicle
     }
 
     @Test
@@ -97,7 +113,9 @@ class BusinessVehicleNonUKClassFragmentTest {
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
@@ -142,7 +160,9 @@ class BusinessVehicleNonUKClassFragmentTest {
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
@@ -187,7 +207,9 @@ class BusinessVehicleNonUKClassFragmentTest {
                 .perform(BaseActions.forceClick())
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
@@ -250,7 +272,9 @@ class BusinessVehicleNonUKClassFragmentTest {
             }
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
@@ -311,7 +335,9 @@ class BusinessVehicleNonUKClassFragmentTest {
             }
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog
@@ -322,7 +348,9 @@ class BusinessVehicleNonUKClassFragmentTest {
 
             onView(withId(R.id.continueButton)).perform(BaseActions.betterScrollTo())
                 .perform(BaseActions.forceClick())
-
+            shadowOf(getMainLooper()).idle()
+            validVehicle.postValue(Resource.Success(""))
+            shadowOf(getMainLooper()).idle()
             runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(VehicleAddConfirmDialog.TAG) as BusinessAddConfirmDialog

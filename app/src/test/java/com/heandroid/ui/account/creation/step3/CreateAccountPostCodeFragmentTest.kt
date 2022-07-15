@@ -169,23 +169,6 @@ class CreateAccountPostCodeFragmentTest {
                 navController.currentDestination?.id,
                 R.id.createAccoutPasswordFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.PERSONAL_ACCOUNT
-                        zipCode1 = ""
-                        countryType = "UK"
-                        city = ""
-                        stateType = "HE"
-                        zipCode1 = "1234"
-                        address1 = ""
-                        planType = null
-                    }
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 
@@ -224,27 +207,6 @@ class CreateAccountPostCodeFragmentTest {
                 navController.currentDestination?.id,
                 R.id.createAccoutPasswordFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.PERSONAL_ACCOUNT
-                        zipCode1 = ""
-                        countryType = "UK"
-                        city = ""
-                        stateType = "HE"
-                        zipCode1 = "1234"
-                        address1 = ""
-                        planType = null
-                    }
-                )
-                putInt(
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 
@@ -285,32 +247,10 @@ class CreateAccountPostCodeFragmentTest {
             onData(anything()).atPosition(1).perform(ViewActions.click())
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-
             Assert.assertEquals(
                 navController.currentDestination?.id,
                 R.id.createAccoutPasswordFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.BUSINESS_ACCOUNT
-                        zipCode1 = ""
-                        countryType = "UK"
-                        city = ""
-                        stateType = "HE"
-                        zipCode1 = "1234"
-                        address1 = ""
-                        planType = "BUSINESS"
-                    }
-                )
-                putInt(
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 }

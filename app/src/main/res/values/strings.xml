@@ -457,7 +457,7 @@
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
     <string name="str_verify_security_code">Verify security code</string>
-    <string name="send_security_code_msg">Security code has been sent to %s. \n If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="send_security_code_msg">If you haven\'t received the security code, please re-check your email address and click resend security code.</string>
     <string name="str_select_account_type">Select an account type</string>
     <string name="str_personal_account">Personal account</string>
     <string name="str_business_account">Business account</string>

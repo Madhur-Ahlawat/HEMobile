@@ -42,7 +42,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
 
     override fun init() {
         requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
-        binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
             isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
@@ -57,10 +56,10 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             etCode.onTextChanged { isEnable() }
             btnAction.setOnClickListener(this@CreateAccountConfirmEmailFragment)
             tvResend.setOnClickListener(this@CreateAccountConfirmEmailFragment)
-            tvMsg.makeLinks(Pair("resend security code",View.OnClickListener {
-                sendEmailVerificationRequest()
-
-            }))
+//            tvMsg.makeLinks(Pair("resend security code",View.OnClickListener {
+//                sendEmailVerificationRequest()
+//
+//            }))
         }
     }
 
@@ -76,6 +75,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
                 confirmEmailCode()
             }
             R.id.tvResend -> {
+                sendEmailVerificationRequest()
             }
         }
     }

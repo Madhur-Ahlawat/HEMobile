@@ -53,14 +53,8 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
         navController.graph = oldGraph
     }
 
-    override fun observeViewModel() {
+    override fun observeViewModel() {}
 
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
 
     override fun onStart() {
         super.onStart()

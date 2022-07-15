@@ -92,18 +92,6 @@ class BusinessTopUpRecommendationFragmentTest {
                 navController.currentDestination?.id,
                 R.id.personalDetailsEntryFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        thresholdAmount = (10 * 100).toString()
-                        replenishmentAmount = (10 * 100 * 2).toString()
-                        transactionAmount = (10 * 100 * 2).toString()
-                    }
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 
@@ -132,20 +120,6 @@ class BusinessTopUpRecommendationFragmentTest {
                 navController.currentDestination?.id,
                 R.id.personalDetailsEntryFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        thresholdAmount = (10 * 100).toString()
-                        replenishmentAmount = (10 * 100 * 2).toString()
-                        transactionAmount = (10 * 100 * 2).toString()
-                    }
-                )
-                putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 
@@ -184,18 +158,6 @@ class BusinessTopUpRecommendationFragmentTest {
                 navController.currentDestination?.id,
                 R.id.paymentSummaryFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        thresholdAmount = (10).toString()
-                        replenishmentAmount = (20).toString()
-                        transactionAmount = (20).toString()
-                    }
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 

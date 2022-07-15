@@ -10,13 +10,17 @@ import com.heandroid.databinding.ActivityViewallNotificationBinding
 import com.heandroid.listener.NotificationItemClick
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.logout.LogoutListener
+import com.heandroid.utils.logout.LogoutUtil
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ViewWithFragmentComponent
+import javax.inject.Inject
 
-class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBinding>()/*, NotificationItemClick*/ {
+@AndroidEntryPoint
+class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBinding>(),
+    LogoutListener  {
 
     private var mType: Int? = null
     private lateinit var binding: ActivityViewallNotificationBinding
@@ -24,6 +28,9 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     private var mList = ArrayList<AlertMessage>()
     private var loader: LoaderDialog?=null
     private val viewModel: NotificationViewAllViewModel by viewModels()
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityViewallNotificationBinding.inflate(layoutInflater)
@@ -110,4 +117,24 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
 //        mList[pos] = notificationModel!!
 //        mNotificationAdapter?.notifyItemChanged(pos)
 //    }
+override fun onStart() {
+    super.onStart()
+    loadSession()
+}
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        sessionManager.clearAll()
+        Utils.sessionExpired(this)
+    }
+
 }

@@ -108,19 +108,8 @@ class CreateAccoutPinFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutInfoFragment
+                R.id.findYourVehicleFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.PERSONAL_ACCOUNT
-                        planType = null
-                    }
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 

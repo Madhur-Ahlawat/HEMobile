@@ -74,7 +74,7 @@ class CreateAccountChoosePaymentFragmentTest {
                 .perform(ViewActions.click())
             onView(withId(R.id.btnContine)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-            Assert.assertNotEquals(
+            Assert.assertEquals(
                 navController.currentDestination?.id,
                 R.id.cardFragment
             )

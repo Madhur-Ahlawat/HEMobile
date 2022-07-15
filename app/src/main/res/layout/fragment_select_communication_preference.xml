@@ -2,10 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,15 +14,15 @@
             <TextView
                 android:id="@+id/tv_set_pref"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/color_EFEFEF"
                 android:gravity="center_vertical"
-                android:padding="@dimen/_10sdp"
                 android:text="@string/str_set_preferences"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
-                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +49,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:layout_marginVertical="@dimen/_10sdp"
+                        android:layout_marginHorizontal="@dimen/_5sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
                         android:background="@color/white"
                         android:orientation="vertical">
 
@@ -67,7 +63,7 @@
                             android:background="@color/white"
                             android:text="@string/str_accnt_related_pref"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_16ssp"
+                            android:textSize="@dimen/_15ssp"
                             android:textStyle="bold" />
 
                         <RadioGroup
@@ -81,14 +77,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/str_email"
-                                android:textSize="@dimen/_15ssp" />
+                                android:textSize="@dimen/_14ssp" />
 
                             <androidx.appcompat.widget.AppCompatRadioButton
                                 android:id="@+id/rb_post"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/str_post"
-                                android:textSize="@dimen/_15ssp" />
+                                android:textSize="@dimen/_14ssp" />
                         </RadioGroup>
 
                         <TextView
@@ -148,7 +144,7 @@
                             android:background="@color/white"
                             android:text="@string/str_would_like_advice"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_16ssp"
+                            android:textSize="@dimen/_15ssp"
                             android:textStyle="bold" />
 
 
@@ -174,7 +170,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/str_yes"
-                                android:textSize="@dimen/_15ssp" />
+                                android:textSize="@dimen/_14ssp" />
 
                             <TextView
                                 android:id="@+id/you_have_opted_number_msg"
@@ -235,7 +231,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/str_no"
-                                android:textSize="@dimen/_15ssp" />
+                                android:textSize="@dimen/_14ssp" />
                         </RadioGroup>
 
 
@@ -252,7 +248,6 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/cl_like_advice"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/str_you_have_opted_to_receive_by_post_msg"
                 android:textColor="@color/black"
@@ -260,40 +255,41 @@
                 android:textStyle="normal"
                 app:layout_constraintBottom_toTopOf="@+id/agreeCheckBox"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_like_advice" />
 
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/agreeCheckBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/you_can_monthly_statements_post"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:padding="@dimen/_5sdp"
                 android:buttonTint="@color/green"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
+                android:padding="@dimen/_5sdp"
                 android:text="@string/str_i_agree_txt"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toTopOf="@+id/btn_save"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/you_can_monthly_statements_post" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:backgroundTint="@color/btn_color"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/str_save"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -303,7 +299,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_30sdp"
@@ -311,7 +307,7 @@
                 android:padding="@dimen/_5sdp"
                 android:text="@string/str_cancel"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"

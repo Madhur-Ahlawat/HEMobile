@@ -69,8 +69,10 @@ class DashboardFragmentTest {
         getApiCallData()
         launchFragmentInHiltContainer<DashboardFragment> {
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.rv_notification)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
         }
     }
 
@@ -80,7 +82,9 @@ class DashboardFragmentTest {
         launchFragmentInHiltContainer<DashboardFragment> {
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.rv_notification)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_view_vehicle)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
@@ -110,7 +114,9 @@ class DashboardFragmentTest {
         launchFragmentInHiltContainer<DashboardFragment> {
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.rv_notification)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up))
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())

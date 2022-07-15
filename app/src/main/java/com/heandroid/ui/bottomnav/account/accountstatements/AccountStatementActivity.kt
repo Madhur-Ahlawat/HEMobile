@@ -10,22 +10,25 @@ import com.heandroid.data.model.account.StatementListModel
 import com.heandroid.databinding.ActivityAccountStatementBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.setSpinnerAdapterData
+import com.heandroid.utils.logout.LogoutListener
+import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountStatementActivity : BaseActivity<Any?>() {
+class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
 
     private lateinit var binding: ActivityAccountStatementBinding
     private val viewModel: AccountStatementViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var periodList = mutableListOf<String>()
     private var yearListCSV = mutableListOf<String>()
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityAccountStatementBinding.inflate(layoutInflater)
@@ -109,6 +112,26 @@ class AccountStatementActivity : BaseActivity<Any?>() {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadSession()
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        sessionManager.clearAll()
+        Utils.sessionExpired(this)
     }
 
 }

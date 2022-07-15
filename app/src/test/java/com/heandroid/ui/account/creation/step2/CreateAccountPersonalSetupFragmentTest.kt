@@ -80,20 +80,10 @@ class CreateAccountPersonalSetupFragmentTest {
             onView(withId(R.id.tvPrepayDesc)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        planType = null
-                    }
-                )
-            }
             assertEquals(
                 navController.currentDestination?.id,
-                R.id.personalDetailsEntryFragment
+                R.id.businessPrepayInfoFragment
             )
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 

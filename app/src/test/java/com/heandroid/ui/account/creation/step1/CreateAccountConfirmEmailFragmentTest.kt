@@ -126,12 +126,15 @@ class CreateAccountConfirmEmailFragmentTest {
             onView(withId(R.id.tvVerification)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             shadowOf(getMainLooper()).idle()
-
-            runTest {
-                onView(withId(R.id.tvResend)).check(matches(isDisplayed()))
+            onView(withId(R.id.tvResend)).check(matches(isDisplayed()))
                     .perform(forceClick())
+            runTest {
                 shadowOf(getMainLooper()).idle()
                 emailVerification.value = Resource.DataError("unknown error")
+                shadowOf(getMainLooper()).idle()
+                val dialogFragment =
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
+                assert(dialogFragment.dialog?.isShowing == true)
             }
         }
     }

@@ -111,20 +111,10 @@ class CreateAccountTypeFragmentTest {
             onView(withId(R.id.tvBusinessDesc)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.BUSINESS_ACCOUNT
-                    }
-                )
-            }
             assertEquals(
                 navController.currentDestination?.id,
-                R.id.businessInfoFragment
+                R.id.businessPrepayInfoFragment
             )
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 
@@ -148,24 +138,11 @@ class CreateAccountTypeFragmentTest {
             onView(withId(R.id.tvBusinessDesc)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.BUSINESS_ACCOUNT
-                    }
-                )
-                putInt(
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-                )
-            }
             assertEquals(
                 navController.currentDestination?.id,
-                R.id.businessInfoFragment
+                R.id.businessPrepayInfoFragment
             )
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
+
         }
     }
 }
