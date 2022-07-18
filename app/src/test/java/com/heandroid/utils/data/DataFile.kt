@@ -2,6 +2,7 @@ package com.heandroid.utils.data
 
 import com.heandroid.data.model.account.*
 import com.heandroid.data.model.accountpayment.TransactionData
+import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
@@ -12,11 +13,20 @@ import com.heandroid.data.model.notification.AlertMessage
 
 object DataFile {
 
-    fun getOneOfPaymentModelRequest() : OneOfPaymentModelRequest {
+    fun getDataAddress(): DataAddress {
+        return DataAddress(
+            "", "", "", "",
+            "", "", ""
+        )
+    }
+
+    fun getOneOfPaymentModelRequest(): OneOfPaymentModelRequest {
         val list = FtVehicleList(arrayListOf())
-        val paymentInfo = PaymentTypeInfo(     "", "", "", "",
+        val paymentInfo = PaymentTypeInfo(
+            "", "", "", "",
             "", "", "", "", "",
-            "", "", "", "", "", "", "", "")
+            "", "", "", "", "", "", "", ""
+        )
         return OneOfPaymentModelRequest(list, paymentInfo)
     }
 
