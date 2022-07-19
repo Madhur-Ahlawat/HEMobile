@@ -23,10 +23,10 @@ class NominatedContactsRepo @Inject constructor(private val apiService: ApiServi
     suspend fun getSecondaryAccessRights(accountId: String) =
         apiService.getSecondaryAccessRights(accountId)
 
-    suspend fun resendActivationMailContacts(body: ResendActivationMail) =
+    suspend fun resendActivationMailContacts(body: ResendActivationMail?) =
         apiService.resendActivationMailContacts(body)
 
-    suspend fun terminateNominatedContact(body: TerminateRequestModel) =
+    suspend fun terminateNominatedContact(body: TerminateRequestModel?) =
         apiService.terminateNominatedContact(body)
 
 

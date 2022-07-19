@@ -14,7 +14,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)
 
-    suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest) =
+    suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest?) =
         apiService.getVehicleCrossingHistoryData(requestParam)
 
     suspend fun getAccountDetailsApiCall() = apiService.getAccountDetailsData()

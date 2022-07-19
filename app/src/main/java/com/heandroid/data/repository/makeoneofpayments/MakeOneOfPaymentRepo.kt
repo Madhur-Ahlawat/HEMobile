@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 class MakeOneOfPaymentRepo @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getCrossingDetails(model:CrossingDetailsModelsRequest) = apiService.getCrossingDetails(model)
+    suspend fun getCrossingDetails(model:CrossingDetailsModelsRequest?) = apiService.getCrossingDetails(model)
 
-    suspend fun oneOfPaymentsPay(model : OneOfPaymentModelRequest) = apiService.oneOfPaymentsPay(model)
+    suspend fun oneOfPaymentsPay(model : OneOfPaymentModelRequest?) = apiService.oneOfPaymentsPay(model)
 
-    suspend fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest)  = apiService.whereToReceivePaymentReceipt(request)
+    suspend fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest?)  = apiService.whereToReceivePaymentReceipt(request)
 
 }

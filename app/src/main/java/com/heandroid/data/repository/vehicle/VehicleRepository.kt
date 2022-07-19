@@ -14,18 +14,18 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun addVehicleApiCall(requestParam: VehicleResponse?) =
         apiService.addVehicleApi(requestParam)
 
-    suspend fun updateVehicleApiCall(requestParam: VehicleResponse) =
+    suspend fun updateVehicleApiCall(requestParam: VehicleResponse?) =
         apiService.updateVehicleApi(requestParam)
 
     suspend fun crossingHistoryApiCall(requestParam: CrossingHistoryRequest?) =
         apiService.getVehicleCrossingHistoryData(requestParam)
 
-    suspend fun downloadCrossingHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest) =
+    suspend fun downloadCrossingHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest?) =
         apiService.getDownloadTransactionListDataInFile(requestParam)
 
     suspend fun getVehicleListApiCall() = apiService.getVehicleData(startIndex = "1", count = "100")
 
-    suspend fun deleteVehicleListApiCall(deleteVehicleRequest: DeleteVehicleRequest) =
+    suspend fun deleteVehicleListApiCall(deleteVehicleRequest: DeleteVehicleRequest?) =
         apiService.deleteVehicle(deleteVehicleRequest)
 
     suspend fun getVehicleGroupListApiCall() =
@@ -34,10 +34,10 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun addVehicleGroupApiCall(requestParam: AddDeleteVehicleGroup?) =
         apiService.addVehicleGroup(requestParam)
 
-    suspend fun renameVehicleGroupApiCall(requestParam: RenameVehicleGroup) =
+    suspend fun renameVehicleGroupApiCall(requestParam: RenameVehicleGroup?) =
         apiService.renameVehicleGroup(requestParam)
 
-    suspend fun deleteVehicleGroupApiCall(requestParam: AddDeleteVehicleGroup) =
+    suspend fun deleteVehicleGroupApiCall(requestParam: AddDeleteVehicleGroup?) =
         apiService.deleteVehicleGroup(requestParam)
 
     suspend fun getVehicleListOfGroupApiCall(group: String) =
