@@ -88,6 +88,14 @@ android {
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
         }
+
+        qapublic{
+            envConfig = getProps("app/config/qapublicenv.properties")
+            applicationId envConfig.APPLICATION_ID.replace("\"", "")
+            versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
+            versionName envConfig.VERSION_NAME.replace("\"", "")
+
+        }
     }
 
     compileOptions {

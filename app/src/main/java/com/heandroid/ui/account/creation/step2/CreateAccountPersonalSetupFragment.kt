@@ -78,7 +78,7 @@ class CreateAccountPersonalSetupFragment : BaseFragment<FragmentCreateAccountPer
                         bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
                     }
 
-                    findNavController().navigate(R.id.action_personalTypeFragment_to_businssInfoFragment, bundle)
+                     findNavController().navigate(R.id.action_personalTypeFragment_to_businssInfoFragment, bundle)
 
                 } else {
                     showError(binding.root,getString(R.string.select_account_type))

@@ -34,7 +34,11 @@ ext {
         flavor = "dev"
     } else if (flavor.contains("tstg")) {
         flavor = "test"
+    }else if(flavor.contains("qapublic")){
+        flavor = "qapublicenv"
+
     }
+//        config = getProps('app/config/' + 'dev' + '.properties')
     config = getProps('app/config/' + flavor + '.properties')
 }
 
@@ -45,7 +49,7 @@ def getProps(path) {
 }
 
 def getCurrentFlavor() {
-    Gradle gradle = getGradle()
+Gradle gradle = getGradle()
     def pattern = Pattern.compile("([A-Z][A-Za-z]+)(Release|Debug)")
     def flavor = ""
 
