@@ -4,6 +4,7 @@ import com.heandroid.data.model.account.*
 import com.heandroid.data.model.accountpayment.TransactionData
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.data.model.auth.login.LoginResponse
+import com.heandroid.data.model.checkpaidcrossings.UsedTollTransactionResponse
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.data.model.makeoneofpayment.*
@@ -12,6 +13,18 @@ import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
 import com.heandroid.data.model.notification.AlertMessage
 
 object DataFile {
+
+    fun getUsedTollTransaction(id : String = "1234"): UsedTollTransactionResponse {
+        return UsedTollTransactionResponse(
+            id, "", "", "",
+            "", "", "","", "", "", "",
+            "", "", "","", "", "", "",
+            "", "", "","", "", "", "",
+            "", "", "","", "", "", "",
+            "", "", "","", "", "", "",
+            "", "", "","", ""
+        )
+    }
 
     fun getDataAddress(): DataAddress {
         return DataAddress(
