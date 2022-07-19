@@ -17,58 +17,36 @@ import dagger.hilt.android.AndroidEntryPoint
 class CheckPaidOptionsFragment : BaseFragment<FragmentUsedUnusedOptionsBinding>(),
     View.OnClickListener {
 
-    private val viewModel: CheckPaidCrossingViewModel by viewModels()
-
-    private var loader: LoaderDialog? = null
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentUsedUnusedOptionsBinding =
-        FragmentUsedUnusedOptionsBinding.inflate(inflater, container, false)
+    ) = FragmentUsedUnusedOptionsBinding.inflate(inflater, container, false)
 
-    override fun init() {
-
-
-    }
+    override fun init() {}
 
     override fun initCtrl() {
         binding.rlUnUsedCrossings.setOnClickListener(this)
         binding.rlUsedCrossings.setOnClickListener(this)
-
     }
 
-    override fun observer() {
-
-    }
-
+    override fun observer() {}
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.rl_un_used_crossings -> {
-
-                binding?.root?.post {
-                    findNavController().navigate(
-                        R.id.action_checkChargesOption_to_unUsedCharges,
-                        arguments
-                    )
-
-                }
-
+                findNavController().navigate(
+                    R.id.action_checkChargesOption_to_unUsedCharges,
+                    arguments
+                )
             }
             R.id.rl_used_crossings -> {
-
-                binding?.root?.post {
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, arguments)
-                    findNavController().navigate(
-                        R.id.action_checkChargesOption_to_usedCharges,
-                        bundle
-                    )
-                }
-
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, arguments)
+                findNavController().navigate(
+                    R.id.action_checkChargesOption_to_usedCharges,
+                    bundle
+                )
             }
         }
-
     }
 }

@@ -1,24 +1,14 @@
 package com.heandroid.ui.checkpaidcrossings
 
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.heandroid.R
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionModel
-import com.heandroid.data.model.auth.forgot.password.RequestOTPModel
-import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
-import com.heandroid.data.model.auth.forgot.password.ConfirmOptionResponseModel
-import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
-import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.data.model.checkpaidcrossings.*
-import com.heandroid.data.repository.auth.ForgotPasswordRepository
 import com.heandroid.data.repository.checkpaidcrossings.CheckPaidCrossingsRepo
-import com.heandroid.ui.base.BaseApplication
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
@@ -116,21 +106,6 @@ class CheckPaidCrossingViewModel @Inject constructor(
         }
     }
 
-
-    fun validation(model: CheckPaidCrossingsOptionsModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (TextUtils.isEmpty(model?.ref)) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.str_payment_ref_number_error_mess))
-        else if (TextUtils.isEmpty(model?.vrm)) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.str_please_enter_valid_vrm_number))
-        return ret
-    }
-    fun validationEnterVrm(model: EnterVrmOptionsModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (TextUtils.isEmpty(model?.vrm)) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.str_please_enter_valid_vrm_number))
-        return ret
-    }
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {

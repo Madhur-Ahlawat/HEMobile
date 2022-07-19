@@ -23,88 +23,83 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 @AndroidEntryPoint
-class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),View.OnClickListener {
+class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
+    View.OnClickListener {
 
     private val viewModel: CheckPaidCrossingViewModel by viewModels()
-
     private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentPaidCrossingCheckBinding =
-        FragmentPaidCrossingCheckBinding.inflate(inflater, container, false)
+    ) = FragmentPaidCrossingCheckBinding.inflate(inflater, container, false)
 
     override fun init() {
-
-        binding.model= CheckPaidCrossingsOptionsModel(ref = "", vrm = "",enable = false)
-        loader= LoaderDialog()
+        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
+        loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
     }
 
     override fun initCtrl() {
-
         binding.paymentRefNo.addTextChangedListener { isEnable() }
         binding.vrmNo.addTextChangedListener { isEnable() }
         binding.continueBtn.setOnClickListener(this)
-
     }
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.loginWithRefAndPlateNumber,::loginWithRefHeader)
+            observe(viewModel.loginWithRefAndPlateNumber, ::loginWithRefHeader)
         }
-
     }
 
-    private fun isEnable(){
-        if(binding.paymentRefNo.length()>0 && binding.vrmNo.length()>0) binding.model = CheckPaidCrossingsOptionsModel(enable = true, ref = binding.paymentRefNo.text.toString(), vrm = binding.vrmNo.text.toString())
-        else binding.model = CheckPaidCrossingsOptionsModel(enable = false, ref = binding.paymentRefNo.text.toString(), vrm = binding.vrmNo.text.toString())
+    private fun isEnable() {
+        if (binding.paymentRefNo.length() > 0 && binding.vrmNo.length() > 0) binding.model =
+            CheckPaidCrossingsOptionsModel(
+                enable = true,
+                ref = binding.paymentRefNo.text.toString(),
+                vrm = binding.vrmNo.text.toString()
+            )
+        else binding.model = CheckPaidCrossingsOptionsModel(
+            enable = false,
+            ref = binding.paymentRefNo.text.toString(),
+            vrm = binding.vrmNo.text.toString()
+        )
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.continue_btn -> {
                 hideKeyboard()
-                val validation=viewModel.validation(binding.model)
-                if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
-                    val checkPaidCrossingReq = CheckPaidCrossingsRequest(binding.model?.ref!!,binding.model?.vrm!!)
-                    viewModel.checkPaidCrossings(checkPaidCrossingReq)
-                }else{
-                    ErrorUtil.showError(binding.root, validation.second)
-                }
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                val checkPaidCrossingReq =
+                    CheckPaidCrossingsRequest(binding.model?.ref, binding.model?.vrm)
+                viewModel.checkPaidCrossings(checkPaidCrossingReq)
             }
         }
 
     }
 
     private fun loginWithRefHeader(status: Resource<CheckPaidCrossingsResponse?>?) {
-        try{
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    Logg.logging("CheckpaidCrossi","response ${status.data}")
-
-                        binding?.root?.post {
-                            val bundle = Bundle()
-                            bundle.putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
-                            bundle.putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
-                            findNavController().navigate(
-                                R.id.action_crossingCheck_to_checkChargesOption,
-                                bundle
-                            )
-
-                        }
-
+        }
+        when (status) {
+            is Resource.Success -> {
+                val bundle = Bundle().apply {
+                    putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
+                    putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
                 }
-                is Resource.DataError -> {
-                    Logg.logging("CheckpaidCrossi","error response ${status.errorMsg}")
-
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
-            }}catch (e: Exception){}
+                findNavController().navigate(
+                    R.id.action_crossingCheck_to_checkChargesOption,
+                    bundle
+                )
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 
