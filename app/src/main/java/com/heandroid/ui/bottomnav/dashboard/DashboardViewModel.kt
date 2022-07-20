@@ -43,7 +43,7 @@ class DashboardViewModel @Inject constructor(
     val accountOverviewVal: MutableLiveData<Resource<AccountResponse?>?> get() = _accountDetailsVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
+    private val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
     val thresholdAmountVal: MutableLiveData<Resource<ThresholdAmountApiResponse?>?> get() = _thresholdAmountVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

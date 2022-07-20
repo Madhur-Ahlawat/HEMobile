@@ -257,7 +257,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             }
 
             Constants.POST_CODE_ADDRESS -> {
-                Log.d("PostCode", accountModelRequesstModel?.postCode!!)
+                Log.d("PostCode", accountModelRequesstModel.postCode!!)
                 showCreatePasswordView()
             }
 
@@ -310,7 +310,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 //            } ?: AccountDetailsRequesstModel(enable = false)
 //        }
 
-        Log.d("ButtonEnable", accountModelRequesstModel.enable.toString());
+        Log.d("ButtonEnable", accountModelRequesstModel.enable.toString())
     }
 
 }

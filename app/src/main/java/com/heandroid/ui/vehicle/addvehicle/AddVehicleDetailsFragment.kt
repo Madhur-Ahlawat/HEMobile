@@ -31,7 +31,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     private var mScreeType = 0
     override fun init() {
         binding.model = false
-        mVehicleDetails = arguments?.getParcelable(Constants.DATA) as? VehicleResponse?
+        mVehicleDetails = arguments?.getParcelable(DATA) as? VehicleResponse?
 
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
@@ -76,7 +76,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                 val bundle = Bundle().apply {
 
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-                    putParcelable(Constants.DATA, mVehicleDetails)
+                    putParcelable(DATA, mVehicleDetails)
                 }
                 findNavController().navigate(R.id.addVehicleClassesFragment, bundle)
 

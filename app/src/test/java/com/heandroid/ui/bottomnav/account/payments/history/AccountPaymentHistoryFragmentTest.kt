@@ -150,7 +150,7 @@ class AccountPaymentHistoryFragmentTest {
             )
             onView(withId(R.id.paginationLayout)).check(matches(isDisplayed()))
             onView(withId(R.id.tvFilter)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+                .perform(click())
 
             val v1 = VehicleResponse(
                 PlateInfoResponse(),

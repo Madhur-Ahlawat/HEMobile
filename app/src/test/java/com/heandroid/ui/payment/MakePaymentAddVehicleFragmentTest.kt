@@ -28,8 +28,8 @@
 //import com.heandroid.data.model.vehicle.VehicleResponse
 //import com.heandroid.ui.loader.ErrorDialog
 //import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-//import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
-//import com.heandroid.ui.vehicle.addvehicle.AddVehicleVRMDialog
+//import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+//import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleVRMDialog
 //import com.heandroid.utils.BaseActions
 //import com.heandroid.utils.common.ConstantsTest
 //import com.heandroid.utils.common.Resource

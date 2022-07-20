@@ -16,10 +16,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import com.heandroid.R
 import com.heandroid.data.model.account.NonUKVehicleModel
-import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
 import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAddConfirmDialog
-import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
+import com.heandroid.ui.vehicle.addvehicle.dialog.VehicleAddConfirmDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest

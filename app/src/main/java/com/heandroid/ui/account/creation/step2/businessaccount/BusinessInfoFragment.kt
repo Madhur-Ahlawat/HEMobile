@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation.step2.businessaccount;
+package com.heandroid.ui.account.creation.step2.businessaccount
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.heandroid.databinding.FragmentBusinessInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.gone
-import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BusinessInfoFragment : BaseFragment<FragmentBusinessInfoBinding>(),

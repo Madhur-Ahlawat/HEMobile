@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.account.NonUKVehicleModel
-import com.heandroid.data.model.account.RetrievePlateInfoDetails
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.databinding.FragmentBusinessVehicleNonUkDetailsBinding
 import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
@@ -19,7 +18,7 @@ import com.heandroid.ui.account.creation.step4.businessaccount.dialog.AddBusines
 import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAddConfirmDialog
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.addvehicle.VehicleAddConfirmDialog
+import com.heandroid.ui.vehicle.addvehicle.dialog.VehicleAddConfirmDialog
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil

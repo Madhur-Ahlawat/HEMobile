@@ -68,7 +68,9 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
             loader?.dismiss()
             when (resource) {
                 is Resource.Success -> {
-                    if(resource.data?.statusCode?.equals("500")==true) { showError(binding.root,resource.data?.message)}
+                    if(resource.data?.statusCode?.equals("500")==true) { showError(binding.root,
+                        resource.data.message
+                    )}
                     else{
                         val bundle = Bundle()
                         binding.data?.referenceId = resource.data?.referenceId

@@ -122,7 +122,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
                     else {
                         val spannableString = if(defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType+"\n"+ defaultCardModel?.bankAccountNumber)
                         else SpannableString(defaultCardModel?.cardType+"\n"+ defaultCardModel?.cardNumber)
-                        spannableString?.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spannableString.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
                         binding.rbDefaultMethod.text = spannableString
                         binding.rbDefaultMethod.isChecked=true
@@ -146,7 +146,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(), 
             when(status){
                 is Resource.Success ->{
                     if(status.data?.statusCode?.equals("500")==true){
-                        showError(binding.root,status.data?.message)
+                        showError(binding.root, status.data.message)
                     }else {
                         val bundle= Bundle()
                         bundle.putParcelable(Constants.DATA,status.data)

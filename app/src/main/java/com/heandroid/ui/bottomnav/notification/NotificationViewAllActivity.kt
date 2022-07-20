@@ -7,15 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.notification.AlertMessage
 import com.heandroid.databinding.ActivityViewallNotificationBinding
-import com.heandroid.listener.NotificationItemClick
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.bottomnav.notification.adapter.NotificationViewAllAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ViewWithFragmentComponent
 import javax.inject.Inject
 
 @AndroidEntryPoint

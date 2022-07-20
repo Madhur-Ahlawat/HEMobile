@@ -7,6 +7,7 @@ import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.heandroid.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.heandroid.data.model.accountpayment.TransactionList
+import com.heandroid.data.repository.paymenthistory.AccountPaymentHistoryRepo
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import com.heandroid.utils.data.DataFile
 import dagger.hilt.android.testing.HiltAndroidRule

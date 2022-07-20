@@ -25,8 +25,8 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryAdapter
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil

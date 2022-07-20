@@ -11,11 +11,10 @@ import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.ui.auth.forgot.email.ForgotEmailFragment
 import com.heandroid.ui.auth.forgot.password.ForgotPasswordFragment
-import com.heandroid.ui.auth.login.LoginFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import launchFragmentInHiltContainer
+import com.heandroid.hiltTesting.launchFragmentInHiltContainer
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -2,7 +2,6 @@ package com.heandroid.ui.vehicle.addvehicle
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -18,8 +17,8 @@ import com.heandroid.databinding.FragmentAddVehicleDoneBinding
 import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
-import com.heandroid.ui.vehicle.vehiclelist.VehicleListAdapter
+import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener
+import com.heandroid.ui.vehicle.vehiclelist.adapter.VehicleListAdapter
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
@@ -93,7 +92,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     private fun getVehicleDataFromDVRM() {
         Logg.logging(
             "Testing",
-            "AddVehicleDoneFragment getVehicleDataFromDVRM mVehicleDetails ${mVehicleDetails}"
+            "AddVehicleDoneFragment getVehicleDataFromDVRM mVehicleDetails $mVehicleDetails"
         )
         val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
 
@@ -111,7 +110,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
             Logg.logging(
                 "Testing",
-                "AddVehicleDoneFragment mRetrievePlateInfoDetails ${mRetrievePlateInfoDetails}"
+                "AddVehicleDoneFragment mRetrievePlateInfoDetails $mRetrievePlateInfoDetails"
             )
             val it = VehicleInfoDetails(mRetrievePlateInfoDetails)
             setAdapter(it)
@@ -178,8 +177,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 "",
                 "",
                 details.retrievePlateInfoDetails!!.vehicleColor ?: "",
-                VehicleClassTypeConverter.toClassName(details.retrievePlateInfoDetails!!.vehicleClass!!)
-                    ?: "",
+                VehicleClassTypeConverter.toClassName(details.retrievePlateInfoDetails!!.vehicleClass!!),
                 mVehicleDetails?.vehicleInfo?.effectiveStartDate ?: ""
             )
 
@@ -205,8 +203,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 "",
                 "",
                 mVehicleDetails?.vehicleInfo?.color ?: "",
-                VehicleClassTypeConverter.toClassName(mVehicleDetails?.vehicleInfo?.vehicleClassDesc!!)
-                    ?: "",
+                VehicleClassTypeConverter.toClassName(mVehicleDetails?.vehicleInfo?.vehicleClassDesc!!),
                 mVehicleDetails?.vehicleInfo?.effectiveStartDate ?: ""
             )
 

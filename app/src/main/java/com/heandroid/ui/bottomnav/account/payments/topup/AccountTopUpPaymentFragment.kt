@@ -70,16 +70,16 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                                     if(thresholdAmountVo?.suggestedAmount!!.isEmpty())
                                         customerAmount.text = "50.00"
                                     else
-                                        customerAmount.text = thresholdAmountVo?.suggestedAmount
+                                        customerAmount.text = thresholdAmountVo.suggestedAmount
 
 
-                                    if(thresholdAmountVo?.suggestedThresholdAmount!!.isEmpty())
+                                    if(thresholdAmountVo.suggestedThresholdAmount!!.isEmpty())
                                         suggestedThresholdAmount.text = "15.00"
                                     else
-                                        suggestedThresholdAmount.text = thresholdAmountVo?.suggestedThresholdAmount
+                                        suggestedThresholdAmount.text = thresholdAmountVo.suggestedThresholdAmount
 
-                                    topUpMyAccount.setText(thresholdAmountVo?.customerAmount)
-                                    topUpFallsAmount.setText(thresholdAmountVo?.thresholdAmount)
+                                    topUpMyAccount.setText(thresholdAmountVo.customerAmount)
+                                    topUpFallsAmount.setText(thresholdAmountVo.thresholdAmount)
                                 }
 
                             }

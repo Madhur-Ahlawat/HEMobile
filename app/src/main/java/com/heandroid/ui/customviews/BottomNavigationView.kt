@@ -131,7 +131,7 @@ class BottomNavigationView @JvmOverloads constructor(
     /**
      * For setting OnNavigationItemChangeListener
      */
-    public fun setOnNavigationItemChangedListener(listener: OnNavigationItemChangeListener) {
+    fun setOnNavigationItemChangedListener(listener: OnNavigationItemChangeListener) {
         this.itemChangeListener = listener
     }
 
@@ -190,7 +190,7 @@ class BottomNavigationView @JvmOverloads constructor(
             addListener(item)
 
             // Add navigation item to view.
-            val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
+            val params = LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
             params.weight = 1f
             params.gravity = Gravity.CENTER
             this.addView(navigationItemView, params)
@@ -254,7 +254,7 @@ class BottomNavigationView @JvmOverloads constructor(
         selectedNavigationItem.imageView.setColorFilter(params.passiveColor)
 
         // Play click sound
-        if (withClickSound) navigationItem.view.playSoundEffect(android.view.SoundEffectConstants.CLICK)
+        if (withClickSound) navigationItem.view.playSoundEffect(SoundEffectConstants.CLICK)
 
         // Update selected position
         selectedPosition = navigationItem.position

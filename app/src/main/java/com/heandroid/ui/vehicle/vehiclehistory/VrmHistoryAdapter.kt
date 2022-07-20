@@ -7,7 +7,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
+import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener
 
 class VrmHistoryAdapter(private val onItemClick: ItemClickListener) :
     RecyclerView.Adapter<VrmHistoryAdapter.VrmHeaderViewHolder>() {

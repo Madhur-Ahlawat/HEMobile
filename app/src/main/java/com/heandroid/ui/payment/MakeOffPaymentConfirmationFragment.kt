@@ -16,6 +16,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentConfirmationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.payment.adapter.MakeOffPaymentVehicleAdapter
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -30,17 +31,16 @@ class MakeOffPaymentConfirmationFragment :
     private var list: MutableList<VehicleResponse> = ArrayList()
     private var mEmail = ""
     private var mModel: CardResponseModel? = null
-
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var number = ""
+    private var mail = ""
     private var mOptionsType = ""
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentMakeOffPaymentConfirmationBinding =
-        FragmentMakeOffPaymentConfirmationBinding.inflate(inflater, container, false)
+    ) = FragmentMakeOffPaymentConfirmationBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
@@ -49,10 +49,16 @@ class MakeOffPaymentConfirmationFragment :
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
+        if (arguments?.containsKey(Constants.EMAIL) == true) {
+            mEmail = arguments?.getString(Constants.EMAIL).toString()
+        }
+        if (arguments?.containsKey(Constants.OPTIONS_TYPE) == true) {
+            mOptionsType = arguments?.getString(Constants.OPTIONS_TYPE).toString()
+        }
+        if (arguments?.containsKey(Constants.DATA) == true) {
+            list = arguments?.getParcelableArrayList(Constants.DATA)!!
+        }
 
-        mEmail = arguments?.getString(Constants.EMAIL)!!
-        mOptionsType = arguments?.getString(Constants.OPTIONS_TYPE)!!
-        list = arguments?.getParcelableArrayList<VehicleResponse>(Constants.DATA)!!
         mModel = arguments?.getParcelable(Constants.PAYMENT_DATA)
         binding.rvVechileList.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvVechileList.adapter = MakeOffPaymentVehicleAdapter(requireActivity(), list, this)
@@ -71,16 +77,11 @@ class MakeOffPaymentConfirmationFragment :
     }
 
     private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
-
+        loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    loader?.dismiss()
-                    it?.let {
-                        Logg.logging(
-                            "testing",
-                            " MakeOffPaymentConfirmationFragment success it  $it"
-                        )
+                    it.let {
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
                         mBundle.putString(Constants.EMAIL, mEmail)
@@ -98,17 +99,11 @@ class MakeOffPaymentConfirmationFragment :
                 }
             }
             is Resource.DataError -> {
-                Logg.logging("testing", " MakeOffPaymentConfirmationFragment error called")
-
-                loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
         }
 
     }
-
-    private var number =""
-    private var mail = ""
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -116,39 +111,39 @@ class MakeOffPaymentConfirmationFragment :
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                 val vehicleList = VehicleList(
-                    list[0].newPlateInfo!!.number!!,
-                    list[0].vehicleInfo!!.make!!,
-                    list[0].vehicleInfo!!.model!!,
-                    list[0].vehicleInfo?.vehicleClassDesc!!,
-                    list[0].newPlateInfo!!.country!!,
-                    list[0].pendingDues!!.toString(),
+                    list[0].newPlateInfo?.number,
+                    list[0].vehicleInfo?.make,
+                    list[0].vehicleInfo?.model,
+                    list[0].vehicleInfo?.vehicleClassDesc,
+                    list[0].newPlateInfo?.country,
+                    list[0].pendingDues.toString(),
                     list[0].futureQuantity.toString(),
-                    (list[0].futureQuantity!!.toDouble()
-                        .times(list[0].classRate!!.toDouble())).toString(),
-                    list[0].vehicleInfo!!.color!!,
+                    (list[0].classRate?.let {
+                        list[0].futureQuantity?.toDouble()
+                            ?.times(it)
+                    }).toString(),
+                    list[0].vehicleInfo?.color,
                     list[0].classRate.toString(),
-                    list[0].vehicleInfo?.vehicleClassDesc!!,
+                    list[0].vehicleInfo?.vehicleClassDesc,
                     list[0].classRate.toString(),
                     "",
                     list[0].pastQuantity.toString(),
                     list[0].classRate.toString()
                 )
 
-                if(mOptionsType.equals("Email",true)){
+                if (mOptionsType.equals("Email", true)) {
                     mail = mEmail
-
-                }
-                else{
+                } else {
                     number = mEmail
                 }
                 val paymentTypeInfo = PaymentTypeInfo(
-                    mModel!!.card?.type!!.uppercase(Locale.ROOT),
-                    mModel!!.card?.number!!,
-                    mModel!!.token!!,
-                    mModel!!.card?.exp?.subSequence(0, 2).toString(),
-                    "20${mModel!!.card?.exp?.subSequence(2, 4)}",
+                    mModel?.card?.type?.uppercase(Locale.ROOT),
+                    mModel?.card?.number,
+                    mModel?.token,
+                    mModel?.card?.exp?.subSequence(0, 2).toString(),
+                    "20${mModel?.card?.exp?.subSequence(2, 4)}",
                     list[0].price.toString(),
-                    mModel!!.check?.name!!,
+                    mModel?.check?.name,
                     "",
                     mail,
                     number, "", "", "", "", "", "", ""
@@ -158,12 +153,7 @@ class MakeOffPaymentConfirmationFragment :
                 mVehicleList.add(vehicleList)
                 val ftVehicleList = FtVehicleList(mVehicleList)
                 val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
-
-                Logg.logging(
-                    "testing",
-                    " MakeOffPaymentConfirmationFragment onPay oneOfPayModelReq  $oneOfPayModelReq"
-                )
-                  viewModel.oneOfPaymentsPay(oneOfPayModelReq)
+                viewModel.oneOfPaymentsPay(oneOfPayModelReq)
             }
         }
     }

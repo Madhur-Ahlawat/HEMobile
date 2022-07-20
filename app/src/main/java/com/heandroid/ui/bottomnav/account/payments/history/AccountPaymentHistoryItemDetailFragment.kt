@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.accountpayment.TransactionData
@@ -18,7 +17,6 @@ import com.heandroid.databinding.AccountPaymentHistoryItemDetailBinding
 import com.heandroid.databinding.DownloadAccountPaymentHistoryPdfBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.Constants

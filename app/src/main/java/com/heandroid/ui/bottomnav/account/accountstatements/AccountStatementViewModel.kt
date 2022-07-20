@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.heandroid.data.error.errorUsecase.ErrorManager
-import com.heandroid.data.model.account.AccountStatementResponse
 import com.heandroid.data.model.account.StatementListModel
+import com.heandroid.data.repository.account.AccountStatementRepo
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel

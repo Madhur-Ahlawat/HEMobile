@@ -71,7 +71,7 @@ class NominatedContactsAdapter(
             val accList = secAccountList?.get(position)
             Logg.logging("NominatedContactsAdapter", "accList?.isExpanded ${accList?.isExpanded}")
          accList?.isExpanded = !accList?.isExpanded!!
-            listener.onItemClick("open", accList!!, position, accList.isExpanded)
+            listener.onItemClick("open", accList, position, accList.isExpanded)
 
             secAccountList?.get(position)?.isExpanded = accList.isExpanded
             notifyItemChanged(position)

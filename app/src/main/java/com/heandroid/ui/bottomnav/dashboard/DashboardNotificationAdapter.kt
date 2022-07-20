@@ -1,16 +1,13 @@
 package com.heandroid.ui.bottomnav.dashboard
 
 import android.content.Context
-import android.graphics.Typeface
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.data.model.notification.AlertMessage
-import com.heandroid.databinding.AdapterNotificationBinding
 import com.heandroid.databinding.DashboardNotificationItemLayoutBinding
-import com.heandroid.ui.bottomnav.notification.NotificationAdapter
 
 class DashboardNotificationAdapter  (private val context: Context, private val list: List<AlertMessage?>?) : RecyclerView.Adapter<DashboardNotificationAdapter.DashboardNotificationViewHolder>() {
 

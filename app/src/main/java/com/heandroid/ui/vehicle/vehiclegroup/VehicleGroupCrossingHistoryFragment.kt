@@ -2,8 +2,6 @@ package com.heandroid.ui.vehicle.vehiclegroup
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,23 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.vehicle.DateRangeModel
-import com.heandroid.databinding.FragmentCrossingHistoryBinding
 import com.heandroid.databinding.FragmentVehicleGroupCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryPaginationAdapter
+import com.heandroid.ui.bottomnav.account.payments.history.adapter.AccountPaymentHistoryPaginationAdapter
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryFilterDialog
-import com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryFilterDialogListener
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
-import com.heandroid.utils.DateUtils
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
+import com.heandroid.ui.vehicle.vehiclegroup.adapter.VehicleGroupCrossingHistoryAdapter
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.StorageHelper.checkStoragePermissions
 import com.heandroid.utils.StorageHelper.requestStoragePermission

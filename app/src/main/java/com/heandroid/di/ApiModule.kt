@@ -6,7 +6,6 @@ import com.heandroid.data.remote.ApiService
 import com.heandroid.data.remote.HeaderInterceptor
 import com.heandroid.data.remote.NetworkConnectionInterceptor
 import com.heandroid.data.remote.NullOnEmptyConverterFactory
-import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -17,7 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -49,15 +47,15 @@ object ApiModule {
         headerInterceptor: HeaderInterceptor,
         networkConnectionInterceptor: NetworkConnectionInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .addInterceptor(headerInterceptor)
+        val builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) builder.addInterceptor(logging)
+        builder.addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
             .callTimeout(25, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
 //            .readTimeout(10, TimeUnit.SECONDS)
 //            .writeTimeout(10, TimeUnit.SECONDS)
-            .build()
+        return builder.build()
     }
 
     @Provides

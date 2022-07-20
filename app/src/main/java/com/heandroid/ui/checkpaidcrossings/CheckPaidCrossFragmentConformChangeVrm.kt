@@ -88,7 +88,7 @@ class CheckPaidCrossFragmentConformChangeVrm :
                     ""
                 )
                 val mBalRequest =
-                    BalanceTransferRequest(mDataVrmRef.vrm!!,mData?.plateCountry!! , mTransferInfo)
+                    BalanceTransferRequest(mDataVrmRef.vrm!!, mData.plateCountry!! , mTransferInfo)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                 viewModel.balanceTransfer(mBalRequest)
@@ -104,7 +104,7 @@ class CheckPaidCrossFragmentConformChangeVrm :
                 is Resource.Success -> {
                     Logg.logging("CheckpaidCrossi", "response ${status.data}")
 
-                    binding?.root?.post {
+                    binding.root.post {
                         findNavController().navigate(
                             R.id.action_checkPaidCrossingChangeVrmConform_to_checkPaidCrossingChangeVrmConformSuccess,
                             arguments

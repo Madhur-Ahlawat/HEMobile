@@ -177,7 +177,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                             showError(binding.root,message)
                         }
                         else {
-                            var data=status.data.personalInformation
+                            val data=status.data.personalInformation
                             cardModel?.run {
                                 city=data?.city
                                 addressline1=data?.addressLine1

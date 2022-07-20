@@ -25,19 +25,23 @@ import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
+
 @AndroidEntryPoint
-class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProfileConfirmEmailBinding>(), View.OnClickListener {
+class NominatedProfileConfirmEmailFragment :
+    BaseFragment<FragmentNominatedProfileConfirmEmailBinding>(), View.OnClickListener {
 
     private var loader: LoaderDialog? = null
 
     private val viewModel: ProfileViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentNominatedProfileConfirmEmailBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentNominatedProfileConfirmEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
         requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.nominated = arguments?.getParcelable(Constants.DATA)
-        binding.tvMsg.text = getString(R.string.send_security_code_msg, binding.nominated?.emailAddress)
+        binding.tvMsg.text =
+            getString(R.string.send_security_code_msg, binding.nominated?.emailAddress)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -45,7 +49,10 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
     override fun initCtrl() {
         binding.apply {
             enable = false
-            etCode.onTextChanged { enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString().trim().length>5 }
+            etCode.onTextChanged {
+                enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString()
+                    .trim().length > 5
+            }
             btnAction.setOnClickListener(this@NominatedProfileConfirmEmailFragment)
             tvResend.setOnClickListener(this@NominatedProfileConfirmEmailFragment)
         }
@@ -59,43 +66,44 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                binding?.nominated?.run {
-                   var request =  ProfileUpdateEmailModel(
-                       referenceId="",
-                     securityCode =securityCode,
-                     addressLine1 ="",
-                     addressLine2="",
-                     city="",
-                     country="",
-                     emailAddress=emailAddress,
-                     phoneCell="",
-                     phoneDay="",
-                     phoneEvening="",
-                     phoneFax="",
-                     primaryEmailStatus="",
-                     primaryEmailUniqueID="",
-                     smsOption="",
-                     state="",
-                     zipCode="",
-                     zipCodePlus =""
+            R.id.btnAction -> {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                binding.nominated?.run {
+                    val request = ProfileUpdateEmailModel(
+                        referenceId = "",
+                        securityCode = securityCode,
+                        addressLine1 = "",
+                        addressLine2 = "",
+                        city = "",
+                        country = "",
+                        emailAddress = emailAddress,
+                        phoneCell = "",
+                        phoneDay = "",
+                        phoneEvening = "",
+                        phoneFax = "",
+                        primaryEmailStatus = "",
+                        primaryEmailUniqueID = "",
+                        smsOption = "",
+                        state = "",
+                        zipCode = "",
+                        zipCodePlus = ""
                     )
                     viewModel.emailValidationForUpdatation(request)
                 }
 
             }
 
-            R.id.tvResend ->{
-                binding.nominated?.referenceId=""
+            R.id.tvResend -> {
+                binding.nominated?.referenceId = ""
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.nominated?.emailAddress?:"")
+                val request = EmailVerificationRequest(
+                    Constants.EMAIL_SELECTION_TYPE,
+                    binding.nominated?.emailAddress ?: ""
+                )
                 viewModel.emailVerificationApi(request)
             }
         }
     }
-
-
-
 
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
@@ -103,18 +111,18 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
             loader?.dismiss()
             when (resource) {
                 is Resource.Success -> {
-                    if(resource.data?.statusCode.equals("500")) {
+                    if (resource.data?.statusCode.equals("500")) {
                         ErrorUtil.showError(binding.root, resource.data?.message)
-                    }
-                    else {
-                        binding.nominated?.referenceId=resource.data?.referenceId
+                    } else {
+                        binding.nominated?.referenceId = resource.data?.referenceId
                     }
                 }
                 is Resource.DataError -> {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
-        } catch (e: Exception) { }
+        } catch (e: Exception) {
+        }
     }
 
 
@@ -123,19 +131,22 @@ class NominatedProfileConfirmEmailFragment  : BaseFragment<FragmentNominatedProf
             loader?.dismiss()
             when (resource) {
                 is Resource.Success -> {
-                    if(resource.data?.statusCode.equals("500")) {
+                    if (resource.data?.statusCode.equals("500")) {
                         ErrorUtil.showError(binding.root, resource.data?.message)
-                    }
-                    else {
-                        val bundle= Bundle()
-                        bundle.putParcelable(Constants.DATA,binding.nominated)
-                        findNavController().navigate(R.id.action_confirmEmailFragment_to_emailUpdatedFragment,bundle)
+                    } else {
+                        val bundle = Bundle()
+                        bundle.putParcelable(Constants.DATA, binding.nominated)
+                        findNavController().navigate(
+                            R.id.action_confirmEmailFragment_to_emailUpdatedFragment,
+                            bundle
+                        )
                     }
                 }
                 is Resource.DataError -> {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
-        } catch (e: Exception) { }
+        } catch (e: Exception) {
+        }
     }
 }

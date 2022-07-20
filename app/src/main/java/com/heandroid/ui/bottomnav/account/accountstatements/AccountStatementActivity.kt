@@ -58,7 +58,7 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
                         for (element in statementList.indices) {
                             periodList.add(statementList[element]?.period.toString())
 
-                            var statementDate = statementList[element]?.statementDate
+                            val statementDate = statementList[element]?.statementDate
 
                             val sdf = SimpleDateFormat("dd/MM/yyyy")
                             val date = sdf.parse(statementDate)

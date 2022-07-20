@@ -33,9 +33,9 @@ object BaseActions {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {
                 return CoreMatchers.anyOf(
-                    ViewMatchers.isDisplayed(),
-                    ViewMatchers.isClickable(),
-                    ViewMatchers.isEnabled()
+                    isDisplayed(),
+                    isClickable(),
+                    isEnabled()
                 )
             }
 
@@ -121,7 +121,7 @@ object BaseActions {
 
     fun clickOnViewChild(viewId: Int) = object : ViewAction {
         override fun getConstraints(): Matcher<View> {
-            return CoreMatchers.allOf(ViewMatchers.isClickable(), ViewMatchers.isDisplayed())
+            return allOf(isClickable(), isDisplayed())
         }
 
         override fun getDescription() = "Click on a child view with specified id."
@@ -132,7 +132,7 @@ object BaseActions {
     fun waitFor(millis: Long): ViewAction {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {
-                return ViewMatchers.isRoot()
+                return isRoot()
             }
 
             override fun getDescription(): String {
@@ -167,7 +167,7 @@ object BaseActions {
     class NestedScrollToAction : ViewAction {
         override fun getConstraints(): Matcher<View?>? {
             return allOf(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), isDescendantOfA(
+                withEffectiveVisibility(Visibility.VISIBLE), isDescendantOfA(
                     anyOf(
                         isAssignableFrom(ScrollView::class.java),
                         isAssignableFrom(HorizontalScrollView::class.java),
@@ -180,7 +180,7 @@ object BaseActions {
         }
 
         override fun perform(uiController: UiController, view: View) {
-            if (ViewMatchers.isDisplayingAtLeast(90).matches(view)) {
+            if (isDisplayingAtLeast(90).matches(view)) {
                 Log.i(TAG, "View is already displayed. Returning.")
                 return
             }
@@ -190,7 +190,7 @@ object BaseActions {
                 Log.w(TAG, "Scrolling to view was requested, but none of the parents scrolled.")
             }
             uiController.loopMainThreadUntilIdle()
-            if (!ViewMatchers.isDisplayingAtLeast(90).matches(view)) {
+            if (!isDisplayingAtLeast(90).matches(view)) {
                 throw PerformException.Builder()
                     .withActionDescription(this.description)
                     .withViewDescription(HumanReadables.describe(view))

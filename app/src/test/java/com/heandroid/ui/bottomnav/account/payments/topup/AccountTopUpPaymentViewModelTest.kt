@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.accountpayment.AccountGetThresholdResponse
 import com.heandroid.data.model.accountpayment.ThresholdAmountValue
-import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryRepo
+import com.heandroid.data.repository.paymenthistory.AccountPaymentHistoryRepo
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

@@ -15,6 +15,8 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentMakeOffPaymentCrossingBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.payment.adapter.FutureCrossingQuantityListner
+import com.heandroid.ui.payment.adapter.MakeOffPaymentCrossingAdapter
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint

@@ -14,8 +14,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.data.model.notification.AlertMessage
 import com.heandroid.data.model.notification.AlertMessageApiResponse
+import com.heandroid.data.model.notification.NotificationModel
 import com.heandroid.listener.FilterDialogListener
 import com.heandroid.listener.NotificationItemClick
+import com.heandroid.ui.bottomnav.notification.adapter.NotificationSectionAdapter
+import com.heandroid.ui.bottomnav.notification.adapter.NotificationTypeAdapter
+import com.heandroid.ui.bottomnav.notification.dialog.FilterDialog
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
@@ -26,7 +30,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private val TAG = "NotificationFragment"
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -101,12 +104,13 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
 
-    private fun handleVisibility(){
+    private fun handleVisibility() {
         binding.clearSelectAllLyt.gone()
         binding.clearFilterLyt.visible()
         binding.filterTxt.gone()
 
     }
+
     private var mTotalList = ArrayList<NotificationModel>()
 
     override fun initCtrl() {
@@ -136,14 +140,14 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     private fun setNotificationAlert(messageList: List<AlertMessage?>?) {
 
-        val hashmap: MutableMap<String?, List<AlertMessage?>?>? = HashMap()
+        val hashmap: MutableMap<String?, List<AlertMessage?>?> = HashMap()
 
         for (element in messageList!!) {
             if (hashmap?.keys?.contains(element?.category) == true) {
-                var list: MutableList<AlertMessage?>? = ArrayList<AlertMessage?>()
-                list?.addAll(hashmap?.get(element?.category)!!)
-                list?.add(element)
-                hashmap?.put(element?.category, list)
+                val list: MutableList<AlertMessage?> = ArrayList()
+                hashmap[element?.category]?.let { list.addAll(it) }
+                list.add(element)
+                hashmap[element?.category] = list
             } else {
                 hashmap?.put(element?.category, listOf(element))
             }
@@ -173,7 +177,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun onCancelClickedListener() {
     }
 
-    private fun setStandardNotifications(){
+    private fun setStandardNotifications() {
 
         val notificationList = ArrayList<NotificationModel>()
 
@@ -221,6 +225,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
 
     }
+
     private fun setPriorityNotifications() {
 
         val notificationList = ArrayList<NotificationModel>()

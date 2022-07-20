@@ -2,27 +2,22 @@ package com.heandroid.ui.payment
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.LargeTest
-import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.heandroid.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.heandroid.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.heandroid.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
-import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.data.repository.makeoneofpayments.MakeOneOfPaymentRepo
-import com.heandroid.data.repository.profile.ProfileRepository
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import com.heandroid.utils.data.DataFile
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -68,7 +63,7 @@ class MakeOneOfPaymentViewModelTest {
     private val crossingDetailsRequest = CrossingDetailsModelsRequest(
         "", "", "", "", ""
     )
-    private val PaymentReceiptRequest = PaymentReceiptDeliveryTypeSelectionRequest(
+    private val paymentReceiptRequest = PaymentReceiptDeliveryTypeSelectionRequest(
         "", ""
     )
 
@@ -189,10 +184,10 @@ class MakeOneOfPaymentViewModelTest {
             Mockito.lenient().`when`(whereToReceivePaymentResponse.code()).thenReturn(200)
             val resp = Mockito.mock(ResponseBody::class.java)
             Mockito.lenient().`when`(whereToReceivePaymentResponse.body()).thenReturn(resp)
-            Mockito.`when`(repository.whereToReceivePaymentReceipt(PaymentReceiptRequest))
+            Mockito.`when`(repository.whereToReceivePaymentReceipt(paymentReceiptRequest))
                 .thenReturn(whereToReceivePaymentResponse)
             makeOneOfPaymentViewModel?.let {
-                it.whereToReceivePaymentReceipt(PaymentReceiptRequest)
+                it.whereToReceivePaymentReceipt(paymentReceiptRequest)
                 assertEquals(
                     resp, it.whereToReceivePaymentReceipt.value?.data
                 )
@@ -218,10 +213,10 @@ class MakeOneOfPaymentViewModelTest {
             Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
             Mockito.lenient().`when`(whereToReceivePaymentResponse.errorBody())
                 .thenReturn(responseBody)
-            Mockito.`when`(repository.whereToReceivePaymentReceipt(PaymentReceiptRequest))
+            Mockito.`when`(repository.whereToReceivePaymentReceipt(paymentReceiptRequest))
                 .thenReturn(whereToReceivePaymentResponse)
             makeOneOfPaymentViewModel?.let {
-                it.whereToReceivePaymentReceipt(PaymentReceiptRequest)
+                it.whereToReceivePaymentReceipt(paymentReceiptRequest)
                 assertEquals(
                     null, it.whereToReceivePaymentReceipt.value?.data
                 )

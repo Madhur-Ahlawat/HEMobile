@@ -2,7 +2,6 @@ package com.heandroid.ui.bottomnav.account.payments.history
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +18,8 @@ import com.heandroid.data.model.crossingHistory.TransactionHistoryDownloadReques
 import com.heandroid.data.model.payment.PaymentDateRangeModel
 import com.heandroid.databinding.FragmentAccountPaymentHistoryBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFilterDialogListener
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
@@ -38,6 +37,9 @@ import okhttp3.ResponseBody
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.ui.bottomnav.account.payments.history.adapter.AccountPaymentHistoryAdapter
+import com.heandroid.ui.bottomnav.account.payments.history.adapter.AccountPaymentHistoryPaginationAdapter
+import com.heandroid.ui.bottomnav.account.payments.history.adapter.FilterVehicleNamesAdapter
 import com.heandroid.utils.DatePicker
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.onTextChanged

@@ -47,7 +47,7 @@ class ForgotPasswordViewModel @Inject constructor(
                 val response = repository.confirmOptionForForgot(model)
                 if (response?.isSuccessful == true) {
                     val serverToken =
-                        response?.headers()?.get("Authorization")?.split("Bearer ")?.get(1)
+                        response.headers()["Authorization"]?.split("Bearer ")?.get(1)
                     sessionManager.saveAuthToken(serverToken ?: "")
                     _confirmOption.postValue(Resource.Success(response.body()))
                 } else {
