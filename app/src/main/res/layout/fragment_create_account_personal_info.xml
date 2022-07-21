@@ -296,6 +296,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="10dp"
+                            android:visibility="gone"
                             android:hint="@string/company_reg_number"
                             app:boxStrokeColor="@color/color_00703C"
                             app:endIconDrawable="@drawable/ic_screenshot__121__2"

@@ -32,66 +32,90 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcodeBinding>(), View.OnClickListener {
+class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcodeBinding>(),
+    View.OnClickListener {
 
     private var loader: LoaderDialog? = null
-    private var isEditAccountType : Int? = null
+    private var isEditAccountType: Int? = null
 
-    private val viewModel : CreateAccountPostCodeViewModel by viewModels()
-    private var model : CreateAccountRequestModel? =null
+    private val viewModel: CreateAccountPostCodeViewModel by viewModels()
+    private var model: CreateAccountRequestModel? = null
 
-    private var addressList : MutableList<String> = ArrayList()
-    private var mainList : MutableList<DataAddress?> = ArrayList()
+    private var addressList: MutableList<String> = ArrayList()
+    private var mainList: MutableList<DataAddress?> = ArrayList()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentCreateAccountPostcodeBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentCreateAccountPostcodeBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.enable=false
-        model=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        binding.enable = false
+        model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
-            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+            isEditAccountType =
+                arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
-        binding.tvStep.text= getString(R.string.str_step_f_of_l,3,5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
 
         accountType()
 
-        when(model?.planType){
-            PAYG ->{
-                binding.switchViewBusiness.gone()
-                binding.tvLabel.text=getString(R.string.pay_as_you_go)  }
+        when (model?.planType) {
+            PAYG -> {
+               // binding.switchViewBusiness.gone()
+                binding.tvLabel.text = getString(R.string.pay_as_you_go)
+            }
             BUSINESS_ACCOUNT -> {
-                binding.switchViewBusiness.visible()
-                binding.tvLabel.text=getString(R.string.business_prepay_account) }
-            else ->{
-                binding.switchViewBusiness.gone()
-                binding.tvLabel.text=getString(R.string.personal_pre_pay_account) }
+               // binding.switchViewBusiness.visible()
+                binding.tvLabel.text = getString(R.string.business_prepay_account)
+            }
+            else -> {
+               // binding.switchViewBusiness.gone()
+                binding.tvLabel.text = getString(R.string.personal_pre_pay_account)
+            }
         }
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     private fun accountType() {
-        when(model?.accountType){
-            BUSINESS_ACCOUNT -> { model?.planType = BUSINESS_ACCOUNT }
+        when (model?.accountType) {
+            BUSINESS_ACCOUNT -> {
+                model?.planType = BUSINESS_ACCOUNT
+            }
         }
     }
 
     override fun initCtrl() {
+
         binding.apply {
+            tilNonUkPostCode.gone()
+            tilCountry.gone()
+
+            switchViewBusiness.setOnCheckedChangeListener { _, isChecked ->
+
+                if (isChecked) {
+                    tilNonUkPostCode.gone()
+                    tilCountry.gone()
+                } else {
+                    tilNonUkPostCode.visible()
+                    tilCountry.visible()
+                }
+
+            }
+
             btnFindAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
             btnAction.setOnClickListener(this@CreateAccountPostCodeFragment)
             tvChange.setOnClickListener(this@CreateAccountPostCodeFragment)
             tieAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
         }
     }
+
     override fun observer() {
-        observe(viewModel.addresses,::handleAddressApiResponse)
+        observe(viewModel.addresses, ::handleAddressApiResponse)
     }
 
     override fun onClick(v: View?) {
         hideKeyboard()
-        when(v?.id) {
+        when (v?.id) {
 
             R.id.btnAction -> {
 
@@ -101,7 +125,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                     }
                     isEditAccountType?.let {
-                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                        bundle.putInt(
+                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                        )
                     }
                     findNavController().navigate(
                         R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
@@ -121,7 +148,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     val bundle = Bundle().apply {
                         putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
                         isEditAccountType?.let {
-                            putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                            putInt(
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                            )
                         }
                     }
                     findNavController().navigate(
@@ -131,14 +161,19 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 }
             }
             R.id.btnFindAddress -> {
-                if(binding.tiePostCode.length()>0) {
-                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+                if (binding.tiePostCode.length() > 0) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.fetchAddress(binding.tiePostCode.text.toString())
+                } else {
+                    showError(binding.root, getString(R.string.please_enter_postcode))
                 }
-                else { showError(binding.root,getString(R.string.please_enter_postcode)) }
             }
-            R.id.tvChange -> { binding.btnFindAddress.performClick() }
-            R.id.tieAddress ->{ binding.spnAddress.performClick() }
+            R.id.tvChange -> {
+                binding.btnFindAddress.performClick()
+            }
+            R.id.tieAddress -> {
+                binding.spnAddress.performClick()
+            }
 
         }
     }
@@ -150,10 +185,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 is Resource.Success -> {
 
                     addressList.clear()
-                    mainList= response.data?.toMutableList() ?: ArrayList()
-                    addressList.add(0,"Select Address")
-                    var list : MutableList<String>? = null
-                    for(address : DataAddress? in mainList){
+                    mainList = response.data?.toMutableList() ?: ArrayList()
+                    addressList.add(0, "Select Address")
+                    var list: MutableList<String>? = null
+                    for (address: DataAddress? in mainList) {
                         list = ArrayList()
                         address?.let {
                             list.add(address.town!!)
@@ -170,14 +205,14 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
                         btnFindAddress.gone()
                         tilAddress.visible()
-                        model?.zipCode1=binding.tiePostCode.text.toString()
+                        model?.zipCode1 = binding.tiePostCode.text.toString()
 
 
-                        when(model?.planType) {
+                        when (model?.planType) {
                             PAYG -> {
-                                model?.countryType=null
-                                model?.city=null
-                                model?.stateType=null
+                                model?.countryType = null
+                                model?.city = null
+                                model?.stateType = null
                                 enable = true
                             }
                         }
@@ -186,27 +221,35 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         tilPostCode.endIconDrawable = null
                     }
                 }
-                is Resource.DataError -> { showError(binding.root, response.errorMsg) }
+                is Resource.DataError -> {
+                    showError(binding.root, response.errorMsg)
+                }
             }
-        } catch (e: Exception) { }
+        } catch (e: Exception) {
+        }
     }
+
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
             if (position == 0) return
 
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
-            mainList[position-1]?.run {
-                model?.countryType="UK"
-                model?.city=town
-                model?.stateType="HE"
-                model?.zipCode1=binding.tiePostCode.text.toString()
-                model?.address1=street
+            mainList[position - 1]?.run {
+                model?.countryType = "UK"
+                model?.city = town
+                model?.stateType = "HE"
+                model?.zipCode1 = binding.tiePostCode.text.toString()
+                model?.address1 = street
             }
 
-            when(model?.planType){
-                PAYG ->{ model?.zipCode1=null }
-                else -> { if(binding.tiePostCode.text?.isNotEmpty()==true) binding.enable = true }
+            when (model?.planType) {
+                PAYG -> {
+                    model?.zipCode1 = null
+                }
+                else -> {
+                    if (binding.tiePostCode.text?.isNotEmpty() == true) binding.enable = true
+                }
             }
 
         }

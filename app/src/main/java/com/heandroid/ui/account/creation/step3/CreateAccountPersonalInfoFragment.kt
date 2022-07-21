@@ -212,7 +212,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                     model?.firstName = firstName.text.toString()
                     model?.lastName = lastName.text.toString()
                     model?.cellPhone = businessMobNo.text.toString()
-                    model?.fein = companyRegNumber.text.toString()
+                    model?.fein = "12345678"
 
                     val bundle = Bundle()
                     bundle.putParcelable(CREATE_ACCOUNT_DATA, model)

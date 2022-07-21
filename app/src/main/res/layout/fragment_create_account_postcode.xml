@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="enable"
             type="Boolean" />
@@ -56,11 +56,11 @@
             android:id="@+id/tvPersonaleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
+            android:text="@string/str_personal_info"
             android:textColor="#626262"
-            android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -106,176 +106,300 @@
             app:layout_constraintStart_toEndOf="@+id/tvPassword" />
 
 
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcvContainer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginTop="15dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="0dp"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvPersonaleInfo">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switch_view_business"
-                    android:theme="@style/ToggleSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:checked="true"
-                    android:text="@string/str_country_of_registraion"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="normal"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:useMaterialThemeColors="false" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilPostCode"
-                    style="@style/Widget.HeMobile.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/postcode"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_vector"
-                    app:endIconMode="custom"
-                    app:endIconTint="@color/green"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switch_view_business">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/btnAction"
+                app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                app:layout_constraintStart_toStartOf="@+id/glStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonaleInfo">
 
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tiePostCode"
-                        android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_view_business"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPersonName"
-                        android:maxLength="12"
-                        android:singleLine="true"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:checked="true"
+                        android:text="@string/str_country_of_registraion"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="normal"
+                        android:theme="@style/ToggleSwitch"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:useMaterialThemeColors="false" />
 
-
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="@string/change"
-                    android:visibility="gone"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_13sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/tilPostCode"
-                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
-                    app:layout_constraintTop_toTopOf="@+id/tilPostCode"
-                    app:layout_constraintVertical_bias="0.86" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnFindAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="26dp"
-                    android:backgroundTint="@color/white"
-                    android:letterSpacing="0"
-                    android:text="@string/find_address"
-                    android:textAllCaps="false"
-                    android:textColor="@color/green"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
-                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
-                    app:layout_constraintTop_toBottomOf="@+id/tilPostCode"
-                    app:strokeColor="@color/green"
-                    app:strokeWidth="1dp" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilAddress"
-                    style="@style/Widget.HeMobile.TextInputLayoutDrop"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="26dp"
-                    android:focusable="false"
-                    android:visibility="gone"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/str_email"
-                    android:textColorHint="@color/black"
-                    app:hintEnabled="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
-                    app:layout_constraintStart_toStartOf="@+id/tilPostCode"
-                    app:layout_constraintTop_toBottomOf="@+id/tilPostCode">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tieAddress"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPostCode"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/ic_vector_drop"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/postcode"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconDrawable="@drawable/ic_vector"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/switch_view_business">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tiePostCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="@string/change"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/tilPostCode"
+                        app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                        app:layout_constraintTop_toTopOf="@+id/tilPostCode"
+                        app:layout_constraintVertical_bias="0.86" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFindAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginBottom="26dp"
+                        android:backgroundTint="@color/white"
+                        android:letterSpacing="0"
+                        android:text="@string/find_address"
+                        android:textAllCaps="false"
+                        android:textColor="@color/green"
+                        app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                        app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                        app:layout_constraintTop_toBottomOf="@+id/tilPostCode"
+                        app:strokeColor="@color/green"
+                        app:strokeWidth="1dp" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilAddress"
+                        style="@style/Widget.HeMobile.TextInputLayoutDrop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginBottom="26dp"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:text="Select Address"
-                        android:textColor="@color/black"
+                        android:hint="@string/str_email"
                         android:textColorHint="@color/black"
-                        android:textSize="@dimen/_13ssp" />
+                        android:visibility="gone"
+                        app:hintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
+                        app:layout_constraintStart_toStartOf="@+id/tilPostCode"
+                        app:layout_constraintTop_toBottomOf="@+id/tilPostCode">
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_vector_drop"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:singleLine="true"
+                            android:text="Select Address"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:textSize="@dimen/_13ssp" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spnAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="0.1dp"
-                    android:background="@color/white"
-                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
-                    app:layout_constraintStart_toStartOf="@+id/tilAddress"
-                    app:layout_constraintTop_toBottomOf="@+id/tilAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spnAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="0.1dp"
+                        android:background="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                        app:layout_constraintStart_toStartOf="@+id/tilAddress"
+                        app:layout_constraintTop_toBottomOf="@+id/tilAddress" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCountry"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/str_house_number"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/spnAddress">
 
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieCountry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-
-
-
-
-
-
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilHouseNumber"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/str_house_number"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilCountry">
 
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieHouseNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilStreetName"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/str_street_name"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilHouseNumber">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieStreetName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCity"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/str_town_city_state_province"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilStreetName">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNonUkPostCode"
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/str_post_cde"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilCity">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tieNonUkPostCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPersonName"
+                            android:maxLength="12"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAction"
@@ -294,7 +418,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent" />
-
 
 
         <androidx.constraintlayout.widget.Guideline
