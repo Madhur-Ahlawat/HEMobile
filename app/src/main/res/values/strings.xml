@@ -825,6 +825,7 @@
     <string name="str_house_number">House Number</string>
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
+    <string name="str_country">Country</string>
 </resources>
 
 
