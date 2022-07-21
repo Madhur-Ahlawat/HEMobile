@@ -176,7 +176,7 @@ class NominatedProfilePinFragment : BaseFragment<FragmentNominatedProfilePinBind
 
     private fun updateBusinessUserProfile() {
         binding.data?.run {
-            var request = UpdateProfileRequest(
+            val request = UpdateProfileRequest(
                 firstName = personalInformation?.firstName,
                 lastName = personalInformation?.lastName,
                 addressLine1 = personalInformation?.addressLine1,
@@ -207,7 +207,7 @@ class NominatedProfilePinFragment : BaseFragment<FragmentNominatedProfilePinBind
     private fun updateStandardUserProfile() {
 
         binding.data?.personalInformation?.run {
-            var request = UpdateProfileRequest(
+            val request = UpdateProfileRequest(
                 firstName = firstName,
                 lastName = lastName,
                 addressLine1 = addressLine1,

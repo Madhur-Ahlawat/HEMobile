@@ -11,7 +11,6 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
-import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.PlateInfoResponse
@@ -19,6 +18,7 @@ import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.dialog.VehicleAddConfirmDialog
 import com.heandroid.utils.BaseActions.betterScrollTo
 import com.heandroid.utils.BaseActions.forceClick
 import com.heandroid.utils.common.ConstantsTest
@@ -33,8 +33,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
-import net.bytebuddy.pool.TypePool
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

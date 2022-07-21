@@ -8,15 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.vehicle.PlateInfoResponse
-import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
+import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource

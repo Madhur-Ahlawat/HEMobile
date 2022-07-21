@@ -20,7 +20,7 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.ui.vehicle.crossinghistory.DownloadFormatSelectionFilterDialog
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
@@ -29,7 +29,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import io.mockk.MockK
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

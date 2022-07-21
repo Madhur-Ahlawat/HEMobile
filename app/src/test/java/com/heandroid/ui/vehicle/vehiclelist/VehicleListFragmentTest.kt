@@ -21,7 +21,8 @@ import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.loader.ErrorDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+import com.heandroid.ui.vehicle.vehiclelist.dialog.RemoveVehicleDialog
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.BaseActions.atPosition
 import com.heandroid.utils.BaseActions.clickOnViewChild

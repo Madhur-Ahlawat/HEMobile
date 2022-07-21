@@ -1,3 +1,5 @@
+package com.heandroid.hiltTesting
+
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +10,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.core.internal.deps.guava.base.Preconditions
-import com.heandroid.hiltTesting.HiltTestActivity
 
 @ExperimentalCoroutinesApi
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(

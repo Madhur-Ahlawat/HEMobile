@@ -12,9 +12,9 @@ open class CardNumberFormatterTextWatcher  : TextWatcher{
 
     private val VISA = "^4[0-9]{6,}$"
     private val MASTER_CARD = "^5[1-5][0-9]{5,}$"
-    private val AMERICAN_EXPRESS = "^3[47][0-9]{5,}$";
+    private val AMERICAN_EXPRESS = "^3[47][0-9]{5,}$"
     private val DINERS_CLAB = "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
-    private val JCB = "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$";
+    private val JCB = "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
 
     private val listOfPattern = listOf(CardTypeModel("VISA",VISA),
                                        CardTypeModel("MASTER_CARD",MASTER_CARD),

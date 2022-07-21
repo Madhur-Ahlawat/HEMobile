@@ -12,6 +12,7 @@ import com.heandroid.data.model.checkpaidcrossings.UsedTollTransactionResponse
 import com.heandroid.data.model.checkpaidcrossings.UsedTollTransactionsRequest
 import com.heandroid.databinding.FragmentUsedChargesBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.checkpaidcrossings.adapter.UsedChargesAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*

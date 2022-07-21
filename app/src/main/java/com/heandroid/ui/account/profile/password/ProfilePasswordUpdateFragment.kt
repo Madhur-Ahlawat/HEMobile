@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.profile.UpdateAccountPassword
 import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.databinding.FragmentProfilePasswordUpdateBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -23,25 +24,29 @@ import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
-class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdateBinding>(), View.OnClickListener {
-    private val viewModel : ProfileViewModel by viewModels()
+class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdateBinding>(),
+    View.OnClickListener {
+    private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfilePasswordUpdateBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfilePasswordUpdateBinding.inflate(inflater, container, false)
+
     override fun init() {
-        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+        if (requireActivity() is ProfileActivity)
+            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
 
-        binding.enable=false
-        binding.data= UpdateAccountPassword(currentPassword = "", newPassword = "", confirmPassword = "")
-
-
+        binding.enable = false
+        binding.data = UpdateAccountPassword(
+            currentPassword = "", newPassword = "", confirmPassword = ""
+        )
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
     }
+
     override fun initCtrl() {
         binding.apply {
             tieCurrentPassword.onTextChanged { checkButton() }
@@ -50,13 +55,15 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
             btnChange.setOnClickListener(this@ProfilePasswordUpdateFragment)
         }
     }
+
     override fun observer() {
-        observe(viewModel.updatePassword,::handleUpdatePasswordResponse)
+        observe(viewModel.updatePassword, ::handleUpdatePasswordResponse)
     }
 
     private fun checkButton() {
         binding.enable = (binding.tiePassword.text.toString().trim().isNotEmpty()
-                && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()  && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
+                && binding.tieConfirmPassword.text.toString().trim()
+            .isNotEmpty() && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString()
             .trim() == binding.tiePassword.text.toString().trim())
 
@@ -64,37 +71,45 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
 
     override fun onClick(v: View?) {
         hideKeyboard()
-        when(v?.id){
-            R.id.btnChange ->{
-                val validation=viewModel.checkPassword(binding.data)
-                if(validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+        when (v?.id) {
+            R.id.btnChange -> {
+                val validation = viewModel.checkPassword(binding.data)
+                if (validation.first) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.updatePassword(binding.data)
-                }else {
+                } else {
                     showError(binding.root, validation.second)
                 }
             }
         }
     }
 
-    private fun handleUpdatePasswordResponse(status: Resource<UpdatePasswordResponseModel?>?){
-        try {
+    private fun handleUpdatePasswordResponse(status: Resource<UpdatePasswordResponseModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success ->{
-                    if(status.data?.statusCode?.equals("500")==true){
-                        showError(binding.root, status.data.message)
-                    }else{
-                        val bundle= Bundle()
-                        bundle.putParcelable(Constants.DATA,arguments?.getParcelable(Constants.DATA))
-                        findNavController().navigate(R.id.action_updatePasswordFragment_to_updatePasswordSuccessfulFragment,bundle)
-                    }
-                }
-                is Resource.DataError ->{
-                    showError(binding.root, status.errorMsg)
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("500") == true) {
+                    showError(binding.root, status.data.message)
+                } else {
+                    val bundle = Bundle()
+                    bundle.putParcelable(
+                        Constants.DATA,
+                        arguments?.getParcelable(Constants.DATA)
+                    )
+                    findNavController().navigate(
+                        R.id.action_updatePasswordFragment_to_updatePasswordSuccessfulFragment,
+                        bundle
+                    )
                 }
             }
-        }catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 }

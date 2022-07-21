@@ -53,12 +53,12 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 Logg.logging(
                     "NewCaseCategoryFrag",
-                    "categoryDropdown position  ${position}  parent $parent  view $view  id  $id"
+                    "categoryDropdown position  $position  parent $parent  view $view  id  $id"
                 )
                 mSelCat = mCatListName[position]
                 Logg.logging(
                     "NewCaseCategoryFrag",
-                    "categoryDropdown mSelCat  ${mSelCat} "
+                    "categoryDropdown mSelCat  $mSelCat "
                 )
                 checkButton()
                 viewModel.getCaseSubCategoriesList(mSelCat)

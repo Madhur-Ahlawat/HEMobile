@@ -39,7 +39,7 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
 
     override fun init() {
         binding.tvAmount.text="£ ${arguments?.getString("amount")}"
-        model=arguments?.getParcelable<PaymentMethodDeleteResponseModel>(Constants.DATA)
+        model=arguments?.getParcelable(Constants.DATA)
         binding.tvReceiptNo.text=model?.transactionId
         binding.tvEmail.text=model?.emailMessage
         binding.tvDate.text=DateUtils.currentDate()

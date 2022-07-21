@@ -90,7 +90,7 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
                             showError(binding.root,message)
                         }
                         else {
-                            var data=status.data.personalInformation
+                            val data=status.data.personalInformation
                             binding.model?.run {
                                 city=data?.city
                                 addressLine1=data?.addressLine1

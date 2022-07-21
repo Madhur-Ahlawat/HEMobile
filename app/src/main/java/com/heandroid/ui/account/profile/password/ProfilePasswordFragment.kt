@@ -13,17 +13,18 @@ import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(), View.OnClickListener {
+class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(),
+    View.OnClickListener {
 
-
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfilePasswordBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfilePasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.enable = true
-        binding.data=arguments?.getParcelable(Constants.DATA)
-        binding.data?.personalInformation?.confirmPassword=binding.data?.accountInformation?.password
+        binding.data = arguments?.getParcelable(Constants.DATA)
+        binding.data?.personalInformation?.confirmPassword =
+            binding.data?.accountInformation?.password
     }
 
     override fun initCtrl() {
@@ -35,16 +36,22 @@ class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(), 
         }
     }
 
-    override fun observer() {
+    override fun observer() {}
 
-    }
     override fun onClick(v: View?) {
         hideKeyboard()
         val bundle = Bundle()
         bundle.putParcelable(Constants.DATA, binding.data)
         when (v?.id) {
-            R.id.btnChangePassword -> { findNavController().navigate(R.id.action_passwordFragment_to_updatePasswordFragment,bundle) }
-            R.id.btnAction -> { findNavController().navigate(R.id.action_passwordFragment_to_pinFragment, bundle) }
+            R.id.btnChangePassword -> {
+                findNavController().navigate(
+                    R.id.action_passwordFragment_to_updatePasswordFragment,
+                    bundle
+                )
+            }
+            R.id.btnAction -> {
+                findNavController().navigate(R.id.action_passwordFragment_to_pinFragment, bundle)
+            }
         }
     }
 
@@ -53,6 +60,5 @@ class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(), 
                 && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString()
             .trim() == binding.tiePassword.text.toString().trim())
-
     }
 }

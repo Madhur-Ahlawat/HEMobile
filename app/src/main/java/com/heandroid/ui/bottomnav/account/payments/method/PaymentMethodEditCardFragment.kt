@@ -52,7 +52,7 @@ class PaymentMethodEditCardFragment : BaseFragment<FragmentPaymentMethodEditCard
         }
     }
 
-    private fun loadBundle(): Bundle? {
+    private fun loadBundle(): Bundle {
         val bundle= Bundle()
         bundle.putParcelable(DATA,binding.model)
         bundle.putBoolean("edit",true)

@@ -239,7 +239,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
 
     }
 
-    lateinit var mAccountResp: AccountResponse
+    private lateinit var mAccountResp: AccountResponse
     private var mCat: String = ""
     private fun getCommunicationSettingsPref(resource: Resource<AccountResponse?>?) {
         loader?.dismiss()
@@ -257,28 +257,28 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                             "res.data?.personalInformation ${res.data?.personalInformation}"
                         )
                         mAccountResp = res.data!!
-                        if (res.data?.personalInformation?.countryType.equals(
+                        if (res.data.personalInformation?.countryType.equals(
                                 Constants.COUNTRY_TYPE_UK,
                                 true
                             )
                         ) {
                             binding.clLikeAdvice.visibility = View.VISIBLE
                         }
-                        val mPhoneNumber = res.data?.personalInformation?.phoneNumber?.replace(
+                        val mPhoneNumber = res.data.personalInformation?.phoneNumber?.replace(
                             "\\d(?=\\d{4})",
                             "*"
                         )
                         binding.youHaveOptedNumberMsg.text =
                             "${getString(R.string.str_you_have_opted_to_receive_text_msgs)} $mPhoneNumber"
 
-                        res.data?.accountInformation?.communicationPreferences?.forEach {
+                        res.data.accountInformation?.communicationPreferences?.forEach {
                             Logg.logging("TestingData", "  receiptId loop ")
 
                             if (it?.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
                                 Logg.logging("TestingData", "  receiptId  loop if ")
 
                                 receiptId = it?.id!!
-                                mCat = it?.category!!
+                                mCat = it.category!!
                                 mReceiptModel = it
                                 if (it.mailFlag.equals("Y", true)) {
                                     binding.rbEmail.isChecked = true

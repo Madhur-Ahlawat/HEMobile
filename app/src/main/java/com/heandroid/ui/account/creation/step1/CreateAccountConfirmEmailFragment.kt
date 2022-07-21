@@ -43,6 +43,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     override fun init() {
         requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+        binding.tvMsg.text = getString(R.string.send_security_code_msg, requestModel?.emailAddress)
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
             isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
         }

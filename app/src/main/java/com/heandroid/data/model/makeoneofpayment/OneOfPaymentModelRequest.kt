@@ -1,7 +1,7 @@
 package com.heandroid.data.model.makeoneofpayment
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OneOfPaymentModelRequest(
@@ -35,21 +35,21 @@ data class PaymentTypeInfo(
 
 @Parcelize
 data class VehicleList(
-    val vehiclePlate: String,
-    val vehicleMake: String,
-    val vehicleModel: String,
-    val iagCode: String,
-    val plateCountry: String,
-    val pendingDues: String,
-    val futureTollCount: String,
-    val futureTollPayment: String,
-    val vehicleColour: String,
-    val classRate: String,
-    val customerClass: String,
-    val customerClassRate: String,
-    val accountNumber: String,
-    val pendingTxnCount: String,
-    val chargingRate: String
+    val vehiclePlate: String?,
+    val vehicleMake: String?,
+    val vehicleModel: String?,
+    val iagCode: String?,
+    val plateCountry: String?,
+    val pendingDues: String?,
+    val futureTollCount: String?,
+    val futureTollPayment: String?,
+    val vehicleColour: String?,
+    val classRate: String?,
+    val customerClass: String?,
+    val customerClassRate: String?,
+    val accountNumber: String?,
+    val pendingTxnCount: String?,
+    val chargingRate: String?
 ):Parcelable
 
 

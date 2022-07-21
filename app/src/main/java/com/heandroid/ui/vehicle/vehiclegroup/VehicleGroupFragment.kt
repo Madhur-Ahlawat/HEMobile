@@ -14,10 +14,11 @@ import com.heandroid.data.model.vehicle.VehicleGroupResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleGroupBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryPaginationAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
-import com.heandroid.utils.VehicleClassTypeConverter
+import com.heandroid.ui.vehicle.vehiclegroup.adapter.VehicleGroupVehiclesAdapter
+import com.heandroid.ui.vehicle.vehiclegroup.dialog.SearchVehicleDialog
+import com.heandroid.ui.vehicle.vehiclegroup.dialog.SearchVehicleListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast

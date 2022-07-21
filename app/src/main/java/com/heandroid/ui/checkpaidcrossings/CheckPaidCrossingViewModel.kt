@@ -55,8 +55,8 @@ class CheckPaidCrossingViewModel @Inject constructor(
                 response?.let {
                     if (response.isSuccessful) {
                         val serverToken =
-                            response.headers().get("Authorization")?.split("Bearer ")?.get(1)
-                        Logg.logging("CheckpaidCrossi","serverToken ${serverToken}")
+                            response.headers()["Authorization"]?.split("Bearer ")?.get(1)
+                        Logg.logging("CheckpaidCrossi","serverToken $serverToken")
 
                         sessionManager.saveAuthToken(serverToken ?: "")
                         _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
@@ -110,7 +110,7 @@ class CheckPaidCrossingViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 findVehicleMutData.setValue(
-                    ResponseHandler.success(
+                    success(
                         repository.getVehicleDetail(
                             vehicleNumber,
                             agencyId

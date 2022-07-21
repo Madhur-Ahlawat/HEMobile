@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +13,8 @@ import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.heandroid.data.model.checkpaidcrossings.UnUsedChargesModel
 import com.heandroid.databinding.FragmentUnusedChargesBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.checkpaidcrossings.adapter.OnChangeClickListener
+import com.heandroid.ui.checkpaidcrossings.adapter.UnUsedChargesAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,12 +30,6 @@ class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(),
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentUnusedChargesBinding.inflate(inflater, container, false)
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     override fun init() {

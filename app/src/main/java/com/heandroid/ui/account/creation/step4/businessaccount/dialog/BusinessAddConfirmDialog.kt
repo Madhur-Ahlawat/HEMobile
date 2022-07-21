@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import com.heandroid.R
 import com.heandroid.databinding.VehicleAddConformBinding
 import com.heandroid.ui.base.BaseDialog
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
 
 class BusinessAddConfirmDialog: BaseDialog<VehicleAddConformBinding>() {
 

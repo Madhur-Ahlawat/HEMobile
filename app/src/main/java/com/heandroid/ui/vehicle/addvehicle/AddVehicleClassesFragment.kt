@@ -2,7 +2,6 @@ package com.heandroid.ui.vehicle.addvehicle
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,8 @@ import com.heandroid.databinding.FragmentAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleListener
+import com.heandroid.ui.vehicle.addvehicle.dialog.VehicleAddConfirmDialog
 import com.heandroid.utils.VehicleClassTypeConverter
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone

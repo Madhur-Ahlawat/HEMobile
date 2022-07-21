@@ -77,7 +77,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
     private fun onClickPersonalAccountValidation() {
 
-        if(model?.planType == Constants.PAYG){
+        if(model?.planType == PAYG){
             binding.apply {
 
                 when {

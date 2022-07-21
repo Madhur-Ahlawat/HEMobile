@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import java.lang.reflect.Field;
+import java.lang.reflect.Field
 
 object Utils {
 
@@ -28,7 +28,7 @@ object Utils {
         val connectivityManager = application.getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
             val activeNetwork = connectivityManager.activeNetwork ?: return false
             val capabilities =
                 connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false

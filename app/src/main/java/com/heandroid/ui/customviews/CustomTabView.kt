@@ -12,7 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 
 class CustomTabView: AppCompatTextView {
 
-    private var showDividerVal:Boolean=false;
+    private var showDividerVal:Boolean=false
 
 
     constructor(context: Context) : super(context) {
@@ -39,7 +39,7 @@ class CustomTabView: AppCompatTextView {
         typeface = mTypeFace
     }
 
-    public fun setDivider(show:Boolean)
+    fun setDivider(show:Boolean)
     {
         showDividerVal = show
     }
@@ -52,8 +52,8 @@ class CustomTabView: AppCompatTextView {
             paint.color = ContextCompat.getColor(context, R.color.black)
             paint.strokeWidth = 0F
             canvas!!.drawLine(
-                0.0f, canvas!!.height.toFloat(), canvas!!.width.toFloat(),
-                canvas!!.height.toFloat(),
+                0.0f, canvas.height.toFloat(), canvas.width.toFloat(),
+                canvas.height.toFloat(),
                 paint
             )
         }

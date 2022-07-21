@@ -59,7 +59,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
         list = arguments?.getParcelableArrayList(Constants.DATA)!!
         mPaymentResp = arguments?.getParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP)
 //        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        binding.tvEmail.text = "$mEmail"
+        binding.tvEmail.text = mEmail
         binding.tvAmount.text = "£ ${list[0].price}"
         binding.tvReceiptNo.text = mPaymentResp?.refrenceNumber?:""
         binding.rgOptions.setOnCheckedChangeListener(this)
@@ -98,7 +98,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
             is Resource.Success -> {
                 resource.data?.let {
                     loader?.dismiss()
-                    it?.let {
+                    it.let {
                         Logg.logging(
                             "testing",
                             " MakeOffPaymentSuccessfulFragment success it  $it"

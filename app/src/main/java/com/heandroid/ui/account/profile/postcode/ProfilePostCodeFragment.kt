@@ -88,7 +88,7 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(), 
                 is Resource.Success -> {
                     addressList.clear()
                     mainList= response.data?.toMutableList()?:ArrayList()
-                    addressList?.add(0,"Select Address")
+                    addressList.add(0,"Select Address")
                     for(address : DataAddress? in mainList){
                         address?.let {
                             addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")

@@ -19,7 +19,4 @@ class InProgressActivity : BaseActivity<Any?>() {
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

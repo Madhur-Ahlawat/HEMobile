@@ -1,6 +1,6 @@
 package com.heandroid.listener
 
-import com.heandroid.ui.bottomnav.notification.NotificationModel
+import com.heandroid.data.model.notification.NotificationModel
 
 
 interface NotificationItemClick {

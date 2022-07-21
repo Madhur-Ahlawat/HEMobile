@@ -67,7 +67,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
               navGraph.setStartDestination(R.id.viewProfile)
               val startDestId = R.id.viewProfile
               navGraph.apply {
-                  setStartDestination(startDestId);
+                  setStartDestination(startDestId)
               }
 
           }

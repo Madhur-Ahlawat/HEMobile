@@ -121,7 +121,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             }
 
             R.id.btnNominatedContact -> {
-                if ((list?.size ?: 0) >= 5) showError(
+                if (list?.size >= 5) showError(
                     binding.root,
                     getString(R.string.str_nominated_contacts_limit_reached)
                 )
@@ -276,7 +276,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 selectedPosition = pos
 
-                data?.let {
+                data.let {
                     if (it.secAccountRowId!!.isNotEmpty()) {
                         val model =
                             TerminateRequestModel(

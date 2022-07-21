@@ -106,7 +106,7 @@ class NominatedInvitationAccessRightFragment :
             loader?.dismiss()
             when (status) {
                 is Resource.Success -> {
-                    if (status?.data?.statusCode.equals("1224")) {
+                    if (status.data?.statusCode.equals("1224")) {
                         findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
                         showError(binding.root, status.data?.message)
                     } else {

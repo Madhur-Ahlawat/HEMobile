@@ -13,6 +13,7 @@ import com.heandroid.R
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.databinding.FragmentProfileConfirmEmailBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -26,16 +27,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
 @AndroidEntryPoint
-class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBinding>(), View.OnClickListener {
-
-    private var loader: LoaderDialog? = null
+class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBinding>(),
+    View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
+    private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfileConfirmEmailBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfileConfirmEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+        if (requireActivity() is ProfileActivity)
+            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.data = arguments?.getParcelable(DATA)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, binding.data?.emailAddress)
         loader = LoaderDialog()
@@ -45,7 +48,10 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
     override fun initCtrl() {
         binding.apply {
             enable = false
-            etCode.onTextChanged { enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString().trim().length>5 }
+            etCode.onTextChanged {
+                enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString()
+                    .trim().length > 5
+            }
             btnAction.setOnClickListener(this@ProfileConfirmEmailFragment)
             tvResend.setOnClickListener(this@ProfileConfirmEmailFragment)
         }
@@ -59,53 +65,66 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.btnAction -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                                viewModel.emailValidationForUpdatation(binding.data)
+            R.id.btnAction -> {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                viewModel.emailValidationForUpdatation(binding.data)
             }
 
-            R.id.tvResend ->{
-                binding.data?.referenceId=""
+            R.id.tvResend -> {
+                binding.data?.referenceId = ""
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val request = EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.data?.emailAddress?:"")
+                val request = EmailVerificationRequest(
+                    Constants.EMAIL_SELECTION_TYPE,
+                    binding.data?.emailAddress ?: ""
+                )
                 viewModel.emailVerificationApi(request)
             }
         }
     }
 
 
-
-
-
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
-                    if(resource.data?.statusCode.equals("500")) { showError(binding.root,resource.data?.message) }
-                    else {
-                        binding.data?.referenceId=resource.data?.referenceId
-                    }
+        }
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.statusCode.equals("500")) {
+                    showError(binding.root, resource.data?.message)
+                } else {
+                    binding.data?.referenceId = resource.data?.referenceId
                 }
-                is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }
-        } catch (e:Exception) { }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {}
+        }
     }
 
 
     private fun handleEmailValidation(resource: Resource<EmailVerificationResponse?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
-                    if(resource.data?.statusCode.equals("500")) { showError(binding.root,resource.data?.message) }
-                    else {
-                        val bundle= Bundle()
-                        bundle.putParcelable(DATA,binding.data)
-                        findNavController().navigate(R.id.action_confirmEmailFragment_to_emailUpdatedFragment,bundle)
-                    }
+        }
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.statusCode.equals("500")) {
+                    showError(binding.root, resource.data?.message)
+                } else {
+                    val bundle = Bundle()
+                    bundle.putParcelable(DATA, binding.data)
+                    findNavController().navigate(
+                        R.id.action_confirmEmailFragment_to_emailUpdatedFragment,
+                        bundle
+                    )
                 }
-                is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
             }
-        } catch (e:Exception) { }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 }

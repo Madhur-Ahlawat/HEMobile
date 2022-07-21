@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +23,10 @@ import com.heandroid.data.model.vehicle.DateRangeModel
 import com.heandroid.databinding.FragmentCrossingHistoryBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.crossinghistory.dialog.CrossingHistoryFilterDialog
+import com.heandroid.ui.vehicle.crossinghistory.dialog.CrossingHistoryFilterDialogListener
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
+import com.heandroid.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.StorageHelper.checkStoragePermissions
@@ -147,13 +150,13 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        val response = resource.data as CrossingHistoryApiResponse
+                        val response = resource.data
                         totalCount = response.transactionList?.transaction?.size ?: 0
                         Log.e("Testing", "--->CrossingHistoryFragment data " + it.transactionList)
                         Log.e("Testing", "--->CrossingHistoryFragment count $totalCount")
 
                         if (response.transactionList != null) {
-                            list?.addAll(response.transactionList?.transaction!!)
+                            list?.addAll(response.transactionList.transaction!!)
                         }
                         isLoading = false
 //                    isLoading = list?.size?:0 != totalCount

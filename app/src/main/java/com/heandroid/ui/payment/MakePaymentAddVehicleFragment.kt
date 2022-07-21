@@ -12,10 +12,11 @@ import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.databinding.FragmentMakePaymentAddVehicleBinding
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleDialog
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleListener
-import com.heandroid.ui.vehicle.addvehicle.AddVehicleVRMDialog
-import com.heandroid.ui.vehicle.vehiclelist.ItemClickListener
+import com.heandroid.ui.payment.adapter.AddedVehicleListAdapter
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleListener
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleVRMDialog
+import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible

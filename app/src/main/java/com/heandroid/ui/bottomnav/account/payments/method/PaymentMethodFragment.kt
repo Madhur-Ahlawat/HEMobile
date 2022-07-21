@@ -126,7 +126,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                         binding.viewDefault.visible()
                         val spannableString = if(defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType+"\n"+ defaultCardModel?.bankAccountNumber)
                         else SpannableString(defaultCardModel?.cardType+"\n"+ defaultCardModel?.cardNumber)
-                        spannableString?.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spannableString.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
                         binding.rbDefaultMethod.text = spannableString
                         binding.rbDefaultMethod.isChecked=true

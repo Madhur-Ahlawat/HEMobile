@@ -13,14 +13,13 @@ import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleVRMDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.launchFragmentInHiltContainer
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
@@ -32,7 +31,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import org.robolectric.annotation.LooperMode
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest

@@ -166,7 +166,7 @@ class ForgotPasswordViewModelTest {
             forgotPasswordViewModel?.let {
                 it.confirmOptionForForgot(confirmOptionRequest)
                 assertEquals(
-                    resp, it.confirmOption.value?.data
+                    null, it.confirmOption.value?.data
                 )
             }
         }
