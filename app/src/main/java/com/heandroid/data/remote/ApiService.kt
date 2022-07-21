@@ -40,10 +40,30 @@ import com.heandroid.data.model.vehicle.*
 import com.heandroid.utils.common.Constants.AGENCY_ID
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
+
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    suspend fun refreshToken(
+        @Field("grant_type") grant_type: String = REFRESH_TOKEN,
+        @Field("client_id") clientId: String = CLIENT_ID,
+        @Field("client_secret") client_secret: String = CLIENT_SECRET,
+        @Field("refresh_token") refresh_token: String
+    ): Response<LoginResponse?>?
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    fun refreshToken2(
+        @Field("grant_type") grant_type: String = REFRESH_TOKEN,
+        @Field("client_id") clientId: String = CLIENT_ID,
+        @Field("client_secret") client_secret: String = CLIENT_SECRET,
+        @Field("refresh_token") refresh_token: String
+    ): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST(LOGIN)

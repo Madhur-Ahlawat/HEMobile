@@ -18,24 +18,29 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfileEmailSuccessfulFragment : BaseFragment<FragmentProfileEmailSuccessfulBinding>(), View.OnClickListener {
+class ProfileEmailSuccessfulFragment : BaseFragment<FragmentProfileEmailSuccessfulBinding>(),
+    View.OnClickListener {
 
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
 
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfileEmailSuccessfulBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfileEmailSuccessfulBinding.inflate(inflater, container, false)
+
     override fun init() {
         requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
-        binding.data=arguments?.getParcelable(Constants.DATA)
+        binding.data = arguments?.getParcelable(Constants.DATA)
     }
+
     override fun initCtrl() {
         binding.btnLogin.setOnClickListener(this)
     }
+
     override fun observer() {}
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnLogin ->{
+        when (v?.id) {
+            R.id.btnLogin -> {
                 sessionManager.clearAll()
                 requireActivity().finish()
                 requireActivity().startNormalActivity(AuthActivity::class.java)

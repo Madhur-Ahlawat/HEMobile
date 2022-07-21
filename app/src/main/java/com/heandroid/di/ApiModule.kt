@@ -2,20 +2,19 @@ package com.heandroid.di
 
 import android.content.Context
 import com.heandroid.BuildConfig
-import com.heandroid.data.remote.ApiService
-import com.heandroid.data.remote.HeaderInterceptor
-import com.heandroid.data.remote.NetworkConnectionInterceptor
-import com.heandroid.data.remote.NullOnEmptyConverterFactory
+import com.heandroid.data.remote.*
 import com.heandroid.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -42,15 +41,29 @@ object ApiModule {
 
     @Provides
     @Singleton
+    fun provideAuthenticator(
+        @ApplicationContext context: Context,
+        apiService: Provider<ApiService>,
+        sessionManager: SessionManager
+    ) = TokenAuthImpl(
+        context,
+        sessionManager,
+        apiService
+    )
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
         logging: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
-        networkConnectionInterceptor: NetworkConnectionInterceptor
+        networkConnectionInterceptor: NetworkConnectionInterceptor,
+        tokenAuthenticator: TokenAuthImpl
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) builder.addInterceptor(logging)
         builder.addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
+            //.authenticator(tokenAuthenticator)
             .callTimeout(25, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
 //            .readTimeout(10, TimeUnit.SECONDS)

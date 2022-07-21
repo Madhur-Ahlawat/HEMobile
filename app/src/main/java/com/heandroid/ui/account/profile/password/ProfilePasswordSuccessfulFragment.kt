@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.FragmentProfilePasswordSuccessfulBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
@@ -24,12 +25,12 @@ class ProfilePasswordSuccessfulFragment : BaseFragment<FragmentProfilePasswordSu
     lateinit var sessionManager: SessionManager
     private var updatePinFlow = false
 
-
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentProfilePasswordSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+        if (requireActivity() is ProfileActivity)
+            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.data = arguments?.getParcelable(Constants.DATA)
         updatePinFlow = arguments?.getBoolean(Constants.UPDATE_PIN_FLOW, false) == true
         if (updatePinFlow) {

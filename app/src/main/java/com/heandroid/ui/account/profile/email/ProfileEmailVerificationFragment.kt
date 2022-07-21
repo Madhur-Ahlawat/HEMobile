@@ -12,6 +12,7 @@ import com.heandroid.R
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.databinding.FragmentProfileEmailVerificationBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -26,22 +27,24 @@ import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerificationBinding>(), View.OnClickListener {
+class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerificationBinding>(),
+    View.OnClickListener {
 
     private var loader: LoaderDialog? = null
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentProfileEmailVerificationBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentProfileEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
+        if (requireActivity() is ProfileActivity)
+            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
 
         loader = LoaderDialog()
-       loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-       binding.enable = true
-       binding.data = arguments?.getParcelable(DATA)
-       binding.data?.referenceId=null
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        binding.enable = true
+        binding.data = arguments?.getParcelable(DATA)
+        binding.data?.referenceId = null
     }
 
     override fun initCtrl() {
@@ -58,27 +61,44 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-           R.id.btn_action -> { loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                                 viewModel.emailVerificationApi(EmailVerificationRequest(selectionType = EMAIL_SELECTION_TYPE, selectionValues = binding.data?.emailAddress?:"")) }
-       }
+            R.id.btn_action -> {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                viewModel.emailVerificationApi(
+                    EmailVerificationRequest(
+                        selectionType = EMAIL_SELECTION_TYPE,
+                        selectionValues = binding.data?.emailAddress ?: ""
+                    )
+                )
+            }
+        }
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        try{
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
-                    if(resource.data?.statusCode?.equals("500")==true) { showError(binding.root,
+        }
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.statusCode?.equals("500") == true) {
+                    showError(
+                        binding.root,
                         resource.data.message
-                    )}
-                    else{
-                        val bundle = Bundle()
-                        binding.data?.referenceId = resource.data?.referenceId
-                        bundle.putParcelable(DATA,binding.data)
-                        findNavController().navigate(R.id.action_emailFragment_to_confirmEmailFragment,bundle)
-                    }
+                    )
+                } else {
+                    val bundle = Bundle()
+                    binding.data?.referenceId = resource.data?.referenceId
+                    bundle.putParcelable(DATA, binding.data)
+                    findNavController().navigate(
+                        R.id.action_emailFragment_to_confirmEmailFragment,
+                        bundle
+                    )
                 }
-                is Resource.DataError -> { showError(binding.root, resource.errorMsg) }
-            }}catch (e: Exception){}
+            }
+            is Resource.DataError -> {
+                showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 }
