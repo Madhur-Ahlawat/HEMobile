@@ -5,9 +5,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
-import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.model.tollrates.TollRatesResp
-import com.heandroid.data.model.tollrates.ViewChargesResponse
 import com.heandroid.databinding.ActivityViewChargesBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.ui.loader.LoaderDialog
@@ -59,6 +57,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                 }
             }
             is Resource.DataError -> {
+
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
             else -> {

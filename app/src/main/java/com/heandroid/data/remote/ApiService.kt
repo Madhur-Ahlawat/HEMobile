@@ -38,6 +38,7 @@ import com.heandroid.data.model.profile.*
 import com.heandroid.data.model.tollrates.TollRatesResp
 import com.heandroid.data.model.vehicle.*
 import com.heandroid.utils.common.Constants.AGENCY_ID
+import com.heandroid.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -428,6 +429,17 @@ interface ApiService {
         @Body request: UserNameCheckReq?,
         @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<Boolean?>?
+
+    @GET(COUNTRIES_LIST)
+    suspend fun getCountriesList(
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<List<CountriesModel?>?>?
+
+    @GET(COUNTRY_CODES)
+    suspend fun getCountryCodes(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("codeType") request: String? = PHONE_COUNTRY_CODE
+    ): Response<List<CountryCodes?>?>?
 
 
 }

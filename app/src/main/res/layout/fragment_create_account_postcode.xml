@@ -131,6 +131,7 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
+                    android:padding="@dimen/_10sdp"
                     android:checked="true"
                     android:text="@string/str_country_of_registraion"
                     android:textColor="@color/black"
@@ -150,6 +151,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:hint="@string/postcode"
+                    android:visibility="visible"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_vector"
                     app:endIconMode="custom"
@@ -197,6 +199,7 @@
                     android:layout_marginBottom="26dp"
                     android:backgroundTint="@color/white"
                     android:letterSpacing="0"
+                    android:visibility="visible"
                     android:text="@string/find_address"
                     android:textAllCaps="false"
                     android:textColor="@color/green"
@@ -258,11 +261,27 @@
                     android:layout_width="0dp"
                     android:id="@+id/barrier"
                     android:layout_height="wrap_content"
+                    app:barrierAllowsGoneWidgets="false"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="btnFindAddress,tilAddress"
+                    app:constraint_referenced_ids="switch_view_business"
                     app:layout_constraintEnd_toEndOf="@+id/tilAddress"
                     app:layout_constraintStart_toStartOf="@+id/tilAddress" />
 
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/tilCountry"
+                    android:layout_width="0dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/white"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                    app:layout_constraintStart_toStartOf="@+id/tilAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+
+<!--
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCountry"
                     style="@style/Widget.HeMobile.TextInputLayout"
@@ -271,6 +290,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:hint="@string/str_country"
+                    android:visibility="gone"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconMode="custom"
                     app:endIconTint="@color/green"
@@ -290,6 +310,17 @@
                         android:textSize="@dimen/_13ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+-->
+
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:layout_width="0dp"
+                    android:id="@+id/barrier1"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="btnFindAddress,tilAddress,tilCountry"
+                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                    app:layout_constraintStart_toStartOf="@+id/tilAddress" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -305,7 +336,7 @@
                     app:endIconTint="@color/green"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilCountry">
+                    app:layout_constraintTop_toBottomOf="@+id/barrier1">
 
 
                     <com.google.android.material.textfield.TextInputEditText

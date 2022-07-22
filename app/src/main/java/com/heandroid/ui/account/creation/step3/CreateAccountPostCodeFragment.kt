@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
+import com.heandroid.data.model.account.CountriesModel
+import com.heandroid.data.model.account.CountryCodes
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.databinding.FragmentCreateAccountPostcodeBinding
@@ -22,12 +25,10 @@ import com.heandroid.utils.common.Constants.PERSONAL_TYPE
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PAY_AS_U_GO
 import com.heandroid.utils.common.Constants.PERSONAL_TYPE_PREPAY
 import com.heandroid.utils.common.ErrorUtil.showError
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.extn.gone
-import com.heandroid.utils.extn.hideKeyboard
-import com.heandroid.utils.extn.setSpinnerAdapter
-import com.heandroid.utils.extn.visible
+import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -42,6 +43,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private var model: CreateAccountRequestModel? = null
 
     private var addressList: MutableList<String> = ArrayList()
+    private var countriesList: MutableList<String> = ArrayList()
     private var mainList: MutableList<DataAddress?> = ArrayList()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -60,15 +62,15 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         when (model?.planType) {
             PAYG -> {
-               // binding.switchViewBusiness.gone()
+                // binding.switchViewBusiness.gone()
                 binding.tvLabel.text = getString(R.string.pay_as_you_go)
             }
             BUSINESS_ACCOUNT -> {
-               // binding.switchViewBusiness.visible()
+                // binding.switchViewBusiness.visible()
                 binding.tvLabel.text = getString(R.string.business_prepay_account)
             }
             else -> {
-               // binding.switchViewBusiness.gone()
+                // binding.switchViewBusiness.gone()
                 binding.tvLabel.text = getString(R.string.personal_pre_pay_account)
             }
         }
@@ -95,9 +97,30 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 if (isChecked) {
                     tilNonUkPostCode.gone()
                     tilCountry.gone()
+                    tilPostCode.visible()
+                    if (tieAddress.isVisible)
+                        tilAddress.visible()
+                    if (tvChange.isVisible) {
+                        tvChange.isVisible
+                    }
+                    if (btnFindAddress.isVisible)
+                        btnFindAddress.isVisible
+
                 } else {
                     tilNonUkPostCode.visible()
                     tilCountry.visible()
+                    tilPostCode.gone()
+                    tvChange.gone()
+                    tilAddress.gone()
+                    btnFindAddress.gone()
+                    if (countriesList.size == 0 && countriesList.isEmpty()) {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
+                        viewModel.getCountries()
+                    }
+//                    viewModel.getCountryCodesList()
                 }
 
             }
@@ -111,6 +134,51 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
     override fun observer() {
         observe(viewModel.addresses, ::handleAddressApiResponse)
+        observe(viewModel.countriesList, ::getCountriesList)
+        observe(viewModel.countriesCodeList, ::getCountryCodesList)
+    }
+
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+
+        try {
+            loader?.dismiss()
+            when (response) {
+                is Resource.Success -> {
+                    countriesList.clear()
+                    response.data?.forEach {
+                        countriesList.add(it?.countryName!!)
+                    }
+                    binding.apply {
+                        tilCountry.setSpinnerAdapter(countriesList)
+                        tilCountry.onItemSelectedListener = countriesSpinnerListener
+
+                    }
+
+                }
+                is Resource.DataError -> {
+                    showError(binding.root, response.errorMsg)
+                }
+            }
+        } catch (e: Exception) {
+        }
+
+
+    }
+
+    private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
+
+        try {
+            loader?.dismiss()
+            when (response) {
+                is Resource.Success -> {
+                }
+                is Resource.DataError -> {
+                    showError(binding.root, response.errorMsg)
+                }
+            }
+        } catch (e: Exception) {
+        }
+
     }
 
     override fun onClick(v: View?) {
@@ -198,6 +266,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                             addressList.add(TextUtils.join(",", list))
                         }
                     }
+                    addressList.add(Constants.NOT_IN_THE_LIST)
                     binding.apply {
 
                         spnAddress.setSpinnerAdapter(addressList)
@@ -206,8 +275,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         btnFindAddress.gone()
                         tilAddress.visible()
                         model?.zipCode1 = binding.tiePostCode.text.toString()
-
-
                         when (model?.planType) {
                             PAYG -> {
                                 model?.countryType = null
@@ -241,7 +308,15 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 model?.stateType = "HE"
                 model?.zipCode1 = binding.tiePostCode.text.toString()
                 model?.address1 = street
+                binding.tieHouseNumber.setText(poperty)
+                binding.tieStreetName.setText(model?.address1)
+                binding.tieCity.setText(model?.city)
+
             }
+            Logg.logging(
+                "Testing",
+                "  addresses list list ${parent.getItemAtPosition(position)} "
+            )
 
             when (model?.planType) {
                 PAYG -> {
@@ -251,6 +326,17 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     if (binding.tiePostCode.text?.isNotEmpty() == true) binding.enable = true
                 }
             }
+
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
+    }
+    private val countriesSpinnerListener = object : AdapterView.OnItemSelectedListener {
+
+        override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            Logg.logging("Testing", "  countries list ${parent.getItemAtPosition(position)} ")
 
         }
 
