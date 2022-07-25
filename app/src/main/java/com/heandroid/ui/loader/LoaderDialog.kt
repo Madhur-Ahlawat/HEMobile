@@ -13,6 +13,8 @@ class LoaderDialog : BaseDialog<DialogLoaderBinding>() {
     ): DialogLoaderBinding = DialogLoaderBinding.inflate(inflater, container, false)
 
     override fun init() {
+        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCancelable(false)
     }
 
     override fun initCtrl() {

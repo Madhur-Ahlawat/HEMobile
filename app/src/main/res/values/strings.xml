@@ -826,6 +826,14 @@
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
     <string name="str_country">Country</string>
+    <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
+    <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
+    <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
+    <string name="failed_retry_desc3">0300 300 0120 (from abroad +44 300 300 0120)</string>
+    <string name="failed_retry_num1">0300 300 0120</string>
+    <string name="failed_retry_num2">+44 300 300 0120</string>
+    <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
+    <string name="try_again_later">Try again later.</string>
 </resources>
 
 

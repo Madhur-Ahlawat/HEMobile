@@ -6,6 +6,7 @@ import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.ErrorResponseModel
 import com.heandroid.data.remote.NoConnectivityException
 import retrofit2.Response
+import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
 
 object ResponseHandler {
@@ -30,7 +31,7 @@ object ResponseHandler {
     fun <T> failure(e: Exception?): Resource<T?> {
         if (e is NoConnectivityException) {
             return Resource.DataError(e.message)
-        } else if (e is SocketTimeoutException) {
+        } else if (e is SocketTimeoutException || e is InterruptedIOException) {
             return Resource.DataError(Constants.VPN_ERROR)
         }
         return Resource.DataError(e?.message)

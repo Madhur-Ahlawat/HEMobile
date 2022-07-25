@@ -40,5 +40,10 @@
         android:name="com.heandroid.ui.landing.SessionExpireFragment"
         android:label="@string/str_session_time_out"
         tools:layout="@layout/fragment_session_expire" />
+    <fragment
+        android:id="@+id/failedRetryFragment"
+        android:name="com.heandroid.ui.landing.FailedRetryFragment"
+        android:label="FailedRetryFragment"
+        tools:layout="@layout/fragment_failed_retry"/>
 
 </navigation>

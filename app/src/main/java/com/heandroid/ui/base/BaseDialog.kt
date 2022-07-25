@@ -14,8 +14,6 @@ abstract class BaseDialog<B: ViewBinding> : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding=getDialogBinding(inflater, container)
-        dialog?.setCanceledOnTouchOutside(false)
-        dialog?.setCancelable(false)
         return binding.root
     }
 

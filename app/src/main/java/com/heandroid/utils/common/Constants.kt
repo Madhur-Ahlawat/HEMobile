@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val RETRY_COUNT = 3
     const val SPLASH_TIME_OUT = 500L
     const val COUNTRY_TYPE = "country_type"
     const val CHECK_PAID_CROSSING_VRM_ENTERED = "CHECK_PAID_CROSSING_VRM_ENTERED"
@@ -71,6 +72,7 @@ object Constants {
     const val SESSION_TIME_OUT = "session_time_out"
     const val START_NOW_SCREEN = "start_now"
     const val LOGOUT_SCREEN = "log_out"
+    const val FAILED_RETRY_SCREEN = "failed_retry"
     const val LANDING_SCREEN = "landing"
     const val TOLL_TRANSACTION = "Toll_Transaction"
     const val ALL_TRANSACTION = "ALL"

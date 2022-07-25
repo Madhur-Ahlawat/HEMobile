@@ -13,7 +13,9 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.extn.setRightButtonText
 import com.heandroid.utils.extn.startNewActivityByClearingStack
 import com.heandroid.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListener {
     override fun getFragmentBinding(
         inflater: LayoutInflater,

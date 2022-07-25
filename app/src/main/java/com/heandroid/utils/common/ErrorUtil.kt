@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.heandroid.R
 import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.ui.loader.OnRetryClickListener
+import com.heandroid.ui.loader.RetryDialog
 
 object ErrorUtil {
 
@@ -30,6 +33,23 @@ object ErrorUtil {
                 )
             }
 
+        } catch (e: Exception) {
+
+        }
+    }
+
+    fun showRetry(view: Fragment?) {
+        try {
+            val dialog = RetryDialog()
+            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            dialog.listener = view as OnRetryClickListener
+
+            view.childFragmentManager.let {
+                dialog.show(
+                    it,
+                    Constants.RETRY_DIALOG
+                )
+            }
         } catch (e: Exception) {
 
         }

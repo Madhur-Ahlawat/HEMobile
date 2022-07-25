@@ -15,6 +15,7 @@ import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.databinding.FragmentStartNowBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.ui.websiteservice.WebSiteServiceViewModel
@@ -28,12 +29,14 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickListener {
+class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickListener,
+    OnRetryClickListener {
 
     private var screenType: String = ""
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isChecked = true
+    private var count = 1
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -95,7 +98,18 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                     }
                 }
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    if (resource.errorMsg.contains("Connect your VPN", true)) {
+                        if (count > Constants.RETRY_COUNT) {
+                            requireActivity().startActivity(
+                                Intent(context, LandingActivity::class.java)
+                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        }
+                        ErrorUtil.showRetry(this)
+                    } else {
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
                 }
                 else -> {
                     // do nothing
@@ -145,5 +159,12 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
         Intent(requireActivity(), ContactDartChargeActivity::class.java).run {
             startActivity(this)
         }
+    }
+
+    override fun onRetryClick() {
+        count++
+        isChecked = true
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        webServiceViewModel.checkServiceStatus()
     }
 }
