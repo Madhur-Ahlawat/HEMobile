@@ -1,15 +1,18 @@
 package com.heandroid.ui.account.creation.step3
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.heandroid.R
 import com.heandroid.data.model.account.CountriesModel
 import com.heandroid.data.model.account.CountryCodes
@@ -76,6 +79,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     private fun accountType() {
@@ -90,29 +94,32 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         binding.apply {
             tilNonUkPostCode.gone()
-            tilCountry.gone()
+            spinnerCountry.gone()
 
             switchViewBusiness.setOnCheckedChangeListener { _, isChecked ->
 
                 if (isChecked) {
                     tilNonUkPostCode.gone()
-                    tilCountry.gone()
+                    spinnerCountry.gone()
                     tilPostCode.visible()
-                    if (tieAddress.isVisible)
-                        tilAddress.visible()
-                    if (tvChange.isVisible) {
-                        tvChange.isVisible
-                    }
-                    if (btnFindAddress.isVisible)
-                        btnFindAddress.isVisible
+                    btnFindAddress.visible()
+                    tilCountry.gone()
+                    tieStreetName.setText("")
+                    tieCity.setText("")
+                    tieHouseNumber.setText("")
 
                 } else {
                     tilNonUkPostCode.visible()
+                    spinnerCountry.visible()
                     tilCountry.visible()
                     tilPostCode.gone()
                     tvChange.gone()
                     tilAddress.gone()
                     btnFindAddress.gone()
+                    tieStreetName.setText("")
+                    tieCity.setText("")
+                    tieHouseNumber.setText("")
+
                     if (countriesList.size == 0 && countriesList.isEmpty()) {
                         loader?.show(
                             requireActivity().supportFragmentManager,
@@ -129,6 +136,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             btnAction.setOnClickListener(this@CreateAccountPostCodeFragment)
             tvChange.setOnClickListener(this@CreateAccountPostCodeFragment)
             tieAddress.setOnClickListener(this@CreateAccountPostCodeFragment)
+            tieCountry.setOnClickListener(this@CreateAccountPostCodeFragment)
         }
     }
 
@@ -149,8 +157,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                         countriesList.add(it?.countryName!!)
                     }
                     binding.apply {
-                        tilCountry.setSpinnerAdapter(countriesList)
-                        tilCountry.onItemSelectedListener = countriesSpinnerListener
+                        spinnerCountry.setSpinnerAdapter(countriesList)
+                        spinnerCountry.onItemSelectedListener = countriesSpinnerListener
 
                     }
 
@@ -181,52 +189,66 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
     }
 
+    private var mCountry = "UK"
+    private fun navigate() {
+        if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
+            binding.switchViewBusiness.gone()
+            val bundle = Bundle().apply {
+                putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
+            }
+            isEditAccountType?.let {
+                bundle.putInt(
+                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                )
+            }
+            findNavController().navigate(
+                R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
+                bundle
+            )
+
+        } else {
+            binding.switchViewBusiness.visible()
+            var country = "UK"
+            country = if (!binding.switchViewBusiness.isChecked) {
+                "Non-UK"
+            } else {
+                "UK"
+            }
+
+            model?.city = binding.tieCity.text.toString()
+            model?.stateType = "HE"
+            model?.zipCode1 = if (binding.tiePostCode.text.toString()
+                    .isEmpty()
+            ) binding.tiePostCode.text.toString() else binding.tieNonUkPostCode.text.toString()
+            model?.address1 = binding.tieStreetName.text.toString()
+            model?.countryType = mCountry
+
+            val bundle = Bundle().apply {
+                putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
+                isEditAccountType?.let {
+                    putInt(
+                        Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                        Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                    )
+                }
+            }
+
+
+            findNavController().navigate(
+                R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
+                bundle
+            )
+        }
+
+    }
+
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
 
             R.id.btnAction -> {
-
-                if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
-                    binding.switchViewBusiness.gone()
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
-                    }
-                    isEditAccountType?.let {
-                        bundle.putInt(
-                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-                        )
-                    }
-                    findNavController().navigate(
-                        R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
-                        bundle
-                    )
-
-                } else {
-                    binding.switchViewBusiness.visible()
-                    var country = "UK"
-                    country = if (!binding.switchViewBusiness.isChecked) {
-                        "Non-UK"
-                    } else {
-                        "UK"
-                    }
-                    model?.countryType = country
-
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
-                        isEditAccountType?.let {
-                            putInt(
-                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-                            )
-                        }
-                    }
-                    findNavController().navigate(
-                        R.id.action_postcodeFragment_to_createAccoutPasswordFragment,
-                        bundle
-                    )
-                }
+                checkForAddress()
             }
             R.id.btnFindAddress -> {
                 if (binding.tiePostCode.length() > 0) {
@@ -242,7 +264,63 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             R.id.tieAddress -> {
                 binding.spnAddress.performClick()
             }
+            R.id.tieCountry -> {
+                binding.spinnerCountry.performClick()
 
+            }
+
+        }
+    }
+
+
+    private fun checkForAddress() {
+        binding.apply {
+            if (model?.countryType == "UK") {
+
+//                if (addressList?.size > 0 && addressList[addressList.size - 1] == Constants.NOT_IN_THE_LIST) {
+                when {
+//                        TextUtils.isEmpty(tieHouseNumber.text?.toString()) ->
+//                            setError(tieHouseNumber, "Please enter house number")
+
+                    TextUtils.isEmpty(tieStreetName.text?.toString()) ->
+                        setError(tieStreetName, "Please enter street name")
+
+
+                    TextUtils.isEmpty(tieCity.text?.toString()) ->
+                        setError(tieCity, "Please enter city")
+
+                    else -> {
+                        navigate()
+                    }
+                }
+
+
+            } else {
+                when {
+                    TextUtils.isEmpty(tieCountry.text?.toString()) && TextUtils.equals(
+                        tieCountry.text?.toString(),
+                        "Country"
+                    ) -> setError(tieCountry, "Please select country")
+
+
+                    TextUtils.isEmpty(tieHouseNumber.text?.toString()) ->
+                        setError(tieHouseNumber, "Please enter house number")
+
+                    TextUtils.isEmpty(tieStreetName.text?.toString()) ->
+                        setError(tieStreetName, "Please enter street name")
+
+
+                    TextUtils.isEmpty(tieCity.text?.toString()) ->
+                        setError(tieCity, "Please enter city")
+
+                    TextUtils.isEmpty(tieNonUkPostCode.text?.toString()) ->
+                        setError(tieNonUkPostCode, "Please enter Post code")
+
+                    else -> {
+                        navigate()
+                    }
+                }
+            }
         }
     }
 
@@ -296,6 +374,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         }
     }
 
+    private fun setError(textInputEditText: TextInputEditText, errorMsg: String) {
+        textInputEditText.error = errorMsg
+    }
+
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -337,11 +419,13 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
             Logg.logging("Testing", "  countries list ${parent.getItemAtPosition(position)} ")
+            binding.tieCountry.setText("${parent.getItemAtPosition(position)}")
+            binding.enable = true
+            mCountry = "${parent.getItemAtPosition(position)}"
 
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
-
         }
     }
 

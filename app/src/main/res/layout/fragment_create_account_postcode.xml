@@ -120,9 +120,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:paddingBottom="@dimen/_30sdp"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/_30sdp">
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view_business"
@@ -131,8 +131,8 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    android:padding="@dimen/_10sdp"
                     android:checked="true"
+                    android:padding="@dimen/_10sdp"
                     android:text="@string/str_country_of_registraion"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
@@ -199,10 +199,10 @@
                     android:layout_marginBottom="26dp"
                     android:backgroundTint="@color/white"
                     android:letterSpacing="0"
-                    android:visibility="visible"
                     android:text="@string/find_address"
                     android:textAllCaps="false"
                     android:textColor="@color/green"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="@+id/tilPostCode"
                     app:layout_constraintStart_toStartOf="@+id/tilPostCode"
                     app:layout_constraintTop_toBottomOf="@+id/tilPostCode"
@@ -257,70 +257,106 @@
                     app:layout_constraintTop_toBottomOf="@+id/tilAddress" />
 
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:layout_width="0dp"
-                    android:id="@+id/barrier"
-                    android:layout_height="wrap_content"
-                    app:barrierAllowsGoneWidgets="false"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="switch_view_business"
-                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
-                    app:layout_constraintStart_toStartOf="@+id/tilAddress" />
+                <!--
+                                <androidx.constraintlayout.widget.Barrier
+                                    android:layout_width="0dp"
+                                    android:id="@+id/barrier"
+                                    android:layout_height="wrap_content"
+                                    app:barrierAllowsGoneWidgets="false"
+                                    app:barrierDirection="bottom"
+                                    app:constraint_referenced_ids="switch_view_business"
+                                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
+                                    app:layout_constraintStart_toStartOf="@+id/tilAddress" />
+                -->
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/tilCountry"
-                    android:layout_width="0dp"
-                    android:layout_height="0.1dp"
-                    android:background="@color/white"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
-                    app:layout_constraintStart_toStartOf="@+id/tilAddress"
-                    app:layout_constraintTop_toBottomOf="@+id/barrier" />
-
-
-<!--
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCountry"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayoutDrop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/str_country"
-                    android:visibility="gone"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconMode="custom"
-                    app:endIconTint="@color/green"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/barrier">
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="26dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/str_email"
+                    android:textColorHint="@color/black"
+                    android:visibility="visible"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tilNonUkPostCode"
+                    app:layout_constraintStart_toStartOf="@+id/tilNonUkPostCode"
+                    app:layout_constraintTop_toBottomOf="@+id/switch_view_business">
 
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tieCountry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:maxLength="12"
+                        android:drawableRight="@drawable/ic_vector_drop"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
                         android:singleLine="true"
+                        android:text="@string/str_country"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
+
                 </com.google.android.material.textfield.TextInputLayout>
--->
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerCountry"
+                    android:layout_width="0dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/tilCountry"
+                    app:layout_constraintStart_toStartOf="@+id/tilCountry"
+                    app:layout_constraintTop_toBottomOf="@+id/tilCountry" />
+
+
+                <!--
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/tilCountry"
+                                    style="@style/Widget.HeMobile.TextInputLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:hint="@string/str_country"
+                                    android:visibility="gone"
+                                    app:boxStrokeColor="@color/color_00703C"
+                                    app:endIconMode="custom"
+                                    app:endIconTint="@color/green"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/barrier">
+
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tieCountry"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="textPersonName"
+                                        android:maxLength="12"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_13ssp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                -->
 
 
                 <androidx.constraintlayout.widget.Barrier
-                    android:layout_width="0dp"
                     android:id="@+id/barrier1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="btnFindAddress,tilAddress,tilCountry"
-                    app:layout_constraintEnd_toEndOf="@+id/tilAddress"
-                    app:layout_constraintStart_toStartOf="@+id/tilAddress" />
+                    app:constraint_referenced_ids="btnFindAddress,tilAddress,spinnerCountry"
+                    app:layout_constraintEnd_toEndOf="@+id/tilCountry"
+                    app:layout_constraintStart_toStartOf="@+id/tilCountry" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -332,8 +368,6 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/str_house_number"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:endIconMode="custom"
-                    app:endIconTint="@color/green"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/barrier1">
@@ -419,6 +453,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:hint="@string/str_post_cde"
+                    android:visibility="gone"
                     app:boxStrokeColor="@color/color_00703C"
                     app:endIconMode="custom"
                     app:endIconTint="@color/green"

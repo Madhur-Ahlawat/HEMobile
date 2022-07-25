@@ -14,6 +14,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import com.google.common.base.Predicates.instanceOf
 import com.heandroid.R
+import com.heandroid.data.model.account.CountriesModel
+import com.heandroid.data.model.account.CountryCodes
 import com.heandroid.data.model.address.DataAddress
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
@@ -32,7 +34,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.anything
-import org.hamcrest.CoreMatchers.containsString
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -57,6 +58,8 @@ class CreateAccountPostCodeFragmentTest {
     val viewModel = mockk<CreateAccountPostCodeViewModel>(relaxed = true)
 
     private val addressesLiveData = MutableLiveData<Resource<List<DataAddress?>?>?>()
+    private val countriesLiveData = MutableLiveData<Resource<List<CountriesModel?>?>?>()
+    private val countryCodeLiveData = MutableLiveData<Resource<List<CountryCodes?>?>?>()
 
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
@@ -74,6 +77,9 @@ class CreateAccountPostCodeFragmentTest {
                 }
             )
         }
+        every { viewModel.addresses } returns addressesLiveData
+        every { viewModel.countriesList } returns countriesLiveData
+        every { viewModel.countriesCodeList } returns countryCodeLiveData
     }
 
     @Test
@@ -87,13 +93,12 @@ class CreateAccountPostCodeFragmentTest {
                 }
             )
         }
-        every { viewModel.addresses } returns addressesLiveData
+
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundl) {
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPersonaleInfo)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPostCode)).check(matches(isDisplayed()))
-            onView(withId(R.id.mcvContainer)).check(matches(isDisplayed()))
             onView(withId(R.id.tilPostCode)).check(matches(isDisplayed()))
             onView(withId(R.id.btnFindAddress)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
@@ -111,13 +116,12 @@ class CreateAccountPostCodeFragmentTest {
                 }
             )
         }
-        every { viewModel.addresses } returns addressesLiveData
+
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundl) {
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPersonaleInfo)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPostCode)).check(matches(isDisplayed()))
-            onView(withId(R.id.mcvContainer)).check(matches(isDisplayed()))
             onView(withId(R.id.tilPostCode)).check(matches(isDisplayed()))
             onView(withId(R.id.btnFindAddress)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
@@ -127,13 +131,12 @@ class CreateAccountPostCodeFragmentTest {
 
     @Test
     fun `test create account post code screen visibility for pay as you go`() {
-        every { viewModel.addresses } returns addressesLiveData
+
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundle) {
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPersonaleInfo)).check(matches(isDisplayed()))
             onView(withId(R.id.tvPostCode)).check(matches(isDisplayed()))
-            onView(withId(R.id.mcvContainer)).check(matches(isDisplayed()))
             onView(withId(R.id.tilPostCode)).check(matches(isDisplayed()))
             onView(withId(R.id.btnFindAddress)).check(matches(isDisplayed()))
             onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
@@ -141,13 +144,17 @@ class CreateAccountPostCodeFragmentTest {
     }
 
     @Test
-    fun `test create account post code screen, find address`() {
-        every { viewModel.addresses } returns addressesLiveData
+    fun `test create account post code screen, add address for non UK`() {
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
             navController.setCurrentDestination(R.id.postcodeFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
+            onView(withId(R.id.switch_view_business)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            val c1 = CountriesModel( "1234","11", "India")
+            val c2 = CountriesModel( "4567","67","China")
+            countriesLiveData.postValue(Resource.Success(listOf(c1, c2)))
             runTest {
                 onView(withId(R.id.tiePostCode)).check(matches(isDisplayed()))
                     .perform(ViewActions.clearText(), ViewActions.typeText("cm111aa"))
