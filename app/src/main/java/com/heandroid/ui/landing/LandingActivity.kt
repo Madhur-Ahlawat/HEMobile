@@ -18,6 +18,7 @@ import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Constants.FAILED_RETRY_SCREEN
 import com.heandroid.utils.common.Constants.LANDING_SCREEN
 import com.heandroid.utils.common.Constants.LOGOUT_SCREEN
 import com.heandroid.utils.common.Constants.SESSION_TIME_OUT
@@ -68,6 +69,9 @@ class LandingActivity : BaseActivity<Any?>() {
                     } else
                         startIntent(AuthActivity::class.java)
                 }
+                FAILED_RETRY_SCREEN -> {
+                    startIntent(AuthActivity::class.java)
+                }
                 else -> {
                     startIntent(AuthActivity::class.java)
                 }
@@ -96,6 +100,7 @@ class LandingActivity : BaseActivity<Any?>() {
                 LANDING_SCREEN -> setStartDestination(R.id.landingFragment)
                 LOGOUT_SCREEN -> setStartDestination(R.id.logoutFragment)
                 SESSION_TIME_OUT -> setStartDestination(R.id.sessionTimeOutFragment)
+                FAILED_RETRY_SCREEN -> setStartDestination(R.id.failedRetryFragment)
             }
         }
     }

@@ -26,6 +26,8 @@ class ErrorDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
 
     override fun init() {
         binding.tvMessage.text = arguments?.getString(Constants.DATA)
+        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCancelable(false)
     }
 
     override fun initCtrl() {

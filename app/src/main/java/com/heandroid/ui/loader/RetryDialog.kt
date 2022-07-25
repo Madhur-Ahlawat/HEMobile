@@ -1,5 +1,6 @@
 package com.heandroid.ui.loader
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,36 +18,32 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RetryDialog : BaseDialog<DialogRetryBinding>(), View.OnClickListener {
 
-    @Inject
-    lateinit var sessionManager: SessionManager
+    var listener: OnRetryClickListener? = null
 
     override fun getDialogBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = DialogRetryBinding.inflate(inflater, container, false)
 
-    override fun init() {
-//        binding.tvMessage.text = arguments?.getString(Constants.DATA)
-    }
+    override fun init() {}
 
     override fun initCtrl() {
         binding.retryBtn.setOnClickListener(this)
     }
 
-    override fun observer() {
-    }
+    override fun observer() {}
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.retryBtn -> {
                 dismiss()
-//                if (arguments?.getString(Constants.DATA)
-//                        ?.contains("Access token expired") == true
-//                ) {
-//                    sessionManager.clearAll()
-//                    requireActivity().startNewActivityByClearingStack(AuthActivity::class.java)
-//                }
+                listener?.onRetryClick()
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = parentFragment as OnRetryClickListener
     }
 }

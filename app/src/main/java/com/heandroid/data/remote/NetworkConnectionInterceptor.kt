@@ -24,7 +24,6 @@ class NetworkConnectionInterceptor @Inject constructor(private val mContext: Con
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isConnected) {
             throw NoConnectivityException()
-            // Throwing our custom exception 'NoConnectivityException'
         }
 
         val builder = chain.request().newBuilder()
