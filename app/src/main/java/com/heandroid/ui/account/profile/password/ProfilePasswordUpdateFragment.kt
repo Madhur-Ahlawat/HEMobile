@@ -35,9 +35,6 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
         FragmentProfilePasswordUpdateBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is ProfileActivity)
-            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
-
         binding.enable = false
         binding.data = UpdateAccountPassword(
             currentPassword = "", newPassword = "", confirmPassword = ""

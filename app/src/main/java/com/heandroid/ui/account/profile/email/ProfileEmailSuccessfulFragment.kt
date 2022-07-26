@@ -29,7 +29,6 @@ class ProfileEmailSuccessfulFragment : BaseFragment<FragmentProfileEmailSuccessf
         FragmentProfileEmailSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.data = arguments?.getParcelable(Constants.DATA)
     }
 

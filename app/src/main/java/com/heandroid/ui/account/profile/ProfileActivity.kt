@@ -18,13 +18,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
 
-    private var accountType: String?= Constants.PERSONAL_ACCOUNT
+    @Inject
+    lateinit var sessionManager: SessionManager
+    private var accountType: String? = Constants.PERSONAL_ACCOUNT
     private var isSecondaryUser: Boolean = false
     private lateinit var binding: ActivityProfileBinding
-
-    @Inject
-    lateinit var sessionManager : SessionManager
-
     private lateinit var navController: NavController
 
     override fun initViewBinding() {
@@ -37,8 +35,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         setFragmentInView()
     }
 
-    override fun observeViewModel() {
-    }
+    override fun observeViewModel() {}
 
     override fun onStart() {
         super.onStart()
@@ -50,7 +47,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         loadSession()
     }
 
-    private fun loadSession(){
+    private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
@@ -59,34 +56,35 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         sessionManager.clearAll()
         Utils.sessionExpired(this)
     }
+
     private fun setFragmentInView() {
         val navGraph = navController.graph
 
-        when  {
-          ! isSecondaryUser && accountType== Constants.PERSONAL_ACCOUNT -> {// oldGraph.startDestination = R.id.viewProfile }
-              navGraph.setStartDestination(R.id.viewProfile)
-              val startDestId = R.id.viewProfile
-              navGraph.apply {
-                  setStartDestination(startDestId)
-              }
+        when {
+            !isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
+                // oldGraph.startDestination = R.id.viewProfile
+                navGraph.setStartDestination(R.id.viewProfile)
+                val startDestId = R.id.viewProfile
+                navGraph.apply {
+                    setStartDestination(startDestId)
+                }
 
-          }
-           !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT ->
-           {
-               navGraph.setStartDestination(R.id.viewBusinessAccountProfileFragment)
-           }
+            }
+            !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {
+                navGraph.setStartDestination(R.id.viewBusinessAccountProfileFragment)
+            }
 
-            isSecondaryUser && accountType ==Constants.PERSONAL_ACCOUNT->{
+            isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
                 navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
-            isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT->{
-                Log.d("nomi","nated")
+            isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {
                 navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
-         else->{   navGraph.setStartDestination(R.id.viewPayGAccountProfileFragment) }
+            else -> {
+                navGraph.setStartDestination(R.id.viewPayGAccountProfileFragment)
+            }
         }
         navController.graph = navGraph
     }
 
-
-   }
+}

@@ -37,8 +37,6 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
         FragmentProfileConfirmEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is ProfileActivity)
-            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.data = arguments?.getParcelable(DATA)
         binding.tvMsg.text = getString(R.string.send_security_code_msg, binding.data?.emailAddress)
         loader = LoaderDialog()

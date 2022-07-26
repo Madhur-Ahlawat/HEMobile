@@ -29,8 +29,6 @@ class ProfilePasswordSuccessfulFragment : BaseFragment<FragmentProfilePasswordSu
         FragmentProfilePasswordSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is ProfileActivity)
-            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
         binding.data = arguments?.getParcelable(Constants.DATA)
         updatePinFlow = arguments?.getBoolean(Constants.UPDATE_PIN_FLOW, false) == true
         if (updatePinFlow) {

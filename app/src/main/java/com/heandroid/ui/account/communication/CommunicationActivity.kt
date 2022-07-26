@@ -24,7 +24,7 @@ class CommunicationActivity : BaseActivity<ActivityCommunicationBinding>(), Logo
     override fun initViewBinding() {
         binding = ActivityCommunicationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        customToolbar(getString(R.string.str_communication_preferences))
+        customToolbar(getString(R.string.str_communications))
         initCtrl()
     }
 

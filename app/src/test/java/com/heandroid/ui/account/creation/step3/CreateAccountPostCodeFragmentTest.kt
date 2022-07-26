@@ -47,7 +47,6 @@ import java.util.EnumSet.allOf
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
-@LargeTest
 class CreateAccountPostCodeFragmentTest {
 
     @get:Rule

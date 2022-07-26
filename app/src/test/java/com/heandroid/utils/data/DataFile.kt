@@ -10,19 +10,27 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryItem
 import com.heandroid.data.model.makeoneofpayment.*
 import com.heandroid.data.model.manualtopup.PaymentWithExistingCardModel
 import com.heandroid.data.model.manualtopup.PaymentWithNewCardModel
+import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.data.model.notification.AlertMessage
 
 object DataFile {
 
-    fun getUsedTollTransaction(id : String = "1234"): UsedTollTransactionResponse {
+    fun getSecondaryAccountData(): SecondaryAccountData {
+        return SecondaryAccountData(
+            "", "", "", "",
+            "", "", "", "", ""
+        )
+    }
+
+    fun getUsedTollTransaction(id: String = "1234"): UsedTollTransactionResponse {
         return UsedTollTransactionResponse(
             id, "", "", "",
-            "", "", "","", "", "", "",
-            "", "", "","", "", "", "",
-            "", "", "","", "", "", "",
-            "", "", "","", "", "", "",
-            "", "", "","", "", "", "",
-            "", "", "","", ""
+            "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "",
+            "", "", "", "", ""
         )
     }
 

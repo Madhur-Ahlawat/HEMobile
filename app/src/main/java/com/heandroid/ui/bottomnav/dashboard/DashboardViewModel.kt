@@ -136,26 +136,26 @@ class DashboardViewModel @Inject constructor(
                 delay(100)
                 val callCrossingCount = async { repository.crossingHistoryApiCall(request) }
                 delay(100)
-                val callThreshold = async { repository.getThresholdAmountApiCAll() }
-                delay(100)
+//                val callThreshold = async { repository.getThresholdAmountApiCAll() }
+//                delay(100)
                 val callOverview = async { repository.getAccountDetailsApiCall() }
                 delay(100)
                 val callAlerts = async { repository.getAlertMessages() }
                 try {
                     vehicleCountResponse = callVehicleCount.await()
                     crossingCountResponse = callCrossingCount.await()
-                    thresholdAmountResponse = callThreshold.await()
+//                    thresholdAmountResponse = callThreshold.await()
                     overviewResponse = callOverview.await()
                     alertsResponse = callAlerts.await()
                     if (vehicleCountResponse?.isSuccessful == true &&
                         crossingCountResponse?.isSuccessful == true &&
-                        thresholdAmountResponse?.isSuccessful == true &&
+//                        thresholdAmountResponse?.isSuccessful == true &&
                         overviewResponse?.isSuccessful == true &&
                         alertsResponse?.isSuccessful == true
                     ) {
                         _vehicleListVal.value = Resource.Success(vehicleCountResponse.body())
                         _crossingHistoryVal.value = Resource.Success(crossingCountResponse.body())
-                        _thresholdAmountVal.value = Resource.Success(thresholdAmountResponse.body())
+//                        _thresholdAmountVal.value = Resource.Success(thresholdAmountResponse.body())
                         _accountDetailsVal.value = Resource.Success(overviewResponse.body())
                         _alertsVal.value = Resource.Success(alertsResponse.body())
 

@@ -22,21 +22,22 @@ import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
-
 @AndroidEntryPoint
 class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnClickListener {
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewProfileBinding = FragmentViewProfileBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentViewProfileBinding = FragmentViewProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-       // loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.accountDetail()
-        //(requireActivity() as ProfileActivity).setHeaderTitle("Your details")
     }
 
     override fun initCtrl() {
@@ -44,32 +45,39 @@ class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnC
     }
 
     override fun observer() {
-        observe(viewModel.accountDetail,::handleAccountDetail)
+        observe(viewModel.accountDetail, ::handleAccountDetail)
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btnEditDetail -> {
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.DATA,binding.model)
-                findNavController().navigate(R.id.action_viewProfile_to_personalInfoFragment,bundle)
+                bundle.putParcelable(Constants.DATA, binding.model)
+                findNavController().navigate(
+                    R.id.action_viewProfile_to_personalInfoFragment,
+                    bundle
+                )
             }
         }
     }
 
-    private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
-        try {
-           // loader?.dismiss()
-            when(status){
-                is  Resource.Success -> {
-                    status.data?.run {
-                        if(status.equals("500")) showError(binding.root,message)
-                        else binding.model= this
-                    }
+    private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.run {
+                    if (status.equals("500")) showError(binding.root, message)
+                    else binding.model = this
                 }
-                is  Resource.DataError ->{ showError(binding.root,status.errorMsg) }
             }
-        }catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 }

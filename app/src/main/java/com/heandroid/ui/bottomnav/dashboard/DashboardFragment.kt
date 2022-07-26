@@ -104,7 +104,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         observe(dashboardViewModel.getAlertsVal, ::handleAlertsData)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
-        observe(dashboardViewModel.thresholdAmountVal, ::handleThresholdAmountData)
+//        observe(dashboardViewModel.thresholdAmountVal, ::handleThresholdAmountData)
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
@@ -177,7 +177,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                             }
                         }
                     }
-                    //setNotificationAdapter(it.messageList)
                 }
             }
             is Resource.DataError -> {
@@ -190,13 +189,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     }
 
-    private fun setNotificationAdapter(notificationList: List<AlertMessage?>?) {
-        binding.rvNotification.apply {
-            adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
-            layoutManager = LinearLayoutManager(requireActivity())
-            setHasFixedSize(true)
-        }
-    }
+//    private fun setNotificationAdapter(notificationList: List<AlertMessage?>?) {
+//        binding.rvNotification.apply {
+//            adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
+//            layoutManager = LinearLayoutManager(requireActivity())
+//            setHasFixedSize(true)
+//        }
+//    }
 
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
         if (loader?.isVisible == true) {
@@ -230,35 +229,35 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    private fun handleThresholdAmountData(status: Resource<ThresholdAmountApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                status.data?.let {
-                    it.thresholdAmountVo?.let { amount ->
-                        //stViewBalance(amount)
-                    }
-                }
-            }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-            else -> {
+//    private fun handleThresholdAmountData(status: Resource<ThresholdAmountApiResponse?>?) {
+//        if (loader?.isVisible == true) {
+//            loader?.dismiss()
+//        }
+//        when (status) {
+//            is Resource.Success -> {
+//                status.data?.let {
+//                    it.thresholdAmountVo?.let { amount ->
+//                        //stViewBalance(amount)
+//                    }
+//                }
+//            }
+//            is Resource.DataError -> {
+//                ErrorUtil.showError(binding.root, status.errorMsg)
+//            }
+//            else -> {
+//
+//            }
+//        }
+//
+//    }
 
-            }
-        }
-
-    }
-
-    private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
-        binding.apply {
-            tvTitle.text = requireActivity().getString(
-                R.string.str_threshold_val_msg,
-                thresholdAmountData.customerAmount,
-                thresholdAmountData.thresholdAmount
-            )
-        }
-    }
+//    private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
+//        binding.apply {
+//            tvTitle.text = requireActivity().getString(
+//                R.string.str_threshold_val_msg,
+//                thresholdAmountData.customerAmount,
+//                thresholdAmountData.thresholdAmount
+//            )
+//        }
+//    }
 }

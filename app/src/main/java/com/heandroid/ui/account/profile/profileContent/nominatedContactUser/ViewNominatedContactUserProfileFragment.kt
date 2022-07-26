@@ -12,25 +12,21 @@ import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewNominatedContactUserProfileBinding
-import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.utils.common.*
-import com.heandroid.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNominatedContactUserProfileBinding>(), View.OnClickListener{
+class ViewNominatedContactUserProfileFragment :
+    BaseFragment<FragmentViewNominatedContactUserProfileBinding>(), View.OnClickListener {
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var ncId : String =""
-   val list: MutableList<SecondaryAccountData?> = ArrayList()
+    private var ncId: String = ""
+    val list: MutableList<SecondaryAccountData?> = ArrayList()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -38,15 +34,13 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )= FragmentViewNominatedContactUserProfileBinding.inflate(inflater, container, false)
+    ) = FragmentViewNominatedContactUserProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.accountDetail()
-       // viewModel.getNominatedContacts()
-       // (requireActivity() as ProfileActivity).setHeaderTitle("Your details")
     }
 
     override fun initCtrl() {
@@ -56,99 +50,77 @@ class ViewNominatedContactUserProfileFragment  : BaseFragment<FragmentViewNomina
     }
 
     override fun observer() {
-        observe(viewModel.accountDetail,::handleAccountDetail)
-        observe(viewModel.getNominatedContactsApiVal ,::handleNominatedContactData)
-
+        observe(viewModel.accountDetail, ::handleAccountDetail)
+        observe(viewModel.getNominatedContactsApiVal, ::handleNominatedContactData)
     }
 
     private fun handleNominatedContactData(status: Resource<NominatedContactRes?>?) {
-        try {
-
-
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-
-                    if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
-                        list.clear()
-                        list.addAll(status.data?.secondaryAccountDetailsType?.secondaryAccountList!!)
-                        for (item in list)
-                        {
-                            if(item?.secAccountRowId.equals(ncId))
-                            {
-                                binding.nominated=item
-                            }
-
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
+                    list.clear()
+                    list.addAll(status.data?.secondaryAccountDetailsType?.secondaryAccountList!!)
+                    for (item in list) {
+                        if (item?.secAccountRowId.equals(ncId)) {
+                            binding.nominated = item
                         }
-//                        list.filter { x -> x?.secAccountRowId == ncId  }
-
-                    } else {
-
                     }
                 }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
             }
-        }
-        catch (e:Exception)
-        {
-           ErrorUtil.showError(binding.root, e.message)
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btnEditDetail -> {
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.NOMINATED_ACCOUNT_DATA,binding.nominated)
-                bundle.putParcelable(Constants.DATA,binding.model)
-                findNavController().navigate(R.id.action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo,bundle)
+                bundle.putParcelable(Constants.NOMINATED_ACCOUNT_DATA, binding.nominated)
+                bundle.putParcelable(Constants.DATA, binding.model)
+                findNavController().navigate(
+                    R.id.action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo,
+                    bundle
+                )
             }
 
-            R.id.rlAccountHolder->{
+            R.id.rlAccountHolder -> {
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.DATA,binding.model)
-                findNavController().navigate(R.id.action_viewNominatedContactUserProfile_to_viewPrimaryAccountHolderProfile,bundle)
+                bundle.putParcelable(Constants.DATA, binding.model)
+                findNavController().navigate(
+                    R.id.action_viewNominatedContactUserProfile_to_viewPrimaryAccountHolderProfile,
+                    bundle
+                )
             }
 
         }
     }
 
-    private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?){
-        try {
+    private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is  Resource.Success -> {
-                    status.data?.run {
-                        if(status.equals("500")) ErrorUtil.showError(binding.root, message)
-                        else
-                        {
-                            // fetch nominated user data
-                            ncId = status.data.accountInformation?.ncId ?:""
-                            viewModel.getNominatedContacts()
-                            binding.model= this
-//                            setProfileView()
-                        }
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.run {
+                    if (status.equals("500")) ErrorUtil.showError(binding.root, message)
+                    else {
+                        ncId = status.data.accountInformation?.ncId ?: ""
+                        viewModel.getNominatedContacts()
+                        binding.model = this
                     }
                 }
-                is  Resource.DataError ->{
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
             }
-        }catch (e: Exception){}
-    }
-
-    private fun setProfileView() {
-
-        when(sessionManager.getAccountType())
-        {
-            Constants.PERSONAL_ACCOUNT->{
-
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
             }
-
-            Constants.BUSINESS_ACCOUNT->{
-
+            else -> {
             }
         }
     }

@@ -37,9 +37,6 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
         FragmentProfileEmailVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is ProfileActivity)
-            requireActivity().findViewById<AppCompatTextView>(R.id.tvYourDetailLabel).gone()
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.enable = true
