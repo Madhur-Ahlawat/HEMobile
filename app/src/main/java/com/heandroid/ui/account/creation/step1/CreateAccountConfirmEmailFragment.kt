@@ -1,5 +1,6 @@
 package com.heandroid.ui.account.creation.step1
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,9 @@ import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.databinding.FragmentCreateAccountConfirmEmailBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
@@ -30,12 +33,15 @@ import java.lang.Exception
 
 @AndroidEntryPoint
 class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConfirmEmailBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, OnRetryClickListener {
 
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var requestModel: CreateAccountRequestModel? = null
     private var isEditEmail: Int? = null
+    private var count = 1
+    private var isCodeCheckApi = true
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountConfirmEmailBinding.inflate(inflater, container, false)
@@ -120,8 +126,11 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        isCodeCheckApi = true
         when (resource) {
             is Resource.Success -> {
+                count = 1
+
                 if (resource.data?.status?.equals("500") == true) showError(
                     binding.root,
                     resource.data.message
@@ -129,7 +138,18 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
                 else loadFragment()
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorMsg.contains("Connect your VPN", true)) {
+                    if (count > Constants.RETRY_COUNT) {
+                        requireActivity().startActivity(
+                            Intent(context, LandingActivity::class.java)
+                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                    ErrorUtil.showRetry(this)
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }
@@ -158,16 +178,41 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        isCodeCheckApi = false
         when (resource) {
             is Resource.Success -> {
+                count = 1
                 requireContext().showToast("code sent successfully")
                 requestModel?.referenceId = resource.data?.referenceId?.toLongOrNull()
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorMsg.contains("Connect your VPN", true)) {
+                    if (count > Constants.RETRY_COUNT) {
+                        requireActivity().startActivity(
+                            Intent(context, LandingActivity::class.java)
+                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                    ErrorUtil.showRetry(this)
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }
+        }
+    }
+
+    override fun onRetryClick() {
+        if(isCodeCheckApi){
+            count++
+            binding.btnAction.performClick()
+
+        }else{
+            count++
+            binding.tvResend.performClick()
+
         }
     }
 }

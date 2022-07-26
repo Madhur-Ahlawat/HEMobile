@@ -1,5 +1,6 @@
 package com.heandroid.ui.account.creation.step1
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,9 @@ import com.heandroid.data.model.createaccount.EmailVerificationResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentCreateAccountEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
+import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
 import com.heandroid.utils.common.Constants.DATA
@@ -29,12 +32,16 @@ import java.util.logging.Logger
 
 @AndroidEntryPoint
 class CreateAccountEmailVerificationFragment :
-    BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener {
+    BaseFragment<FragmentCreateAccountEmailVerificationBinding>(), View.OnClickListener,
+    OnRetryClickListener {
 
     private var loader: LoaderDialog? = null
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var requestModel: CreateAccountRequestModel? = null
     private var isEditEmail: Int? = null
+    private var count = 1
+    private var isCodeCheckApi = true
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountEmailVerificationBinding.inflate(inflater, container, false)
@@ -126,8 +133,10 @@ class CreateAccountEmailVerificationFragment :
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        isCodeCheckApi = true
         when (resource) {
             is Resource.Success -> {
+                count = 1
                 loader?.show(requireActivity().supportFragmentManager, "")
 
                 val request =
@@ -137,7 +146,18 @@ class CreateAccountEmailVerificationFragment :
 
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorMsg.contains("Connect your VPN", true)) {
+                    if (count > Constants.RETRY_COUNT) {
+                        requireActivity().startActivity(
+                            Intent(context, LandingActivity::class.java)
+                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                    ErrorUtil.showRetry(this)
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
 
@@ -150,8 +170,11 @@ class CreateAccountEmailVerificationFragment :
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        isCodeCheckApi = false
+
         when (resource) {
             is Resource.Success -> {
+                count = 1
                 if (resource.data?.statusCode?.equals("0") == true) {
                     requestModel?.emailAddress = binding.etEmail.text.toString().trim()
                     requestModel?.referenceId = resource.data.referenceId?.toLongOrNull()
@@ -173,7 +196,18 @@ class CreateAccountEmailVerificationFragment :
                 }
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorMsg.contains("Connect your VPN", true)) {
+                    if (count > Constants.RETRY_COUNT) {
+                        requireActivity().startActivity(
+                            Intent(context, LandingActivity::class.java)
+                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                    ErrorUtil.showRetry(this)
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
 
@@ -201,5 +235,23 @@ class CreateAccountEmailVerificationFragment :
             EmailValidationModel(enable = true, email = binding.etEmail.text.toString(), "")
         else binding.model =
             EmailValidationModel(enable = false, email = binding.etEmail.text.toString(), "")
+    }
+
+    override fun onRetryClick() {
+        if(isCodeCheckApi){
+            count++
+            sendEmailVerificationRequest()
+
+        }else{
+            count++
+            loader?.show(requireActivity().supportFragmentManager, "")
+
+            val request =
+                EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
+
+            createAccountViewModel.emailVerificationApi(request)
+
+        }
+
     }
 }
