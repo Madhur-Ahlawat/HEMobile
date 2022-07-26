@@ -60,9 +60,7 @@ class CreateAccountPostCodeFragmentTest {
     private val addressesLiveData = MutableLiveData<Resource<List<DataAddress?>?>?>()
     private val countriesLiveData = MutableLiveData<Resource<List<CountriesModel?>?>?>()
     private val countryCodeLiveData = MutableLiveData<Resource<List<CountryCodes?>?>?>()
-
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
-
     private lateinit var bundle: Bundle
 
     @Before
@@ -152,26 +150,30 @@ class CreateAccountPostCodeFragmentTest {
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.switch_view_business)).check(matches(isDisplayed()))
                 .perform(BaseActions.forceClick())
-            val c1 = CountriesModel( "1234","11", "India")
-            val c2 = CountriesModel( "4567","67","China")
+            val c1 = CountriesModel("1234", "11", "India")
+            val c2 = CountriesModel("4567", "67", "China")
+
             countriesLiveData.postValue(Resource.Success(listOf(c1, c2)))
             runTest {
-                onView(withId(R.id.tiePostCode)).check(matches(isDisplayed()))
-                    .perform(ViewActions.clearText(), ViewActions.typeText("cm111aa"))
+                onView(withId(R.id.tieHouseNumber)).check(matches(isDisplayed()))
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
                 Espresso.closeSoftKeyboard()
                 delay(500)
+                onView(withId(R.id.tieStreetName)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("street"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieCity)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("city"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieNonUkPostCode)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
+                    .perform(ViewActions.click())
             }
-            onView(withId(R.id.btnFindAddress)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
-            val list1 = DataAddress(postcode = "1234")
-            val list2 = DataAddress(postcode = "4567")
-            addressesLiveData.postValue(Resource.Success(listOf(list1, list2)))
-            onView(withId(R.id.tieAddress)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
-            onData(anything()).atPosition(1).perform(ViewActions.click())
-            onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
-
             Assert.assertEquals(
                 navController.currentDestination?.id,
                 R.id.createAccoutPasswordFragment
@@ -180,14 +182,7 @@ class CreateAccountPostCodeFragmentTest {
     }
 
     @Test
-    fun `test create account post code screen, find address, edit account type for personal`() {
-        bundle.apply {
-            putInt(
-                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
-                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
-            )
-        }
-        every { viewModel.addresses } returns addressesLiveData
+    fun `test create account post code screen, add address for UK`() {
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
             navController.setCurrentDestination(R.id.postcodeFragment)
@@ -205,10 +200,24 @@ class CreateAccountPostCodeFragmentTest {
             val list2 = DataAddress(postcode = "4567")
             addressesLiveData.postValue(Resource.Success(listOf(list1, list2)))
             onView(withId(R.id.tieAddress)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+                .perform(BaseActions.forceClick())
             onData(anything()).atPosition(1).perform(ViewActions.click())
-            onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+            runTest {
+                onView(withId(R.id.tieHouseNumber)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieStreetName)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("street"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieCity)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("city"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
+                    .perform(ViewActions.click())
+            }
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
@@ -218,7 +227,7 @@ class CreateAccountPostCodeFragmentTest {
     }
 
     @Test
-    fun `test create account post code screen, find address, edit account type for business`() {
+    fun `test create account post code screen, add address for non UK with edit account type for business`() {
         val bundl = Bundle().apply {
             putParcelable(
                 ConstantsTest.CREATE_ACCOUNT_DATA,
@@ -232,7 +241,59 @@ class CreateAccountPostCodeFragmentTest {
                 Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
             )
         }
-        every { viewModel.addresses } returns addressesLiveData
+        launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundl) {
+            navController.setGraph(R.navigation.nav_graph_account_creation)
+            navController.setCurrentDestination(R.id.postcodeFragment)
+            Navigation.setViewNavController(requireView(), navController)
+            onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
+            onView(withId(R.id.switch_view_business)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            val c1 = CountriesModel("1234", "11", "India")
+            val c2 = CountriesModel("4567", "67", "China")
+
+            countriesLiveData.postValue(Resource.Success(listOf(c1, c2)))
+            runTest {
+                onView(withId(R.id.tieHouseNumber)).check(matches(isDisplayed()))
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieStreetName)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("street"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieCity)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("city"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieNonUkPostCode)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
+                    .perform(ViewActions.click())
+            }
+            Assert.assertEquals(
+                navController.currentDestination?.id,
+                R.id.createAccoutPasswordFragment
+            )
+        }
+    }
+
+    @Test
+    fun `test create account post code screen, add address for UK with edit account type for business`() {
+        val bundl = Bundle().apply {
+            putParcelable(
+                ConstantsTest.CREATE_ACCOUNT_DATA,
+                DataFile.getCreateAccountRequestModel().apply {
+                    accountType = Constants.BUSINESS_ACCOUNT
+                    planType = null
+                }
+            )
+            putInt(
+                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+            )
+        }
         launchFragmentInHiltContainer<CreateAccountPostCodeFragment>(bundl) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
             navController.setCurrentDestination(R.id.postcodeFragment)
@@ -250,10 +311,25 @@ class CreateAccountPostCodeFragmentTest {
             val list2 = DataAddress(postcode = "4567")
             addressesLiveData.postValue(Resource.Success(listOf(list1, list2)))
             onView(withId(R.id.tieAddress)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+                .perform(BaseActions.forceClick())
             onData(anything()).atPosition(1).perform(ViewActions.click())
-            onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+            runTest {
+                onView(withId(R.id.tieHouseNumber)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("1234"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieStreetName)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("street"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.tieCity)).perform(BaseActions.betterScrollTo())
+                    .perform(ViewActions.clearText(), ViewActions.typeText("city"))
+                Espresso.closeSoftKeyboard()
+                delay(500)
+                onView(withId(R.id.btnAction)).check(matches(isDisplayed()))
+                    .perform(ViewActions.click())
+            }
+
             Assert.assertEquals(
                 navController.currentDestination?.id,
                 R.id.createAccoutPasswordFragment

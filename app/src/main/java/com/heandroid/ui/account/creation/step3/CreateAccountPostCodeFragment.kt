@@ -39,15 +39,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcodeBinding>(),
     View.OnClickListener {
 
+    private var mCountry = "UK"
     private var loader: LoaderDialog? = null
     private var isEditAccountType: Int? = null
-
-    private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var model: CreateAccountRequestModel? = null
-
     private var addressList: MutableList<String> = ArrayList()
     private var countriesList: MutableList<String> = ArrayList()
     private var mainList: MutableList<DataAddress?> = ArrayList()
+    private val viewModel: CreateAccountPostCodeViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostcodeBinding.inflate(inflater, container, false)
@@ -147,49 +146,43 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     }
 
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-                    countriesList.clear()
-                    response.data?.forEach {
-                        countriesList.add(it?.countryName!!)
-                    }
-                    binding.apply {
-                        spinnerCountry.setSpinnerAdapter(countriesList)
-                        spinnerCountry.onItemSelectedListener = countriesSpinnerListener
-
-                    }
-
+        }
+        when (response) {
+            is Resource.Success -> {
+                countriesList.clear()
+                response.data?.forEach {
+                    countriesList.add(it?.countryName!!)
                 }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
+                binding.apply {
+                    spinnerCountry.setSpinnerAdapter(countriesList)
+                    spinnerCountry.onItemSelectedListener = countriesSpinnerListener
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
         }
-
-
     }
 
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
-
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
-                }
-            }
-        } catch (e: Exception) {
         }
-
+        when (response) {
+            is Resource.Success -> {
+            }
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
-    private var mCountry = "UK"
     private fun navigate() {
         if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
             binding.switchViewBusiness.gone()
@@ -325,53 +318,55 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     }
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
+        }
+        when (response) {
+            is Resource.Success -> {
 
-                    addressList.clear()
-                    mainList = response.data?.toMutableList() ?: ArrayList()
-                    addressList.add(0, "Select Address")
-                    var list: MutableList<String>? = null
-                    for (address: DataAddress? in mainList) {
-                        list = ArrayList()
-                        address?.let {
-                            list.add(address.town!!)
-                            list.add(address.street!!)
-                            list.add(address.locality!!)
-                            list.add(address.country!!)
-                            addressList.add(TextUtils.join(",", list))
-                        }
-                    }
-                    addressList.add(Constants.NOT_IN_THE_LIST)
-                    binding.apply {
-
-                        spnAddress.setSpinnerAdapter(addressList)
-                        spnAddress.onItemSelectedListener = spinnerListener
-
-                        btnFindAddress.gone()
-                        tilAddress.visible()
-                        model?.zipCode1 = binding.tiePostCode.text.toString()
-                        when (model?.planType) {
-                            PAYG -> {
-                                model?.countryType = null
-                                model?.city = null
-                                model?.stateType = null
-                                enable = true
-                            }
-                        }
-
-                        tvChange.visible()
-                        tilPostCode.endIconDrawable = null
+                addressList.clear()
+                mainList = response.data?.toMutableList() ?: ArrayList()
+                addressList.add(0, "Select Address")
+                var list: MutableList<String>? = null
+                for (address: DataAddress? in mainList) {
+                    list = ArrayList()
+                    address?.let {
+                        list.add(address.town!!)
+                        list.add(address.street!!)
+                        list.add(address.locality!!)
+                        list.add(address.country!!)
+                        addressList.add(TextUtils.join(",", list))
                     }
                 }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
+                addressList.add(Constants.NOT_IN_THE_LIST)
+                binding.apply {
+
+                    spnAddress.setSpinnerAdapter(addressList)
+                    spnAddress.onItemSelectedListener = spinnerListener
+
+                    btnFindAddress.gone()
+                    tilAddress.visible()
+                    model?.zipCode1 = binding.tiePostCode.text.toString()
+                    when (model?.planType) {
+                        PAYG -> {
+                            model?.countryType = null
+                            model?.city = null
+                            model?.stateType = null
+                            enable = true
+                        }
+                    }
+
+                    tvChange.visible()
+                    tilPostCode.endIconDrawable = null
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
         }
+
     }
 
     private fun setError(textInputEditText: TextInputEditText, errorMsg: String) {
@@ -395,10 +390,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 binding.tieCity.setText(model?.city)
 
             }
-            Logg.logging(
-                "Testing",
-                "  addresses list list ${parent.getItemAtPosition(position)} "
-            )
 
             when (model?.planType) {
                 PAYG -> {
@@ -418,7 +409,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     private val countriesSpinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-            Logg.logging("Testing", "  countries list ${parent.getItemAtPosition(position)} ")
             binding.tieCountry.setText("${parent.getItemAtPosition(position)}")
             binding.enable = true
             mCountry = "${parent.getItemAtPosition(position)}"
