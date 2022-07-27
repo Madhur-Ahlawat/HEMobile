@@ -1,8 +1,8 @@
 package com.heandroid.ui.base
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
+import com.adobe.marketing.mobile.*
+import com.heandroid.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.HiltAndroidApp
 import java.util.*
@@ -22,6 +22,22 @@ class BaseApplication : Application() {
     override fun onCreate() {
         INSTANCE = this@BaseApplication
         super.onCreate()
+        MobileCore.setApplication(this)
+        MobileCore.setLogLevel(LoggingMode.DEBUG)
+
+        try {
+            Analytics.registerExtension()
+            Identity.registerExtension()
+            Lifecycle.registerExtension()
+            Signal.registerExtension()
+            UserProfile.registerExtension()
+            MobileCore.start {
+
+                MobileCore.configureWithAppID(ADOBE_ENVIRONMENT_KEY)
+            }
+        } catch (e: InvalidInitException) {
+
+        }
     }
 
     fun setSessionTime() {

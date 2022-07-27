@@ -106,6 +106,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     tieStreetName.setText("")
                     tieCity.setText("")
                     tieHouseNumber.setText("")
+                    tieNonUkPostCode.setText("")
 
                 } else {
                     tilNonUkPostCode.visible()
@@ -118,6 +119,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     tieStreetName.setText("")
                     tieCity.setText("")
                     tieHouseNumber.setText("")
+                    tiePostCode.setText("")
 
                     if (countriesList.size == 0 && countriesList.isEmpty()) {
                         loader?.show(
@@ -184,6 +186,15 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     }
 
     private fun navigate() {
+
+        val mPostCode = if (binding.tiePostCode.text.toString().isEmpty()) binding.tieNonUkPostCode.text.toString() else binding.tiePostCode.text.toString()
+
+        model?.city = binding.tieCity.text.toString()
+        model?.stateType = "HE"
+        model?.zipCode1 = mPostCode
+        model?.address1 = binding.tieStreetName.text.toString()
+        model?.countryType = mCountry
+
         if (model?.accountType == Constants.PERSONAL_ACCOUNT) {
             binding.switchViewBusiness.gone()
             val bundle = Bundle().apply {
@@ -202,20 +213,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         } else {
             binding.switchViewBusiness.visible()
-            var country = "UK"
-            country = if (!binding.switchViewBusiness.isChecked) {
-                "Non-UK"
-            } else {
-                "UK"
-            }
 
-            model?.city = binding.tieCity.text.toString()
-            model?.stateType = "HE"
-            model?.zipCode1 = if (binding.tiePostCode.text.toString()
-                    .isEmpty()
-            ) binding.tiePostCode.text.toString() else binding.tieNonUkPostCode.text.toString()
-            model?.address1 = binding.tieStreetName.text.toString()
-            model?.countryType = mCountry
 
             val bundle = Bundle().apply {
                 putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
