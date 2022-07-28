@@ -16,17 +16,13 @@ import com.heandroid.R
 import com.heandroid.databinding.FragmentFailedRetryBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.extn.gone
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnClickListener {
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,7 +39,6 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnC
     }
 
     override fun init() {
-        sessionManager.clearAll()
         binding.desc3.movementMethod = LinkMovementMethod.getInstance()
         makeLinksInLicenseAgreementDescription()
     }

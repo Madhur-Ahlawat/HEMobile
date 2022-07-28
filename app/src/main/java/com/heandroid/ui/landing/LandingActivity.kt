@@ -14,6 +14,7 @@ import com.heandroid.R
 import com.heandroid.databinding.ActivityLandingBinding
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
@@ -52,6 +53,8 @@ class LandingActivity : BaseActivity<Any?>() {
 
     override fun onResume() {
         super.onResume()
+        BaseApplication.INSTANCE.stopTimerAPi()
+        sessionManager.clearAll()
         initCtrl()
     }
 

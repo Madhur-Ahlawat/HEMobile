@@ -1,5 +1,6 @@
 package com.heandroid.ui.bottomnav
 
+import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -8,6 +9,7 @@ import com.heandroid.R
 import com.heandroid.databinding.ActivityHomeMainBinding
 import com.heandroid.listener.OnNavigationItemChangeListener
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.customviews.BottomNavigationView
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
@@ -24,6 +26,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     lateinit var dataBinding: ActivityHomeMainBinding
     private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        BaseApplication.INSTANCE.initTimerObject()
+        BaseApplication.INSTANCE.startTimerAPi()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BaseApplication.INSTANCE.stopTimerAPi()
+    }
 
     override fun initViewBinding() {
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)

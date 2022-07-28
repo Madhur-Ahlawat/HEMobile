@@ -18,8 +18,7 @@ data class LoginResponse(
     @SerializedName("user_name")
     var user_name: String?,
 
-    @SerializedName("expires_in")
-    private var expiresIn: Int?,
+    @SerializedName("expires_in") var expiresIn: Int?,
 
     @SerializedName("scope")
     private var scope: String?,

@@ -43,7 +43,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     override fun init() {
-        binding.model = LoginModel(value = "", password = "", enable = false)
+        binding.model = LoginModel(value = "100313904", password = "Welcome1", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -87,7 +87,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
             isSecondaryUser(response.data?.isSecondary ?: false)
-            //saveAccountNumber(response.data?.user_name?:"")
+            saveAuthTokenTimeOut(response.data?.expiresIn ?: 0)
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
         }
