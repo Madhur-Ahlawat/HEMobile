@@ -74,5 +74,9 @@
     <color name="switch_disable">#c8c8c8</color>
     <color name="dialog_title">#444251</color>
 
+    <color name="color_C93E28">#C93E28</color>
+    <color name="color_942514">#942514</color>
+    <color name="color_383f43">#383f43</color>
+    <color name="color_144e81">#144e81</color>
 
 </resources>
