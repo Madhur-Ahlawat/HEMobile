@@ -20,6 +20,7 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
 
     companion object {
         const val USER_TOKEN = "user_token"
+        const val USER_TOKEN_TIME_OUT = "user_token_time_out"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
         const val ACCOUNT_TYPE = "account_type"
@@ -30,6 +31,24 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
         const val IS_SECONDARY = "is_secondary_user"
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
+    }
+
+    /**
+     * Function to save time out
+     */
+    fun saveAuthTokenTimeOut(time: Int?) {
+        val editor = prefs.edit()
+        if (time != null) {
+            editor.putInt(USER_TOKEN_TIME_OUT, time)
+        }
+        editor.apply()
+    }
+
+    /**
+     * Function to fetch auth token
+     */
+    fun fetchAuthTokenTimeout(): Int {
+        return prefs.getInt(USER_TOKEN_TIME_OUT, 0)
     }
 
     /**

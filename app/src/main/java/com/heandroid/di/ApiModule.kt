@@ -14,7 +14,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -41,15 +40,15 @@ object ApiModule {
 
     @Provides
     @Singleton
+    fun provideResponseConnectionInterceptor(context: Context): ResponseInterceptor {
+        return ResponseInterceptor(context)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthenticator(
-        @ApplicationContext context: Context,
-        apiService: Provider<ApiService>,
-        sessionManager: SessionManager
-    ) = TokenAuthImpl(
-        context,
-        sessionManager,
-        apiService
-    )
+        @ApplicationContext context: Context
+    ) = TokenAuthenticator(context)
 
     @Provides
     @Singleton
@@ -57,15 +56,17 @@ object ApiModule {
         logging: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
         networkConnectionInterceptor: NetworkConnectionInterceptor,
-        tokenAuthenticator: TokenAuthImpl
+        responseInterceptor: ResponseInterceptor,
+        tokenAuthenticator: TokenAuthenticator
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) builder.addInterceptor(logging)
         builder.addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
-            //.authenticator(tokenAuthenticator)
-            .callTimeout(25, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(responseInterceptor)
+            .authenticator(tokenAuthenticator)
+            .callTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
 //            .readTimeout(10, TimeUnit.SECONDS)
 //            .writeTimeout(10, TimeUnit.SECONDS)
         return builder.build()
