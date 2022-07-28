@@ -249,7 +249,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent="0.6" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -310,7 +310,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_account_type" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -360,7 +360,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_top_up_type" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_top_up_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

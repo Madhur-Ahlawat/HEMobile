@@ -834,6 +834,31 @@
     <string name="failed_retry_num2">+44 300 300 0120</string>
     <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
     <string name="try_again_later">Try again later.</string>
+
+
+    // account status
+    <string name="open">Open</string>
+    <string name="suspended">Suspended</string>
+    <string name="dormant">Dormant</string>
+    <string name="closed">Closed</string>
+    <string name="close_Pending">Close Pending</string>
+
+    // account type
+    <string name="personal">Personal</string>
+    <string name="business">Business</string>
+    <string name="exempt_partner">Exempt Partner</string>
+
+    // account sub type
+    <string name="pay_as_you_go_acc">Pay as you go account</string>
+    <string name="personal_pay_as_you_go_acc">Personal Pay as you go account</string>
+    <string name="LRDS">LRDS</string>
+    <string name="pre_pay_acc">Pre-pay account</string>
+    <string name="personal_pre_pay_acc">Personal Pre-pay account</string>
+
+    // account financial status
+    <string name="auto_top_up">Auto top-up</string>
+    <string name="manual_top_up">Manual top-up</string>
+
 </resources>
 
 

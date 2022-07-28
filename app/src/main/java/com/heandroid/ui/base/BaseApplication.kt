@@ -2,6 +2,7 @@ package com.heandroid.ui.base
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.util.Log
 import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.remote.ApiService
 import com.adobe.marketing.mobile.*
@@ -57,6 +58,10 @@ class BaseApplication : Application() {
     }
 
     fun initTimerObject(timePeriod: Long = TIME_PERIOD) {
+        Log.i(
+            "teja12345",
+            "refresh will call in ${timePeriod / 1000} sec or ${(timePeriod / 1000) / 60} min"
+        )
         timer = object :
             CountDownTimer(
                 timePeriod,
@@ -65,6 +70,7 @@ class BaseApplication : Application() {
             override fun onTick(millisUntilFinished: Long) {}
 
             override fun onFinish() {
+                Log.i("teja12345", "refresh : called")
                 sessionManager.fetchRefreshToken()?.let { refresh ->
                     var responseOK = false
                     var tryCount = 0
@@ -87,15 +93,19 @@ class BaseApplication : Application() {
                     }
                     if (responseOK) {
                         saveToken(response)
-                    }
+                    } else
+                        Log.i("teja12345", "refresh : failed")
                 }
             }
         }
     }
 
     private fun saveToken(response: Response<LoginResponse?>?) {
+        Log.i("teja12345", "refresh : success")
         sessionManager.saveAuthToken(response?.body()?.accessToken ?: "")
-        val time = (sessionManager.fetchAuthTokenTimeout() - 30) * 1000 //ms
+        sessionManager.saveRefreshToken(response?.body()?.refreshToken ?: "")
+        sessionManager.saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
+        val time = kotlin.math.abs((sessionManager.fetchAuthTokenTimeout() - 150) * 1000) //ms
         initTimerObject(time.toLong())
         startTimerAPi()
     }

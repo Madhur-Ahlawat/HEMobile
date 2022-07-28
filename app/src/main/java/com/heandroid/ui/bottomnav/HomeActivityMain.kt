@@ -33,11 +33,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         BaseApplication.INSTANCE.startTimerAPi()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        BaseApplication.INSTANCE.stopTimerAPi()
-    }
-
     override fun initViewBinding() {
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding.root)
@@ -112,5 +107,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onLogout() {
         sessionManager.clearAll()
         Utils.sessionExpired(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LogoutUtil.stopLogoutTimer()
+        BaseApplication.INSTANCE.stopTimerAPi()
     }
 }

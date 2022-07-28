@@ -164,7 +164,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                         binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
                             (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
-                                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                val badgeCountBtn =
+                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                                 badgeCountBtn.visible()
                                 badgeCountBtn.text = alerts.size.toString()
                             }
@@ -172,7 +173,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                     } else {
                         if (requireActivity() is HomeActivityMain) {
                             (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
-                                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                val badgeCountBtn =
+                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                                 badgeCountBtn.gone()
                             }
                         }
@@ -222,9 +224,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 get(0) + " " + drop(1)
             }
             tvAccountNumber.text = data.accountInformation?.number
-            tvAccountStatus.text = data.accountInformation?.accountStatus
-            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
-            tvAccountType.text = data.accountInformation?.type
+//            tvAccountStatus.text = data.accountInformation?.accountStatus
+//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
+//            tvAccountType.text = data.accountInformation?.type
+            data.accountInformation?.accountStatus?.let {
+                DashboardUtils.setAccountStatus(it, tvAccountStatus)
+            }
+            data.accountInformation?.accountFinancialstatus?.let {
+                DashboardUtils.setAccountFinancialStatus(it, tvTopUpType)
+            }
+            data.accountInformation?.type?.let {
+                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
+            }
 
         }
     }
