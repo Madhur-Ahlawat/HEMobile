@@ -3,6 +3,8 @@ package com.heandroid.ui.bottomnav.dashboard
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -30,6 +32,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.bouncycastle.jcajce.provider.symmetric.ARC4
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -42,7 +45,6 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
-@LargeTest
 class DashboardFragmentTest {
 
     @get:Rule
@@ -57,7 +59,7 @@ class DashboardFragmentTest {
     private val accountOverview = MutableLiveData<Resource<AccountResponse?>?>()
     private val alerts = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     private val thresholdAmount = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
-    private val navController: NavController = Mockito.mock(NavController::class.java)
+    private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
     @Before
     fun init() {
@@ -72,7 +74,8 @@ class DashboardFragmentTest {
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_top_up_heading)).perform(BaseActions.betterScrollTo())
+                .check(matches(isDisplayed()))
         }
     }
 
@@ -80,31 +83,40 @@ class DashboardFragmentTest {
     fun `test dashboard screen, navigate to vehicle list screen`() {
         getApiCallData()
         launchFragmentInHiltContainer<DashboardFragment> {
+            navController.setGraph(R.navigation.bottom_navigation_graph)
+            navController.setCurrentDestination(R.id.dashBoardFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_top_up_heading)).perform(BaseActions.betterScrollTo())
+                .check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_view_vehicle)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
-
-//            Mockito.verify(navController).navigate(R.id.action_dashBoardFragment_to_vehicleListFragment2, bundle)
+            Assert.assertEquals(
+                navController.currentDestination?.id,
+                R.id.vehicleListFragment2
+            )
         }
     }
 
-    //Test
+    @Test
     fun `test dashboard screen, navigate to vehicle crossings screen`() {
         getApiCallData()
         launchFragmentInHiltContainer<DashboardFragment> {
+            navController.setGraph(R.navigation.bottom_navigation_graph)
+            navController.setCurrentDestination(R.id.dashBoardFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.rv_notification)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
-            onView(withId(R.id.crossingsView)).perform(BaseActions.betterScrollTo())
+            onView(withId(R.id.tv_view_crossings)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
 
-            Mockito.verify(navController).navigate(R.id.action_dashBoardFragment_to_crossingHistoryFragment)
+            Assert.assertEquals(
+                navController.currentDestination?.id,
+                R.id.crossingHistoryFragment
+            )
         }
     }
 
@@ -116,7 +128,8 @@ class DashboardFragmentTest {
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_number_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_account_status_heading)).check(matches(isDisplayed()))
-            onView(withId(R.id.tv_account_type)).check(matches(isDisplayed()))
+            onView(withId(R.id.tv_top_up_heading)).perform(BaseActions.betterScrollTo())
+                .check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up))
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
@@ -151,8 +164,17 @@ class DashboardFragmentTest {
             CrossingHistoryApiResponse(crossingHistoryResponseData, "", "")
         crossingHistoryList.postValue(Resource.Success(crossingHistoryResponse))
         accountOverview.postValue(Resource.Success(DataFile.getAccountResponse()))
-        val messageList = listOf(DataFile.getAlertMessage(),DataFile.getAlertMessage() )
+        val messageList = listOf(DataFile.getAlertMessage(), DataFile.getAlertMessage())
         alerts.postValue(Resource.Success(AlertMessageApiResponse(200, "message", messageList)))
-        thresholdAmount.postValue(Resource.Success(ThresholdAmountApiResponse(ThresholdAmountData("50", "150"), "", "")))
+        thresholdAmount.postValue(
+            Resource.Success(
+                ThresholdAmountApiResponse(
+                    ThresholdAmountData(
+                        "50",
+                        "150"
+                    ), "", ""
+                )
+            )
+        )
     }
 }
