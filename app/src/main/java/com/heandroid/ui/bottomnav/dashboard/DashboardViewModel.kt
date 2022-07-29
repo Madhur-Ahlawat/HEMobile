@@ -12,7 +12,9 @@ import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.data.remote.NoConnectivityException
 import com.heandroid.data.repository.dashboard.DashBoardRepo
+import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.InterruptedIOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -126,27 +130,30 @@ class DashboardViewModel @Inject constructor(
 
     fun getDashboardAllData(request: CrossingHistoryRequest) {
         viewModelScope.launch {
-            coroutineScope {
-                val vehicleCountResponse: Response<List<VehicleResponse?>?>?
-                val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
-                val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
-                val overviewResponse: Response<AccountResponse?>?
-                val alertsResponse: Response<AlertMessageApiResponse?>?
-                val callVehicleCount = async { repository.getVehicleData() }
-                delay(100)
-                val callCrossingCount = async { repository.crossingHistoryApiCall(request) }
-                delay(100)
-//                val callThreshold = async { repository.getThresholdAmountApiCAll() }
-//                delay(100)
-                val callOverview = async { repository.getAccountDetailsApiCall() }
-                delay(100)
-                val callAlerts = async { repository.getAlertMessages() }
-                try {
+            try {
+                coroutineScope {
+                    val vehicleCountResponse: Response<List<VehicleResponse?>?>?
+                    val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
+//                    val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
+                    val overviewResponse: Response<AccountResponse?>?
+                    val alertsResponse: Response<AlertMessageApiResponse?>?
+
+                    val callVehicleCount = async { repository.getVehicleData() }
+                    delay(100)
+                    val callCrossingCount = async { repository.crossingHistoryApiCall(request) }
+                    delay(100)
+//                    val callThreshold = async { repository.getThresholdAmountApiCAll() }
+//                    delay(100)
+                    val callOverview = async { repository.getAccountDetailsApiCall() }
+                    delay(100)
+                    val callAlerts = async { repository.getAlertMessages() }
+
                     vehicleCountResponse = callVehicleCount.await()
                     crossingCountResponse = callCrossingCount.await()
 //                    thresholdAmountResponse = callThreshold.await()
                     overviewResponse = callOverview.await()
                     alertsResponse = callAlerts.await()
+
                     if (vehicleCountResponse?.isSuccessful == true &&
                         crossingCountResponse?.isSuccessful == true &&
 //                        thresholdAmountResponse?.isSuccessful == true &&
@@ -163,11 +170,14 @@ class DashboardViewModel @Inject constructor(
                         _vehicleListVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
-                } catch (ex: Exception) {
-                    _vehicleListVal.value =
-                        Resource.DataError("Something went wrong. Try again later")
                 }
-
+            } catch (e: Exception) {
+                if (e is NoConnectivityException) {
+                    _vehicleListVal.value = Resource.DataError(e.message)
+                } else if (e is SocketTimeoutException || e is InterruptedIOException) {
+                    _vehicleListVal.value = Resource.DataError(Constants.VPN_ERROR)
+                }
+                _vehicleListVal.value = Resource.DataError(e.message)
             }
         }
 
