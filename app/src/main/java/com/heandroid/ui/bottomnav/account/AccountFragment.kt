@@ -9,32 +9,41 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.heandroid.R
+import com.heandroid.data.model.auth.login.AuthResponseModel
 import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.databinding.FragmentAccountBinding
 import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
+import com.heandroid.ui.auth.logout.LogoutViewModel
+import com.heandroid.ui.auth.logout.OnLogOutListener
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.account.accountstatements.AccountStatementActivity
 import com.heandroid.ui.bottomnav.account.payments.AccountPaymentActivity
+import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.nominatedcontacts.NominatedContactActivity
 import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.openActivityWithDataBack
 import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener {
+class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener,
+    OnLogOutListener {
 
     private val viewModel: NominatedContactListViewModel by viewModels()
+    private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -62,6 +71,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun observer() {
         lifecycleScope.launch {
             observe(viewModel.contactList, ::handleContactListResponse)
+            observe(logOutViewModel.logout, ::handleLogout)
         }
     }
 
@@ -100,42 +110,68 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             }
 
             R.id.log_out_lyt -> {
-                val dialog = LogoutDialog()
-                Bundle().run {
-                    putString("title", getString(R.string.logout))
-                    putString("desc", getString(R.string.sure_wants_logout))
-                    dialog.arguments = this
-                }
-                dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                dialog.show(requireActivity().supportFragmentManager, Constants.LOGOUT_DIALOG)
+                LogoutDialog.newInstance(
+                    this
+                ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
             }
 
         }
     }
 
     private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    Intent(requireActivity(), NominatedContactActivity::class.java).run {
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                        putExtra(
-                            "count",
-                            status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size
-                                ?: 0
-                        )
-                        startActivity(this)
-                    }
+        }
+        when (status) {
+            is Resource.Success -> {
+                Intent(requireActivity(), NominatedContactActivity::class.java).run {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra(
+                        "count",
+                        status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size
+                            ?: 0
+                    )
+                    startActivity(this)
+                }
 
-                }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
     }
 
+    private fun handleLogout(status: Resource<AuthResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                logOutOfAccount()
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
+    }
+
+    private fun logOutOfAccount() {
+        sessionManager.clearAll()
+        Intent(requireActivity(), LandingActivity::class.java).apply {
+            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(this)
+        }
+    }
+
+    override fun onLogOutClick() {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        logOutViewModel.logout()
+    }
 
 }

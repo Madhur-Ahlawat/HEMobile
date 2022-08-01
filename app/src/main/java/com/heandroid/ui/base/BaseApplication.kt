@@ -105,7 +105,7 @@ class BaseApplication : Application() {
         sessionManager.saveAuthToken(response?.body()?.accessToken ?: "")
         sessionManager.saveRefreshToken(response?.body()?.refreshToken ?: "")
         sessionManager.saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
-        val time = kotlin.math.abs((sessionManager.fetchAuthTokenTimeout() - 150) * 1000) //ms
+        val time = kotlin.math.abs((sessionManager.fetchAuthTokenTimeout() - 100) * 1000) //ms
         initTimerObject(time.toLong())
         startTimerAPi()
     }

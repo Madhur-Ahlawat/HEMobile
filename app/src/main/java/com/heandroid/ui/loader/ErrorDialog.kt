@@ -5,11 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.heandroid.R
 import com.heandroid.databinding.DialogErrorBinding
-import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
-import com.heandroid.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -41,12 +39,6 @@ class ErrorDialog : BaseDialog<DialogErrorBinding>(), View.OnClickListener {
         when (v?.id) {
             R.id.btnOk -> {
                 dismiss()
-                if (arguments?.getString(Constants.DATA)
-                        ?.contains("Access token expired") == true
-                ) {
-                    sessionManager.clearAll()
-                    requireActivity().startNewActivityByClearingStack(AuthActivity::class.java)
-                }
             }
         }
     }

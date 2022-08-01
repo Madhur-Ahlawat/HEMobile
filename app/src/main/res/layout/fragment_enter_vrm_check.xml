@@ -14,94 +14,95 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/llRecommendParent"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_10ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@color/white"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/top_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7ssp"
-                android:text="@string/str_enter_the_number_plate_you_wish"
-                android:textColor="@color/grey_two"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="normal" />
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.HeMobile.TextInputLayout"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/str_number_plate"
-                app:boxStrokeColor="@color/color_00703C"
-                app:endIconDrawable="@drawable/ic_screenshot__121__2">
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/vrm_no"
+                <LinearLayout
+                    android:id="@+id/llRecommendParent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/radio_group"
-                android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/uk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="@dimen/_6sdp"
-                    android:text="@string/str_UK"
-                    android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/color_00703C" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/top_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/str_enter_the_number_plate_you_wish"
+                        android:textColor="@color/grey_two"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
 
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/non_uk"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:background="@color/white"
-                    android:padding="@dimen/_6sdp"
-                    android:text="@string/str_non_uk"
-                    android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/color_00703C" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.HeMobile.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:hint="@string/str_number_plate"
+                        app:boxStrokeColor="@color/color_00703C"
+                        app:endIconDrawable="@drawable/ic_screenshot__121__2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/vrm_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-            </RadioGroup>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:checked="true"
+                        android:text="@string/str_country_of_registraion"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="normal"
+                        android:theme="@style/ToggleSwitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_input_lyt" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/findVehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_20ssp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+                        android:enabled="@{model.enable}"
+                        android:gravity="center"
+                        android:text="@string/str_continue"
+                        android:textAllCaps="false"
+                        android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/findVehicle"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_20ssp"
-                android:layout_marginBottom="60dp"
-                android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
-                android:enabled="@{model.enable}"
-                android:gravity="center"
-                android:text="@string/str_continue"
-                android:textAllCaps="false"
-                android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                </LinearLayout>
 
-
-        </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

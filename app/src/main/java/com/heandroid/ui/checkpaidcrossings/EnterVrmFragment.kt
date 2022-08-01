@@ -42,16 +42,6 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     override fun initCtrl() {
         binding.vrmNo.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
-        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.uk -> {
-                    country = "UK"
-                }
-                R.id.non_uk -> {
-                    country = "NON UK"
-                }
-            }
-        }
     }
 
     override fun observer() {
@@ -70,6 +60,11 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+                country = if (!binding.switchView.isChecked) {
+                    "NON UK"
+                } else {
+                    "UK"
+                }
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.getVehicleData(binding.model?.vrm, Constants.AGENCY_ID.toInt())
