@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import com.heandroid.R
 import com.heandroid.databinding.DialogConfirmChangeBinding
-import com.heandroid.databinding.DialogDeleteVehicleGroupBinding
 import com.heandroid.ui.base.BaseDialog
 
 class ConfirmChangeDialog : BaseDialog<DialogConfirmChangeBinding>() {
@@ -17,6 +18,12 @@ class ConfirmChangeDialog : BaseDialog<DialogConfirmChangeBinding>() {
 
     override fun init() {
         dialog?.setCanceledOnTouchOutside(false)
+        arguments?.getString(KEY_TITLE)?.let {
+            binding.tvTitle.setText(
+                HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY),
+                TextView.BufferType.SPANNABLE
+            )
+        }
     }
 
     override fun initCtrl() {

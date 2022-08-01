@@ -75,7 +75,7 @@ object FilePath {
         val projection = arrayOf(column)
         try {
             cursor =
-                context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
+                uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
             if (cursor != null && cursor.moveToFirst()) {
                 val index: Int = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)

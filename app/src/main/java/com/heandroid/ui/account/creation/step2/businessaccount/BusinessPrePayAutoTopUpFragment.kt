@@ -65,11 +65,13 @@ class BusinessPrePayAutoTopUpFragment : BaseFragment<FragmentBusinessPrepayAutoT
                 val noOfCrossing = binding.noOfCrossings.text.toString()
                 val noOfVehicle = binding.noOfVehicle.text.toString()
                 val mCode =
-                    arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, 0)!!
+                    arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, 0)
                 val bundle = Bundle()
                 bundle.putString(Constants.NO_OF_CROSSING_BUSINESS, noOfCrossing)
                 bundle.putString(Constants.NO_OF_VEHICLE_BUSINESS, noOfVehicle)
-                bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, mCode)
+                if (mCode != null) {
+                    bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT, mCode)
+                }
                 requestModel?.mNoOfVehicles = noOfVehicle
                 requestModel?.mNoOfCrossings = noOfCrossing
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

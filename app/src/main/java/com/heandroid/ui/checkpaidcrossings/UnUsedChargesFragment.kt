@@ -1,10 +1,7 @@
 package com.heandroid.ui.checkpaidcrossings
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
@@ -15,60 +12,57 @@ import com.heandroid.databinding.FragmentUnusedChargesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.checkpaidcrossings.adapter.OnChangeClickListener
 import com.heandroid.ui.checkpaidcrossings.adapter.UnUsedChargesAdapter
-import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(),
-    View.OnClickListener, OnChangeClickListener {
+class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(), OnChangeClickListener {
 
-    private val viewModel: CheckPaidCrossingViewModel by viewModels()
-    private var loader: LoaderDialog? = null
+    private val mList = mutableListOf<UnUsedChargesModel?>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentUnusedChargesBinding.inflate(inflater, container, false)
 
-
     override fun init() {
         val mData =
-            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)!!
+            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
         val mDataVrmRef =
-            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)!!
-        val mList = mutableListOf<UnUsedChargesModel?>()
+            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)
+
         mList.clear()
-        for (value in 1..mData.unusedTrip!!.toInt()) {
-            mList.add(UnUsedChargesModel(value, mDataVrmRef.vrm!!))
+        mData?.unusedTrip?.toInt()?.let {
+            for (value in 1..mData.unusedTrip.toInt()) {
+                mList.add(UnUsedChargesModel(value, mDataVrmRef?.vrm))
+            }
         }
-
-        binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvHistory.adapter = UnUsedChargesAdapter(mList, this)
-
+        setView()
 
     }
 
-    override fun initCtrl() {
-    }
+    override fun initCtrl() {}
 
-    override fun observer() {
-    }
-
-
-    override fun onClick(v: View?) {
-        when (v?.id) {
-        }
-    }
+    override fun observer() {}
 
     override fun clickChange(index: Int) {
-
-        arguments?.putInt("Index",index)
         findNavController().navigate(
-            R.id.action_unUsedCharges_to_enterVrmFragment,
-            arguments
+            R.id.action_unUsedCharges_to_enterVrmFragment
         )
+    }
 
+    private fun setView() {
+        if (mList.isEmpty()) {
+            binding.apply {
+                rvHistory.gone()
+                tvNoCrossing.visible()
+            }
+        } else {
+            binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
+            binding.rvHistory.adapter = UnUsedChargesAdapter(mList, this)
+        }
     }
 }
 

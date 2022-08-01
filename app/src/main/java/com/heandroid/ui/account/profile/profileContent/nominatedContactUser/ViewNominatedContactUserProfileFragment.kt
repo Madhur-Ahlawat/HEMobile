@@ -62,7 +62,11 @@ class ViewNominatedContactUserProfileFragment :
             is Resource.Success -> {
                 if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
                     list.clear()
-                    list.addAll(status.data?.secondaryAccountDetailsType?.secondaryAccountList!!)
+                    status.data?.secondaryAccountDetailsType?.secondaryAccountList?.let {
+                        list.addAll(
+                            it
+                        )
+                    }
                     for (item in list) {
                         if (item?.secAccountRowId.equals(ncId)) {
                             binding.nominated = item

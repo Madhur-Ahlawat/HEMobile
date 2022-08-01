@@ -101,9 +101,6 @@
             app:destination="@id/addVehicleDetailsFragment" />
 
         <action
-            android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConform"
-            app:destination="@id/checkPaidCrossingChangeVrmConform" />
-        <action
             android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConformSuccess"
             app:destination="@id/checkPaidCrossingChangeVrmConformSuccess"
             app:popUpTo="@id/crossingCheck"
@@ -111,18 +108,6 @@
 
 
     </fragment>
-    <fragment
-        android:id="@+id/checkPaidCrossingChangeVrmConform"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrm"
-        tools:layout="@layout/fragment_enter_vrm_check_change_conform">
-
-        <action
-            android:id="@+id/action_checkPaidCrossingChangeVrmConform_to_checkPaidCrossingChangeVrmConformSuccess"
-            app:destination="@id/checkPaidCrossingChangeVrmConformSuccess" />
-
-
-    </fragment>
-
 
     <fragment
         android:id="@+id/checkPaidCrossingChangeVrmConformSuccess"

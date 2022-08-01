@@ -192,7 +192,11 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                         if (isMakePayment)
                             setVrmDetails()
                         else
-                            checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails!!)
+                            resource.data.retrievePlateInfoDetails?.let { it1 ->
+                                checkForDuplicateVehicle(
+                                    it1
+                                )
+                            }
                     }
                 }
 
@@ -208,8 +212,8 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
 
     private fun setNavigation() {
         plateInfoResponse = PlateInfoResponse()
-        plateInfoResponse!!.country = country
-        plateInfoResponse!!.number = binding.addVrmInput.text.toString()
+        plateInfoResponse?.country = country
+        plateInfoResponse?.number = binding.addVrmInput.text.toString()
 
         vehicleResponse =
             VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
@@ -280,7 +284,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         val vehicleInfoResp = VehicleInfoResponse(
             retrieveVehicle?.vehicleMake, retrieveVehicle?.vehicleModel, "", "",
             "", "", retrieveVehicle?.vehicleColor,
-            VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!),
+            retrieveVehicle?.vehicleClass?.let { VehicleClassTypeConverter.toClassName(it) },
             DateUtils.convertDateFormat(DateUtils.currentDate(), 0)
         )
 

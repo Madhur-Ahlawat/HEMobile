@@ -127,7 +127,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             viewTwo.visible()
 // set button disable first time
             accountModelRequesstModel.enable =
-                accountModelRequesstModel.postCode!!.isNotEmpty() && edtPostCode.text.isNullOrEmpty()
+                accountModelRequesstModel.postCode?.isNotEmpty() == true && edtPostCode.text.isNullOrEmpty()
             //model = accountModelRequesstModel
 
         }
@@ -143,7 +143,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             viewThree.visible()
             // set button disable first time
             accountModelRequesstModel.enable =
-                accountModelRequesstModel.createPassword!!.isNotEmpty() && edtConformPassword.text.isNullOrEmpty()
+                accountModelRequesstModel.createPassword?.isNotEmpty() == true && edtConformPassword.text.isNullOrEmpty()
             //model = accountModelRequesstModel
 
 
@@ -159,7 +159,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clPinView.visible()
             viewFour.visible()
             // set button disable first time
-            accountModelRequesstModel.enable = accountModelRequesstModel.pin!!.isNotEmpty()
+            accountModelRequesstModel.enable = accountModelRequesstModel.pin?.isNotEmpty()
             //model = accountModelRequesstModel
 
         }
@@ -252,22 +252,18 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
 
         when (entryType) {
             Constants.PERSONAL_DETAILS -> {
-                Log.d("PersonalDet", accountModelRequesstModel.fullName!!)
                 showEnterAddressView()
             }
 
             Constants.POST_CODE_ADDRESS -> {
-                Log.d("PostCode", accountModelRequesstModel.postCode!!)
                 showCreatePasswordView()
             }
 
             Constants.PASSWORD -> {
-                Log.d("Password", accountModelRequesstModel.createPassword!!)
                 showSetPinView()
             }
 
             Constants.PIN -> {
-                Log.d("Pin", accountModelRequesstModel.pin!!)
                 showLRDS()
             }
         }
@@ -282,7 +278,7 @@ class PersonalDetailsEntryFragment : BaseFragment<FragmentPersonalDetailsEntryBi
             clHeader.gone()
             requireActivity().toolbar(requireActivity().getString(R.string.str_local_resident_information))
             // set button disable first time
-            accountModelRequesstModel.enable = accountModelRequesstModel.fullName!!.isEmpty()
+            accountModelRequesstModel.enable = accountModelRequesstModel.fullName?.isEmpty()
             //model = accountModelRequesstModel
             btnAction.text = requireActivity().getText(R.string.str_next)
         }

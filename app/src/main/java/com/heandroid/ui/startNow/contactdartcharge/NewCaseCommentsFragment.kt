@@ -91,7 +91,7 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             is Resource.Success -> {
                 resource.data?.let {
                     checkUploadedFile(it.originalFileName)
-                    mList.add(it.fileName!!)
+                    it.fileName?.let { it1 -> mList.add(it1) }
 
                 }
             }

@@ -117,7 +117,7 @@ class VehicleHistoryCrossingHistoryFragment :
                         val response = resource.data
                         totalCount = response.transactionList?.transaction?.size ?: 0
                         if (response.transactionList != null) {
-                            list?.addAll(response.transactionList.transaction!!)
+                            response.transactionList.transaction?.let { it1 -> list?.addAll(it1) }
                         }
                         isLoading = false
                         Handler(Looper.myLooper()!!).postDelayed({

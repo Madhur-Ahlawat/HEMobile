@@ -390,6 +390,7 @@
     <string name="spread_sheet">Spread Sheet</string>
     <string name="str_download_crossing_history">Download crossing history</string>
     <string name="no_crossings_have_been_made">No crossings have been made</string>
+    <string name="no_crossings">No crossings</string>
     <string name="str_download_payment_receipt">Download payment receipt</string>
 
     <string name="str_reg_num">Registration number</string>
@@ -814,7 +815,7 @@
     <string name="str_expiry_date">Expiry date</string>
     <string name="str_change_vehicle">Change Vehicle</string>
     <string name="str_enter_the_number_plate_you_wish">Enter the number plate you wish to associate to this payment</string>
-    <string name="str_confirm_if_u_wish_to_associate_vehicle_no">Confirm if wish to associate vehicle number plate %s to your payment reference: %s</string>
+    <string name="str_confirm_if_u_wish_to_associate_vehicle_no"><![CDATA[Confirm if wish to associate vehicle number plate <b>%s</b> to your payment reference : <b>%s</b>]]></string>
     <string name="str_your_change_to_ref_no_made">Your change to reference number  %s have been made successfully</string>
     <string name="str_make_another_change">Make another change</string>
     <string name="str_date_changed">Date changed</string>

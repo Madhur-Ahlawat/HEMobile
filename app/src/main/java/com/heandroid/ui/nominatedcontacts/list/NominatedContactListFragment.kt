@@ -257,7 +257,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 if (isExpanded) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     selectedPosition = pos
-                    viewModel.getSecondaryRights(data.secAccountRowId!!)
+                    data.secAccountRowId?.let { viewModel.getSecondaryRights(it) }
                 }
             }
 
@@ -277,7 +277,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 selectedPosition = pos
 
                 data.let {
-                    if (it.secAccountRowId!!.isNotEmpty()) {
+                    if (it.secAccountRowId?.isNotEmpty() == true) {
                         val model =
                             TerminateRequestModel(
                                 it.secAccountRowId,
