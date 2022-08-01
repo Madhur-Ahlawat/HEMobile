@@ -23,8 +23,9 @@
             android:gravity="start"
             android:text="@string/str_pay_dart_ford_crossing"
             android:textColor="@color/color_757575"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toTopOf="@+id/glTop" />

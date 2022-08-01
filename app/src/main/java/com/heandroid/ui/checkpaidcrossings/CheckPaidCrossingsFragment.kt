@@ -38,6 +38,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
         binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        isEnable()
     }
 
     override fun initCtrl() {

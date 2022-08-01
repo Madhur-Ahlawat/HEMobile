@@ -22,15 +22,13 @@ class HeaderInterceptor @Inject constructor(
         val appVersion = getVersionName()
         val osVersion: String? = Build.VERSION.RELEASE
 
-        if (!chain.request().url.encodedPath.contains("oauth/token")){
-            sessionManager.let {
-                it.fetchAuthToken()?.let { accessToken ->
-                    requestBuilder.addHeader("Authorization", "Bearer $accessToken")
-                    requestBuilder.addHeader(
-                        "User-Agent",
-                        "MobileApp-${appVersion}, Android-${osVersion}"
-                    )
-                }
+        sessionManager.let {
+            it.fetchAuthToken()?.let { accessToken ->
+                requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                requestBuilder.addHeader(
+                    "User-Agent",
+                    "MobileApp-${appVersion}, Android-${osVersion}"
+                )
             }
         }
         return chain.proceed(requestBuilder.build())

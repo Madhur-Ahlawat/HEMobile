@@ -67,7 +67,6 @@ class CheckPaidCrossingsFragmentTest {
             navController.setCurrentDestination(R.id.crossingCheck)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.third_txt)).check(matches(isDisplayed()))
-            onView(withId(R.id.continue_btn)).check(matches(isDisplayed()))
             runTest {
                 onView(withId(R.id.paymentRefNo)).check(matches(isDisplayed()))
                     .perform(ViewActions.clearText(), ViewActions.typeText("12345"))
@@ -77,9 +76,10 @@ class CheckPaidCrossingsFragmentTest {
                     .perform(ViewActions.clearText(), ViewActions.typeText("12345"))
                 Espresso.closeSoftKeyboard()
                 delay(500)
-                onView(withId(R.id.continue_btn)).perform(BaseActions.betterScrollTo())
-                    .check(matches(isDisplayed())).perform(BaseActions.forceClick())
             }
+            onView(withId(R.id.continue_btn)).perform(BaseActions.betterScrollTo())
+                .check(matches(isDisplayed())).perform(BaseActions.forceClick())
+
             shadowOf(getMainLooper()).idle()
             loginWithRefLiveData.postValue(
                 Resource.Success(
@@ -105,7 +105,6 @@ class CheckPaidCrossingsFragmentTest {
             navController.setCurrentDestination(R.id.crossingCheck)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.third_txt)).check(matches(isDisplayed()))
-            onView(withId(R.id.continue_btn)).check(matches(isDisplayed()))
             runTest {
                 onView(withId(R.id.paymentRefNo)).check(matches(isDisplayed()))
                     .perform(ViewActions.clearText(), ViewActions.typeText("12345"))

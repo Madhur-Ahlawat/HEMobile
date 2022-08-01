@@ -50,9 +50,11 @@ class CheckPaidCrossFragmentConformChangeVrmSuccessFullTest {
     @Test
     fun `test change vrm successful screen visibility`() {
         launchFragmentInHiltContainer<CheckPaidCrossFragmentConformChangeVrmSuccessFull>(bundle) {
-            onView(withId(R.id.llRecommendParent)).check(matches(isDisplayed()))
+            onView(withId(R.id.success)).check(matches(isDisplayed()))
             onView(withId(R.id.top_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.makeAnotherChange)).check(matches(isDisplayed()))
+            onView(withId(R.id.registration)).check(matches(isDisplayed()))
+            onView(withId(R.id.date)).check(matches(isDisplayed()))
         }
     }
 }

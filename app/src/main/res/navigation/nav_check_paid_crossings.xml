@@ -103,6 +103,11 @@
         <action
             android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConform"
             app:destination="@id/checkPaidCrossingChangeVrmConform" />
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConformSuccess"
+            app:destination="@id/checkPaidCrossingChangeVrmConformSuccess"
+            app:popUpTo="@id/crossingCheck"
+            app:popUpToInclusive="true" />
 
 
     </fragment>

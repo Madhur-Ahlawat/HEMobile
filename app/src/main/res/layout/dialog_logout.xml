@@ -1,126 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/black_trans_dailog"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_corner"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/drawable_corner"
-            android:backgroundTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/logout"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/sure_wants_logout"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:weightSum="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDes">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Aleart!"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/cancel"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:id="@+id/tvDes"
-                android:layout_width="0dp"
+                android:id="@+id/tvLogout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Aleart!"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/str_log_out"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+                android:textSize="@dimen/_14ssp" />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/fill_grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDes" />
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:weightSum="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                app:layout_constraintVertical_bias="0.0">
-
-
-                <TextView
-                    android:id="@+id/tvCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:padding="5dp"
-                    android:text="@string/cancel"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:textColor="@color/hyperlink_blue"
-                    android:textSize="@dimen/_13sdp" />
-
-                <TextView
-                    android:id="@+id/tvLogout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:padding="5dp"
-                    android:text="@string/str_log_out"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/hyperlink_blue"
-                    android:textSize="@dimen/_13sdp" />
-
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@color/fill_grey"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view4" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

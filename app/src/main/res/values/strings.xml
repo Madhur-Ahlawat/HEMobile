@@ -744,6 +744,7 @@
     <string name="str_i_agree_txt">I agree to a monthly charge of £ %s being taken from my registered card to receive your monthly account statements</string>
 
     <string name="group_mngmt">Group management</string>
+    <string name="select_crossing_type">Select crossing type</string>
     <string name="create_vehicle_group">Create new group</string>
     <string name="rename_vehicle_group">Rename group</string>
     <string name="vehicle_group_name">Group Name</string>
