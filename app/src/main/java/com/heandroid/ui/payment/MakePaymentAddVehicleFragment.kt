@@ -105,7 +105,7 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     }
 
     private fun hideAndShowRecyclerView() {
-        if (vehicleList?.isEmpty()!! || vehicleList?.size == 0) {
+        if (vehicleList?.isEmpty() == true || vehicleList?.size == 0) {
             binding.apply {
                 Logg.logging("MakePayMent", " calling inside ")
                 rvVehiclesList.gone()

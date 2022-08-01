@@ -15,14 +15,15 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.checkpaidcrossings.dialog.ConfirmChangeDialog
 import com.heandroid.ui.checkpaidcrossings.dialog.ConfirmChangeListener
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.vehicle.vehiclegroup.dialog.DeleteVehicleGroupDialog
 import com.heandroid.utils.VehicleClassTypeConverter
-import com.heandroid.utils.common.*
+import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.ErrorUtil
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 @AndroidEntryPoint
 class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingChangeVrmBinding>(),
@@ -97,19 +98,15 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
                         arguments
                     )
                 } else {
-                    findNavController().navigate(
-                        R.id.action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConform,
-                        arguments
-                    )
-//                    ConfirmChangeDialog.newInstance(
-//                        getString(
-//                            R.string.str_confirm_if_u_wish_to_associate_vehicle_no,
-//                            arguments?.getParcelable<VehicleInfoDetails?>
-//                                (Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)?.retrievePlateInfoDetails?.plateNumber,
-//                            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)?.ref
-//                        ),
-//                        this
-//                    ).show(childFragmentManager, Constants.DELETE_VEHICLE_GROUP_DIALOG)
+                    ConfirmChangeDialog.newInstance(
+                        getString(
+                            R.string.str_confirm_if_u_wish_to_associate_vehicle_no,
+                            arguments?.getParcelable<VehicleInfoDetails?>
+                                (Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)?.retrievePlateInfoDetails?.plateNumber,
+                            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)?.ref
+                        ),
+                        this
+                    ).show(childFragmentManager, Constants.DELETE_VEHICLE_GROUP_DIALOG)
                 }
             }
         }
@@ -117,26 +114,26 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
 
     override fun onConfirmClick() {
         val mData =
-            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)!!
+            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
         val mDataVrmRef =
-            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)!!
+            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)
         val country =
             arguments?.getString(Constants.COUNTRY_TYPE)
         val mVrmDetailsDvla =
-            arguments?.getParcelable<VehicleInfoDetails?>(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)!!
+            arguments?.getParcelable<VehicleInfoDetails?>(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)
 
         val mTransferInfo = TransferInfo(
             "1",
-            mVrmDetailsDvla.retrievePlateInfoDetails?.plateNumber!!,
+            mVrmDetailsDvla?.retrievePlateInfoDetails?.plateNumber,
             "HE",
-            country!!,
-            mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleClass!!,
-            mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleMake!!,
-            mVrmDetailsDvla.retrievePlateInfoDetails?.vehicleModel!!,
+            country,
+            mVrmDetailsDvla?.retrievePlateInfoDetails?.vehicleClass,
+            mVrmDetailsDvla?.retrievePlateInfoDetails?.vehicleMake,
+            mVrmDetailsDvla?.retrievePlateInfoDetails?.vehicleModel,
             ""
         )
         val mBalRequest =
-            BalanceTransferRequest(mDataVrmRef.vrm!!, mData.plateCountry!!, mTransferInfo)
+            BalanceTransferRequest(mDataVrmRef?.vrm, mData?.plateCountry, mTransferInfo)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         viewModel.balanceTransfer(mBalRequest)

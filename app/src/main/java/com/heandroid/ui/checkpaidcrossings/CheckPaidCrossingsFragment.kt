@@ -20,7 +20,6 @@ import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 @AndroidEntryPoint
 class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
@@ -28,6 +27,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
 
     private val viewModel: CheckPaidCrossingViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var isCalled = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -71,6 +71,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
         when (v?.id) {
             R.id.continue_btn -> {
                 hideKeyboard()
+                isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 val checkPaidCrossingReq =
                     CheckPaidCrossingsRequest(binding.model?.ref, binding.model?.vrm)
@@ -84,23 +85,27 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (status) {
-            is Resource.Success -> {
-                val bundle = Bundle().apply {
-                    putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
-                    putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
+        if (isCalled) {
+            when (status) {
+                is Resource.Success -> {
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
+                        putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
+                    }
+                    findNavController().navigate(
+                        R.id.action_crossingCheck_to_checkChargesOption,
+                        bundle
+                    )
                 }
-                findNavController().navigate(
-                    R.id.action_crossingCheck_to_checkChargesOption,
-                    bundle
-                )
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-            else -> {
-            }
+            isCalled = false
         }
+
     }
 
 

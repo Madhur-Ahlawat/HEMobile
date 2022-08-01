@@ -69,42 +69,41 @@ class NominatedContactsAdapter(
         holder.binding.arrowTitleLyt.setOnClickListener {
 
             val accList = secAccountList?.get(position)
-            Logg.logging("NominatedContactsAdapter", "accList?.isExpanded ${accList?.isExpanded}")
-         accList?.isExpanded = !accList?.isExpanded!!
-            listener.onItemClick("open", accList, position, accList.isExpanded)
+         accList?.isExpanded = (accList?.isExpanded == false)
+            if (accList != null) {
+                listener.onItemClick("open", accList, position, accList.isExpanded)
+            }
 
-            secAccountList?.get(position)?.isExpanded = accList.isExpanded
+            secAccountList?.get(position)?.isExpanded = accList?.isExpanded == true
             notifyItemChanged(position)
 
         }
 
         holder.binding.resendBtn.setOnClickListener {
-            Logg.logging(
-                "TESTSTR",
-                "testess createAccount called on adapter called ${holder.binding.resendBtn.text}"
-            )
             val accList = secAccountList?.get(position)
-            listener.onItemClick(
-                holder.binding.resendBtn.text.toString(),
-                accList!!,
-                position,
-                false
-            )
+            accList?.let {
+                listener.onItemClick(
+                    holder.binding.resendBtn.text.toString(),
+                    it,
+                    position,
+                    false
+                )
+            }
+
 
         }
         holder.binding.removeBtn.setOnClickListener {
             val accList = secAccountList?.get(position)
 
-            Logg.logging(
-                "TESTSTR",
-                "testess createAccount called on adapter called ${holder.binding.removeBtn.text}"
-            )
-            listener.onItemClick(
-                holder.binding.removeBtn.text.toString(),
-                accList!!,
-                position,
-                false
-            )
+            accList?.let {
+                listener.onItemClick(
+                    holder.binding.removeBtn.text.toString(),
+                    it,
+                    position,
+                    false
+                )
+            }
+
 
         }
 

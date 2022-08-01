@@ -126,7 +126,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             when(resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        checkForDuplicateVehicle(resource.data.retrievePlateInfoDetails!!)
+                        resource.data.retrievePlateInfoDetails?.let { it1 ->
+                            checkForDuplicateVehicle(
+                                it1
+                            )
+                        }
                     }
                 }
 
@@ -163,7 +167,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
                 nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
                 nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
-                nonUKVehicleModel?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(retrieveVehicle?.vehicleClass!!)
+                nonUKVehicleModel?.vehicleClassDesc = retrieveVehicle?.vehicleClass?.let {
+                    VehicleClassTypeConverter.toClassName(
+                        it
+                    )
+                }
 
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)

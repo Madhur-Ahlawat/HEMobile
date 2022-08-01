@@ -1,5 +1,6 @@
 package com.heandroid.ui.checkpaidcrossings
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     private val viewModel: CheckPaidCrossingViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var country = "UK"
+    private var isCalled = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -66,6 +68,7 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
                     "UK"
                 }
                 hideKeyboard()
+                isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.getVehicleData(binding.model?.vrm, Constants.AGENCY_ID.toInt())
             }
@@ -76,40 +79,47 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let {
-                    arguments?.putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS, it)
-                    arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, true)
-                    arguments?.putString(
-                        Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
-                        binding.model?.vrm
-                    )
-                    arguments?.putString(Constants.COUNTRY_TYPE, country)
+        if (isCalled) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        val bundle = Bundle().apply {
+                            putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS, it)
+                            putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, true)
+                            putString(
+                                Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
+                                binding.model?.vrm
+                            )
+                            putString(Constants.COUNTRY_TYPE, country)
+                        }
+
+                        findNavController().navigate(
+                            R.id.action_enterVrmFragment_to_checkPaidCrossingChangeVrm,
+                            bundle
+                        )
+                    }
+
+                }
+                is Resource.DataError -> {
+                    val bundle = Bundle().apply {
+                        putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)
+                        putString(
+                            Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
+                            binding.model?.vrm
+                        )
+                        putString(Constants.COUNTRY_TYPE, country)
+                    }
+
                     findNavController().navigate(
                         R.id.action_enterVrmFragment_to_checkPaidCrossingChangeVrm,
-                        arguments
+                        bundle
                     )
                 }
-
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)
-                arguments?.putString(
-                    Constants.CHECK_PAID_CROSSING_VRM_ENTERED,
-                    binding.model?.vrm
-                )
-                arguments?.putString(Constants.COUNTRY_TYPE, country)
-
-                findNavController().navigate(
-                    R.id.action_enterVrmFragment_to_checkPaidCrossingChangeVrm,
-                    arguments
-                )
-            }
-            else -> {
-            }
+            isCalled = false
         }
-
     }
 
 }

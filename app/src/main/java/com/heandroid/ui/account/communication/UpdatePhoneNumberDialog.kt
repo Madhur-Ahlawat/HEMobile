@@ -60,11 +60,11 @@ class UpdatePhoneNumberDialog : DialogFragment() {
 
         dataBinding.btnCancel.setOnClickListener {
             dismiss()
-            mListener!!.onCancelClickedListener(this)
+            mListener?.onCancelClickedListener(this)
         }
         dataBinding.imvCancel.setOnClickListener {
             dismiss()
-            mListener!!.onCrossImageClickedListener(this)
+            mListener?.onCrossImageClickedListener(this)
         }
         dataBinding.btnSave.setOnClickListener {
             phoneNumber = dataBinding.edtPhone.text.toString()

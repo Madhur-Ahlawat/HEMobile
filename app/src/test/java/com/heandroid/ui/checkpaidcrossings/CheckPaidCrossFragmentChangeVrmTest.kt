@@ -70,10 +70,6 @@ class CheckPaidCrossFragmentChangeVrmTest {
             onView(withId(R.id.countryMarker)).check(matches(isDisplayed()))
             onView(withId(R.id.changeVehicle)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
-            assertEquals(
-                navController.currentDestination?.id,
-                R.id.checkPaidCrossingChangeVrmConform
-            )
         }
     }
 

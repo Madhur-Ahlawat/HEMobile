@@ -15,8 +15,7 @@ import com.heandroid.utils.common.Constants
 class VehicleGroupNamesAdapter(
     private val fragment: Fragment,
     var vehicleList: List<VehicleGroupResponse?>
-) :
-    RecyclerView.Adapter<VehicleGroupNamesAdapter.FilterVehicleNamesHolder>() {
+) : RecyclerView.Adapter<VehicleGroupNamesAdapter.FilterVehicleNamesHolder>() {
 
     private var checkedGroups: ArrayList<String> = ArrayList()
 
@@ -38,12 +37,12 @@ class VehicleGroupNamesAdapter(
         vehicleItem?.let { item ->
             if (item.groupName.equals(
                     fragment.requireContext().getString(R.string.unallocated_vehicle), true
-                ) && item.groupId!!.isEmpty()
+                ) && item.groupId?.isEmpty() == true
             ) {
                 holder.binding.cbVehicleGroup.isEnabled = false
             }
-            holder.setView(vehicleItem.groupName!!)
-            holder.binding.cbVehicleGroup.isChecked = checkedGroups.contains(vehicleItem.groupName!!)
+            vehicleItem.groupName?.let { holder.setView(it) }
+            holder.binding.cbVehicleGroup.isChecked = checkedGroups.contains(vehicleItem.groupName)
             holder.binding.mainLayout.setOnClickListener {
                 if (fragment is VehicleGroupMngmtFragment) {
                     val bundle = Bundle().apply {
@@ -56,13 +55,13 @@ class VehicleGroupNamesAdapter(
                 }
             }
             holder.binding.cbVehicleGroup.setOnClickListener {
-                makeButton(holder, item.groupId!!)
+                item.groupId?.let { it1 -> makeButton(holder, it1) }
             }
             holder.binding.vehicleGroupLayout.setOnClickListener {
                 if (holder.binding.cbVehicleGroup.isEnabled) {
                     holder.binding.cbVehicleGroup.isChecked =
                         !holder.binding.cbVehicleGroup.isChecked
-                    makeButton(holder, item.groupId!!)
+                    item.groupId?.let { it1 -> makeButton(holder, it1) }
                 }
             }
         }

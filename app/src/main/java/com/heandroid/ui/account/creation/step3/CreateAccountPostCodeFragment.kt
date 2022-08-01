@@ -153,7 +153,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             is Resource.Success -> {
                 countriesList.clear()
                 response.data?.forEach {
-                    countriesList.add(it?.countryName!!)
+                    it?.countryName?.let { it1 -> countriesList.add(it1) }
                 }
                 binding.apply {
                     spinnerCountry.setSpinnerAdapter(countriesList)
@@ -331,10 +331,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 for (address: DataAddress? in mainList) {
                     list = ArrayList()
                     address?.let {
-                        list.add(address.town!!)
-                        list.add(address.street!!)
-                        list.add(address.locality!!)
-                        list.add(address.country!!)
+                        address.town?.let { it1 -> list.add(it1) }
+                        address.street?.let { it1 -> list.add(it1) }
+                        address.locality?.let { it1 -> list.add(it1) }
+                        address.country?.let { it1 -> list.add(it1) }
                         addressList.add(TextUtils.join(",", list))
                     }
                 }

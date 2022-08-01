@@ -28,9 +28,9 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
     private var receiptId: String = ""
     private var eMailFlag = ""
     private var smsFlag = ""
-    private lateinit var mAccountResp: AccountResponse
+    private var mAccountResp: AccountResponse? = null
     private var mCat: String = ""
-    private lateinit var mReceiptModel: CommunicationPrefsModel
+    private var mReceiptModel: CommunicationPrefsModel? = null
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
     override fun getFragmentBinding(
@@ -108,17 +108,17 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                 }
 
                 val mListModel = CommunicationPrefsRequestModelList(
-                    mReceiptModel.id,
-                    mReceiptModel.category,
-                    mReceiptModel.oneMandatory,
-                    mReceiptModel.defEmail,
+                    mReceiptModel?.id,
+                    mReceiptModel?.category,
+                    mReceiptModel?.oneMandatory,
+                    mReceiptModel?.defEmail,
                     eMailFlag,
-                    mReceiptModel.mailFlag,
-                    mReceiptModel.defSms,
+                    mReceiptModel?.mailFlag,
+                    mReceiptModel?.defSms,
                     smsFlag,
-                    mReceiptModel.defVoice,
-                    mReceiptModel.voiceFlag,
-                    mReceiptModel.pushNotFlag
+                    mReceiptModel?.defVoice,
+                    mReceiptModel?.voiceFlag,
+                    mReceiptModel?.pushNotFlag
                 )
 
                 mList.add(mListModel)
@@ -127,21 +127,21 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
 
                 communicationPrefsViewModel.updateCommunicationPrefs(model)
                 val mAccountModelReq = UpdateProfileRequest(
-                    addressLine1 = mAccountResp.personalInformation?.addressLine1!!,
-                    addressLine2 = mAccountResp.personalInformation?.addressLine2!!,
-                    city = mAccountResp.personalInformation?.city!!,
+                    addressLine1 = mAccountResp?.personalInformation?.addressLine1,
+                    addressLine2 = mAccountResp?.personalInformation?.addressLine2,
+                    city = mAccountResp?.personalInformation?.city,
                     state = "HE",
-                    zipCode = mAccountResp.personalInformation?.zipCode!!,
-                    zipCodePlus = mAccountResp.personalInformation?.zipCodePlus!!,
-                    country = mAccountResp.personalInformation?.country!!,
-                    emailAddress = mAccountResp.personalInformation?.emailAddress!!,
-                    primaryEmailStatus = mAccountResp.personalInformation?.primaryEmailStatus!!,
-                    primaryEmailUniqueID = mAccountResp.personalInformation?.pemailUniqueCode!!,
-                    phoneCell = mAccountResp.personalInformation?.cellPhone,
-                    phoneDay = mAccountResp.personalInformation?.phoneDay,
-                    phoneFax = mAccountResp.personalInformation?.fax,
+                    zipCode = mAccountResp?.personalInformation?.zipCode,
+                    zipCodePlus = mAccountResp?.personalInformation?.zipCodePlus,
+                    country = mAccountResp?.personalInformation?.country,
+                    emailAddress = mAccountResp?.personalInformation?.emailAddress,
+                    primaryEmailStatus = mAccountResp?.personalInformation?.primaryEmailStatus,
+                    primaryEmailUniqueID = mAccountResp?.personalInformation?.pemailUniqueCode,
+                    phoneCell = mAccountResp?.personalInformation?.cellPhone,
+                    phoneDay = mAccountResp?.personalInformation?.phoneDay,
+                    phoneFax = mAccountResp?.personalInformation?.fax,
                     smsOption = smsFlag,
-                    phoneEvening = mAccountResp.personalInformation?.eveningPhone,
+                    phoneEvening = mAccountResp?.personalInformation?.eveningPhone,
                     correspDeliveryMode = "EMAIL",
                     correspDeliveryFrequency = "MONTHLY"
                 )
@@ -217,31 +217,33 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
         when (resource) {
             is Resource.Success -> {
                 resource.let { res ->
-                    mAccountResp = res.data!!
-                    if (res.data.personalInformation?.countryType.equals(
+                    res.data?.let {
+                        mAccountResp = it
+                    }
+                    if (res.data?.personalInformation?.countryType.equals(
                             Constants.COUNTRY_TYPE_UK,
                             true
                         )
                     ) {
                         binding.clLikeAdvice.visibility = View.VISIBLE
                     }
-                    val mPhoneNumber = res.data.personalInformation?.phoneNumber?.replace(
+                    val mPhoneNumber = res.data?.personalInformation?.phoneNumber?.replace(
                         "\\d(?=\\d{4})",
                         "*"
                     )
                     binding.youHaveOptedNumberMsg.text =
                         "${getString(R.string.str_you_have_opted_to_receive_text_msgs)} $mPhoneNumber"
 
-                    res.data.accountInformation?.communicationPreferences?.forEach {
+                    res.data?.accountInformation?.communicationPreferences?.forEach {
                         if (it?.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
-                            receiptId = it?.id!!
-                            mCat = it.category!!
+                            receiptId = it?.id.toString()
+                            mCat = it?.category.toString()
                             mReceiptModel = it
-                            if (it.mailFlag.equals("Y", true)) {
+                            if (it?.mailFlag.equals("Y", true)) {
                                 binding.rbEmail.isChecked = true
                                 binding.rbPost.gone()
                             }
-                            if (it.smsFlag.equals("Y", true)) {
+                            if (it?.smsFlag.equals("Y", true)) {
                                 binding.rbYes.isChecked = true
                             }
                         }

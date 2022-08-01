@@ -3,7 +3,6 @@ package com.heandroid.ui.vehicle.vehiclelist
 import android.os.Bundle
 import android.widget.Button
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.recyclerview.widget.RecyclerView
@@ -40,14 +39,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.Matchers.not
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -66,8 +63,7 @@ class VehicleListFragmentTest {
     val viewModel = mockk<VehicleMgmtViewModel>(relaxed = true)
 
     private val vehicleList = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
-    private val navController: NavController = Mockito.mock(NavController::class.java)
-    private val navCont = TestNavHostController(ApplicationProvider.getApplicationContext())
+    private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
     @Before
     fun init() {
@@ -95,7 +91,7 @@ class VehicleListFragmentTest {
             )
             val v2 = VehicleResponse(
                 PlateInfoResponse(),
-                PlateInfoResponse("ABCD"),
+                PlateInfoResponse("ABED"),
                 VehicleInfoResponse(),
                 false
             )
@@ -219,14 +215,12 @@ class VehicleListFragmentTest {
         }
     }
 
-    // @Test
+     @Test
     fun `test add and remove button visibility for dashboard screen`() {
         val bundle = Bundle().apply {
-            putBoolean(ConstantsTest.DATA, true)
+            putBoolean(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST, true)
         }
-        launchFragmentInHiltContainer<VehicleListFragment>(
-            bundle
-        ) {
+        launchFragmentInHiltContainer<VehicleListFragment>(bundle) {
             onView(withId(R.id.yourVehicleTv)).check(matches(isDisplayed()))
             onView(withId(R.id.addVehicleBtn)).check(matches(not(isDisplayed())))
             onView(withId(R.id.removeVehicleBtn)).check(matches(not(isDisplayed())))
@@ -277,12 +271,12 @@ class VehicleListFragmentTest {
         }
     }
 
-    //@Test
+    @Test
     fun `test add vehicle dialog, add button enabled for vehicle number`() {
         launchFragmentInHiltContainer<VehicleListFragment> {
-            navCont.setGraph(R.navigation.navigation_vehicle_list)
-            navCont.setCurrentDestination(R.id.chooseOptionFragment)
-            Navigation.setViewNavController(requireView(), navCont)
+            navController.setGraph(R.navigation.navigation_vehicle_list)
+            navController.setCurrentDestination(R.id.vehicleListFragment)
+            Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
             onView(withId(R.id.addVehicleBtn)).perform(BaseActions.forceClick())
 
@@ -302,16 +296,10 @@ class VehicleListFragmentTest {
                     false
                 )
                 (this@launchFragmentInHiltContainer as VehicleListFragment).onAddClick(vehicle)
-                val bundle = Bundle().apply {
-                    putParcelable(ConstantsTest.CREATE_ACCOUNT_DATA, null)
-                    putParcelable(ConstantsTest.DATA, vehicle)
-                }
                 assertEquals(
                     navController.currentDestination?.id,
                     R.id.addVehicleDetailsFragment
                 )
-                val currentDestinationArgs = navCont.backStack.last().arguments
-                Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bundle))
             }
         }
     }

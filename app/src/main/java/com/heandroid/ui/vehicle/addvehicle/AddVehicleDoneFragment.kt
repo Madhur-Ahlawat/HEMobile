@@ -170,14 +170,18 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             )
 
             val vehicleInfoResp = VehicleInfoResponse(
-                details.retrievePlateInfoDetails!!.vehicleMake ?: "",
-                details.retrievePlateInfoDetails!!.vehicleModel ?: "",
+                details.retrievePlateInfoDetails?.vehicleMake ?: "",
+                details.retrievePlateInfoDetails?.vehicleModel ?: "",
                 "",
                 "",
                 "",
                 "",
-                details.retrievePlateInfoDetails!!.vehicleColor ?: "",
-                VehicleClassTypeConverter.toClassName(details.retrievePlateInfoDetails!!.vehicleClass!!),
+                details.retrievePlateInfoDetails?.vehicleColor ?: "",
+                details.retrievePlateInfoDetails?.vehicleClass?.let {
+                    VehicleClassTypeConverter.toClassName(
+                        it
+                    )
+                },
                 mVehicleDetails?.vehicleInfo?.effectiveStartDate ?: ""
             )
 
@@ -203,7 +207,11 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 "",
                 "",
                 mVehicleDetails?.vehicleInfo?.color ?: "",
-                VehicleClassTypeConverter.toClassName(mVehicleDetails?.vehicleInfo?.vehicleClassDesc!!),
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc?.let {
+                    VehicleClassTypeConverter.toClassName(
+                        it
+                    )
+                },
                 mVehicleDetails?.vehicleInfo?.effectiveStartDate ?: ""
             )
 

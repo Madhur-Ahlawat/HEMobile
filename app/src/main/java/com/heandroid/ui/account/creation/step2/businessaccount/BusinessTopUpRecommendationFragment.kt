@@ -20,7 +20,7 @@ class BusinessTopUpRecommendationFragment :
     private var requestModel: CreateAccountRequestModel? = null
     private var noOfCrossings: String? = null
     private var noOfVehicle: String? = null
-    private var isEditAccountType : Int? = null
+    private var isEditAccountType: Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessTopUpRecommendationBinding.inflate(inflater, container, false)
@@ -35,7 +35,8 @@ class BusinessTopUpRecommendationFragment :
             binding.tvLabel.text = getString(R.string.str_business_prepay_account)
 
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
-            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+            isEditAccountType =
+                arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
         binding.isEnable = true
         calculateAndUpdateUI()
@@ -67,7 +68,10 @@ class BusinessTopUpRecommendationFragment :
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 isEditAccountType?.let {
-                    bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                    bundle.putInt(
+                        Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                        Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                    )
                 }
 
                 if (mCode == Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY) {
@@ -89,21 +93,23 @@ class BusinessTopUpRecommendationFragment :
 
     private fun calculateAndUpdateUI() {
         binding.apply {
-            val noOfVehicle = noOfVehicle!!.toInt()
-            val noOfCrossing = noOfCrossings!!.toInt()
-            val myAccountAutoTopUp = noOfVehicle * noOfCrossing * 2
-            val autoTopUpFalls = noOfVehicle * noOfCrossing
+            val noOfVehicle = noOfVehicle?.toInt()
+            val noOfCrossing = noOfCrossings?.toInt()
+            noOfCrossing?.let {
+                val myAccountAutoTopUp = (noOfVehicle?.times(it))?.times(2)
+                val autoTopUpFalls = noOfVehicle?.times(noOfCrossing)
+                val recommendCal =
+                    "$noOfVehicle vehicles * $noOfCrossing/month * Assume Car charge at £2.00 = £$myAccountAutoTopUp"
+                topUpCalculate.text = recommendCal
+                topUpAmount.setText(myAccountAutoTopUp.toString())
+                topUpAmountFalls.setText(autoTopUpFalls.toString())
+                val recommendAmount =
+                    "We recommend that you have a minimum top-up amount of £$myAccountAutoTopUp and a minimum balance threshold of £$autoTopUpFalls.\n" +
+                            "Please note that you can change these amounts by manually entering the amounts you require."
+                topUpCalculateRecommend.text = recommendAmount
+            }
 
-            val recommendCal =
-                "$noOfVehicle vehicles * $noOfCrossing/month * Assume Car charge at £2.00 = £$myAccountAutoTopUp"
-            topUpCalculate.text = recommendCal
-            topUpAmount.setText(myAccountAutoTopUp.toString())
-            topUpAmountFalls.setText(autoTopUpFalls.toString())
 
-            val recommendAmount =
-                "We recommend that you have a minimum top-up amount of £$myAccountAutoTopUp and a minimum balance threshold of £$autoTopUpFalls.\n" +
-                        "Please note that you can change these amounts by manually entering the amounts you require."
-            topUpCalculateRecommend.text = recommendAmount
         }
     }
 
