@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.adobe.marketing.mobile.MobileCore
 import com.heandroid.R
 import com.heandroid.databinding.ActivityLandingBinding
 import com.heandroid.ui.auth.controller.AuthActivity
@@ -18,6 +19,7 @@ import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.futureModule.InProgressActivity
 import com.heandroid.ui.startNow.StartNowBaseActivity
+import com.heandroid.utils.common.AdobeAnalytics
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Constants.FAILED_RETRY_SCREEN
 import com.heandroid.utils.common.Constants.LANDING_SCREEN
@@ -26,6 +28,7 @@ import com.heandroid.utils.common.Constants.SESSION_TIME_OUT
 import com.heandroid.utils.common.Constants.START_NOW_SCREEN
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.extn.startNormalActivity
+import com.heandroid.utils.extn.toolbar
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -49,14 +52,27 @@ class LandingActivity : BaseActivity<Any?>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         loadFragment()
+        val mContextData = HashMap<String, String>()
+        mContextData["LandingActivity"] = "Started"
+        AdobeAnalytics.trackState("LandingPage", mContextData)
+
     }
 
     override fun onResume() {
         super.onResume()
+        MobileCore.setApplication(BaseApplication.INSTANCE)
+        MobileCore.lifecycleStart(null)
         BaseApplication.INSTANCE.stopTimerAPi()
         sessionManager.clearAll()
         initCtrl()
     }
+
+    override fun onPause() {
+        super.onPause()
+        MobileCore.lifecyclePause()
+
+    }
+
 
     private fun initCtrl() {
         binding.toolBarLyt.btnLogin.setOnClickListener {

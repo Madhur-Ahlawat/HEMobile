@@ -7,6 +7,7 @@ import com.heandroid.data.model.auth.login.LoginResponse
 import com.heandroid.data.remote.ApiService
 import com.adobe.marketing.mobile.*
 import com.heandroid.BuildConfig.ADOBE_ENVIRONMENT_KEY
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
@@ -47,8 +48,11 @@ class BaseApplication : Application() {
             MobileCore.start {
 
                 MobileCore.configureWithAppID(ADOBE_ENVIRONMENT_KEY)
+                Logg.logging("BaseApplication ","ADOBE_ENVIRONMENT_KEY $ADOBE_ENVIRONMENT_KEY")
+                Logg.logging("BaseApplication ","it  ${it.toString()}")
             }
-        } catch (e: InvalidInitException) {
+        } catch (e: java.lang.Exception) {
+            Logg.logging("BaseApplication ","it InvalidInitException  ${e.toString()}")
 
         }
     }
