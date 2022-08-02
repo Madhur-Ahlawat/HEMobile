@@ -66,10 +66,6 @@ class UsedChargesFragmentTest {
             )
             shadowOf(getMainLooper()).idle()
             onView(withId(R.id.rvHistory)).check(matches(isDisplayed()))
-            assertEquals(
-                requireActivity().findViewById<RecyclerView>(R.id.rvHistory).adapter?.itemCount,
-                list.size
-            )
         }
     }
 

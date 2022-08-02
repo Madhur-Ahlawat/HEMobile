@@ -24,7 +24,9 @@ class HeaderInterceptor @Inject constructor(
 
         sessionManager.let {
             it.fetchAuthToken()?.let { accessToken ->
-                requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                if (!chain.request().url.encodedPath.contains("bosuser/api/account/vehicle/getPlateInfo/")) {
+                    requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                }
                 requestBuilder.addHeader(
                     "User-Agent",
                     "MobileApp-${appVersion}, Android-${osVersion}"

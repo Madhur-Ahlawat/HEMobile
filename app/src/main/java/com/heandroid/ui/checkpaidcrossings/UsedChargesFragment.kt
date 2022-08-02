@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
@@ -24,7 +25,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
 
     private var loader: LoaderDialog? = null
     val mList = mutableListOf<UsedChargesModel?>()
-    private val viewModel: CheckPaidCrossingViewModel by viewModels()
+    private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -63,6 +64,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
                             crossingDate = DateUtils.convertDateFormat(it?.entryDate, 0),
                             it?.exitTime, bounds
                         )
+                        mList.clear()
                         mList.add(model)
                         binding.rvHistory.adapter = UsedChargesAdapter(mList)
                     }

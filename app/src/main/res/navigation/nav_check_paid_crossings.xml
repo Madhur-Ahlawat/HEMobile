@@ -83,7 +83,7 @@
     <fragment
         android:id="@+id/addVehicleClassesFragment"
         android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossAddVehicleClassesFragment"
-        tools:layout="@layout/fragment_add_vehicle_classes">
+        tools:layout="@layout/fragment_paid_cross_add_vehicle_classes">
 
         <action
             android:id="@+id/action_addVehicleClassesFragment_to_checkPaidCrossingChangeVrm"
@@ -104,6 +104,11 @@
             android:id="@+id/action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConformSuccess"
             app:destination="@id/checkPaidCrossingChangeVrmConformSuccess"
             app:popUpTo="@id/crossingCheck"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrm_to_enterVrmFragment"
+            app:destination="@id/enterVrmFragment"
+            app:popUpTo="@id/enterVrmFragment"
             app:popUpToInclusive="true" />
 
 
@@ -114,6 +119,11 @@
         android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrmSuccessFull"
         tools:layout="@layout/fragment_enter_vrm_check_change_conform_success">
 
+        <action
+            android:id="@+id/action_checkPaidCrossingChangeVrmConformSuccess_to_crossingCheck"
+            app:destination="@id/crossingCheck"
+            app:popUpTo="@id/crossingCheck"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 

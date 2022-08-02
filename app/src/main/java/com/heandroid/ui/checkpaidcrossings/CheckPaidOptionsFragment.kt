@@ -40,12 +40,7 @@ class CheckPaidOptionsFragment : BaseFragment<FragmentUsedUnusedOptionsBinding>(
                 )
             }
             R.id.rl_used_crossings -> {
-                val bundle = Bundle()
-                bundle.putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, arguments)
-                findNavController().navigate(
-                    R.id.action_checkChargesOption_to_usedCharges,
-                    bundle
-                )
+                findNavController().navigate(R.id.action_checkChargesOption_to_usedCharges)
             }
         }
     }

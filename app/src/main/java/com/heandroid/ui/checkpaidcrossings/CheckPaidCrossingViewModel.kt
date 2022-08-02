@@ -47,6 +47,20 @@ class CheckPaidCrossingViewModel @Inject constructor(
     private val _balanceTransfer = MutableLiveData<Resource<BalanceTransferResponse?>?>()
     val balanceTransfer: LiveData<Resource<BalanceTransferResponse?>?> get() = _balanceTransfer
 
+    private val _paidCrossingOption = MutableLiveData<CheckPaidCrossingsOptionsModel?>()
+    val paidCrossingOption: LiveData<CheckPaidCrossingsOptionsModel?> get() = _paidCrossingOption
+
+    private val _paidCrossingResponse = MutableLiveData<CheckPaidCrossingsResponse?>()
+    val paidCrossingResponse: LiveData<CheckPaidCrossingsResponse?> get() = _paidCrossingResponse
+
+
+    fun setPaidCrossingOption(data : CheckPaidCrossingsOptionsModel?){
+        _paidCrossingOption.value = data
+    }
+    fun setPaidCrossingResponse(data : CheckPaidCrossingsResponse?){
+        _paidCrossingResponse.value = data
+    }
+
 
     fun checkPaidCrossings(model: CheckPaidCrossingsRequest?) {
         viewModelScope.launch {

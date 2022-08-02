@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -29,10 +30,11 @@ import kotlinx.coroutines.launch
 class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingChangeVrmBinding>(),
     View.OnClickListener, ConfirmChangeListener {
 
+    private var isClicked: Boolean = false
     private var exists: Boolean = false
     private var vrm: String = ""
     private var loader: LoaderDialog? = null
-    private val viewModel: CheckPaidCrossingViewModel by viewModels()
+    private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,7 +42,6 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
     ) = FragmentCheckPaidCrossingChangeVrmBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         val country = arguments?.getString(Constants.COUNTRY_TYPE)
@@ -89,7 +90,7 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.removeVehicle -> {
-
+                findNavController().navigate(R.id.action_checkPaidCrossingChangeVrm_to_enterVrmFragment)
             }
             R.id.changeVehicle -> {
                 if (!exists) {
@@ -103,7 +104,7 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
                             R.string.str_confirm_if_u_wish_to_associate_vehicle_no,
                             arguments?.getParcelable<VehicleInfoDetails?>
                                 (Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS)?.retrievePlateInfoDetails?.plateNumber,
-                            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)?.ref
+                            viewModel.paidCrossingOption.value?.vrm
                         ),
                         this
                     ).show(childFragmentManager, Constants.DELETE_VEHICLE_GROUP_DIALOG)
@@ -113,10 +114,6 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
     }
 
     override fun onConfirmClick() {
-        val mData =
-            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
-        val mDataVrmRef =
-            arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)
         val country =
             arguments?.getString(Constants.COUNTRY_TYPE)
         val mVrmDetailsDvla =
@@ -133,9 +130,14 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
             ""
         )
         val mBalRequest =
-            BalanceTransferRequest(mDataVrmRef?.vrm, mData?.plateCountry, mTransferInfo)
+            BalanceTransferRequest(
+                viewModel.paidCrossingOption.value?.vrm,
+                viewModel.paidCrossingResponse.value?.plateCountry,
+                mTransferInfo
+            )
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
+        isClicked = true
         viewModel.balanceTransfer(mBalRequest)
     }
 
@@ -143,19 +145,23 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (status) {
-            is Resource.Success -> {
-                findNavController().navigate(
-                    R.id.action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConformSuccess,
-                    arguments
-                )
+        if (isClicked) {
+            when (status) {
+                is Resource.Success -> {
+                    findNavController().navigate(
+                        R.id.action_checkPaidCrossingChangeVrm_to_checkPaidCrossingChangeVrmConformSuccess,
+                        arguments
+                    )
+                }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-            else -> {
-            }
+            isClicked = false
         }
+
     }
 
 }
