@@ -202,12 +202,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         } else {
             binding.switchViewBusiness.visible()
-            var country = "UK"
-            country = if (!binding.switchViewBusiness.isChecked) {
-                "Non-UK"
-            } else {
-                "UK"
-            }
 
             model?.city = binding.tieCity.text.toString()
             model?.stateType = "HE"
@@ -327,7 +321,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 addressList.clear()
                 mainList = response.data?.toMutableList() ?: ArrayList()
                 addressList.add(0, "Select Address")
-                var list: MutableList<String>? = null
+                var list: MutableList<String>?
                 for (address: DataAddress? in mainList) {
                     list = ArrayList()
                     address?.let {

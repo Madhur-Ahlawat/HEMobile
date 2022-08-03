@@ -259,6 +259,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                 }
                 findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleFragment, bundle)
             }
+            else -> {}
         }
     }
 }

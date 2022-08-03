@@ -34,6 +34,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
@@ -121,7 +122,7 @@ class AccountPaymentHistoryFragmentTest {
 
         launchFragmentInHiltContainer<AccountPaymentHistoryFragment> {
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)

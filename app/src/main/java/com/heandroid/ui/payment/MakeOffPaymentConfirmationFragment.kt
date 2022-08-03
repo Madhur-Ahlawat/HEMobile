@@ -77,7 +77,9 @@ class MakeOffPaymentConfirmationFragment :
     }
 
     private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -100,6 +102,8 @@ class MakeOffPaymentConfirmationFragment :
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
             }
         }
 

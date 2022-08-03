@@ -102,25 +102,27 @@ class NominatedInvitationAccessRightFragment :
 
 
     private fun handleCreateAccountResponse(status: Resource<CreateAccountResponseModel?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    if (status.data?.statusCode.equals("1224")) {
-                        findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
-                        showError(binding.root, status.data?.message)
-                    } else {
-                        accountId = status.data?.secondaryAccountId ?: ""
-                        updateAccessRight()
-
-                    }
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode.equals("1224")) {
+                    findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
+                    showError(binding.root, status.data?.message)
+                } else {
+                    accountId = status.data?.secondaryAccountId ?: ""
+                    updateAccessRight()
 
                 }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
+
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+
         }
 
     }
@@ -146,19 +148,21 @@ class NominatedInvitationAccessRightFragment :
 
 
     private fun handleUpdateAccessResponse(status: Resource<ResponseBody?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
-                    showError(binding.root, "Successfully updated Access details")
+        }
+        when (status) {
+            is Resource.Success -> {
+                findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncListFragment)
+                showError(binding.root, "Successfully updated Access details")
 
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+
         }
 
     }

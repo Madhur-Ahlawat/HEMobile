@@ -69,7 +69,9 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
 
     private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
 
@@ -83,6 +85,8 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
+            }
+            else -> {
             }
         }
     }
@@ -117,11 +121,10 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 binding.btnInvited.changeBackgroundColor(R.color.green)
                 binding.btnInvited.backgroundTintList =
                     requireActivity().getColorStateList(R.color.green)
-
             }
 
             R.id.btnNominatedContact -> {
-                if (list?.size >= 5) showError(
+                if (list.size >= 5) showError(
                     binding.root,
                     getString(R.string.str_nominated_contacts_limit_reached)
                 )
@@ -151,96 +154,80 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
 
     private fun handleAccessRightResponse(status: Resource<GetSecondaryAccessRightsResp?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    if (status.data?.accessRights?.accessVo?.isNotEmpty() == true) {
-                        if (status.data.accessRights.accessVo[0]?.value.equals(
-                                "READ",
-                                true
-                            )
-                        ) filterList?.get(selectedPosition)?.mPermissionLevel = "Read Only"
-                        else filterList?.get(selectedPosition)?.mPermissionLevel =
-                            "Amend Account, Vehicle data"
-                    } else filterList?.get(selectedPosition)?.mPermissionLevel =
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.accessRights?.accessVo?.isNotEmpty() == true) {
+                    if (status.data.accessRights.accessVo[0]?.value.equals(
+                            "READ",
+                            true
+                        )
+                    ) filterList?.get(selectedPosition)?.mPermissionLevel = "Read Only"
+                    else filterList?.get(selectedPosition)?.mPermissionLevel =
                         "Amend Account, Vehicle data"
+                } else filterList?.get(selectedPosition)?.mPermissionLevel =
+                    "Amend Account, Vehicle data"
 
 
-                    binding.rvList.adapter?.notifyItemChanged(
-                        selectedPosition,
-                        list[selectedPosition]
-                    )
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
+                binding.rvList.adapter?.notifyItemChanged(
+                    selectedPosition,
+                    list[selectedPosition]
+                )
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
     }
 
     private fun handleTerminatedContactsResp(status: Resource<ResponseBody?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
+        }
+        when (status) {
+            is Resource.Success -> {
 
-                    showError(binding.root, "Contact Removed Successfully")
-                    Log.v(
-                        "ListFrag",
-                        " handleTerminatedContactsResp   succes called ${status.data}   "
-                    )
+                showError(binding.root, "Contact Removed Successfully")
+                val remo = list.indexOf(filterList?.get(selectedPosition))
+                list.remove(list[remo])
 
-                    val remo = list.indexOf(filterList?.get(selectedPosition))
-                    list.remove(list[remo])
+                filterList?.removeAt(selectedPosition)
 
-                    filterList?.removeAt(selectedPosition)
-
-                    binding.rvList.adapter?.notifyItemRemoved(
-                        selectedPosition
-                    )
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                    Log.v(
-                        "ListFrag",
-                        " handleTerminatedContactsResp   error called ${status.data}   "
-                    )
-
-                }
+                binding.rvList.adapter?.notifyItemRemoved(
+                    selectedPosition
+                )
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+
         }
 
     }
 
     private fun handleResendActivationMail(status: Resource<ResendRespModel?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (status) {
-                is Resource.Success -> {
-                    Log.v(
-                        "ListFrag",
-                        " handleResendActivationMail   succes called ${status.data?.message}   "
-                    )
-                    if (status.data?.status.equals("0")) {
-                        showError(binding.root, getString(R.string.resend_success))
-                    } else {
-                        showError(binding.root, status.errorMsg)
-                    }
-
-                }
-                is Resource.DataError -> {
-                    Log.v(
-                        "ListFrag",
-                        " handleResendActivationMail   error called ${status.data}   "
-                    )
-
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.status.equals("0")) {
+                    showError(binding.root, getString(R.string.resend_success))
+                } else {
                     showError(binding.root, status.errorMsg)
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
 
     }

@@ -27,97 +27,121 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NominatedProfilePostCodeFragment: BaseFragment<FragmentNominatedProfilePostcodeBinding>(), View.OnClickListener {
-    private val viewModel : CreateAccountPostCodeViewModel by viewModels()
-    private var addressList : MutableList<String> = ArrayList()
-    private var mainList : MutableList<DataAddress?> = ArrayList()
+class NominatedProfilePostCodeFragment : BaseFragment<FragmentNominatedProfilePostcodeBinding>(),
+    View.OnClickListener {
+    private val viewModel: CreateAccountPostCodeViewModel by viewModels()
+    private var addressList: MutableList<String> = ArrayList()
+    private var mainList: MutableList<DataAddress?> = ArrayList()
     private var loader: LoaderDialog? = null
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)= FragmentNominatedProfilePostcodeBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentNominatedProfilePostcodeBinding.inflate(inflater, container, false)
+
     override fun init() {
-        binding.enable=false
+        binding.enable = false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.data=arguments?.getParcelable(Constants.DATA)
-        binding.enable=true
-        if(binding.data?.personalInformation?.zipcode?.isNotEmpty()==true) binding.tilAddress.visible()
+        binding.data = arguments?.getParcelable(Constants.DATA)
+        binding.enable = true
+        if (binding.data?.personalInformation?.zipcode?.isNotEmpty() == true) binding.tilAddress.visible()
     }
+
     override fun initCtrl() {
         binding.apply {
             btnFindAddress.setOnClickListener(this@NominatedProfilePostCodeFragment)
             btnAction.setOnClickListener(this@NominatedProfilePostCodeFragment)
             tvChange.setOnClickListener(this@NominatedProfilePostCodeFragment)
             binding.tilAddress.setOnClickListener(this@NominatedProfilePostCodeFragment)
-            binding.tiePostCode.doAfterTextChanged { enable = tiePostCode.text.toString().isNotEmpty() && tieAddress.text.toString().isNotEmpty() && tieAddress.text.toString() != "Select Address" }
+            binding.tiePostCode.doAfterTextChanged {
+                enable = tiePostCode.text.toString().isNotEmpty() && tieAddress.text.toString()
+                    .isNotEmpty() && tieAddress.text.toString() != "Select Address"
+            }
         }
     }
+
     override fun observer() {
-        observe(viewModel.addresses,::handleAddressApiResponse)
+        observe(viewModel.addresses, ::handleAddressApiResponse)
     }
 
 
     override fun onClick(v: View?) {
         hideKeyboard()
-        when(v?.id) {
+        when (v?.id) {
             R.id.btnAction -> {
 
-                val bundle= Bundle()
-                bundle.putParcelable(Constants.DATA,binding.data)
-                findNavController().navigate(R.id.action_nominatedPostcodeFragment_to_nominatedPasswordFragment,bundle)
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.DATA, binding.data)
+                findNavController().navigate(
+                    R.id.action_nominatedPostcodeFragment_to_nominatedPasswordFragment,
+                    bundle
+                )
 
             }
             R.id.btnFindAddress -> {
-                if(binding.tiePostCode.length()>0) {
-                    loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+                if (binding.tiePostCode.length() > 0) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.fetchAddress(binding.tiePostCode.text.toString())
-                }
-                else {
+                } else {
                     ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
                 }
             }
 
-            R.id.tvChange -> { binding.btnFindAddress.performClick() }
-            R.id.tilAddress ->{ binding.spnAddress.performClick() }
+            R.id.tvChange -> {
+                binding.btnFindAddress.performClick()
+            }
+            R.id.tilAddress -> {
+                binding.spnAddress.performClick()
+            }
         }
     }
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-                    addressList.clear()
-                    mainList= response.data?.toMutableList()?:ArrayList()
-                    addressList.add(0,"Select Address")
-                    for(address : DataAddress? in mainList){
-                        address?.let {
-                            addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
-                        }
-                    }
-                    binding.apply {
-                        spnAddress.setSpinnerAdapter(addressList)
-                        spnAddress.onItemSelectedListener = spinnerListener
-                        tilAddress.visible()
-                        enable = true
-                        btnFindAddress.strokeColor=null
-                        btnFindAddress.strokeWidth=0
-                        btnFindAddress.backgroundTintList=
-                            ContextCompat.getColorStateList(requireActivity(), R.color.green)
-                        btnFindAddress.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        }
+        when (response) {
+            is Resource.Success -> {
+                addressList.clear()
+                mainList = response.data?.toMutableList() ?: ArrayList()
+                addressList.add(0, "Select Address")
+                for (address: DataAddress? in mainList) {
+                    address?.let {
+                        addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
                     }
                 }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, response.errorMsg)
+                binding.apply {
+                    spnAddress.setSpinnerAdapter(addressList)
+                    spnAddress.onItemSelectedListener = spinnerListener
+                    tilAddress.visible()
+                    enable = true
+                    btnFindAddress.strokeColor = null
+                    btnFindAddress.strokeWidth = 0
+                    btnFindAddress.backgroundTintList =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.green)
+                    btnFindAddress.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
                 }
             }
-        } catch (e: Exception) { }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
+        }
+
     }
+
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
             if (position == 0) return
             binding.tieAddress.setText(parent.getItemAtPosition(position).toString())
-            binding.data?.personalInformation?.addressLine1=parent.getItemAtPosition(position).toString()
+            binding.data?.personalInformation?.addressLine1 =
+                parent.getItemAtPosition(position).toString()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}

@@ -20,6 +20,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -92,7 +93,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(response.code()).thenReturn(200)
             Mockito.lenient().`when`(response.body())
@@ -115,7 +116,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for invalid token error`() {
-        runBlockingTest {
+        runTest {
             val status = 401
             val message = "Invalid token"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -146,7 +147,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -176,7 +177,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for unknown error Exception`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = ""
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -206,7 +207,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for unknown api error model Exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
             val testValidData = ""
             val jsonString: String = Gson().toJson(testValidData)
@@ -230,7 +231,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.addVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -249,7 +250,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.addVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -268,7 +269,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test add vehicle api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.addVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw Exception(unknownException)
@@ -287,7 +288,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for success`() {
-        runBlockingTest {
+        runTest {
             val status = 200
             val message = "success"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(true)
@@ -311,7 +312,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for invalid token error`() {
-        runBlockingTest {
+        runTest {
             val status = 401
             val message = "Invalid token"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -341,7 +342,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -371,7 +372,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.updateVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -390,7 +391,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.updateVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -409,7 +410,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test update vehicle api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.updateVehicleApiCall(vehicleRequest))
                 .thenAnswer {
                     throw Exception(unknownException)
@@ -428,7 +429,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test delete vehicle api call for success`() {
-        runBlockingTest {
+        runTest {
             val status = 200
             val message = "success"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(true)
@@ -452,7 +453,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test delete vehicle api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -482,7 +483,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test delete vehicle api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.deleteVehicleListApiCall(deleteRequest))
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -501,7 +502,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test delete vehicle api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.deleteVehicleListApiCall(deleteRequest))
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -520,7 +521,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test delete vehicle api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.deleteVehicleListApiCall(deleteRequest))
                 .thenAnswer {
                     throw Exception(unknownException)
@@ -539,7 +540,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(vehicleListResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(vehicleListResponse.code()).thenReturn(200)
 
@@ -572,7 +573,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for success with no vehicles`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(vehicleListResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(vehicleListResponse.code()).thenReturn(200)
             val vehicleList = listOf<VehicleResponse>()
@@ -592,7 +593,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(vehicleListResponse.isSuccessful).thenReturn(false)
@@ -622,7 +623,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.getVehicleListApiCall())
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -641,7 +642,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.getVehicleListApiCall())
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -660,7 +661,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test get vehicle list api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.getVehicleListApiCall())
                 .thenAnswer {
                     throw Exception(unknownException)
@@ -679,7 +680,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(crossingResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(crossingResponse.code()).thenReturn(200)
             val item1 = DataFile.getCrossingHistoryItem("1234")
@@ -706,7 +707,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for success with no crossings`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(crossingResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(crossingResponse.code()).thenReturn(200)
             val crossingList = mutableListOf<CrossingHistoryItem?>()
@@ -730,7 +731,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(crossingResponse.isSuccessful).thenReturn(false)
@@ -761,7 +762,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.crossingHistoryApiCall(crossingRequest))
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -780,7 +781,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.crossingHistoryApiCall(crossingRequest))
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -799,7 +800,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test vehicle crossing history api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.crossingHistoryApiCall(crossingRequest))
                 .thenAnswer {
                     throw Exception(unknownException)
@@ -818,7 +819,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test download vehicle crossing history api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(downloadResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(downloadResponse.code()).thenReturn(200)
             Mockito.lenient().`when`(downloadResponse.body()).thenReturn(responseBody)
@@ -835,7 +836,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test download vehicle crossing history api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(downloadResponse.isSuccessful).thenReturn(false)
@@ -867,7 +868,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test download vehicle crossing history api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.downloadCrossingHistoryAPiCall(downloadRequest))
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -886,7 +887,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test download vehicle crossing history api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.downloadCrossingHistoryAPiCall(downloadRequest))
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -905,7 +906,7 @@ class VehicleMgmtViewModelTest {
 
     @Test
     fun `test download vehicle crossing history api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.downloadCrossingHistoryAPiCall(downloadRequest))
                 .thenAnswer {
                     throw Exception(unknownException)

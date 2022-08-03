@@ -143,13 +143,13 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         val hashmap: MutableMap<String?, List<AlertMessage?>?> = HashMap()
 
         for (element in messageList!!) {
-            if (hashmap?.keys?.contains(element?.category) == true) {
+            if (hashmap.keys.contains(element?.category)) {
                 val list: MutableList<AlertMessage?> = ArrayList()
                 hashmap[element?.category]?.let { list.addAll(it) }
                 list.add(element)
                 hashmap[element?.category] = list
             } else {
-                hashmap?.put(element?.category, listOf(element))
+                hashmap.put(element?.category, listOf(element))
             }
         }
 

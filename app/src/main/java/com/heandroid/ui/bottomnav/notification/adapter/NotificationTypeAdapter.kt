@@ -167,11 +167,7 @@ class NotificationTypeAdapter(private val mContext: Context) :
     }
 
     override fun getItemCount(): Int {
-        return if (notificationList == null) {
-            0
-        } else {
-            notificationList.size
-        }
+        return notificationList.size
     }
 
 

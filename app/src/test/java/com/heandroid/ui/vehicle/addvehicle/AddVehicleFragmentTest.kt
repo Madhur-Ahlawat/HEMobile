@@ -23,6 +23,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -70,7 +71,7 @@ class AddVehicleFragmentTest {
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
                 .perform(click())
 
-            runBlockingTest {
+            runTest {
                 delay(1000)
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleVRMDialog
@@ -95,7 +96,7 @@ class AddVehicleFragmentTest {
             onView(withId(R.id.addVehicleBtn)).check(matches(isDisplayed()))
                 .perform(click())
 
-            runBlockingTest {
+            runTest {
                 delay(1000)
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(AddVehicleDialog.TAG) as AddVehicleVRMDialog

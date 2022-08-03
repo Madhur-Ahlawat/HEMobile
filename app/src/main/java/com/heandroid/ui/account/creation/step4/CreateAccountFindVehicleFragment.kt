@@ -79,7 +79,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     binding.continueBtn.isEnabled = true
                 }, time)
 
-                var country = "UK"
+                val country: String
                 if (binding.addVrmInput.text.toString().isNotEmpty()) {
                     country = if (!binding.switchView.isChecked) {
                         "Non-UK"
@@ -142,6 +142,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                     findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment, bundle)
                 }
+                else -> {}
             }
         }
     }
@@ -184,6 +185,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 findNavController().popBackStack()
             }
+            else -> {}
         }
     }
 

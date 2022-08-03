@@ -48,14 +48,14 @@ class FilterDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCanceledOnTouchOutside(false)
-        setupClickListeners(view)
+        setupClickListeners()
     }
 
     private var selOption = ""
 
-    private fun setupClickListeners(view: View) {
+    private fun setupClickListeners() {
 
-        dataBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        dataBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
 
             when (checkedId) {
 
