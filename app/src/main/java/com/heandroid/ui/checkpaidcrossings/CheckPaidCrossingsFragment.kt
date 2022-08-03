@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
     View.OnClickListener {
 
-    private val viewModel: CheckPaidCrossingViewModel by viewModels()
+    private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isCalled = false
 
@@ -92,6 +93,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
                         putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
                         putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
                     }
+                    viewModel.setPaidCrossingOption(binding.model)
+                    viewModel.setPaidCrossingResponse(status.data)
                     findNavController().navigate(
                         R.id.action_crossingCheck_to_checkChargesOption,
                         bundle

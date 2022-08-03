@@ -6,7 +6,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.databinding.FragmentAddVehicleClassesBinding
+import com.heandroid.databinding.FragmentPaidCrossAddVehicleClassesBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.VehicleClassTypeConverter
@@ -16,7 +16,7 @@ import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>() {
+class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentPaidCrossAddVehicleClassesBinding>() {
 
     private var loader: LoaderDialog? = null
     private var mClassType = ""
@@ -26,17 +26,25 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentAddVehicleClassesBinding.inflate(inflater, container, false)
+    ) = FragmentPaidCrossAddVehicleClassesBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         vrm = arguments?.getString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED).toString()
         exists = arguments?.getBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)
-        binding.title.text = "Vehicle registration number: $vrm"
-        binding.classARadioButton.isChecked = true
-        mClassType = "1"
-        binding.classADesc.visible()
+        binding.title.text = getString(R.string.vehicle_reg_num, vrm)
+
+        binding.classBRadioButton.isChecked = true
+        mClassType = "2"
+        binding.classBDesc.visible()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.classVehicleCheckbox.isChecked = false
+        isEnabled()
     }
 
 
@@ -85,6 +93,12 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
                 mClassType = "4"
             }
         }
+        binding.classVehicleCheckbox.setOnClickListener{
+            isEnabled()
+        }
+        binding.cancelButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
         binding.continueButton.setOnClickListener {
             arguments?.putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, true)
             val mVrmDetailsDvla =
@@ -100,6 +114,10 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentAddVehicleC
     }
 
     override fun observer() {}
+
+    private fun isEnabled() {
+        binding.model = binding.classVehicleCheckbox.isChecked
+    }
 
 }
 
