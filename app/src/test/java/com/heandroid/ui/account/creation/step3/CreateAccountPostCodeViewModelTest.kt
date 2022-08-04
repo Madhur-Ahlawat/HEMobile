@@ -82,7 +82,6 @@ class CreateAccountPostCodeViewModelTest {
     @Test
     fun `test update communication prefs api call for unknown error`() {
         runTest {
-            val request = EmailVerificationRequest("", "")
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(addressesResponse.isSuccessful).thenReturn(false)

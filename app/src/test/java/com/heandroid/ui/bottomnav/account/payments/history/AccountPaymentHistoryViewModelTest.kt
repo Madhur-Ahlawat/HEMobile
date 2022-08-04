@@ -15,6 +15,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -67,7 +68,7 @@ class AccountPaymentHistoryViewModelTest {
 
     @Test
     fun `test get payment history details api call for success for no history`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(accountPaymentHistoryResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(accountPaymentHistoryResponse.code()).thenReturn(200)
             val resp = AccountPaymentHistoryResponse(null, "", "")
@@ -85,7 +86,7 @@ class AccountPaymentHistoryViewModelTest {
 
     @Test
     fun `test get payment history details api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(accountPaymentHistoryResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(accountPaymentHistoryResponse.code()).thenReturn(200)
             val t1 = DataFile.getPaymentHistoryTransactionData()
@@ -112,7 +113,7 @@ class AccountPaymentHistoryViewModelTest {
 
     @Test
     fun `test get payment history details api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(accountPaymentHistoryResponse.isSuccessful).thenReturn(false)

@@ -52,7 +52,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
     override fun initCtrl() {
         binding.rbEmail.isChecked = true
         communicationPref = Constants.EMAIL
-        binding.rgCommunicationPref.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgCommunicationPref.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_email -> {
                     binding.printedMsgTxt.gone()
@@ -73,7 +73,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             binding.numberTextInput.visible()
             binding.changeImg.gone()
         }
-        binding.rgAnswer.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgAnswer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_yes -> {
                     adviseOnText = Constants.YES

@@ -34,6 +34,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -124,7 +125,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
             val crossingHistoryResponse =
                 CrossingHistoryApiResponse(crossingHistoryResponseData, "", "")
 
-            runBlockingTest {
+            runTest {
                 selectedVehicleLiveData.postValue(selectedVehicle)
                 delay(1000)
                 crossingList.postValue(Resource.Success(crossingHistoryResponse))
@@ -142,7 +143,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
         launchFragmentInHiltContainer<VehicleHistoryCrossingHistoryFragment> {
             onView(withId(R.id.linearLayout)).check(matches(isDisplayed()))
 
-            runBlockingTest {
+            runTest {
                 delay(500)
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
@@ -174,7 +175,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
                 list.size
             )
             onView(withId(R.id.download_crossing_history_btn)).perform(ViewActions.click())
-            runBlockingTest {
+            runTest {
                 delay(500)
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as DownloadFormatSelectionFilterDialog
@@ -207,7 +208,7 @@ class VehicleHistoryCrossingHistoryFragmentTest {
                 list.size
             )
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 onView(withId(R.id.rvVehicleCrossingHistory)).perform(ViewActions.swipeUp())
                     .perform(ViewActions.swipeUp())
                 delay(2000)

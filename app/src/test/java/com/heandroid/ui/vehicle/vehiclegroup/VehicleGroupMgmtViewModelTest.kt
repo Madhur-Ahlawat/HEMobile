@@ -504,7 +504,7 @@ class VehicleGroupMgmtViewModelTest {
 
     @Test
     fun `test search vehicle of vehicle group api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(vehicleListResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(vehicleListResponse.code()).thenReturn(200)
             val v1 = VehicleResponse(
@@ -534,7 +534,7 @@ class VehicleGroupMgmtViewModelTest {
 
     @Test
     fun `test search vehicle of vehicle group api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(vehicleListResponse.isSuccessful).thenReturn(false)

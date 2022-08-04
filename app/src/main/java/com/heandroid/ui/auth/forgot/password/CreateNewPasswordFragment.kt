@@ -5,25 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
 import com.heandroid.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.heandroid.data.model.auth.forgot.password.ResetPasswordModel
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.heandroid.databinding.FragmentForgotCreateNewPasswordBinding
-import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBinding>(),

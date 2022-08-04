@@ -1,7 +1,7 @@
 package com.heandroid.data.model.payment
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Check(
@@ -9,4 +9,4 @@ data class Check(
     val account: String?,
     val hash: String?,
     val name: String?
-): Parcelable
+) : Parcelable

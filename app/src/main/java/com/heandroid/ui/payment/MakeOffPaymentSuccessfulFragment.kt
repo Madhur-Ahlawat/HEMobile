@@ -94,54 +94,30 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
     }
 
     private fun receipt(resource: Resource<ResponseBody?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    loader?.dismiss()
-                    it.let {
-                        Logg.logging(
-                            "testing",
-                            " MakeOffPaymentSuccessfulFragment success it  $it"
-                        )
-
-
-                    }
                 }
             }
             is Resource.DataError -> {
-                Logg.logging("testing", " MakeOffPaymentSuccessfulFragment error called")
-
-                loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+            else -> {}
         }
 
     }
     private var mType = true
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-
-        Logg.logging(
-            "testing",
-            " MakeOffPaymentSuccessfulFragment onCheckedChanged rbCreateAccount"
-        )
-
         when (group?.checkedRadioButtonId) {
-
             R.id.rbCreateAccount -> {
-                Logg.logging(
-                    "testing",
-                    " MakeOffPaymentSuccessfulFragment rbCreateAccount"
-                )
                 mType = true
             }
             R.id.rbMakePayment -> {
-                Logg.logging(
-                    "testing",
-                    " MakeOffPaymentSuccessfulFragment success rbMakePayment"
-                )
                 mType= false
-
             }
         }
 

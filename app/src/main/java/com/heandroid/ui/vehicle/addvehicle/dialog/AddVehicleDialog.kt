@@ -60,7 +60,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         }
         binding.addVehicleBtn.setOnClickListener {
             binding.addVrmInput.hideKeyboard()
-            var country = "UK"
+            val country: String
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
                     "Non-UK"

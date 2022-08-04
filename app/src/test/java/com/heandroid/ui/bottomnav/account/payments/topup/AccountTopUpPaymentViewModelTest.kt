@@ -13,6 +13,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -63,7 +64,7 @@ class AccountTopUpPaymentViewModelTest {
 
     @Test
     fun `test payment with new card api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(accountGetThresholdResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(accountGetThresholdResponse.code()).thenReturn(200)
             val resp = AccountGetThresholdResponse(ThresholdAmountValue("", "", "", ""), "", "")
@@ -81,7 +82,7 @@ class AccountTopUpPaymentViewModelTest {
 
     @Test
     fun `test payment with new card api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(accountGetThresholdResponse.isSuccessful).thenReturn(false)

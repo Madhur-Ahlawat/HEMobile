@@ -32,16 +32,17 @@ import java.lang.Exception
 
 
 @AndroidEntryPoint
-class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View.OnClickListener, RadioGroup.OnCheckedChangeListener, (Boolean?,Int?,CardListResponseModel?) -> Unit {
+class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View.OnClickListener,
+    RadioGroup.OnCheckedChangeListener, (Boolean?, Int?, CardListResponseModel?) -> Unit {
 
-    private val viewModel : PaymentMethodViewModel by viewModels()
+    private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var isDefaultDeleted=false
+    private var isDefaultDeleted = false
     private var cardsList: MutableList<CardListResponseModel?>? = ArrayList()
-    private var position : Int? =0
+    private var position: Int? = 0
 
-    private var defaultCardModel: CardListResponseModel? =null
-    private var defaultConstantCardModel: CardListResponseModel? =null
+    private var defaultCardModel: CardListResponseModel? = null
+    private var defaultConstantCardModel: CardListResponseModel? = null
 
 
     override fun onResume() {
@@ -50,7 +51,8 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
     }
 
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)= FragmentPaymentMethodBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentPaymentMethodBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
@@ -71,135 +73,172 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.savedCardList,::handleSaveCardResponse)
-            observe(viewModel.deleteCard,::handleDeleteCardResponse)
-            observe(viewModel.defaultCard,::handleDefaultCardResponse)
+            observe(viewModel.savedCardList, ::handleSaveCardResponse)
+            observe(viewModel.deleteCard, ::handleDeleteCardResponse)
+            observe(viewModel.defaultCard, ::handleDefaultCardResponse)
         }
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-          R.id.btnAdd -> {
-              when(binding.rgPayment.checkedRadioButtonId){
-                R.id.rbAddCard -> { findNavController().navigate(R.id.action_paymentMethodFragment_to_paymentMethodCardFragment) }
-                R.id.rbDirectDebit ->{ showError(binding.root,"Under Developement") }
-              }
-          }
-          R.id.btnDefault -> {
-              loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
-              if(defaultCardModel?.bankAccount==true)
-              viewModel.editDefaultCard(PaymentMethodEditModel(cardType = defaultCardModel?.bankAccountType?:"", easyPay = "Y", paymentType = "ach", primaryCard ="Y",rowId=defaultCardModel?.rowId?:"" ))
-              else viewModel.editDefaultCard(PaymentMethodEditModel(cardType = defaultCardModel?.cardType?:"", easyPay = "Y", paymentType = "card", primaryCard ="Y",rowId=defaultCardModel?.rowId?:"" ))
+        when (v?.id) {
+            R.id.btnAdd -> {
+                when (binding.rgPayment.checkedRadioButtonId) {
+                    R.id.rbAddCard -> {
+                        findNavController().navigate(R.id.action_paymentMethodFragment_to_paymentMethodCardFragment)
+                    }
+                    R.id.rbDirectDebit -> {
+                        showError(binding.root, "Under Developement")
+                    }
+                }
+            }
+            R.id.btnDefault -> {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                if (defaultCardModel?.bankAccount == true)
+                    viewModel.editDefaultCard(
+                        PaymentMethodEditModel(
+                            cardType = defaultCardModel?.bankAccountType ?: "",
+                            easyPay = "Y",
+                            paymentType = "ach",
+                            primaryCard = "Y",
+                            rowId = defaultCardModel?.rowId ?: ""
+                        )
+                    )
+                else viewModel.editDefaultCard(
+                    PaymentMethodEditModel(
+                        cardType = defaultCardModel?.cardType ?: "",
+                        easyPay = "Y",
+                        paymentType = "card",
+                        primaryCard = "Y",
+                        rowId = defaultCardModel?.rowId ?: ""
+                    )
+                )
 
-          }
-          R.id.btnDelete ->{
-              if(defaultCardModel?.primaryCard==false) {
-                  loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
-                  viewModel.deleteCard(PaymentMethodDeleteModel(defaultCardModel?.rowId))
-              } else {
-                  showError(binding.root,"Primary card cann't be deleted")
-              }
-          }
+            }
+            R.id.btnDelete -> {
+                if (defaultCardModel?.primaryCard == false) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    viewModel.deleteCard(PaymentMethodDeleteModel(defaultCardModel?.rowId))
+                } else {
+                    showError(binding.root, "Primary card cann't be deleted")
+                }
+            }
         }
     }
 
 
-    private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?){
-        try {
-            binding.clMain.visible()
+    private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success ->{
-                    cardsList?.clear()
-                    cardsList=status.data?.creditCardListType?.cardsList
-                    defaultCardModel =status.data?.creditCardListType?.cardsList?.filter { it?.primaryCard==true }?.get(0)
-                    defaultConstantCardModel=defaultCardModel
-                    if(defaultCardModel==null){
-                        binding.tvDefaultLabel.gone()
-                        binding.rbDefaultMethod.gone()
-                        binding.viewDefault.gone()
-                    }
-                    else {
+        }
+        binding.clMain.visible()
+        when (status) {
+            is Resource.Success -> {
+                cardsList?.clear()
+                cardsList = status.data?.creditCardListType?.cardsList
+                defaultCardModel =
+                    status.data?.creditCardListType?.cardsList?.filter { it?.primaryCard == true }
+                        ?.get(0)
+                defaultConstantCardModel = defaultCardModel
+                if (defaultCardModel == null) {
+                    binding.tvDefaultLabel.gone()
+                    binding.rbDefaultMethod.gone()
+                    binding.viewDefault.gone()
+                } else {
 
-                        binding.tvDefaultLabel.visible()
-                        binding.rbDefaultMethod.visible()
-                        binding.viewDefault.visible()
-                        val spannableString = if(defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType+"\n"+ defaultCardModel?.bankAccountNumber)
-                        else SpannableString(defaultCardModel?.cardType+"\n"+ defaultCardModel?.cardNumber)
-                        spannableString.setSpan( ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.txt_disable)), spannableString.length-(defaultCardModel?.cardNumber?.length?:0), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    binding.tvDefaultLabel.visible()
+                    binding.rbDefaultMethod.visible()
+                    binding.viewDefault.visible()
+                    val spannableString =
+                        if (defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType + "\n" + defaultCardModel?.bankAccountNumber)
+                        else SpannableString(defaultCardModel?.cardType + "\n" + defaultCardModel?.cardNumber)
+                    spannableString.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                requireActivity(),
+                                R.color.txt_disable
+                            )
+                        ),
+                        spannableString.length - (defaultCardModel?.cardNumber?.length ?: 0),
+                        spannableString.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
 
-                        binding.rbDefaultMethod.text = spannableString
-                        binding.rbDefaultMethod.isChecked=true
+                    binding.rbDefaultMethod.text = spannableString
+                    binding.rbDefaultMethod.isChecked = true
 
-                        cardsList?.remove(defaultCardModel)
-                        binding.enable=false
-                    }
-
-                    binding.rvOtherPayment.layoutManager=LinearLayoutManager(requireActivity())
-                    binding.rvOtherPayment.adapter=PaymentCardAdapter(requireActivity(),cardsList,this)
+                    cardsList?.remove(defaultCardModel)
+                    binding.enable = false
                 }
-                is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
-            }
-        }catch (e: Exception){
 
+                binding.rvOtherPayment.layoutManager = LinearLayoutManager(requireActivity())
+                binding.rvOtherPayment.adapter =
+                    PaymentCardAdapter(requireActivity(), cardsList, this)
+            }
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
     }
 
-    private fun handleDefaultCardResponse(status: Resource<PaymentMethodEditResponse?>?){
-        try {
+    private fun handleDefaultCardResponse(status: Resource<PaymentMethodEditResponse?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success ->{
-                    requireActivity().showToast(status.data?.message)
-                    findNavController().navigate(R.id.paymentMethodFragment)
-                }
-                is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
+        }
+        when (status) {
+            is Resource.Success -> {
+                requireActivity().showToast(status.data?.message)
+                findNavController().navigate(R.id.paymentMethodFragment)
             }
-        }catch (e: Exception){ }
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 
-    private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?){
-        try {
+    private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success -> {
-                    if(status.data?.statusCode?.equals("500")==true){
-                        showError(binding.root,status.data.message)
-                        return
-                    }
-
-                    if(isDefaultDeleted) {
-                        binding.tvDefaultLabel.gone()
-                        binding.rbDefaultMethod.gone()
-                        binding.viewDefault.gone()
-                        isDefaultDeleted=false
-                    }
-                    else{
-                        cardsList?.removeAt(position?:0)
-                        binding.rvOtherPayment.adapter?.notifyItemRemoved(position?:0)
-                    }
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("500") == true) {
+                    showError(binding.root, status.data.message)
+                    return
                 }
-                is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
-            }
-        }catch (e: Exception){
 
+                if (isDefaultDeleted) {
+                    binding.tvDefaultLabel.gone()
+                    binding.rbDefaultMethod.gone()
+                    binding.viewDefault.gone()
+                    isDefaultDeleted = false
+                } else {
+                    cardsList?.removeAt(position ?: 0)
+                    binding.rvOtherPayment.adapter?.notifyItemRemoved(position ?: 0)
+                }
+            }
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
         }
     }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-
-
-        when(group?.checkedRadioButtonId){
-
+        when (group?.checkedRadioButtonId) {
             R.id.rbDefaultMethod -> {
-                isDefaultDeleted=true
+                isDefaultDeleted = true
                 binding.btnDelete.visible()
                 binding.btnDefault.visible()
-                binding.enable=false
+                binding.enable = false
                 binding.btnAdd.gone()
-                if(binding.rbDefaultMethod.isChecked) {
-                    defaultCardModel=defaultConstantCardModel
+                if (binding.rbDefaultMethod.isChecked) {
+                    defaultCardModel = defaultConstantCardModel
                     loadCheck()
                 }
             }
@@ -207,51 +246,48 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                 binding.btnAdd.visible()
                 binding.btnDelete.gone()
                 binding.btnDefault.gone()
-                if(binding.rbAddCard.isChecked) loadCheck()
+                if (binding.rbAddCard.isChecked) loadCheck()
 
             }
-            R.id.rbDirectDebit ->{
+            R.id.rbDirectDebit -> {
                 binding.btnAdd.visible()
                 binding.btnDelete.gone()
                 binding.btnDefault.gone()
-                if(binding.rbDirectDebit.isChecked) loadCheck()
+                if (binding.rbDirectDebit.isChecked) loadCheck()
             }
         }
 
 
-
     }
 
-    private fun loadCheck(){
-        if(cardsList!=null){
-            for(i in cardsList?.indices!!){
-                cardsList?.get(i)?.check=false
+    private fun loadCheck() {
+        if (cardsList != null) {
+            for (i in cardsList?.indices!!) {
+                cardsList?.get(i)?.check = false
             }
-            binding.rvOtherPayment.adapter?.notifyItemRangeChanged(0,cardsList?.size?:0)
+            binding.rvOtherPayment.adapter?.notifyItemRangeChanged(0, cardsList?.size ?: 0)
         }
     }
 
-    override fun invoke(check: Boolean?,position: Int?,model: CardListResponseModel?) {
+    override fun invoke(check: Boolean?, position: Int?, model: CardListResponseModel?) {
 
-        this.position=position
-        isDefaultDeleted=false
+        this.position = position
+        isDefaultDeleted = false
 
         binding.rgPayment.clearCheck()
 
-        if(cardsList?.get(position?:0)?.check != false){
+        if (cardsList?.get(position ?: 0)?.check != false) {
             binding.btnDefault.visible()
             binding.btnAdd.gone()
             binding.btnDelete.visible()
-        }
-
-        else {
+        } else {
             binding.btnDelete.gone()
             binding.btnDefault.gone()
         }
 
-        binding.enable=true
+        binding.enable = true
 
-        this.defaultCardModel=model
+        this.defaultCardModel = model
 
 
     }

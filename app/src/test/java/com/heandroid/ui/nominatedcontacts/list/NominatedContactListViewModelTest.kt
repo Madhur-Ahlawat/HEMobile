@@ -12,6 +12,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -62,7 +63,7 @@ class NominatedContactListViewModelTest {
 
     @Test
     fun `test get list of nominated contacts api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(nominatedContactResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(nominatedContactResponse.code()).thenReturn(200)
             val resp = NominatedContactRes(null,"", "")
@@ -80,7 +81,7 @@ class NominatedContactListViewModelTest {
 
     @Test
     fun `test get list of nominated contacts api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(nominatedContactResponse.isSuccessful).thenReturn(false)

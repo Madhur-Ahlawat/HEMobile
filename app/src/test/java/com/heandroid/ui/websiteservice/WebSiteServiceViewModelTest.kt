@@ -15,6 +15,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Before
@@ -74,7 +75,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(response.code()).thenReturn(200)
             Mockito.lenient().`when`(response.body())
@@ -91,7 +92,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for invalid token error`() {
-        runBlockingTest {
+        runTest {
             val status = 401
             val message = "Invalid token"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -122,7 +123,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -152,7 +153,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for unknown error Exception`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = ""
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
@@ -182,7 +183,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for unknown api error model Exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(response.isSuccessful).thenReturn(false)
             val testValidData = ""
             val jsonString: String = Gson().toJson(testValidData)
@@ -209,7 +210,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for no internet connection`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.webSiteServiceStatus())
                 .thenAnswer {
                     throw NoConnectivityException()
@@ -228,7 +229,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for timed out exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.webSiteServiceStatus())
                 .thenAnswer {
                     throw SocketTimeoutException()
@@ -247,7 +248,7 @@ class WebSiteServiceViewModelTest {
 
     @Test
     fun `test toll rates api call for unknown exception`() {
-        runBlockingTest {
+        runTest {
             Mockito.`when`(repository.webSiteServiceStatus())
                 .thenAnswer {
                     throw Exception(unknownException)

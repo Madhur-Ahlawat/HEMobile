@@ -24,18 +24,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
 @AndroidEntryPoint
-class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfirmCardBinding>(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfirmCardBinding>(),
+    View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private var loader: LoaderDialog? = null
-    private val viewModel : PaymentMethodViewModel by viewModels()
+    private val viewModel: PaymentMethodViewModel by viewModels()
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPaymentMethodConfirmCardBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentPaymentMethodConfirmCardBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.model=arguments?.getParcelable(Constants.DATA)
-        binding.cbDefault.isChecked=binding.model?.default?:false
+        binding.model = arguments?.getParcelable(Constants.DATA)
+        binding.cbDefault.isChecked = binding.model?.default ?: false
     }
 
     override fun onResume() {
@@ -50,73 +52,79 @@ class PaymentMethodConfirmCardFragment : BaseFragment<FragmentPaymentMethodConfi
     }
 
     override fun observer() {
-        observe(viewModel.saveNewCard,::handleSaveNewCardResponse)
-        observe(viewModel.accountDetail,::handleAccountDetailResponse)
+        observe(viewModel.saveNewCard, ::handleSaveNewCardResponse)
+        observe(viewModel.accountDetail, ::handleAccountDetailResponse)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnSave ->{
-                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+            R.id.btnSave -> {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.accountDetail()
             }
         }
     }
 
 
-    private fun handleSaveNewCardResponse(status : Resource<PaymentMethodDeleteResponseModel?>?){
-        try {
+    private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success -> {
-                    if(status.data?.statusCode?.equals("0")==true){
-                        findNavController().navigate(R.id.paymentMethodFragment)
-                    }else{
-                        showError(binding.root,status.data?.message)
-                    }
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("0") == true) {
+                    findNavController().navigate(R.id.paymentMethodFragment)
+                } else {
+                    showError(binding.root, status.data?.message)
                 }
-                is Resource.DataError -> { showError(binding.root,status.errorMsg)}
             }
-        }catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
-    private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?){
-        try {
-            when(status){
-                is  Resource.Success -> {
-                    status.data?.run {
-                        if(status.equals("500")){
-                            loader?.dismiss()
-                            showError(binding.root,message)
+    private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.run {
+                    if (status.equals("500")) {
+                        loader?.dismiss()
+                        showError(binding.root, message)
+                    } else {
+                        val data = status.data.personalInformation
+                        binding.model?.run {
+                            city = data?.city
+                            addressLine1 = data?.addressLine1
+                            addressLine2 = data?.addressLine2
+                            country = data?.country
+                            state = data?.state
+                            zipcode1 = data?.zipcode
+                            zipcode2 = ""
+                            expYear = "20$expYear"
+                            default = null
                         }
-                        else {
-                            val data=status.data.personalInformation
-                            binding.model?.run {
-                                city=data?.city
-                                addressLine1=data?.addressLine1
-                                addressLine2=data?.addressLine2
-                                country=data?.country
-                                state=data?.state
-                                zipcode1=data?.zipcode
-                                zipcode2=""
-                                expYear="20$expYear"
-                                default=null
-                            }
-                            viewModel.saveNewCard(binding.model)
-                        }
+                        viewModel.saveNewCard(binding.model)
                     }
                 }
-
-                is  Resource.DataError ->{
-                    loader?.dismiss()
-                    showError(binding.root,status.errorMsg) }
             }
-        }catch (e: Exception){}
 
+            is Resource.DataError -> {
+                loader?.dismiss()
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        binding.model?.default=isChecked
+        binding.model?.default = isChecked
     }
 
 

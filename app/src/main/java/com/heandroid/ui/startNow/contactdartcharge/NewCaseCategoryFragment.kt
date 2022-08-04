@@ -63,7 +63,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                 checkButton()
                 viewModel.getCaseSubCategoriesList(mSelCat)
             }
-            subCategoryDropdown.setOnItemClickListener { parent, view, position, id ->
+            subCategoryDropdown.setOnItemClickListener { _, _, position, _ ->
 //                mSelSubCat = parent.getItemAtPosition(position) as String
                 mSelSubCat = mSubCatListName[position]
                 checkButton()

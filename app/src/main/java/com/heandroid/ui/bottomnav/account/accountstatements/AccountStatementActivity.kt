@@ -48,45 +48,47 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     private fun handleAccountStatementResponse(resource: Resource<List<StatementListModel?>?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (resource) {
-                is Resource.Success -> {
+        }
+        when (resource) {
+            is Resource.Success -> {
 
-                    val statementList = resource.data
-                    if (statementList?.size!! > 0) {
-                        for (element in statementList.indices) {
-                            periodList.add(statementList[element]?.period.toString())
+                val statementList = resource.data
+                if (statementList?.size!! > 0) {
+                    for (element in statementList.indices) {
+                        periodList.add(statementList[element]?.period.toString())
 
-                            val statementDate = statementList[element]?.statementDate
+                        val statementDate = statementList[element]?.statementDate
 
-                            val sdf = SimpleDateFormat("dd/MM/yyyy")
-                            val date = sdf.parse(statementDate)
+                        val sdf = SimpleDateFormat("dd/MM/yyyy")
+                        val date = sdf.parse(statementDate)
 
-                            val outputFormat = SimpleDateFormat("yyyy")
-                            val formattedDate = outputFormat.format(date)
+                        val outputFormat = SimpleDateFormat("yyyy")
+                        val formattedDate = outputFormat.format(date)
 
-                            yearListCSV.add(formattedDate.toString())
-                        }
-                        binding.spPeriodCsv.setSpinnerAdapterData(periodList)
-                        binding.spPeriodCsv.onItemSelectedListener = spinnerListener
-                        binding.spYearCsv.setSpinnerAdapterData(yearListCSV)
-                        binding.spYearCsv.onItemSelectedListener = yearCSVListener
-                        binding.spYearPdf.setSpinnerAdapterData(yearListCSV)
-                        binding.spYearPdf.onItemSelectedListener = yearCSVListener
-                        binding.spPeriodPdf.setSpinnerAdapterData(periodList)
-                        binding.spPeriodPdf.onItemSelectedListener = spinnerListener
-
-                        binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
-                        binding.spYearAccount.onItemSelectedListener = yearCSVListener
-
+                        yearListCSV.add(formattedDate.toString())
                     }
-                }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    binding.spPeriodCsv.setSpinnerAdapterData(periodList)
+                    binding.spPeriodCsv.onItemSelectedListener = spinnerListener
+                    binding.spYearCsv.setSpinnerAdapterData(yearListCSV)
+                    binding.spYearCsv.onItemSelectedListener = yearCSVListener
+                    binding.spYearPdf.setSpinnerAdapterData(yearListCSV)
+                    binding.spYearPdf.onItemSelectedListener = yearCSVListener
+                    binding.spPeriodPdf.setSpinnerAdapterData(periodList)
+                    binding.spPeriodPdf.onItemSelectedListener = spinnerListener
+
+                    binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
+                    binding.spYearAccount.onItemSelectedListener = yearCSVListener
+
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+
         }
     }
 

@@ -26,6 +26,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
     private var loader: LoaderDialog? = null
     val mList = mutableListOf<UsedChargesModel?>()
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
+    private var isClicked = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -38,6 +39,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val trans = UsedTollTransactionsRequest()
+        isClicked = true
         viewModel.usedTollTransactions(trans)
     }
 
@@ -48,33 +50,38 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
     }
 
     private fun handleUsedTollTrans(resource: Resource<List<UsedTollTransactionResponse?>?>?) {
-        loader?.dismiss()
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let { data ->
-                    data.forEach {
-                        val bounds = if (it?.exitDirection.equals("S"))
-                            "SouthBound"
-                        else
-                            "NorthBound"
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        if (isClicked) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let { data ->
+                        data.forEach {
+                            val bounds = if (it?.exitDirection.equals("S"))
+                                "SouthBound"
+                            else
+                                "NorthBound"
 
-                        val model = UsedChargesModel(
-                            it?.lookupKey,
-                            it?.plateNumber,
-                            crossingDate = DateUtils.convertDateFormat(it?.entryDate, 0),
-                            it?.exitTime, bounds
-                        )
-                        mList.clear()
-                        mList.add(model)
-                        binding.rvHistory.adapter = UsedChargesAdapter(mList)
+                            val model = UsedChargesModel(
+                                it?.lookupKey,
+                                it?.plateNumber,
+                                crossingDate = DateUtils.convertDateFormat(it?.entryDate, 0),
+                                it?.exitTime, bounds
+                            )
+                            mList.clear()
+                            mList.add(model)
+                            binding.rvHistory.adapter = UsedChargesAdapter(mList)
+                        }
                     }
                 }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-            else -> {
-            }
+            isClicked = false
         }
     }
 

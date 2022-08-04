@@ -46,7 +46,7 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
             )
         binding.mailSmsDropDown.setAdapter(mAdapter1)
 
-        binding.mailSmsDropDown.setOnItemClickListener { parent, view, position, id ->
+        binding.mailSmsDropDown.setOnItemClickListener { parent, _, position, _ ->
             mOption = parent.getItemAtPosition(position) as String
             if (mOption == "SMS") {
                 binding.tilEmail.hint = getString(R.string.str_mobile_number)

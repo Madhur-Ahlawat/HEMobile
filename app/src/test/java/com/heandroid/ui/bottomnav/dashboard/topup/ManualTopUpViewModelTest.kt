@@ -13,6 +13,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -63,7 +64,7 @@ class ManualTopUpViewModelTest {
 
     @Test
     fun `test payment with new card api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(paymentMethodDeleteResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(paymentMethodDeleteResponse.code()).thenReturn(200)
             val resp = PaymentMethodDeleteResponseModel("", "","", "", null)
@@ -82,7 +83,7 @@ class ManualTopUpViewModelTest {
 
     @Test
     fun `test payment with new card api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(paymentMethodDeleteResponse.isSuccessful).thenReturn(false)
@@ -114,7 +115,7 @@ class ManualTopUpViewModelTest {
 
     @Test
     fun `test payment with existing card api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(paymentMethodDeleteResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(paymentMethodDeleteResponse.code()).thenReturn(200)
             val resp = PaymentMethodDeleteResponseModel("", "","", "", null)
@@ -133,7 +134,7 @@ class ManualTopUpViewModelTest {
 
     @Test
     fun `test payment with existing card api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(paymentMethodDeleteResponse.isSuccessful).thenReturn(false)

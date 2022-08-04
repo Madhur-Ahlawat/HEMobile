@@ -27,6 +27,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -122,7 +123,7 @@ class VehicleHistoryListFragmentTest {
 
             vehicleList.postValue(Resource.DataError("Unknown Error"))
 
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)

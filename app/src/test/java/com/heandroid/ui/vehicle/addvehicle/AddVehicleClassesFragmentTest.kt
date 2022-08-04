@@ -33,6 +33,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -233,7 +234,7 @@ class AddVehicleClassesFragmentTest {
             addVehicleLiveData.postValue(Resource.DataError("Unknown error"))
             shadowOf(getMainLooper()).idle()
 
-            runBlockingTest {
+            runTest {
                 delay(1000)
                 val dialogFragment2 =
                     requireActivity().supportFragmentManager.findFragmentByTag(ConstantsTest.ERROR_DIALOG) as ErrorDialog

@@ -35,23 +35,25 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>(), View.OnClickListener {
+class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>(),
+    View.OnClickListener {
 
     private var loader: LoaderDialog? = null
 
-    private var cardModel : PaymentWithNewCardModel?=null
-    private val viewModel : ManualTopUpViewModel by viewModels()
-    private val paymentViewModel : PaymentMethodViewModel by viewModels()
-    private var isAlready : Boolean =false
+    private var cardModel: PaymentWithNewCardModel? = null
+    private val viewModel: ManualTopUpViewModel by viewModels()
+    private val paymentViewModel: PaymentMethodViewModel by viewModels()
+    private var isAlready: Boolean = false
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPaymentMethodCardBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentPaymentMethodCardBinding.inflate(inflater, container, false)
 
 
     override fun init() {
-        isAlready=false
+        isAlready = false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         binding.webview.loadSetting("file:///android_asset/NMI.html")
         binding.cbDefault.gone()
     }
@@ -66,25 +68,30 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
     }
 
     override fun observer() {
-        observe(viewModel.paymentWithNewCard,::handlePaymentWithNewCardResponse)
-        observe(paymentViewModel.accountDetail,::handleAccountDetailResponse)
+        observe(viewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
+        observe(paymentViewModel.accountDetail, ::handleAccountDetailResponse)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAdd -> {
-                isAlready=true
-                loader?.show(requireActivity().supportFragmentManager,Constants.LOADER_DIALOG)
+                isAlready = true
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 paymentViewModel.accountDetail()
             }
 
-            R.id.btnCancel ->{ requireActivity().onBackPressed() }
+            R.id.btnCancel -> {
+                requireActivity().onBackPressed()
+            }
         }
     }
 
     private val progressListener = object : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
             view?.loadUrl("file:///android_asset/NMI.html")
             return true
         }
@@ -103,40 +110,59 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
             if (check) {
                 binding.webview.gone()
                 binding.mcvContainer.visible()
-                val responseModel: CardResponseModel = Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
-                Log.e("payment token ",responseModel.toString())
-                cardModel= PaymentWithNewCardModel(transactionAmount = arguments?.getString("amount"),
-                                                   cardType = responseModel.card?.type?.uppercase(Locale.ROOT), cardNumber = responseModel.token,
-                                                   cvv=responseModel.card?.hash, expMonth = responseModel.card?.exp?.substring(0, 2),
-                                                   expYear = "20${responseModel.card?.exp?.substring(2, 4)}" , saveCard = "Y", useAddressCheck = "N",
-                                                   bankRoutingNumber = "", paymentType = "card", maskedNumber =  responseModel.card?.number,
-                                                   firstName = "", middleName = "", lastName = "", primaryCard = "N", easyPay = "Y")
+                val responseModel: CardResponseModel =
+                    Gson().fromJson(consoleMessage.message(), CardResponseModel::class.java)
+                Log.e("payment token ", responseModel.toString())
+                cardModel = PaymentWithNewCardModel(
+                    transactionAmount = arguments?.getString("amount"),
+                    cardType = responseModel.card?.type?.uppercase(Locale.ROOT),
+                    cardNumber = responseModel.token,
+                    cvv = responseModel.card?.hash,
+                    expMonth = responseModel.card?.exp?.substring(0, 2),
+                    expYear = "20${responseModel.card?.exp?.substring(2, 4)}",
+                    saveCard = "Y",
+                    useAddressCheck = "N",
+                    bankRoutingNumber = "",
+                    paymentType = "card",
+                    maskedNumber = responseModel.card?.number,
+                    firstName = "",
+                    middleName = "",
+                    lastName = "",
+                    primaryCard = "N",
+                    easyPay = "Y"
+                )
 
 
                 binding.apply {
-                    tieCardNo.setText( cardModel?.maskedNumber?:"")
+                    tieCardNo.setText(cardModel?.maskedNumber ?: "")
                     tieExpiryDate.setText("${cardModel?.expMonth}/${cardModel?.expYear}")
-                    tieName.setText( responseModel.check?.name?:"")
+                    tieName.setText(responseModel.check?.name ?: "")
                     tieCVV.setText("***")
                 }
 
                 val fullName: List<String?>? = responseModel.check?.name?.split(" ")
                 when (fullName?.size) {
-                    1 -> { cardModel?.run {
-                        firstName = fullName[0]
-                        middleName = ""
-                        lastName = ""
-                    } }
-                    2 -> { cardModel?.run {
-                        firstName=fullName[0]
-                        middleName=""
-                        lastName=fullName[1]
-                    } }
-                    3 -> { cardModel?.run {
-                        firstName=fullName[0]
-                        middleName=fullName[1]
-                        lastName=fullName[2]
-                    } }
+                    1 -> {
+                        cardModel?.run {
+                            firstName = fullName[0]
+                            middleName = ""
+                            lastName = ""
+                        }
+                    }
+                    2 -> {
+                        cardModel?.run {
+                            firstName = fullName[0]
+                            middleName = ""
+                            lastName = fullName[1]
+                        }
+                    }
+                    3 -> {
+                        cardModel?.run {
+                            firstName = fullName[0]
+                            middleName = fullName[1]
+                            lastName = fullName[2]
+                        }
+                    }
                 }
 
             }
@@ -145,63 +171,70 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
     }
 
 
-    private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?){
-        try {
-            isAlready=false
+    private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when(status){
-                is Resource.Success ->{
-                    if(status.data?.statusCode?.equals("0")==true){
-                        val bundle= Bundle()
-                        bundle.putParcelable(Constants.DATA,status.data)
-                        bundle.putString("amount",arguments?.getString("amount"))
-                        findNavController().navigate(R.id.action_manualTopUpAddCardFragment_to_manualTopUpSuccessfulFragment,bundle)
-                    }else {
-                        showError(binding.root,status.data?.message)
-                    }
+        }
+        isAlready = false
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("0") == true) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.DATA, status.data)
+                    bundle.putString("amount", arguments?.getString("amount"))
+                    findNavController().navigate(
+                        R.id.action_manualTopUpAddCardFragment_to_manualTopUpSuccessfulFragment,
+                        bundle
+                    )
+                } else {
+                    showError(binding.root, status.data?.message)
                 }
-                is Resource.DataError ->{ showError(binding.root,status.errorMsg) }
             }
-        }catch (e: Exception){}
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 
-    private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?){
-        try {
-            if(!isAlready) return
-            when(status){
-                is  Resource.Success -> {
-                    status.data?.run {
-                        if(status.equals("500")){
-                            loader?.dismiss()
-                            showError(binding.root,message)
-                        }
-                        else {
-                            val data=status.data.personalInformation
-                            cardModel?.run {
-                                city=data?.city
-                                addressline1=data?.addressLine1
-                                addressline2=data?.addressLine2
-                                country=data?.country
-                                state=data?.state?:""
-                                zipcode1=data?.zipcode?:""
-                                zipcode2=""
-                            }
-
-                            viewModel.paymentWithNewCard(cardModel)
-                        }
-                    }
-                   }
-
-                    is  Resource.DataError ->{
+    private fun handleAccountDetailResponse(status: Resource<ProfileDetailModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        if (!isAlready) return
+        when (status) {
+            is Resource.Success -> {
+                status.data?.run {
+                    if (status.equals("500")) {
                         loader?.dismiss()
+                        showError(binding.root, message)
+                    } else {
+                        val data = status.data.personalInformation
+                        cardModel?.run {
+                            city = data?.city
+                            addressline1 = data?.addressLine1
+                            addressline2 = data?.addressLine2
+                            country = data?.country
+                            state = data?.state ?: ""
+                            zipcode1 = data?.zipcode ?: ""
+                            zipcode2 = ""
+                        }
 
-                        showError(binding.root,status.errorMsg) }
+                        viewModel.paymentWithNewCard(cardModel)
+                    }
                 }
             }
-           catch (e: Exception){
 
-           }
+            is Resource.DataError -> {
+                loader?.dismiss()
+
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
 
