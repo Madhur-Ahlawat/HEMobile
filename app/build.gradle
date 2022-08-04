@@ -219,6 +219,13 @@ android {
         androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
         testAnnotationProcessor "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
+
+        //Adobe analytics
+        implementation 'com.adobe.marketing.mobile:analytics:1.+'
+        implementation 'com.adobe.marketing.mobile:sdk-core:1.+'
+        implementation 'com.adobe.marketing.mobile:userprofile:1.+'
+
+
     }
 
     hilt {

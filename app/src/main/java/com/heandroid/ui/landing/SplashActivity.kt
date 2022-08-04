@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.adobe.marketing.mobile.MobileCore
+import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
@@ -31,6 +33,18 @@ class SplashActivity : AppCompatActivity() {
             startActivity(Intent(this, LandingActivity::class.java))
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobileCore.setApplication(BaseApplication.INSTANCE)
+        MobileCore.lifecycleStart(null)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobileCore.lifecyclePause()
     }
 
     private fun checkSession(): Boolean {

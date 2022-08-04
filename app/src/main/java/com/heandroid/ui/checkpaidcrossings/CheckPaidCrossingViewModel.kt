@@ -110,16 +110,6 @@ class CheckPaidCrossingViewModel @Inject constructor(
         }
     }
 
-    fun resetPassword(model: BalanceTransferRequest?) {
-        viewModelScope.launch {
-            try {
-                _balanceTransfer.postValue(success(repository.balanceTransfer(model), errorManager))
-            } catch (e: Exception) {
-                _balanceTransfer.postValue(failure(e))
-            }
-        }
-    }
-
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {
