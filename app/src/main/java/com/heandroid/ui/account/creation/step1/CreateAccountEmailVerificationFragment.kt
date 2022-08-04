@@ -111,7 +111,7 @@ class CreateAccountEmailVerificationFragment :
             requestModel = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         }
 
-        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 5)
+        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 1, 6)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }

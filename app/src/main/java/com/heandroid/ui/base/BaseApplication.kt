@@ -10,6 +10,7 @@ import com.heandroid.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import java.util.*
@@ -45,9 +46,12 @@ class BaseApplication : Application() {
             Lifecycle.registerExtension()
             Signal.registerExtension()
             UserProfile.registerExtension()
+//            Edge.registerExtension()
+//            Assurance.registerExtension()
             MobileCore.start {
-
                 MobileCore.configureWithAppID(ADOBE_ENVIRONMENT_KEY)
+
+
                 Logg.logging("BaseApplication ","ADOBE_ENVIRONMENT_KEY $ADOBE_ENVIRONMENT_KEY")
                 Logg.logging("BaseApplication ","it  ${it.toString()}")
             }
@@ -55,6 +59,8 @@ class BaseApplication : Application() {
             Logg.logging("BaseApplication ","it InvalidInitException  ${e.toString()}")
 
         }
+        MobileCore.setPrivacyStatus(MobilePrivacyStatus.OPT_IN)
+
     }
 
     fun setSessionTime() {

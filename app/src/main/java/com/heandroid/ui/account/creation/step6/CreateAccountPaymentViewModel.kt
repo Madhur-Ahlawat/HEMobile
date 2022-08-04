@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation.step5
+package com.heandroid.ui.account.creation.step6
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

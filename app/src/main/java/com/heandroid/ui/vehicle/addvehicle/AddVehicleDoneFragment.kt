@@ -14,7 +14,7 @@ import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentAddVehicleDoneBinding
-import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
+import com.heandroid.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener

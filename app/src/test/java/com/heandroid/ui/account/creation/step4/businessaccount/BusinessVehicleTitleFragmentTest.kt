@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.heandroid.R
+import com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.data.DataFile

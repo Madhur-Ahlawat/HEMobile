@@ -41,7 +41,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
             isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
 
         when(model?.planType) {
             PAYG ->{  binding.tvLabel.text=getString(R.string.pay_as_you_go)  }

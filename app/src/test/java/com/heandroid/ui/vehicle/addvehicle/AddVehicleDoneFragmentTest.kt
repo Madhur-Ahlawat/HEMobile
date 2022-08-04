@@ -13,7 +13,7 @@ import com.heandroid.R
 import com.heandroid.data.model.vehicle.PlateInfoResponse
 import com.heandroid.data.model.vehicle.VehicleInfoResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
-import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
+import com.heandroid.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.ConstantsTest
 import com.heandroid.utils.launchFragmentInHiltContainer

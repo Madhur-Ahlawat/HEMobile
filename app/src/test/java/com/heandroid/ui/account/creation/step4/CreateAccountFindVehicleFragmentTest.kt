@@ -17,7 +17,9 @@ import com.heandroid.R
 import com.heandroid.data.model.account.NonUKVehicleModel
 import com.heandroid.data.model.account.RetrievePlateInfoDetails
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleFindUK
+import com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK
+import com.heandroid.ui.account.creation.step5.CreateAccountFindVehicleFragment
+import com.heandroid.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest

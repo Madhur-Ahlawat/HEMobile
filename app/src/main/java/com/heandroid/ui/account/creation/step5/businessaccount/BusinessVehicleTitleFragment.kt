@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation.step4.businessaccount
+package com.heandroid.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.account.CreateAccountRequestModel
 import com.heandroid.databinding.FragmentBusinessVehicleTitleFragmentBinding
-import com.heandroid.ui.account.creation.step4.CreateAccountVehicleViewModel
+import com.heandroid.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants

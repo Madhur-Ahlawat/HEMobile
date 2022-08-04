@@ -23,7 +23,7 @@ class CreateAccountSetupPrePayFragment : BaseFragment<FragmentCreateAccountSetup
     override fun init() {
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         model?.transactionAmount ="10.00"
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
     }
 
     override fun initCtrl() {

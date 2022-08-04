@@ -38,7 +38,7 @@ class CreateAccountPersonalSetupFragment :
             isEditAccountType =
                 arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
-        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 5)
+        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 6)
         binding.enable = false
     }
 

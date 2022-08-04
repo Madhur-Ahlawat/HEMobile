@@ -58,7 +58,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
             isEditAccountType =
                 arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
 
         accountType()
 

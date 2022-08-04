@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.account.*
 import com.heandroid.data.repository.auth.CreateAccountRespository
+import com.heandroid.ui.account.creation.step6.CreateAccountPaymentViewModel
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import com.heandroid.utils.data.DataFile
 import dagger.hilt.android.testing.HiltAndroidRule

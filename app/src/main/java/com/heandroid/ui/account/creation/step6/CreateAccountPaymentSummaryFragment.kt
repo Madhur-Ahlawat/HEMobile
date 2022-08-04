@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation.step5
+package com.heandroid.ui.account.creation.step6
 
 import android.os.Bundle
 import android.view.LayoutInflater
