@@ -14,6 +14,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody
 import org.junit.Assert.*
 import org.junit.Before
@@ -64,7 +65,7 @@ class NotificationViewModelTest {
 
     @Test
     fun `test get alert api call for success`() {
-        runBlockingTest {
+        runTest {
             Mockito.lenient().`when`(alertMessageApiResponse.isSuccessful).thenReturn(true)
             Mockito.lenient().`when`(alertMessageApiResponse.code()).thenReturn(200)
             val resp = AlertMessageApiResponse(0, "", null)
@@ -82,7 +83,7 @@ class NotificationViewModelTest {
 
     @Test
     fun `test get alert api call for unknown error`() {
-        runBlockingTest {
+        runTest {
             val status = 403
             val message = "Unknown error"
             Mockito.lenient().`when`(alertMessageApiResponse.isSuccessful).thenReturn(false)

@@ -1,6 +1,7 @@
 package com.heandroid.data.model.payment
+
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Card(
@@ -9,4 +10,4 @@ data class Card(
     val hash: String?,
     val number: String?,
     val type: String?
-):Parcelable
+) : Parcelable

@@ -123,6 +123,7 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
                 findNavController().navigate(R.id.action_businessNonUkMakeFragment_to_findYourVehicleFragment, arguments)
 
             }
+            else -> {}
         }
     }
 

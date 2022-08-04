@@ -119,24 +119,18 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
-        Logg.logging("Testing", "AddVehicleDoneFragment  apiResponseDVRM")
-
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    loader?.dismiss()
                     setAdapter(it)
                 }
-                Logg.logging("Testing", "AddVehicleDoneFragment  apiResponseDVRM Success called")
+
 
             }
             is Resource.DataError -> {
-                loader?.dismiss()
-                Logg.logging(
-                    "Testing",
-                    "AddVehicleDoneFragment  apiResponseDVRM DataError called mVehicleDetails $mVehicleDetails"
-                )
-
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, mVehicleDetails)
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
@@ -149,6 +143,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 
             }
+            else -> {}
         }
 
     }

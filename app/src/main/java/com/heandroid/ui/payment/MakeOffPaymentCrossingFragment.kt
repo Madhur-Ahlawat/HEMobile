@@ -90,11 +90,12 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     private var payableCrossingAmount=0.0
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
-
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    loader?.dismiss()
                     it.let {
 
                         list?.get(0)?.classRate = it.customerClassRate?.toDouble()
@@ -129,9 +130,9 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                 }
             }
             is Resource.DataError -> {
-                loader?.dismiss()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+            else -> {}
         }
 
     }

@@ -52,11 +52,11 @@ class UpdatePhoneNumberDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCanceledOnTouchOutside(false)
-        setupView(view)
-        setupClickListeners(view)
+        setupView()
+        setupClickListeners()
     }
 
-    private fun setupClickListeners(view: View) {
+    private fun setupClickListeners() {
 
         dataBinding.btnCancel.setOnClickListener {
             dismiss()
@@ -80,7 +80,7 @@ class UpdatePhoneNumberDialog : DialogFragment() {
         }
     }
 
-    private fun setupView(view: View) {
+    private fun setupView() {
         setBtnNormal()
 
 //        dataBinding.addVrmInput.addTextChangedListener {

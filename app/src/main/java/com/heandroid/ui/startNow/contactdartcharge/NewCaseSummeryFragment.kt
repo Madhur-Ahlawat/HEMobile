@@ -142,7 +142,6 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)
                 val mComment = arguments?.getString(Constants.CASE_COMMENTS_KEY)
 
-                var loggedInUser = (sessionManager.getLoggedInUser())
                 val newCaseReq: CreateNewCaseReq?
                 if (mModel == null) {
                     newCaseReq = CreateNewCaseReq(

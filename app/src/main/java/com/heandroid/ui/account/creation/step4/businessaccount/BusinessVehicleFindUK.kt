@@ -106,6 +106,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                     findNavController().navigate(R.id.action_businessUKListFragment_to_businessNonUKMakeFragment, bundle)
                 }
+                else -> {}
             }
         }
     }
@@ -151,6 +152,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 findNavController().popBackStack()
             }
+            else -> {}
         }
     }
 }

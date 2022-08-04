@@ -206,6 +206,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                     setNavigation()
                 }
+                else -> {}
             }
         }
     }
@@ -271,6 +272,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 findNavController().popBackStack()
             }
+            else -> {}
         }
     }
 

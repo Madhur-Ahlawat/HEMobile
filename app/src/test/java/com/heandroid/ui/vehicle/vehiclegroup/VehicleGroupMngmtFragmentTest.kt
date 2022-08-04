@@ -30,6 +30,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -117,7 +118,7 @@ class VehicleGroupMngmtFragmentTest {
         launchFragmentInHiltContainer<VehicleGroupMngmtFragment> {
             shadowOf(getMainLooper()).idle()
             vehicleGroupList.postValue(Resource.DataError("Unknown error"))
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)
@@ -180,7 +181,7 @@ class VehicleGroupMngmtFragmentTest {
             shadowOf(getMainLooper()).idle()
             onView(withId(R.id.deleteVehicleGroupBtn)).perform(ViewActions.click())
             every { viewModel.deleteVehicleGroupApiVal } returns vehicleGroupDeleteLiveData
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag("") as DeleteVehicleGroupDialog
                 assert(dialogFragment.dialog?.isShowing == true)
@@ -233,7 +234,7 @@ class VehicleGroupMngmtFragmentTest {
                 )
 
             onView(withId(R.id.deleteVehicleGroupBtn)).perform(ViewActions.click())
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     childFragmentManager.findFragmentByTag(ConstantsTest.DELETE_VEHICLE_GROUP_DIALOG) as DeleteVehicleGroupDialog
                 assert(dialogFragment.dialog?.isShowing == true)
@@ -244,7 +245,7 @@ class VehicleGroupMngmtFragmentTest {
             every { viewModel.deleteVehicleGroupApiVal } returns vehicleGroupDeleteLiveData
             vehicleGroupDeleteLiveData.postValue(Resource.DataError("Unknown error"))
             shadowOf(getMainLooper()).idle()
-            runBlockingTest {
+            runTest {
                 val dialogFragment =
                     requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
                 assert(dialogFragment.dialog?.isShowing == true)

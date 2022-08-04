@@ -69,36 +69,36 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
     }
 
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
-                }
-            }
-        } catch (e: Exception) {
         }
+        when (response) {
+            is Resource.Success -> {
 
+            }
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
+        }
 
     }
 
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
-
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-                }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
-                }
-            }
-        } catch (e: Exception) {
         }
+        when (response) {
+            is Resource.Success -> {
+            }
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
+        }
+
 
     }
 
@@ -134,41 +134,43 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
     }
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
-        try {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
-            when (response) {
-                is Resource.Success -> {
-                    addressList.clear()
-                    mainList = response.data?.toMutableList() ?: ArrayList()
-                    addressList.add(0, "Select Address")
-                    for (address: DataAddress? in mainList) {
-                        address?.let {
-                            addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
-                        }
-                    }
-                    binding.apply {
-                        spnAddress.setSpinnerAdapter(addressList)
-                        spnAddress.onItemSelectedListener = spinnerListener
-                        tilAddress.visible()
-                        enable = true
-                        btnFindAddress.strokeColor = null
-                        btnFindAddress.strokeWidth = 0
-                        btnFindAddress.backgroundTintList =
-                            ContextCompat.getColorStateList(requireActivity(), R.color.green)
-                        btnFindAddress.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.white
-                            )
-                        )
+        }
+        when (response) {
+            is Resource.Success -> {
+                addressList.clear()
+                mainList = response.data?.toMutableList() ?: ArrayList()
+                addressList.add(0, "Select Address")
+                for (address: DataAddress? in mainList) {
+                    address?.let {
+                        addressList.add("${address.town} , ${address.street} ,  ${address.locality} , ${address.country}")
                     }
                 }
-                is Resource.DataError -> {
-                    showError(binding.root, response.errorMsg)
+                binding.apply {
+                    spnAddress.setSpinnerAdapter(addressList)
+                    spnAddress.onItemSelectedListener = spinnerListener
+                    tilAddress.visible()
+                    enable = true
+                    btnFindAddress.strokeColor = null
+                    btnFindAddress.strokeWidth = 0
+                    btnFindAddress.backgroundTintList =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.green)
+                    btnFindAddress.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
                 }
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                showError(binding.root, response.errorMsg)
+            }
+            else -> {
+            }
         }
+
     }
 
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {

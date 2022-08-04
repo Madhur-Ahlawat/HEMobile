@@ -325,7 +325,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                 addressList.clear()
                 mainList = response.data?.toMutableList() ?: ArrayList()
                 addressList.add(0, "Select Address")
-                var list: MutableList<String>? = null
+                var list: MutableList<String>?
                 for (address: DataAddress? in mainList) {
                     list = ArrayList()
                     address?.let {
