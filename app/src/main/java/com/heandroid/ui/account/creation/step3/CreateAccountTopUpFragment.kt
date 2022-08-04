@@ -25,7 +25,7 @@ class CreateAccountTopUpFragment : BaseFragment<FragmentCreateAccountTopUpBindin
 
     override fun init() {
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
         model?.thresholdAmount="10.00"
         binding.enable=false
     }

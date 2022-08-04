@@ -44,7 +44,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
         model?.eveningPhone = ""
         model?.enable = false
         binding.model = model
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
 
         accountType()
         planType()

@@ -1,4 +1,4 @@
-package com.heandroid.ui.account.creation.step5
+package com.heandroid.ui.account.creation.step6
 
 import android.os.Bundle
 import android.util.Log
@@ -35,7 +35,7 @@ class CreateAccountChoosePaymentFragment :
             " CreateAccountChoosePaymentFragment init  called"
         )
 
-        binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 5)
+        binding.tvStep.text = getString(R.string.str_step_f_of_l, 6, 6)
         binding.enable = false
         binding.btnContine.setOnClickListener(this)
         binding.rgPaymentOptions.setOnCheckedChangeListener(this)

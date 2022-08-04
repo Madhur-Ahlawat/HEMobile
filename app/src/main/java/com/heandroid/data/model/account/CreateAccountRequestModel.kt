@@ -10,26 +10,27 @@ data class CreateAccountRequestModel(
     var securityCd: Long?,
     var accountType: String? = null,
     val tcAccepted: String?,
-    var firstName: String?,
-    var lastName: String?,
-    var address1: String?,
-    var city: String?,
-    var stateType: String?,
-    var countryType: String?,
-    var zipCode1: String?,
+    var planType: String?,
+    var firstName: String?,  // payg with zipcode and without not required
+    var lastName: String?, // payg with zipcode and without not required
+    var address1: String?, //payg with zipcode and without not required
+    var city: String?, //payg with zipcode and without not required
+    var stateType: String?, //payg with and without zipcode not required
+    var countryType: String?,//payg with zipcode and without zipcode not required
+    var zipCode1: String?,//payg  without zipcode not required
     var emailAddress: String?,
     var cellPhone: String?,
     var cellPhoneCountryCode: String?,
     var eveningPhone: String?,
-    var eveningPhoneCountryCode:String?,
-    var smsOption: String?,
+    var eveningPhoneCountryCode: String?,
+    var smsOption: String?,  //payg with zipcode and without zipcode not required
     var password: String?,
     var digitPin: String?,
-    var correspDeliveryMode :String?,
-    var correspDeliveryFrequency:String?,
-    var companyName: String?,
-    var fein: String?,
-    var nonRevenueOption: String?,
+    var correspDeliveryMode: String?,
+    var correspDeliveryFrequency: String?,
+    var companyName: String?, //payg with zipcode and without zipcode & prepay not required
+    var fein: String?,////payg with zipcode and without zipcode & prepay not required
+    var nonRevenueOption: String?,// payg with zipcode and without zipcode not required
     var ftvehicleList: CreateAccountVehicleListModel?,
     var creditCardType: String?,
     var creditCardNumber: String?,
@@ -45,13 +46,12 @@ data class CreateAccountRequestModel(
     var cardCity: String?,
     var cardStateType: String?,
     var cardZipCode: String?,
-    var thresholdAmount: String?,
+    var thresholdAmount: String?, // payg with zipcode and without zipcode not required
     var replenishmentAmount: String?,
     var transactionAmount: String?,
-    var planType: String?,
     var enable: Boolean?,
     var vehicleNo: String?,
     var mNoOfVehicles: String?,
     var mNoOfCrossings: String?,
-    var plateCountryType:String?
+    var plateCountryType: String?
 ) : Parcelable

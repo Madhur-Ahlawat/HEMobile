@@ -164,14 +164,10 @@
         <action
             android:id="@+id/action_createAccoutPinFragment_to_createAccoutInfoFragment"
             app:destination="@id/createAccoutInfoFragment" />
-
         <action
-            android:id="@+id/action_createAccoutPinFragment_to_findYourVehicleFragment"
-            app:destination="@id/findYourVehicleFragment" />
+            android:id="@+id/action_createAccoutPinFragment_to_createCommunicationPrefsFragment"
+            app:destination="@id/createCommunicationPrefsFragment" />
 
-        <action
-            android:id="@+id/action_createAccountPinFragment_to_businessVehicleTitleFragment"
-            app:destination="@+id/businessVehicleTitleFragment" />
         <action
             android:id="@+id/action_createAccoutPinFragment_to_paymentSummaryFragment"
             app:destination="@id/paymentSummaryFragment" />
@@ -200,13 +196,29 @@
             android:id="@+id/action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
     </fragment>
-
-
     <!-- Step 4 -->
+    <fragment
+        android:id="@+id/createCommunicationPrefsFragment"
+        android:name="com.heandroid.ui.account.creation.step4.CreateCommunicationPrefsFragment"
+        android:label="createAccoutInfoConfirmationFragment"
+        tools:layout="@layout/fragment_create_account_top_up">
+        <action
+            android:id="@+id/action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+
+
+        <action
+            android:id="@+id/action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment"
+            app:destination="@+id/businessVehicleTitleFragment" />
+
+    </fragment>
+
+
+    <!-- Step 5 -->
 
     <fragment
         android:id="@+id/findYourVehicleFragment"
-        android:name="com.heandroid.ui.account.creation.step4.CreateAccountFindVehicleFragment"
+        android:name="com.heandroid.ui.account.creation.step5.CreateAccountFindVehicleFragment"
         android:label="FindYourVehicleFragment"
         tools:layout="@layout/fragment_create_account_find_vehicle">
 
@@ -233,7 +245,7 @@
 
     <fragment
         android:id="@+id/businessVehicleTitleFragment"
-        android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleTitleFragment"
+        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
         android:label="BusinessVehicleTitle"
         tools:layout="@layout/fragment_business_vehicle_title_fragment">
 
@@ -245,7 +257,7 @@
 
     <fragment
         android:id="@+id/businessVehicleUKListFragment"
-        android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleFindUK"
+        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK"
         android:label="BusinessUKVehicleList"
         tools:layout="@layout/fragment_business_vehicle_find_uk">
 
@@ -262,7 +274,7 @@
 
     <fragment
         android:id="@+id/businessNonUKMakeFragment"
-        android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleNonUKMakeFragment"
+        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment"
         android:label="BusinessNonUKMake"
         tools:layout="@layout/fragment_business_vehicle_non_uk_make">
 
@@ -274,7 +286,7 @@
 
     <fragment
         android:id="@+id/businessNonUKClassFragment"
-        android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleNonUKClassFragment"
+        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKClassFragment"
         android:label="BusinessNonUkDetails"
         tools:layout="@layout/fragment_business_vehicle_non_uk_details">
 
@@ -293,7 +305,7 @@
 
     <fragment
         android:id="@+id/businessVehicleDetailFragment"
-        android:name="com.heandroid.ui.account.creation.step4.businessaccount.BusinessVehicleDetailFragment"
+        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
         android:label="BusinessVehicleDetail"
         tools:layout="@layout/fragment_business_vehicle_detail">
 
@@ -307,11 +319,11 @@
 
     </fragment>
 
-    <!-- Step 5 -->
+    <!-- Step 6 -->
 
     <fragment
         android:id="@+id/paymentSummaryFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountPaymentSummaryFragment"
+        android:name="com.heandroid.ui.account.creation.step6.CreateAccountPaymentSummaryFragment"
         android:label="Payment Summary Screen"
         tools:layout="@layout/fragment_create_account_payment_summary">
 
@@ -338,7 +350,7 @@
 
     <fragment
         android:id="@+id/choosePaymentFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountChoosePaymentFragment"
+        android:name="com.heandroid.ui.account.creation.step6.CreateAccountChoosePaymentFragment"
         android:label="Choose Payment Fragment"
         tools:layout="@layout/fragment_create_account_choose_payment">
 
@@ -349,7 +361,7 @@
 
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountCardFragment"
+        android:name="com.heandroid.ui.account.creation.step6.CreateAccountCardFragment"
         android:label="Card Fragment"
         tools:layout="@layout/fragment_create_account_card">
         <action
@@ -359,7 +371,7 @@
 
     <fragment
         android:id="@+id/successfulFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountSuccessfulFragment"
+        android:name="com.heandroid.ui.account.creation.step6.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
 

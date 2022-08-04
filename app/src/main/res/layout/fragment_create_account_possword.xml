@@ -163,7 +163,6 @@
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:passwordToggleEnabled="true"
-                    
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilPassword">
 

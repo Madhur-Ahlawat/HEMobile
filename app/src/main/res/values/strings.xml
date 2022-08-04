@@ -284,7 +284,7 @@
     <string name="str_save">Save</string>
     <string name="txt_notification">Notifications</string>
     <string name="str_communication_preferences">Communication preferences</string>
-    <string name="str_set_preferences">Set preference</string>
+    <string name="str_set_preferences">Set communication preference</string>
     <string name="str_accnt_related_pref">Account related communication preference</string>
     <string name="str_post">Post</string>
     <string name="str_printed_statmnt">Printed statements by post will be chargeable. If you require your statements by post, please contact Dart Charge Customer Services.</string>
@@ -862,6 +862,7 @@
     // account financial status
     <string name="auto_top_up">Auto top-up</string>
     <string name="manual_top_up">Manual top-up</string>
+    <string name="str_terms_conditions_txt">See the terms and conditions. Messages and data rates apply.</string>
 
 </resources>
 

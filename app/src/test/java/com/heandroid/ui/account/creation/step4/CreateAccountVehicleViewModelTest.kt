@@ -8,6 +8,7 @@ import com.heandroid.data.model.account.RetrievePlateInfoDetails
 import com.heandroid.data.model.account.ValidVehicleCheckRequest
 import com.heandroid.data.model.account.VehicleInfoDetails
 import com.heandroid.data.repository.auth.CreateAccountRespository
+import com.heandroid.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

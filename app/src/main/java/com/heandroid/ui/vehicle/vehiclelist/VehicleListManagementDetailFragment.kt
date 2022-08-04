@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.*
 import com.heandroid.databinding.FragmentVehicleListManagementDetailBinding
-import com.heandroid.ui.account.creation.step4.businessaccount.dialog.AddBusinessVehicleListener
-import com.heandroid.ui.account.creation.step4.businessaccount.dialog.BusinessAddConfirmDialog
+import com.heandroid.ui.account.creation.step5.businessaccount.dialog.AddBusinessVehicleListener
+import com.heandroid.ui.account.creation.step5.businessaccount.dialog.BusinessAddConfirmDialog
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel

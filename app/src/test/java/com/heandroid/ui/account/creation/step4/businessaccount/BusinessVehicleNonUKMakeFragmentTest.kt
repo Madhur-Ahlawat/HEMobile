@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.heandroid.R
 import com.heandroid.data.model.account.NonUKVehicleModel
+import com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment
 import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ConstantsTest
