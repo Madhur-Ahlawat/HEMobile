@@ -39,8 +39,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     override fun onResume() {
         super.onResume()
         requireActivity().toolbar(getString(R.string.str_log_in_dart_system))
-        MobileCore.setApplication(BaseApplication.INSTANCE)
-        MobileCore.lifecycleStart(null)
+        BaseApplication.INSTANCE?.let {
+            MobileCore.setApplication(it)
+            MobileCore.lifecycleStart(null)
+        }
     }
 
     override fun init() {

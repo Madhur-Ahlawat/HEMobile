@@ -31,7 +31,7 @@ class BaseApplication : Application() {
     private val TIME_PERIOD: Long = 3000 //ms
 
     companion object {
-        lateinit var INSTANCE: BaseApplication
+        var INSTANCE: BaseApplication? = null
     }
 
     override fun onCreate() {

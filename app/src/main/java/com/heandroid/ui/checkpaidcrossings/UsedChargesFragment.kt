@@ -17,6 +17,8 @@ import com.heandroid.ui.checkpaidcrossings.adapter.UsedChargesAdapter
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +58,7 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
         if (isClicked) {
             when (resource) {
                 is Resource.Success -> {
+                    mList.clear()
                     resource.data?.let { data ->
                         data.forEach {
                             val bounds = if (it?.exitDirection.equals("S"))
@@ -69,13 +72,20 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
                                 crossingDate = DateUtils.convertDateFormat(it?.entryDate, 0),
                                 it?.exitTime, bounds
                             )
-                            mList.clear()
                             mList.add(model)
-                            binding.rvHistory.adapter = UsedChargesAdapter(mList)
                         }
+                    }
+                    if (mList.isEmpty()) {
+                        binding.rvHistory.gone()
+                        binding.tvNoCrossing.visible()
+                    } else {
+                        binding.rvHistory.visible()
+                        binding.rvHistory.adapter = UsedChargesAdapter(mList)
                     }
                 }
                 is Resource.DataError -> {
+                    binding.rvHistory.gone()
+                    binding.tvNoCrossing.visible()
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {

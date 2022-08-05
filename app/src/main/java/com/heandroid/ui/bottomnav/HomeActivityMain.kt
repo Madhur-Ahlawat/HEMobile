@@ -29,8 +29,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BaseApplication.INSTANCE.initTimerObject()
-        BaseApplication.INSTANCE.startTimerAPi()
+        BaseApplication.INSTANCE?.initTimerObject()
+        BaseApplication.INSTANCE?.startTimerAPi()
     }
 
     override fun initViewBinding() {
@@ -112,6 +112,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onDestroy() {
         super.onDestroy()
         LogoutUtil.stopLogoutTimer()
-        BaseApplication.INSTANCE.stopTimerAPi()
+        BaseApplication.INSTANCE?.stopTimerAPi()
     }
 }

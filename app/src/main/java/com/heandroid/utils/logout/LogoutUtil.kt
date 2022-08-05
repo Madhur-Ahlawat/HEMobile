@@ -23,12 +23,12 @@ object LogoutUtil {
             listner = listne
             timer = object : CountDownTimer(LOGOUT_TIME, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    BaseApplication.INSTANCE.setSessionTime()
+                    BaseApplication.INSTANCE?.setSessionTime()
                 }
 
                 override fun onFinish() {
                     if (!isTimeFinish) {
-                        BaseApplication.INSTANCE.setSessionTime()
+                        BaseApplication.INSTANCE?.setSessionTime()
                         listner?.onLogout()
                     }
                 }

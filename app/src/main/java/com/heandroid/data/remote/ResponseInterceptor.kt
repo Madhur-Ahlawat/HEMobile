@@ -18,22 +18,16 @@ class ResponseInterceptor @Inject constructor(private val mContext: Context) :
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-
-        Log.i("teja1234", "response : " + chain.request().toString())
         val response = chain.proceed(chain.request())
 
         return try{
             if (!response.isSuccessful) {
-                Log.i("teja1234", "response : failed")
 //                showDialog(mContext, chain)
                 response
-
             } else {
-                Log.i("teja1234", "response : success")
                 response
             }
         } catch (e : Exception){
-            Log.i("teja1234", "response : exception")
             response
         }
     }

@@ -62,7 +62,7 @@ class LandingActivity : BaseActivity<Any?>() {
         super.onResume()
         MobileCore.setApplication(BaseApplication.INSTANCE)
         MobileCore.lifecycleStart(null)
-        BaseApplication.INSTANCE.stopTimerAPi()
+        BaseApplication.INSTANCE?.stopTimerAPi()
         sessionManager.clearAll()
         initCtrl()
     }

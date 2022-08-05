@@ -5,8 +5,7 @@ import androidx.test.filters.MediumTest
 import com.google.gson.Gson
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.model.account.VehicleInfoDetails
-import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
-import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
+import com.heandroid.data.model.checkpaidcrossings.*
 import com.heandroid.data.repository.checkpaidcrossings.CheckPaidCrossingsRepo
 import com.heandroid.ui.vehicle.TestErrorResponseModel
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -38,6 +37,7 @@ class CheckPaidCrossingViewModelTest {
     private var checkPaidCrossingViewModel: CheckPaidCrossingViewModel? = null
 
     private val unknownException = "unknown exception"
+    private val checkPaidCrossingsRequest = CheckPaidCrossingsRequest("", "")
 
     @Mock
     private lateinit var responseBody: ResponseBody
@@ -47,6 +47,15 @@ class CheckPaidCrossingViewModelTest {
 
     @Mock
     private lateinit var finVehicleResponse: Response<VehicleInfoDetails?>
+
+    @Mock
+    private lateinit var usedTollTransactionsResponse: Response<List<UsedTollTransactionResponse?>?>
+
+    @Mock
+    private lateinit var balanceTransferResponse: Response<BalanceTransferResponse?>
+
+    @Mock
+    private lateinit var loginWithRefAndPlateNumberResponse: Response<CheckPaidCrossingsResponse?>
 
     @Inject
     lateinit var errorManager: ErrorManager
@@ -134,7 +143,6 @@ class CheckPaidCrossingViewModelTest {
         }
     }
 
-
     @Test
     fun `test set paid crossing option`() {
         runTest {
@@ -158,8 +166,12 @@ class CheckPaidCrossingViewModelTest {
     fun `test set paid crossing response`() {
         runTest {
             checkPaidCrossingViewModel?.let {
-                it.setPaidCrossingResponse(CheckPaidCrossingsResponse("11223344", "account type", "type",
-                    "active", "", "UK","11", "2022"))
+                it.setPaidCrossingResponse(
+                    CheckPaidCrossingsResponse(
+                        "11223344", "account type", "type",
+                        "active", "", "UK", "11", "2022"
+                    )
+                )
                 assertEquals(
                     "11223344", it.paidCrossingResponse.value?.accountNo
                 )
@@ -172,4 +184,246 @@ class CheckPaidCrossingViewModelTest {
             }
         }
     }
+
+    @Test
+    fun `test login with Ref And plate number api call for success`() {
+        runTest {
+            Mockito.lenient().`when`(loginWithRefAndPlateNumberResponse.isSuccessful)
+                .thenReturn(true)
+            Mockito.lenient().`when`(loginWithRefAndPlateNumberResponse.code()).thenReturn(200)
+            val resp = CheckPaidCrossingsResponse(
+                "", "", "",
+                "", "", "", "", ""
+            )
+            Mockito.lenient().`when`(loginWithRefAndPlateNumberResponse.body()).thenReturn(resp)
+            Mockito.`when`(repository.loginWithRefAndPlateNumber(checkPaidCrossingsRequest))
+                .thenReturn(loginWithRefAndPlateNumberResponse)
+            checkPaidCrossingViewModel?.let {
+                it.checkPaidCrossings(checkPaidCrossingsRequest)
+                assertEquals(
+                    null, it.loginWithRefAndPlateNumber.value?.data
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test login with Ref And plate number api call for unknown error`() {
+        runTest {
+            val status = 403
+            val message = "Unknown error"
+            Mockito.lenient().`when`(loginWithRefAndPlateNumberResponse.isSuccessful)
+                .thenReturn(false)
+            val testValidData = TestErrorResponseModel(
+                error = message,
+                exception = "exception",
+                message = message,
+                status = status,
+                errorCode = status,
+                timestamp = ""
+            )
+            val jsonString: String = Gson().toJson(testValidData)
+            Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
+            Mockito.lenient().`when`(loginWithRefAndPlateNumberResponse.errorBody())
+                .thenReturn(responseBody)
+            Mockito.`when`(repository.loginWithRefAndPlateNumber(checkPaidCrossingsRequest))
+                .thenReturn(loginWithRefAndPlateNumberResponse)
+            checkPaidCrossingViewModel?.let {
+                it.checkPaidCrossings(checkPaidCrossingsRequest)
+                assertEquals(
+                    null, it.loginWithRefAndPlateNumber.value?.data
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test login with Ref And plate number api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.loginWithRefAndPlateNumber(checkPaidCrossingsRequest))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            checkPaidCrossingViewModel?.let {
+                it.checkPaidCrossings(checkPaidCrossingsRequest)
+                assertEquals(
+                    null, it.loginWithRefAndPlateNumber.value?.data
+                )
+                assertEquals(
+                    unknownException, it.loginWithRefAndPlateNumber.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test used toll transaction api call for success`() {
+        runTest {
+            Mockito.lenient().`when`(usedTollTransactionsResponse.isSuccessful).thenReturn(true)
+            Mockito.lenient().`when`(usedTollTransactionsResponse.code()).thenReturn(200)
+            val resp = listOf<UsedTollTransactionResponse>()
+            Mockito.lenient().`when`(usedTollTransactionsResponse.body()).thenReturn(resp)
+            Mockito.`when`(repository.getTollTransactions(UsedTollTransactionsRequest()))
+                .thenReturn(usedTollTransactionsResponse)
+            checkPaidCrossingViewModel?.let {
+                it.usedTollTransactions(UsedTollTransactionsRequest())
+                assertEquals(
+                    resp, it.usedTollTransactions.value?.data
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test used toll transaction api call for unknown error`() {
+        runTest {
+            val status = 403
+            val message = "Unknown error"
+            Mockito.lenient().`when`(usedTollTransactionsResponse.isSuccessful).thenReturn(false)
+            val testValidData = TestErrorResponseModel(
+                error = message,
+                exception = "exception",
+                message = message,
+                status = status,
+                errorCode = status,
+                timestamp = ""
+            )
+            val jsonString: String = Gson().toJson(testValidData)
+            Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
+            Mockito.lenient().`when`(usedTollTransactionsResponse.errorBody())
+                .thenReturn(responseBody)
+            Mockito.`when`(repository.getTollTransactions(UsedTollTransactionsRequest()))
+                .thenReturn(usedTollTransactionsResponse)
+            checkPaidCrossingViewModel?.let {
+                it.usedTollTransactions(UsedTollTransactionsRequest())
+                assertEquals(
+                    null, it.usedTollTransactions.value?.data
+                )
+                assertEquals(
+                    message, it.usedTollTransactions.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test used toll transaction api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(repository.getTollTransactions(UsedTollTransactionsRequest()))
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            checkPaidCrossingViewModel?.let {
+                it.usedTollTransactions(UsedTollTransactionsRequest())
+                assertEquals(
+                    null, it.usedTollTransactions.value?.data
+                )
+                assertEquals(
+                    unknownException, it.usedTollTransactions.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test balance transfer api call for success`() {
+        runTest {
+            Mockito.lenient().`when`(balanceTransferResponse.isSuccessful).thenReturn(true)
+            Mockito.lenient().`when`(balanceTransferResponse.code()).thenReturn(200)
+            val resp = BalanceTransferResponse(true)
+            Mockito.lenient().`when`(balanceTransferResponse.body()).thenReturn(resp)
+            Mockito.`when`(
+                repository.balanceTransfer(
+                    BalanceTransferRequest(
+                        "", "", null
+                    )
+                )
+            )
+                .thenReturn(balanceTransferResponse)
+            checkPaidCrossingViewModel?.let {
+                it.balanceTransfer(
+                    BalanceTransferRequest(
+                        "",
+                        "", null
+                    )
+                )
+                assertEquals(
+                    resp, it.balanceTransfer.value?.data
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test balance transfer api call for unknown error`() {
+        runTest {
+            val status = 403
+            val message = "Unknown error"
+            Mockito.lenient().`when`(balanceTransferResponse.isSuccessful).thenReturn(false)
+            val testValidData = TestErrorResponseModel(
+                error = message,
+                exception = "exception",
+                message = message,
+                status = status,
+                errorCode = status,
+                timestamp = ""
+            )
+            val jsonString: String = Gson().toJson(testValidData)
+            Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
+            Mockito.lenient().`when`(balanceTransferResponse.errorBody())
+                .thenReturn(responseBody)
+            Mockito.`when`(
+                repository.balanceTransfer(
+                    BalanceTransferRequest(
+                        "", "", null
+                    )
+                )
+            )
+                .thenReturn(balanceTransferResponse)
+            checkPaidCrossingViewModel?.let {
+                it.balanceTransfer(
+                    BalanceTransferRequest(
+                        "", "", null
+                    )
+                )
+                assertEquals(
+                    null, it.balanceTransfer.value?.data
+                )
+                assertEquals(
+                    message, it.balanceTransfer.value?.errorMsg
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test balance transfer api call for unknown exception`() {
+        runTest {
+            Mockito.`when`(
+                repository.balanceTransfer(
+                    BalanceTransferRequest(
+                        "", "", null
+                    )
+                )
+            )
+                .thenAnswer {
+                    throw Exception(unknownException)
+                }
+            checkPaidCrossingViewModel?.let {
+                it.balanceTransfer(
+                    BalanceTransferRequest(
+                        "", "", null
+                    )
+                )
+                assertEquals(
+                    null, it.balanceTransfer.value?.data
+                )
+                assertEquals(
+                    unknownException, it.balanceTransfer.value?.errorMsg
+                )
+            }
+        }
+    }
+
+
 }

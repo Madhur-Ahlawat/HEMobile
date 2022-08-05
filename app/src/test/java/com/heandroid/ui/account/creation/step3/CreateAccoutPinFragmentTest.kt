@@ -108,7 +108,7 @@ class CreateAccoutPinFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.findYourVehicleFragment
+                R.id.createCommunicationPrefsFragment
             )
         }
     }
@@ -155,7 +155,7 @@ class CreateAccoutPinFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.findYourVehicleFragment
+                R.id.createCommunicationPrefsFragment
             )
             val bun = Bundle().apply {
                 putParcelable(
@@ -213,7 +213,7 @@ class CreateAccoutPinFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.businessVehicleTitleFragment
+                R.id.createCommunicationPrefsFragment
             )
             val bun = Bundle().apply {
                 putParcelable(

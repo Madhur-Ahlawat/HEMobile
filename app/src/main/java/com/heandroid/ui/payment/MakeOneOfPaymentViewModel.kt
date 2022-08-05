@@ -78,15 +78,15 @@ class MakeOneOfPaymentViewModel @Inject constructor(
     fun validationEmail(model: String?, model2: String, type: Int): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (model?.isEmpty() == true && model2.isEmpty()) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_email))
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_email) ?: "")
         else if (model != model2)
             ret =
-                Pair(false, BaseApplication.INSTANCE.getString(R.string.error_confirm_mail))
+                Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_confirm_mail) ?: "")
         else if (type == 0) {
             if (!Patterns.EMAIL_ADDRESS.matcher(model).matches()) ret = Pair(
-                false, BaseApplication.INSTANCE.getString(
+                false, BaseApplication.INSTANCE?.getString(
                     R.string.error_valid_email
-                )
+                ) ?: ""
             )
         }
         return ret

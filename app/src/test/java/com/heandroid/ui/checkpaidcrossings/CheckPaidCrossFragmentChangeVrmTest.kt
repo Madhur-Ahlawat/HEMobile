@@ -2,6 +2,7 @@ package com.heandroid.ui.checkpaidcrossings
 
 import android.os.Bundle
 import android.os.Looper.getMainLooper
+import android.widget.Button
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
@@ -14,8 +15,18 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.heandroid.R
 import com.heandroid.data.model.account.VehicleInfoDetails
+import com.heandroid.data.model.checkpaidcrossings.BalanceTransferResponse
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
+import com.heandroid.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.heandroid.data.model.checkpaidcrossings.UsedTollTransactionResponse
+import com.heandroid.data.model.vehicle.VehicleResponse
+import com.heandroid.ui.checkpaidcrossings.dialog.ConfirmChangeDialog
 import com.heandroid.ui.loader.ErrorDialog
+import com.heandroid.ui.vehicle.VehicleMgmtViewModel
+import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
+import com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment
+import com.heandroid.ui.vehicle.vehiclelist.dialog.RemoveVehicleDialog
+import com.heandroid.utils.BaseActions
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.data.DataFile
@@ -46,6 +57,20 @@ class CheckPaidCrossFragmentChangeVrmTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    @BindValue
+    @JvmField
+    val viewModel = mockk<CheckPaidCrossingViewModel>(relaxed = true)
+
+    private val balanceTransferLiveData = MutableLiveData<Resource<BalanceTransferResponse?>?>()
+    private val paidCrossingLiveData = MutableLiveData<CheckPaidCrossingsOptionsModel?>()
+    private val paidCrossing = CheckPaidCrossingsOptionsModel(
+        "112233", "qq", true)
+    private val paidCrossingResponseLiveData = MutableLiveData<CheckPaidCrossingsResponse?>()
+    private val paidCrossingResponse = CheckPaidCrossingsResponse(
+        "112233", "qq", "type", "qq",
+        "cd", "UK","100", "2022" )
+
+
     private lateinit var bundle: Bundle
     private val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
 
@@ -58,6 +83,9 @@ class CheckPaidCrossFragmentChangeVrmTest {
             putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, true)
             putParcelable(Constants.CHECK_PAID_CROSSINGS_VRM_DETAILS, VehicleInfoDetails(null))
         }
+        every { viewModel.balanceTransfer } returns balanceTransferLiveData
+        every { viewModel.paidCrossingOption } returns paidCrossingLiveData
+        every { viewModel.paidCrossingResponse } returns paidCrossingResponseLiveData
     }
 
     @Test
@@ -69,7 +97,7 @@ class CheckPaidCrossFragmentChangeVrmTest {
             onView(withId(R.id.regNum)).check(matches(isDisplayed()))
             onView(withId(R.id.countryMarker)).check(matches(isDisplayed()))
             onView(withId(R.id.changeVehicle)).check(matches(isDisplayed()))
-                .perform(ViewActions.click())
+
         }
     }
 
@@ -93,4 +121,82 @@ class CheckPaidCrossFragmentChangeVrmTest {
             )
         }
     }
+
+    @Test
+    fun `test paid crossing for non existed vehicle, test remove button`() {
+        bundle.apply {
+            putBoolean(Constants.CHECK_PAID_CROSSING_VRM_EXISTS, false)
+        }
+        launchFragmentInHiltContainer<CheckPaidCrossFragmentChangeVrm>(bundle) {
+            navController.setGraph(R.navigation.nav_check_paid_crossings)
+            navController.setCurrentDestination(R.id.checkPaidCrossingChangeVrm)
+            Navigation.setViewNavController(requireView(), navController)
+            onView(withId(R.id.regNum)).check(matches(isDisplayed()))
+            onView(withId(R.id.countryMarker)).check(matches(isDisplayed()))
+            onView(withId(R.id.removeVehicle)).check(matches(isDisplayed()))
+                .perform(ViewActions.click())
+            assertEquals(
+                navController.currentDestination?.id,
+                R.id.enterVrmFragment
+            )
+        }
+    }
+
+    @Test
+    fun `test paid crossings balance transfer for success api call`() {
+        paidCrossingLiveData.value = paidCrossing
+        paidCrossingResponseLiveData.value = paidCrossingResponse
+        launchFragmentInHiltContainer<CheckPaidCrossFragmentChangeVrm>(bundle) {
+            navController.setGraph(R.navigation.nav_check_paid_crossings)
+            navController.setCurrentDestination(R.id.checkPaidCrossingChangeVrm)
+            Navigation.setViewNavController(requireView(), navController)
+            onView(withId(R.id.regNum)).check(matches(isDisplayed()))
+            onView(withId(R.id.countryMarker)).check(matches(isDisplayed()))
+            onView(withId(R.id.changeVehicle)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            val dialogFragment =
+                childFragmentManager.findFragmentByTag(Constants.DELETE_VEHICLE_GROUP_DIALOG) as ConfirmChangeDialog
+            assert(dialogFragment.dialog?.isShowing == true)
+            dialogFragment.dialog?.findViewById<Button>(R.id.btnConfirm)?.performClick()
+            assert(dialogFragment.dialog?.isShowing == false)
+//            (this@launchFragmentInHiltContainer as CheckPaidCrossFragmentChangeVrm).onConfirmClick()
+            shadowOf(getMainLooper()).idle()
+            balanceTransferLiveData.postValue(Resource.Success(BalanceTransferResponse(true)))
+            shadowOf(getMainLooper()).idle()
+            assertEquals(
+                navController.currentDestination?.id,
+                R.id.checkPaidCrossingChangeVrmConformSuccess
+            )
+        }
+    }
+
+    @Test
+    fun `test paid crossings balance transfer for failed api call`() {
+        paidCrossingLiveData.value = paidCrossing
+        paidCrossingResponseLiveData.value = paidCrossingResponse
+        launchFragmentInHiltContainer<CheckPaidCrossFragmentChangeVrm>(bundle) {
+            navController.setGraph(R.navigation.nav_check_paid_crossings)
+            navController.setCurrentDestination(R.id.checkPaidCrossingChangeVrm)
+            Navigation.setViewNavController(requireView(), navController)
+            onView(withId(R.id.regNum)).check(matches(isDisplayed()))
+            onView(withId(R.id.countryMarker)).check(matches(isDisplayed()))
+            onView(withId(R.id.changeVehicle)).check(matches(isDisplayed()))
+                .perform(BaseActions.forceClick())
+            val dialogFragment =
+                childFragmentManager.findFragmentByTag(Constants.DELETE_VEHICLE_GROUP_DIALOG) as ConfirmChangeDialog
+            assert(dialogFragment.dialog?.isShowing == true)
+            dialogFragment.dialog?.findViewById<Button>(R.id.btnConfirm)?.performClick()
+            assert(dialogFragment.dialog?.isShowing == false)
+//            (this@launchFragmentInHiltContainer as CheckPaidCrossFragmentChangeVrm).onConfirmClick()
+            shadowOf(getMainLooper()).idle()
+            balanceTransferLiveData.postValue(Resource.DataError("unknown error"))
+            shadowOf(getMainLooper()).idle()
+            runTest {
+                val dialogFragment2 =
+                    requireActivity().supportFragmentManager.findFragmentByTag(Constants.ERROR_DIALOG) as ErrorDialog
+                assert(dialogFragment2.dialog?.isShowing == true)
+            }
+        }
+    }
+
 }

@@ -172,19 +172,6 @@ class BusinessVehicleFindUKTest {
                 navController.currentDestination?.id,
                 R.id.businessNonUKMakeFragment
             )
-            val bun = Bundle().apply {
-                putParcelable(
-                    ConstantsTest.CREATE_ACCOUNT_DATA,
-                    DataFile.getCreateAccountRequestModel().apply {
-                        accountType = Constants.PERSONAL_ACCOUNT
-                        planType = null
-                        ftvehicleList = null
-                        correspDeliveryFrequency = null
-                    }
-                )
-            }
-            val currentDestinationArgs = navController.backStack.last().arguments
-            Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
 

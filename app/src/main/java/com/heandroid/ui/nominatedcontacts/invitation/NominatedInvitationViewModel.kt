@@ -91,9 +91,9 @@ class NominatedInvitationViewModel @Inject constructor(
     fun validationFullName(model: CreateAccountRequestModel?): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (model?.firstName?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_first_name))
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_first_name) ?: "")
         else if (model?.lastName?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_last_name))
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_last_name) ?: "")
         return ret
     }
 
@@ -101,9 +101,9 @@ class NominatedInvitationViewModel @Inject constructor(
     fun validationEmail(model: CreateAccountRequestModel?): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (model?.emailId?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_email))
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_email) ?: "")
         else if (!Patterns.EMAIL_ADDRESS.matcher(model?.emailId).matches()) ret =
-            Pair(false, BaseApplication.INSTANCE.getString(R.string.error_valid_email))
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.error_valid_email) ?: "")
         return ret
     }
 
