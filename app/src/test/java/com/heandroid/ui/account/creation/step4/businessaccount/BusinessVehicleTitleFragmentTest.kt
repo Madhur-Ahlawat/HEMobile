@@ -1,3 +1,4 @@
+/*
 package com.heandroid.ui.account.creation.step4.businessaccount
 
 import android.os.Bundle
@@ -82,4 +83,4 @@ class BusinessVehicleTitleFragmentTest {
             )
         }
     }
-}
+}*/
