@@ -107,7 +107,6 @@
 
 
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mcvContainer"
             android:layout_width="0dp"
@@ -160,7 +159,6 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="@string/str_confirm_password"
                     app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:passwordToggleEnabled="true"
                     app:layout_constraintStart_toStartOf="parent"
