@@ -1,9 +1,12 @@
 package com.heandroid.ui.account.creation.step3
 
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -83,8 +86,32 @@ class CreateAccoutPinFragment : BaseFragment<FragmentCreateAccountPinBinding>(),
                 else binding.tvPinThree.requestFocus()
                 checkButton()
             }
+            showHide.setOnClickListener {
+
+                if (show) {
+                    show = false
+                    showHide.setImageResource(R.drawable.ic_invisible)
+                    tvPinOne.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    tvPinTwo.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    tvPinThree.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    tvPinFour.transformationMethod = HideReturnsTransformationMethod.getInstance()
+
+                } else {
+                    show = true
+                    showHide.setImageResource(R.drawable.ic_visible)
+                    tvPinOne.transformationMethod = PasswordTransformationMethod.getInstance()
+                    tvPinTwo.transformationMethod = PasswordTransformationMethod.getInstance()
+                    tvPinThree.transformationMethod = PasswordTransformationMethod.getInstance()
+                    tvPinFour.transformationMethod = PasswordTransformationMethod.getInstance()
+
+
+                }
+
+            }
         }
     }
+
+    private var show = true
 
     private fun checkButton() {
         binding.enable = binding.tvPinOne.text.toString().isNotEmpty() &&
