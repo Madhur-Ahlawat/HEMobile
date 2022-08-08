@@ -8,7 +8,7 @@ data class NonUKVehicleModel (
     var plateCountry: String?="",
     var plateTypeDesc: String?="",
     var vehicleColor: String?="",
-    val vehicleComments: String?="",
+    var vehicleComments: String?="",
     var vehicleMake: String?="",
     var vehicleModel: String?="",
     var vehiclePlate: String?="",

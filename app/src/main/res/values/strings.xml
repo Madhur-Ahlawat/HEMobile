@@ -697,7 +697,7 @@
     <string name="update_password_success">Password has been updated successfully</string>
     <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
     <string name="str_business_account_intro">To create a personal account you will need a \n\n \u2022 Company registration number. \n \u2022 Your company details. \n \u2022 Details of the vehicle you are registering. \n \u2022 A valid debit or a credit card</string>
-    <string name="str_business_prepay">To set up a business pre-pay account you will need a \n\n \u2022 A initial deposit of £10 \n \u2022 Company details and details of the primary vehicle which you are registering. \n \u2022 A valid debit or a credit card</string>
+    <string name="str_business_prepay"><b>To set up a business pre-pay account you will need:</b>  \n\n \u2022 A initial deposit of £ 10.00 \n \u2022 Company details and details of the primary vehicle which you are registering. \n \u2022 A valid debit or a credit card</string>
     <string name="business_info_fragment">Business Info Fragment</string>
     <string name="business_prepay">Business Prepay Info</string>
     <string name="business_prepay_account">Business pre-pay account</string>
@@ -723,7 +723,9 @@
     <string name="vehicle_class">Vehicle class</string>
     <string name="two_plus_axles">2+ Axle vehicles</string>
     <string name="group_name_field">The group name field can be used to help you distinguish different vehicles associated with your account</string>
+    <string name="free_txt_name_field">The free text field can be used to help distinguish different vehicles associated with your account</string>
     <string name="group_name_optional">Group name (Optional)</string>
+    <string name="free_txt_name_optional">Free text (Optional)</string>
     <string name="vehicle_understanding">Please provide registration number for your primary vehicle.You can add additional vehicles when your account has been successfully activated.</string>
     <string name="uk_vehicle">UK</string>
     <string name="step_4to5">Step 4 of 5</string>
@@ -863,6 +865,7 @@
     <string name="auto_top_up">Auto top-up</string>
     <string name="manual_top_up">Manual top-up</string>
     <string name="str_terms_conditions_txt">See the terms and conditions. Messages and data rates apply.</string>
+    <string name="str_to_set_up_a_personal_prepay_account"><b>To set up a personal prepay account, you will need:</b> \n\n \u2022 A initial deposit of £ 10.00 \n \u2022 Personal  details and details of the primary vehicle which you are registering. \n \u2022 A valid debit or a credit card</string>
 
 </resources>
 

@@ -83,7 +83,6 @@ class CreateAccountPersonalSetupFragment :
                             bundle
                         )
 
-
                     }
                     binding.mrbPrePay.isChecked -> {
                         val bundle = Bundle()

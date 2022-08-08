@@ -20,20 +20,18 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.addvehicle.dialog.VehicleAddConfirmDialog
 import com.heandroid.utils.VehicleClassTypeConverter
-import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNonUkDetailsBinding>(),
+class BusinessVehicleNonUKClassFragment :
+    BaseFragment<FragmentBusinessVehicleNonUkDetailsBinding>(),
     View.OnClickListener, AddBusinessVehicleListener {
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NonUKVehicleModel?= null
+    private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var mClassType = ""
 
     private var loader: LoaderDialog? = null
@@ -54,11 +52,12 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
-            binding.groupNameLayout.visible()
-            binding.groupNameTitle.visible()
+            binding.groupNameTitle.text = getString(R.string.group_name_field)
+            binding.groupNameLayout.hint = getString(R.string.group_name_optional)
         } else {
-            binding.groupNameLayout.gone()
-            binding.groupNameTitle.gone()
+            binding.groupNameTitle.text = getString(R.string.free_txt_name_field)
+            binding.groupNameLayout.hint = getString(R.string.free_txt_name_optional)
+
         }
 
         binding.classARadioButton.isChecked = true
@@ -98,7 +97,7 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when(resource) {
+        when (resource) {
             is Resource.Success -> {
 
                 // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
@@ -107,12 +106,17 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
                 nonUKVehicleModelLocal.vehicleMake = nonUKVehicleModel?.vehicleMake
                 nonUKVehicleModelLocal.vehicleModel = nonUKVehicleModel?.vehicleModel
                 nonUKVehicleModelLocal.vehicleColor = nonUKVehicleModel?.vehicleColor
-                nonUKVehicleModelLocal.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
+                nonUKVehicleModelLocal.vehicleClassDesc =
+                    VehicleClassTypeConverter.toClassName(mClassType)
 
 //                val bundle = Bundle()
 //                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
 //                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                BusinessAddConfirmDialog.newInstance(resources.getString(R.string.str_do_you_want_the_below), "",this@BusinessVehicleNonUKClassFragment).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+                BusinessAddConfirmDialog.newInstance(
+                    resources.getString(R.string.str_do_you_want_the_below),
+                    "",
+                    this@BusinessVehicleNonUKClassFragment
+                ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
 
 //                findNavController().navigate(R.id.action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment, bundle)
             }
@@ -120,15 +124,19 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                findNavController().navigate(R.id.action_businessNonUkMakeFragment_to_findYourVehicleFragment, arguments)
+                findNavController().navigate(
+                    R.id.action_businessNonUkMakeFragment_to_findYourVehicleFragment,
+                    arguments
+                )
 
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 
     override fun onClick(view: View?) {
-        when(view?.id) {
+        when (view?.id) {
             R.id.continueButton -> {
 
 
@@ -136,23 +144,46 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
                     when {
 
 
-                        cbDeclare.isChecked && mClassType.isNotEmpty() ->{
+                        cbDeclare.isChecked && mClassType.isNotEmpty() -> {
 
                             val vehicleValidReqModel = ValidVehicleCheckRequest(
-                                requestModel?.vehicleNo, requestModel?.countryType, "STANDARD",
-                                "2022", nonUKVehicleModel?.vehicleModel,  nonUKVehicleModel?.vehicleMake, nonUKVehicleModel?.vehicleColor, "2", "HE")
-                            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
+                                requestModel?.vehicleNo,
+                                requestModel?.countryType,
+                                "STANDARD",
+                                "2022",
+                                nonUKVehicleModel?.vehicleModel,
+                                nonUKVehicleModel?.vehicleMake,
+                                nonUKVehicleModel?.vehicleColor,
+                                "2",
+                                "HE"
+                            )
+                            viewModel.validVehicleCheck(
+                                vehicleValidReqModel,
+                                Constants.AGENCY_ID.toInt()
+                            )
 
                         }
 
                         !cbDeclare.isChecked && mClassType.isNotEmpty() ->
-                            Snackbar.make(classAView, "Please select the checkbox", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                classAView,
+                                "Please select the checkbox",
+                                Snackbar.LENGTH_LONG
+                            ).show()
 
                         cbDeclare.isChecked && mClassType.isEmpty() ->
-                            Snackbar.make(classAView, "Please select the class", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                classAView,
+                                "Please select the class",
+                                Snackbar.LENGTH_LONG
+                            ).show()
 
                         else ->
-                            Snackbar.make(classAView, "Please select the class and checkbox", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                classAView,
+                                "Please select the class and checkbox",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                     }
                 }
             }
@@ -216,13 +247,21 @@ class BusinessVehicleNonUKClassFragment: BaseFragment<FragmentBusinessVehicleNon
 
             nonUKVehicleModel?.apply {
                 vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
-                vehicleGroup = groupName.text.toString()
+                if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT)
+                    vehicleGroup = groupName.text.toString()
+                else
+                    vehicleComments = groupName.text.toString()
+
             }
+            Logg.logging("ClassesVehicle", "create acccount Vehicle details $nonUKVehicleModel")
 
             val bundle = Bundle()
             bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA,  nonUKVehicleModel)
-            findNavController().navigate(R.id.action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment, bundle)
+            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+            findNavController().navigate(
+                R.id.action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment,
+                bundle
+            )
         }
     }
 }
