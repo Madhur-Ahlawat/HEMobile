@@ -23,10 +23,15 @@ class BusinessPrePayInfoFragment : BaseFragment<FragmentBusinessPrepayInfoBindin
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        if (requestModel?.accountType == PERSONAL_ACCOUNT)
+        if (requestModel?.accountType == PERSONAL_ACCOUNT) {
             binding.tvLabel.text = getString(R.string.str_personal_pre_pay_account)
-        else
+            binding.businessPrepay.text =
+                getString(R.string.str_to_set_up_a_personal_prepay_account)
+        } else {
             binding.tvLabel.text = getString(R.string.str_business_prepay_account)
+            binding.businessPrepay.text =
+                getString(R.string.str_business_prepay)
+        }
 
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
             isEditAccountType =

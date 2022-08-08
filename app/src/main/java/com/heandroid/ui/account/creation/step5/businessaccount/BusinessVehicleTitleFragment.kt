@@ -43,6 +43,6 @@ class BusinessVehicleTitleFragment: BaseFragment<FragmentBusinessVehicleTitleFra
 
         val bundle = Bundle()
         bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
-        findNavController().navigate(R.id.action_businessVehicleTitleFragment_to_businessVehicleUKFragment, bundle)
+//        findNavController().navigate(R.id.action_businessVehicleTitleFragment_to_businessVehicleUKFragment, bundle)
     }
 }

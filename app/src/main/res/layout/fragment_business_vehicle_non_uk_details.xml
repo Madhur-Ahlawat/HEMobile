@@ -85,7 +85,8 @@
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp"
-                    app:buttonTint="@color/bottomActiveColor"
+                    app:buttonTint="@color/btn_disable"
+                    android:enabled="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

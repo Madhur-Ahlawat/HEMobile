@@ -50,7 +50,7 @@ class CreateCommunicationPrefsFragment :
         binding.changeImg.gone()
         binding.numberTextInput.gone()
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 4, 6)
-        Logg.logging("AccountCreatePin"," step 4  model  $model")
+        Logg.logging("AccountCreatePin", " step 4  model  $model")
 
         val mSearchModel = SearchProcessParamsModelReq(
             "SIGNUP", "ENU", "FEES", "MAIL"
@@ -105,26 +105,10 @@ class CreateCommunicationPrefsFragment :
             val bundle = Bundle().apply {
                 putParcelable(Constants.CREATE_ACCOUNT_DATA, model)
             }
-            when (model?.planType) {
-                Constants.PAYG -> {
-                    findNavController().navigate(
-                        R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment,
-                        bundle
-                    )
-                }
-                Constants.BUSINESS_ACCOUNT -> {
-                    findNavController().navigate(
-                        R.id.action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment,
-                        bundle
-                    )
-                }
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_createAccoutInfoConfirmationFragment_to_findYourVehicleFragment,
-                        bundle
-                    )
-                }
-            }
+            findNavController().navigate(
+                R.id.action_createCommunicationPrefsFragment_to_findYourVehicleFragment,
+                bundle
+            )
 
         }
         binding.rgAnswer.setOnCheckedChangeListener { group, checkedId ->
@@ -144,7 +128,6 @@ class CreateCommunicationPrefsFragment :
                 }
             }
         }
-
 
 
     }
