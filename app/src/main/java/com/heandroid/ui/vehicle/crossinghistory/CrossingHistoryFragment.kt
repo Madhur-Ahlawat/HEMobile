@@ -99,9 +99,9 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
             // find 90 days crossing history
 
             val request = CrossingHistoryRequest(
-                startIndex = startIndex,
-                count = count,
-                transactionType = Constants.ALL_TRANSACTION,
+                startIndex = 1,
+                count = 5,
+                transactionType = Constants.TOLL_TRANSACTION,
                 searchDate = Constants.TRANSACTION_DATE,
                 startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
                 endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy

@@ -48,7 +48,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         mVehicleDetails = arguments?.getParcelable(Constants.DATA)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        binding.tickTxt.text = getString(R.string.str_vehicle_added_successfully)
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
@@ -69,20 +69,22 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
     override fun initCtrl() {
         binding.conformBtn.setOnClickListener {
-            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
-                val bundle = Bundle()
-                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
 
-                findNavController().navigate(
-                    R.id.action_addVehicleDoneFragment_to_vehicleListFragment,
-                    bundle
-                )
-            } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList(Constants.DATA, ArrayList(mList))
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 findNavController().navigate(
                     R.id.action_addVehicleDoneFragment_to_makeOneOffPaymentCrossingFragment,
+                    bundle
+                )
+
+            } else {
+                val bundle = Bundle()
+                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+
+                findNavController().navigate(
+                    R.id.action_addVehicleDoneFragment_to_vehicleListFragment,
                     bundle
                 )
             }

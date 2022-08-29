@@ -533,7 +533,7 @@
     <string name="case_number">Case number</string>
     <string name="last_name">Last Name</string>
     <string name="telephone">Telephone no (Optional)</string>
-    <string name="raise_new_query">Raise a new enquiry</string>
+    <string name="raise_new_query">Raise a new Enquiry</string>
     <string name="case_number_column">Case number : </string>
     <string name="submitted_date_column">Submitted date : </string>
     <string name="submitted_time_column">Submitted time : </string>
@@ -546,7 +546,7 @@
     <string name="str_category">Category</string>
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
-    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+    <string name="str_raise_new_enquiry">Raise a new Enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
     <string name="vehicle_reg_number">Vehicle registration number</string>
@@ -866,6 +866,9 @@
     <string name="manual_top_up">Manual top-up</string>
     <string name="str_terms_conditions_txt">See the terms and conditions. Messages and data rates apply.</string>
     <string name="str_to_set_up_a_personal_prepay_account"><b>To set up a personal prepay account, you will need:</b> \n\n \u2022 A initial deposit of £ 10.00 \n \u2022 Personal  details and details of the primary vehicle which you are registering. \n \u2022 A valid debit or a credit card</string>
+    <string name="str_username_exits_message">An account already exists with this email address</string>
+    <string name="str_free_text_field_can_be_used_to_distingush">The free text field can be used to help you distinguish different vehicles associated with your account</string>
+    <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
 
 </resources>
 

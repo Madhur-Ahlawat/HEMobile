@@ -59,8 +59,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun getDashBoardAllData() {
         val request = CrossingHistoryRequest(
             startIndex = 1,
-            count = 1,
-            transactionType = Constants.ALL_TRANSACTION,
+            count = 5,
+            transactionType = Constants.TOLL_TRANSACTION,
             searchDate = Constants.TRANSACTION_DATE,
             startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
             endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
