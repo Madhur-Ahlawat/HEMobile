@@ -81,6 +81,7 @@ class BusinessVehicleDetailFragmentTest {
         }
     }
 
+/*
     @Test
     fun `test vehicle details screen ,click not your vehicle button`() {
         launchFragmentInHiltContainer<BusinessVehicleDetailFragment>(bundle) {
@@ -110,6 +111,7 @@ class BusinessVehicleDetailFragmentTest {
             Assert.assertTrue(BaseActions.equalBundles(currentDestinationArgs, bun))
         }
     }
+*/
 
     @Test
     fun `test vehicle details screen ,navigate to next screen`() {
