@@ -47,6 +47,7 @@ object Constants {
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY = 1009
     const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY = 1010
+    const val FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE = 1011
 
 
     const val FILE_NAMES_KEY = " file_names_key"
@@ -61,7 +62,7 @@ object Constants {
     const val LRDS_SCREEN = "lrds_screen"
     const val STATUS_TERMINATED = "TERMINATED"
 
-    const val TRANSACTION_DATE = "transaction_date"
+    const val TRANSACTION_DATE = "Transaction Date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
     const val VPN_ERROR = "Connect your VPN to access network."
@@ -179,5 +180,6 @@ object Constants {
     const val CROSSING_HISTORY_FILTER_DIALOG = "crossing_history_filter_dialog"
     const val DOWNLOAD_FORMAT_SELECTION_DIALOG = "download_format_selection_dialog"
     const val LIVE = "LIVE"
+    const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
 
 }

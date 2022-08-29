@@ -17,6 +17,7 @@ import javax.inject.Inject
 class VehicleFragment : BaseFragment<FragmentVehicleBinding>() {
 
     private var isBusinessAccount = false
+
     @Inject
     lateinit var sessionManager: SessionManager
 

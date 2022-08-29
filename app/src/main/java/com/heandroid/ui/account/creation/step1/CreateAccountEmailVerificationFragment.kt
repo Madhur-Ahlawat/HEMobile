@@ -101,7 +101,7 @@ class CreateAccountEmailVerificationFragment :
             vehicleNo = "",
             mNoOfVehicles = "",
             mNoOfCrossings = "",
-            plateCountryType =""
+            plateCountryType = ""
         )
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL) == true) {
             isEditEmail = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL)
@@ -136,13 +136,24 @@ class CreateAccountEmailVerificationFragment :
         isCodeCheckApi = true
         when (resource) {
             is Resource.Success -> {
-                count = 1
-                loader?.show(requireActivity().supportFragmentManager, "")
+                Logg.logging("CreateAccount", "checkUserNameAvailable ${resource.data}")
 
-                val request =
-                    EmailVerificationRequest(Constants.EMAIL_SELECTION_TYPE, binding.model?.email ?: "")
+                if(resource?.data!!){
+                    count = 1
+                    loader?.show(requireActivity().supportFragmentManager, "")
 
-                createAccountViewModel.emailVerificationApi(request)
+                    val request =
+                        EmailVerificationRequest(
+                            Constants.EMAIL_SELECTION_TYPE,
+                            binding.model?.email ?: ""
+                        )
+
+                    createAccountViewModel.emailVerificationApi(request)
+
+                }else{
+                    showError(binding.root, getString(R.string.str_username_exits_message))
+
+                }
 
             }
             is Resource.DataError -> {
@@ -227,7 +238,11 @@ class CreateAccountEmailVerificationFragment :
 
     private fun sendEmailVerificationRequest() {
         loader?.show(requireActivity().supportFragmentManager, "")
-        createAccountViewModel.userNameAvailabilityCheck(UserNameCheckReq(binding.model?.email?:""))
+        createAccountViewModel.userNameAvailabilityCheck(
+            UserNameCheckReq(
+                binding.model?.email ?: ""
+            )
+        )
     }
 
     private fun isEnable() {
@@ -238,11 +253,11 @@ class CreateAccountEmailVerificationFragment :
     }
 
     override fun onRetryClick() {
-        if(isCodeCheckApi){
+        if (isCodeCheckApi) {
             count++
             sendEmailVerificationRequest()
 
-        }else{
+        } else {
             count++
             loader?.show(requireActivity().supportFragmentManager, "")
 

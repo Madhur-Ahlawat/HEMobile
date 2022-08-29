@@ -3,9 +3,11 @@ package com.heandroid.ui.account.creation.step5
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,17 +17,15 @@ import com.heandroid.databinding.FragmentCreateAccountFindVehicleBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.VehicleClassTypeConverter
-import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.BUSINESS_ACCOUNT
-import com.heandroid.utils.common.ErrorUtil
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(), View.OnClickListener {
+class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(),
+    View.OnClickListener {
 
     private var isAccountVehicle = false
     private var requestModel: CreateAccountRequestModel? = null
@@ -35,6 +35,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var retrieveVehicle: RetrievePlateInfoDetails? = null
     private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var time = (1 * 1000).toLong()
+    private var mFromKey = 0
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -47,6 +49,31 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun init() {
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 5, 6)
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        mFromKey =
+            arguments?.getInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE, 0)!!
+        if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
+            nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
+            binding.addVrmInput.setText(
+                nonUKVehicleModel?.vehiclePlate ?: "",
+                TextView.BufferType.EDITABLE
+            )
+            Logg.logging(
+                "NotVehicle",
+                "bundle CreateAccountFindVehicleFragment nonUKVehicleModel   if cond mFromKey"
+            )
+
+        } else {
+
+        }
+
+        Logg.logging(
+            "NotVehicle",
+            "bundle CreateAccountFindVehicleFragment nonUKVehicleModel data $nonUKVehicleModel"
+        )
+        Logg.logging(
+            "NotVehicle",
+            "bundle CreateAccountFindVehicleFragment mFromKey data $mFromKey"
+        )
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -79,35 +106,51 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     binding.continueBtn.isEnabled = true
                 }, time)
 
-                val country: String
-                if (binding.addVrmInput.text.toString().isNotEmpty()) {
-                    country = if (!binding.switchView.isChecked) {
-                        "Non-UK"
-                    } else {
-                        "UK"
-                    }
-                    requestModel?.plateCountryType = country
-
-                    businessAccountVehicle(country)
+                if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
 
                 } else {
-                    requireContext().showToast("Please enter your vehicle number")
+                    val country: String
+                    if (binding.addVrmInput.text.toString().isNotEmpty()) {
+                        country = if (!binding.switchView.isChecked) {
+                            "Non-UK"
+                        } else {
+                            "UK"
+                        }
+                        requestModel?.plateCountryType = country
+
+                        businessAccountVehicle(country)
+
+                    } else {
+                        requireContext().showToast("Please enter your vehicle number")
+                    }
                 }
+
             }
         }
     }
 
     private fun businessAccountVehicle(country: String) {
-          requestModel?.plateCountryType = country
-          requestModel?.vehicleNo = binding.addVrmInput.text.toString()
+        requestModel?.plateCountryType = country
+        requestModel?.vehicleNo = binding.addVrmInput.text.toString()
 
-           val bundle = Bundle()
-           bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+        Logg.logging("NotVehicle", "bundle CreateAccountFindVehicleFragment country $country")
+//        findNavController().navigate(
+//            R.id.action_findVehicleFragment_to_businessVehicleUKListFragment,
+//            bundle
+//        )
 
-           if(country == "UK")
-                findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleUKListFragment, bundle)
-             else
-               getVehicleDataFromDVRM()
+        if (country == "UK")
+            getVehicleDataFromDVRM()
+        else {
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+            findNavController().navigate(
+                R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment,
+                arguments
+            )
+        }
     }
 
     private fun getVehicleDataFromDVRM() {
@@ -122,8 +165,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             loader?.dismiss()
         }
 
-        if(isObserverBack) {
-            when(resource) {
+        if (isObserverBack) {
+            when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
                         resource.data.retrievePlateInfoDetails?.let { it1 ->
@@ -140,9 +183,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     isObserverBack = false
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                    findNavController().navigate(R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment, bundle)
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment,
+                        bundle
+                    )
                 }
-                else -> {}
+                else -> {
+                }
             }
         }
     }
@@ -152,7 +199,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         plateInfo.apply {
             val vehicleValidReqModel = ValidVehicleCheckRequest(
                 plateNumber, requestModel?.plateCountryType, "STANDARD",
-                "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE")
+                "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE"
+            )
             viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
         }
     }
@@ -161,7 +209,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when(resource) {
+        when (resource) {
             is Resource.Success -> {
 
                 // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
@@ -178,14 +226,18 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
 
-                findNavController().navigate(R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                    bundle
+                )
             }
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 findNavController().popBackStack()
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 

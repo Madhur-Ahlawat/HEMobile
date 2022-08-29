@@ -268,6 +268,7 @@
                             android:paddingHorizontal="@dimen/_10sdp">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/group_txt_optional"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
