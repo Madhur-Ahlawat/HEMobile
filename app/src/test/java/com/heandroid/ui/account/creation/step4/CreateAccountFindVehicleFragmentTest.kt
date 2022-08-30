@@ -168,6 +168,7 @@ class CreateAccountFindVehicleFragmentTest {
     }
 */
 
+/*
     @Test
     fun `test click find your vehicle for unknown error`() {
         every { viewModel.findVehicleLiveData } returns findLiveData
@@ -202,6 +203,7 @@ class CreateAccountFindVehicleFragmentTest {
             )
         }
     }
+*/
 
 /*
     @Test

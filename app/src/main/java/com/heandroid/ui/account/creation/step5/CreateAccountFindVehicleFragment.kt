@@ -225,11 +225,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+                // prasad commneted
 
+/*
                 findNavController().navigate(
                     R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                     bundle
                 )
+*/
             }
 
             is Resource.DataError -> {
