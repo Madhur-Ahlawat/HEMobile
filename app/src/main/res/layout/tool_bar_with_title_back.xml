@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@color/white"
+        android:background="@drawable/he_bg_toolbar"
         android:theme="@style/Theme.ToolBar">
 
         <RelativeLayout
@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:tint="@color/black"
+                android:tint="@color/white"
                 app:srcCompat="@drawable/ic_back_grey" />
 
 
@@ -39,7 +39,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
                 tools:text="@string/str_make_one_of_payment" />
