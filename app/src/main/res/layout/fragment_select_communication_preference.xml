@@ -9,7 +9,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/color_EFEFEF">
+            android:background="@drawable/he_bg">
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -50,10 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@color/color_EFEFEF"
                 android:gravity="center_vertical"
                 android:text="@string/str_set_preferences"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +62,7 @@
                 android:id="@+id/cl_select_pref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_EFEFEF"
+
                 android:padding="@dimen/_10sdp"
                 android:visibility="visible"
                 app:layout_constraintHeight_percent="0.65"
@@ -143,7 +142,6 @@
                 android:id="@+id/cl_like_advice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_EFEFEF"
                 android:padding="@dimen/_10sdp"
                 android:visibility="gone"
                 app:layout_constraintHeight_percent="0.65"
@@ -313,12 +311,12 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:buttonTint="@color/green"
+                android:buttonTint="@color/btn_color"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/str_i_agree_txt"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toTopOf="@+id/btn_save"
                 app:layout_constraintEnd_toEndOf="parent"

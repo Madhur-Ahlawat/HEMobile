@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_EFEFEF">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_location"
@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center_vertical"
             android:text="@string/str_locations"
-            android:textColor="@color/color_D8000000"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +127,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_reason"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -143,7 +143,7 @@
                 android:paddingHorizontal="@dimen/_4sdp"
                 android:paddingVertical="@dimen/_2sdp"
                 android:text="@string/str_congestion"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp" />
         </RelativeLayout>
 
@@ -166,7 +166,7 @@
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_6sdp"
                 android:text="@string/str_time_to_clr"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +184,7 @@
                 android:paddingHorizontal="@dimen/_4sdp"
                 android:paddingVertical="@dimen/_2sdp"
                 android:text="@string/str_clearance"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
