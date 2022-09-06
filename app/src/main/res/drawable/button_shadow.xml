@@ -10,7 +10,7 @@
     <!-- White foreground. -->
     <item android:bottom="@dimen/_1sdp" android:right="@dimen/_1sdp">
         <shape>
-            <solid android:color="@color/btn_color" />
+            <solid android:color="@color/blue_color" />
             <corners android:radius="@dimen/_1sdp" />
         </shape>
     </item>

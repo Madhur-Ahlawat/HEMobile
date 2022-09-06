@@ -5,7 +5,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@color/action_bar_color_new"
+        android:background="@drawable/he_bg_toolbar"
         app:contentInsetStart="0dp">
 
         <RelativeLayout

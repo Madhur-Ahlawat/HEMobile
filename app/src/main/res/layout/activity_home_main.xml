@@ -31,9 +31,9 @@
 
         <com.heandroid.ui.customviews.BottomNavigationView
             android:orientation="horizontal"
-            app:active_color="@color/bottomActiveColor"
+            app:active_color="@color/dark_blue_color"
             app:passive_color="@color/bottomPassiveColor"
-            app:pressed_color="@color/bottomPressedColor"
+            app:pressed_color="@color/dark_blue_color"
             app:item_text_size="@dimen/_10ssp"
             app:item_padding="@dimen/_4sdp"
             app:animation_duration="300"

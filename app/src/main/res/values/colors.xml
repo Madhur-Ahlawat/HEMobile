@@ -80,6 +80,15 @@
     <color name="color_144e81">#144e81</color>
     <color name="color_DDE8E3">#DDE8E3</color>
 
-    <color name="action_bar_color_new">#008BCB</color>
+
+    <!--  rebranding colors  -->
+    <color name="blue_color">#008BCB</color>
+    <color name="red_color">#E51635</color>
+    <color name="toolbar_color">#272727</color>
+    <color name="btn_disable_txt_color">#7D7D7D</color>
+    <color name="btn_disable_color">#D3D3D4</color>
+    <color name="radio_btn_color">#002E5F</color>
+    <color name="dark_blue_color">#002E5F</color>
+    <color name="edittext_stroke_color">#79FCFF</color>
 
 </resources>

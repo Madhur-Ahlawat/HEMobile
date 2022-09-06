@@ -2,7 +2,7 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
     </style>
 
     <!-- Base application theme. -->
@@ -16,7 +16,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/action_bar_color_new</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
         <item name="backgroundColor">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
@@ -41,7 +41,7 @@
 
     <style name="Theme.HEMobileDark" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/btn_color</item>
+        <item name="colorPrimary">@color/blue_color</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlActivated">@color/black</item>
@@ -51,10 +51,10 @@
     <style name="Theme.HEMobileLight" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/green</item>
-        <item name="colorPrimaryDark">@color/green</item>
-        <item name="colorOnPrimary">@color/btn_color</item>
-        <item name="colorAccent">@color/btn_color</item>
+        <item name="colorPrimaryVariant">@color/blue_color</item>
+        <item name="colorPrimaryDark">@color/blue_color</item>
+        <item name="colorOnPrimary">@color/blue_color</item>
+        <item name="colorAccent">@color/blue_color</item>
     </style>
 
     <style name="Theme.ToolBar" parent="Theme.MaterialComponents">
@@ -66,8 +66,8 @@
     <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
         </item>
-        <item name="hintTextColor">@color/grey_two</item>
-        <item name="boxStrokeColor">@color/grey_two</item>
+        <item name="hintTextColor">@color/edittext_stroke_color</item>
+        <item name="boxStrokeColor">@color/edittext_stroke_color</item>
     </style>
 
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -94,7 +94,7 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
-        <item name="strokeColor">@color/btn_color</item>
+        <item name="strokeColor">@color/blue_color</item>
         <item name="strokeWidth">@dimen/_1sdp</item>
     </style>
 
@@ -111,7 +111,7 @@
     <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
         <item name="background">@drawable/button_shadow</item>
         <item name="colorButtonNormal">@color/grey_two</item>
-        <item name="colorControlActivated">@color/btn_color</item>
+        <item name="colorControlActivated">@color/blue_color</item>
         <item name="backgroundTint">@color/color_C9C9C9</item>
         <item name="android:height">@dimen/_40sdp</item>
     </style>
@@ -138,7 +138,7 @@
 
     <style name="ToggleSwitch" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->
-        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlActivated">@color/blue_color</item>
 
         <!-- inactive thumb color -->
         <item name="colorSwitchThumbNormal">#FFFFFF</item>

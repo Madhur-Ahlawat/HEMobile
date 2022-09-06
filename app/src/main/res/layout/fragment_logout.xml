@@ -3,7 +3,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <TextView
             android:layout_width="0dp"
@@ -11,7 +12,7 @@
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_logout_msg"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_6sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/start_again"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -38,21 +39,21 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignin"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/txt_sign_in"
             android:textAllCaps="false"
-            app:strokeColor="@color/green"
-            android:textColor="@color/green"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             app:cornerRadius="@dimen/_4sdp"
-            app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/blue_color"
+            app:strokeWidth="1dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
