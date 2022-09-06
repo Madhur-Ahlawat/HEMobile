@@ -4,9 +4,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatCheckedTextView
             android:id="@+id/appCompatCheckedTextView"
@@ -15,7 +14,7 @@
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/your_session_has_expired"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,14 +27,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_14sdp"
-            android:textColor="@color/black"
             android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatCheckedTextView" />
-
-
 
 
         <com.google.android.material.button.MaterialButton
@@ -44,7 +41,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"

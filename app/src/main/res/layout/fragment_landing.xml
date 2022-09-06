@@ -13,19 +13,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_EFEFEF">
+        android:background="@drawable/he_bg">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pay_dart_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="start"
             android:text="@string/str_pay_dart_ford_crossing"
-            android:textColor="@color/color_757575"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
-            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toTopOf="@+id/glTop" />
@@ -38,133 +38,139 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="start"
             android:text="@string/str_what_would_you_like_to_do"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />
 
-        <RadioGroup
-            android:id="@+id/rgOptions"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/radioButtonsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/white"
             android:gravity="start"
             android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/id_title_lyt">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbCreateAccount"
+            <RadioGroup
+                android:id="@+id/rgOptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_13sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_create_account"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
+                android:background="@color/white"
+                android:gravity="start"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbCreateAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_create_account"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
 
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbMakeOffPayment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_13sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_make_one_of_payment"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/blue_color" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbResolvePenalty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_13sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_resolve_penalty_charge"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbMakeOffPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_make_one_of_payment"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/blue_color" />
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbResolvePenalty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_resolve_penalty_charge"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbCheckForPaid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_13sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_check_for_paid_crossing"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/blue_color" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbViewCharges"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_13sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_view_charges"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbCheckForPaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_check_for_paid_crossing"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/blue_color" />
 
-        </RadioGroup>
 
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbViewCharges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_view_charges"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
+
+            </RadioGroup>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@{model.enable==false?@color/btn_disable:@color/green}"
+            android:backgroundTint="@{model.enable==false?@color/btn_disable_color:@color/blue_color}"
             android:enabled="@{model.enable}"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/txt_disable:@color/white}"
+            android:textColor="@{model.enable==false?@color/btn_disable_txt_color:@color/white}"
             android:textSize="@dimen/_13ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
