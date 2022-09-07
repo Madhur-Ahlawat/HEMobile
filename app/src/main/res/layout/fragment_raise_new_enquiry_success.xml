@@ -4,17 +4,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/your_enquiry_submitted_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:gravity="center"
             android:text="@string/str_Your_enquiry_submitted"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,35 +24,40 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/get_back_to_you_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_we_will_get_back_to_you"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/your_enquiry_submitted_txt" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/email_conformation_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_email_conformation"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/get_back_to_you_txt" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_case_no_title_lyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:background="@color/white"
+            android:background="@drawable/corner_radius_white_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_conformation_txt">
@@ -70,7 +76,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/str_case_number"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +90,7 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="EN123456"
                 android:textColor="@color/color_626262"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,8 +103,9 @@
             android:id="@+id/rl_date_title_lyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:background="@color/white"
+            android:background="@drawable/corner_radius_white_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_case_no_title_lyt">
@@ -117,7 +124,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/str_date"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -131,7 +138,7 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="March 18 2022 03:34"
                 android:textColor="@color/color_626262"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -141,18 +148,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/check_enquiry_status"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_61sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/green"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/str_check_enquiry_status"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintBottom_toTopOf="@+id/go_to_start_menu"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -165,11 +170,11 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_61sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/str_go_to_start_menu"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -182,7 +187,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glEnd"
             android:layout_width="match_parent"
@@ -190,14 +194,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_12sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/_6sdp" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"

@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/light_grey"
+        android:background="@drawable/he_bg"
         android:layout_height="match_parent">
 
         <androidx.drawerlayout.widget.DrawerLayout
@@ -18,14 +18,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@color/white"
                 android:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/filterLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_grey"
                     android:padding="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +36,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_6sdp"
                         android:text="@string/cases_history"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -53,8 +51,8 @@
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="center_vertical"
                         android:text="@string/str_filter_sort_underline"
-                        android:textColor="@color/color_00703C"
-                        android:textSize="@dimen/_13ssp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +65,7 @@
                     android:layout_height="0dp"
                     android:text="@string/no_data_to_display"
                     android:visibility="gone"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -89,8 +89,8 @@
                     android:id="@+id/btnGoStart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_margin="@dimen/_15sdp"
-                    android:backgroundTint="@color/green"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:backgroundTint="@color/blue_color"
                     android:enabled="true"
                     android:gravity="center"
                     android:text="@string/go_to_start"
@@ -106,10 +106,10 @@
                     android:id="@+id/btnRaiseNewQuery"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/blue_color"
                     android:enabled="true"
                     android:gravity="center"
                     android:text="@string/raise_new_query"
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:visibility="gone"
+
                 android:fitsSystemWindows="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

@@ -12,7 +12,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey"
+        android:background="@drawable/he_bg"
         android:padding="@dimen/_15sdp">
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/provide_below_details"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:hint="@string/first_name"
             android:textColorHint="@color/color_CBCBCB"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/color_000000"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +60,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/last_name"
             android:textColorHint="@color/color_CBCBCB"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidthFocused="1dp"
             app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/color_000000"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/str_email_address"
             android:textColorHint="@color/color_CBCBCB"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidthFocused="1dp"
             app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:textColor="@color/color_000000"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/telephone"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidthFocused="1dp"
             android:textColorHint="@color/color_CBCBCB"
             app:errorEnabled="false"
@@ -128,7 +128,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,13 +136,13 @@
             android:id="@+id/btnContinue"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{model.enable==true?@color/blue_color:@color/btn_disable_color}"
+            android:textColor="@{model.enable==true?@color/white:@color/btn_disable_txt_color}"
             android:enabled="true"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:clickable="@{model.enable}"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

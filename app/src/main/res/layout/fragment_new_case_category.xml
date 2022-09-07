@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLableCategory"
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/underline_category"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -36,7 +37,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/str_comments"
-            android:textColor="@color/color_626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
@@ -50,7 +51,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/str_summary"
-            android:textColor="@color/color_626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
@@ -65,7 +66,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/str_category"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,10 +83,10 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidth="@dimen/_1sdp"
-            app:endIconTint="@color/green"
-            app:hintTextColor="@color/green"
+            app:endIconTint="@color/blue_color"
+            app:hintTextColor="@color/blue_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleCategory">
@@ -105,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,9 +121,9 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:boxStrokeColor="@color/grey_two"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidth="@dimen/_1sdp"
-            app:endIconTint="@color/green"
+            app:endIconTint="@color/blue_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleSubCategory">
@@ -136,24 +137,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNext"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_61sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{model.enable==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{model.enable}"
             android:text="@string/str_next"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{model.enable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
@@ -162,14 +161,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glEnd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_12sdp" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTop"
@@ -178,14 +175,12 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/_6sdp" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glBottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="@dimen/_6sdp" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

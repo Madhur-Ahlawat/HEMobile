@@ -136,7 +136,7 @@
             android:layout_marginBottom="@dimen/_15sdp"
             android:text="@string/str_close"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_14sdp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"

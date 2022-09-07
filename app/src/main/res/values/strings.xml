@@ -593,7 +593,7 @@
     <string name="str_email_conformation">* We will send an email confirmation to %1$s! post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
-    <string name="str_case_number">case number</string>
+    <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
     <string name="str_intial_deposit_to_account">Initial deposit to your account</string>

@@ -69,7 +69,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/retry"
                     android:textAllCaps="true"
-                    android:textColor="@color/green"
+                    android:textColor="@color/blue_color"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
