@@ -5,6 +5,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/he_bg"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/str_category"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -33,7 +34,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/underline_comments"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -48,7 +49,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/str_summary"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -63,7 +64,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/str_select_category"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -77,7 +78,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text=":Complaint"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toEndOf="@+id/tvSelectCategoryTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelSummary" />
@@ -90,7 +91,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/str_select_sub_category"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +104,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text=":Payment"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toEndOf="@+id/tvSubSelectCategoryTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvSelectCategoryTitle" />
@@ -116,7 +117,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/str_please_provide_additional_information_txt"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSubSelectCategoryTitle" />
@@ -142,8 +143,8 @@
                     android:hint="@string/str_comments"
                     android:inputType="textMultiLine"
                     android:maxLines="10"
-                    android:textColor="@color/color_000000"
-                    android:textColorHint="@color/grey_two"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/color_D3D3D4"
                     android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,7 +156,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:text="@string/str_you_have_chars_remain"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tf_description" />
@@ -168,7 +169,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/str_upload_file"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +183,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/str_upto_four_files_uploaded"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/upload_file_txt" />
@@ -195,7 +196,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/str_file_size_may_be"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/upto_four_files_txt" />
@@ -208,7 +209,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/str_permitted_file_types_are_doc_docx_xls"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/file_size_txt" />
@@ -227,14 +228,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn1"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -247,179 +248,183 @@
 
                     <ProgressBar
                         android:id="@+id/loader1"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:theme="@style/Theme.HEMobileLight"
-                        android:layout_marginStart="@dimen/_15sdp" />
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/success1"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn2"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload2"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
+
                     <ProgressBar
                         android:id="@+id/loader2"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:theme="@style/Theme.HEMobileLight"
-                        android:layout_marginStart="@dimen/_15sdp" />
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/success2"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn3"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload3"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
+
                     <ProgressBar
                         android:id="@+id/loader3"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:theme="@style/Theme.HEMobileLight"
-                        android:layout_marginStart="@dimen/_15sdp" />
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/success3"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn4"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload4"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
 
                     <ProgressBar
                         android:id="@+id/loader4"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:theme="@style/Theme.HEMobileLight"
-                        android:layout_marginStart="@dimen/_15sdp" />
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/success4"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_tick" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fileName4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
@@ -432,7 +437,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/blue_color"
                 android:text="@string/str_next"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

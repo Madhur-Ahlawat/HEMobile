@@ -43,14 +43,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.landing.LandingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark"/>
         <activity
             android:name=".ui.vehicle.VehicleMgmtActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobile" />
         <activity
             android:name=".ui.bottomnav.HomeActivityMain"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark"/>
         <activity
             android:name=".ui.viewcharges.ViewChargesActivity"
             android:screenOrientation="portrait" />

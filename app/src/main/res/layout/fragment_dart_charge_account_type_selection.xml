@@ -12,7 +12,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <TextView
             android:id="@+id/tv_verification"
@@ -21,70 +21,74 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/str_do_you_have"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioGroup
-            android:id="@+id/rgAccount"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/radioButtonsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:background="@color/white"
-            android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_verification">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/yes"
+            <RadioGroup
+                android:id="@+id/rgAccount"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_yes"
-                android:textSize="@dimen/_14ssp"
-                app:buttonTint="@color/color_00703C" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_7D7D7D" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/yes"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_yes"
+                    android:textSize="@dimen/_14ssp"
+                    app:buttonTint="@color/radio_btn_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/blue_color" />
 
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/no"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingEnd="0dp"
-                android:text="@string/str_no"
-                android:textSize="@dimen/_14ssp"
-                app:buttonTint="@color/color_00703C" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/no"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_no"
+                    android:textSize="@dimen/_14ssp"
+                    app:buttonTint="@color/radio_btn_color" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_7D7D7D" />
-
-        </RadioGroup>
+            </RadioGroup>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_margin="@dimen/_15sdp"
-            android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{model.enable==true?@color/blue_color:@color/btn_disable_color}"
+            android:clickable="@{model.enable}"
             android:enabled="true"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:clickable="@{model.enable}"
-            android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{model.enable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

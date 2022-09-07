@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
@@ -20,7 +20,7 @@
             android:textSize="@dimen/_16ssp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:gravity="start"
             android:text="@string/str_what_you_want_to_do"
             android:layout_height="@dimen/_40sdp"/>
@@ -30,8 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1sdp"
-            android:background="@color/white"
             android:paddingVertical="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/corner_radius_white_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_title_txt">
@@ -63,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1sdp"
-            android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/corner_radius_white_back"
             android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

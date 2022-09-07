@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="data"
             type="com.heandroid.data.model.contactdartcharge.ServiceRequest" />
@@ -11,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <TextView
             android:id="@+id/tvProvideDetails"
@@ -20,7 +21,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/cases_details"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +30,21 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
             app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProvideDetails">
+            app:layout_constraintTop_toBottomOf="@id/tvProvideDetails"
+            app:layout_constraintVertical_bias="0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/corner_radius_white_back"
+                android:paddingBottom="@dimen/_10sdp">
 
                 <TextView
                     android:id="@+id/tvCaseNumber"
@@ -147,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:text="@string/resolution_info"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
@@ -170,13 +176,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoStart"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_margin="@dimen/_15sdp"
-            android:backgroundTint="@color/green"
+            android:layout_margin="@dimen/_10sdp"
+            android:backgroundTint="@color/blue_color"
             android:enabled="true"
             android:gravity="center"
             android:text="@string/go_to_start"
@@ -192,10 +197,10 @@
             android:id="@+id/btnRaiseNewQuery"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:enabled="true"
             android:gravity="center"
             android:text="@string/raise_new_query"

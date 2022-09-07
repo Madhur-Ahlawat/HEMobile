@@ -10,7 +10,8 @@
         android:id="@+id/cvMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey">
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:background="@drawable/corner_radius_white_back">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
@@ -21,6 +22,7 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
             android:fadingEdgeLength="@dimen/_2sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +74,8 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_1sdp"
-                    android:paddingBottom="@dimen/_1sdp"
                     android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_1sdp"
                     android:text="RESOLVED"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
@@ -92,15 +94,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/color_C9C9C9"
-            app:layout_constraintTop_toBottomOf="@id/cardView"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

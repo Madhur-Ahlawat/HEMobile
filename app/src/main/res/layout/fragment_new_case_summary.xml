@@ -5,6 +5,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/he_bg"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/str_category"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -32,7 +33,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/str_comments"
-                android:textColor="@color/color_626262"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -46,7 +47,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/underline_summary"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -58,8 +59,9 @@
                 android:id="@+id/rl_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_13sdp"
-                android:background="@color/white"
+                android:background="@drawable/corner_radius_white_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelSummary">
@@ -104,8 +106,9 @@
                 android:id="@+id/rl_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/white"
+                android:background="@drawable/corner_radius_white_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rl_category">
@@ -151,8 +154,9 @@
                 android:id="@+id/rl_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/white"
+                android:background="@drawable/corner_radius_white_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rl_sub_category">
@@ -191,16 +195,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rl_transaction_title" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rl_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/white"
+                android:background="@drawable/corner_radius_white_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rl_transaction">
@@ -257,21 +260,21 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn1"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload1"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
 
@@ -279,32 +282,32 @@
                         android:id="@+id/fileName1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn2"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload2"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
 
@@ -312,31 +315,32 @@
                         android:id="@+id/fileName2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn3"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload3"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
 
@@ -344,31 +348,32 @@
                         android:id="@+id/fileName3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/chooseFileBtn4"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_choose_file_txt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/upload4"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:srcCompat="@drawable/ic_upload" />
 
@@ -376,10 +381,10 @@
                         android:id="@+id/fileName4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp" />
 
                 </LinearLayout>
@@ -394,7 +399,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_61sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/blue_color"
                 android:text="@string/str_raise_new_enquiry"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
