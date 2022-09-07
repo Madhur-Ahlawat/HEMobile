@@ -20,6 +20,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
             app:navGraph="@navigation/communication_preferences_nav_graph" />
