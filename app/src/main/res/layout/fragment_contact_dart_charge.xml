@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_timing"
@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:gravity="center_vertical"
             android:text="@string/str_timing"
-            android:textColor="@color/color_D8000000"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
