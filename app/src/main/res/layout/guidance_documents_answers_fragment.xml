@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/_10sdp"
+        android:background="@drawable/he_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_header">
@@ -19,8 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:lineSpacingExtra="@dimen/_4sdp"
             android:text="@string/str_guidance_and_documents_answers"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -147,7 +147,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.color = Color.parseColor("#FF3700B3")
+                ds.color = Color.parseColor("#79FCFF")
                 ds.isUnderlineText = true
             }
         }

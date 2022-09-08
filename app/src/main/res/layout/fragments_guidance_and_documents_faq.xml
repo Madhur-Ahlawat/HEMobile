@@ -9,13 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <RelativeLayout
             android:id="@+id/rl_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
