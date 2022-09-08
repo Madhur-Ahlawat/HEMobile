@@ -34,7 +34,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/underline_comments"
-                android:textColor="@color/white"
+                android:textColor="@color/high_lighted_color"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -131,6 +131,8 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="start|center_horizontal"
                 app:errorEnabled="false"
+                app:hintTextColor="@color/white"
+                app:boxStrokeColor="@color/edittext_stroke_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/plsProvideAdditionalInformation">
@@ -144,7 +146,7 @@
                     android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/color_D3D3D4"
+                    android:textColorHint="@color/white"
                     android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 

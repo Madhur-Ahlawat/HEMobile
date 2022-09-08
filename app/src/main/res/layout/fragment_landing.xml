@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:id="@+id/radioButtonsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,6 @@
             android:background="@color/white"
             android:gravity="start"
             android:orientation="vertical"
-            app:cardCornerRadius="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/id_title_lyt">
@@ -159,7 +158,7 @@
 
             </RadioGroup>
 
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"

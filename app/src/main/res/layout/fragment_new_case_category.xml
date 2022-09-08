@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/underline_category"
-            android:textColor="@color/white"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"

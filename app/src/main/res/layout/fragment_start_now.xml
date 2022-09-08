@@ -91,7 +91,7 @@
                     android:gravity="start"
                     android:text="@string/str_pay_dart_ford_crossing_free_flow_crossing"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

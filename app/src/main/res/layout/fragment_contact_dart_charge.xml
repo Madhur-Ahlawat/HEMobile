@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:background="@drawable/he_bg">
+        android:background="@drawable/he_bg"
+        android:paddingHorizontal="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_timing"
@@ -20,7 +20,7 @@
             android:gravity="center_vertical"
             android:text="@string/str_timing"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_13sdp"
-            android:background="@drawable/corner_radius_white_back"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_timing">
@@ -88,8 +88,8 @@
             android:id="@+id/rl_outside_uk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/corner_radius_white_back"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_phone">
@@ -146,8 +146,8 @@
             android:id="@+id/rl_text_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/corner_radius_white_back"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_outside_uk">
@@ -204,8 +204,8 @@
             android:id="@+id/rl_case_and_enquiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/corner_radius_white_back"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
             android:paddingVertical="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -215,8 +215,8 @@
                 android:id="@+id/tv_cases_and_enquiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
                 android:text="@string/str_cases_and_enquiries"
@@ -232,9 +232,6 @@
                 android:src="@drawable/ic_right" />
         </RelativeLayout>
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
 
