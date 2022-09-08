@@ -869,6 +869,9 @@
     <string name="str_username_exits_message">An account already exists with this email address</string>
     <string name="str_free_text_field_can_be_used_to_distingush">The free text field can be used to help you distinguish different vehicles associated with your account</string>
     <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
+    <string name="str_how_can_i_make">How can I make accessbility requests?</string>
+    <string name="str_guidance_and_documents">Guidance and documents</string>
+    <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
 
 </resources>
 
