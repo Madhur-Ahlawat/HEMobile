@@ -2,6 +2,7 @@ package com.heandroid.utils.extn
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -146,7 +147,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.color = ds.linkColor
+                ds.color = Color.parseColor("#FF3700B3")
                 ds.isUnderlineText = true
             }
         }

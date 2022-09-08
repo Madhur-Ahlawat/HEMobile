@@ -80,6 +80,9 @@
             android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.payment.MakeOffPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />

@@ -18,6 +18,7 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
+import com.heandroid.ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity
 import com.heandroid.ui.websiteservice.WebSiteServiceViewModel
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
@@ -25,6 +26,7 @@ import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.setRightButtonText
+import com.heandroid.utils.extn.startNormalActivity
 import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -71,6 +73,8 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             rlCrossingServiceUpdate.setOnClickListener(this@StartNowFragment)
             rlContactDartCharge.setOnClickListener(this@StartNowFragment)
             tvContactDartCharge.setOnClickListener(this@StartNowFragment)
+            rlDartChargeGuidanceAndDocuments.setOnClickListener(this@StartNowFragment)
+            tvDartChargeGuidanceAndDocuments.setOnClickListener(this@StartNowFragment)
             btnStartNow.setOnClickListener(this@StartNowFragment)
         }
     }
@@ -139,6 +143,12 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                 R.id.rl_crossing_service_update -> {
                     screenType = Constants.CROSSING_SERVICE_UPDATE
                     startServicesActivity()
+                }
+                R.id.rl_dart_charge_guidance_and_documents,
+                R.id.tv_dart_charge_guidance_and_documents -> {
+                    screenType = Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                    requireActivity().startNormalActivity(GuidanceAndDocumentsActivity::class.java)
+
                 }
 
                 R.id.btn_start_now -> {
