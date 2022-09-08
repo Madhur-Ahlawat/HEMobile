@@ -208,15 +208,15 @@
     <string name="str_password_reset_successfull">Password reset susccessful</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
     <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but can charges for crossing in various ways.</string>
-    <string name="str_about_this_service">About this service.</string>
+    <string name="str_about_this_service">About this service</string>
     <string name="str_crossing_service_update">Crossing Service Updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
     <string name="str_use_this_service_to">Use this service to</string>
-    <string name="str_use_service_guideline"> <li> pay for crossings.</li>
-        \n <li> pay or challenge a penalty charge notice (PCN).</li>
-        \n <li> create and manage an account.</li>
-        \n <li> check payment for crossings.</li>
+    <string name="str_use_service_guideline"> <li> Pay for crossings.</li>
+        \n <li> Pay or challenge a penalty charge notice (PCN).</li>
+        \n <li> Create and manage an account.</li>
+        \n <li> Check payment for crossings.</li>
 </string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
@@ -513,7 +513,7 @@
     <string name="str_lrds_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae tincidunt lobortis suspendisse id lacus enim sed diam. Posuere eu elementum enim et nisi, sed elit. Id aliquam faucibus cursus gravida porta donec fermentum vivamus consequat. Mi aliquet lacus, fusce lacus, quis morbi facilisis imperdiet odio.</string>
     <string name="str_find_address">Find address</string>
     <string name="str_enter_evening_no">Evening number (optional)</string>
-    <string name="str_understanding_charges_fines">Understanding Charges and fines</string>
+    <string name="str_understanding_charges_fines">Understanding charges and fines</string>
     <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
     <string name="str_normal_phone_no">0300 300 0120</string>
     <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>

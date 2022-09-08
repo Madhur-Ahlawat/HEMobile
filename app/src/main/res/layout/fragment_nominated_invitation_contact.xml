@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:text="@string/underline_contact"
             android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="@color/white"
+            android:textColor="@color/high_lighted_text_color"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
