@@ -66,8 +66,7 @@
     </style>
 
     <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
-        </item>
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText</item>
         <item name="hintTextColor">@color/edittext_stroke_color</item>
         <item name="boxStrokeColor">@color/edittext_stroke_color</item>
     </style>

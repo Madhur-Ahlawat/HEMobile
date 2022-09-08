@@ -99,11 +99,11 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
 
                 binding.btnActive.changeTextColor(R.color.white)
-                binding.btnActive.changeBackgroundColor(R.color.green)
+                binding.btnActive.changeBackgroundColor(R.color.blue_color)
                 binding.btnActive.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.green)
+                    requireActivity().getColorStateList(R.color.blue_color)
 
-                binding.btnInvited.changeTextColor(R.color.green)
+                binding.btnInvited.changeTextColor(R.color.blue_color)
                 binding.btnInvited.changeBackgroundColor(R.color.white)
                 binding.btnInvited.backgroundTintList =
                     requireActivity().getColorStateList(R.color.white)
@@ -112,15 +112,15 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 val invitedList = list.filter { it?.accountStatus.equals("INITIATED", true) }
                 setDataToUI(invitedList)
 
-                binding.btnActive.changeTextColor(R.color.green)
+                binding.btnActive.changeTextColor(R.color.blue_color)
                 binding.btnActive.changeBackgroundColor(R.color.white)
                 binding.btnActive.backgroundTintList =
                     requireActivity().getColorStateList(R.color.white)
 
                 binding.btnInvited.changeTextColor(R.color.white)
-                binding.btnInvited.changeBackgroundColor(R.color.green)
+                binding.btnInvited.changeBackgroundColor(R.color.blue_color)
                 binding.btnInvited.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.green)
+                    requireActivity().getColorStateList(R.color.blue_color)
             }
 
             R.id.btnNominatedContact -> {

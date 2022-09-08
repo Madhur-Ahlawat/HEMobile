@@ -6,7 +6,8 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/he_bg">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/you_can_nominate_txt"
@@ -16,7 +17,7 @@
         android:padding="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:text="@string/str_u_can_nominate_upto_five_users"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -28,7 +29,7 @@
         android:id="@+id/btnNotimateContact"
         android:layout_width="0dp"
         android:layout_height="@dimen/_48sdp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/blue_color"
         android:text="@string/str_nominate_contact"
         android:textAllCaps="false"
         android:textColor="@color/white"

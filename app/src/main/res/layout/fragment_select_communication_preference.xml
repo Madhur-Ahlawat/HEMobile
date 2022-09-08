@@ -249,7 +249,8 @@
                                     android:focusableInTouchMode="false"
                                     android:hint="@string/str_mobile_number"
                                     android:visibility="gone"
-                                    app:boxStrokeColor="@color/color_00703C"
+                                    app:hintTextColor="@color/dark_blue_color"
+                                    app:boxStrokeColor="@color/dark_blue_color"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent">

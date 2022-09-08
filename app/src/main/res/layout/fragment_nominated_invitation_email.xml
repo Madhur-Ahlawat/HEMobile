@@ -14,7 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_invite_nominated_contact_title"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_21sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/full_name"
-            android:textColor="@color/color_626262"
+            android:textColor="@color/unselected_tab_color"
             android:textSize="@dimen/_11sdp"
             android:layout_marginTop="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -52,7 +53,7 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:text="@string/underline_contact"
             android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -68,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/str_email_address"
-            android:textColorHint="@color/grey_two"
+            android:textColorHint="@color/text_input_place_holder"
             android:layout_marginTop="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -82,8 +83,8 @@
                 android:inputType="textEmailAddress"
                 android:text="@={model.emailId}"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey_two"
+                android:textColor="@color/white"
+                android:textColorHint="@color/unselected_tab_color"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:hint="@string/str_mobile_number_optional"
-            android:textColorHint="@color/grey_two"
+            android:textColorHint="@color/text_input_place_holder"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tilEmail">
@@ -107,7 +108,7 @@
                 android:inputType="number"
                 android:text="@={model.phoneNumber}"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_48sdp"
             android:layout_marginTop="@dimen/_61sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/str_next"
             android:textAllCaps="false"
             android:textColor="@color/white"

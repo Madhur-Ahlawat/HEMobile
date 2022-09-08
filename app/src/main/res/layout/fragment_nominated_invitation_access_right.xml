@@ -20,7 +20,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/he_bg">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_edit_contact_details"
             android:layout_marginTop="@dimen/_12sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_full_name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -55,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.firstName+` `+model.lastName}"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/tvLabelFullName"
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_email_address"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.emailId}"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/tvLabelEmail"
@@ -96,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_mobile_number"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -108,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="@{model.phoneNumber}"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/tvLabelMobileNo"
@@ -121,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_choose_access_rights"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_21sdp"
             android:layout_marginTop="@dimen/_28sdp"
             android:textStyle="bold"
@@ -207,7 +208,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_36sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/str_invite"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -220,19 +221,19 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_13sdp"
-            android:backgroundTint="@color/white"
             android:text="@string/str_cancel"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_5sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@id/btnInvite"
-            app:strokeColor="@color/green"
+            app:strokeColor="@color/blue_color"
             app:strokeWidth="@dimen/_2sdp" />
 
 
