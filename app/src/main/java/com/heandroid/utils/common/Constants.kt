@@ -123,6 +123,7 @@ object Constants {
     const val ABOUT_SERVICE = "about_service"
     const val CONTACT_DART_CHARGES = "contact_dart_charges"
     const val CROSSING_SERVICE_UPDATE = "crossing_service_update"
+    const val DART_CHARGE_GUIDANCE_AND_DOCUMENTS = "dart_charge_guidance_documents"
 
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
