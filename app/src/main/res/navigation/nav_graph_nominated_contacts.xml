@@ -21,7 +21,7 @@
         android:id="@+id/ncFullNameFragment"
         android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationFullNameFragment"
         android:label="NominatedEmailFragment"
-        tools:layout="@layout/fragment_nominated_invitation_full_name" >
+        tools:layout="@layout/fragment_nominated_invitation_full_name">
         <action
             android:id="@+id/action_ncFullNameFragment_to_ncEmailFragment"
             app:destination="@id/ncEmailFragment" />
@@ -35,9 +35,10 @@
         tools:layout="@layout/fragment_nominated_invitation_contact">
         <action
             android:id="@+id/action_ncEmailFragment_to_ncAcceessRightFragment"
+            app:popUpTo="@id/ncAcceessRightFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/ncAcceessRightFragment" />
     </fragment>
-
 
 
     <fragment
@@ -47,11 +48,10 @@
         tools:layout="@layout/fragment_nominated_invitation_access_right">
         <action
             android:id="@+id/action_ncAcceessRightFragment_to_ncListFragment"
+            app:popUpTo="@id/ncListFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/ncListFragment" />
     </fragment>
-
-
-
 
 
     <fragment
@@ -62,12 +62,10 @@
 
         <action
             android:id="@+id/action_ncListFragment_to_ncFullNameFragment"
-            app:destination="@id/ncFullNameFragment" />
+            app:destination="@id/ncFullNameFragment"
+            app:popUpTo="@id/ncFullNameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-
-
-
-
 
 
 </navigation>
