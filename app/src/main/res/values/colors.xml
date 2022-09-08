@@ -91,6 +91,7 @@
     <color name="dark_blue_color">#002E5F</color>
     <color name="high_lighted_color">#79FCFF</color>
     <color name="edittext_stroke_color">#79FCFF</color>
+    <color name="high_lighted_text_color">#79FCFF</color>
     <color name="unselected_tab_color">#A3C0DA</color>
     <color name="text_input_place_holder">#A3C0DA</color>
 
