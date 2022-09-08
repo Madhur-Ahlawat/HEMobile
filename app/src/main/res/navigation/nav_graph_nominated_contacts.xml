@@ -4,30 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_nominated_contacts"
     app:startDestination="@id/ncNoListFragment">
-
-
     <fragment
         android:id="@+id/ncNoListFragment"
         android:name="com.heandroid.ui.nominatedcontacts.list.NoNominatedContactFragment"
         android:label="NoNominatedListFragment"
         tools:layout="@layout/fragment_no_nomiated_contact">
-
         <action
             android:id="@+id/action_ncNoListFragment_to_ncFullNameFragment"
             app:destination="@id/ncFullNameFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/ncFullNameFragment"
         android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationFullNameFragment"
         android:label="NominatedEmailFragment"
-        tools:layout="@layout/fragment_nominated_invitation_full_name" >
+        tools:layout="@layout/fragment_nominated_invitation_full_name">
         <action
             android:id="@+id/action_ncFullNameFragment_to_ncEmailFragment"
             app:destination="@id/ncEmailFragment" />
     </fragment>
-
-
     <fragment
         android:id="@+id/ncEmailFragment"
         android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationContactFragment"
@@ -35,11 +29,10 @@
         tools:layout="@layout/fragment_nominated_invitation_contact">
         <action
             android:id="@+id/action_ncEmailFragment_to_ncAcceessRightFragment"
+            app:popUpTo="@id/ncAcceessRightFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/ncAcceessRightFragment" />
     </fragment>
-
-
-
     <fragment
         android:id="@+id/ncAcceessRightFragment"
         android:name="com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationAccessRightFragment"
@@ -47,27 +40,19 @@
         tools:layout="@layout/fragment_nominated_invitation_access_right">
         <action
             android:id="@+id/action_ncAcceessRightFragment_to_ncListFragment"
+            app:popUpTo="@id/ncListFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/ncListFragment" />
     </fragment>
-
-
-
-
-
     <fragment
         android:id="@+id/ncListFragment"
         android:name="com.heandroid.ui.nominatedcontacts.list.NominatedContactListFragment"
         android:label="NominatedListFragment"
         tools:layout="@layout/fragment_nominated_contact_list">
-
         <action
             android:id="@+id/action_ncListFragment_to_ncFullNameFragment"
-            app:destination="@id/ncFullNameFragment" />
+            app:destination="@id/ncFullNameFragment"
+            app:popUpTo="@id/ncFullNameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-
-
-
-
-
-
 </navigation>
