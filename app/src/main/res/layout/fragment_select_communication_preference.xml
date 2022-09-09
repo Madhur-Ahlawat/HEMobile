@@ -309,7 +309,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:buttonTint="@color/btn_color"
+                    android:buttonTint="@color/checkbox_state"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
                     android:padding="@dimen/_5sdp"
