@@ -19,13 +19,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_email"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_32sdp"
-            android:hint="@string/str_sign_in_email"
-            android:textColorHint="@color/text_input_place_holder"
+            android:hint="@string/str_email_address"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,13 +32,13 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_email"
+                style="@style/AppEditTextTransparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:text="@={model.value}"
-                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,7 +46,6 @@
             android:id="@+id/tv_forgot_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/forgot_email"
@@ -60,26 +58,25 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_pwd"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/str_password"
-            android:textColorHint="@color/text_input_place_holder"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@+id/tv_forgot_username"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_pwd"
+                style="@style/AppEditTextTransparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:text="@={model.password}"
-                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 

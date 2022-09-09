@@ -39,14 +39,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_account_number"
-                style="@style/Widget.HeMobile.TextInputLayout"
+                style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_7sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:hint="@string/str_account_number"
-                android:textColorHint="@color/color_CBCBCB"
-                app:boxStrokeColor="@color/edittext_stroke_color"
+                android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,26 +53,25 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_account_number"
+                    style="@style/AppEditTextTransparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={model.accountNumber}"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/_11ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_post_code"
-                style="@style/Widget.HeMobile.TextInputLayout"
+                style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_7sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:hint="@string/str_post_cde"
-                android:textColorHint="@color/color_CBCBCB"
-                app:boxStrokeColor="@color/edittext_stroke_color"
+                android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,13 +79,13 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_post_code"
+                    style="@style/AppEditTextTransparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:singleLine="true"
                     android:text="@={model.zipCode}"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/_11ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -194,7 +194,7 @@
     <string name="txt_recovery_username">"Username recovery "</string>
     <string name="txt_recovery_emai">Email recovery</string>
 
-    <string name="str_email_address">Email Address</string>
+    <string name="str_email_address">Email address</string>
     <string name="str_password_recovery">Password recovery</string>
     <string name="str_enter_one_time_code">Enter one time code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
@@ -521,19 +521,20 @@
     <string name="str_make_enquiry"><u> Make an enquiry </u></string>
     <string name="str_text_phone">Textphone</string>
     <string name="str_do_you_have">Do you have a Dart Charge account?</string>
-    <string name="cases_and_enquiry">Cases and Enquiry</string>
+    <string name="cases_and_enquiry">Cases and enquiry</string>
     <string name="account_created_successfully">Account Created Successfully</string>
 
     <string name="cases_history">Case history</string>
+    <string name="enquiry_history">Enquiry History</string>
     <string name="cases_details">Case details</string>
     <string name="check_enquiry_status">Check enquiry status</string>
     <string name="provide_below_details">Provide below details</string>
     <string name="provide_below_info">Provide below information</string>
-    <string name="first_name">First Name</string>
+    <string name="first_name">First name</string>
     <string name="case_number">Case number</string>
-    <string name="last_name">Last Name</string>
+    <string name="last_name">Last name</string>
     <string name="telephone">Telephone no (Optional)</string>
-    <string name="raise_new_query">Raise a new Enquiry</string>
+    <string name="raise_new_query">Raise a new enquiry</string>
     <string name="case_number_column">Case number : </string>
     <string name="submitted_date_column">Submitted date : </string>
     <string name="submitted_time_column">Submitted time : </string>
@@ -546,7 +547,7 @@
     <string name="str_category">Category</string>
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
-    <string name="str_raise_new_enquiry">Raise a new Enquiry</string>
+    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
     <string name="vehicle_reg_number">Vehicle registration number</string>
@@ -592,6 +593,7 @@
     <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
     <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
+    <string name="str_enquiry_status">Cases enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>

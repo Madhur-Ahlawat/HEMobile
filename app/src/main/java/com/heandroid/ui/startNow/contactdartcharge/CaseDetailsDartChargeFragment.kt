@@ -33,7 +33,7 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
 
 
     override fun init() {
-        requireActivity().customToolbar(getString(R.string.check_enquiry_status))
+        requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         accountModel = AccountTypeSelectionModel(false)
     }
 
