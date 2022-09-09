@@ -30,7 +30,7 @@
             android:fontFamily="@font/roboto_regular"
             android:text="@string/download"
             android:textAlignment="center"
-            android:textColor="@color/blue_color"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_7sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvFilter"
             app:layout_constraintTop_toTopOf="@+id/glTop" />
@@ -48,7 +48,7 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:textAlignment="center"
-            android:textColor="@color/blue_color"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_7sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintTop_toTopOf="@+id/glTop" />

@@ -65,6 +65,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFirstName"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/str_first_name"
@@ -89,6 +90,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilLastName"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"

@@ -150,11 +150,16 @@
     //Rebranding
     <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/text_input_transparent</item>
-        <item name="hintTextColor">@color/unselected_tab_color</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
     </style>
 
     <style name="Widget.HeMobile.TextInputLayout.Dark_Blue" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/text_input_dark_blue</item>
+        <item name="hintTextColor">@color/dark_blue_color</item>
+        <item name="android:textColor">@color/dark_blue_color</item>
+        <item name="android:colorControlActivated">@color/dark_blue_color</item>
     </style>
 
 </resources>

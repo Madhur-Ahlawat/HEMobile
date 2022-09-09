@@ -19,6 +19,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_email"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -59,6 +60,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_pwd"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
