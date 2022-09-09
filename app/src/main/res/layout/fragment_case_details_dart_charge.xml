@@ -19,10 +19,9 @@
             android:id="@+id/tvProvideDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/provide_below_info"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +31,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/case_number"
             android:textColorHint="@color/color_CBCBCB"
             app:boxStrokeColor="@color/edittext_stroke_color"
@@ -86,6 +85,7 @@
             android:clickable="@{model.enable}"
             android:enabled="true"
             android:gravity="center"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
             android:textColor="@{model.enable==true?@color/white:@color/btn_disable_txt_color}"

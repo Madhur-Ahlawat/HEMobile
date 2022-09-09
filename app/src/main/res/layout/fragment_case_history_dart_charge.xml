@@ -52,7 +52,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/str_filter_sort_underline"
                         android:textColor="@color/high_lighted_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_13ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,10 +61,11 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/emptyDataMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/no_data_to_display"
                     android:visibility="gone"
+                    android:textSize="@dimen/_16ssp"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/btnRaiseNewQuery"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -293,6 +294,7 @@
                                         android:text="@string/specific_day"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_12sdp"
+                                        android:buttonTint="@color/radio_btn_color"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@id/clearAllSpecificDate" />
@@ -374,6 +376,7 @@
                                         android:paddingHorizontal="@dimen/_10sdp"
                                         android:text="@string/date_rang"
                                         android:textColor="@color/black"
+                                        android:buttonTint="@color/radio_btn_color"
                                         android:textSize="@dimen/_12sdp"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
@@ -476,6 +479,7 @@
                             android:text="@string/str_apply"
                             android:textAllCaps="false"
                             android:textSize="@dimen/_13ssp"
+                            android:backgroundTint="@color/blue_color"
                             app:cornerRadius="@dimen/_4sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

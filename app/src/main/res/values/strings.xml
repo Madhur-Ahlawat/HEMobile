@@ -5,7 +5,7 @@
     <string name="app_name">Dart Charge</string>
     <string name="txt_dart_charge">DART CHARGE</string>
     <string name="txt_gov_uk">GOV.UK</string>
-    <string name="txt_sign_in">Sign In</string>
+    <string name="txt_sign_in">Sign in</string>
     <string name="txt_user_name">Username : </string>
     <string name="txt_enter_password">Enter password</string>
     <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
@@ -209,7 +209,7 @@
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
     <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways</string>
     <string name="str_about_this_service">About this service</string>
-    <string name="str_crossing_service_update">Crossing Service Updates</string>
+    <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
     <string name="str_use_this_service_to">Use this service to</string>
@@ -577,20 +577,20 @@
     <string name="valid_debit">• A valid debit or credit card</string>
     <string name="setup_prepay_account">To set up a personal pre-pay account, you will need:</string>
     <string name="str_sub_category">Sub-category</string>
-    <string name="str_select_category">Select category</string>
-    <string name="str_select_sub_category">Select sub-category</string>
+    <string name="str_select_category">Select category : </string>
+    <string name="str_select_sub_category">Select sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
     <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
     <string name="str_upload_file">Upload file(Optional)</string>
-    <string name="str_upto_four_files_uploaded">* Up to 4 files can be uploaded</string>
-    <string name="str_file_size_may_be">* File size may be 8mb each</string>
-    <string name="str_permitted_file_types_are_doc_docx_xls">* Permitted files types are doc/docx, xls/xlsx,pdf,jpg,bmp,tiff,csv.</string>
+    <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
+    <string name="str_file_size_may_be">\u25CF File size may be 8mb each</string>
+    <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted files types are doc/docx, xls/xlsx, pdf, jpg, bmp, tiff, csv.</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
-    <string name="str_Your_enquiry_submitted">"Your enquiry has been submitted successfully "</string>
-    <string name="str_we_will_get_back_to_you">* We will get back to you with in 7 working days</string>
-    <string name="str_email_conformation">* We will send an email confirmation to %1$s! post verification</string>
+    <string name="str_Your_enquiry_submitted">Your enquiry has been submitted successfully</string>
+    <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
+    <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
@@ -873,6 +873,7 @@
     <string name="str_guidance_and_documents">Guidance and documents</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
+    <string name="select">Select</string>
 
 </resources>
 

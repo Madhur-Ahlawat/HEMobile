@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_2sdp"
-        android:background="@drawable/corner_radius_white_back">
+        android:background="@color/white">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"

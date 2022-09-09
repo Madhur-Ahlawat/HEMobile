@@ -53,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/_10sdp"
-                        android:paddingVertical="@dimen/_15sdp"
+                        android:paddingVertical="@dimen/_12sdp"
                         android:text="@string/str_maintainance_desc"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"
