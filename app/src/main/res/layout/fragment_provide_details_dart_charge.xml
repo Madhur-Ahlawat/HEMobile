@@ -13,16 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/he_bg"
-        android:padding="@dimen/_15sdp">
+        android:paddingHorizontal="@dimen/_15sdp">
 
         <TextView
             android:id="@+id/tvProvideDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/provide_below_details"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +32,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/first_name"
             android:textColorHint="@color/color_CBCBCB"
             app:boxStrokeColor="@color/edittext_stroke_color"
@@ -141,6 +141,7 @@
             android:enabled="true"
             android:gravity="center"
             android:text="@string/str_continue"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:textAllCaps="false"
             android:clickable="@{model.enable}"
             android:textSize="@dimen/_14ssp"

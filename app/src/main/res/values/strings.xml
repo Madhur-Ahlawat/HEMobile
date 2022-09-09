@@ -5,7 +5,7 @@
     <string name="app_name">Dart Charge</string>
     <string name="txt_dart_charge">DART CHARGE</string>
     <string name="txt_gov_uk">GOV.UK</string>
-    <string name="txt_sign_in">Sign In</string>
+    <string name="txt_sign_in">Sign in</string>
     <string name="txt_user_name">Username : </string>
     <string name="txt_enter_password">Enter password</string>
     <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
@@ -108,9 +108,9 @@
     <string name="str_login">Log In</string>
     <string name="str_pay_dart_ford_crossing">Pay the Dartford Crossing charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
-    <string name="str_create_account">Create an Account</string>
-    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice(PCN)</string>
-    <string name="str_check_for_paid_crossing">Check for paid crossing</string>
+    <string name="str_create_account">Create an account</string>
+    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
+    <string name="str_check_for_paid_crossing">Check for paid crossings</string>
     <string name="str_view_charges">View charges (6AM - 10AM)</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
@@ -207,19 +207,19 @@
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_password_reset_successfull">Password reset susccessful</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
-    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
+    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways</string>
     <string name="str_about_this_service">About this service</string>
-    <string name="str_crossing_service_update">Crossing Service Updates</string>
+    <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
     <string name="str_use_this_service_to">Use this service to</string>
-    <string name="str_use_service_guideline"> <li> Pay for crossings.</li>
-        \n <li> Pay or challenge a penalty charge notice (PCN).</li>
-        \n <li> Create and manage an account.</li>
-        \n <li> Check payment for crossings.</li>
-</string>
-
-    <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge.</u></string>
+    <string name="str_use_service_guideline">
+        \u25CF Pay for crossings
+        \n\u25CF Pay or challenge a penalty charge notice (PCN)
+        \n\u25CF Create and manage an account
+        \n\u25CF Check payment for crossings
+    </string>
+    <string name="str_learn_about_"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
     <string name="str_active">ACTIVE</string>
@@ -577,20 +577,20 @@
     <string name="valid_debit">• A valid debit or credit card</string>
     <string name="setup_prepay_account">To set up a personal pre-pay account, you will need:</string>
     <string name="str_sub_category">Sub-category</string>
-    <string name="str_select_category">Select category</string>
-    <string name="str_select_sub_category">Select sub-category</string>
+    <string name="str_select_category">Category : </string>
+    <string name="str_select_sub_category">Sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
     <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
-    <string name="str_upload_file">Upload file(Optional)</string>
-    <string name="str_upto_four_files_uploaded">* Up to 4 files can be uploaded</string>
-    <string name="str_file_size_may_be">* File size may be 8mb each</string>
-    <string name="str_permitted_file_types_are_doc_docx_xls">* Permitted files types are doc/docx, xls/xlsx,pdf,jpg,bmp,tiff,csv.</string>
+    <string name="str_upload_file">Upload file (Optional)</string>
+    <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
+    <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
+    <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
-    <string name="str_Your_enquiry_submitted">"Your enquiry has been submitted successfully "</string>
-    <string name="str_we_will_get_back_to_you">* We will get back to you with in 7 working days</string>
-    <string name="str_email_conformation">* We will send an email confirmation to %1$s! post verification</string>
+    <string name="str_Your_enquiry_submitted">Your enquiry has been submitted successfully</string>
+    <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
+    <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
@@ -621,14 +621,14 @@
     <string name="submitted">SUBMITTED</string>
 
     //todo : get correct message
-    <string name="no_data_to_display">No Data to display</string>
+    <string name="no_data_to_display">No data to display</string>
     <string name="vehicle_reg_num">Vehicle registration number: %s</string>
     <string name="country_reg">Country of registration %s</string>
     <string name="txt_view_crossings">View crossings</string>
     <string name="txt_view_crossing">View crossing</string>
     <string name="str_account_type">Account type</string>
     <string name="str_cases_and_enquiries">Cases and enquiry</string>
-    <string name="str_what_you_want_to_do">What you want to do</string>
+    <string name="str_what_you_want_to_do">What you want to do?</string>
     <string name="edit_details">Edit details</string>
     <string name="change_password">Change password</string>
     <string name="current_password_validation">New password can\'t be same as current password</string>
@@ -767,7 +767,7 @@
     <string name="str_edit_vehicle_details">Edit vehicle details</string>
     <string name="vehicle_details_number">Vehicle registration number</string>
     <string name="vehicle_details_country">Country of registration</string>
-    <string name="vehicle_details_group_desc">The group name field can be used to help you disinguish different vehicles associated with your account</string>
+    <string name="vehicle_details_group_desc">The group name field can be used to help you distinguish different vehicles associated with your account</string>
     <string name="vehicle_details_date_added">Date added</string>
     <string name="vehicle_details_group_name">Group name</string>
     <string name="no_groups_added">No groups added</string>
@@ -872,6 +872,8 @@
     <string name="str_how_can_i_make">How can I make accessbility requests?</string>
     <string name="str_guidance_and_documents">Guidance and documents</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
+    <string name="no_file_chosen">No file chosen</string>
+    <string name="select">Select</string>
 
 </resources>
 

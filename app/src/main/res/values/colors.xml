@@ -89,6 +89,7 @@
     <color name="btn_disable_color">#D3D3D4</color>
     <color name="radio_btn_color">#002E5F</color>
     <color name="dark_blue_color">#002E5F</color>
+    <color name="high_lighted_color">#79FCFF</color>
     <color name="edittext_stroke_color">#79FCFF</color>
     <color name="high_lighted_text_color">#79FCFF</color>
     <color name="unselected_tab_color">#A3C0DA</color>

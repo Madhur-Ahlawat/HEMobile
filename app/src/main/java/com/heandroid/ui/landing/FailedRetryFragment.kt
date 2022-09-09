@@ -107,7 +107,7 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnC
     private fun linkClickListener(linkToOpen: String): ClickableSpan {
         return object : ClickableSpan() {
             override fun updateDrawState(ds: TextPaint) {
-                ds.color = requireContext().getColor(R.color.white)
+                ds.color = requireContext().getColor(R.color.high_lighted_color)
                 ds.isUnderlineText = true
             }
 

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <data>
-       <variable
-           name="isEnable"
-           type="Boolean" /> 
-        
+
+        <variable
+            name="isEnable"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
@@ -21,7 +22,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_check_your_mail"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_enter_one_time_code"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            app:boxStrokeColor="@color/edittext_stroke_color"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,11 +60,11 @@
                 android:id="@+id/edt_otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:imeOptions="actionDone"
-                android:singleLine="true"
+                android:inputType="number"
                 android:maxLength="6"
-                android:textColor="@color/color_000000"
+                android:singleLine="true"
+                android:textColor="@color/white"
                 android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +77,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="start"
             android:text="@string/str_not_received_otp_txt"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15ssp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,10 +91,10 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_resend_one_time_code"
-            android:textColor="@color/black"
-            android:visibility="visible"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/not_received_txt" />
@@ -103,12 +105,12 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
-            android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{isEnable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{isEnable}"
             android:gravity="center"
             android:text="@string/str_verify_one_time_code"
             android:textAllCaps="false"
+            android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
