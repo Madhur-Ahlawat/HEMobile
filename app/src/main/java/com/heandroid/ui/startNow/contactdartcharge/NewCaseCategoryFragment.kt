@@ -107,7 +107,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                         val mAdapter =
                             ArrayAdapter(
                                 requireActivity(),
-                                android.R.layout.simple_dropdown_item_1line,
+                                R.layout.item_spinner,
                                 mList
                             )
 
@@ -144,7 +144,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                         val mAdapter1 =
                             ArrayAdapter(
                                 requireActivity(),
-                                android.R.layout.simple_dropdown_item_1line,
+                                R.layout.item_spinner,
                                 mSubList
                             )
                         binding.subCategoryDropdown.setAdapter(mAdapter1)

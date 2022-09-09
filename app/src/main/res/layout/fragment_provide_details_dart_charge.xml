@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/he_bg"
-        android:padding="@dimen/_15sdp">
+        android:paddingHorizontal="@dimen/_15sdp">
 
         <TextView
             android:id="@+id/tvProvideDetails"
@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="@string/provide_below_details"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,6 +141,7 @@
             android:enabled="true"
             android:gravity="center"
             android:text="@string/str_continue"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:textAllCaps="false"
             android:clickable="@{model.enable}"
             android:textSize="@dimen/_14ssp"

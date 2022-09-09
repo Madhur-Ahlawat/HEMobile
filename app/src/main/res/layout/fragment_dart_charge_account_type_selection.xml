@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/str_do_you_have"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

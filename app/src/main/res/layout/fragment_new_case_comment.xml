@@ -26,7 +26,7 @@
                     android:id="@+id/tvLableCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/str_category"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/underline_comments"
                     android:textColor="@color/high_lighted_color"
                     android:textSize="@dimen/_12ssp"
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/str_summary"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
@@ -66,31 +66,41 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/inputView"
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelSummary"
+                    android:layout_height="wrap_content">
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSelectCategoryTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/str_select_category"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLabelSummary" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_SelectedCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="Complaint"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toEndOf="@+id/tvSelectCategoryTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLabelSummary" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -100,7 +110,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="@string/str_select_sub_category"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +123,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Payment"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toEndOf="@+id/tvSubSelectCategoryTitle"
                     app:layout_constraintTop_toBottomOf="@+id/tvSelectCategoryTitle" />
@@ -123,13 +133,13 @@
                     android:id="@+id/plsProvideAdditionalInformation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:lineSpacingExtra="@dimen/_5sdp"
                     android:text="@string/str_please_provide_additional_information_txt"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="@id/glEnd"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvSubSelectCategoryTitle" />
 
@@ -141,9 +151,11 @@
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="start|center_horizontal"
-                    app:boxStrokeColor="@color/edittext_stroke_color"
                     app:errorEnabled="false"
-                    app:hintTextColor="@color/edittext_stroke_color"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1000"
+                    android:textColor="@color/color_000000"
+                    android:textColorHint="@color/grey_two"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plsProvideAdditionalInformation">
@@ -155,9 +167,8 @@
                         android:gravity="start|top"
                         android:hint="@string/str_comments"
                         android:inputType="textMultiLine"
-                        android:maxLines="10"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/edittext_stroke_color"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_two"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,11 +180,11 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:text="@string/str_you_have_chars_remain"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_626262"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tf_description" />
-
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/upload_file_txt"
@@ -186,7 +197,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/remaining_chars_txt" />
+                    app:layout_constraintTop_toBottomOf="@+id/inputView" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -221,14 +232,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:lineSpacingExtra="@dimen/_5sdp"
                     android:text="@string/str_permitted_file_types_are_doc_docx_xls"
                     android:textColor="@color/white"
-                    android:lineSpacingExtra="@dimen/_5sdp"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toEndOf="@id/glEnd"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/file_size_txt" />
-
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/upload_main_lyt"
