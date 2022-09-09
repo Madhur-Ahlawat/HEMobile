@@ -239,7 +239,7 @@
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/numberTextInput"
-                                    style="@style/Widget.HeMobile.TextInputLayout"
+                                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="15dp"
@@ -250,7 +250,6 @@
                                     android:hint="@string/str_mobile_number"
                                     android:visibility="gone"
                                     app:hintTextColor="@color/dark_blue_color"
-                                    app:boxStrokeColor="@color/dark_blue_color"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent">

@@ -4,8 +4,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView3"
@@ -14,7 +14,7 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/crossing_hours"
-            android:textColor="@color/color_626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvDownload"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -30,7 +30,7 @@
             android:fontFamily="@font/roboto_regular"
             android:text="@string/download"
             android:textAlignment="center"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_7sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvFilter"
             app:layout_constraintTop_toTopOf="@+id/glTop" />
@@ -48,7 +48,7 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:textAlignment="center"
-            android:textColor="@color/color_00703C"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_7sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintTop_toTopOf="@+id/glTop" />
@@ -72,7 +72,7 @@
             android:text="@string/no_crossings_have_been_made"
             android:textSize="@dimen/_14sdp"
             android:visibility="gone"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -207,7 +207,7 @@
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_password_reset_successfull">Password reset susccessful</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
-    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but can charges for crossing in various ways.</string>
+    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
     <string name="str_about_this_service">About this service</string>
     <string name="str_crossing_service_update">Crossing Service Updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
