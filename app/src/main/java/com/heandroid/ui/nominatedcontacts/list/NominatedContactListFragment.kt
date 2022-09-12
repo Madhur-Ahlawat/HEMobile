@@ -98,29 +98,34 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 setDataToUI(activeList)
 
 
-                binding.btnActive.changeTextColor(R.color.white)
-                binding.btnActive.changeBackgroundColor(R.color.blue_color)
-                binding.btnActive.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.blue_color)
+                binding.btnActive.changeTextColor(R.color.high_lighted_text_color)
+                binding.btnActive.changeBackgroundColor(R.color.dark_blue_color)
+                binding.btnActive.setStrokeColorResource(R.color.dark_blue_color)
+                /*binding.btnActive.backgroundTintList =
+                    requireActivity().getColorStateList(R.color.dark_blue_color)*/
 
-                binding.btnInvited.changeTextColor(R.color.blue_color)
-                binding.btnInvited.changeBackgroundColor(R.color.white)
-                binding.btnInvited.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.white)
+                binding.btnInvited.changeTextColor(R.color.unselected_tab_color)
+                binding.btnInvited.setStrokeColorResource(R.color.unselected_tab_color)
+                binding.btnInvited.changeBackgroundColor(android.R.color.transparent)
+                /* binding.btnInvited.backgroundTintList =
+                        requireActivity().getColorStateList(R.color.white)*/
             }
             R.id.btnInvited -> {
                 val invitedList = list.filter { it?.accountStatus.equals("INITIATED", true) }
                 setDataToUI(invitedList)
 
-                binding.btnActive.changeTextColor(R.color.blue_color)
-                binding.btnActive.changeBackgroundColor(R.color.white)
-                binding.btnActive.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.white)
+                binding.btnInvited.changeTextColor(R.color.high_lighted_text_color)
+                binding.btnInvited.changeBackgroundColor(R.color.dark_blue_color)
+                binding.btnInvited.setStrokeColorResource(R.color.dark_blue_color)
+                /*binding.btnActive.backgroundTintList =
+                    requireActivity().getColorStateList(R.color.dark_blue_color)*/
 
-                binding.btnInvited.changeTextColor(R.color.white)
-                binding.btnInvited.changeBackgroundColor(R.color.blue_color)
-                binding.btnInvited.backgroundTintList =
-                    requireActivity().getColorStateList(R.color.blue_color)
+                binding.btnActive.changeTextColor(R.color.unselected_tab_color)
+                binding.btnActive.setStrokeColorResource(R.color.unselected_tab_color)
+                binding.btnActive.changeBackgroundColor(android.R.color.transparent)
+               // binding.btnInvited.changeBackgroundColor(R.color.blue_color)
+                /*binding.btnInvited.backgroundTintList =
+                    requireActivity().getColorStateList(R.color.white)*/
             }
 
             R.id.btnNominatedContact -> {

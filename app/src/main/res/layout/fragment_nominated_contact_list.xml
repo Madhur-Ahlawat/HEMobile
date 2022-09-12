@@ -23,10 +23,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnActive"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_38sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:paddingStart="@dimen/_10sdp"
             android:paddingTop="@dimen/_4sdp"
@@ -34,13 +34,11 @@
             android:paddingBottom="@dimen/_4sdp"
             android:text="@string/str_active_small"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:cornerRadius="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvLabel"
-            app:strokeColor="@color/blue_color"
             app:strokeWidth="1dp" />
 
 
@@ -58,13 +56,13 @@
             android:paddingBottom="@dimen/_4sdp"
             android:text="@string/str_invited"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:cornerRadius="@dimen/_13sdp"
             app:layout_constraintStart_toEndOf="@+id/btnActive"
             app:layout_constraintTop_toBottomOf="@+id/tvLabel"
-            app:strokeColor="@color/blue_color"
+            app:strokeColor="@color/white"
             app:strokeWidth="1dp" />
 
 
@@ -103,7 +101,7 @@
             android:text="@string/str_nominated_contacts"
             android:textAllCaps="false"
             android:textColor="@color/blue_color"
-            android:textSize="@dimen/_17sdp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:cornerRadius="@dimen/_6sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"

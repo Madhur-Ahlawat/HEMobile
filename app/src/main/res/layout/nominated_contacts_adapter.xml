@@ -9,15 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        android:paddingTop="@dimen/_5sdp">
+        android:paddingTop="@dimen/_6sdp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardview_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_2sdp"
             android:fadingEdgeLength="@dimen/_2sdp"
@@ -63,16 +62,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
                         app:tint="@color/black" />
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/color_C4C4C4"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,6 +72,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/arrow_title_lyt">
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/color_C4C4C4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/email_id_title"
@@ -217,8 +213,8 @@
                         app:layout_constraintEnd_toStartOf="@+id/guide_line_vertical1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/status_title_str"
-                        app:strokeColor="@color/color_BEBEBE"
-                        app:strokeWidth="@dimen/_2sdp" />
+                        app:strokeColor="@color/blue_color"
+                        app:strokeWidth="@dimen/_1sdp" />
 
 
                     <com.google.android.material.button.MaterialButton
@@ -238,9 +234,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/guide_line_vertical1"
                         app:layout_constraintTop_toBottomOf="@id/status_title_str"
-                        app:strokeColor="@color/color_BEBEBE"
-                        app:strokeWidth="@dimen/_2sdp" />
+                        app:strokeColor="@color/blue_color"
+                        app:strokeWidth="@dimen/_1sdp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_5sdp"
+                        app:layout_constraintTop_toBottomOf="@id/remove_btn"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
