@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:text="@string/cases_history"
+                        android:text="@string/enquiry_history"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintStart_toStartOf="parent"

@@ -21,7 +21,7 @@ class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDet
     ) = FragmentCaseHistoryDetailsDartChargeBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
+        requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         data = arguments?.getParcelable(Constants.DATA)
         data?.let {
             binding.data = it

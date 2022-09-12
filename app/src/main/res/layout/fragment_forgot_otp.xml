@@ -45,12 +45,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/otp_input"
-            style="@style/Widget.HeMobile.TextInputLayout"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            app:boxStrokeColor="@color/edittext_stroke_color"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,14 +58,13 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_otp"
+                style="@style/AppEditTextTransparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="6"
                 android:singleLine="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/grey_two"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 

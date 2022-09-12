@@ -43,7 +43,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         lastName = arguments?.getString(Constants.LAST_NAME)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
+        requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         Logg.logging(
             "CaseHistoryDartChargeFragment",
             "mValue ${(requireActivity() as ContactDartChargeActivity).mValue}"

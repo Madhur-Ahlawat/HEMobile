@@ -148,11 +148,17 @@
     </style>
 
     //Rebranding
-    <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/text_input_transparent</item>
-        <item name="hintTextColor">@color/white</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edit_text_selector</item>
+        <item name="android:textColorHint">@color/edit_text_inactive</item>
+        <item name="hintTextColor">@color/edittext_stroke_color</item>
         <item name="colorControlActivated">@color/white</item>
+        <item name="passwordToggleTint">@color/edit_text_selector</item>
+    </style>
+
+    <style name="AppEditTextTransparent" parent="@android:style/TextAppearance">
+        <item name="android:textColorHighlight">@color/edit_text_inactive</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Widget.HeMobile.TextInputLayout.Dark_Blue" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
