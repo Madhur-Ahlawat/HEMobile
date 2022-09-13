@@ -26,12 +26,15 @@ import kotlin.getValue
 
 @AndroidEntryPoint
 class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClickListener {
+
+
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: RequestOTPModel? = null
     private var response: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
+    private var isCalled = false
 
 
     override fun getFragmentBinding(
@@ -50,7 +53,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
         viewModel.requestOTP(data)
     }
 
-
     override fun initCtrl() {
         binding.apply {
             btnVerify.setOnClickListener(this@OTPForgotPassword)
@@ -66,7 +68,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_verify -> {
-//                if(response?.code?.equals(binding.edtOtp.text.toString())==true) {
                 if (!timeFinish) {
                     val bundle = Bundle()
                     response?.code = binding.edtOtp.text.toString()
@@ -78,12 +79,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
                 } else {
                     showError(binding.root, getString(R.string.error_otp_time_expire))
                 }
-//                }
-//                else { showError(binding.root,getString(R.string.enter_otp)) }
-
             }
 
             R.id.resend_txt -> {
+                isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.requestOTP(data)
             }
@@ -92,10 +91,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
 
     private fun loadUI() {
         when (data?.optionType) {
-
             Constants.SMS -> {
-                binding.topTitle.text = getString(R.string.check_sms)
-                binding.notReceivedTxt.text = getString(R.string.str_not_sms_received_otp_txt)
+                binding.topTitle.text = getString(R.string.str_check_sms)
+                binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_sms)
             }
             Constants.EMAIL -> {
                 binding.topTitle.text = getString(R.string.str_check_your_mail)
@@ -108,28 +106,30 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (status) {
-            is Resource.Success -> {
-                response = status.data
+        if (isCalled) {
+            when (status) {
+                is Resource.Success -> {
+                    response = status.data
 
-                timer = object : CountDownTimer(response?.otpExpiryInSeconds ?: 0L, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        timeFinish = true
+                    timer = object : CountDownTimer(response?.otpExpiryInSeconds ?: 0L, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            timeFinish = true
+                        }
+
+                        override fun onFinish() {
+                            timeFinish = true
+                        }
                     }
 
-                    override fun onFinish() {
-                        timeFinish = true
-                    }
                 }
-
+                is Resource.DataError -> {
+                    showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
-            }
-            else -> {
-            }
+            isCalled = false
         }
     }
-
 
 }

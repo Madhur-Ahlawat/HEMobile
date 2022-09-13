@@ -62,7 +62,7 @@
         <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite" />
+            android:theme="@style/Theme.HEMobile" />
         <activity
             android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"
