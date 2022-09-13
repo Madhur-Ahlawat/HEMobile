@@ -111,7 +111,7 @@
     <string name="str_create_account">Create an account</string>
     <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
     <string name="str_check_for_paid_crossing">Check for paid crossings</string>
-    <string name="str_view_charges">View charges (6AM - 10AM)</string>
+    <string name="str_view_charges">View charges (6AM - 10PM)</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
     <string name="str_email">Email</string>
