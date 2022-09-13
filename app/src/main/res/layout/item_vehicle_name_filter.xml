@@ -19,6 +19,7 @@
             android:button="@drawable/drawable_selector_radio_button"
             android:paddingHorizontal="@dimen/_15sdp"
             android:text="ASD 1234"
+            android:buttonTint="@color/radio_btn_color"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

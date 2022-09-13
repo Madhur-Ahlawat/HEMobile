@@ -15,8 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/E5E5E5">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/toolbar"
@@ -25,11 +24,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/he_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
         <HorizontalScrollView
             android:id="@+id/tabLikeButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
+
             android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,62 +57,66 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/tvPaymentHistory"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@{model.history==false?@color/white:@color/btn_color}"
+                    android:backgroundTint="@{model.history==false?@android:color/transparent:@color/dark_blue_color}"
                     android:gravity="center"
                     android:letterSpacing="0"
                     android:text="@string/payment_history"
                     android:textAllCaps="false"
-                    android:textColor="@{model.history==false?@color/green:@color/white}"
+                    android:textColor="@{model.history==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@color/green"
+                    app:strokeColor="@{model.history==false?@color/unselected_tab_color:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/tvPaymentMethod"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="136dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@{model.method==false?@color/white:@color/btn_color}"
+                    android:backgroundTint="@{model.method==false?@android:color/transparent:@color/dark_blue_color}"
                     android:gravity="center"
                     android:letterSpacing="0"
                     android:text="@string/payment_methods"
                     android:textAllCaps="false"
-                    android:textColor="@{model.method==false?@color/green:@color/white}"
+                    android:textColor="@{model.method==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@color/green"
+                    app:strokeColor="@{model.method==false?@color/unselected_tab_color:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/tvTopUp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="74dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@{model.topUp==false?@color/white:@color/btn_color}"
+                    android:backgroundTint="@{model.topUp==false?@android:color/transparent:@color/dark_blue_color}"
                     android:gravity="center"
                     android:letterSpacing="0"
                     android:text="@string/str_top_up"
                     android:textAllCaps="false"
-                    android:textColor="@{model.topUp==false?@color/green:@color/white}"
+                    android:textColor="@{model.topUp==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@color/green"
+                    app:strokeColor="@{model.topUp==false?@color/unselected_tab_color:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
             </LinearLayout>
         </HorizontalScrollView>
 
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+            app:layout_constraintTop_toBottomOf="@+id/tabLikeButtonsLayout">
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerPayment"
                 android:name="androidx.navigation.fragment.NavHostFragment"

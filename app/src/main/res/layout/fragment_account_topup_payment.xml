@@ -3,14 +3,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_EFEFEF">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_EFEFEF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +27,7 @@
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginVertical="@dimen/_7sdp"
                     android:text="@string/payment_top_up"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
@@ -40,7 +38,7 @@
                     android:layout_marginVertical="@dimen/_7sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/payment_top_up_contents"
-                    android:textColor="@color/color_666666"
+                    android:textColor="@color/text_input_place_holder"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
@@ -51,20 +49,22 @@
                     android:layout_marginVertical="@dimen/_7sdp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/str_auto_top_up_my_account"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/top_up_my_account_layout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="@string/enter_amount"
-                    android:textColorHint="@color/grey_two"
+                    android:textColorHint="@color/text_input_place_holder"
                     app:errorEnabled="true"
+                    app:prefixTextColor="@color/white"
                     app:prefixText="@string/txt_pound">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -75,8 +75,7 @@
                         android:inputType="numberDecimal"
                         android:maxLength="6"
                         android:singleLine="true"
-                        android:textColor="@color/color_000000"
-                        android:textColorHint="@color/grey_two"
+                        style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +90,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="@string/suggested_amount"
-                        android:textColor="@color/color_666666"
+                        android:textColor="@color/text_input_place_holder"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -102,7 +101,7 @@
                         android:layout_toEndOf="@+id/suggestedAmount"
                         android:fontFamily="@font/roboto_regular"
                         android:text="50"
-                        android:textColor="@color/color_666666"
+                        android:textColor="@color/text_input_place_holder"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
                 </RelativeLayout>
@@ -114,7 +113,7 @@
                     android:layout_marginTop="@dimen/_20ssp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/account_falls"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
 
@@ -129,7 +128,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:text="@string/suggested_amount"
-                        android:textColor="@color/color_666666"
+                        android:textColor="@color/text_input_place_holder"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -142,7 +141,7 @@
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_toEndOf="@+id/suggestedThreshold"
                         android:text="15"
-                        android:textColor="@color/color_666666"
+                        android:textColor="@color/text_input_place_holder"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -150,14 +149,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_last_name"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="@string/enter_amount"
-                    android:textColorHint="@color/grey_two"
+                    android:textColorHint="@color/text_input_place_holder"
                     app:errorEnabled="true"
+                    app:prefixTextColor="@color/white"
                     app:prefixText="@string/txt_pound">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -168,8 +169,7 @@
                         android:inputType="numberDecimal"
                         android:maxLength="6"
                         android:singleLine="true"
-                        android:textColor="@color/color_000000"
-                        android:textColorHint="@color/grey_two"
+                        style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,12 +180,12 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20ssp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/blue_color"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/str_update"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="@dimen/_15ssp"
                     app:cornerRadius="@dimen/_5sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

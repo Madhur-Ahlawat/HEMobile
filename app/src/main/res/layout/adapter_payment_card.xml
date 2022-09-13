@@ -23,14 +23,13 @@
             android:id="@+id/rbDefaultMethod"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginLeft="24dp"
             android:paddingLeft="22dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="HDFC bank credit card \n *** **** *** 4567"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
-            app:buttonTint="@color/bottomActiveColor" />
+            app:buttonTint="@color/radio_btn_color" />
 
         <View
             android:layout_width="match_parent"
