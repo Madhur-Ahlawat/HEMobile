@@ -3,11 +3,14 @@ package com.heandroid.ui.startNow.contactdartcharge
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.bottomnav.HomeActivityMain
+import com.heandroid.ui.landing.LandingActivity
+import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
@@ -29,6 +32,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
+        requireActivity().findViewById<AppCompatImageView>(R.id.back_button).visibility = View.INVISIBLE
     }
 
     override fun initCtrl() {
@@ -37,12 +41,16 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             goToStartMenu.setOnClickListener(this@CaseCreatedSuccessfullyFragment)
             rlCaseNoVal.text = arguments?.getString(Constants.CASE_NUMBER)
             rlDateVal.text = Utils.currentDateAndTime()
-            emailConformationTxt.text  = getString(R.string.str_email_conformation,arguments?.getString(Constants.LAST_NAME))
-            if(sessionManager.getLoggedInUser()){
-              checkEnquiryStatus.gone()
+
+            emailConformationTxt.text = getString(
+                R.string.str_email_conformation,
+                arguments?.getString(Constants.LAST_NAME)
+            )
+            if (sessionManager.getLoggedInUser()) {
+                checkEnquiryStatus.gone()
                 goToStartMenu.visible()
                 goToStartMenu.text = getString(R.string.str_go_to_account_management)
-            }else{
+            } else {
                 checkEnquiryStatus.visible()
                 goToStartMenu.visible()
                 goToStartMenu.text = getString(R.string.str_go_to_start_menu)
@@ -59,9 +67,9 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
             R.id.check_enquiry_status -> {
 //                findNavController().navigate(R.id.action)
-                if(sessionManager.getLoggedInUser()){
+                if (sessionManager.getLoggedInUser()) {
                     requireActivity().finish()
-                }else{
+                } else {
                     findNavController().navigate(
                         R.id.action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment,
                         arguments
@@ -71,9 +79,10 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
             }
             R.id.go_to_start_menu -> {
-                if(sessionManager.getLoggedInUser()) {
+                if (sessionManager.getLoggedInUser()) {
                     requireActivity().finish()
-//                    requireActivity().startNormalActivity(HomeActivityMain::class.java)
+                } else {
+                    requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
                 }
             }
             else -> {
@@ -82,7 +91,6 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
 
     }
-
 
 
 }
