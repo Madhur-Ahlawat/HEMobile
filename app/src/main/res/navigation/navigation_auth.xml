@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.heandroid.ui.auth.login.LoginFragment"
-        tools:layout="@layout/fragment_login"
-        android:label="LoginFragment" >
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_forgotEmailFragment"
             app:destination="@id/forgotEmailFragment" />
@@ -18,20 +18,17 @@
             app:destination="@id/forgotPasswordFragment" />
     </fragment>
 
-
-
     <fragment
         android:id="@+id/forgotEmailFragment"
         android:name="com.heandroid.ui.auth.forgot.email.ForgotEmailFragment"
-        tools:layout="@layout/fragment_forgot_email"
-        android:label="ForgotEmailFragment" />
-
+        android:label="ForgotEmailFragment"
+        tools:layout="@layout/fragment_forgot_email" />
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.heandroid.ui.auth.forgot.password.ForgotPasswordFragment"
-        tools:layout="@layout/fragment_forgot_password"
-        android:label="ForgotPasswordFragment" >
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_chooseOptionFragment"
             app:destination="@id/chooseOptionFragment" />
@@ -40,8 +37,8 @@
     <fragment
         android:id="@+id/chooseOptionFragment"
         android:name="com.heandroid.ui.auth.forgot.password.ChooseOptionForgotFragment"
-        tools:layout="@layout/fragment_forgot_choose_option"
-        android:label="ChooseOptionFragment" >
+        android:label="ChooseOptionFragment"
+        tools:layout="@layout/fragment_forgot_choose_option">
         <action
             android:id="@+id/action_chooseOptionFragment_to_postalEmailFragment"
             app:destination="@id/postalEmailFragment" />
@@ -50,53 +47,46 @@
             app:destination="@id/otpFragment" />
     </fragment>
 
-
-
     <fragment
         android:id="@+id/postalEmailFragment"
         android:name="com.heandroid.ui.auth.forgot.password.PostEmailForgotFragment"
-        tools:layout="@layout/fragment_forgot_password_postal_email"
-        android:label="PostatEmailFragment" />
-
-
-
-
-
+        android:label="PostatEmailFragment"
+        tools:layout="@layout/fragment_forgot_password_postal_email">
+        <action
+            android:id="@+id/action_postalEmailFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/otpFragment"
         android:name="com.heandroid.ui.auth.forgot.password.OTPForgotPassword"
-        tools:layout="@layout/fragment_forgot_otp"
-        android:label="OTPFragment" >
+        android:label="OTPFragment"
+        tools:layout="@layout/fragment_forgot_otp">
         <action
             android:id="@+id/action_otpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
     </fragment>
 
-
     <fragment
         android:id="@+id/createPasswordFragment"
         android:name="com.heandroid.ui.auth.forgot.password.CreateNewPasswordFragment"
-        tools:layout="@layout/fragment_forgot_create_new_password"
-        android:label="PostatEmailFragment" >
+        android:label="PostatEmailFragment"
+        tools:layout="@layout/fragment_forgot_create_new_password">
         <action
             android:id="@+id/action_createPasswordFragment_to_resetFragment"
             app:destination="@id/resetFragment" />
     </fragment>
 
-
-
-
     <fragment
         android:id="@+id/resetFragment"
         android:name="com.heandroid.ui.auth.forgot.password.ResetForgotPassword"
-        tools:layout="@layout/fragment_forgot_reset"
-        android:label="ResetFragment" >
+        android:label="ResetFragment"
+        tools:layout="@layout/fragment_forgot_reset">
         <action
             android:id="@+id/action_resetFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment" />
     </fragment>
-
 
 </navigation>

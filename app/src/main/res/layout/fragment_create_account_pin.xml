@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLabel"
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/personal_pre_pay_account"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:text="@string/str_personal_info"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/postcode"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
@@ -86,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/password"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
@@ -99,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/underline_cap_pin"
-            android:textColor="@color/black"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPassword"
@@ -167,11 +168,10 @@
 
                 <EditText
                     android:id="@+id/tvPinOne"
-                    android:layout_width="61dp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="@dimen/_12sdp"                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/_13sdp"
                     android:background="@drawable/bg_pin"
                     android:gravity="center"
                     android:imeOptions="actionNext"
@@ -190,11 +190,10 @@
 
                 <EditText
                     android:id="@+id/tvPinTwo"
-                    android:layout_width="61dp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="@dimen/_12sdp"                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/_13sdp"
                     android:background="@drawable/bg_pin"
                     android:gravity="center"
                     android:imeOptions="actionNext"
@@ -212,11 +211,10 @@
 
                 <EditText
                     android:id="@+id/tvPinThree"
-                    android:layout_width="61dp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="@dimen/_12sdp"                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/_13sdp"
                     android:background="@drawable/bg_pin"
                     android:gravity="center"
                     android:imeOptions="actionNext"
@@ -234,9 +232,9 @@
 
                 <EditText
                     android:id="@+id/tvPinFour"
-                    android:layout_width="61dp"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="@dimen/_12sdp"
                     android:background="@drawable/bg_pin"
                     android:gravity="center"
                     android:imeOptions="actionDone"
@@ -257,13 +255,13 @@
                     android:id="@+id/showHide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:src="@drawable/ic_visible"
                     app:layout_constraintBottom_toBottomOf="@id/tvPinFour"
                     app:layout_constraintLeft_toRightOf="@+id/tvPinFour"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvPinFour"
-                    android:src="@drawable/ic_visible" />
+                    app:layout_constraintTop_toTopOf="@+id/tvPinFour" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -274,13 +272,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{enable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_next"
             android:textAllCaps="false"
-            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="parent"

@@ -39,11 +39,11 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentForgotEmailBinding = FragmentForgotEmailBinding.inflate(inflater, container, false)
+    ) = FragmentForgotEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
-        requireActivity().toolbar(getString(R.string.txt_recovery_username))
+        requireActivity().toolbar(getString(R.string.txt_recovery_mail_address))
         binding.model = ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -76,7 +76,6 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
                 }
             }
         }
-
     }
 
     private fun handleForgotEmail(status: Resource<ForgotEmailResponseModel?>?) {

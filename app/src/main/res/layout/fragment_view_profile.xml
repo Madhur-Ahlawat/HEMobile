@@ -17,11 +17,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/he_bg"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/he_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -509,10 +511,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_end="@dimen/_11sdp" />
-
-
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

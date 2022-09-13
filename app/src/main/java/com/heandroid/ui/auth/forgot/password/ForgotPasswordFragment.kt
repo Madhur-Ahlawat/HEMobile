@@ -32,18 +32,17 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     @Inject
     lateinit var sessionManager: SessionManager
     private var loader: LoaderDialog? = null
-
     private val viewModel: ForgotPasswordViewModel by viewModels()
+    private var isCalled = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentForgotPasswordBinding =
-        FragmentForgotPasswordBinding.inflate(inflater, container, false)
+    ) = FragmentForgotPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
-        requireActivity().toolbar(getString(R.string.str_password_recovery))
+        requireActivity().toolbar(getString(R.string.forgot_password))
         binding.model = ConfirmOptionModel(identifier = "", zipCode = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -65,26 +64,29 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (status) {
-            is Resource.Success -> {
-                if (status.data?.statusCode?.equals("1054") == true) {
-                    showError(binding.root, status.data.message)
-                } else {
-                    binding.root.post {
-                        val bundle = Bundle()
-                        bundle.putParcelable(Constants.OPTIONS, status.data)
-                        findNavController().navigate(
-                            R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
-                            bundle
-                        )
+        if (isCalled) {
+            when (status) {
+                is Resource.Success -> {
+                    if (status.data?.statusCode?.equals("1054") == true) {
+                        showError(binding.root, status.data.message)
+                    } else {
+                        binding.root.post {
+                            val bundle = Bundle()
+                            bundle.putParcelable(Constants.OPTIONS, status.data)
+                            findNavController().navigate(
+                                R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
+                                bundle
+                            )
+                        }
                     }
                 }
+                is Resource.DataError -> {
+                    showError(binding.root, status.errorMsg)
+                }
+                else -> {
+                }
             }
-            is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
-            }
-            else -> {
-            }
+            isCalled = false
         }
     }
 
@@ -94,6 +96,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
+                isCalled = true
                 viewModel.confirmOptionForForgot(binding.model)
             }
         }

@@ -235,14 +235,14 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     private fun accountType() {
         when (model?.accountType) {
             BUSINESS_ACCOUNT -> {
-                binding.tvPersonaleInfo.text = "Company Info"
+                binding.tvPersonaleInfo.setText(getString(R.string.underline_company_info))
                 model?.planType = BUSINESS_ACCOUNT
                 model?.enable = true
                 binding.businessAccountParent.visible()
                 binding.personalAccountParent.gone()
             }
             else -> {
-                binding.tvPersonaleInfo.text = "Personal Info"
+                binding.tvPersonaleInfo.setText(getString(R.string.underline_personal_info))
                 binding.personalAccountParent.visible()
                 binding.businessAccountParent.gone()
             }

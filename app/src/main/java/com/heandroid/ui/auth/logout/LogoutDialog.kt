@@ -23,7 +23,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
 
     override fun initCtrl() {
         binding.apply {
-            tvCancel.setOnClickListener(this@LogoutDialog)
+            cancelBtn.setOnClickListener(this@LogoutDialog)
             tvLogout.setOnClickListener(this@LogoutDialog)
         }
     }
@@ -32,7 +32,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.tvCancel -> {
+            R.id.cancel_btn -> {
                 dismiss()
             }
             R.id.tvLogout -> {

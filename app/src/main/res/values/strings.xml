@@ -44,6 +44,7 @@
     <string name="txt_add_vehicle">Add Vehicle</string>
     <string name="txt_forgot_your_email"><u>Forgot your email?</u></string>
     <string name="txt_forgot_your_password"><u>Forgot your password?</u></string>
+    <string name="forgot_password">Forgot your password</string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -53,7 +54,8 @@
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
-    <string name="txt_find_username_string">Please find your username based on your account number and postcode</string>
+    <string name="txt_your_email_address">Your email address</string>
+    <string name="txt_find_username_string">Please find your registered email address based on your account number and postcode</string>
     <string name="txt_username_string">UserName : %1$s</string>
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
@@ -111,7 +113,7 @@
     <string name="str_create_account">Create an account</string>
     <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
     <string name="str_check_for_paid_crossing">Check for paid crossings</string>
-    <string name="str_view_charges">View charges (6AM - 10AM)</string>
+    <string name="str_view_charges">View charges (6AM - 10PM)</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
     <string name="str_email">Email</string>
@@ -192,6 +194,7 @@
     <string name="str_forgot_your_password"><u>Forgot your password?</u></string>
 
     <string name="txt_recovery_username">"Username recovery "</string>
+    <string name="txt_recovery_mail_address">Forgot your email address</string>
     <string name="txt_recovery_emai">Email recovery</string>
 
     <string name="str_email_address">Email address</string>
@@ -199,7 +202,8 @@
     <string name="str_enter_one_time_code">Enter one time code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
 
-    <string name="str_not_received_otp_txt">If you haven\'t received the one time code, please re-check your email address and click resend one time code</string>
+    <string name="str_not_received_otp_txt">If you haven\’t received the one time code, please click resend one time code. <b>The one time code will be active for 60 minutes</b></string>
+    <string name="str_not_received_otp_sms">If you haven\’t received the one time code, please re-check your messages and click resend one time code</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify one time code</string>
     <string name="str_create_password">Create your password</string>
@@ -379,6 +383,7 @@
     <string name="error_password_not_match">Confirm password does not match</string>
     <string name="error_postal_code">Please enter post code</string>
     <string name="check_sms">Check your SMS</string>
+    <string name="str_check_sms">Check your text messages in your mobile</string>
     <string name="enter_otp">Please enter correct otp</string>
 
     <string name="str_log_out">Logout</string>
@@ -435,7 +440,7 @@
     <string name="contact_us">Contact us</string>
     <string name="str_no_active_contacts">No contacts currently</string>
     <string name="str_nominated_contacts_limit_reached">A total of 5 contacts has been set-up, if you wish to add further nominated contacts you need to remove any one of the contact</string>
-    <string name="str_logout_msg">You have successfully sign out of your account</string>
+    <string name="str_logout_msg">You have successfully signed out of your account</string>
     <string name="str_session_time_out">Session Time out</string>
     <string name="str_verification">Verification</string>
     <string name="str_step_f_of_l">Step %d of %d</string>
@@ -459,13 +464,16 @@
     <string name="underline_contact"><u>Contact</u></string>
     <string name="nominated_contact_list">Nominated contact list</string>
     <string name="str_verify_security_code">Verify security code</string>
-    <string name="send_security_code_msg">Security code has been sent to %s. \n If you haven’t received the security code, please re-check your email address and click resend security code</string>
+    <string name="send_security_code_msg">Security code has been sent to %s If you haven’t received the security code, please re-check your email address and click resend security code</string>
     <string name="str_select_account_type">Select an account type</string>
     <string name="str_personal_account">Personal account</string>
     <string name="str_business_account">Business account</string>
-    <string name="str_personal_account_desc">To create a personal account you will need \n\u25CF Details of which vehicle you are registering  \n\u25CF A debit or credit card  \n\u25CF Register for a personal account if your company is not registered with Companies house</string>
+    <string name="str_personal_account_desc">To create a personal account you will need
+        \n \u25CF Details of which vehicle you are registering
+        \n \u25CF A debit or credit card
+        \n \u25CF Register for a personal account if your company is not registered with Companies house</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
-    <string name="str_business_account_desc_info">\n\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
+    <string name="str_business_account_desc_info">\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_prepay">Pre-pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
@@ -598,6 +606,7 @@
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
+    <string name="underline_company_info"><u>Company info</u></string>
     <string name="str_intial_deposit_to_account">Initial deposit to your account</string>
     <string name="str_auto_top_up">Auto top-up</string>
     <string name="str_you_need_to_make_an_initial_payment">You need to make an initial minimum deposit amount of £10 to open your account</string>

@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:orientation="vertical"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +31,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/txt_enter_your_details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16ssp"
@@ -42,8 +41,7 @@
                 style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:hint="@string/str_account_number"
                 android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 app:errorEnabled="true"
@@ -60,7 +58,7 @@
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={model.accountNumber}"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -68,8 +66,7 @@
                 style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:hint="@string/str_post_cde"
                 android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 app:errorEnabled="true"
@@ -83,18 +80,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:singleLine="true"
                     android:text="@={model.zipCode}"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_43sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:backgroundTint="@{model.enable==true?@color/blue_color:@color/btn_disable_color}"
                 android:enabled="@{model.enable}"
                 android:gravity="center"
@@ -123,11 +119,10 @@
                 android:id="@+id/tv_heading2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/txt_your_username"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_24ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/txt_your_email_address"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -136,10 +131,10 @@
                 android:id="@+id/tv_heading3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
                 android:layout_marginVertical="@dimen/_7sdp"
+                android:lineSpacingExtra="@dimen/_4sdp"
                 android:text="@string/txt_find_username_string"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -148,6 +143,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +156,7 @@
                     android:layout_marginVertical="5dp"
                     android:gravity="center"
                     android:text="@string/txt_user_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     android:visibility="gone" />
 
@@ -172,8 +168,8 @@
                     android:layout_marginVertical="@dimen/_7sdp"
                     android:gravity="center"
                     android:text="ad****rf"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -181,12 +177,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/green"
+                android:layout_height="@dimen/_40sdp"
+                android:backgroundTint="@color/blue_color"
                 android:gravity="center_horizontal"
                 android:text="@string/txt_login"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

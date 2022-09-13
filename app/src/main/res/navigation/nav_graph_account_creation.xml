@@ -58,11 +58,9 @@
         android:label="@string/str_select_account_type"
         tools:layout="@layout/fragment_create_account_personal_setup">
 
-
         <action
             android:id="@+id/action_personalTypeFragment_to_businssInfoFragment"
             app:destination="@+id/businessPrepayInfoFragment"/>
-
 
         <action
             android:id="@+id/action_personalTypeFragment_to_personalDetailsEntryFragment"

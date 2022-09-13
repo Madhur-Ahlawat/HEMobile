@@ -41,6 +41,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     private var isEditEmail: Int? = null
     private var count = 1
     private var isCodeCheckApi = true
+    private var isClicked = false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -103,6 +104,7 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             requestModel?.emailAddress ?: "",
             binding.etCode.text.toString().trim()
         )
+        isClicked = true
         createAccountViewModel.confirmEmailApi(request)
     }
 
@@ -126,33 +128,36 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        isCodeCheckApi = true
-        when (resource) {
-            is Resource.Success -> {
-                count = 1
+        if (isClicked) {
+            isCodeCheckApi = true
+            when (resource) {
+                is Resource.Success -> {
+                    count = 1
 
-                if (resource.data?.status?.equals("500") == true) showError(
-                    binding.root,
-                    resource.data.message
-                )
-                else loadFragment()
-            }
-            is Resource.DataError -> {
-                if (resource.errorMsg.contains("Connect your VPN", true)) {
-                    if (count > Constants.RETRY_COUNT) {
-                        requireActivity().startActivity(
-                            Intent(context, LandingActivity::class.java)
-                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
+                    if (resource.data?.status?.equals("500") == true) showError(
+                        binding.root,
+                        resource.data.message
+                    )
+                    else loadFragment()
+                }
+                is Resource.DataError -> {
+                    if (resource.errorMsg.contains("Connect your VPN", true)) {
+                        if (count > Constants.RETRY_COUNT) {
+                            requireActivity().startActivity(
+                                Intent(context, LandingActivity::class.java)
+                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        }
+                        ErrorUtil.showRetry(this)
+                    } else {
+                        showError(binding.root, resource.errorMsg)
                     }
-                    ErrorUtil.showRetry(this)
-                } else {
-                    showError(binding.root, resource.errorMsg)
+                }
+                else -> {
                 }
             }
-            else -> {
-            }
+            isClicked = false
         }
     }
 
@@ -205,11 +210,11 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
     }
 
     override fun onRetryClick() {
-        if(isCodeCheckApi){
+        if (isCodeCheckApi) {
             count++
             binding.btnAction.performClick()
 
-        }else{
+        } else {
             count++
             binding.tvResend.performClick()
 
