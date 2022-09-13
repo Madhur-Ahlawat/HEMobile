@@ -23,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreateAccountPersonalSetupFragment :
-    BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener,
-    RadioGroup.OnCheckedChangeListener {
+    BaseFragment<FragmentCreateAccountPersonalSetupBinding>(), View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
     private var isEditAccountType: Int? = null
@@ -45,27 +44,31 @@ class CreateAccountPersonalSetupFragment :
     override fun initCtrl() {
         binding.apply {
             btnAction.setOnClickListener(this@CreateAccountPersonalSetupFragment)
-            rgOptions.setOnCheckedChangeListener(this@CreateAccountPersonalSetupFragment)
+            mrbPrePay.setOnClickListener(this@CreateAccountPersonalSetupFragment)
+            mrbPayG.setOnClickListener(this@CreateAccountPersonalSetupFragment)
         }
     }
 
     override fun observer() {}
-    override fun onCheckedChanged(rg: RadioGroup?, checkedId: Int) {
-        binding.enable = true
-        when (rg?.checkedRadioButtonId) {
-            R.id.mrbPrePay -> {
-                model?.planType = null
-                binding.tvPrepayDesc.visible()
-            }
-            R.id.mrbPayG -> {
-                model?.planType = Constants.PAYG
-                binding.tvPayGDesc.visible()
-            }
-        }
-    }
 
     override fun onClick(view: View?) {
         when (view?.id) {
+            R.id.mrbPrePay -> {
+                binding.enable = true
+                binding.mrbPayG.isChecked = false
+                model?.planType = null
+                binding.tvPrepayDesc.visible()
+                binding.tvPayGDesc.gone()
+            }
+
+            R.id.mrbPayG -> {
+                binding.enable = true
+                binding.mrbPrePay.isChecked = false
+                model?.planType = Constants.PAYG
+                binding.tvPayGDesc.visible()
+                binding.tvPrepayDesc.gone()
+            }
+
             R.id.btnAction -> {
                 when {
                     binding.mrbPayG.isChecked -> {

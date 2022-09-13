@@ -5,14 +5,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_F5F5F5">
+        android:background="@drawable/he_bg">
 
         <RelativeLayout
             android:id="@+id/vehicleParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10ssp"
-            android:background="@color/color_F5F5F5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -23,8 +22,8 @@
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center_vertical"
                 android:text="@string/add_a_vehicle"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -37,17 +36,17 @@
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
                 android:text="@string/step_4to5"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginTop="@dimen/_10ssp"
+            android:layout_height="@dimen/_44sdp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="@dimen/_30ssp"
+            android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/vehicleParent">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -69,10 +68,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15ssp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_centerVertical="true"
                 android:text="@string/uk_vehicle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
@@ -84,9 +83,9 @@
             android:id="@+id/findVehicleBusiness"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="84dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/str_find_vehicle"
             android:textAllCaps="false"

@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_E5E5E5"
+        android:background="@drawable/he_bg"
         android:padding="@dimen/_10sdp">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/add_a_vehicle"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_step"
@@ -35,7 +35,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:fontFamily="@font/roboto_regular"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.669"
@@ -57,18 +57,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/_10sdp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_20sdp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tv_vehicle_reg_no"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     app:boxStrokeColor="@color/grey_two"
-                    android:layout_marginTop="@dimen/_10sdp"
                     app:boxStrokeWidthFocused="1dp"
                     app:errorEnabled="false"
                     app:hintEnabled="false"
@@ -83,8 +84,8 @@
                         android:hint="@string/str_vrm_ful"
                         android:imeOptions="actionDone"
                         android:inputType="textCapCharacters"
-                        android:singleLine="true"
                         android:maxLength="15"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey_two"
                         android:textSize="@dimen/_13ssp"
@@ -94,16 +95,16 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view"
-                    android:theme="@style/ToggleSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:checked="true"
                     android:text="@string/str_country_of_registraion"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="normal"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:theme="@style/ToggleSwitch"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_reg_no"
                     app:useMaterialThemeColors="false" />
@@ -118,18 +119,17 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{isEnable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{isEnable}"
             android:text="@string/str_continue"
+            android:layout_marginTop="@dimen/_40sdp"
             android:textAllCaps="false"
-            android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            app:layout_constraintVertical_bias="0.118" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

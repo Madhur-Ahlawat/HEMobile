@@ -66,9 +66,10 @@
     </style>
 
     <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText</item>
-        <item name="hintTextColor">@color/edittext_stroke_color</item>
-        <item name="boxStrokeColor">@color/edittext_stroke_color</item>
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
+        </item>
+        <item name="hintTextColor">@color/grey_two</item>
+        <item name="boxStrokeColor">@color/grey_two</item>
     </style>
 
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -148,6 +149,7 @@
     </style>
 
     //Rebranding
+
     <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/edit_text_selector</item>
         <item name="android:textColorHint">@color/edit_text_inactive</item>

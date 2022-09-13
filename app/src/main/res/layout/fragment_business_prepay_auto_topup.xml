@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <TextView
             android:id="@+id/tvLabel"
@@ -21,7 +22,7 @@
             android:layout_marginTop="@dimen/_10ssp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/business_prepay_account"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -34,7 +35,7 @@
             android:layout_marginTop="@dimen/_10ssp"
             android:layout_marginEnd="@dimen/_10ssp"
             android:text="@string/step_2_of_5"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvLabel"
@@ -43,9 +44,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLabel">
 
             <LinearLayout
@@ -60,7 +61,7 @@
                     android:layout_marginTop="@dimen/_10ssp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/initial_deposit_account"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
@@ -70,7 +71,7 @@
                     android:layout_marginTop="@dimen/_7ssp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/initial_payment"
-                    android:textColor="@color/grey_two"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
@@ -79,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:text="@string/str_auto_top_up"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
 
@@ -89,7 +90,7 @@
                     android:layout_marginTop="@dimen/_7ssp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/auto_top_up_funds"
-                    android:textColor="@color/grey_two"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal"
                     android:visibility="visible" />
@@ -99,19 +100,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10ssp"
                     android:text="@string/how_many_vehicle"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilConfirmPassword"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/no_of_vehicle"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2">
+                    android:hint="@string/no_of_vehicle">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/no_of_vehicle"
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textColor="@color/black"
+                        style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,20 +129,19 @@
                     android:layout_marginTop="@dimen/_10ssp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/how_many_crossing"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/crossings"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/crossings"
-                    app:boxStrokeColor="@color/color_00703C"
-                    app:endIconDrawable="@drawable/ic_screenshot__121__2">
+                    android:hint="@string/crossings">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/no_of_crossings"
@@ -150,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textColor="@color/black"
+                        style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,12 +160,12 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_20ssp"
                     android:layout_marginBottom="60dp"
-                    android:backgroundTint="@{isEnable==true?@color/btn_color:@color/color_C9C9C9}"
+                    android:backgroundTint="@{isEnable==true?@color/blue_color:@color/btn_disable_color}"
                     android:enabled="@{isEnable}"
                     android:gravity="center"
                     android:text="@string/str_continue"
                     android:textAllCaps="false"
-                    android:textColor="@{isEnable==false?@color/color_7D7D7D:@color/white}"
+                    android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

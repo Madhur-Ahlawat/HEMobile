@@ -11,14 +11,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_select_account_type"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -40,95 +41,96 @@
             android:id="@+id/rgOptions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLabel">
 
-
-
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/mrbPersonalAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:lineSpacingExtra="6dp"
-                android:paddingLeft="28dp"
-                android:layout_marginLeft="28dp"
-                android:drawablePadding="@dimen/_40sdp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:text="@string/str_personal_account"
-                android:textSize="@dimen/_13sdp"
-                app:buttonTint="@color/color_00703C" />
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/color_EFEFEF" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_EFEFEF">
+                android:background="@color/white">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPersonalDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/str_personal_account_desc"
-                android:visibility="gone" />
-
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/mrbPersonalAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:background="@color/white"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="@string/str_personal_account"
+                    android:textSize="@dimen/_13sdp"
+                    app:buttonTint="@color/radio_btn_color" />
             </LinearLayout>
 
 
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/mrbBusinessAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:background="@color/white"
-
-                android:lineSpacingExtra="6dp"
-                android:paddingLeft="28dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:text="@string/str_business_account"
-                android:textSize="@dimen/_13sdp"
-                app:buttonTint="@color/color_00703C" />
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.2dp"
-                android:background="@color/color_EFEFEF" />
+                android:layout_height="2dp"
+                android:background="@color/blue_color" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPersonalDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:text="@string/str_personal_account_desc"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_EFEFEF"
-                >
+                android:background="@color/white">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBusinessDesc"
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/mrbBusinessAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:background="@color/white"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="@string/str_business_account"
+                    android:textSize="@dimen/_13sdp"
+                    app:buttonTint="@color/radio_btn_color" />
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/str_business_account_desc"
-                android:visibility="gone" />
+                android:layout_height="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBusinessDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:text="@string/str_business_account_desc"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -171,14 +173,16 @@
             android:id="@+id/btnAction"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@{enable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{enable}"
             android:gravity="center"
             android:padding="@dimen/_7sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />

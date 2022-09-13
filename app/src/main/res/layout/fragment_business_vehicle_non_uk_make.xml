@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@drawable/he_bg">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                     android:layout_marginTop="@dimen/_10ssp"
                     android:gravity="center_vertical"
                     android:text="@string/str_vehicle_details"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
                     android:layout_marginEnd="@dimen/_10ssp"
                     android:gravity="center_vertical"
                     android:text="@string/step_4to5"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -72,11 +72,11 @@
                         android:id="@+id/vehicleNotRecognized"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginStart="13dp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:layout_toEndOf="@+id/blockIcon"
                         android:text="@string/vehicle_not_recognized"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_13ssp" />
 
                 </RelativeLayout>
@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Vehicle Registraton Number"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Country of registration"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -111,13 +111,13 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/makeInputLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="@string/str_make"
-                    android:textColorHint="@color/grey_two"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -125,24 +125,23 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/makeInputEditText"
+                        style="@style/AppEditTextTransparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/grey_two"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/modelInputLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/str_model"
-                    android:textColorHint="@color/grey_two"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -150,24 +149,23 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/modelInputEditText"
+                        style="@style/AppEditTextTransparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/grey_two"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/colorInputLayout"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/str_color"
-                    android:textColorHint="@color/grey_two"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -175,13 +173,12 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/colorInputEditText"
+                        style="@style/AppEditTextTransparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:imeOptions="actionDone"
                         android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/grey_two"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,14 +187,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+                    android:backgroundTint="@{model==true?@color/blue_color:@color/btn_disable_color}"
                     android:clickable="@{model}"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/str_next"
                     android:textAllCaps="false"
-                    android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
+                    android:textColor="@{model==true?@color/white:@color/btn_disable_txt_color}"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

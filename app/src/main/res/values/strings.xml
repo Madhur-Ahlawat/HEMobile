@@ -606,6 +606,7 @@
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
+    <string name="underline_company_info"><u>Company info</u></string>
     <string name="str_intial_deposit_to_account">Initial deposit to your account</string>
     <string name="str_auto_top_up">Auto top-up</string>
     <string name="str_you_need_to_make_an_initial_payment">You need to make an initial minimum deposit amount of £10 to open your account</string>
