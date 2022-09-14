@@ -15,31 +15,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPaymentAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Add new card details"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCardNo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_marginTop="19dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvPaymentAmount">
 
 
@@ -77,16 +75,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:drawableEnd="@drawable/ic_right_arrow"
+                android:drawableTint="@color/blue_color"
                 android:drawablePadding="10dp"
                 android:text="@string/change"
                 android:gravity="top"
-                android:textColor="@color/hyperlink_blue2"
+                android:textColor="@color/blue_color"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
             <View
                 android:layout_width="match_parent"
@@ -96,20 +93,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clExpiryDate"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clCardNo">
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView8"
@@ -124,7 +118,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,23 +131,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/appCompatTextView8"
                 app:layout_constraintVertical_bias="1.0"/>
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvChangeExpire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:drawableEnd="@drawable/ic_right_arrow"
+                android:drawableTint="@color/blue_color"
                 android:drawablePadding="10dp"
                 android:text="Change"
                 android:gravity="top"
-                android:textColor="#007AFF"
+                android:textColor="@color/blue_color"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
             <View
                 android:layout_width="match_parent"
@@ -163,20 +154,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clExpiryDate">
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView9"
@@ -191,7 +178,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,24 +191,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9"
                 app:layout_constraintVertical_bias="1.0"/>
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvChangeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:drawableEnd="@drawable/ic_right_arrow"
+                android:drawableTint="@color/blue_color"
                 android:drawablePadding="10dp"
                 android:text="Change"
                 android:gravity="top"
-                android:textColor="#007AFF"
+                android:textColor="@color/blue_color"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
-
 
             <View
                 android:layout_width="match_parent"
@@ -231,21 +214,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCVV"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="64dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clName">
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView10"
@@ -260,7 +239,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -274,17 +252,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10"
                 app:layout_constraintVertical_bias="1.0"/>
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvChangeCVV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:drawableEnd="@drawable/ic_right_arrow"
+                android:drawableTint="@color/blue_color"
                 android:drawablePadding="10dp"
                 android:text="Change"
                 android:gravity="top"
-                android:textColor="#007AFF"
+                android:textColor="@color/blue_color"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -328,22 +306,17 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:shadowRadius="6"
             android:text="Verify and Add"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/btnDelete"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:strokeColor="@color/green"
-            app:strokeWidth="1dp" />
-
-
-
+            app:layout_constraintStart_toStartOf="@id/glStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
@@ -355,13 +328,13 @@
             android:shadowRadius="6"
             android:text="Delete Card"
             android:textAllCaps="false"
-            android:textColor="@color/green"
-            android:textSize="@dimen/_16ssp"
+            android:textColor="@color/blue_color"
+            android:textSize="@dimen/_15ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
             app:layout_constraintStart_toStartOf="@id/glStart"
-            app:strokeColor="@color/green"
+            app:strokeColor="@color/blue_color"
             app:strokeWidth="1dp" />
 
 

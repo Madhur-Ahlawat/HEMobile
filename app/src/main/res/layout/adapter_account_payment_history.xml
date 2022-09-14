@@ -63,7 +63,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
                     android:text="£ 2.00"
-                    android:textColor="@color/color_00703C"
+                    android:textColor="@color/blue_color"
                     android:textSize="@dimen/_14sdp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -72,6 +72,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_17sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
+                    android:tint="@color/blue_color"
                     android:src="@drawable/ic_chevron_right_24px" />
 
 

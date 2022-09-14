@@ -104,6 +104,8 @@
                     android:id="@+id/paymentRecycleView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     app:layout_constraintBottom_toTopOf="@id/paginationLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -142,24 +144,26 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/previousBtn"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="@dimen/_55sdp"
                         android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="1dp"
                         android:backgroundTint="@{prevBtnModel==true?@color/white:@color/color_C9C9C9}"
                         android:clickable="@{prevBtnModel}"
                         android:text="@string/previous"
                         android:textAllCaps="false"
-                        android:textColor="@{prevBtnModel==true?@color/green:@color/color_7D7D7D}"
+                        android:textColor="@{prevBtnModel==true?@color/blue_color:@color/btn_disable_txt_color}"
                         app:autoSizePresetSizes="@array/button_text_auto_size"
                         app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@{prevBtnModel==true?@color/green:@color/color_C9C9C9}" />
-
+                        app:layout_constraintVertical_bias="0.384"
+                        app:strokeColor="@{prevBtnModel==true?@color/blue_color:@color/btn_disable_color}" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/nextBtn"
@@ -171,13 +175,13 @@
                         android:clickable="@{nextBtnModel}"
                         android:text="@string/next"
                         android:textAllCaps="false"
-                        android:textColor="@{nextBtnModel==true?@color/green:@color/color_7D7D7D}"
+                        android:textColor="@{nextBtnModel==true?@color/blue_color:@color/btn_disable_txt_color}"
                         app:autoSizePresetSizes="@array/button_text_auto_size"
                         app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@{nextBtnModel==true?@color/green:@color/color_C9C9C9}" />
+                        app:strokeColor="@{nextBtnModel==true?@color/blue_color:@color/btn_disable_color}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/paginationNumberRecyclerView"
@@ -187,7 +191,6 @@
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/nextBtn"
                         app:layout_constraintStart_toEndOf="@id/previousBtn"

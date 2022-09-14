@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Add new card details"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -58,7 +58,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCardNo"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -67,7 +67,6 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/card_number"
-                    app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_screenshot__121__2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -93,14 +92,13 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilExpiryDate"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/expiry_date"
-                    app:boxStrokeColor="@color/color_00703C"
                     app:helperText="Month/year, For example 12/21"
                     app:helperTextEnabled="true"
                     app:layout_constraintEnd_toEndOf="@+id/tilCardNo"
@@ -127,12 +125,11 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilName"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="@string/name_on_card"
-                    app:boxStrokeColor="@color/color_00703C"
                     app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
                     app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
                     app:layout_constraintTop_toBottomOf="@+id/tilExpiryDate">
@@ -159,16 +156,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCVV"
-                    style="@style/Widget.HeMobile.TextInputLayout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-
-
                     android:hint="@string/card_security_code"
-                    app:boxStrokeColor="@color/color_00703C"
                     app:helperText="@string/hint_cvv"
+                    app:helperTextTextColor="@color/dark_blue_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
                     app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
@@ -221,12 +216,12 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/add"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/btnCancel"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
@@ -243,13 +238,13 @@
             android:shadowRadius="6"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_16ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
             app:layout_constraintStart_toStartOf="@id/glStart"
-            app:strokeColor="@color/green"
+            app:strokeColor="@color/blue_color"
             app:strokeWidth="1dp" />
 
 
