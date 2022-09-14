@@ -98,7 +98,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:letterSpacing="0"
-            android:text="@string/str_nominated_contacts"
+            android:text="@string/str_nominate_contact"
             android:textAllCaps="false"
             android:textColor="@color/blue_color"
             android:textSize="@dimen/_15ssp"
