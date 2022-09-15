@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="@string/personal_pre_pay_account_info"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -47,7 +48,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +61,7 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center_vertical"
                     android:text="@string/str_intial_deposit_to_account"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -73,8 +74,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/str_you_need_to_make_an_initial_payment"
-                    android:textColor="#626262"
-                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toStartOf="@+id/glEnd"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/tvInitialDepositLabel" />
@@ -87,7 +88,7 @@
                     android:layout_marginTop="24dp"
                     android:gravity="center_vertical"
                     android:text="@string/str_auto_top_up"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -99,8 +100,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/str_maintainance_desc"
-                    android:textColor="#626262"
-                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toStartOf="@+id/glEnd"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
                     app:layout_constraintTop_toBottomOf="@id/tvAutoTopUp" />
@@ -113,7 +114,7 @@
                     android:layout_marginTop="26dp"
                     android:gravity="center_vertical"
                     android:text="@string/str_will_you_be_making_more_than_10"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -124,8 +125,9 @@
                     android:id="@+id/rbOptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@color/white"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lableWillYouBeMaking">
@@ -135,20 +137,18 @@
                         android:id="@+id/mrbYes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:buttonTint="@color/green"
-                        android:drawablePadding="28dp"
-                        android:paddingStart="28dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/radio_btn_color"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingVertical="@dimen/_10sdp"
                         android:text="@string/str_yes"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1.5dp"
-                        android:background="@color/E5E5E5" />
+                        android:layout_height="1dp"
+                        android:background="@color/blue_color" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clYesDes"
@@ -180,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:text="@string/change"
-                            android:textColor="@color/green"
+                            android:textColor="@color/blue_color"
                             android:textSize="@dimen/_12ssp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/tvYesDes"
@@ -194,12 +194,10 @@
                         android:id="@+id/mrbNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:buttonTint="@color/green"
-                        android:drawablePadding="28dp"
-                        android:paddingStart="28dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/radio_btn_color"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingVertical="@dimen/_10sdp"
                         android:text="@string/str_no"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"
@@ -210,8 +208,8 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1.5dp"
-                        android:background="@color/E5E5E5" />
+                        android:layout_height="1dp"
+                        android:background="@color/blue_color" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,7 +218,6 @@
                         android:layout_height="wrap_content"
                         android:background="@color/color_EFEFEF"
                         android:visibility="gone">
-
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvNoDes"
@@ -245,7 +242,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:text="@string/change"
-                            android:textColor="@color/green"
+                            android:textColor="@color/blue_color"
                             android:textSize="@dimen/_12ssp"
                             android:textStyle="bold"
                             android:visibility="gone"
@@ -298,16 +295,16 @@
             android:id="@+id/btnAction"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@{enable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{enable}"
             android:gravity="center"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            app:cornerRadius="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{enable==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_13ssp"
+            app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

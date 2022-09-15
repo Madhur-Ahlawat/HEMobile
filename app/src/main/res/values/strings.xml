@@ -581,9 +581,9 @@
     <string name="pin_desc1">• Your PIN must be made up of four digits.</string>
     <string name="pin_desc2">• This would be used to verify your identity if you contact us by phone</string>
 
-    <string name="initial_deposit">• An initial deposit of £10</string>
-    <string name="personal_deposit">• Personal details and details of the primary vehicle which you are registering</string>
-    <string name="valid_debit">• A valid debit or credit card</string>
+    <string name="initial_deposit">\u25CF An initial deposit of £10</string>
+    <string name="personal_deposit">\u25CF Personal details and details of the primary vehicle which you are registering</string>
+    <string name="valid_debit">\u25CF A valid debit or credit card</string>
     <string name="setup_prepay_account">To set up a personal pre-pay account, you will need:</string>
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Category : </string>
