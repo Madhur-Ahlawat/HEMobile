@@ -48,6 +48,7 @@ class NominatedContactActivity : BaseActivity<ActivityNominatedContactsBinding>(
         val oldGraph = inflater.inflate(R.navigation.nav_graph_nominated_contacts)
 
         navController = navHostFragment.navController
+
         if (intent.getIntExtra("count", 0) > 0)   oldGraph.setStartDestination( R.id.ncListFragment)
         else  oldGraph.setStartDestination(R.id.ncNoListFragment)
         navController.graph = oldGraph

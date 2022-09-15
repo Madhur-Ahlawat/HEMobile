@@ -29,10 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_edit_contact_details"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_13ssp"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
-            android:textStyle="normal"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/glTop" />

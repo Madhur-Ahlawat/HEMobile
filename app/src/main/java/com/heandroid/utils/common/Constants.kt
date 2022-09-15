@@ -2,6 +2,7 @@ package com.heandroid.utils.common
 
 object Constants {
 
+    const val EXPIRED = "EXPIRED"
     const val RETRY_COUNT = 3
     const val SPLASH_TIME_OUT = 500L
     const val COUNTRY_TYPE = "country_type"

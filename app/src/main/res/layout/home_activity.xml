@@ -72,15 +72,6 @@
                   android:backgroundTint="@color/white"
                   android:layout_height="@dimen/_35sdp">
   -->
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_30sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:id="@+id/id_create_account"
-                android:text="@string/str_create_account"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp" />
 
 
             <!--
@@ -100,10 +91,20 @@
                 android:layout_marginStart="@dimen/_30sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:id="@+id/id_one_of_payment"
-
                 android:text="@string/str_make_one_of_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:id="@+id/id_create_account"
+                android:text="@string/str_create_account"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
 
 
             <!--  </com.google.android.material.card.MaterialCardView>
