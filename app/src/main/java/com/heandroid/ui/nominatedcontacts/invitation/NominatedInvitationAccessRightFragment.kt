@@ -1,5 +1,6 @@
 package com.heandroid.ui.nominatedcontacts.invitation
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class NominatedInvitationAccessRightFragment :
         binding.apply {
             btnInvite.setOnClickListener(this@NominatedInvitationAccessRightFragment)
             btnCancel.setOnClickListener(this@NominatedInvitationAccessRightFragment)
+            tvEditContact.setOnClickListener(this@NominatedInvitationAccessRightFragment)
         }
     }
 
@@ -78,7 +80,17 @@ class NominatedInvitationAccessRightFragment :
 
             }
             R.id.btnCancel -> {
+
                 findNavController().popBackStack(R.id.ncFullNameFragment, true)
+            }
+            R.id.tvEditContact -> {
+                val bundle = Bundle()
+                bundle.putBoolean("edit", false)
+                bundle.putBoolean("FromNormalEdit",true)
+                bundle.putParcelable("data", binding.model)
+
+                findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncFullNameFragment,bundle)
+
             }
         }
     }

@@ -14,6 +14,7 @@ import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.databinding.FragmentAccountBinding
 import com.heandroid.ui.account.communication.CommunicationActivity
 import com.heandroid.ui.account.profile.ProfileActivity
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.auth.logout.LogoutDialog
 import com.heandroid.ui.auth.logout.LogoutViewModel
 import com.heandroid.ui.auth.logout.OnLogOutListener
@@ -27,6 +28,7 @@ import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.openActivityWithData
 import com.heandroid.utils.extn.openActivityWithDataBack
 import com.heandroid.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -124,6 +126,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         }
         when (status) {
             is Resource.Success -> {
+
+                Logg.logging("AccountFragment", "nominated count data ${status.data}")
+
+                Logg.logging(
+                    "AccountFragment",
+                    "nominated count ${status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size}"
+                )
                 Intent(requireActivity(), NominatedContactActivity::class.java).run {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     putExtra(

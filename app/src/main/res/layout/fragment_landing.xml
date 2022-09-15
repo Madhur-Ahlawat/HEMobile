@@ -66,24 +66,6 @@
                 android:gravity="start"
                 android:orientation="vertical">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbCreateAccount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_create_account"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/blue_color" />
-
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rbMakeOffPayment"
@@ -94,6 +76,24 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="0dp"
                     android:text="@string/str_make_one_of_payment"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:buttonTint="@color/radio_btn_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/blue_color" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbCreateAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_13sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/str_create_account"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
                     app:buttonTint="@color/radio_btn_color" />

@@ -17,6 +17,7 @@ import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.*
@@ -111,7 +112,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                         requireActivity().getColorStateList(R.color.white)*/
             }
             R.id.btnInvited -> {
-                val invitedList = list.filter { it?.accountStatus.equals("INITIATED", true) }
+                val invitedList = list.filter { it?.accountStatus.equals("INITIATED", true)||it?.accountStatus.equals(Constants.EXPIRED,true) }
                 setDataToUI(invitedList)
 
                 binding.btnInvited.changeTextColor(R.color.high_lighted_text_color)
@@ -123,7 +124,7 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 binding.btnActive.changeTextColor(R.color.unselected_tab_color)
                 binding.btnActive.setStrokeColorResource(R.color.unselected_tab_color)
                 binding.btnActive.changeBackgroundColor(android.R.color.transparent)
-               // binding.btnInvited.changeBackgroundColor(R.color.blue_color)
+                // binding.btnInvited.changeBackgroundColor(R.color.blue_color)
                 /*binding.btnInvited.backgroundTintList =
                     requireActivity().getColorStateList(R.color.white)*/
             }
@@ -200,11 +201,20 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                 val remo = list.indexOf(filterList?.get(selectedPosition))
                 list.remove(list[remo])
 
-                filterList?.removeAt(selectedPosition)
+                if(filterList!!.isNotEmpty() && filterList!!.size > 0){
+                    filterList?.removeAt(selectedPosition)
 
-                binding.rvList.adapter?.notifyItemRemoved(
-                    selectedPosition
-                )
+                    binding.rvList.adapter?.notifyItemRemoved(
+                        selectedPosition
+                    )
+                }
+                Logg.logging("AccountFragment", "filterList size ${filterList!!.size}")
+
+                if (filterList!!.isEmpty() && filterList!!.size <= 0) {
+                    findNavController().navigate(
+                        R.id.action_ncListFragment_to_ncNoListFragment
+                    )
+                }
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
