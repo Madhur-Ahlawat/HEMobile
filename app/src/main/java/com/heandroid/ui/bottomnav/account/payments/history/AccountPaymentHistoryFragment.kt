@@ -280,7 +280,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         binding.progressBar.gone()
         binding.paymentRecycleView.visible()
-        binding.paginationLayout.visible()
+        //binding.paginationLayout.visible()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -298,7 +298,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
                         binding.paymentRecycleView.adapter = paymentHistoryAdapter
-                        binding.paginationLayout.visible()
+//                        binding.paginationLayout.visible()
 
                         paginationNumberAdapter?.apply {
                             setCount(noOfPages)
