@@ -194,10 +194,10 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDelete"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/white"
                 android:gravity="center"
                 android:shadowRadius="6"
                 android:text="@string/delete"

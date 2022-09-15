@@ -1,125 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/clMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDefaultLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/how_much_amount_would_you_like_to_top_up"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/glStart"
-                app:layout_constraintTop_toTopOf="@+id/glTop" />
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDefaultLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how_much_amount_would_you_like_to_top_up"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
+            app:layout_constraintTop_toTopOf="@+id/glTop" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAmount"
-            style="@style/Widget.HeMobile.TextInputLayout"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:hint="@string/enter_amount"
-            app:boxStrokeColor="@color/color_00703C"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:textColorHint="@color/text_input_place_holder"
             app:endIconDrawable="@drawable/ic_screenshot__121__2"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvDefaultLabel"
-            app:prefixText="£">
+            app:prefixText="£"
+            app:prefixTextColor="@color/white">
 
-
-                <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
                 android:digits="0123456789."
+                android:imeOptions="actionDone"
                 android:inputType="number"
-                android:singleLine="true"
                 android:maxLength="6"
-                android:textColor="@color/black"
+                android:singleLine="true"
+                style="@style/AppEditTextTransparent"
                 android:textSize="@dimen/_13ssp" />
-
-
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/blue_color"
+            android:gravity="center"
+            android:shadowRadius="6"
+            android:text="@string/str_next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
 
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/_12sdp" />
 
-
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNext"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:gravity="center"
-                android:shadowRadius="6"
-                android:text="@string/str_next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
-                app:cornerRadius="@dimen/_4sdp"
-                app:layout_constraintBottom_toTopOf="@+id/glBottom"
-                app:layout_constraintEnd_toEndOf="@id/glEnd"
-                app:layout_constraintStart_toStartOf="@id/glStart"
-                app:strokeColor="@color/green"
-                app:strokeWidth="1dp" />
-
-
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glStart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glEnd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glTop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glBottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

@@ -144,7 +144,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
                 if (defaultCardModel == null) {
                     binding.tvDefaultLabel.gone()
                     binding.rbDefaultMethod.gone()
-                    binding.viewDefault.gone()
+//                    binding.viewDefault.gone()
                 } else {
                     val spannableString =
                         if (defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType + "\n" + defaultCardModel?.bankAccountNumber)
