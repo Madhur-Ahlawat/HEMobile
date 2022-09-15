@@ -199,7 +199,7 @@
         android:id="@+id/createCommunicationPrefsFragment"
         android:name="com.heandroid.ui.account.creation.step4.CreateCommunicationPrefsFragment"
         android:label="createAccoutInfoConfirmationFragment"
-        tools:layout="@layout/fragment_create_account_top_up">
+        tools:layout="@layout/fragment_select_communication_preference">
         <action
             android:id="@+id/action_createCommunicationPrefsFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />

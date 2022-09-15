@@ -66,10 +66,10 @@
     </style>
 
     <style name="Widget.HeMobile.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
-        </item>
-        <item name="hintTextColor">@color/grey_two</item>
-        <item name="boxStrokeColor">@color/grey_two</item>
+        <item name="boxStrokeColor">@color/edit_text_white_selector</item>
+        <item name="android:textColorHint">@color/color_909090</item>
+        <item name="hintTextColor">@color/dark_blue_color</item>
+        <item name="passwordToggleTint">@color/edit_text_white_selector</item>
     </style>
 
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
