@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/transaction_date"
                 android:layout_width="0dp"
@@ -81,9 +80,8 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="1sp"
-                android:background="@color/color_B8B8B8"
-
+                android:layout_height="1.5dp"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

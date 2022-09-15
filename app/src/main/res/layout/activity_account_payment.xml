@@ -66,10 +66,10 @@
                     android:letterSpacing="0"
                     android:text="@string/payment_history"
                     android:textAllCaps="false"
-                    android:textColor="@{model.history==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
+                    android:textColor="@{model.history==false?@color/white:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@{model.history==false?@color/unselected_tab_color:@color/dark_blue_color}"
+                    app:strokeColor="@{model.history==false?@color/white:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -83,10 +83,10 @@
                     android:letterSpacing="0"
                     android:text="@string/payment_methods"
                     android:textAllCaps="false"
-                    android:textColor="@{model.method==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
+                    android:textColor="@{model.method==false?@color/white:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@{model.method==false?@color/unselected_tab_color:@color/dark_blue_color}"
+                    app:strokeColor="@{model.method==false?@color/white:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -100,10 +100,10 @@
                     android:letterSpacing="0"
                     android:text="@string/str_top_up"
                     android:textAllCaps="false"
-                    android:textColor="@{model.topUp==false?@color/unselected_tab_color:@color/high_lighted_text_color}"
+                    android:textColor="@{model.topUp==false?@color/white:@color/high_lighted_text_color}"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
-                    app:strokeColor="@{model.topUp==false?@color/unselected_tab_color:@color/dark_blue_color}"
+                    app:strokeColor="@{model.topUp==false?@color/white:@color/dark_blue_color}"
                     app:strokeWidth="1dp" />
             </LinearLayout>
         </HorizontalScrollView>

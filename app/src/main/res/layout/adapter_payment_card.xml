@@ -33,8 +33,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1.1dp"
-            android:background="@color/line_grey" />
+            android:layout_height="1.5dp"
+            android:background="@color/blue_color" />
 
 
     </RadioGroup>

@@ -142,12 +142,12 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                 if (defaultCardModel == null) {
                     binding.tvDefaultLabel.gone()
                     binding.rbDefaultMethod.gone()
-                    binding.viewDefault.gone()
+//                    binding.viewDefault.gone()
                 } else {
 
                     binding.tvDefaultLabel.visible()
                     binding.rbDefaultMethod.visible()
-                    binding.viewDefault.visible()
+//                    binding.viewDefault.visible()
                     val spannableString =
                         if (defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType + "\n" + defaultCardModel?.bankAccountNumber)
                         else SpannableString(defaultCardModel?.cardType + "\n" + defaultCardModel?.cardNumber)
@@ -214,7 +214,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                 if (isDefaultDeleted) {
                     binding.tvDefaultLabel.gone()
                     binding.rbDefaultMethod.gone()
-                    binding.viewDefault.gone()
+//                    binding.viewDefault.gone()
                     isDefaultDeleted = false
                 } else {
                     cardsList?.removeAt(position ?: 0)
