@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.adobe.marketing.mobile.MobileCore
 import com.heandroid.ui.base.BaseApplication
 import com.heandroid.ui.bottomnav.HomeActivityMain
+import com.heandroid.utils.common.AdobeAnalytics
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.logout.LogoutUtil
@@ -37,14 +38,13 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        MobileCore.setApplication(BaseApplication.INSTANCE)
-        MobileCore.lifecycleStart(null)
+        AdobeAnalytics.setLifeCycleCallAdobe(true)
 
     }
 
     override fun onPause() {
         super.onPause()
-        MobileCore.lifecyclePause()
+        AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
     private fun checkSession(): Boolean {

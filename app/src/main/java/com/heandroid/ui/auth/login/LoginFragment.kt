@@ -50,10 +50,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        val mContextData = HashMap<String, String>()
-        mContextData["LoginActivity"] = "Started"
-        AdobeAnalytics.trackState("LoginPage", mContextData)
-
     }
 
     override fun initCtrl() {
@@ -113,10 +109,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.login(binding.model)
-                val mContextData = HashMap<String, String>()
-                mContextData["email"] = "chpp@gmail.com"
-                mContextData["password"] = "Test@123"
-                AdobeAnalytics.trackAction("LoginClick", mContextData)
 
             }
 

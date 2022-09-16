@@ -28,6 +28,7 @@ import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.heandroid.ui.vehicle.addvehicle.dialog.AddVehicleDialog
 import com.heandroid.utils.common.*
+import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.openActivityWithData
 import com.heandroid.utils.extn.openActivityWithDataBack
 import com.heandroid.utils.extn.startNormalActivity
@@ -55,6 +56,19 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (sessionManager.fetchAccountType()
+                .equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
+                .equals(Constants.PAYG, true)
+        ) {
+            binding.nominatedContactsLyt.gone()
+        }
+
+        if (sessionManager.fetchAccountType()
+                .equals("NonRevenue", true)
+        ) {
+            binding.payment.gone()
+        }
+
     }
 
     override fun initCtrl() {

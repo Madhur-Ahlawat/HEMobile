@@ -170,12 +170,11 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
                             "READ",
                             true
                         )
-                    ) filterList?.get(selectedPosition)?.mPermissionLevel = "Read Only"
+                    ) filterList?.get(selectedPosition)?.mPermissionLevel = "Limited Access"
                     else filterList?.get(selectedPosition)?.mPermissionLevel =
-                        "Amend Account, Vehicle data"
+                        "Full Access"
                 } else filterList?.get(selectedPosition)?.mPermissionLevel =
-                    "Amend Account, Vehicle data"
-
+                    "Full Access"
 
                 binding.rvList.adapter?.notifyItemChanged(
                     selectedPosition,

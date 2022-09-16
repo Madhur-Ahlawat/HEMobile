@@ -5,6 +5,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityContactDartChargeBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.utils.common.AdobeAnalytics
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
@@ -43,9 +44,20 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         } else {
             oldGraph.setStartDestination(R.id.contactDartCharge)
         }
+        AdobeAnalytics.setScreenTrack("contact dart charge","contact dart charge","english","contact dart charge","landing","contact dart charge")
 
         navController.graph = oldGraph
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AdobeAnalytics.setLifeCycleCallAdobe(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
     override fun onBackPressed() {

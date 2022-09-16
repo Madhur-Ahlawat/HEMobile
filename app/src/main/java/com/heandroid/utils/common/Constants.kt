@@ -131,6 +131,7 @@ object Constants {
     const val PERSONAL_ACCOUNT = "PRIVATE"
     const val BUSINESS_ACCOUNT = "BUSINESS"
     const val PRE_PAY_ACCOUNT = "pre_pay_account"
+    const val STANDARD ="STANDARD"
     const val PAYG_ACCOUNT = "pay_as_you_go_account"
     const val UK = "UK"
     const val NON_UK = "Non UK"

@@ -52,16 +52,20 @@ class LandingActivity : BaseActivity<Any?>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         loadFragment()
-        val mContextData = HashMap<String, String>()
-        mContextData["LandingActivity"] = "Started"
-        AdobeAnalytics.trackState("LandingPage", mContextData)
 
+        AdobeAnalytics.setScreenTrack(
+            "landing",
+            "landing",
+            "english",
+            "landing",
+            "splash",
+            "landing"
+        )
     }
 
     override fun onResume() {
         super.onResume()
-        MobileCore.setApplication(BaseApplication.INSTANCE)
-        MobileCore.lifecycleStart(null)
+        AdobeAnalytics.setLifeCycleCallAdobe(true)
         BaseApplication.INSTANCE?.stopTimerAPi()
         sessionManager.clearAll()
         initCtrl()
@@ -69,7 +73,7 @@ class LandingActivity : BaseActivity<Any?>() {
 
     override fun onPause() {
         super.onPause()
-        MobileCore.lifecyclePause()
+        AdobeAnalytics.setLifeCycleCallAdobe(false)
 
     }
 
@@ -79,6 +83,7 @@ class LandingActivity : BaseActivity<Any?>() {
             when (screenType) {
                 LANDING_SCREEN, START_NOW_SCREEN -> {
                     startIntent(AuthActivity::class.java)
+
                 }
                 LOGOUT_SCREEN -> {
                     if (binding.toolBarLyt.btnLogin.text.toString()

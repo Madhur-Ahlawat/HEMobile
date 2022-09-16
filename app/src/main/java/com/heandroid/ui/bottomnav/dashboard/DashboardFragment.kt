@@ -207,6 +207,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     setAccountDetailsView(it)
+
                 }
             }
             is Resource.DataError -> {
@@ -235,6 +236,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             }
             data.accountInformation?.type?.let {
                 DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
+                sessionManager.saveSubAccountType(data?.accountInformation!!.accSubType!!)
+                sessionManager.saveAccountType(it)
+
+
             }
 
         }
