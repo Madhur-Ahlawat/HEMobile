@@ -144,14 +144,16 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
 
                             when {
                                 customerAmount < 5.0 -> {
-                                    topUpMyAccount.error =
+                                    topUpMyAccountLayout.error =
                                         resources.getString(R.string.customer_amount_err_msg)
                                 }
                                 thresholdAmount < 10.0 -> {
-                                    topUpFallsAmount.error =
+                                    tfLastName.error =
                                         resources.getString(R.string.threshold_amount_err_msg)
                                 }
                                 else -> {
+                                    tfLastName.error = null
+                                    topUpMyAccountLayout.error = null
                                     val request = AccountTopUpUpdateThresholdRequest(
                                         thresholdAmount.toString(),
                                         customerAmount.toString()
