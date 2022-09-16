@@ -41,6 +41,9 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
 
         viewModel.getAccountStatement()
 
+        binding.toolBarLyt.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun observeViewModel() {
@@ -54,7 +57,7 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
         when (resource) {
             is Resource.Success -> {
 
-                val statementList = resource.data
+                /*val statementList = resource.data
                 if (statementList?.size!! > 0) {
                     for (element in statementList.indices) {
                         periodList.add(statementList[element]?.period.toString())
@@ -81,7 +84,26 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
                     binding.spYearAccount.onItemSelectedListener = yearCSVListener
 
+                }*/
+                val years = resources.getStringArray(R.array.years)
+                years.forEach {
+                    yearListCSV.add(it)
                 }
+                val periods = resources.getStringArray(R.array.period)
+                periods.forEach {
+                    periodList.add(it)
+                }
+                binding.spPeriodCsv.setSpinnerAdapterData(periodList)
+                binding.spPeriodCsv.onItemSelectedListener = spinnerListener
+                binding.spYearCsv.setSpinnerAdapterData(yearListCSV)
+                binding.spYearCsv.onItemSelectedListener = yearCSVListener
+                binding.spYearPdf.setSpinnerAdapterData(yearListCSV)
+                binding.spYearPdf.onItemSelectedListener = yearCSVListener
+                binding.spPeriodPdf.setSpinnerAdapterData(periodList)
+                binding.spPeriodPdf.onItemSelectedListener = spinnerListener
+
+                binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
+                binding.spYearAccount.onItemSelectedListener = yearCSVListener
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)

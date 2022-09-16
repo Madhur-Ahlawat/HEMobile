@@ -51,7 +51,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/yearPdf"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
@@ -64,7 +64,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/periodPdf"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -76,32 +76,33 @@
             app:layout_constraintLeft_toRightOf="@+id/yearPdf"
             app:layout_constraintTop_toBottomOf="@+id/pdfTitleText" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spYearPdf"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grey_one"
+            android:layout_height="35dp"
+            android:background="@drawable/spinner"
             android:overlapAnchor="false"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/yearPdf" />
+            app:layout_constraintStart_toStartOf="@id/yearPdf"
+            app:layout_constraintEnd_toEndOf="@id/yearPdf"
+            app:layout_constraintTop_toBottomOf="@id/yearPdf" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spPeriodPdf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:backgroundTint="@color/grey_one"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/spinner"
             android:overlapAnchor="false"
             android:spinnerMode="dropdown"
-            app:layout_constraintLeft_toRightOf="@+id/yearPdf"
-            app:layout_constraintTop_toBottomOf="@+id/periodPdf" />
+            app:layout_constraintStart_toStartOf="@id/periodPdf"
+            app:layout_constraintEnd_toEndOf="@id/periodPdf"
+            app:layout_constraintTop_toBottomOf="@id/periodPdf" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/downloadPdf"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25ssp"
-            android:background="@drawable/button_shadow"
+            android:background="@color/blue_color"
             android:text="@string/download"
             android:textAllCaps="false"
             android:layout_marginTop="@dimen/_10ssp"
@@ -139,7 +140,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/yearCsv"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
@@ -152,7 +153,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/periodCsv"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -164,32 +165,33 @@
             app:layout_constraintLeft_toRightOf="@+id/yearCsv"
             app:layout_constraintTop_toBottomOf="@+id/csvTitleText" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spYearCsv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grey_one"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/spinner"
             android:overlapAnchor="false"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/yearCsv" />
+            app:layout_constraintStart_toStartOf="@id/yearCsv"
+            app:layout_constraintEnd_toEndOf="@id/yearCsv"
+            app:layout_constraintTop_toBottomOf="@id/yearCsv" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spPeriodCsv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:backgroundTint="@color/grey_one"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/spinner"
             android:overlapAnchor="false"
             android:spinnerMode="dropdown"
-            app:layout_constraintLeft_toRightOf="@+id/yearCsv"
-            app:layout_constraintTop_toBottomOf="@+id/periodCsv" />
+            app:layout_constraintStart_toStartOf="@id/periodCsv"
+            app:layout_constraintEnd_toEndOf="@id/periodCsv"
+            app:layout_constraintTop_toBottomOf="@id/periodCsv" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/downloadCsv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25sdp"
-            android:background="@drawable/button_shadow"
+            android:background="@color/blue_color"
             android:text="@string/str_submit"
             android:layout_marginTop="@dimen/_10ssp"
             android:textAllCaps="false"
@@ -227,7 +229,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/yearAccount"
-            android:layout_width="@dimen/_60sdp"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
@@ -238,28 +240,29 @@
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/accountTitleText" />
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spYearAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grey_one"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/spinner"
             android:overlapAnchor="false"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/yearAccount" />
+            app:layout_constraintStart_toStartOf="@id/yearAccount"
+            app:layout_constraintEnd_toEndOf="@id/yearAccount"
+            app:layout_constraintTop_toBottomOf="@id/yearAccount" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submitAccount"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25ssp"
-            android:background="@drawable/button_shadow"
+            android:background="@color/blue_color"
             android:text="@string/str_submit"
             android:textAllCaps="false"
             android:layout_marginStart="@dimen/_35ssp"
             android:layout_marginTop="@dimen/_10ssp"
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintLeft_toRightOf="@+id/yearAccount"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
             app:layout_constraintTop_toBottomOf="@+id/accountTitleText" />
 
         <androidx.constraintlayout.widget.Guideline
