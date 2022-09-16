@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
             type="com.heandroid.data.model.account.CreateAccountRequestModel" />
@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <WebView
             android:id="@+id/webview"
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -43,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
@@ -53,11 +54,11 @@
             android:id="@+id/mcvContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="9dp"
             android:visibility="gone"
-            app:cardElevation="5dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="0dp"
+            app:cardElevation="5dp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvPaymentAmount">
@@ -65,7 +66,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCardNo"
@@ -89,13 +89,13 @@
                         android:id="@+id/tieCardNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"
-                        android:editable="false"
-                        android:text="@{model.maskedNumber}"
                         android:singleLine="true"
+                        android:text="@{model.maskedNumber}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
@@ -124,11 +124,11 @@
                         android:id="@+id/tieExpiryDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"
-                        android:editable="false"
                         android:singleLine="true"
                         android:text="@{model.creditCExpMonth +`/`+ model.creditCExpYear}"
                         android:textColor="@color/black"
@@ -155,14 +155,14 @@
                         android:id="@+id/tieName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:digits="@string/name_validation"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"
-                        android:editable="false"
-                        android:digits="@string/name_validation"
-                        android:singleLine="true"
                         android:maxLength="32"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
@@ -176,8 +176,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:boxStrokeColor="@color/color_00703C"
                     android:hint="@string/card_security_code"
+                    app:boxStrokeColor="@color/color_00703C"
                     app:helperText="@string/hint_cvv"
                     app:layout_constraintEnd_toEndOf="@+id/tilExpiryDate"
                     app:layout_constraintStart_toStartOf="@+id/tilExpiryDate"
@@ -189,10 +189,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/cvv"
-                        android:imeOptions="actionDone"
                         android:editable="false"
-                        android:focusableInTouchMode="false"
                         android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionDone"
                         android:paddingEnd="5dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -208,7 +208,7 @@
                     android:layout_height="20dp"
                     android:layout_marginTop="23dp"
                     android:layout_marginBottom="21dp"
-                    android:buttonTint="@color/green"
+                    android:buttonTint="@color/blue_color"
                     android:paddingLeft="14dp"
                     android:text="Set this as default payment method"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -225,9 +225,9 @@
             android:id="@+id/btnPay"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
-            android:text="Confirm"
+            android:text="@string/str_confirm"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"

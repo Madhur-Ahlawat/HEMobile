@@ -708,7 +708,8 @@
     <string name="update_password_success">Password has been updated successfully</string>
     <string name="update_pin_success">Your Dart charge PIN has been updated successfully</string>
     <string name="str_business_account_intro">To create a personal account you will need a \n\n \u2022 Company registration number. \n \u2022 Your company details. \n \u2022 Details of the vehicle you are registering. \n \u2022 A valid debit or a credit card</string>
-    <string name="str_business_prepay"><b>To set up a business pre-pay account you will need:</b>  \n\n \u2022 A initial deposit of £ 10.00 \n \u2022 Company details and details of the primary vehicle which you are registering. \n \u2022 A valid debit or a credit card</string>
+    <string name="str_business_prepay"><b>To set up a business pre-pay account you will need:</b>
+        \n\n \u25CF A initial deposit of £ 10.00 \n \u25CF Company details and details of the primary vehicle which you are registering. \n \u25CF A valid debit or a credit card</string>
     <string name="business_info_fragment">Business Info Fragment</string>
     <string name="business_prepay">Business Prepay Info</string>
     <string name="business_prepay_account">Business pre-pay account</string>

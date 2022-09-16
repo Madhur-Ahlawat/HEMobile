@@ -44,6 +44,7 @@
             android:layout_marginTop="@dimen/_20ssp"
             android:text="@string/str_business_prepay"
             android:textColor="@color/white"
+            android:lineSpacingExtra="@dimen/_4sdp"
             android:textSize="@dimen/_14ssp"
             android:textStyle="normal"
             android:visibility="visible"

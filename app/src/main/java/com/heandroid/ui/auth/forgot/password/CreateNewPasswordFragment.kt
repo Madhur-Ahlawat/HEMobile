@@ -80,11 +80,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.success == true) findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment)
-                else showError(binding.root, status.data?.message)
+                if (status.data?.success == true)
+                    findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment)
+                else
+                    showError(binding.root, status.data?.message)
             }
             is Resource.DataError -> {
-                showError(binding.root, "")
+                showError(binding.root, status.errorMsg)
             }
             else -> {
             }
