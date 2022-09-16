@@ -60,9 +60,9 @@ class BusinessVehicleNonUKClassFragment :
 
         }
 
-        binding.classARadioButton.isChecked = true
-        mClassType = "1"
-        binding.classADesc.visible()
+        binding.classBRadioButton.isChecked = true
+        mClassType = "2"
+        binding.classBDesc.visible()
     }
 
     override fun initCtrl() {

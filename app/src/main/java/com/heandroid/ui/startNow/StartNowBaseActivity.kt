@@ -12,10 +12,12 @@ import com.heandroid.R
 import com.heandroid.databinding.ActivityAuthBinding
 import com.heandroid.databinding.ActivityStartNowBaseBinding
 import com.heandroid.ui.base.BaseActivity
+import com.heandroid.utils.common.AdobeAnalytics
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.HashMap
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,6 +43,18 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
             }
         }
 
+        AdobeAnalytics.setScreenTrack("about this service","about this service","english","about this service","landing","about this service")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdobeAnalytics.setLifeCycleCallAdobe(false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AdobeAnalytics.setLifeCycleCallAdobe(true)
     }
 
     override fun observeViewModel() {

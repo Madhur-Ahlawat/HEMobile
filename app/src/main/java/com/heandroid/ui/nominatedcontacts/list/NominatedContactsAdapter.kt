@@ -36,7 +36,7 @@ class NominatedContactsAdapter(
                 if(contact.accountStatus.equals(Constants.EXPIRED))
                     binding.statusTitleStr.text = Constants.EXPIRED
                 else
-                    binding.statusTitleStr.text = "Pending"
+                    binding.statusTitleStr.text = Constants.PENDING_STATUS
 
                 binding.removeBtn.text = context.getString(R.string.str_remove)
                 binding.resendBtn.text = context.getString(R.string.str_resend)

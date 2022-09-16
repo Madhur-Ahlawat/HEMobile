@@ -24,6 +24,7 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
         const val ACCOUNT_TYPE = "account_type"
+        const val SUB_ACCOUNT_TYPE = "sub_account_type"
         const val SECURITY_CODE = "security_code"
         const val SESSION_TIME = "session_time"
         const val SECURITY_CODE_OBJ = "security_code_obj"
@@ -114,7 +115,16 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
         editor.putString(ACCOUNT_TYPE, accountType)
         editor.apply()
     }
+    fun saveSubAccountType(subAccountType: String) {
+        Log.d("Session Manager::", subAccountType)
+        val editor = prefs.edit()
+        editor.putString(SUB_ACCOUNT_TYPE, subAccountType)
+        editor.apply()
+    }
 
+    fun fetchSubAccountType(): String? {
+        return prefs.getString(SUB_ACCOUNT_TYPE, null)
+    }
     fun fetchAccountType(): String? {
         return prefs.getString(ACCOUNT_TYPE, null)
     }
