@@ -5,16 +5,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +96,7 @@
                     android:id="@+id/classASeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classAView" />
@@ -157,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -216,7 +215,7 @@
                     android:id="@+id/classBSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classBView" />
@@ -278,7 +277,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -323,7 +322,7 @@
                     android:id="@+id/classCSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classCView" />
@@ -385,7 +384,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -430,7 +429,7 @@
                     android:id="@+id/classDSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classDView" />
@@ -497,9 +496,9 @@
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="start"
                 android:text="@string/str_declare_info"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
-                android:buttonTint="@color/green"
+                android:buttonTint="@color/checkbox_state"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -511,12 +510,12 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/btn_color"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/str_continue"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/classVehicleCheckbox" />
@@ -534,13 +533,13 @@
                 android:includeFontPadding="true"
                 android:text="@string/str_cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/blue_color"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/continueButton"
-                app:strokeColor="@color/green" />
+                app:strokeColor="@color/btn_color" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

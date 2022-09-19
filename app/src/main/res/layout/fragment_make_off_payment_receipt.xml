@@ -13,7 +13,7 @@
             android:layout_height="48dp"
             android:gravity="center_vertical"
             android:text="Where do you want your receipt to be sent?"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -66,12 +66,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
-            style="@style/Widget.HeMobile.TextInputLayout"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/str_email"
             android:layout_marginTop="14dp"
-            android:textColorHint="@color/grey_two"
+            android:textColorHint="@color/edit_text_inactive"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tilOptionEmail">
@@ -83,19 +84,19 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey_two"
+                style="@style/AppEditTextTransparent"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilConfirmEmail"
-            style="@style/Widget.HeMobile.TextInputLayout"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/confirm_email"
             android:layout_marginTop="14dp"
-            android:textColorHint="@color/grey_two"
+            android:textColorHint="@color/edit_text_inactive"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tilEmail">
@@ -107,8 +108,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey_two"
+                style="@style/AppEditTextTransparent"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,10 +121,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
             android:paddingTop="@dimen/_12sdp"
-            android:buttonTint="@color/green"
+            android:buttonTint="@color/checkbox_state"
             android:paddingLeft="@dimen/_11sdp"
             android:text="@string/i_declare_that_the_information_given_n_above_is_correct"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintBottom_toTopOf="@+id/btnContinue"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -135,7 +135,7 @@
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/btn_color"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"

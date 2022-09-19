@@ -16,7 +16,7 @@
             android:text="@string/payment_successful"
             android:drawableStart="@drawable/ic_successful"
             android:drawablePadding="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -31,10 +31,10 @@
             android:layout_height="48dp"
             android:gravity="center_vertical"
             android:text="£ 5.00"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
@@ -44,8 +44,8 @@
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
 
 
@@ -90,8 +90,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@color/color_B8B8B8"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -103,10 +103,9 @@
             android:id="@+id/clEmailAddress"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_marginTop="1dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clPaymentMethod">
 
 
@@ -142,8 +141,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@color/color_B8B8B8"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -157,8 +156,8 @@
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clEmailAddress">
 
 
@@ -193,7 +192,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
-                android:background="@color/color_B8B8B8"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -210,7 +209,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:text="What would you like to do next?"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clVechile" />
@@ -218,13 +217,13 @@
 
         <RadioGroup
             android:id="@+id/rgOptions"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="start"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView8">
 
 
@@ -232,39 +231,39 @@
                 android:id="@+id/rbCreateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="20dp"
                 android:lineSpacingExtra="6dp"
-                android:paddingLeft="28dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:text="Create an account with the details \nalready provided."
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
+                app:buttonTint="@color/radio_btn_color" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:background="@color/color_EFEFEF" />
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/blue_color" />
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbMakePayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:paddingLeft="28dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:text="@string/make_another_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/bottomActiveColor" />
+                app:buttonTint="@color/radio_btn_color" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:background="@color/color_EFEFEF" />
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/blue_color" />
 
 
         </RadioGroup>
@@ -278,7 +277,7 @@
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
-            android:textColor="@color/txt_disable"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"

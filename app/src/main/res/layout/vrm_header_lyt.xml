@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingStart ="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:background="@color/light_grey">
+        android:paddingEnd="@dimen/_10sdp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardview_top"
