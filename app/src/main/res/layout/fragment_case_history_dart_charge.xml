@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="applyBtnModel"
+            type="Boolean" />
+    </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -222,10 +229,10 @@
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_marginStart="@dimen/_12sdp"
                                         android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_marginBottom="@dimen/_10sdp"
                                         android:layout_marginEnd="@dimen/_4sdp"
                                         android:background="@drawable/drawable_round_corner"
-                                        android:focusable="false"
-                                        android:focusableInTouchMode="false"
+                                        android:focusableInTouchMode="true"
                                         android:fontFamily="@font/roboto_regular"
                                         android:hint="@string/case_number"
                                         android:paddingHorizontal="@dimen/_10sdp"
@@ -244,6 +251,7 @@
                                     android:id="@+id/numberSeparator"
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
+                                    android:layout_marginTop="@dimen/_10sdp"
                                     android:background="@color/color_BFBFBF"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -314,6 +322,7 @@
                                         android:paddingHorizontal="@dimen/_10sdp"
                                         android:textColor="@color/black"
                                         android:textColorHint="@color/black"
+                                        android:layout_marginBottom="@dimen/_10sdp"
                                         android:textSize="@dimen/_13sdp"
                                         app:hintTextColor="@color/black"
                                         app:layout_constraintEnd_toEndOf="parent"
@@ -474,12 +483,14 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:layout_marginBottom="@dimen/_12sdp"
+                            android:backgroundTint="@{applyBtnModel==true?@color/blue_color:@color/btn_disable_color}"
+                            android:clickable="@{applyBtnModel}"
                             android:fontFamily="@font/roboto_regular"
                             android:padding="@dimen/_6sdp"
                             android:text="@string/str_apply"
                             android:textAllCaps="false"
-                            android:textSize="@dimen/_13ssp"
-                            android:backgroundTint="@color/blue_color"
+                            android:textColor="@{applyBtnModel==false?@color/btn_disable_txt_color:@color/white}"
+                            android:textSize="@dimen/_14ssp"
                             app:cornerRadius="@dimen/_4sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

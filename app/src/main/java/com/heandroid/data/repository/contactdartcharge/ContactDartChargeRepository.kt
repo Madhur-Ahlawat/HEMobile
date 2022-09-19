@@ -1,6 +1,7 @@
 package com.heandroid.data.repository.contactdartcharge
 
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
+import com.heandroid.data.model.contactdartcharge.CaseHistoryRangeModel
 import com.heandroid.data.model.contactdartcharge.CreateNewCaseReq
 import com.heandroid.data.remote.ApiService
 import okhttp3.MultipartBody
@@ -10,6 +11,9 @@ class ContactDartChargeRepository @Inject constructor(private val apiService: Ap
 
     suspend fun getCaseHistoryDataApiCall(requestParam: CaseEnquiryHistoryRequest?) =
         apiService.getCaseHistoryData(request = requestParam)
+
+    suspend fun getCaseHistoryLoginDataApiCall(requestParam: CaseHistoryRangeModel?) =
+        apiService.getLoginCaseHistoryData(request = requestParam)
 
     suspend fun getCaseCategoriesList() =
         apiService.getCaseCategoriesList()

@@ -102,6 +102,32 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etNumberPlateLayout"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/number_plate_optional"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmailLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNumberPlate"
+                style="@style/AppEditTextTransparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textSize="@dimen/_13ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etTelePhoneLayout"
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
@@ -112,7 +138,7 @@
             app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEmailLayout">
+            app:layout_constraintTop_toBottomOf="@id/etNumberPlateLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTelePhone"

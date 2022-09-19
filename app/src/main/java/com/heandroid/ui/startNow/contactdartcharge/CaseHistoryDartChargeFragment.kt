@@ -1,5 +1,6 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
+import com.heandroid.data.model.contactdartcharge.CaseHistoryRangeModel
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
+import com.heandroid.data.model.payment.PaymentDateRangeModel
 import com.heandroid.databinding.*
 import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.utils.DatePicker
+import com.heandroid.utils.DateUtils
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.*
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.logging.Logger
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -30,8 +37,14 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
     private lateinit var mAdapter: CaseHistoryAdapter
     private var loader: LoaderDialog? = null
     private val viewModel: ContactDartChargeViewModel by viewModels()
+    private var dateRangeModel: CaseHistoryRangeModel =
+        CaseHistoryRangeModel("", "", "", "")
+
     private var caseNumber: String? = null
     private var lastName: String? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,7 +63,9 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         )
         if ((requireActivity() as ContactDartChargeActivity).mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             binding.btnGoStart.gone()
-            getCaseHistoryData()
+            // getCaseHistoryData()
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            viewModel.getCaseHistoryLoginData(dateRangeModel)
         } else {
             getCaseHistoryApiData()
             binding.btnGoStart.visible()
@@ -58,6 +73,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         }
 
     }
+
 
     private fun getCaseHistoryApiData() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -88,7 +104,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         return drawer.isDrawerOpen(GravityCompat.END)
     }
 
-    fun closeFilterDrawer() {
+    private fun closeFilterDrawer() {
         binding.drawerLayout.closeDrawers()
     }
 
@@ -98,6 +114,29 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             btnGoStart.setOnClickListener(this@CaseHistoryDartChargeFragment)
             btnRaiseNewQuery.setOnClickListener(this@CaseHistoryDartChargeFragment)
             tvFilter.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            closeImage.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            clearAllNumber.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            clearAllDateRange.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            clearAllSpecificDate.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            edFrom.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            edTo.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            edSpecificDay.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            rbDateRange.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            applyBtn.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            rbSpecificDay.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            edFrom.onTextChanged {
+                checkFilterApplyBtn()
+            }
+            edTo.onTextChanged {
+                checkFilterApplyBtn()
+            }
+            edSpecificDay.onTextChanged {
+                checkFilterApplyBtn()
+            }
+            edtCaseNumber.onTextChanged {
+                checkFilterApplyBtn()
+            }
+
         }
     }
 
@@ -138,6 +177,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
 
     override fun observer() {
         observe(viewModel.caseHistoryApiVal, ::handleCaseHistoryListData)
+        observe(viewModel.caseHistoryLoginApiVal, ::handleCaseHistoryListData)
     }
 
     private fun handleCaseHistoryListData(resource: Resource<CaseEnquiryHistoryResponse?>?) {
@@ -182,11 +222,148 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                 }
                 R.id.tvFilter -> {
                     openFilterDrawer()
+                    checkFilterApplyBtn()
+                }
+                R.id.closeImage -> {
+                    closeFilterDrawer()
+                }
+
+                R.id.clearAllNumber -> {
+                    binding.edtCaseNumber.text?.clear()
+                    checkFilterApplyBtn()
+                }
+                R.id.clearAllDateRange -> {
+                    binding.edFrom.text?.clear()
+                    binding.edTo.text?.clear()
+                    checkFilterApplyBtn()
+
+                }
+                R.id.clearAllSpecificDate -> {
+
+                    binding.rbSpecificDay.isChecked = false
+                    binding.edSpecificDay.text?.clear()
+                    checkFilterApplyBtn()
+                }
+                R.id.edFrom -> {
+                    DatePicker(binding.edFrom).show(
+                        requireActivity().supportFragmentManager,
+                        Constants.DATE_PICKER_DIALOG
+                    )
+                }
+                R.id.edTo -> {
+                    DatePicker(binding.edTo).show(
+                        requireActivity().supportFragmentManager,
+                        Constants.DATE_PICKER_DIALOG
+                    )
+                }
+                R.id.edSpecificDay -> {
+                    DatePicker(binding.edSpecificDay).show(
+                        requireActivity().supportFragmentManager,
+                        Constants.DATE_PICKER_DIALOG
+                    )
+                }
+                R.id.applyBtn -> {
+
+                    closeFilterDrawer()
+                    clickApplyBtn()
+                    binding.edtCaseNumber.text?.clear()
+                    binding.edSpecificDay.text?.clear()
+                    binding.edFrom.text?.clear()
+                    binding.edTo.text?.clear()
+                    binding.rbDateRange.isChecked = false
+                    binding.rbSpecificDay.isChecked = false
+
+
+                }
+                R.id.rbSpecificDay -> {
+                    binding.rbSpecificDay.isChecked = true
+                    binding.rbDateRange.isChecked = false
+                    checkFilterApplyBtn()
+                }
+                R.id.rbDateRange -> {
+                    binding.rbDateRange.isChecked = true
+                    binding.rbSpecificDay.isChecked = false
+                    checkFilterApplyBtn()
                 }
                 else -> {
                 }
             }
         }
     }
+
+    private fun clickApplyBtn() {
+
+        if (binding.edtCaseNumber.text!!.isNotEmpty()) {
+
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            viewModel.getCaseHistoryLoginData(
+                CaseHistoryRangeModel(
+                    "",
+                    "",
+                    "",
+                    binding.edtCaseNumber.text.toString()
+                )
+            )
+
+        } else if (binding.rbSpecificDay.isChecked) {
+            if (binding.edSpecificDay.text!!.isNotEmpty()) {
+
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                viewModel.getCaseHistoryLoginData(
+                    CaseHistoryRangeModel(
+                        binding.edSpecificDay.text.toString(),
+                        "",
+                        "",
+                        binding.edtCaseNumber.text.toString()
+                    )
+                )
+
+            }
+
+        } else if (binding.rbDateRange.isChecked) {
+            if (binding.edFrom.text!!.isNotEmpty() && binding.edTo.text!!.isNotEmpty()) {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                viewModel.getCaseHistoryLoginData(
+                    CaseHistoryRangeModel(
+                        binding.edFrom.text.toString(),
+                        binding.edTo.text.toString(),
+                        "",
+                        binding.edtCaseNumber.text.toString()
+                    )
+                )
+            }
+
+        } else {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            viewModel.getCaseHistoryLoginData(
+                CaseHistoryRangeModel(
+                    "",
+                    "",
+                    Constants.ALL,
+                    ""
+                )
+            )
+        }
+
+    }
+
+    private fun checkFilterApplyBtn() {
+        when {
+            binding.rbSpecificDay.isChecked -> {
+                binding.applyBtnModel =
+                    (!binding.edSpecificDay.text.isNullOrEmpty())
+            }
+            binding.rbDateRange.isChecked -> {
+                binding.applyBtnModel =
+                    !binding.edFrom.text.isNullOrEmpty()
+                            && !binding.edTo.text.isNullOrEmpty()
+            }
+            else -> {
+                binding.applyBtnModel = true
+            }
+        }
+
+    }
+
 
 }

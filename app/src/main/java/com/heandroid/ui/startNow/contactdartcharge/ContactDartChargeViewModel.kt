@@ -26,6 +26,10 @@ class ContactDartChargeViewModel @Inject constructor(
     val caseHistoryApiVal: LiveData<Resource<CaseEnquiryHistoryResponse?>?> get() = _caseHistoryApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _caseHistoryLoginApiVal = MutableLiveData<Resource<CaseEnquiryHistoryResponse?>?>()
+    val caseHistoryLoginApiVal: LiveData<Resource<CaseEnquiryHistoryResponse?>?> get() = _caseHistoryLoginApiVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getCaseCategoriesListVal =
         MutableLiveData<Resource<List<CaseCategoriesModel?>?>?>()
     val getCaseCategoriesListVal: LiveData<Resource<List<CaseCategoriesModel?>?>?> get() = _getCaseCategoriesListVal
@@ -54,6 +58,20 @@ class ContactDartChargeViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _caseHistoryApiVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun getCaseHistoryLoginData(request: CaseHistoryRangeModel?) {
+        viewModelScope.launch {
+            try {
+                _caseHistoryLoginApiVal.postValue(
+                    ResponseHandler.success(
+                        repository.getCaseHistoryLoginDataApiCall(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _caseHistoryLoginApiVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

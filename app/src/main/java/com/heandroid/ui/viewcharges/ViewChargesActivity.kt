@@ -53,7 +53,28 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                 binding.titleCard.visible()
                 binding.recyclerView.apply {
                     layoutManager = LinearLayoutManager(this@ViewChargesActivity)
-                    adapter = TollRateAdapter(this@ViewChargesActivity, status.data)
+
+                    val mTollRatesList = ArrayList<TollRatesResp>()
+                    status.data?.forEach {
+                        if (it?.vehicleType == "A") {
+                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Motorcycle, \nmopeds,\nquad bikes",it?.videoRate,it?.etcRate))
+
+                        } else if (it?.vehicleType == "B") {
+                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Cars, \nmotorhomes,\nminibuses",it?.videoRate,it?.etcRate))
+
+                        } else if (it?.vehicleType == "C") {
+                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Vehicles with \n2 axles",it?.videoRate,it?.etcRate))
+
+                        } else if (it?.vehicleType == "D") {
+                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Vehicles with\n more than 2\n axles",it?.videoRate,it?.etcRate))
+
+                        } else {
+
+                        }
+
+                    }
+
+                    adapter = TollRateAdapter(this@ViewChargesActivity,mTollRatesList)
                 }
             }
             is Resource.DataError -> {

@@ -217,6 +217,11 @@ interface ApiService {
         @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<CaseEnquiryHistoryResponse?>?
 
+    @POST(GET_ACCOUNT_SR_LIST)
+    suspend fun getLoginCaseHistoryData(
+        @Body request: CaseHistoryRangeModel?,
+    ): Response<CaseEnquiryHistoryResponse?>?
+
     @GET(ACCOUNT_DETAIL)
     suspend fun accountDetail(
         @Query("agencyId") agencyId: String? = AGENCY_ID
