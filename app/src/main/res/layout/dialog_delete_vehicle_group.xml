@@ -59,13 +59,12 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="@string/str_no"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/yesBtn"
             app:layout_constraintTop_toBottomOf="@id/tvDeleteTitle"
-            app:strokeColor="@color/btn_color"
-            app:strokeWidth="1dp" />
+            app:strokeColor="@color/btn_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -21,21 +21,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/E5E5E5">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvGroupDesc1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="start"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="@string/group_mngmt_desc1"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +51,8 @@
             android:gravity="start"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="@string/group_mngmt_desc2"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,8 +69,8 @@
             android:gravity="start"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="@string/group_mngmt_desc3"
-            android:textColor="@color/color_626262"
-            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,13 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_groups_added"
-            android:visibility="gone"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/createVehicleGroupBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGroupDesc3" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvVehicleGroupList"
             android:layout_width="match_parent"
@@ -109,17 +109,15 @@
             android:layout_height="@dimen/_44sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:backgroundTint="@{createNewGroup==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{createNewGroup==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{createNewGroup}"
             android:text="@string/create_vehicle_group"
             android:textAllCaps="false"
-            android:textColor="@{createNewGroup==true?@color/white:@color/btn_color}"
+            android:textColor="@{createNewGroup==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@id/deleteVehicleGroupBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/deleteVehicleGroupBtn"
@@ -128,18 +126,16 @@
             android:layout_height="@dimen/_44sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:backgroundTint="@{deleteGroup==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{deleteGroup==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{deleteGroup}"
             android:includeFontPadding="true"
             android:text="@string/delete_vehicle_group"
             android:textAllCaps="false"
-            android:textColor="@{deleteGroup==true?@color/white:@color/btn_color}"
+            android:textColor="@{deleteGroup==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@id/renameVehicleGroupBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/renameVehicleGroupBtn"
@@ -149,18 +145,16 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:backgroundTint="@{renameGroup==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{renameGroup==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{renameGroup}"
             android:includeFontPadding="true"
             android:text="@string/rename_vehicle_group"
             android:textAllCaps="false"
-            android:textColor="@{renameGroup==true?@color/white:@color/btn_color}"
+            android:textColor="@{renameGroup==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
-
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

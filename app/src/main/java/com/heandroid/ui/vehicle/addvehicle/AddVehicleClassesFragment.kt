@@ -46,18 +46,14 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-        Logg.logging("testing", " AddVehicleClassesFragment mScreeType  $mScreeType")
+        binding.title.text = getString(R.string.vehicle_reg_num, mVehicleDetails?.plateInfo?.number)
 
-        binding.title.text = "Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
-
-        binding.classARadioButton.isChecked = true
-        mClassType = "1"
-        binding.classADesc.visible()
+        binding.classBRadioButton.isChecked = true
+        mClassType = "2"
+        binding.classBDesc.visible()
     }
 
     override fun initCtrl() {
-        binding.classADesc.visible()
-
 /*
         binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {

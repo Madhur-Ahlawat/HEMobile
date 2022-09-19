@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,12 +10,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/he_bg"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvVehicleCrossingHistory"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/_10sdp"
+            tools:listitem="@layout/adapter_crossing_history"
             app:layout_constraintBottom_toTopOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_crossings_have_been_made"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -64,7 +68,7 @@
                 android:id="@+id/download_crossing_history_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/blue_color"
                 android:text="@string/str_download_crossing_history"
                 android:visibility="gone"
                 android:textAllCaps="false"
@@ -81,9 +85,9 @@
                 android:includeFontPadding="true"
                 android:text="@string/str_back_to_vehicles_list"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_16ssp"
-                app:strokeColor="@color/green" />
+                android:textColor="@color/blue_color"
+                android:textSize="@dimen/_14ssp"
+                app:strokeColor="@color/blue_color" />
 
         </LinearLayout>
 

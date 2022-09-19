@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/charges_crossing_txt"
@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/str_charges_for_crossing"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -25,10 +25,10 @@
             android:id="@+id/tvLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="start"
             android:lineSpacingExtra="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/color_626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="normal"
             android:visibility="visible"
@@ -40,7 +40,7 @@
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
@@ -72,8 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_11sdp"
-            />
+            app:layout_constraintGuide_begin="@dimen/_11sdp" />
 
 
         <androidx.constraintlayout.widget.Guideline

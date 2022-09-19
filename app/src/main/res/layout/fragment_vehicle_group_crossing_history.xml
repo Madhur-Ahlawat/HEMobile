@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/E5E5E5">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/crossingTitle"
@@ -30,7 +30,7 @@
             android:gravity="start"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="@string/crossings"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,12 +44,11 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:drawableEnd="@drawable/ic_download_crossing"
             android:drawablePadding="@dimen/_8sdp"
-            android:drawableTint="@color/black"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:text="@string/download"
-            android:textColor="@color/black"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvFilter"
             app:layout_constraintTop_toBottomOf="@id/crossingTitle" />
@@ -62,14 +61,14 @@
             android:layout_marginEnd="@dimen/_18sdp"
             android:drawableStart="@drawable/ic_filter_small"
             android:drawablePadding="@dimen/_5sdp"
-            android:drawableTint="@color/green"
+            android:drawableTint="@color/high_lighted_color"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:text="@string/str_filter"
-            android:textColor="@color/color_00703C"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/crossingTitle" />
@@ -79,6 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_crossings_have_been_made"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,6 +114,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/backBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -177,7 +179,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue_color"
             android:text="@string/back_to_vehicles_list"
             android:textAllCaps="false"
             android:textColor="@color/white"

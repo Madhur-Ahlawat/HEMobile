@@ -12,6 +12,7 @@
         android:elevation="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_2sdp"
         android:layout_width="match_parent"
+        app:cardCornerRadius="0dp"
         android:layout_height="@dimen/_40sdp">
 
 

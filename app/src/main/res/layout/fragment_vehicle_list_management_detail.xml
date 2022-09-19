@@ -8,26 +8,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@drawable/he_bg">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/separator"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_EFEFEF">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_C4C4C4"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -70,7 +65,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_10sdp">
@@ -107,7 +102,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_10sdp">
@@ -146,7 +141,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_10sdp">
@@ -185,7 +180,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_10sdp">
@@ -224,7 +219,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_48sdp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp"
                         android:paddingHorizontal="@dimen/_10sdp">
@@ -259,12 +254,10 @@
 
                     </RelativeLayout>
 
-
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/white"
                         android:padding="@dimen/_10sdp">
 
@@ -310,27 +303,16 @@
                                 android:textSize="@dimen/_13ssp" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"/>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-
         </androidx.core.widget.NestedScrollView>
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_C4C4C4"
-            app:layout_constraintBottom_toTopOf="@+id/buttonsView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2" />
 
         <LinearLayout
             android:id="@+id/buttonsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_EFEFEF"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -344,7 +326,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:backgroundTint="@color/btn_color"
+                android:backgroundTint="@color/blue_color"
                 android:textColor="@color/white"
                 android:text="@string/str_change"
                 android:textAllCaps="false"
@@ -363,9 +345,9 @@
                 android:includeFontPadding="true"
                 android:text="@string/str_remove_vehicle"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_16ssp"
-                app:strokeColor="@color/green" />
+                android:textColor="@color/blue_color"
+                android:textSize="@dimen/_14ssp"
+                app:strokeColor="@color/blue_color" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

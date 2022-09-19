@@ -121,13 +121,12 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/str_cancel"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/add_vehicle_btn"
             app:layout_constraintTop_toBottomOf="@+id/switch_view"
-            app:strokeColor="@color/btn_color"
-            app:strokeWidth="1dp" />
+            app:strokeColor="@color/btn_color"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
