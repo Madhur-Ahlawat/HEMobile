@@ -886,6 +886,7 @@
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
     <string name="select">Select</string>
+    <string name="number_plate_optional">Number Plate(Optional)</string>
 
 </resources>
 

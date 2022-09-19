@@ -102,14 +102,14 @@
             android:id="@+id/downloadPdf"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25ssp"
-            android:background="@color/blue_color"
+            android:background="@drawable/button_shadow"
             android:text="@string/download"
             android:textAllCaps="false"
             android:layout_marginTop="@dimen/_10ssp"
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintTop_toBottomOf="@+id/pdfTitleText" />
+            app:layout_constraintBottom_toBottomOf="@id/spYearPdf" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/monthlyCsvFormat"
@@ -191,14 +191,14 @@
             android:id="@+id/downloadCsv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25sdp"
-            android:background="@color/blue_color"
+            android:background="@drawable/button_shadow"
             android:text="@string/str_submit"
             android:layout_marginTop="@dimen/_10ssp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintTop_toBottomOf="@+id/csvTitleText" />
+            app:layout_constraintBottom_toBottomOf="@id/spPeriodCsv" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/annualAccountSummary"
@@ -255,7 +255,7 @@
             android:id="@+id/submitAccount"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_25ssp"
-            android:background="@color/blue_color"
+            android:background="@drawable/button_shadow"
             android:text="@string/str_submit"
             android:textAllCaps="false"
             android:layout_marginStart="@dimen/_35ssp"
@@ -263,7 +263,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintTop_toBottomOf="@+id/accountTitleText" />
+            app:layout_constraintBottom_toBottomOf="@id/spYearAccount" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glStart"
