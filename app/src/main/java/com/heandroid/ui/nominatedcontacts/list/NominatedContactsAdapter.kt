@@ -24,7 +24,7 @@ class NominatedContactsAdapter(
 
         fun setView(context: Context, contact: SecondaryAccountData) {
 
-            binding.nameTitle.text = "${contact.firstName}${contact.lastName}"
+            binding.nameTitle.text = "${contact.firstName?.replaceFirstChar { it.uppercase() }} ${contact.lastName?.replaceFirstChar { it.uppercase() }}"
             binding.emailIdStr.text = contact.emailAddress
             binding.mobileNumberStr.text = contact.phoneNumber
 

@@ -81,6 +81,7 @@ object Constants {
     const val SPREAD_SHEET = "spreadsheet"
     const val PDF = "pdf"
     const val VIEW_ALL = "view_all"
+    const val ALL = "ALL"
     const val DATE_FILTER = "date_filter"
     const val NO = "no"
     const val YES = "yes"
