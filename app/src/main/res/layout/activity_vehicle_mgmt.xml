@@ -25,7 +25,8 @@
         <LinearLayout
             android:id="@+id/chipLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/he_bg_toolbar"
             android:gravity="start"
             android:orientation="horizontal"
             android:padding="@dimen/_8sdp"
@@ -45,7 +46,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/str_vehicle_details"
-                android:textColor="@{chipButtonVehicle==true?@color/white:@color/black}"
+                android:textColor="@{chipButtonVehicle==true?@color/high_lighted_text_color:@color/white}"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -60,7 +61,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/str_crossing_history"
-                android:textColor="@{chipButtonVehicle==false?@color/white:@color/black}"
+                android:textColor="@{chipButtonVehicle==false?@color/high_lighted_text_color:@color/white}"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 

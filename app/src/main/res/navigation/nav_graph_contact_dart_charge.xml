@@ -92,7 +92,8 @@
         tools:layout="@layout/fragment_new_case_summary">
         <action
             android:id="@+id/action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment"
-            app:destination="@id/CaseCreatedSuccessfullyFragment" />
+            app:destination="@id/CaseCreatedSuccessfullyFragment"
+            app:popUpTo="@id/newCaseCategoryFragment" />
     </fragment>
 
     <fragment
@@ -100,9 +101,10 @@
         android:name="com.heandroid.ui.startNow.contactdartcharge.CaseCreatedSuccessfullyFragment"
         android:label="CaseCreatedSuccessfullyFragment"
         tools:layout="@layout/fragment_raise_new_enquiry_success">
+
         <action
-            android:id="@+id/action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment"
-            app:destination="@id/caseHistoryDartChargeFragment" />
+            android:id="@+id/action_CaseCreatedSuccessfullyFragment_to_caseDetailsDartChargeFragment"
+            app:destination="@id/caseDetailsDartChargeFragment" />
 
     </fragment>
 

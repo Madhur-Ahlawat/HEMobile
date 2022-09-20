@@ -41,7 +41,7 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:padding="@dimen/_2sdp"
             android:text="@string/str_clear_underlined"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +55,10 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:checked="true"
-            android:theme="@style/Theme.HEMobileLight"
             android:paddingHorizontal="@dimen/_10sdp"
             android:text="@string/number_plate"
             android:textColor="@color/black"
+            android:theme="@style/Theme.HEMobileLight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -101,11 +101,11 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+            android:backgroundTint="@{model==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{model}"
             android:text="@string/str_apply"
             android:textAllCaps="false"
-            android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
+            android:textColor="@{model==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@+id/cancel_btn"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -123,13 +123,12 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/str_cancel"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/blue_color"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/applyBtn"
             app:layout_constraintTop_toBottomOf="@+id/txt_input_lyt"
-            app:strokeColor="@color/btn_color"
-            app:strokeWidth="1dp" />
+            app:strokeColor="@color/btn_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

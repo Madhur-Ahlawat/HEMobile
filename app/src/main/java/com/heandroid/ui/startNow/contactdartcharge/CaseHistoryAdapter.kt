@@ -31,19 +31,14 @@ class CaseHistoryAdapter(
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(list?.get(position))
-        if (list?.get(position)?.status.equals(Constants.CLOSED, true)){
-            holder.binding.next.visible()
-            holder.binding.cvMain.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putParcelable(Constants.DATA, list?.get(position))
-                if (myFragment is CaseHistoryDartChargeFragment)
-                    it.findNavController().navigate(
-                        R.id.action_caseHistoryDartChargeFragment_to_caseHistoryDetailsDartChargeFragment,
-                        bundle
-                    )
-            }
-        } else {
-            holder.binding.next.visibility = View.INVISIBLE
+        holder.binding.cvMain.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.DATA, list?.get(position))
+            if (myFragment is CaseHistoryDartChargeFragment)
+                it.findNavController().navigate(
+                    R.id.action_caseHistoryDartChargeFragment_to_caseHistoryDetailsDartChargeFragment,
+                    bundle
+                )
         }
     }
 

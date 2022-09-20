@@ -248,8 +248,8 @@
                         android:textSize="@dimen/_11ssp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/rl_comments_title" />
 
 
@@ -267,6 +267,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/rl_comments">
 
                     <LinearLayout
+                        android:id="@+id/file1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -276,6 +277,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_choose_file_txt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -284,7 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_upload" />
+                            app:srcCompat="@drawable/ic_successful" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/fileName1"
@@ -300,6 +302,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/file2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -310,6 +313,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_choose_file_txt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -318,7 +322,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_upload" />
+                            app:srcCompat="@drawable/ic_successful" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/fileName2"
@@ -334,6 +338,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/file3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -344,6 +349,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_choose_file_txt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -352,7 +358,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_upload" />
+                            app:srcCompat="@drawable/ic_successful" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/fileName3"
@@ -368,6 +374,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/file4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -378,6 +385,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_choose_file_txt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -386,7 +394,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_upload" />
+                            app:srcCompat="@drawable/ic_successful" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/fileName4"
@@ -443,12 +451,12 @@
             android:id="@+id/btnNext"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_61sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="@color/blue_color"
-            android:text="@string/str_raise_new_enquiry"
+            android:text="@string/str_submit_enquiry"
             android:textAllCaps="false"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_5sdp"

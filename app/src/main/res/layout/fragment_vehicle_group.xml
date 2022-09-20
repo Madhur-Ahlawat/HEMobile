@@ -29,20 +29,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/E5E5E5">
+        android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/groupName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="start"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="Group A"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +60,7 @@
             android:lineSpacingExtra="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_2sdp"
             android:text="@string/group_desc"
-            android:textColor="@color/color_3C3C4399"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,12 +74,12 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:drawableEnd="@drawable/ic_download_crossing"
             android:drawablePadding="@dimen/_8sdp"
-            android:drawableTint="@color/black"
+            android:drawableTint="@color/high_lighted_color"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:text="@string/download"
-            android:textColor="@color/black"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/tvFilter"
             app:layout_constraintTop_toBottomOf="@id/tvGroupDesc" />
@@ -94,14 +93,14 @@
             android:layout_marginEnd="@dimen/_18sdp"
             android:drawableStart="@drawable/ic_filter_small"
             android:drawablePadding="@dimen/_5sdp"
-            android:drawableTint="@color/green"
+            android:drawableTint="@color/high_lighted_color"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:text="@string/str_filter"
-            android:textColor="@color/color_00703C"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGroupDesc" />
@@ -111,6 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_no_vehicles"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@+id/paginationLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -211,16 +211,15 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:backgroundTint="@{addVehicleModel==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{addVehicleModel==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{addVehicleModel}"
             android:text="@string/vehicle_add"
             android:textAllCaps="false"
-            android:textColor="@{addVehicleModel==true?@color/white:@color/btn_color}"
+            android:textColor="@{addVehicleModel==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toTopOf="@id/removeVehicleBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/removeVehicleBtn"
@@ -230,17 +229,16 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:backgroundTint="@{removeVehicleModel==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{removeVehicleModel==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{removeVehicleModel}"
             android:includeFontPadding="true"
             android:text="@string/vehicle_remove"
             android:textAllCaps="false"
-            android:textColor="@{removeVehicleModel==true?@color/white:@color/btn_color}"
+            android:textColor="@{removeVehicleModel==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toTopOf="@id/bulkUploadBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bulkUploadBtn"
@@ -250,17 +248,16 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:backgroundTint="@{bulkUploadModel==true?@color/btn_color:@color/E5E5E5}"
+            android:backgroundTint="@{bulkUploadModel==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{bulkUploadModel}"
             android:includeFontPadding="true"
             android:text="@string/vehicle_bulk_upload"
             android:textAllCaps="false"
-            android:textColor="@{bulkUploadModel==true?@color/white:@color/btn_color}"
+            android:textColor="@{bulkUploadModel==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/btn_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

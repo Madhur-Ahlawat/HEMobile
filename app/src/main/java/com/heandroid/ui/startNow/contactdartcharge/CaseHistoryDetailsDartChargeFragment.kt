@@ -16,13 +16,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDetailsDartChargeBinding>(), View.OnClickListener {
+class CaseHistoryDetailsDartChargeFragment :
+    BaseFragment<FragmentCaseHistoryDetailsDartChargeBinding>(), View.OnClickListener {
 
-    private var data : ServiceRequest? = null
+    private var data: ServiceRequest? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -36,11 +36,10 @@ class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDet
             binding.data = it
         }
         if (sessionManager.getLoggedInUser()) {
-           binding.btnGoStart.text = getString(R.string.str_go_to_account_management)
+            binding.btnGoStart.text = getString(R.string.str_go_to_account_management)
         } else {
-           binding.btnGoStart.text = getString(R.string.str_go_to_start_menu)
+            binding.btnGoStart.text = getString(R.string.str_go_to_start_menu)
         }
-
     }
 
     override fun initCtrl() {
@@ -50,7 +49,7 @@ class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDet
         }
     }
 
-    override fun observer() { }
+    override fun observer() {}
 
     override fun onClick(view: View?) {
         view?.let {
@@ -59,13 +58,18 @@ class CaseHistoryDetailsDartChargeFragment : BaseFragment<FragmentCaseHistoryDet
                     if (sessionManager.getLoggedInUser()) {
                         requireActivity().finish()
                     } else {
-                        requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
+                        requireActivity().startNewActivityByClearingStack(
+                            LandingActivity::class.java
+                        )
                     }
                 }
                 R.id.btnRaiseNewQuery -> {
-                    findNavController().navigate(R.id.action_caseHistoryDetailsDartChargeFragment_to_newCaseCategoryFragment)
+                    findNavController().navigate(
+                        R.id.action_caseHistoryDetailsDartChargeFragment_to_newCaseCategoryFragment
+                    )
                 }
-                else -> { }
+                else -> {
+                }
             }
         }
     }

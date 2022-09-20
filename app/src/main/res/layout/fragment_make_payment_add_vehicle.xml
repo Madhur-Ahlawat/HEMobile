@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="addButton"
             type="Boolean" />
+
         <variable
             name="findButton"
             type="Boolean" />
@@ -15,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/he_bg"
         android:padding="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -38,13 +41,13 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:listitem="@layout/adapter_vehicles_row"
-            tools:itemCount="5"
+            app:layout_constraintBottom_toTopOf="@id/add_upto_five_vehicles"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/add_upto_five_vehicles"
-            app:layout_constraintTop_toBottomOf="@+id/no_vehicles_added" />
+            app:layout_constraintTop_toBottomOf="@+id/no_vehicles_added"
+            tools:itemCount="5"
+            tools:listitem="@layout/adapter_vehicles_row"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/no_vehicles_added"
@@ -81,20 +84,20 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@{addButton==true?@color/blue_color:@color/btn_disable_color}"
+            android:clickable="@{addButton}"
             android:text="@string/str_add_vehicle"
             android:textAllCaps="false"
-            android:backgroundTint="@{addButton==true?@color/white:@color/color_C9C9C9}"
-            android:clickable="@{addButton}"
-            android:textColor="@{addButton==true?@color/blue_color:@color/color_7D7D7D}"
-            app:iconTint="@{addButton==true?@color/btn_color:@color/color_7D7D7D}"
-            app:strokeColor="@{addButton==true?@color/btn_color:@color/color_7D7D7D}"
+            android:textColor="@{addButton==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:icon="@drawable/ic_baseline_add_24"
             app:iconGravity="textStart"
+            app:iconTint="@{addButton==true?@color/white:@color/btn_disable_txt_color}"
             app:layout_constraintBottom_toTopOf="@+id/findVehicle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@{addButton==true?@color/blue_color:@color/btn_disable_txt_color}"
             app:strokeWidth="@dimen/_1sdp" />
 
 
@@ -104,9 +107,9 @@
             android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@{findButton==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{findButton}"
-            android:textColor="@{findButton==false?@color/btn_disable_txt_color:@color/white}"
             android:text="@string/str_find_vehicle"
             android:textAllCaps="false"
+            android:textColor="@{findButton==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

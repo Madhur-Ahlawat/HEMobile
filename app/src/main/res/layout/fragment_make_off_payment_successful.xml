@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
-            android:text="@string/payment_successful"
+            android:layout_height="@dimen/_40sdp"
             android:drawableStart="@drawable/ic_successful"
             android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/payment_successful"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
@@ -31,21 +31,22 @@
             android:layout_height="48dp"
             android:gravity="center_vertical"
             android:text="£ 5.00"
-            android:textColor="@color/white"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPaymentMethod"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="4dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
 
 
@@ -81,8 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:textSize="@dimen/_13sdp"
                 android:text="@string/download_receipt"
+                android:textSize="@dimen/_13sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,8 +91,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@color/blue_color"
+                android:layout_height="0.8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -102,10 +102,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clEmailAddress"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clPaymentMethod">
 
 
@@ -141,8 +143,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@color/blue_color"
+                android:layout_height="0.8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -154,10 +155,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clVechile"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="2dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clEmailAddress">
 
 
@@ -182,8 +185,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:textSize="@dimen/_13sdp"
                 android:text="@string/view_all_vehicles"
+                android:textSize="@dimen/_13sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -192,14 +195,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
-                android:background="@color/blue_color"
+                android:background="@color/color_B8B8B8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -217,13 +219,14 @@
 
         <RadioGroup
             android:id="@+id/rgOptions"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:gravity="start"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView8">
 
 
@@ -231,11 +234,11 @@
                 android:id="@+id/rbCreateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:lineSpacingExtra="6dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:lineSpacingExtra="@dimen/_4sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
                 android:text="Create an account with the details \nalready provided."
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -243,18 +246,19 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@color/blue_color" />
+                android:layout_height="@dimen/_2sdp"
+                android:background="@color/color_EFEFEF" />
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rbMakePayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:lineSpacingExtra="@dimen/_4sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
                 android:text="@string/make_another_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
@@ -262,8 +266,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@color/blue_color" />
+                android:layout_height="@dimen/_2sdp"
+                android:background="@color/color_EFEFEF" />
 
 
         </RadioGroup>
@@ -273,7 +277,7 @@
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/btn_color"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/str_continue"
             android:textAllCaps="false"
@@ -283,9 +287,6 @@
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />
-
-
-
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -309,8 +310,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="0dp"
-            />
+            app:layout_constraintGuide_begin="0dp" />
 
 
         <androidx.constraintlayout.widget.Guideline

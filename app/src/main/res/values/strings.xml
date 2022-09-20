@@ -556,6 +556,7 @@
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
     <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+    <string name="str_submit_enquiry">Submit enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
     <string name="vehicle_reg_number">Vehicle registration number</string>

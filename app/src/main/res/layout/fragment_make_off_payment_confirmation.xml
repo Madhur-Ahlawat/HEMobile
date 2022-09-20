@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/he_bg">
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView"
@@ -16,9 +18,9 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
@@ -28,21 +30,21 @@
             android:layout_height="48dp"
             android:gravity="center_vertical"
             android:text="£ 5.00"
-            android:textColor="@color/white"
+            android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintTop_toBottomOf="@id/glTop" />
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPaymentMethod"
             android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="4dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/corner_radius_white_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
 
 
@@ -79,7 +81,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
-                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -90,11 +91,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clEmailAddress"
             android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/corner_radius_white_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clPaymentMethod">
 
 
@@ -131,7 +133,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
-                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -143,12 +144,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView8"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/_40sdp"
             android:gravity="center_vertical"
             android:text="Vehicle list"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
-            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/clEmailAddress" />
 
 
@@ -156,26 +157,29 @@
             android:id="@+id/rvVechileList"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btnPayNow"
-            app:layout_constraintEnd_toEndOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView8" />
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@+id/btnPayNow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView8"
+            tools:listitem="@layout/adapter_make_off_payment_vechile" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPayNow"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@color/btn_color"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/pay_now"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
-            app:layout_constraintBottom_toTopOf="@id/glBottom"
-            app:layout_constraintEnd_toStartOf="@id/glEnd"
-            app:layout_constraintStart_toStartOf="@id/glStart" />
+            app:layout_constraintBottom_toTopOf="@+id/glBottom"
+            app:layout_constraintEnd_toStartOf="@+id/glEnd"
+            app:layout_constraintStart_toStartOf="@+id/glStart" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -199,8 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="0dp"
-            />
+            app:layout_constraintGuide_begin="0dp" />
 
 
         <androidx.constraintlayout.widget.Guideline

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart ="@dimen/_10sdp"
-        android:paddingTop="@dimen/_5sdp"
+        android:paddingTop="@dimen/_2sdp"
         android:paddingEnd="@dimen/_10sdp">
 
         <com.google.android.material.card.MaterialCardView
@@ -19,15 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@color/white"
-            android:backgroundTint="@color/white"
-            android:elevation="@dimen/_2sdp"
-            android:fadingEdgeLength="@dimen/_2sdp">
+            app:cardCornerRadius="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:background="@color/white">
 
@@ -63,15 +61,17 @@
             android:id="@+id/card_view_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:layout_below="@+id/cardview_top"
             android:background="@color/white"
+            app:cardCornerRadius="0dp"
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_2sdp"
             android:fadingEdgeLength="@dimen/_2sdp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
+                android:layout_marginStart="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
