@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="10dp"
-            android:padding="@dimen/_2sdp"
+            android:padding="@dimen/_10sdp"
             android:src="@drawable/ic_close"
             app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"

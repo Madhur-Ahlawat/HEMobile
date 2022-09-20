@@ -59,7 +59,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
 
         vehiclesAdapter = VehicleGroupVehiclesAdapter(this, vehicleResponseList)
-        vehicleMgmtViewModel.getVehicleInformationApi()
+        vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
 
     }
 
@@ -115,7 +115,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             is Resource.Success -> {
                 requireActivity().showToast("vehicle(s) added successfully")
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
 //                vehicleGroup?.let {
 //                    val bundle = Bundle().apply {
 //                        putParcelable(Constants.DATA, it)
@@ -128,7 +128,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             }
             is Resource.DataError -> {
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {

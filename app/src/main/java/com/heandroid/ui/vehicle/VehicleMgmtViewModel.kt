@@ -234,12 +234,12 @@ class VehicleMgmtViewModel @Inject constructor(
         }
     }
 
-    fun getVehicleInformationApi() {
+    fun getVehicleInformationApi(start: String, count: String) {
         viewModelScope.launch {
             try {
                 _vehicleListVal.postValue(
                     ResponseHandler.success(
-                        repository.getVehicleListApiCall(),
+                        repository.getVehicleListApiCall(start, count),
                         errorManager
                     )
                 )

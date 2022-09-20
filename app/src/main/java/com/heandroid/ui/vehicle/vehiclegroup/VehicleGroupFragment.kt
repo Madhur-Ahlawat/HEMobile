@@ -76,7 +76,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 && it.groupId?.isEmpty() == true
             ) {
                 isGetVehicleListData = true
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
             } else {
                 isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)
@@ -253,7 +253,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 && it.groupId!!.isEmpty()
             ) {
                 isGetVehicleListData = true
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
             } else {
                 isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)

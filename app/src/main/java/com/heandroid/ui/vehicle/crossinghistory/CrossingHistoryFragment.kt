@@ -74,7 +74,6 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         container: ViewGroup?
     ) = FragmentCrossingHistoryBinding.inflate(inflater, container, false)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crossingHistoryAdapter = CrossingHistoryAdapter(this, list)
@@ -83,7 +82,6 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
         isCrossingHistory = true
 
     }
-
 
     override fun init() {
         binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
@@ -152,8 +150,6 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                     resource.data?.let {
                         val response = resource.data
                         totalCount = response.transactionList?.transaction?.size ?: 0
-                        Log.e("Testing", "--->CrossingHistoryFragment data " + it.transactionList)
-                        Log.e("Testing", "--->CrossingHistoryFragment count $totalCount")
 
                         if (response.transactionList != null) {
                             list?.addAll(response.transactionList.transaction!!)

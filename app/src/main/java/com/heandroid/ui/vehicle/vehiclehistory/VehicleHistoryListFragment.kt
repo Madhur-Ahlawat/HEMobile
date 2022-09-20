@@ -1,17 +1,17 @@
 package com.heandroid.ui.vehicle.vehiclehistory
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentVehicleHistoryListBinding
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.vehicle.SelectedVehicleViewModel
 import com.heandroid.ui.vehicle.VehicleMgmtViewModel
 import com.heandroid.ui.vehicle.vehiclelist.dialog.ItemClickListener
@@ -19,6 +19,8 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,23 +28,33 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     ItemClickListener {
 
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
-    private var loader: LoaderDialog? = null
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private val selectedViewModel: SelectedVehicleViewModel by activityViewModels()
+    private lateinit var mAdapter: VrmHistoryAdapter
+
+    private var startIndex: Long = 1
+    private val count: Long = Constants.ITEM_COUNT
+    private var totalCount: Int = 0
+    private var isLoading = false
+    private var isFirstTime = true
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentVehicleHistoryListBinding.inflate(inflater, container, false)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mAdapter = VrmHistoryAdapter(this)
+    }
+
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        binding.rvVehicleHistoryList.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvVehicleHistoryList.adapter = mAdapter
     }
 
     override fun initCtrl() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        vehicleMgmtViewModel.getVehicleInformationApi()
+        vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
     }
 
     override fun observer() {
@@ -50,41 +62,73 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     }
 
     private fun handleVehicleHistoryListData(resource: Resource<List<VehicleResponse?>?>?) {
-        loader?.dismiss()
+        binding.rvVehicleHistoryList.visible()
+        binding.progressBar.gone()
         when (resource) {
             is Resource.Success -> {
-                if (!resource.data.isNullOrEmpty()) {
-                    mList.clear()
-                    mList.addAll(resource.data)
-                    setHistoryAdapter()
+                resource.data?.let {
+                    val response = resource.data
+                    totalCount = response.size
+                    mList.addAll(response)
+                    isLoading = false
+                    mAdapter.setList(mList)
+                    binding.rvVehicleHistoryList.adapter?.notifyDataSetChanged()
+
+                    if (mList.size == 0) {
+                        binding.rvVehicleHistoryList.gone()
+                        binding.tvNoVehicles.visible()
+                        binding.progressBar.gone()
+                    } else {
+                        binding.rvVehicleHistoryList.visible()
+                        binding.progressBar.gone()
+                        binding.tvNoVehicles.gone()
+                    }
+                    endlessScroll()
                 }
             }
             is Resource.DataError -> {
+                binding.rvVehicleHistoryList.gone()
+                binding.progressBar.gone()
+                binding.tvNoVehicles.visible()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
-                // do nothing
             }
         }
     }
 
-    private fun setHistoryAdapter() {
-        val mAdapter = VrmHistoryAdapter(this)
-        mAdapter.setList(mList)
-        binding.rvVehicleHistoryList.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = mAdapter
+    private fun endlessScroll() {
+        if (isFirstTime) {
+            isFirstTime = false
+            binding.rvVehicleHistoryList.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.layoutManager is LinearLayoutManager) {
+                        val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                        if (!isLoading) {
+                            if (linearLayoutManager != null &&
+                                linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
+                                (mList.size - 1) && totalCount > count - 1
+                            ) {
+                                startIndex += count
+                                isLoading = true
+                                binding.progressBar.visible()
+                                vehicleMgmtViewModel.getVehicleInformationApi(
+                                    startIndex.toString(),
+                                    count.toString()
+                                )
+                            }
+                        }
+                    }
+                }
+            })
         }
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {}
 
     override fun onItemClick(details: VehicleResponse?, pos: Int) {
-//        val bundle = Bundle().apply {
-//            putSerializable(Constants.DATA, details)
-//        }
-//        (requireActivity() as VehicleMgmtActivity).setVehicleItem(details)
         selectedViewModel.setSelectedVehicleResponse(details)
         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment)
     }

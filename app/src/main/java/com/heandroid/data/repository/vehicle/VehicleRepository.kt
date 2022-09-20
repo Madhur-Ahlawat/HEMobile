@@ -23,7 +23,8 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun downloadCrossingHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest?) =
         apiService.getDownloadTransactionListDataInFile(requestParam)
 
-    suspend fun getVehicleListApiCall() = apiService.getVehicleData(startIndex = "1", count = "100")
+    suspend fun getVehicleListApiCall(start: String, count: String) =
+        apiService.getVehicleData(startIndex = start, count = count)
 
     suspend fun deleteVehicleListApiCall(deleteVehicleRequest: DeleteVehicleRequest?) =
         apiService.deleteVehicle(deleteVehicleRequest)
@@ -46,10 +47,15 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun getSearchVehicleForGroupApiCall(vehicleGroup: String, plateNumber: String) =
         apiService.getSearchVehiclesForGroup(vehicleGroup, plateNumber)
 
-    suspend fun getDownloadVehicleList(type: String?)  = apiService.getDownloadVehicleList(type)
+    suspend fun getDownloadVehicleList(type: String?) = apiService.getDownloadVehicleList(type)
 
-    suspend fun updateVehicleListManagement(request: VehicleListManagementEditRequest?) = apiService.updateVehicleListManagement(request)
-    suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) = apiService.getAccountFindVehicle(vehicleNumber, agencyId)
-    suspend fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) = apiService.validVehicleCheck(vehicleValidReqModel, agencyId)
+    suspend fun updateVehicleListManagement(request: VehicleListManagementEditRequest?) =
+        apiService.updateVehicleListManagement(request)
+
+    suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
+        apiService.getAccountFindVehicle(vehicleNumber, agencyId)
+
+    suspend fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) =
+        apiService.validVehicleCheck(vehicleValidReqModel, agencyId)
 
 }

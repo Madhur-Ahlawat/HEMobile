@@ -1,7 +1,9 @@
 package com.heandroid.ui.account.creation.step3
 
 import android.os.Bundle
+import android.text.SpannableString
 import android.text.TextUtils
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -235,14 +237,18 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     private fun accountType() {
         when (model?.accountType) {
             BUSINESS_ACCOUNT -> {
-                binding.tvPersonaleInfo.setText(getString(R.string.underline_company_info))
+                val content = SpannableString(getString(R.string.underline_company_info))
+                content.setSpan(UnderlineSpan(), 0, content.length, 0)
+                binding.tvPersonaleInfo.text = content
                 model?.planType = BUSINESS_ACCOUNT
                 model?.enable = true
                 binding.businessAccountParent.visible()
                 binding.personalAccountParent.gone()
             }
             else -> {
-                binding.tvPersonaleInfo.setText(getString(R.string.underline_personal_info))
+                val content = SpannableString(getString(R.string.underline_personal_info))
+                content.setSpan(UnderlineSpan(), 0, content.length, 0)
+                binding.tvPersonaleInfo.text = content
                 binding.personalAccountParent.visible()
                 binding.businessAccountParent.gone()
             }

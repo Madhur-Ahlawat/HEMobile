@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.vehicle.DeleteVehicleRequest
@@ -33,6 +34,7 @@ import com.heandroid.utils.StorageHelper
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
@@ -53,11 +55,23 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     private var selectionType: String = Constants.PDF
     private var isDownload = false
 
+    private var startIndex: Long = 1
+    private val count: Long = Constants.ITEM_COUNT
+    private var totalCount: Int = 0
+    private var isLoading = false
+    private var isFirstTime = true
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentVehicleListBinding.inflate(inflater, container, false)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mAdapter = VehicleListAdapter(requireContext(), this, isBusinessAccount)
+    }
+
     override fun init() {
+        binding.rvVehicleList.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvVehicleList.adapter = mAdapter
 
         val buttonVisibility = arguments?.getBoolean(
             Constants.FROM_DASHBOARD_TO_VEHICLE_LIST,
@@ -74,10 +88,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             }
         }
 
-        val content = SpannableString("Download")
-        content.setSpan(UnderlineSpan(), 0, content.length, 0)
-        binding.download.text = content
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -93,14 +103,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun getVehicleListData() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        vehicleMgmtViewModel.getVehicleInformationApi()
+        vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.addVehicleBtn -> {
-
                 AddVehicleDialog.newInstance(
                     getString(R.string.str_title),
                     getString(R.string.str_sub_title),
@@ -122,7 +130,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this@VehicleListFragment)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
+                        dialog.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
+                        )
                     }
                 }
             }
@@ -143,8 +154,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun handleDeleteVehicle(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
-
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 requireContext().showToast("vehicle deleted successfully")
@@ -161,19 +173,36 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
-        loader?.dismiss()
-
+        binding.rvVehicleList.visible()
+        binding.progressBar.gone()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (!it.isNullOrEmpty()) {
-                        mList.clear()
-                        mList.addAll(it)
-                        setVehicleListAdapter(mList)
+                    val response = resource.data
+                    totalCount = response.size
+                    mList.addAll(response)
+                    isLoading = false
+                    mAdapter.setList(mList)
+                    binding.rvVehicleList.adapter?.notifyDataSetChanged()
+
+                    if (mList.size == 0) {
+                        binding.rvVehicleList.gone()
+                        binding.tvNoVehicles.visible()
+                        binding.progressBar.gone()
+                    } else {
+                        binding.rvVehicleList.visible()
+                        binding.progressBar.gone()
+                        binding.tvNoVehicles.gone()
                     }
+                    endlessScroll()
                 }
             }
             is Resource.DataError -> {
+                binding.rvVehicleList.gone()
+                binding.progressBar.gone()
+                binding.removeVehicleBtn.gone()
+                binding.tvNoVehicles.visible()
+                binding.download.gone()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
@@ -182,47 +211,60 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     }
 
     private fun handleDownloadVehicleListData(resource: Resource<ResponseBody?>?) {
-
-        if(isDownload){
-                when (resource) {
-                    is Resource.Success -> {
-                        resource.data?.let {
-                            callCoroutines(resource.data)
-                        }
-                    }
-                    is Resource.DataError -> {
-                        requireContext().showToast("failed to download the document")
-                    }
-                    else -> {
-
+        if (isDownload) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        callCoroutines(resource.data)
                     }
                 }
+                is Resource.DataError -> {
+                    requireContext().showToast("failed to download the document")
+                }
+                else -> {
+
+                }
+            }
             isDownload = false
         }
 
     }
 
-    private fun setVehicleListAdapter(mList: ArrayList<VehicleResponse?>) {
-        this.mList = mList
-        mAdapter = VehicleListAdapter(requireContext(), this, isBusinessAccount)
-        mAdapter.setList(mList)
+    private fun endlessScroll() {
+        if (isFirstTime) {
+            isFirstTime = false
+            binding.rvVehicleList.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
 
-        binding.rvVehicleList.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = mAdapter
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.layoutManager is LinearLayoutManager) {
+                        val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                        if (!isLoading) {
+                            if (linearLayoutManager != null &&
+                                linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
+                                (mList.size - 1) && totalCount > count - 1
+                            ) {
+                                startIndex += count
+                                isLoading = true
+                                binding.progressBar.visible()
+                                vehicleMgmtViewModel.getVehicleInformationApi(
+                                    startIndex.toString(),
+                                    count.toString()
+                                )
+                            }
+                        }
+                    }
+                }
+
+            })
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
-
-    }
+    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {}
 
     override fun onItemClick(details: VehicleResponse?, pos: Int) {
-
         details?.isExpanded = details?.isExpanded != true
         mList[pos]?.isExpanded = details?.isExpanded
-
         mAdapter.notifyItemChanged(pos)
     }
 
@@ -274,8 +316,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         vehicleMgmtViewModel.downloadVehicleList(selectionType)
     }
 
-    override fun onCancelClicked() {
-    }
+    override fun onCancelClicked() {}
 
     private fun callCoroutines(body: ResponseBody) {
         lifecycleScope.launch(Dispatchers.IO) {
@@ -290,12 +331,16 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
             if (ret) {
                 withContext(Dispatchers.Main) {
-                    loader?.dismiss()
+                    if (loader?.isVisible == true) {
+                        loader?.dismiss()
+                    }
                     requireActivity().showToast("Document downloaded successfully")
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    loader?.dismiss()
+                    if (loader?.isVisible == true) {
+                        loader?.dismiss()
+                    }
                     requireActivity().showToast("Document download failed")
                 }
             }

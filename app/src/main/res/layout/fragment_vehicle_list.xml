@@ -17,10 +17,10 @@
             android:id="@+id/yourVehicleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="start"
+            android:padding="@dimen/_10sdp"
             android:text="@string/str_ur_vehicles"
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
@@ -33,14 +33,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:drawableEnd="@drawable/ic_download_crossing"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/roboto_regular"
             android:gravity="start"
+            android:padding="@dimen/_10sdp"
             android:text="@string/download"
             android:textColor="@color/high_lighted_color"
             android:textSize="@dimen/_15ssp"
             android:textStyle="normal"
-            android:fontFamily="@font/roboto_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,12 +52,36 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/yourVehicleTv"
             tools:listitem="@layout/vrm_header_lyt" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:theme="@style/Theme.HEMobileLight"
+            app:layout_constraintBottom_toTopOf="@+id/addVehicleBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvVehicleList" />
+
+        <TextView
+            android:id="@+id/tvNoVehicles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_added_vehicle_found"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/addVehicleBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yourVehicleTv" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addVehicleBtn"
