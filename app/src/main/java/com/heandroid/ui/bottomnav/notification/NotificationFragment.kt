@@ -42,45 +42,46 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.getAlertsApi(Constants.LANGUAGE)
         binding.priority.background =
-            ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+            ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
         binding.standard.background =
-            ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+            ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
         binding.standard.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.black
+                R.color.white
             )
         )
         handleVisibility()
-        binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
 
         binding.priority.setOnClickListener {
             binding.standard.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
             binding.priority.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
             binding.standard.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.black
+                    R.color.white
                 )
             )
-            binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
             handleVisibility()
             setPriorityNotifications()
         }
         binding.standard.setOnClickListener {
             binding.priority.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_bg)
+                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
             binding.standard.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_bg)
+                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
             binding.priority.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
                     R.color.black
                 )
             )
-            binding.standard.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.standard.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
             binding.clearFilterLyt.visible()
             binding.clearSelectAllLyt.gone()
             binding.filterTxt.visible()
