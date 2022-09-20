@@ -9,21 +9,21 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.utils.common.Constants
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.heandroid.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.heandroid.utils.StorageHelper
 import java.io.File
 import com.heandroid.data.model.contactdartcharge.UploadFileResponseModel
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
+import com.heandroid.ui.loader.LoaderDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import com.heandroid.utils.FilePath
 import com.heandroid.utils.MimeType
-import com.heandroid.utils.common.Logg
+import com.heandroid.utils.common.*
+import com.heandroid.utils.onTextChanged
 import okhttp3.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,11 +35,21 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
 
     private var clickedChooseButton: String = Constants.CHOOSE_FILE_1
     private var clickedUploadButton: String = Constants.CHOOSE_FILE_1
-    private val viewModel: ContactDartChargeViewModel by viewModels()
+    private var isUploaded: Boolean = false
+
     private var file1: File? = null
     private var file2: File? = null
     private var file3: File? = null
     private var file4: File? = null
+
+    private var fileUploaded1: Boolean = false
+    private var fileUploaded2: Boolean = false
+    private var fileUploaded3: Boolean = false
+    private var fileUploaded4: Boolean = false
+
+    private var loader: LoaderDialog? = null
+    private val mList = mutableListOf<String>()
+    private val viewModel: ContactDartChargeViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -48,20 +58,46 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
-        Logg.logging(
-            "NewCaseComments",
-            "bundle data CaseProvideDetailsModel ${
-                arguments?.getParcelable<CaseProvideDetailsModel>(Constants.CASES_PROVIDE_DETAILS_KEY)
-            }"
-        )
-        Logg.logging(
-            "NewCaseComments",
-            "bundle data cat  ${arguments?.getString(Constants.CASES_CATEGORY)}"
-        )
-        Logg.logging(
-            "NewCaseComments",
-            "bundle data  sub Cat ${arguments?.getString(Constants.CASES_SUB_CATEGORY)}"
-        )
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        setView()
+    }
+
+    private fun setView() {
+        binding.apply {
+            file1?.let {
+                if (fileUploaded1) {
+                    fileName1.text = it.name.toString()
+                    chooseFileBtn1.gone()
+                    upload1.gone()
+                    success1.visible()
+                }
+            }
+            file2?.let {
+                if (fileUploaded2) {
+                    fileName2.text = it.name.toString()
+                    chooseFileBtn2.gone()
+                    upload2.gone()
+                    success2.visible()
+                }
+            }
+            file3?.let {
+                if (fileUploaded3) {
+                    fileName3.text = it.name.toString()
+                    chooseFileBtn3.gone()
+                    upload3.gone()
+                    success3.visible()
+                }
+            }
+            file4?.let {
+                if (fileUploaded4) {
+                    fileName4.text = it.name.toString()
+                    chooseFileBtn4.gone()
+                    upload4.gone()
+                    success4.visible()
+                }
+            }
+        }
     }
 
     override fun initCtrl() {
@@ -79,6 +115,10 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             upload2.setOnClickListener(this@NewCaseCommentsFragment)
             upload3.setOnClickListener(this@NewCaseCommentsFragment)
             upload4.setOnClickListener(this@NewCaseCommentsFragment)
+
+            binding.tfDescriptionInput.onTextChanged {
+                binding.model = binding.tfDescriptionInput.text.toString().isNotEmpty()
+            }
         }
     }
 
@@ -87,92 +127,100 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     }
 
     private fun handleUploadFileResponse(resource: Resource<UploadFileResponseModel?>?) {
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let {
-                    checkUploadedFile(it.originalFileName)
-                    it.fileName?.let { it1 -> mList.add(it1) }
-
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        if (isUploaded) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        checkUploadedFile(it.originalFileName)
+                        it.originalFileName?.let { it1 -> mList.add(it1) }
+                    }
+                }
+                is Resource.DataError -> {
+                    ErrorUtil.showError(binding.root, "failed to upload the selected file")
+                }
+                else -> {
                 }
             }
-            is Resource.DataError -> {
-                requireContext().showToast("failed to upload the file")
-            }
-            else -> { }
+            isUploaded = false
         }
+
     }
 
     private fun checkUploadedFile(originalFileName: String?) {
         file1?.let {
             if (it.name.equals(originalFileName, true)) {
-
                 binding.loader1.gone()
                 binding.success1.visible()
+                binding.upload1.gone()
+                binding.chooseFileBtn1.gone()
+                fileUploaded1 = true
             }
         }
         file2?.let {
             if (it.name.equals(originalFileName, true)) {
                 binding.loader2.gone()
                 binding.success2.visible()
+                binding.upload2.gone()
+                binding.chooseFileBtn2.gone()
+                fileUploaded2 = true
             }
         }
         file3?.let {
             if (it.name.equals(originalFileName, true)) {
                 binding.loader3.gone()
                 binding.success3.visible()
+                binding.upload3.gone()
+                binding.chooseFileBtn3.gone()
+                fileUploaded3 = true
             }
         }
         file4?.let {
             if (it.name.equals(originalFileName, true)) {
                 binding.loader4.gone()
                 binding.success4.visible()
+                binding.upload4.gone()
+                binding.chooseFileBtn4.gone()
+                fileUploaded4 = true
             }
         }
     }
-    private val mList = mutableListOf<String>()
 
     override fun onClick(it: View?) {
-
         when (it?.id) {
             R.id.btnNext -> {
-                arguments?.putStringArrayList(Constants.FILE_NAMES_KEY,ArrayList(mList))
-                if (binding.tfDescriptionInput.text.toString().isNotEmpty()) {
-                    findNavController().navigate(
-                        R.id.action_NewCaseCommentsFragment_to_NewCaseSummeryFragment,
-                        arguments?.apply {
-                            putString(
-                                Constants.CASE_COMMENTS_KEY,
-                                binding.tfDescriptionInput.text.toString()
-                            )
-                        }
-                    )
-                } else {
-                    requireActivity().showToast("Please add case comment")
-                }
+                arguments?.putStringArrayList(Constants.FILE_NAMES_KEY, ArrayList(mList))
+                findNavController().navigate(
+                    R.id.action_NewCaseCommentsFragment_to_NewCaseSummeryFragment,
+                    arguments?.apply {
+                        putString(
+                            Constants.CASE_COMMENTS_KEY,
+                            binding.tfDescriptionInput.text.toString()
+                        )
+                    }
+                )
             }
             R.id.chooseFileBtn1 -> {
-                binding.upload1.visible()
                 binding.loader1.gone()
                 binding.success1.gone()
                 clickedChooseButton = Constants.CHOOSE_FILE_1
                 checkPermission()
             }
             R.id.chooseFileBtn2 -> {
-                binding.upload2.visible()
                 binding.loader2.gone()
                 binding.success2.gone()
                 clickedChooseButton = Constants.CHOOSE_FILE_2
                 checkPermission()
             }
             R.id.chooseFileBtn3 -> {
-                binding.upload3.visible()
                 binding.loader3.gone()
                 binding.success3.gone()
                 clickedChooseButton = Constants.CHOOSE_FILE_3
                 checkPermission()
             }
             R.id.chooseFileBtn4 -> {
-                binding.upload4.visible()
                 binding.loader4.gone()
                 binding.success4.gone()
                 clickedChooseButton = Constants.CHOOSE_FILE_4
@@ -203,29 +251,21 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
         when (clickedUploadButton) {
             Constants.CHOOSE_FILE_1 -> {
                 file1?.let {
-                    binding.loader1.visible()
-                    binding.upload1.gone()
                     uploadFile(it)
                 }
             }
             Constants.CHOOSE_FILE_2 -> {
                 file2?.let {
-                    binding.loader2.visible()
-                    binding.upload2.gone()
                     uploadFile(it)
                 }
             }
             Constants.CHOOSE_FILE_3 -> {
                 file3?.let {
-                    binding.loader3.visible()
-                    binding.upload3.gone()
                     uploadFile(it)
                 }
             }
             else -> {
                 file4?.let {
-                    binding.loader4.visible()
-                    binding.upload4.gone()
                     uploadFile(it)
                 }
             }
@@ -233,8 +273,11 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     }
 
     private fun uploadFile(file: File) {
-        val requestFile: RequestBody = RequestBody.create(MimeType.selectMimeType(file).toMediaTypeOrNull(), file)
+        val requestFile: RequestBody =
+            RequestBody.create(MimeType.selectMimeType(file).toMediaTypeOrNull(), file)
         val data = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        loader?.show(requireActivity().supportFragmentManager, "Loader")
+        isUploaded = true
         viewModel.uploadFileApi(data)
     }
 
@@ -260,9 +303,9 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 result?.data?.data?.let {
-                    val path : String? = FilePath.getPath(requireContext(), it)
+                    val path: String? = FilePath.getPath(requireContext(), it)
                     path?.let { pat ->
-                        val file= File(pat)
+                        val file = File(pat)
                         setFileName(file.name)
                         saveFile(file)
                     }
@@ -318,15 +361,19 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
         when (clickedChooseButton) {
             Constants.CHOOSE_FILE_1 -> {
                 binding.fileName1.text = fileName ?: ""
+                binding.upload1.visible()
             }
             Constants.CHOOSE_FILE_2 -> {
                 binding.fileName2.text = fileName ?: ""
+                binding.upload2.visible()
             }
             Constants.CHOOSE_FILE_3 -> {
                 binding.fileName3.text = fileName ?: ""
+                binding.upload3.visible()
             }
             else -> {
                 binding.fileName4.text = fileName ?: ""
+                binding.upload4.visible()
             }
         }
     }

@@ -8,9 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.bottomnav.HomeActivityMain
 import com.heandroid.ui.landing.LandingActivity
-import com.heandroid.ui.startNow.StartNowBaseActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.common.Utils
@@ -21,9 +19,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySuccessBinding>(),
     View.OnClickListener {
+
     @Inject
     lateinit var sessionManager: SessionManager
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -54,29 +52,22 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
                 checkEnquiryStatus.visible()
                 goToStartMenu.visible()
                 goToStartMenu.text = getString(R.string.str_go_to_start_menu)
-
-
             }
         }
     }
 
     override fun observer() {}
+
     override fun onClick(it: View?) {
-
         when (it?.id) {
-
             R.id.check_enquiry_status -> {
-//                findNavController().navigate(R.id.action)
                 if (sessionManager.getLoggedInUser()) {
                     requireActivity().finish()
                 } else {
                     findNavController().navigate(
-                        R.id.action_CaseCreatedSuccessfullyFragment_to_caseHistoryDartChargeFragment,
-                        arguments
+                        R.id.action_CaseCreatedSuccessfullyFragment_to_caseDetailsDartChargeFragment
                     )
-
                 }
-
             }
             R.id.go_to_start_menu -> {
                 if (sessionManager.getLoggedInUser()) {
@@ -88,9 +79,6 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
             else -> {
             }
         }
-
-
     }
-
 
 }

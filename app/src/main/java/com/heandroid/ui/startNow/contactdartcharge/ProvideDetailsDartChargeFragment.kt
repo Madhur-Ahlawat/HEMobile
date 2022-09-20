@@ -17,6 +17,7 @@ import com.heandroid.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.heandroid.databinding.FragmentProvideDetailsDartChargeBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.*
 import com.heandroid.utils.onTextChanged
 
@@ -57,7 +58,7 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
             model = AccountTypeSelectionModel(
                 binding.etFistName.text.toString().trim().isNotEmpty() &&
                         binding.etLastName.text.toString().trim()
-                            .isNotEmpty() && binding.etEmail.text.toString().trim().isNotEmpty()
+                            .isNotEmpty() && Utils.isEmailValid(binding.etEmail.text.toString().trim())
             )
         }
     }
