@@ -149,7 +149,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             "s",
             "This is the description of the request",
             null, null,
-            "Jan 20, 2022, 13:45", "response"
+            "Jan 20, 2022, 13:45", "response",""
         )
         val data2 = ServiceRequest(
             "I-2345",
@@ -159,7 +159,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             "s",
             "This is the description of the request",
             null, null,
-            "Jan 20, 2022, 13:45", "response"
+            "Jan 20, 2022, 13:45", "response",""
         )
         val data3 = ServiceRequest(
             "I-2343455",
@@ -169,7 +169,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             "s",
             "This is the description of the request",
             null, null,
-            "Jan 20, 2022, 13:45", "response"
+            "Jan 20, 2022, 13:45", "response",""
         )
         val list = arrayListOf(data1, data2, data3)
         showDataInView(list)

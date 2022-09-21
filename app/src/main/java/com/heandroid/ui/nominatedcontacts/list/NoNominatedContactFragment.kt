@@ -8,7 +8,6 @@ import com.heandroid.databinding.FragmentNoNomiatedContactBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
-import com.heandroid.utils.extn.gone
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +27,7 @@ class NoNominatedContactFragment : BaseFragment<FragmentNoNomiatedContactBinding
             findNavController().navigate(
                 R.id.action_ncNoListFragment_to_ncFullNameFragment
             )
+           /* binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,5)
 
             if (sessionManager.fetchAccountType()
                     .equals(
@@ -36,14 +36,14 @@ class NoNominatedContactFragment : BaseFragment<FragmentNoNomiatedContactBinding
                     ) && sessionManager.fetchSubAccountType()
                     .equals(Constants.STANDARD, true)
             ) {
-                binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,"2")
+                binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,2)
             }
             if (sessionManager.fetchAccountType()
                     .equals(
                         Constants.BUSINESS_ACCOUNT,
                         true)) {
-                binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,"5")
-            }
+                binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,5)
+            }*/
 
         }
     }
