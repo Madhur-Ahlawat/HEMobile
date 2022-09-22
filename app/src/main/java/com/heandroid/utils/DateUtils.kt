@@ -57,13 +57,12 @@ object DateUtils {
                 SimpleDateFormat("hh:mm:ss a")
             } else {
                 SimpleDateFormat("h:mm:ss")
-
             }
             val dateObj = timeFormatter.parse(time)
             val postFormatter = SimpleDateFormat("HH:mm")
             postFormatter.format(dateObj)
         } catch (e: Exception) {
-            "__:__"
+            time
         }
     }
 
@@ -86,7 +85,7 @@ object DateUtils {
             val postFormatter = SimpleDateFormat("dd MMM yyyy")
             return postFormatter.format(dateObj)
         } catch (e: Exception) {
-            return currentDate()!!
+            return date ?: ""
         }
     }
 

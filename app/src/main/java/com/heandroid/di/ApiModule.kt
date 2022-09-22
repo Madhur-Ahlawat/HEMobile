@@ -64,7 +64,7 @@ object ApiModule {
         builder.addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
 //            .addInterceptor(responseInterceptor)
-            .authenticator(tokenAuthenticator)
+//            .authenticator(tokenAuthenticator)
             .callTimeout(0, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
