@@ -22,14 +22,11 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
-import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
-import com.heandroid.utils.extn.makeLinks
 import com.heandroid.utils.extn.showToast
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConfirmEmailBinding>(),
@@ -64,10 +61,6 @@ class CreateAccountConfirmEmailFragment : BaseFragment<FragmentCreateAccountConf
             etCode.onTextChanged { isEnable() }
             btnAction.setOnClickListener(this@CreateAccountConfirmEmailFragment)
             tvResend.setOnClickListener(this@CreateAccountConfirmEmailFragment)
-//            tvMsg.makeLinks(Pair("resend security code",View.OnClickListener {
-//                sendEmailVerificationRequest()
-//
-//            }))
         }
     }
 
