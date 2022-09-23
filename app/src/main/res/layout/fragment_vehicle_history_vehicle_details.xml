@@ -22,7 +22,7 @@
             android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             app:layout_constraintBottom_toTopOf="@+id/buttonsView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -300,7 +300,8 @@
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"/>
+                    android:background="@color/white"
+                    android:layout_height="@dimen/_20sdp"/>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -321,7 +322,6 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:backgroundTint="@{buttonModel==true?@color/blue_color:@color/btn_disable_color}"
                 android:clickable="@{buttonModel}"
                 android:text="@string/str_save"
@@ -336,7 +336,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:includeFontPadding="true"
