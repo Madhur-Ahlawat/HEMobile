@@ -32,8 +32,8 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@color/white"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
