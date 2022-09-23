@@ -175,66 +175,66 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="@color/dark_blue_color"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
+                        android:padding="12dp"
                         android:src="@drawable/ic_home"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_number_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_number_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_number_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_number_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_account_number"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading"
                         tools:text="12342345" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -258,67 +258,67 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="#5B1356"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#5B1356"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
+                        android:padding="12dp"
                         android:src="@drawable/ic_home"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_status_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_status_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_status_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_status_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_account_status"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading"
                         tools:text="12342345" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -342,67 +342,71 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="#B12009"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B12009"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
+                        android:padding="12dp"
                         android:src="@drawable/ic_home"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_type_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_type_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_type_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_type_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_account_type"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:lines="1"
+                        android:paddingRight="5dp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_account_type_heading"
+                        app:layout_constraintRight_toLeftOf="@id/account_type_arrow_image"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_type_heading"
                         tools:text="@string/str_personal_pre_pay_account" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/account_type_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -426,67 +430,68 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="#B35D00"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B35D00"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_home"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_topup"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_topup_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_topup_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_top_up_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_top_up"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_top_up_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_top_up_heading"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_top_up_heading"
                         tools:text="@string/str_auto_top_up" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -510,79 +515,79 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="#00A6AA"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#00A6AA"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_home"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_vehicle"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_vehicle_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_vehicles"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
 
                     <TextView
                         android:id="@+id/tv_vehicle_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:text="@string/str_two_vehicle"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="@string/str_two_vehicle"
-                        app:layout_constraintTop_toBottomOf="@id/tv_vehicle_heading"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_vehicle_heading" />
 
                     <TextView
                         android:id="@+id/tv_view_vehicle"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/your_vehicles_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_view_vehicles"
                         android:textColor="@color/blue_color"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/your_vehicles_arrow_image"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/your_vehicles_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -606,97 +611,103 @@
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="80dp"
+                        android:layout_height="90dp"
                         android:background="#457C1F"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_image_dummy"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#457C1F"
-                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_dummy"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_home"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_crossing"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
                         app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
-                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_crossing_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_crossings"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
 
                     <TextView
                         android:id="@+id/tv_crossing_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:text="@string/str_two_crossing"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="@string/str_two_crossing"
-                        app:layout_constraintTop_toBottomOf="@id/tv_crossing_heading"
-                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintTop_toBottomOf="@id/tv_crossing_heading" />
 
                     <TextView
                         android:id="@+id/tv_view_crossings"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/your_crossing_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_view_crossings"
                         android:textColor="@color/blue_color"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/your_crossing_arrow_image"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/your_crossing_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tint="@color/btn_disable_txt_color"
-                        android:src="@drawable/ic_back_arrow"
-                        android:rotation="180"
                         android:layout_marginRight="10dp"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        android:tint="@color/btn_disable_txt_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_vehicle_card" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/glStart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
+                app:layout_constraintGuide_begin="@dimen/_10sdp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/glEnd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
+                app:layout_constraintGuide_end="@dimen/_10sdp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
