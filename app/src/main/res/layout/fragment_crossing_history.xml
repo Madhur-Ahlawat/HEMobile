@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_10sdp" />
+            app:layout_constraintGuide_begin="@dimen/_5sdp" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/_12sdp" />
+            app:layout_constraintGuide_end="@dimen/_4sdp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
