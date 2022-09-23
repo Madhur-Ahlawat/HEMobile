@@ -11,30 +11,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@drawable/he_bg">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:id="@+id/fragment_dashboard_title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/str_account_summary"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_20ssp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notificationView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@color/color_FFE8E8"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_title">
 
                 <View
                     android:id="@+id/side_view"
@@ -65,13 +70,12 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/str_view_all"
-                    android:textColor="@color/green"
+                    android:textColor="@color/dark_blue_color"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
 
                 <TextView
                     android:id="@+id/tv_title_two"
@@ -92,447 +96,609 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_notification"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:visibility="gone">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_balance_card"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/notificationView">
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_one"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_available_balance, tv_available_balance_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-
-                <TextView
-                    android:id="@+id/tv_available_balance_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/txt_your_balance"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/group_one" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/tv_manual_top_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:backgroundTint="@color/blue_color"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:includeFontPadding="false"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:text="@string/txt_top_up"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:cornerRadius="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_available_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/group_one"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="£ 1200" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/blue_color" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_two"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_account_number, tv_account_number_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_account_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="12342345" />
-
-                <TextView
-                    android:id="@+id/tv_account_number_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/str_account_number"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_account_number" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/blue_color"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_three"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_account_status, tv_account_status_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_account_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/str_open_account" />
-
-                <TextView
-                    android:id="@+id/tv_account_status_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/txt_account_status"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_account_status" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/blue_color"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_four"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_account_type_heading, tv_account_type"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_account_type_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_account_type"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_account_type" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_account_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/str_personal_pre_pay_account" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/blue_color" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_five"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_top_up_heading, tv_top_up_type"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_top_up_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_top_up"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_top_up_type" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_top_up_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/str_auto_top_up" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/blue_color"
-                android:layout_marginHorizontal="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/crossingsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_six"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_crossing_count, tv_crossing_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_crossing_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_two_crossing"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_crossing_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/txt_your_crossings"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_crossing_count" />
-
-                <LinearLayout
-                    android:id="@+id/tv_view_crossings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:padding="@dimen/_10sdp">
 
                     <TextView
+                        android:id="@+id/tv_available_balance_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:paddingHorizontal="@dimen/_3sdp"
-                        android:text="@string/txt_view_crossings"
-                        android:textColor="@color/color_666666"
+                        android:gravity="center_vertical"
+                        android:text="@string/txt_your_balance"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/tv_manual_top_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:backgroundTint="@color/dark_blue_color"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:paddingVertical="@dimen/_8sdp"
+                        android:text="@string/txt_top_up"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        app:cornerRadius="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_available_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/dark_blue_color"
+                        android:textSize="@dimen/_40ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_manual_top_up"
+                        tools:text="£ 1200" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_number_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_balance_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_number_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="@color/dark_blue_color"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_number_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_8sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:src="@drawable/ic_chevron_right" />
-                </LinearLayout>
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_number_card_image_dummy" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/blue_color"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:background="@color/white"
-                android:padding="@dimen/_10sdp">
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group_seven"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_vehicle_count, tv_vehicle_heading"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.6" />
-
-                <TextView
-                    android:id="@+id/tv_vehicle_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:text="@string/str_two_vehicle"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_vehicle_heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center_vertical"
-                    android:text="@string/txt_your_vehicles"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_count" />
-
-                <LinearLayout
-                    android:id="@+id/tv_view_vehicle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_number_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:paddingHorizontal="@dimen/_3sdp"
+                        android:gravity="center_vertical"
+                        android:text="@string/str_account_number"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
+                        tools:text="12342345" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_status_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_number_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_status_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="#5B1356"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_status_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:backgroundTint="#5B1356"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_status_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_status_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/txt_account_status"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
+                        tools:text="12342345" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_type_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_status_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_type_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="#B12009"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_type_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:backgroundTint="#B12009"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_type_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_type_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/str_account_type"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_account_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_account_type_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        tools:text="@string/str_personal_pre_pay_account" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_topup_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_type_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_topup_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="#B35D00"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_topup_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:backgroundTint="#B35D00"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_top_up_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/str_top_up"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_top_up_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_top_up_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
+                        tools:text="@string/str_auto_top_up" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_vehicle_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_crossing_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_vehicle_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="#00A6AA"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:backgroundTint="#00A6AA"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_vehicle_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/txt_your_vehicles"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+
+                    <TextView
+                        android:id="@+id/tv_vehicle_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="@string/str_two_vehicle"
+                        app:layout_constraintTop_toBottomOf="@id/tv_vehicle_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+
+                    <TextView
+                        android:id="@+id/tv_view_vehicle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/your_vehicles_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/txt_view_vehicles"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/blue_color"
+                        android:textSize="@dimen/_14ssp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_8sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:src="@drawable/ic_chevron_right" />
-                </LinearLayout>
+                        android:id="@+id/your_vehicles_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fragment_dashboard_account_crossing_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="@id/glEnd"
+                app:layout_constraintStart_toStartOf="@id/glStart"
+                app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_topup_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_crossing_card_dummy"
+                        android:layout_width="@dimen/_4sdp"
+                        android:layout_height="80dp"
+                        android:background="#457C1F"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/fragment_dashboard_account_crossing_card_image_dummy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_shape_tint"
+                        android:backgroundTint="#457C1F"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_dummy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_home"
+                        app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintRight_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_crossing_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/txt_your_crossings"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+
+                    <TextView
+                        android:id="@+id/tv_crossing_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/btn_disable_txt_color"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="@string/str_two_crossing"
+                        app:layout_constraintTop_toBottomOf="@id/tv_crossing_heading"
+                        app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+
+                    <TextView
+                        android:id="@+id/tv_view_crossings"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/your_crossing_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_view_crossings"
+                        android:textColor="@color/blue_color"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/your_crossing_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/btn_disable_txt_color"
+                        android:src="@drawable/ic_back_arrow"
+                        android:rotation="180"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glStart"
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/_12sdp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glEnd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/_12sdp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </layout>
