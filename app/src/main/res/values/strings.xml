@@ -411,7 +411,7 @@
     <string name="post_mail">Post Mail - %1$s</string>
     <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate contacts</string>
-    <string name="str_u_can_nominate_upto_users">You can nominate up to %1$s users for your account</string>
+    <string name="str_u_can_nominate_upto_users">You can nominate up to %d users for your account</string>
     <string name="str_mobile_number_optional">Mobile number (optional)</string>
     <string name="str_invite_nominated_contact_title">Invite nominated contact</string>
     <string name="str_contact">Contact</string>
