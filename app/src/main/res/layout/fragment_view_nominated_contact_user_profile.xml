@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlFirstName"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlFirstName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlLastName"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlLastName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -241,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlEmailId"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlEmailId"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -290,7 +290,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlMobileNo"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlMobileNo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -345,7 +345,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlPassword"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -395,7 +395,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
                 android:layout_alignBottom="@+id/rlPassword"
-                android:background="@color/color_EFEFEF"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="@+id/rlPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

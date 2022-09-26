@@ -1,6 +1,5 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,7 @@ import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryRequest
 import com.heandroid.data.model.contactdartcharge.CaseEnquiryHistoryResponse
 import com.heandroid.data.model.contactdartcharge.CaseHistoryRangeModel
 import com.heandroid.data.model.contactdartcharge.ServiceRequest
-import com.heandroid.data.model.payment.PaymentDateRangeModel
 import com.heandroid.databinding.*
-import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.utils.DatePicker
@@ -26,9 +23,7 @@ import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.*
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.logging.Logger
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartChargeBinding>(),
@@ -38,7 +33,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
     private var loader: LoaderDialog? = null
     private val viewModel: ContactDartChargeViewModel by viewModels()
     private var dateRangeModel: CaseHistoryRangeModel =
-        CaseHistoryRangeModel("", "", "", "")
+        CaseHistoryRangeModel("", "", "ALL", "")
 
     private var caseNumber: String? = null
     private var lastName: String? = null
@@ -57,21 +52,20 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         requireActivity().customToolbar(getString(R.string.str_enquiry_status))
-        Logg.logging(
-            "CaseHistoryDartChargeFragment",
-            "mValue ${(requireActivity() as ContactDartChargeActivity).mValue}"
-        )
+
         if ((requireActivity() as ContactDartChargeActivity).mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             binding.btnGoStart.gone()
-            // getCaseHistoryData()
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.getCaseHistoryLoginData(dateRangeModel)
+            getCasesForLoginUserApi()
         } else {
             getCaseHistoryApiData()
             binding.btnGoStart.visible()
-
+            binding.tvFilter.gone()
         }
+    }
 
+    private fun getCasesForLoginUserApi() {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        viewModel.getCaseHistoryLoginData(dateRangeModel)
     }
 
 
@@ -84,11 +78,9 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                 )
                 viewModel.getCaseHistoryData(request)
             }
-
         }
 
     }
-
 
     private fun openFilterDrawer() {
         val drawer: DrawerLayout = binding.drawerLayout
@@ -104,7 +96,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         return drawer.isDrawerOpen(GravityCompat.END)
     }
 
-    private fun closeFilterDrawer() {
+    fun closeFilterDrawer() {
         binding.drawerLayout.closeDrawers()
     }
 
@@ -115,7 +107,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             btnRaiseNewQuery.setOnClickListener(this@CaseHistoryDartChargeFragment)
             tvFilter.setOnClickListener(this@CaseHistoryDartChargeFragment)
             closeImage.setOnClickListener(this@CaseHistoryDartChargeFragment)
-            clearAllNumber.setOnClickListener(this@CaseHistoryDartChargeFragment)
+            clearCaseNumber.setOnClickListener(this@CaseHistoryDartChargeFragment)
             clearAllDateRange.setOnClickListener(this@CaseHistoryDartChargeFragment)
             clearAllSpecificDate.setOnClickListener(this@CaseHistoryDartChargeFragment)
             edFrom.setOnClickListener(this@CaseHistoryDartChargeFragment)
@@ -140,40 +132,6 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         }
     }
 
-    private fun getCaseHistoryData() {
-        val data1 = ServiceRequest(
-            "I-230495",
-            "Jan 20, 2022, 13:45",
-            "Closed",
-            "c",
-            "s",
-            "This is the description of the request",
-            null, null,
-            "Jan 20, 2022, 13:45", "response",""
-        )
-        val data2 = ServiceRequest(
-            "I-2345",
-            "Feb 22, 2022, 13:45",
-            "Open",
-            "c",
-            "s",
-            "This is the description of the request",
-            null, null,
-            "Jan 20, 2022, 13:45", "response",""
-        )
-        val data3 = ServiceRequest(
-            "I-2343455",
-            "Feb 22, 2022, 13:45",
-            "Submitted",
-            "c",
-            "s",
-            "This is the description of the request",
-            null, null,
-            "Jan 20, 2022, 13:45", "response",""
-        )
-        val list = arrayListOf(data1, data2, data3)
-        showDataInView(list)
-    }
 
     override fun observer() {
         observe(viewModel.caseHistoryApiVal, ::handleCaseHistoryListData)
@@ -189,7 +147,6 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                         binding.emptyDataMessage.gone()
                         showDataInView(it)
                     } else {
-                        //    getCaseHistoryData()
                         binding.emptyDataMessage.visible()
                     }
                 }
@@ -228,18 +185,17 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                     closeFilterDrawer()
                 }
 
-                R.id.clearAllNumber -> {
+                R.id.clearCaseNumber -> {
                     binding.edtCaseNumber.text?.clear()
                     checkFilterApplyBtn()
                 }
                 R.id.clearAllDateRange -> {
+                    binding.rbDateRange.isChecked = false
                     binding.edFrom.text?.clear()
                     binding.edTo.text?.clear()
                     checkFilterApplyBtn()
-
                 }
                 R.id.clearAllSpecificDate -> {
-
                     binding.rbSpecificDay.isChecked = false
                     binding.edSpecificDay.text?.clear()
                     checkFilterApplyBtn()
@@ -263,17 +219,8 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                     )
                 }
                 R.id.applyBtn -> {
-
                     closeFilterDrawer()
                     clickApplyBtn()
-                    binding.edtCaseNumber.text?.clear()
-                    binding.edSpecificDay.text?.clear()
-                    binding.edFrom.text?.clear()
-                    binding.edTo.text?.clear()
-                    binding.rbDateRange.isChecked = false
-                    binding.rbSpecificDay.isChecked = false
-
-
                 }
                 R.id.rbSpecificDay -> {
                     binding.rbSpecificDay.isChecked = true
@@ -292,59 +239,32 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
     }
 
     private fun clickApplyBtn() {
-
-        if (binding.edtCaseNumber.text!!.isNotEmpty()) {
-
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.getCaseHistoryLoginData(
-                CaseHistoryRangeModel(
-                    "",
-                    "",
-                    "",
-                    binding.edtCaseNumber.text.toString()
-                )
-            )
-
-        } else if (binding.rbSpecificDay.isChecked) {
-            if (binding.edSpecificDay.text!!.isNotEmpty()) {
-
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.getCaseHistoryLoginData(
-                    CaseHistoryRangeModel(
-                        binding.edSpecificDay.text.toString(),
-                        "",
-                        "",
-                        binding.edtCaseNumber.text.toString()
-                    )
-                )
-
+        if (binding.edtCaseNumber.text?.isNotEmpty() == true) {
+            dateRangeModel.caseNumber = binding.edtCaseNumber.text.toString().trim()
+        }
+        if (binding.rbSpecificDay.isChecked) {
+            if (binding.edSpecificDay.text?.isNotEmpty() == true) {
+                val date = binding.edSpecificDay.text.toString().trim()
+                dateRangeModel.startDate = DateUtils.convertDateToMonth(date)
+                dateRangeModel.endDate = DateUtils.convertDateToMonth(date)
             }
 
         } else if (binding.rbDateRange.isChecked) {
-            if (binding.edFrom.text!!.isNotEmpty() && binding.edTo.text!!.isNotEmpty()) {
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.getCaseHistoryLoginData(
-                    CaseHistoryRangeModel(
-                        binding.edFrom.text.toString(),
-                        binding.edTo.text.toString(),
-                        "",
-                        binding.edtCaseNumber.text.toString()
-                    )
-                )
+            if (binding.edFrom.text?.isNotEmpty() == true &&
+                binding.edTo.text?.isNotEmpty() == true
+            ) {
+                val startDate = binding.edFrom.text.toString().trim()
+                val endDate = binding.edTo.text.toString().trim()
+                dateRangeModel.startDate = DateUtils.convertDateToMonth(startDate)
+                dateRangeModel.endDate = DateUtils.convertDateToMonth(endDate)
             }
-
         } else {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.getCaseHistoryLoginData(
-                CaseHistoryRangeModel(
-                    "",
-                    "",
-                    Constants.ALL,
-                    ""
-                )
-            )
+            dateRangeModel.apply {
+                startDate = ""
+                endDate = ""
+            }
         }
-
+        getCasesForLoginUserApi()
     }
 
     private fun checkFilterApplyBtn() {
