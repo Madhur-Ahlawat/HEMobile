@@ -8,8 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_EFEFEF">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/notification_title"
@@ -18,7 +17,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginVertical="@dimen/_10sdp"
             android:text="@string/str_notifications"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +41,8 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/text_unselected_bg"
                 android:gravity="center"
                 android:text="@string/str_priority"
-                android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -55,10 +52,8 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/text_unselected_bg"
                 android:gravity="center"
                 android:text="@string/str_standard"
-                android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -87,7 +82,7 @@
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:text="@string/str_your_notifications"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
 
@@ -105,7 +100,7 @@
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:layout_toStartOf="@+id/clear_txt"
                 android:text="@string/str_select_all"
-                android:textColor="@color/green"
+                android:textColor="@color/high_lighted_text_color"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal" />
 
@@ -118,7 +113,7 @@
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:text="@string/str_clear_u"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/green"
+                android:textColor="@color/high_lighted_text_color"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="normal" />
 
@@ -140,7 +135,7 @@
                     android:layout_marginVertical="@dimen/_5sdp"
                     android:layout_toStartOf="@+id/filter_txt"
                     android:text="@string/str_clear_notification"
-                    android:textColor="@color/green"
+                    android:textColor="@color/high_lighted_text_color"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="normal" />
 
@@ -153,7 +148,7 @@
                     android:layout_marginVertical="@dimen/_5sdp"
                     android:text="@string/str_filter_underline"
                     android:layout_alignParentEnd="true"
-                    android:textColor="@color/green"
+                    android:textColor="@color/high_lighted_text_color"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="normal" />
 
@@ -166,10 +161,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
-            android:background="@color/color_EFEFEF"
             android:clickable="true"
             android:clipToPadding="false"
             android:focusable="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
             android:paddingBottom="@dimen/_190sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

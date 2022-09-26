@@ -57,13 +57,12 @@ object DateUtils {
                 SimpleDateFormat("hh:mm:ss a")
             } else {
                 SimpleDateFormat("h:mm:ss")
-
             }
             val dateObj = timeFormatter.parse(time)
             val postFormatter = SimpleDateFormat("HH:mm")
             postFormatter.format(dateObj)
         } catch (e: Exception) {
-            "__:__"
+            time
         }
     }
 
@@ -86,8 +85,46 @@ object DateUtils {
             val postFormatter = SimpleDateFormat("dd MMM yyyy")
             return postFormatter.format(dateObj)
         } catch (e: Exception) {
-            return currentDate()!!
+            return date ?: ""
         }
+    }
+
+    fun getDateForCasesAndEnquiry(date: String?): String {
+        val list = mutableListOf<DateFormat>()
+        val dateFormatter1: DateFormat = SimpleDateFormat("MMM dd,yyyy, hh:mm")
+        val dateFormatter2: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm aa")
+        list.add(dateFormatter1)
+        list.add(dateFormatter2)
+
+        list.forEach { myDate ->
+            try {
+                val dateObj = myDate.parse(date)
+                val postFormatter = SimpleDateFormat("dd MMM yyyy")
+                return postFormatter.format(dateObj)
+            } catch (e: Exception) {
+
+            }
+        }
+        return date ?: ""
+    }
+
+    fun getTimeForCasesAndEnquiry(date: String?): String {
+        val list = mutableListOf<DateFormat>()
+        val dateFormatter1: DateFormat = SimpleDateFormat("MMM dd,yyyy, hh:mm")
+        val dateFormatter2: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm aa")
+        list.add(dateFormatter1)
+        list.add(dateFormatter2)
+
+        list.forEach { myDate ->
+            try {
+                val dateObj = myDate.parse(date)
+                val postFormatter = SimpleDateFormat("hh:mm")
+                return postFormatter.format(dateObj)
+            } catch (e: Exception) {
+
+            }
+        }
+        return date ?: ""
     }
 
     fun convertDateToMonth(date: String): String {

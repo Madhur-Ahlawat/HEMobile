@@ -9,6 +9,8 @@ import com.heandroid.data.model.contactdartcharge.ServiceRequest
 import com.heandroid.databinding.*
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.landing.LandingActivity
+import com.heandroid.utils.DateUtils.getDateForCasesAndEnquiry
+import com.heandroid.utils.DateUtils.getTimeForCasesAndEnquiry
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.extn.*
@@ -35,6 +37,9 @@ class CaseHistoryDetailsDartChargeFragment :
         data?.let {
             binding.data = it
         }
+        binding.tvDateValue.text =
+            getDateForCasesAndEnquiry(data?.created) //"23 Sep 2022 12:00 AM" , "Jan 20, 2022, 13:45"
+        binding.tvTimeValue.text = getTimeForCasesAndEnquiry(data?.created) //"23 Sep 2022 12:00 AM"
         if (sessionManager.getLoggedInUser()) {
             binding.btnGoStart.text = getString(R.string.str_go_to_account_management)
         } else {

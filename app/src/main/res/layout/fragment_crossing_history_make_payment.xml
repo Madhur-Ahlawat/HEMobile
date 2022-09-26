@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
                     android:text="@string/str_your_crossing"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"

@@ -1,5 +1,6 @@
 package com.heandroid.ui.startNow.contactdartcharge
 
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
@@ -22,7 +23,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
     private lateinit var navController: NavController
 
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityContactDartChargeBinding.inflate(layoutInflater)
@@ -44,7 +45,14 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         } else {
             oldGraph.setStartDestination(R.id.contactDartCharge)
         }
-        AdobeAnalytics.setScreenTrack("contact dart charge","contact dart charge","english","contact dart charge","landing","contact dart charge")
+        AdobeAnalytics.setScreenTrack(
+            "contact dart charge",
+            "contact dart charge",
+            "english",
+            "contact dart charge",
+            "landing",
+            "contact dart charge"
+        )
 
         navController.graph = oldGraph
 
@@ -61,6 +69,17 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     override fun onBackPressed() {
+        if (navController.currentDestination?.id == R.id.caseHistoryDartChargeFragment) {
+            val navHostFragment: Fragment? =
+                supportFragmentManager.findFragmentById(R.id.fragment_container)
+            val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+            if (fragment is CaseHistoryDartChargeFragment) {
+                if (fragment.isFilterDrawerOpen()) {
+                    fragment.closeFilterDrawer()
+                    return
+                }
+            }
+        }
         super.onBackPressed()
 /*
         if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
@@ -82,7 +101,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         loadSession()
     }
 
-    private fun loadSession(){
+    private fun loadSession() {
         if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             LogoutUtil.stopLogoutTimer()
             LogoutUtil.startLogoutTimer(this)

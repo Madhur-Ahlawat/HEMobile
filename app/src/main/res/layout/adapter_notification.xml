@@ -29,7 +29,7 @@
             android:id="@+id/message_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:linksClickable="true"
             android:textColorLink="@color/blue"
@@ -46,12 +46,11 @@
             android:layout_width="@dimen/_8sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:background="@color/green"
+            android:background="@color/blue_color"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/message_txt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/date_txt" />
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_txt"

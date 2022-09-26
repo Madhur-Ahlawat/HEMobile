@@ -15,7 +15,6 @@ import com.heandroid.data.model.account.EmailValidationModel
 import com.heandroid.data.model.account.UserNameCheckReq
 import com.heandroid.data.model.createaccount.EmailVerificationRequest
 import com.heandroid.data.model.createaccount.EmailVerificationResponse
-import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentCreateAccountEmailVerificationBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.landing.LandingActivity
@@ -23,12 +22,10 @@ import com.heandroid.ui.loader.LoaderDialog
 import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.utils.common.*
 import com.heandroid.utils.common.Constants.CREATE_ACCOUNT_DATA
-import com.heandroid.utils.common.Constants.DATA
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.logging.Logger
 
 @AndroidEntryPoint
 class CreateAccountEmailVerificationFragment :
@@ -41,6 +38,8 @@ class CreateAccountEmailVerificationFragment :
     private var isEditEmail: Int? = null
     private var count = 1
     private var isCodeCheckApi = true
+    private var isLiveDateClicked = false
+    private var isNavigate = false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -134,46 +133,48 @@ class CreateAccountEmailVerificationFragment :
             loader?.dismiss()
         }
         isCodeCheckApi = true
-        when (resource) {
-            is Resource.Success -> {
-                Logg.logging("CreateAccount", "checkUserNameAvailable ${resource.data}")
+        if (isLiveDateClicked) {
+            when (resource) {
+                is Resource.Success -> {
+                    if (resource.data == true) {
+                        count = 1
+                        loader?.show(requireActivity().supportFragmentManager, "")
 
-                if(resource?.data!!){
-                    count = 1
-                    loader?.show(requireActivity().supportFragmentManager, "")
+                        val request =
+                            EmailVerificationRequest(
+                                Constants.EMAIL_SELECTION_TYPE,
+                                binding.model?.email ?: ""
+                            )
 
-                    val request =
-                        EmailVerificationRequest(
-                            Constants.EMAIL_SELECTION_TYPE,
-                            binding.model?.email ?: ""
-                        )
+                        isNavigate = true
+                        createAccountViewModel.emailVerificationApi(request)
 
-                    createAccountViewModel.emailVerificationApi(request)
-
-                }else{
-                    showError(binding.root, getString(R.string.str_username_exits_message))
-
-                }
-
-            }
-            is Resource.DataError -> {
-                if (resource.errorMsg.contains("Connect your VPN", true)) {
-                    if (count > Constants.RETRY_COUNT) {
-                        requireActivity().startActivity(
-                            Intent(context, LandingActivity::class.java)
-                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
+                    } else {
+                        showError(binding.root, getString(R.string.str_username_exits_message))
                     }
-                    ErrorUtil.showRetry(this)
-                } else {
-                    showError(binding.root, resource.errorMsg)
+
+                }
+                is Resource.DataError -> {
+                    if (resource.errorMsg.contains("Connect your VPN", true)) {
+                        if (count > Constants.RETRY_COUNT) {
+                            requireActivity().startActivity(
+                                Intent(context, LandingActivity::class.java)
+                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        }
+                        ErrorUtil.showRetry(this)
+                    } else {
+                        showError(binding.root, resource.errorMsg)
+                    }
+                }
+                else -> {
+
                 }
             }
-            else -> {
-
-            }
+            isLiveDateClicked = false
         }
+
     }
 
 
@@ -182,48 +183,51 @@ class CreateAccountEmailVerificationFragment :
             loader?.dismiss()
         }
         isCodeCheckApi = false
-
-        when (resource) {
-            is Resource.Success -> {
-                count = 1
-                if (resource.data?.statusCode?.equals("0") == true) {
-                    requestModel?.emailAddress = binding.etEmail.text.toString().trim()
-                    requestModel?.referenceId = resource.data.referenceId?.toLongOrNull()
-                    val bundle = Bundle().apply {
-                        putParcelable(CREATE_ACCOUNT_DATA, requestModel)
-                        isEditEmail?.let {
-                            putInt(
-                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,
-                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY
+        if (isNavigate) {
+            when (resource) {
+                is Resource.Success -> {
+                    count = 1
+                    if (resource.data?.statusCode?.equals("0") == true) {
+                        requestModel?.emailAddress = binding.etEmail.text.toString().trim()
+                        requestModel?.referenceId = resource.data.referenceId?.toLongOrNull()
+                        val bundle = Bundle().apply {
+                            putParcelable(CREATE_ACCOUNT_DATA, requestModel)
+                            isEditEmail?.let {
+                                putInt(
+                                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL,
+                                    Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY
+                                )
+                            }
+                        }
+                        findNavController().navigate(
+                            R.id.action_emailVerification_to_confirmEmailFragment,
+                            bundle
+                        )
+                    } else {
+                        showError(binding.root, resource.data?.message)
+                    }
+                }
+                is Resource.DataError -> {
+                    if (resource.errorMsg.contains("Connect your VPN", true)) {
+                        if (count > Constants.RETRY_COUNT) {
+                            requireActivity().startActivity(
+                                Intent(context, LandingActivity::class.java)
+                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             )
                         }
+                        ErrorUtil.showRetry(this)
+                    } else {
+                        showError(binding.root, resource.errorMsg)
                     }
-                    findNavController().navigate(
-                        R.id.action_emailVerification_to_confirmEmailFragment,
-                        bundle
-                    )
-                } else {
-                    showError(binding.root, resource.data?.message)
                 }
-            }
-            is Resource.DataError -> {
-                if (resource.errorMsg.contains("Connect your VPN", true)) {
-                    if (count > Constants.RETRY_COUNT) {
-                        requireActivity().startActivity(
-                            Intent(context, LandingActivity::class.java)
-                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
-                    }
-                    ErrorUtil.showRetry(this)
-                } else {
-                    showError(binding.root, resource.errorMsg)
-                }
-            }
-            else -> {
+                else -> {
 
+                }
             }
+            isNavigate = false
         }
+
     }
 
 
@@ -231,6 +235,7 @@ class CreateAccountEmailVerificationFragment :
         when (v?.id) {
             R.id.btn_action -> {
                 hideKeyboard()
+                isLiveDateClicked = true
                 sendEmailVerificationRequest()
             }
         }

@@ -5,6 +5,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.heandroid.databinding.FragmentMakeOffPaymentReceiptBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.Logg
+import com.heandroid.utils.extn.setSpinnerAdapterData
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -34,39 +36,43 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
         }
 
         val mSubList = ArrayList<String>()
-        binding.mailSmsDropDown.setText("Email")
+//        binding.mailSmsDropDown.setText("Email")
 
         mSubList.add("Email")
         mSubList.add("SMS")
-        val mAdapter1 =
+        /*val mAdapter1 =
             ArrayAdapter(
                 requireActivity(),
                 android.R.layout.simple_dropdown_item_1line,
                 mSubList
-            )
-        binding.mailSmsDropDown.setAdapter(mAdapter1)
+            )*/
+        binding.mailSmsDropDown.setSpinnerAdapterData(mSubList)
 
-        binding.mailSmsDropDown.setOnItemClickListener { parent, _, position, _ ->
-            mOption = parent.getItemAtPosition(position) as String
-            if (mOption == "SMS") {
-                binding.tilEmail.hint = getString(R.string.str_mobile_number)
-                binding.tilConfirmEmail.hint = getString(R.string.str_mobile_number)
-                binding.tieEmail.inputType = InputType.TYPE_CLASS_PHONE
-                binding.tieConfirmEmail.inputType = InputType.TYPE_CLASS_PHONE
-                type =1
-                mOption= "SMS"
-            } else {
-                type =0
-                mOption="Email"
-                binding.tilEmail.hint = getString(R.string.str_email)
-                binding.tilConfirmEmail.hint = getString(R.string.str_email)
-                binding.tieEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                binding.tieConfirmEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        binding.mailSmsDropDown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                mOption = parent.getItemAtPosition(position) as String
+                if (mOption == "SMS") {
+                    binding.tilEmail.hint = getString(R.string.str_mobile_number)
+                    binding.tilConfirmEmail.hint = getString(R.string.str_mobile_number)
+                    binding.tieEmail.inputType = InputType.TYPE_CLASS_PHONE
+                    binding.tieConfirmEmail.inputType = InputType.TYPE_CLASS_PHONE
+                    type =1
+                    mOption= "SMS"
+                } else {
+                    type =0
+                    mOption="Email"
+                    binding.tilEmail.hint = getString(R.string.str_email)
+                    binding.tilConfirmEmail.hint = getString(R.string.str_email)
+                    binding.tieEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    binding.tieConfirmEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         }
-
-
     }
 
     private var mOption = "Email"

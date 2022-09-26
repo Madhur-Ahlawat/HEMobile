@@ -21,107 +21,82 @@
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/glTop" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/corner_radius_white_back"
-            android:padding="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appCompatTextView">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilOptionEmail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="@dimen/_10sdp">
 
-
-                <AutoCompleteTextView
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/mailSmsDropDown"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:drawableRight="@drawable/ic_vector_drop"
-                    android:inputType="none"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="@dimen/_13ssp" />
+                    android:layout_height="50dp"
+                    android:background="@drawable/spinner_db"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!--
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/tieOptionEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:imeOptions="actionNext"
-                                android:inputType="textEmailAddress"
-                                android:focusable="false"
-                                android:focusableInTouchMode="false"
-                                android:drawableRight="@drawable/ic_vector_drop"
-                                android:singleLine="true"
-                                android:textColor="@color/black"
-                                android:textColorHint="@color/black"
-                                android:textSize="@dimen/_13ssp" />
-                -->
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
-                style="@style/Widget.HeMobile.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:hint="@string/str_email"
-                android:textColorHint="@color/grey_two"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilOptionEmail">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tieEmail"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEmail"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="14dp"
+                    android:hint="@string/str_email"
                     android:textColorHint="@color/grey_two"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mailSmsDropDown">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilConfirmEmail"
-                style="@style/Widget.HeMobile.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:hint="@string/confirm_email"
-                android:textColorHint="@color/grey_two"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilEmail">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_two"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tieConfirmEmail"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilConfirmEmail"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="14dp"
+                    android:hint="@string/confirm_email"
                     android:textColorHint="@color/grey_two"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilEmail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieConfirmEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_two"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/appCompatCheckBox"
