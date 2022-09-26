@@ -35,16 +35,6 @@ class CaseHistoryDetailsDartChargeFragment :
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         data = arguments?.getParcelable(Constants.DATA)
-        Logg.logging("DetailsFrag", " test model call ServiceRequest $data")
-        val mList = data?.created?.split(" ")
-        Logg.logging("DetailsFrag", " test model call mList $mList")
-        Logg.logging("DetailsFrag", " test model call mList{4} ${mList!![4]}")
-        Logg.logging("DetailsFrag", " test model call mList{3} ${mList!![3]}")
-
-        if (mList?.isNotEmpty()) {
-            data?.time = "${mList[3]} ${mList[4]}"
-            data?.date = "${mList[0]} ${mList[1]} ${mList[2]}"
-        }
 
         data?.let {
             binding.data = it

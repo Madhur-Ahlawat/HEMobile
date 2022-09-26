@@ -27,7 +27,7 @@ class NoNominatedContactFragment : BaseFragment<FragmentNoNomiatedContactBinding
             findNavController().navigate(
                 R.id.action_ncNoListFragment_to_ncFullNameFragment
             )
-           /* binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,5)
+            binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,5)
 
             if (sessionManager.fetchAccountType()
                     .equals(
@@ -43,7 +43,7 @@ class NoNominatedContactFragment : BaseFragment<FragmentNoNomiatedContactBinding
                         Constants.BUSINESS_ACCOUNT,
                         true)) {
                 binding.youCanNominateTxt.text = getString(R.string.str_u_can_nominate_upto_users,5)
-            }*/
+            }
 
         }
     }

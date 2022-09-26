@@ -24,9 +24,7 @@ data class ServiceRequest(
     val description: String?,
     val fileList: List<FileUploadList?>?,
     val fileUploadList: List<String?>?,
-    var date: String?,
-    val response: String?,
-    var time:String?
+    val response: String?
 ) : Parcelable
 
 @Parcelize
