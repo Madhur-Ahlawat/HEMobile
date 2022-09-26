@@ -72,7 +72,13 @@ class NominatedInvitationAccessRightFragment :
                             "data"
                         )
                     )
-                    else viewModel.createAccount(arguments?.getParcelable("data"))
+                    else {
+                        val request =
+                            arguments?.getParcelable<CreateAccountRequestModel>("data")?.apply {
+                                accessType = if (binding.rbWrite.isChecked) "READ-WRITE" else "READ"
+                            }
+                        viewModel.createAccount(request)
+                    }
 
                 } else {
                     showError(binding.root, "Please select access right")
@@ -86,10 +92,13 @@ class NominatedInvitationAccessRightFragment :
             R.id.tvEditContact -> {
                 val bundle = Bundle()
                 bundle.putBoolean("edit", false)
-                bundle.putBoolean("FromNormalEdit",true)
+                bundle.putBoolean("FromNormalEdit", true)
                 bundle.putParcelable("data", binding.model)
 
-                findNavController().navigate(R.id.action_ncAcceessRightFragment_to_ncFullNameFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_ncAcceessRightFragment_to_ncFullNameFragment,
+                    bundle
+                )
 
             }
         }

@@ -11,7 +11,8 @@ data class CreateAccountRequestModel(
     var emailId: String?,
     @SerializedName("phoneNumber", alternate = ["cellPhoneNumber"])
     var phoneNumber: String?,
-    val accessType: String? = "",
-    val accountId: String?,
-    val status: String?,
+    var accessType: String? = "",
+    var accountId: String?,
+    var status: String?,
+    var phoneNumberCountryCode: String = "+44"
 ) : Parcelable
