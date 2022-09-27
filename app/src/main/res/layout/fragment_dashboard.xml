@@ -13,8 +13,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/he_bg">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragment_dashboard_title"
@@ -170,21 +169,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="@color/dark_blue_color"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_dummy"
@@ -193,7 +194,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_home"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_number_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_number_card_image_dummy"
@@ -204,20 +205,21 @@
                         android:id="@+id/tv_account_number_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_account_number"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_number_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
@@ -227,7 +229,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
                         android:tint="@color/btn_disable_txt_color"
@@ -253,21 +255,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="#5B1356"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#5B1356"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -277,7 +281,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_home"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_status_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_status_card_image_dummy"
@@ -288,20 +292,21 @@
                         android:id="@+id/tv_account_status_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_account_status"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_status_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
@@ -311,7 +316,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
                         android:tint="@color/btn_disable_txt_color"
@@ -337,21 +342,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="#B12009"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B12009"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -361,7 +368,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_home"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_type_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_type_card_image_dummy"
@@ -372,22 +379,23 @@
                         android:id="@+id/tv_account_type_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_account_type"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_type_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_account_type"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:lines="1"
-                        android:paddingRight="5dp"
+                        android:paddingRight="@dimen/_5sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintRight_toLeftOf="@id/account_type_arrow_image"
@@ -399,7 +407,7 @@
                         android:id="@+id/account_type_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
                         android:tint="@color/btn_disable_txt_color"
@@ -425,21 +433,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="#B35D00"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B35D00"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -449,7 +459,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_topup"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_topup_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_topup_card_image_dummy"
@@ -460,21 +470,22 @@
                         android:id="@+id/tv_top_up_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_top_up"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_topup_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_top_up_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
@@ -484,7 +495,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
                         android:tint="@color/btn_disable_txt_color"
@@ -510,21 +521,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="#00A6AA"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#00A6AA"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -534,7 +547,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_vehicle"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
@@ -545,6 +558,7 @@
                         android:id="@+id/tv_vehicle_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_vehicles"
@@ -552,7 +566,7 @@
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_vehicle_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_vehicle_count"
@@ -580,7 +594,7 @@
                         android:id="@+id/your_vehicles_arrow_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
                         android:tint="@color/btn_disable_txt_color"
@@ -606,21 +620,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_60sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_dummy"
                         android:layout_width="@dimen/_4sdp"
-                        android:layout_height="90dp"
+                        android:layout_height="0dp"
                         android:background="#457C1F"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_image_dummy"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#457C1F"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -630,7 +646,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/_8sdp"
                         android:src="@drawable/ic_crossing"
                         app:layout_constraintBottom_toBottomOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
                         app:layout_constraintLeft_toLeftOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
@@ -641,6 +657,7 @@
                         android:id="@+id/tv_crossing_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_crossings"
@@ -648,7 +665,7 @@
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
-                        app:layout_constraintTop_toTopOf="@id/fragment_dashboard_account_crossing_card_image_dummy" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_crossing_count"

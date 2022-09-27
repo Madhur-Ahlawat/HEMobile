@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_verification"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/glStart"
@@ -44,12 +44,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etCodeLayout"
-                style="@style/Widget.HeMobile.TextInputLayout"
+                style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/str_enter_security_code"
-                android:textColorHint="@color/color_CBCBCB"
-                app:boxStrokeColor="@color/color_00703C">
+                android:hint="@string/str_enter_security_code">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCode"
@@ -60,7 +59,7 @@
                     android:maxLength="6"
                     android:singleLine="true"
                     android:text="@={data.securityCode}"
-                    android:textColor="@color/color_000000" />
+                    style="@style/AppEditTextTransparent" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -76,7 +75,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/str_resend"
-                android:textColor="@color/color_00703C" />
+                android:textColor="@color/dark_blue_color" />
 
         </RelativeLayout>
 
@@ -86,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/send_security_code_msg"
-            android:textColor="@color/color_99000000"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
