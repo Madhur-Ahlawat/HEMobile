@@ -13,8 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
@@ -27,7 +26,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"
@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -502,11 +502,11 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:buttonTint="@color/green"
+                android:buttonTint="@color/blue_color"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="start"
                 android:text="@string/str_declare_info"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -519,12 +519,12 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+                android:backgroundTint="@{model==true?@color/btn_color:@color/btn_disable_color}"
                 android:enabled="@{model}"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/str_continue"
                 android:textAllCaps="false"
-                android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
+                android:textColor="@{model==false?@color/btn_disable_txt_color:@color/white}"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -543,13 +543,13 @@
                 android:includeFontPadding="true"
                 android:text="@string/str_cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
+                android:textColor="@color/blue_color"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/continueButton"
-                app:strokeColor="@color/green" />
+                app:strokeColor="@color/blue_color" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

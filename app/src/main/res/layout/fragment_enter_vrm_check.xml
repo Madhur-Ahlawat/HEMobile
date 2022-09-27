@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:background="@color/white"
-            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -49,12 +49,11 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.HeMobile.TextInputLayout"
+                        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:hint="@string/str_number_plate"
-                        app:boxStrokeColor="@color/color_00703C"
                         app:endIconDrawable="@drawable/ic_screenshot__121__2">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -63,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="none"
                             android:singleLine="true"
-                            android:textColor="@color/black"
+                            android:textColor="@color/dark_blue_color"
                             android:textSize="@dimen/_13ssp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,12 +87,12 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_20ssp"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:backgroundTint="@{model.enable==true?@color/btn_color:@color/color_C9C9C9}"
+                        android:backgroundTint="@{model.enable==true?@color/btn_color:@color/btn_disable_color}"
                         android:enabled="@{model.enable}"
                         android:gravity="center"
                         android:text="@string/str_continue"
                         android:textAllCaps="false"
-                        android:textColor="@{model.enable==false?@color/color_7D7D7D:@color/white}"
+                        android:textColor="@{model.enable==false?@color/btn_disable_txt_color:@color/white}"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

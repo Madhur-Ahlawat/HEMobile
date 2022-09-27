@@ -6,7 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
@@ -20,7 +19,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
+                android:layout_marginHorizontal="@dimen/_10sdp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -33,7 +32,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/color_EFEFEF"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -288,7 +286,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:background="@color/white"
             android:orientation="vertical"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -318,9 +315,9 @@
                 android:layout_weight="1"
                 android:text="@string/str_remove"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
+                android:textColor="@color/blue_color"
                 android:textSize="@dimen/_14ssp"
-                app:strokeColor="@color/green" />
+                app:strokeColor="@color/btn_color" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
