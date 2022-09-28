@@ -10,6 +10,7 @@ import com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,15 +29,12 @@ class VehicleFragment : BaseFragment<FragmentVehicleBinding>() {
 
     override fun init() {
         sessionManager.fetchAccountType()?.let {
-            if (it == Constants.BUSINESS_ACCOUNT){
+            if (it == Constants.BUSINESS_ACCOUNT) {
                 isBusinessAccount = true
             }
         }
         if (isBusinessAccount) {
-            binding.apply {
-                addVehicleLyt.gone()
-                vehicleHistoryLyt.gone()
-            }
+            binding.vehicleManagementLyt.visible()
         } else {
             binding.vehicleManagementLyt.gone()
         }

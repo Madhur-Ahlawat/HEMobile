@@ -76,7 +76,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 && it.groupId?.isEmpty() == true
             ) {
                 isGetVehicleListData = true
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getUnAllocatedVehiclesApi()
             } else {
                 isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)
@@ -124,7 +124,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
         observe(vehicleMgmtViewModel.removeVehiclesFromGroupApiVal, ::handleUpdatedVehicle)
         observe(vehicleGroupMgmtViewModel.vehicleListVal, ::handleVehicleListData)
         observe(vehicleGroupMgmtViewModel.searchVehicleVal, ::handleVehicleListData)
-        observe(vehicleMgmtViewModel.vehicleListVal, ::handleUnallocatedVehicleListData)
+        observe(vehicleMgmtViewModel.unAllocatedVehicleListVal, ::handleUnallocatedVehicleListData)
     }
 
     private fun handleUnallocatedVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
@@ -139,11 +139,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 is Resource.Success -> {
                     resource.data?.let {
                         if (!it.isNullOrEmpty()) {
-                            it.forEach { vehicle ->
-                                if (vehicle?.vehicleInfo?.groupName.isNullOrEmpty()) {
-                                    vehicleResponseList.add(vehicle)
-                                }
-                            }
+                            vehicleResponseList.addAll(it)
                             if (vehicleResponseList.isEmpty()) {
                                 handleVehicleData()
                             } else {
@@ -253,7 +249,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 && it.groupId!!.isEmpty()
             ) {
                 isGetVehicleListData = true
-                vehicleMgmtViewModel.getVehicleInformationApi()
+                vehicleMgmtViewModel.getUnAllocatedVehiclesApi()
             } else {
                 isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getVehiclesOfGroupApi(it)
