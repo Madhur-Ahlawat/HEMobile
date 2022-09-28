@@ -111,6 +111,9 @@ interface ApiService {
         @Query("count") count: String?
     ): Response<List<VehicleResponse?>?>?
 
+    @GET(VEHICLE_GROUP_UNALLOCATED)
+    suspend fun getUnAllocatedVehicles(): Response<List<VehicleResponse?>?>?
+
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?
 
