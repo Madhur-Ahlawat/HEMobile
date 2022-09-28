@@ -139,18 +139,25 @@
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
                         app:cornerRadius="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_available_balance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:maxLines="1"
                         android:textColor="@color/dark_blue_color"
-                        android:textSize="@dimen/_40ssp"
+                        android:textSize="@dimen/_35ssp"
+                        app:autoSizePresetSizes="@array/button_text_auto_size"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_manual_top_up"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_manual_top_up"
-                        tools:text="£ 1200" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_available_balance_heading"
+                        tools:text="£ 1200.00" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,8 +184,8 @@
                         android:layout_width="@dimen/_4sdp"
                         android:layout_height="0dp"
                         android:background="@color/dark_blue_color"
-                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
@@ -263,9 +270,9 @@
                         android:layout_width="@dimen/_4sdp"
                         android:layout_height="0dp"
                         android:background="#5B1356"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_image_dummy"
@@ -292,8 +299,8 @@
                         android:id="@+id/tv_account_status_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_account_status"
                         android:textColor="@android:color/black"
@@ -379,8 +386,8 @@
                         android:id="@+id/tv_account_type_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_account_type"
                         android:textColor="@android:color/black"
@@ -398,8 +405,8 @@
                         android:paddingRight="@dimen/_5sdp"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
-                        app:layout_constraintRight_toLeftOf="@id/account_type_arrow_image"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
+                        app:layout_constraintRight_toLeftOf="@id/account_type_arrow_image"
                         app:layout_constraintTop_toBottomOf="@id/tv_account_type_heading"
                         tools:text="@string/str_personal_pre_pay_account" />
 
@@ -470,8 +477,8 @@
                         android:id="@+id/tv_top_up_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/str_top_up"
                         android:textColor="@android:color/black"
@@ -484,8 +491,8 @@
                         android:id="@+id/tv_top_up_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:lines="1"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:lines="1"
                         android:textColor="@color/btn_disable_txt_color"
                         android:textSize="@dimen/_15ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
@@ -558,8 +565,8 @@
                         android:id="@+id/tv_vehicle_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_vehicles"
                         android:textColor="@android:color/black"
@@ -657,8 +664,8 @@
                         android:id="@+id/tv_crossing_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_crossings"
                         android:textColor="@android:color/black"

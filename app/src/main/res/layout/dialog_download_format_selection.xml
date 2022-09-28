@@ -44,12 +44,13 @@
                     android:id="@+id/ivClose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_13sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:elevation="10dp"
+                    android:padding="@dimen/_10sdp"
                     android:src="@drawable/ic_close"
+                    app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView5"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/appCompatTextView5" />
 
 
                 <RadioGroup
@@ -66,7 +67,7 @@
                         android:layout_height="@dimen/_33sdp"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_14sdp"
-                        android:buttonTint="@color/blue_color"
+                        android:buttonTint="@color/radio_btn_color"
                         android:button="@drawable/drawable_selector_radio_button"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingLeft="@dimen/_21sdp"
@@ -87,7 +88,7 @@
                         android:layout_marginStart="@dimen/_14sdp"
                         android:button="@drawable/drawable_selector_radio_button"
                         android:fontFamily="@font/roboto_regular"
-                        android:buttonTint="@color/blue_color"
+                        android:buttonTint="@color/radio_btn_color"
                         android:paddingLeft="@dimen/_21sdp"
                         android:text="@string/spread_sheet"
                         android:textColor="@color/black"
