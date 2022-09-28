@@ -29,7 +29,7 @@
                     android:gravity="center_horizontal"
                     android:padding="@dimen/_20sdp"
                     android:text="@string/str_your_change_to_ref_no_made"
-                    android:textColor="@color/green"
+                    android:textColor="@color/dark_blue_color"
                     android:textSize="@dimen/_15ssp"
                     android:lineSpacingExtra="@dimen/_5sdp"
                     app:layout_constraintBottom_toBottomOf="parent"

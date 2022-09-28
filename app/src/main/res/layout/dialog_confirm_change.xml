@@ -60,7 +60,7 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:textColor="@color/green"
+            android:textColor="@color/btn_color"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintEnd_toStartOf="@id/btnConfirm"
             app:layout_constraintStart_toStartOf="parent"
