@@ -121,14 +121,7 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
 
         binding.continueButton.setOnClickListener {
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton  mScreeType $mScreeType")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton mClassType $mClassType")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked binding.classVehicleCheckbox.isChecked ${binding.classVehicleCheckbox.isChecked}")
-
             if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked  if called" )
-
                 if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
                     mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
                     val vehicleData = mVehicleDetails
@@ -195,15 +188,15 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
 
-        if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD) {
-            val vehicleValidReqModel = ValidVehicleCheckRequest(
-                details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
-                "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
-            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
-        }else {
+//        if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD) {
+//            val vehicleValidReqModel = ValidVehicleCheckRequest(
+//                details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
+//                "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
+//            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
+//        }else {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
-        }
+//        }
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
