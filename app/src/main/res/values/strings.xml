@@ -309,7 +309,7 @@
     <string name="str_in_order">In order</string>
     <string name="str_others">Others</string>
     <string name="str_high_priority">HIGH PRIORITY</string>
-    <string name="str_view_all"><U>View all(%s)</U></string>
+    <string name="str_view_all">View all(%s)</string>
     <string name="str_high_priority_small">High priority</string>
     <string name="str_activate_msg_now">Activate text messaging now,</string>
     <string name="str_click_here">Click here</string>
@@ -412,7 +412,7 @@
     <string name="post_mail">Post Mail - %1$s</string>
     <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate contacts</string>
-    <string name="str_u_can_nominate_upto_users">You can nominate up to %1$s users for your account</string>
+    <string name="str_u_can_nominate_upto_users">You can nominate up to %d users for your account</string>
     <string name="str_mobile_number_optional">Mobile number (optional)</string>
     <string name="str_invite_nominated_contact_title">Invite nominated contact</string>
     <string name="str_contact">Contact</string>
@@ -804,14 +804,14 @@
     <string name="add_below_vehicle">Do you want to add below vehicles to the vehicle list?</string>
     <string name="str_account_statements">Account Statements</string>
     <string name="monthly_account_statement">Monthly account statements</string>
-    <string name="choose_pdf_file">choose the year and the period you require, and select Download for the pdf file</string>
+    <string name="choose_pdf_file">choose the year and the period you require, and select Download for the pdf file.</string>
     <string name="year">Year</string>
     <string name="period">Period</string>
     <string name="monthly_csv_format">Monthly account statements - CSV request</string>
     <string name="annual_account_summary">Annual account summaries</string>
     <string name="str_selected_stage">You have selected</string>
-    <string name="choose_csv_file">For your monthly account statement in a CSV format, choose the year and the period you require and select Submit</string>
-    <string name="choose_annual_account">To request an annual summary, choose the year you require and select Submit. Annual account summaries can be requested one at a time</string>
+    <string name="choose_csv_file">For your monthly account statement in a CSV format, choose the year and the period you require and select Submit.</string>
+    <string name="choose_annual_account">To request an annual summary, choose the year you require and select Submit. Annual account summaries can be requested one at a time.</string>
     <string name="str_filter_sort_underline">Filter/Sort</string>
     <string name="str_by_case_no">By case number</string>
     <string name="str_go_to_account_management">Go to account management page</string>

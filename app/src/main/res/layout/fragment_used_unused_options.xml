@@ -3,8 +3,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_EFEFEF">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/topText"
@@ -13,7 +12,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/select_crossing_type"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,10 +21,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_used_crossings"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,9 +54,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_un_used_crossings"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="2dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:background="@color/white"
             android:paddingHorizontal="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -52,9 +52,9 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-        Logg.logging("testing", " AddVehicleDoneFragment mScreeType  $mScreeType")
 
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD ||
+            mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST) {
             binding.tickLayout.visible()
             binding.tvYourVehicle.gone()
             binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
@@ -92,15 +92,22 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     private fun getVehicleDataFromDVRM() {
-        Logg.logging(
-            "Testing",
-            "AddVehicleDoneFragment getVehicleDataFromDVRM mVehicleDetails $mVehicleDetails"
-        )
         val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
 
-        if (mVehicleDetails?.newPlateInfo?.country.equals("UK", true) && mUKVehicleDataNotFound == 0) {
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD
+            || mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST
+        ) {
+            setAdapter()
+        } else if (mVehicleDetails?.newPlateInfo?.country.equals(
+                "UK",
+                true
+            ) && mUKVehicleDataNotFound == 0
+        ) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.getVehicleData(mVehicleDetails?.newPlateInfo?.number, Constants.AGENCY_ID.toInt())
+            viewModel.getVehicleData(
+                mVehicleDetails?.newPlateInfo?.number,
+                Constants.AGENCY_ID.toInt()
+            )
         } else {
             val mRetrievePlateInfoDetails = RetrievePlateInfoDetails(
                 mVehicleDetails?.newPlateInfo?.number,
@@ -110,10 +117,6 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 mVehicleDetails?.vehicleInfo?.color
             )
 
-            Logg.logging(
-                "Testing",
-                "AddVehicleDoneFragment mRetrievePlateInfoDetails $mRetrievePlateInfoDetails"
-            )
             val it = VehicleInfoDetails(mRetrievePlateInfoDetails)
             setAdapter(it)
 
@@ -129,8 +132,6 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 resource.data?.let {
                     setAdapter(it)
                 }
-
-
             }
             is Resource.DataError -> {
                 val bundle = Bundle().apply {
@@ -145,16 +146,14 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 
             }
-            else -> {}
+            else -> {
+            }
         }
 
     }
 
-    private fun setAdapter(details: VehicleInfoDetails) {
+    private fun setAdapter(details: VehicleInfoDetails? = null) {
         mList.clear()
-        Logg.logging("testing", "mScreeType  $mScreeType")
-        Logg.logging("testing", "details  $details")
-
         if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
             val plateInfoResp = PlateInfoResponse(
                 mVehicleDetails?.plateInfo?.number ?: "",
@@ -167,14 +166,14 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             )
 
             val vehicleInfoResp = VehicleInfoResponse(
-                details.retrievePlateInfoDetails?.vehicleMake ?: "",
-                details.retrievePlateInfoDetails?.vehicleModel ?: "",
+                details?.retrievePlateInfoDetails?.vehicleMake ?: "",
+                details?.retrievePlateInfoDetails?.vehicleModel ?: "",
                 "",
                 "",
                 "",
                 "",
-                details.retrievePlateInfoDetails?.vehicleColor ?: "",
-                details.retrievePlateInfoDetails?.vehicleClass?.let {
+                details?.retrievePlateInfoDetails?.vehicleColor ?: "",
+                details?.retrievePlateInfoDetails?.vehicleClass?.let {
                     VehicleClassTypeConverter.toClassName(
                         it
                     )
@@ -186,7 +185,9 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp, true)
             Logg.logging("testing", "mVehicleResponse1  $mVehicleResponse1")
             mList.add(mVehicleResponse1)
-        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD
+            || mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST
+        ) {
             val plateInfoResp = PlateInfoResponse(
                 mVehicleDetails?.plateInfo?.number ?: "",
                 mVehicleDetails?.plateInfo?.country ?: "",

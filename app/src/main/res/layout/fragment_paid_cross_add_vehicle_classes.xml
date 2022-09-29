@@ -13,8 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
@@ -27,7 +26,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"
@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:padding="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +47,7 @@
                     android:id="@+id/classAView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
                     android:padding="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -57,9 +58,11 @@
                         android:id="@+id/classA_RadioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_bold"
-                        app:buttonTint="@color/btn_disable"
                         android:enabled="false"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:buttonTint="@color/btn_disable"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,7 +108,8 @@
                     android:id="@+id/classASeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classAView" />
@@ -114,11 +118,8 @@
                     android:id="@+id/classADesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#eceff1"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classASeparator">
@@ -130,7 +131,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_cars_with_or_without"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -142,7 +143,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_Motorhomes_passengers_vans"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/classADesc1" />
@@ -153,6 +154,7 @@
                     android:id="@+id/classBView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
                     android:padding="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -165,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -187,11 +189,14 @@
                         android:id="@+id/classBSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_80sdp"
                         android:fontFamily="@font/roboto_light"
                         android:text="@string/str_goods_vans_car_based_vans"
                         android:textColor="@color/grey_two"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="@+id/classB_RadioButton"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="@+id/tvClassB" />
 
                     <ImageView
@@ -224,7 +229,8 @@
                     android:id="@+id/classBSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classBView" />
@@ -233,11 +239,8 @@
                     android:id="@+id/classBDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#eceff1"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classBSeparator">
@@ -249,7 +252,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_cars_with_or_without"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -261,7 +264,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_Motorhomes_passengers_vans"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/classBDesc1" />
@@ -273,6 +276,7 @@
                     android:id="@+id/classCView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
                     android:padding="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -286,7 +290,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -331,7 +335,8 @@
                     android:id="@+id/classCSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classCView" />
@@ -340,11 +345,8 @@
                     android:id="@+id/classCDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#eceff1"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classCSeparator">
@@ -356,7 +358,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_cars_with_or_without"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -368,7 +370,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_Motorhomes_passengers_vans"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/classCDesc1" />
@@ -380,6 +382,7 @@
                     android:id="@+id/classDView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:background="@color/white"
                     android:padding="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -393,7 +396,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
-                        app:buttonTint="@color/bottomActiveColor"
+                        app:buttonTint="@color/radio_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -415,7 +418,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_light"
-                        android:text="@string/str_2_plus_axles"
+                        android:text="@string/two_plus_axles"
                         android:textColor="@color/grey_two"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintBottom_toBottomOf="@+id/classD_RadioButton"
@@ -438,7 +441,8 @@
                     android:id="@+id/classDSeparator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/black_trans"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@color/blue_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classDView" />
@@ -447,11 +451,8 @@
                     android:id="@+id/classDDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#eceff1"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/classDSeparator">
@@ -463,7 +464,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_cars_with_or_without"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -475,7 +476,7 @@
                         android:fontFamily="@font/roboto_light"
                         android:padding="@dimen/_3sdp"
                         android:text="@string/str_Motorhomes_passengers_vans"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/classDDesc1" />
@@ -502,11 +503,11 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:buttonTint="@color/green"
+                android:buttonTint="@color/blue_color"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="start"
                 android:text="@string/str_declare_info"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -519,12 +520,12 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:backgroundTint="@{model==true?@color/btn_color:@color/color_C9C9C9}"
+                android:backgroundTint="@{model==true?@color/btn_color:@color/btn_disable_color}"
                 android:enabled="@{model}"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/str_continue"
                 android:textAllCaps="false"
-                android:textColor="@{model==false?@color/color_7D7D7D:@color/white}"
+                android:textColor="@{model==false?@color/btn_disable_txt_color:@color/white}"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -543,13 +544,13 @@
                 android:includeFontPadding="true"
                 android:text="@string/str_cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/green"
+                android:textColor="@color/blue_color"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/continueButton"
-                app:strokeColor="@color/green" />
+                app:strokeColor="@color/blue_color" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

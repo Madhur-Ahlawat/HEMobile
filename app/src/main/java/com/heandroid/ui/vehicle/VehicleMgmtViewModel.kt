@@ -61,6 +61,10 @@ class VehicleMgmtViewModel @Inject constructor(
     private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _unAllocatedVehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
+    val unAllocatedVehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _unAllocatedVehicleListVal
+
     private val _vehicleVRMDownloadVal = MutableLiveData<Resource<ResponseBody?>?>()
     val vehicleVRMDownloadVal: LiveData<Resource<ResponseBody?>?> get() = _vehicleVRMDownloadVal
 
@@ -249,17 +253,62 @@ class VehicleMgmtViewModel @Inject constructor(
         }
     }
 
-    fun deleteVehicleApi(deleteVehicleRequest: DeleteVehicleRequest) {
+    fun getUnAllocatedVehiclesApi() {
         viewModelScope.launch {
             try {
-                _deleteVehicleApiVal.postValue(
+                _unAllocatedVehicleListVal.postValue(
                     ResponseHandler.success(
-                        repository.deleteVehicleListApiCall(deleteVehicleRequest),
+                        repository.getUnAllocatedVehiclesApiCall(),
                         errorManager
                     )
                 )
             } catch (e: Exception) {
-                _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
+                _unAllocatedVehicleListVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun deleteVehicleApi(list: List<String?>) {
+        var successCount = 0
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    coroutineScope {
+                        list.forEach { id ->
+                            delay(500)
+                            launch {
+                                id?.let { vehicleId ->
+                                    val request = DeleteVehicleRequest(vehicleId)
+                                    val apiResponse = repository.deleteVehicleListApiCall(request)
+                                    if (apiResponse != null) {
+                                        if (apiResponse.isSuccessful) {
+                                            successCount++
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (successCount == list.size) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.Success(EmptyApiResponse(200, "success"))
+                        )
+                    } else if (successCount == 0 && list.size == 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Failed to delete vehicle")
+                        )
+                    } else if (successCount == 0 && list.size > 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Failed to delete all vehicles")
+                        )
+                    } else if (successCount < list.size && list.size > 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Few vehicle(s) failed to delete.")
+                        )
+                    }
+                } catch (e: Exception) {
+                    _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
+                }
             }
         }
     }
@@ -314,7 +363,6 @@ class VehicleMgmtViewModel @Inject constructor(
     }
 
     fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) {
-
         viewModelScope.launch {
             try {
                 validVehicleMutData.setValue(

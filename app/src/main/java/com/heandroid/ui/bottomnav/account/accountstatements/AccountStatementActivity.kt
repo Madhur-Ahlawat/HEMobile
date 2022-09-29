@@ -2,7 +2,6 @@ package com.heandroid.ui.bottomnav.account.accountstatements
 
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import com.heandroid.R
@@ -15,11 +14,10 @@ import com.heandroid.utils.extn.setSpinnerAdapterData
 import com.heandroid.utils.logout.LogoutListener
 import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
+class AccountStatementActivity : BaseActivity<ActivityAccountStatementBinding>(), LogoutListener {
 
     private lateinit var binding: ActivityAccountStatementBinding
     private val viewModel: AccountStatementViewModel by viewModels()
@@ -54,9 +52,13 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        yearListCSV.clear()
+        periodList.clear()
+        yearListCSV.add("Select")
+        periodList.add("Select")
         when (resource) {
             is Resource.Success -> {
-
+                setSpinnerData()
                 /*val statementList = resource.data
                 if (statementList?.size!! > 0) {
                     for (element in statementList.indices) {
@@ -85,25 +87,7 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.spYearAccount.onItemSelectedListener = yearCSVListener
 
                 }*/
-                val years = resources.getStringArray(R.array.years)
-                years.forEach {
-                    yearListCSV.add(it)
-                }
-                val periods = resources.getStringArray(R.array.period)
-                periods.forEach {
-                    periodList.add(it)
-                }
-                binding.spPeriodCsv.setSpinnerAdapterData(periodList)
-                binding.spPeriodCsv.onItemSelectedListener = spinnerListener
-                binding.spYearCsv.setSpinnerAdapterData(yearListCSV)
-                binding.spYearCsv.onItemSelectedListener = yearCSVListener
-                binding.spYearPdf.setSpinnerAdapterData(yearListCSV)
-                binding.spYearPdf.onItemSelectedListener = yearCSVListener
-                binding.spPeriodPdf.setSpinnerAdapterData(periodList)
-                binding.spPeriodPdf.onItemSelectedListener = spinnerListener
 
-                binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
-                binding.spYearAccount.onItemSelectedListener = yearCSVListener
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -114,11 +98,34 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
         }
     }
 
+    private fun setSpinnerData() {
+        val years = resources.getStringArray(R.array.years)
+        years.forEach {
+            yearListCSV.add(it)
+        }
+        val periods = resources.getStringArray(R.array.period)
+        periods.forEach {
+            periodList.add(it)
+        }
+        binding.spPeriodCsv.setSpinnerAdapterData(periodList)
+        binding.spPeriodCsv.onItemSelectedListener = spinnerListener
+        binding.spYearCsv.setSpinnerAdapterData(yearListCSV)
+        binding.spYearCsv.onItemSelectedListener = yearCSVListener
+        binding.spYearPdf.setSpinnerAdapterData(yearListCSV)
+        binding.spYearPdf.onItemSelectedListener = yearCSVListener
+        binding.spPeriodPdf.setSpinnerAdapterData(periodList)
+        binding.spPeriodPdf.onItemSelectedListener = spinnerListener
+
+        binding.spYearAccount.setSpinnerAdapterData(yearListCSV)
+        binding.spYearAccount.onItemSelectedListener = yearCSVListener
+    }
+
+
     private val spinnerListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-            Toast.makeText(this@AccountStatementActivity, periodList[position], Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(this@AccountStatementActivity, periodList[position], Toast.LENGTH_SHORT)
+//                .show()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -129,8 +136,8 @@ class AccountStatementActivity : BaseActivity<Any?>(), LogoutListener {
     private val yearCSVListener = object : AdapterView.OnItemSelectedListener {
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-            Toast.makeText(this@AccountStatementActivity, yearListCSV[position], Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(this@AccountStatementActivity, yearListCSV[position], Toast.LENGTH_SHORT)
+//                .show()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {

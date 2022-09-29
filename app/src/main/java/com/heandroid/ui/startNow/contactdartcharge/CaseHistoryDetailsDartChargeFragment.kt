@@ -12,6 +12,7 @@ import com.heandroid.ui.landing.LandingActivity
 import com.heandroid.utils.DateUtils.getDateForCasesAndEnquiry
 import com.heandroid.utils.DateUtils.getTimeForCasesAndEnquiry
 import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.SessionManager
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,7 @@ class CaseHistoryDetailsDartChargeFragment :
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         data = arguments?.getParcelable(Constants.DATA)
+
         data?.let {
             binding.data = it
         }

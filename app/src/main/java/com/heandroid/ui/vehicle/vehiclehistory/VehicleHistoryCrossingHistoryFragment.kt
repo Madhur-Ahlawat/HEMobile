@@ -120,9 +120,11 @@ class VehicleHistoryCrossingHistoryFragment :
                             response.transactionList.transaction?.let { it1 -> list?.addAll(it1) }
                         }
                         isLoading = false
-                        Handler(Looper.myLooper()!!).postDelayed({
-                            binding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
-                        }, 100)
+                        Looper.myLooper()?.let { it1 ->
+                            Handler(it1).postDelayed({
+                                binding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
+                            }, 100)
+                        }
                         if (list?.size == 0) {
                             binding.downloadCrossingHistoryBtn.gone()
                             binding.rvVehicleCrossingHistory.gone()
@@ -164,7 +166,7 @@ class VehicleHistoryCrossingHistoryFragment :
             startIndex = startIndex,
             count = count,
             transactionType = Constants.ALL_TRANSACTION,  //Constants.TOLL_TRANSACTION
-            plateNumber = ""  //mVehicleDetails.plateInfo.number
+            plateNumber = mVehicleDetails.plateInfo?.number
         )
         isCrossingHistory = true
         viewModel.crossingHistoryApiCall(request)
@@ -177,7 +179,11 @@ class VehicleHistoryCrossingHistoryFragment :
         lifecycleScope.launch(Dispatchers.IO) {
 
             val ret = async {
-                return@async StorageHelper.writeResponseBodyToDisk(requireActivity(), selectionType, body)
+                return@async StorageHelper.writeResponseBodyToDisk(
+                    requireActivity(),
+                    selectionType,
+                    body
+                )
             }.await()
 
             if (ret) {
@@ -240,7 +246,10 @@ class VehicleHistoryCrossingHistoryFragment :
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
+                        dialog.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
+                        )
                     }
                 }
             }
@@ -255,10 +264,10 @@ class VehicleHistoryCrossingHistoryFragment :
         downloadCrossingHistory()
     }
 
-    override fun onCancelClicked() { }
+    override fun onCancelClicked() {}
 
     private fun downloadCrossingHistory() {
-        val downloadRequest =  TransactionHistoryDownloadRequest().apply {
+        val downloadRequest = TransactionHistoryDownloadRequest().apply {
             startIndex = startOne
             downloadType = selectionType
             transactionType = Constants.ALL_TRANSACTION

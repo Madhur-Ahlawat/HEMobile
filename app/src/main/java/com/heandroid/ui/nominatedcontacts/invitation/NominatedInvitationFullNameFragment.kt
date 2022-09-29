@@ -22,14 +22,13 @@ class NominatedInvitationFullNameFragment :
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentNominatedInvitationFullNameBinding =
-        FragmentNominatedInvitationFullNameBinding.inflate(inflater, container, false)
+    ) = FragmentNominatedInvitationFullNameBinding.inflate(inflater, container, false)
 
     override fun init() {
         if (arguments?.getBoolean("edit") == true) binding.model = arguments?.getParcelable("data")
         else binding.model = CreateAccountRequestModel("", "", "", "", "READ", "", "")
 
-        if (arguments?.getBoolean("FromNormalEdit",false) == true)
+        if (arguments?.getBoolean("FromNormalEdit", false) == true)
             binding.model = arguments?.getParcelable("data")
     }
 

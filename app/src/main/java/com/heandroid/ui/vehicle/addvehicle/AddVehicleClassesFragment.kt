@@ -52,26 +52,17 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         binding.classBRadioButton.isChecked = true
         mClassType = "2"
         binding.classBDesc.visible()
+        checkButton()
+    }
+
+    private fun checkButton() {
+        binding.model = binding.classVehicleCheckbox.isChecked
     }
 
     override fun initCtrl() {
-/*
-        binding.classARadioButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.apply {
-                    classBRadioButton.isChecked = false
-                    classCRadioButton.isChecked = false
-                    classDRadioButton.isChecked = false
-                    classADesc.visible()
-                    classBDesc.gone()
-                    classCDesc.gone()
-                    classDDesc.gone()
-                }
-                mClassType = "1"
-            }
+        binding.classVehicleCheckbox.setOnCheckedChangeListener { _, _ ->
+            checkButton()
         }
-*/
-
         binding.classBRadioButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.apply {
@@ -121,57 +112,37 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         }
 
         binding.continueButton.setOnClickListener {
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton  mScreeType $mScreeType")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton mClassType $mClassType")
-            Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked binding.classVehicleCheckbox.isChecked ${binding.classVehicleCheckbox.isChecked}")
 
-            if (binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                Logg.logging("testing", " AddVehicleClassesFragment continueButton clicked  if called" )
-
-                if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
-                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
-                    val vehicleData = mVehicleDetails
-                    vehicleData?.apply {
-                        vehicleInfo?.vehicleClassDesc =
-                            VehicleClassTypeConverter.toClassName(mClassType)
-                        vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
-                    }
-                    val bundle = Bundle().apply {
-                        putParcelable(Constants.DATA, vehicleData)
-                        putInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY,Constants.UK_VEHICLE_DATA_NOT_FOUND)
-                        putInt(
-                            Constants.VEHICLE_SCREEN_KEY,
-                            Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
-                        )
-                    }
-                    findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment, bundle)
-                    return@setOnClickListener
-                } else {
-                    mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
-                    VehicleAddConfirmDialog.newInstance(
-                        mVehicleDetails,
-                        this
-                    ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
+            if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
+                val vehicleData = mVehicleDetails
+                vehicleData?.apply {
+                    vehicleInfo?.vehicleClassDesc =
+                        VehicleClassTypeConverter.toClassName(mClassType)
+                    vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
                 }
-            } else if (!binding.classVehicleCheckbox.isChecked && mClassType.isNotEmpty()) {
-                Snackbar.make(
-                    binding.classAView,
-                    "Please select the checkbox",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            } else if (binding.classVehicleCheckbox.isChecked && mClassType.isEmpty()) {
-                Snackbar.make(
-                    binding.classAView,
-                    "Please select the class",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                val bundle = Bundle().apply {
+                    putParcelable(Constants.DATA, vehicleData)
+                    putInt(
+                        Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY,
+                        Constants.UK_VEHICLE_DATA_NOT_FOUND
+                    )
+                    putInt(
+                        Constants.VEHICLE_SCREEN_KEY,
+                        Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT
+                    )
+                }
+                findNavController().navigate(
+                    R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment,
+                    bundle
+                )
+                return@setOnClickListener
             } else {
-                Snackbar.make(
-                    binding.classAView,
-                    "Please select the class and checkbox",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                mVehicleDetails?.vehicleInfo?.vehicleClassDesc = mClassType
+                VehicleAddConfirmDialog.newInstance(
+                    mVehicleDetails,
+                    this
+                ).show(childFragmentManager, VehicleAddConfirmDialog.TAG)
             }
         }
     }
@@ -195,15 +166,15 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
 
-        if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD) {
-            val vehicleValidReqModel = ValidVehicleCheckRequest(
-                details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
-                "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
-            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
-        }else {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
-        }
+//        if (mScreeType==Constants.VEHICLE_SCREEN_TYPE_ADD) {
+//            val vehicleValidReqModel = ValidVehicleCheckRequest(
+//                details.plateInfo?.number, details.plateInfo?.country, "STANDARD",
+//                "2022", details.vehicleInfo?.make, details.vehicleInfo?.model, details.vehicleInfo?.color, "2", "HE")
+//            vehicleMgmtViewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
+//        }else {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        vehicleMgmtViewModel.addVehicleApi(mVehicleDetails)
+//        }
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
@@ -240,13 +211,16 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when(resource) {
+        when (resource) {
             is Resource.Success -> {
                 val bundle = Bundle().apply {
                     putParcelable(Constants.DATA, mVehicleDetails)
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 }
-                findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_addVehicleClassesFragment_to_addVehicleFragment,
+                    bundle
+                )
             }
 
             is Resource.DataError -> {
@@ -254,9 +228,13 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                 val bundle = Bundle().apply {
                     putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 }
-                findNavController().navigate(R.id.action_addVehicleClassesFragment_to_addVehicleFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_addVehicleClassesFragment_to_addVehicleFragment,
+                    bundle
+                )
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 }

@@ -26,6 +26,8 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun getVehicleListApiCall(start: String, count: String) =
         apiService.getVehicleData(startIndex = start, count = count)
 
+    suspend fun getUnAllocatedVehiclesApiCall() = apiService.getUnAllocatedVehicles()
+
     suspend fun deleteVehicleListApiCall(deleteVehicleRequest: DeleteVehicleRequest?) =
         apiService.deleteVehicle(deleteVehicleRequest)
 

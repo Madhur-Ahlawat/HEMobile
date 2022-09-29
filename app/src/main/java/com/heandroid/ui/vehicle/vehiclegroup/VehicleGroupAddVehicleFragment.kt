@@ -59,7 +59,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             AccountPaymentHistoryPaginationAdapter(this, noOfPages, selectedPosition)
 
         vehiclesAdapter = VehicleGroupVehiclesAdapter(this, vehicleResponseList)
-        vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
+        vehicleMgmtViewModel.getUnAllocatedVehiclesApi()
 
     }
 
@@ -102,7 +102,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
 
     override fun observer() {
         observe(vehicleMgmtViewModel.addVehiclesToGroupApiVal, ::handleUpdatedVehicle)
-        observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
+        observe(vehicleMgmtViewModel.unAllocatedVehicleListVal, ::handleVehicleListData)
         observe(
             vehicleGroupMgmtViewModel.searchVehicleVal,
             ::handleVehicleListData
@@ -115,7 +115,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             is Resource.Success -> {
                 requireActivity().showToast("vehicle(s) added successfully")
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
+                vehicleMgmtViewModel.getUnAllocatedVehiclesApi()
 //                vehicleGroup?.let {
 //                    val bundle = Bundle().apply {
 //                        putParcelable(Constants.DATA, it)
@@ -128,7 +128,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             }
             is Resource.DataError -> {
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                vehicleMgmtViewModel.getVehicleInformationApi("1", "100")
+                vehicleMgmtViewModel.getUnAllocatedVehiclesApi()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
@@ -146,11 +146,7 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
                     if (!it.isNullOrEmpty()) {
                         checkedVehicleList.clear()
                         vehicleResponseList.clear()
-                        it.forEach { vehicle ->
-                            if (vehicle?.vehicleInfo?.groupName.isNullOrEmpty()){
-                                vehicleResponseList.add(vehicle)
-                            }
-                        }
+                        vehicleResponseList.addAll(it)
                         if (vehicleResponseList.isEmpty()) {
                             handleVehicleData()
                         } else {

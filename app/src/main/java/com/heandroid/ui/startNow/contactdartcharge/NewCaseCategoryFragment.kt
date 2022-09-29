@@ -24,12 +24,13 @@ import java.util.ArrayList
 @AndroidEntryPoint
 class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
     View.OnClickListener {
-    private val viewModel: ContactDartChargeViewModel by viewModels()
-    private lateinit var accountModel: AccountTypeSelectionModel
-    private var loader: LoaderDialog? = null
 
+    private val viewModel: ContactDartChargeViewModel by viewModels()
+    private var loader: LoaderDialog? = null
     private var mSelCat = ""
     private var mSelSubCat = ""
+    private val mCatListName = ArrayList<String>()
+    private val mSubCatListName = ArrayList<String>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -49,17 +50,9 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
 
         binding.apply {
             btnNext.setOnClickListener(this@NewCaseCategoryFragment)
-            categoryDropdown.setOnItemClickListener { parent, view, position, id ->
+            categoryDropdown.setOnItemClickListener { _, _, position, _ ->
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                Logg.logging(
-                    "NewCaseCategoryFrag",
-                    "categoryDropdown position  $position  parent $parent  view $view  id  $id"
-                )
                 mSelCat = mCatListName[position]
-                Logg.logging(
-                    "NewCaseCategoryFrag",
-                    "categoryDropdown mSelCat  $mSelCat "
-                )
                 checkButton()
                 viewModel.getCaseSubCategoriesList(mSelCat)
             }
@@ -86,22 +79,17 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
         observe(viewModel.getCaseSubCategoriesListVal, ::handleCaseSubCategoryData)
     }
 
-    private val mCatListName = ArrayList<String>()
-    private val mSubCatListName = ArrayList<String>()
-
     private fun handleCaseCategoryData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let { it ->
                     if (it.isNotEmpty()) {
-                        binding.categoryDropdown.setText("Select")
-
                         val mList = ArrayList<String>()
                         mCatListName.clear()
                         it.forEach { data ->
-                            mList.add(data?.value!!)
-                            mCatListName.add(data.name!!)
+                            data?.value?.let { it1 -> mList.add(it1) }
+                            data?.name?.let { it1 -> mCatListName.add(it1) }
                         }
 
                         val mAdapter =
@@ -110,10 +98,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                                 R.layout.item_spinner,
                                 mList
                             )
-
                         binding.categoryDropdown.setAdapter(mAdapter)
-                        Logg.logging("NewCaseCategoryFrag", "list data $it ")
-                    } else {
                     }
                 }
             }
@@ -132,13 +117,11 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
             is Resource.Success -> {
                 resource.data?.let {
                     if (it.isNotEmpty()) {
-                        Logg.logging("NewCaseSubCategoryFrag", "list data $it ")
                         val mSubList = ArrayList<String>()
-                        binding.subCategoryDropdown.setText("Select")
                         mSubCatListName.clear()
                         it.forEach { data ->
-                            mSubList.add(data?.value!!)
-                            mSubCatListName.add(data.name!!)
+                            data?.value?.let { it1 -> mSubList.add(it1) }
+                            data?.name?.let { it1 -> mSubCatListName.add(it1) }
                         }
 
                         val mAdapter1 =
@@ -148,9 +131,6 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
                                 mSubList
                             )
                         binding.subCategoryDropdown.setAdapter(mAdapter1)
-
-
-                    } else {
                     }
                 }
             }
@@ -166,9 +146,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
 
     override fun onClick(it: View?) {
         when (it?.id) {
-
             R.id.btnNext -> {
-
                 findNavController().navigate(
                     R.id.action_newCaseCategoryFragment_to_NewCaseCommentsFragment,
                     Bundle().apply {

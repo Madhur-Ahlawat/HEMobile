@@ -70,7 +70,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     override fun initCtrl() {
 
-        binding.tvViewVehicle.setOnClickListener {
+        binding.viewVehicle.setOnClickListener {
             val bundle = Bundle().apply {
                 putBoolean(Constants.FROM_DASHBOARD_TO_VEHICLE_LIST, true)
             }
@@ -85,7 +85,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                     .dataBinding.bottomNavigationView.setActiveNavigationIndex(2)
             }
         }
-        binding.tvViewCrossings.setOnClickListener {
+        binding.viewCrossings.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
             findNavController().navigate(
@@ -161,7 +161,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                         binding.notificationView.visible()
                         binding.viewAllNotifi.text =
                             getString(R.string.str_view_all, alerts.size.toString())
-                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+//                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
                             (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
                                 val badgeCountBtn =

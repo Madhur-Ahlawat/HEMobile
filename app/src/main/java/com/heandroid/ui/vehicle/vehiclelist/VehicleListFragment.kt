@@ -276,6 +276,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     override fun onAddClick(details: VehicleResponse) {
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, details)
+            putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_LIST)
             putParcelable(
                 Constants.CREATE_ACCOUNT_DATA,
                 arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
@@ -286,7 +287,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun onRemoveClick(selectedVehicleList: List<String?>) {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        vehicleMgmtViewModel.deleteVehicleApi(DeleteVehicleRequest(selectedVehicleList[0]))
+        vehicleMgmtViewModel.deleteVehicleApi(selectedVehicleList)
     }
 
     private var onScopeResultLauncher =

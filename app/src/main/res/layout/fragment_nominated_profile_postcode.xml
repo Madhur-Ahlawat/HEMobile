@@ -27,8 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="#626262"
-            android:textStyle="bold"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintHorizontal_bias="0.0"
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/underline_postcode"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPersonaleInfo"
@@ -55,9 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/password"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
-            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPostCode"
             app:layout_constraintStart_toEndOf="@+id/tvPostCode" />
 
@@ -68,9 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/pin"
-            android:textColor="#626262"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
-            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvPassword"
             app:layout_constraintStart_toEndOf="@+id/tvPassword" />
 
@@ -101,7 +98,6 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:hint="@string/postcode"
-                    app:boxStrokeColor="@color/color_00703C"
                     app:endIconDrawable="@drawable/ic_vector"
                     app:endIconMode="custom"
                     app:endIconTint="@color/green"
