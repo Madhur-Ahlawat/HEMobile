@@ -160,6 +160,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         when (resource) {
             is Resource.Success -> {
                 requireContext().showToast("vehicle deleted successfully")
+                startIndex = 1
+                totalCount = 0
+                mList.clear()
                 getVehicleListData()
             }
             is Resource.DataError -> {
@@ -198,12 +201,14 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                 }
             }
             is Resource.DataError -> {
-                binding.rvVehicleList.gone()
-                binding.progressBar.gone()
-                binding.removeVehicleBtn.gone()
-                binding.tvNoVehicles.visible()
-                binding.download.gone()
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
+                    binding.rvVehicleList.gone()
+                    binding.progressBar.gone()
+                    binding.removeVehicleBtn.gone()
+                    binding.tvNoVehicles.visible()
+                    binding.download.gone()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }

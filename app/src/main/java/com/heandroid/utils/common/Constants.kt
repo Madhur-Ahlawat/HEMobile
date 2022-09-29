@@ -4,7 +4,7 @@ object Constants {
 
     const val EXPIRED = "EXPIRED"
     const val RETRY_COUNT = 3
-    const val ITEM_COUNT : Long = 5
+    const val ITEM_COUNT : Long = 20
     const val SPLASH_TIME_OUT = 500L
     const val COUNTRY_TYPE = "country_type"
     const val CHECK_PAID_CROSSING_VRM_ENTERED = "CHECK_PAID_CROSSING_VRM_ENTERED"
@@ -187,4 +187,6 @@ object Constants {
     const val LIVE = "LIVE"
     const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
 
+    //Error code for api response
+    const val NO_DATA_FOR_GIVEN_INDEX = 1020
 }

@@ -19,9 +19,9 @@ object ResponseHandler {
                 val errorResponse =
                     Gson().fromJson(response?.errorBody()?.string(), ErrorResponseModel::class.java)
                 if (TextUtils.isEmpty(errorResponse.message)) {
-                    return Resource.DataError(errorResponse.exception)
+                    return Resource.DataError(errorResponse.exception, errorResponse)
                 }
-                return Resource.DataError(errorResponse.message)
+                return Resource.DataError(errorResponse.message, errorResponse)
             } catch (e: Exception) {
                 return Resource.DataError(e.message)
             }
