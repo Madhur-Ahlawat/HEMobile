@@ -186,9 +186,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
                 }
             }
-
+            isCrossingHistory = false
         }
-        isCrossingHistory = false
     }
 
     private fun callCoroutines(body: ResponseBody) {

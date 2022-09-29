@@ -154,18 +154,31 @@ class DashboardViewModel @Inject constructor(
                     overviewResponse = callOverview.await()
                     alertsResponse = callAlerts.await()
 
-                    if (vehicleCountResponse?.isSuccessful == true &&
-                        crossingCountResponse?.isSuccessful == true &&
-//                        thresholdAmountResponse?.isSuccessful == true &&
-                        overviewResponse?.isSuccessful == true &&
-                        alertsResponse?.isSuccessful == true
-                    ) {
-                        _vehicleListVal.value = Resource.Success(vehicleCountResponse.body())
-                        _crossingHistoryVal.value = Resource.Success(crossingCountResponse.body())
-//                        _thresholdAmountVal.value = Resource.Success(thresholdAmountResponse.body())
-                        _accountDetailsVal.value = Resource.Success(overviewResponse.body())
-                        _alertsVal.value = Resource.Success(alertsResponse.body())
-
+                    if (overviewResponse?.isSuccessful == true) {
+                        _accountDetailsVal.postValue(
+                            ResponseHandler.success(
+                                overviewResponse,
+                                errorManager
+                            )
+                        )
+                        _crossingHistoryVal.postValue(
+                            ResponseHandler.success(
+                                crossingCountResponse,
+                                errorManager
+                            )
+                        )
+                        _vehicleListVal.postValue(
+                            ResponseHandler.success(
+                                vehicleCountResponse,
+                                errorManager
+                            )
+                        )
+                        _alertsVal.postValue(
+                            ResponseHandler.success(
+                                alertsResponse,
+                                errorManager
+                            )
+                        )
                     } else {
                         _vehicleListVal.value =
                             Resource.DataError("Something went wrong. Try again later")

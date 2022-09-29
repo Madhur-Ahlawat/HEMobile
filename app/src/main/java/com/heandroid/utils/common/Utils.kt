@@ -125,27 +125,20 @@ object Utils {
 
     fun getStatusForCases(status: String, tvTitle: AppCompatTextView) {
         when (status) {
-
             "Closed" -> {
                 tvTitle.text = tvTitle.context.getString(R.string.resolved)
-                tvTitle.changeTextColor(R.color.color_10403C)
-                tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
-
-
+                tvTitle.changeTextColor(R.color.color_3D2375)
+                tvTitle.changeBackgroundColor(R.color.color_DBD5E9)
             }
             "Open" -> {
+                tvTitle.text = tvTitle.context.getString(R.string.submitted)
+                tvTitle.changeTextColor(R.color.color_10403C)
+                tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
+            }
+            else -> {
                 tvTitle.text = tvTitle.context.getString(R.string.in_progress_open)
                 tvTitle.changeTextColor(R.color.color_594D00)
                 tvTitle.changeBackgroundColor(R.color.FFF7BF)
-//                tvTitle.changeTextColor(R.color.color_10403C)
-//                tvTitle.changeBackgroundColor(R.color.FCD6C3)
-
-            }
-
-            else -> {
-                tvTitle.text = tvTitle.context.getString(R.string.submitted)
-                tvTitle.changeTextColor(R.color.color_3D2375)
-                tvTitle.changeBackgroundColor(R.color.color_DBD5E9)
             }
         }
     }

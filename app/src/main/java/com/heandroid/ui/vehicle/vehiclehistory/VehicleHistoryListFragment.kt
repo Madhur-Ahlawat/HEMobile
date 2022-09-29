@@ -37,6 +37,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     private var totalCount: Int = 0
     private var isLoading = false
     private var isFirstTime = true
+    private var isVehicleHistory = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,6 +47,8 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAdapter = VrmHistoryAdapter(this)
+        isVehicleHistory = true
+        vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
     }
 
     override fun init() {
@@ -53,9 +56,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
         binding.rvVehicleHistoryList.adapter = mAdapter
     }
 
-    override fun initCtrl() {
-        vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
-    }
+    override fun initCtrl() {}
 
     override fun observer() {
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleHistoryListData)
@@ -64,37 +65,41 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
     private fun handleVehicleHistoryListData(resource: Resource<List<VehicleResponse?>?>?) {
         binding.rvVehicleHistoryList.visible()
         binding.progressBar.gone()
-        when (resource) {
-            is Resource.Success -> {
-                resource.data?.let {
-                    val response = resource.data
-                    totalCount = response.size
-                    mList.addAll(response)
-                    isLoading = false
-                    mAdapter.setList(mList)
-                    binding.rvVehicleHistoryList.adapter?.notifyDataSetChanged()
+        if (isVehicleHistory) {
+            isVehicleHistory = false
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        val response = resource.data
+                        totalCount = response.size
+                        mList.addAll(response)
+                        isLoading = false
+                        mAdapter.setList(mList)
+                        binding.rvVehicleHistoryList.adapter?.notifyDataSetChanged()
 
-                    if (mList.size == 0) {
-                        binding.rvVehicleHistoryList.gone()
-                        binding.tvNoVehicles.visible()
-                        binding.progressBar.gone()
-                    } else {
-                        binding.rvVehicleHistoryList.visible()
-                        binding.progressBar.gone()
-                        binding.tvNoVehicles.gone()
+                        if (mList.size == 0) {
+                            binding.rvVehicleHistoryList.gone()
+                            binding.tvNoVehicles.visible()
+                            binding.progressBar.gone()
+                        } else {
+                            binding.rvVehicleHistoryList.visible()
+                            binding.progressBar.gone()
+                            binding.tvNoVehicles.gone()
+                        }
+                        endlessScroll()
                     }
-                    endlessScroll()
+                }
+                is Resource.DataError -> {
+                    binding.rvVehicleHistoryList.gone()
+                    binding.progressBar.gone()
+                    binding.tvNoVehicles.visible()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
                 }
             }
-            is Resource.DataError -> {
-                binding.rvVehicleHistoryList.gone()
-                binding.progressBar.gone()
-                binding.tvNoVehicles.visible()
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-            else -> {
-            }
         }
+
     }
 
     private fun endlessScroll() {
@@ -111,6 +116,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleHistoryListBindin
                                 linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
                                 (mList.size - 1) && totalCount > count - 1
                             ) {
+                                isVehicleHistory = true
                                 startIndex += count
                                 isLoading = true
                                 binding.progressBar.visible()

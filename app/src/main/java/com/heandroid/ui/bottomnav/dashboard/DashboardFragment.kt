@@ -1,6 +1,5 @@
 package com.heandroid.ui.bottomnav.dashboard
 
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,14 +7,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.heandroid.R
 import com.heandroid.data.model.account.AccountResponse
-import com.heandroid.data.model.account.ThresholdAmountApiResponse
-import com.heandroid.data.model.account.ThresholdAmountData
 import com.heandroid.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.heandroid.data.model.crossingHistory.CrossingHistoryRequest
-import com.heandroid.data.model.notification.AlertMessage
 import com.heandroid.data.model.notification.AlertMessageApiResponse
 import com.heandroid.data.model.vehicle.VehicleResponse
 import com.heandroid.databinding.FragmentDashboardBinding
@@ -44,7 +39,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentDashboardBinding = FragmentDashboardBinding.inflate(inflater, container, false)
+    ) = FragmentDashboardBinding.inflate(inflater, container, false)
 
 
     override fun init() {
@@ -171,18 +166,16 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                             }
                         }
                     } else {
-                        if (requireActivity() is HomeActivityMain) {
-                            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
-                                val badgeCountBtn =
-                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
-                                badgeCountBtn.gone()
-                            }
-                        }
+                        hideNotification()
                     }
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.NO_DATA_FOR_NOTIFICATIONS) {
+                    hideNotification()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
 
@@ -190,6 +183,17 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
 
     }
+
+    private fun hideNotification() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+                val badgeCountBtn =
+                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                badgeCountBtn.gone()
+            }
+        }
+    }
+
 
 //    private fun setNotificationAdapter(notificationList: List<AlertMessage?>?) {
 //        binding.rvNotification.apply {

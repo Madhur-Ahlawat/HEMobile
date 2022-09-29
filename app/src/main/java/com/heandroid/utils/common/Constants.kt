@@ -189,4 +189,5 @@ object Constants {
 
     //Error code for api response
     const val NO_DATA_FOR_GIVEN_INDEX = 1020
+    const val NO_DATA_FOR_NOTIFICATIONS = 1220
 }
