@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
 
-    private lateinit var removeAdapter : RemoveVehicleDialogAdapter
+    private lateinit var removeAdapter: RemoveVehicleDialogAdapter
     private var selectedVehicleList = mutableListOf<String?>()
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -34,18 +34,8 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
 
     override fun initCtrl() {
         binding.btnRemove.setOnClickListener {
-            when {
-                selectedVehicleList.size == 0 -> {
-                    requireContext().showToast("please select one vehicle")
-                }
-                selectedVehicleList.size > 1 -> {
-                    requireContext().showToast("please select only one vehicle")
-                }
-                else -> {
-                    dismiss()
-                    mListener?.onRemoveClick(selectedVehicleList)
-                }
-            }
+            dismiss()
+            mListener?.onRemoveClick(selectedVehicleList)
         }
 
         binding.btnCancel.setOnClickListener {
@@ -57,12 +47,13 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
         }
     }
 
-    fun addRemoveVehicleData(id : String?){
-        if (selectedVehicleList.contains(id)){
+    fun addRemoveVehicleData(id: String?) {
+        if (selectedVehicleList.contains(id)) {
             selectedVehicleList.remove(id)
         } else {
             selectedVehicleList.add(id)
         }
+        setBtnActivated()
     }
 
     override fun observer() {
@@ -72,11 +63,11 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
     }
 
     companion object {
-        var vehicleList : ArrayList<VehicleResponse?> = ArrayList()
+        var vehicleList: ArrayList<VehicleResponse?> = ArrayList()
         var mListener: RemoveVehicleListener? = null
 
         fun newInstance(
-            list : ArrayList<VehicleResponse?>,
+            list: ArrayList<VehicleResponse?>,
             listener: RemoveVehicleListener
         ): RemoveVehicleDialog {
             mListener = listener
@@ -86,12 +77,9 @@ class RemoveVehicleDialog : BaseDialog<DialogRemoveVehicleBinding>() {
     }
 
     private fun setBtnActivated() {
-        binding.model = true
+        binding.model = selectedVehicleList.size >= 1
     }
 
-    private fun setBtnDisabled() {
-        binding.model = false
-    }
 
     override fun onStart() {
         super.onStart()

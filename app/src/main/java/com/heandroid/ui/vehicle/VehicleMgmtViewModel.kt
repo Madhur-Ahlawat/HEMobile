@@ -268,17 +268,47 @@ class VehicleMgmtViewModel @Inject constructor(
         }
     }
 
-    fun deleteVehicleApi(deleteVehicleRequest: DeleteVehicleRequest) {
+    fun deleteVehicleApi(list: List<String?>) {
+        var successCount = 0
         viewModelScope.launch {
-            try {
-                _deleteVehicleApiVal.postValue(
-                    ResponseHandler.success(
-                        repository.deleteVehicleListApiCall(deleteVehicleRequest),
-                        errorManager
-                    )
-                )
-            } catch (e: Exception) {
-                _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
+            withContext(Dispatchers.IO) {
+                try {
+                    coroutineScope {
+                        list.forEach { id ->
+                            delay(500)
+                            launch {
+                                id?.let { vehicleId ->
+                                    val request = DeleteVehicleRequest(vehicleId)
+                                    val apiResponse = repository.deleteVehicleListApiCall(request)
+                                    if (apiResponse != null) {
+                                        if (apiResponse.isSuccessful) {
+                                            successCount++
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (successCount == list.size) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.Success(EmptyApiResponse(200, "success"))
+                        )
+                    } else if (successCount == 0 && list.size == 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Failed to delete vehicle")
+                        )
+                    } else if (successCount == 0 && list.size > 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Failed to delete all vehicles")
+                        )
+                    } else if (successCount < list.size && list.size > 1) {
+                        _deleteVehicleApiVal.postValue(
+                            Resource.DataError("Few vehicle(s) failed to delete.")
+                        )
+                    }
+                } catch (e: Exception) {
+                    _deleteVehicleApiVal.postValue(ResponseHandler.failure(e))
+                }
             }
         }
     }
@@ -333,7 +363,6 @@ class VehicleMgmtViewModel @Inject constructor(
     }
 
     fun validVehicleCheck(vehicleValidReqModel: ValidVehicleCheckRequest?, agencyId: Int?) {
-
         viewModelScope.launch {
             try {
                 validVehicleMutData.setValue(

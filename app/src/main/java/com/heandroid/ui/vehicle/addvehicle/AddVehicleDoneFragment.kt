@@ -53,7 +53,8 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
             mScreeType = it
         }
 
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD ||
+            mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST) {
             binding.tickLayout.visible()
             binding.tvYourVehicle.gone()
             binding.tickTxt.text = getString(R.string.str_new_vehicles_added_success)
@@ -93,7 +94,9 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     private fun getVehicleDataFromDVRM() {
         val mUKVehicleDataNotFound = arguments?.getInt(Constants.UK_VEHICLE_DATA_NOT_FOUND_KEY, 0)
 
-        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+        if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD
+            || mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST
+        ) {
             setAdapter()
         } else if (mVehicleDetails?.newPlateInfo?.country.equals(
                 "UK",
@@ -182,7 +185,9 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 VehicleResponse(plateInfoResp, plateInfoResp, vehicleInfoResp, true)
             Logg.logging("testing", "mVehicleResponse1  $mVehicleResponse1")
             mList.add(mVehicleResponse1)
-        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD) {
+        } else if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD
+            || mScreeType == Constants.VEHICLE_SCREEN_TYPE_LIST
+        ) {
             val plateInfoResp = PlateInfoResponse(
                 mVehicleDetails?.plateInfo?.number ?: "",
                 mVehicleDetails?.plateInfo?.country ?: "",

@@ -18,6 +18,7 @@ import java.nio.BufferUnderflowException
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
+    private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
 
     override fun getFragmentBinding(
@@ -25,10 +26,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         container: ViewGroup?
     ) = FragmentAddVehicleDetailsBinding.inflate(inflater, container, false)
 
-    override fun observer() {
-    }
+    override fun observer() {}
 
-    private var mScreeType = 0
     override fun init() {
         binding.model = false
         mVehicleDetails = arguments?.getParcelable(DATA) as? VehicleResponse?
@@ -36,8 +35,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-        Logg.logging("testing", " AddVehicleDetailsFragment mScreeType  $mScreeType")
-        Logg.logging("testing", " AddVehicleDetailsFragment mVehicleDetails  $mVehicleDetails")
 
         binding.title.text = getString(
             R.string.vehicle_reg_num,
@@ -93,7 +90,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         } else {
             setBtnDisabled()
         }
-
     }
 
     private fun setBtnActivated() {

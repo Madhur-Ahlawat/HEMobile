@@ -122,7 +122,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                         val dialog = DownloadFormatSelectionFilterDialog()
                         dialog.setListener(this@VehicleListFragment)
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-                        dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
+                        dialog.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
+                        )
                     }
                 }
             }
@@ -183,20 +186,20 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     private fun handleDownloadVehicleListData(resource: Resource<ResponseBody?>?) {
 
-        if(isDownload){
-                when (resource) {
-                    is Resource.Success -> {
-                        resource.data?.let {
-                            callCoroutines(resource.data)
-                        }
-                    }
-                    is Resource.DataError -> {
-                        requireContext().showToast("failed to download the document")
-                    }
-                    else -> {
-
+        if (isDownload) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        callCoroutines(resource.data)
                     }
                 }
+                is Resource.DataError -> {
+                    requireContext().showToast("failed to download the document")
+                }
+                else -> {
+
+                }
+            }
             isDownload = false
         }
 
@@ -229,6 +232,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
     override fun onAddClick(details: VehicleResponse) {
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, details)
+            putInt(Constants.VEHICLE_SCREEN_KEY, Constants.VEHICLE_SCREEN_TYPE_LIST)
             putParcelable(
                 Constants.CREATE_ACCOUNT_DATA,
                 arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
@@ -239,7 +243,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
 
     override fun onRemoveClick(selectedVehicleList: List<String?>) {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        vehicleMgmtViewModel.deleteVehicleApi(DeleteVehicleRequest(selectedVehicleList[0]))
+        vehicleMgmtViewModel.deleteVehicleApi(selectedVehicleList)
     }
 
     private var onScopeResultLauncher =
