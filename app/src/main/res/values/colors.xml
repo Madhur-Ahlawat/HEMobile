@@ -96,5 +96,6 @@
     <color name="text_input_place_holder">#A3C0DA</color>
     <color name="edit_text_inactive">#B5CEE4</color>
     <color name="color_909090">#909090</color>
+    <color name="color_99999">#999999</color>
 
 </resources>

@@ -19,7 +19,7 @@
                 android:id="@+id/fragment_dashboard_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/str_account_summary"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_20ssp"
@@ -32,7 +32,7 @@
                 android:id="@+id/notificationView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@color/color_FFE8E8"
                 android:visibility="gone"
@@ -67,11 +67,12 @@
                     android:id="@+id/view_all_notifi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/corner_radius_blue_back"
+                    android:padding="@dimen/_7sdp"
                     android:text="@string/str_view_all"
-                    android:textColor="@color/dark_blue_color"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +100,7 @@
                 android:id="@+id/fragment_dashboard_balance_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_2sdp"
                 app:layout_constraintEnd_toEndOf="@id/glEnd"
@@ -127,7 +128,7 @@
                         android:id="@+id/tv_manual_top_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginHorizontal="@dimen/_5sdp"
                         android:backgroundTint="@color/dark_blue_color"
                         android:gravity="center_vertical|center_horizontal"
                         android:includeFontPadding="false"
@@ -138,7 +139,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        app:cornerRadius="5dp"
+                        app:cornerRadius="@dimen/_4sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -150,7 +151,7 @@
                         android:layout_marginEnd="@dimen/_4sdp"
                         android:maxLines="1"
                         android:textColor="@color/dark_blue_color"
-                        android:textSize="@dimen/_35ssp"
+                        android:textSize="@dimen/_30ssp"
                         app:autoSizePresetSizes="@array/button_text_auto_size"
                         app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toStartOf="@+id/tv_manual_top_up"
@@ -177,7 +178,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_dummy"
@@ -190,9 +191,9 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_number_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_dummy"
@@ -217,7 +218,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/str_account_number"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -228,22 +229,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_number_card_image_dummy"
                         app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading"
                         tools:text="12342345" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -263,7 +252,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_dummy"
@@ -276,9 +265,9 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_status_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#5B1356"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -304,7 +293,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/txt_account_status"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -315,22 +304,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_status_card_image_dummy"
                         app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading"
                         tools:text="12342345" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -350,7 +327,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_dummy"
@@ -363,9 +340,9 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_type_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B12009"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -391,7 +368,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/str_account_type"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -404,24 +381,10 @@
                         android:lines="1"
                         android:paddingRight="@dimen/_5sdp"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_type_card_image_dummy"
-                        app:layout_constraintRight_toLeftOf="@id/account_type_arrow_image"
                         app:layout_constraintTop_toBottomOf="@id/tv_account_type_heading"
                         tools:text="@string/str_personal_pre_pay_account" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/account_type_arrow_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -441,7 +404,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_dummy"
@@ -454,9 +417,9 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_topup_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#B35D00"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -482,7 +445,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/str_top_up"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -494,22 +457,10 @@
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:lines="1"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_topup_card_image_dummy"
                         app:layout_constraintTop_toBottomOf="@id/tv_top_up_heading"
                         tools:text="@string/str_auto_top_up" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -527,9 +478,10 @@
                 app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_crossing_card">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_vehicle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_dummy"
@@ -542,8 +494,8 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_vehicle_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#00A6AA"
@@ -565,12 +517,12 @@
                         android:id="@+id/tv_vehicle_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_vehicles"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -579,20 +531,21 @@
                         android:id="@+id/tv_vehicle_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:text="@string/str_two_vehicle"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_vehicle_card_image_dummy"
                         app:layout_constraintTop_toBottomOf="@id/tv_vehicle_heading" />
 
                     <TextView
-                        android:id="@+id/tv_view_vehicle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_1sdp"
+                        android:includeFontPadding="false"
                         android:text="@string/txt_view_vehicles"
                         android:textColor="@color/blue_color"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/your_vehicles_arrow_image"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -604,7 +557,7 @@
                         android:layout_marginRight="@dimen/_8sdp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
+                        android:tint="@color/color_99999"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -626,9 +579,10 @@
                 app:layout_constraintTop_toBottomOf="@id/fragment_dashboard_account_topup_card">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_crossings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60sdp">
+                    android:minHeight="@dimen/_55sdp">
 
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_dummy"
@@ -641,9 +595,9 @@
 
                     <View
                         android:id="@+id/fragment_dashboard_account_crossing_card_image_dummy"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/circular_shape_tint"
                         android:backgroundTint="#457C1F"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -669,7 +623,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/txt_your_crossings"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -681,17 +635,18 @@
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:text="@string/str_two_crossing"
                         android:textColor="@color/btn_disable_txt_color"
-                        android:textSize="@dimen/_15ssp"
+                        android:textSize="@dimen/_14ssp"
                         app:layout_constraintLeft_toRightOf="@id/fragment_dashboard_account_crossing_card_image_dummy"
                         app:layout_constraintTop_toBottomOf="@id/tv_crossing_heading" />
 
                     <TextView
-                        android:id="@+id/tv_view_crossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_1sdp"
+                        android:includeFontPadding="false"
                         android:text="@string/txt_view_crossings"
                         android:textColor="@color/blue_color"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/your_crossing_arrow_image"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -703,7 +658,7 @@
                         android:layout_marginRight="10dp"
                         android:rotation="180"
                         android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/btn_disable_txt_color"
+                        android:tint="@color/color_99999"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
