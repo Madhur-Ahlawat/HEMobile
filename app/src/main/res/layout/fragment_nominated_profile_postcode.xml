@@ -143,6 +143,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFindAddress"
                     android:layout_width="0dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
                     android:layout_marginBottom="19dp"
@@ -150,8 +151,8 @@
                     android:letterSpacing="0"
                     android:text="@string/find_address"
                     android:textAllCaps="false"
-                    android:textColor="@color/green"
-                    app:strokeColor="@color/green"
+                    android:textColor="@color/blue_color"
+                    app:strokeColor="@color/blue_color"
                     app:strokeWidth="1dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tilPostCode"

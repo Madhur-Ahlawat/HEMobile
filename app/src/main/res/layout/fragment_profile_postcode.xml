@@ -146,6 +146,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFindAddress"
                     android:layout_width="0dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
                     android:layout_marginBottom="19dp"

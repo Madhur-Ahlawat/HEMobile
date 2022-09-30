@@ -154,9 +154,6 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                 R.id.tv_dart_charge_guidance_and_documents -> {
                     screenType = Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
                     requireActivity().startNormalActivity(GuidanceAndDocumentsActivity::class.java)
-
-
-
                 }
 
                 R.id.btn_start_now -> {
@@ -178,8 +175,6 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
         Intent(requireActivity(), ContactDartChargeActivity::class.java).run {
             startActivity(this)
         }
-
-
 
     }
 

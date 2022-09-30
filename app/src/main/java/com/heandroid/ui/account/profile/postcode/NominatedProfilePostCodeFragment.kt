@@ -117,7 +117,7 @@ class NominatedProfilePostCodeFragment : BaseFragment<FragmentNominatedProfilePo
                     btnFindAddress.strokeColor = null
                     btnFindAddress.strokeWidth = 0
                     btnFindAddress.backgroundTintList =
-                        ContextCompat.getColorStateList(requireActivity(), R.color.green)
+                        ContextCompat.getColorStateList(requireActivity(), R.color.blue_color)
                     btnFindAddress.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
