@@ -84,7 +84,7 @@
     <!--  rebranding colors  -->
     <color name="blue_color">#008BCB</color>
     <color name="red_color">#E51635</color>
-    <color name="toolbar_color">#272727</color>
+    <color name="toolbar_color">#FF272727</color>
     <color name="btn_disable_txt_color">#7D7D7D</color>
     <color name="btn_disable_color">#D3D3D4</color>
     <color name="radio_btn_color">#002E5F</color>

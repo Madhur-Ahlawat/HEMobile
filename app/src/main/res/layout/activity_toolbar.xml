@@ -7,7 +7,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@color/white"
+        android:background="@drawable/he_bg_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
