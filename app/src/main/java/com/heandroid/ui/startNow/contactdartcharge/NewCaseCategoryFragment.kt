@@ -39,6 +39,7 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
+        checkButton()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

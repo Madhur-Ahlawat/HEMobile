@@ -2,6 +2,8 @@ package com.heandroid.ui.startNow.contactdartcharge
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.text.format.Formatter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -284,6 +286,8 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, Utils.getFileUploadMIMETypes())
         fileManagerResult.launch(intent)
     }
 
@@ -306,10 +310,17 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
                     val path: String? = FilePath.getPath(requireContext(), it)
                     path?.let { pat ->
                         val file = File(pat)
-                        setFileName(file.name)
-                        saveFile(file)
+                        if (file.length()
+                                .toFloat() / (1000 * 1000) <= 8.0
+                        ) { //checking file size which should be less than 8mb
+                            setFileName(file.name)
+                            saveFile(file)
+                        } else {
+                            ErrorUtil.showError(binding.root, "File size must be less than 8MB")
+                        }
+                    } ?: run {
+                        ErrorUtil.showError(binding.root, "Unable to upload the selected file")
                     }
-
                 }
             }
         }

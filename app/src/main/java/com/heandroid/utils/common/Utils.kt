@@ -184,5 +184,34 @@ object Utils {
         return versionNumber
     }
 
+    fun getFileUploadMIMETypes(): Array<String> {
+        val list = mutableListOf<String>()
+        list.add(DOC)
+        list.add(DOCX)
+        list.add(XLS)
+        list.add(XLSX)
+        list.add(PDF)
+        list.add(IMAGE)
+        list.add(IMAGE_JPEG)
+        list.add(IMAGE_TIFF)
+        list.add(IMAGE_BMP)
+        list.add(CSV)
+        return list.toTypedArray()
+    }
+
+
+    private const val DOC = "application/msword"
+    private const val DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    private const val XLS = "application/vnd.ms-excel"
+    private const val XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    private const val PDF = "application/pdf"
+    private const val IMAGE = "image/*"
+    private const val IMAGE_JPEG = "image/jpeg"
+    private const val IMAGE_TIFF = "image/tiff"
+    private const val IMAGE_BMP = "image/bmp"
+    private const val CSV = "text/csv"
+    private const val AUDIO = "audio/*"
+    private const val TEXT = "text/*"
+
 
 }
