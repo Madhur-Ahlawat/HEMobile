@@ -78,8 +78,8 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                                     else
                                         suggestedThresholdAmount.text = thresholdAmountVo.suggestedThresholdAmount
 
-                                    topUpMyAccount.setText(thresholdAmountVo.customerAmount)
-                                    topUpFallsAmount.setText(thresholdAmountVo.thresholdAmount)
+                                    topUpMyAccount.setText("${thresholdAmountVo.customerAmount}.00")
+                                    topUpFallsAmount.setText("${thresholdAmountVo.thresholdAmount}.00")
                                 }
 
                             }

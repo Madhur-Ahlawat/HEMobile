@@ -10,7 +10,7 @@
             layout="@layout/toolbar_with_logo"
             android:layout_width="match_parent"
             android:id="@+id/id_tool_bar_lyt"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_45sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

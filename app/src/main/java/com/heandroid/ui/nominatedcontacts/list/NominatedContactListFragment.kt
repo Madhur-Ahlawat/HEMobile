@@ -15,16 +15,14 @@ import com.heandroid.data.model.nominatedcontacts.*
 import com.heandroid.databinding.FragmentNominatedContactListBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.utils.common.Constants
+import com.heandroid.utils.common.*
 import com.heandroid.utils.common.ErrorUtil.showError
-import com.heandroid.utils.common.Logg
-import com.heandroid.utils.common.Resource
-import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import java.lang.Exception
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -35,6 +33,8 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
 
     private var filterList: MutableList<SecondaryAccountData?>? = ArrayList()
     private var selectedPosition = 0
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     private var loader: LoaderDialog? = null
@@ -130,11 +130,36 @@ class NominatedContactListFragment : BaseFragment<FragmentNominatedContactListBi
             }
 
             R.id.btnNominatedContact -> {
-                if (list.size >= 5) showError(
-                    binding.root,
-                    getString(R.string.str_nominated_contacts_limit_reached)
-                )
-                else findNavController().navigate(R.id.action_ncListFragment_to_ncFullNameFragment)
+
+                if (sessionManager.fetchAccountType()
+                        .equals(
+                            Constants.PERSONAL_ACCOUNT,
+                            true
+                        ) && sessionManager.fetchSubAccountType()
+                        .equals(Constants.STANDARD, true)
+                ) {
+                    if (list.size >= 2) showError(
+                        binding.root,
+                        getString(R.string.str_nominated_contacts_limit_reached,2)
+                    )
+                    else findNavController().navigate(R.id.action_ncListFragment_to_ncFullNameFragment)
+
+                }
+
+
+                if (sessionManager.fetchAccountType()
+                        .equals(
+                            Constants.BUSINESS_ACCOUNT,
+                            true)) {
+
+                    if (list.size >= 5) showError(
+                        binding.root,
+                        getString(R.string.str_nominated_contacts_limit_reached,5)
+                    )
+                    else findNavController().navigate(R.id.action_ncListFragment_to_ncFullNameFragment)
+
+                }
+
             }
         }
     }

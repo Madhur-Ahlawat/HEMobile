@@ -27,11 +27,13 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
     private var loader: LoaderDialog? = null
     private var receiptId: String = ""
     private var eMailFlag = ""
+    private var mailFlag = ""
     private var smsFlag = ""
     private var mAccountResp: AccountResponse? = null
     private var mCat: String = ""
     private var mReceiptModel: CommunicationPrefsModel? = null
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+    private val mCommunicationsList = ArrayList<CommunicationPrefsModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -100,6 +102,11 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                 } else {
                     "N"
                 }
+                mailFlag = if (communicationPref == Constants.POST_MAIL) {
+                    "Y"
+                } else {
+                    "N"
+                }
 
                 smsFlag = if (adviseOnText == Constants.YES) {
                     "Y"
@@ -107,24 +114,30 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     "N"
                 }
 
-                val mListModel = CommunicationPrefsRequestModelList(
-                    mReceiptModel?.id,
-                    mReceiptModel?.category,
-                    mReceiptModel?.oneMandatory,
-                    mReceiptModel?.defEmail,
-                    eMailFlag,
-                    mReceiptModel?.mailFlag,
-                    mReceiptModel?.defSms,
-                    smsFlag,
-                    mReceiptModel?.defVoice,
-                    mReceiptModel?.voiceFlag,
-                    mReceiptModel?.pushNotFlag
-                )
+                if (mCommunicationsList.size > 0 && mCommunicationsList.isNotEmpty()) {
 
-                mList.add(mListModel)
+                    mCommunicationsList.forEach {
+                        val mListModel = CommunicationPrefsRequestModelList(
+                            it.id,
+                            it.category,
+                            it.oneMandatory,
+                            it.defEmail,
+                            eMailFlag,
+                            mailFlag,
+                            it.defSms,
+                            smsFlag,
+                            it.defVoice,
+                            it.voiceFlag,
+                            it.pushNotFlag
+                        )
+                        mList.add(mListModel)
+
+                    }
+
+                }
+
                 val model = CommunicationPrefsRequestModel(mList)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
                 communicationPrefsViewModel.updateCommunicationPrefs(model)
                 val mAccountModelReq = UpdateProfileRequest(
                     addressLine1 = mAccountResp?.personalInformation?.addressLine1,
@@ -133,7 +146,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     state = "HE",
                     zipCode = mAccountResp?.personalInformation?.zipCode,
                     zipCodePlus = mAccountResp?.personalInformation?.zipCodePlus,
-                    country = mAccountResp?.personalInformation?.country,
+                    country = mAccountResp?.personalInformation?.countryType,
                     emailAddress = mAccountResp?.personalInformation?.emailAddress,
                     primaryEmailStatus = mAccountResp?.personalInformation?.primaryEmailStatus,
                     primaryEmailUniqueID = mAccountResp?.personalInformation?.pemailUniqueCode,
@@ -142,7 +155,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     phoneFax = mAccountResp?.personalInformation?.fax,
                     smsOption = smsFlag,
                     phoneEvening = mAccountResp?.personalInformation?.eveningPhone,
-                    correspDeliveryMode = "EMAIL",
+                    correspDeliveryMode = communicationPref,
                     correspDeliveryFrequency = "MONTHLY"
                 )
                 communicationPrefsViewModel.updateAccountSettingsPrefs(mAccountModelReq)
@@ -188,9 +201,6 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
     }
 
     private fun searchProcessParameters(resource: Resource<SearchProcessParamsModelResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
         when (resource) {
 
             is Resource.Success -> {
@@ -201,6 +211,9 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             }
 
             is Resource.DataError -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
 
             }
             else -> {
@@ -234,7 +247,10 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     binding.youHaveOptedNumberMsg.text =
                         "${getString(R.string.str_you_have_opted_to_receive_text_msgs)} $mPhoneNumber"
 
+                    mCommunicationsList.clear()
+
                     res.data?.accountInformation?.communicationPreferences?.forEach {
+                        mCommunicationsList.add(it!!)
                         if (it?.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
                             receiptId = it?.id.toString()
                             mCat = it?.category.toString()

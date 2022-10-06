@@ -8,7 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/toolbar_color"
+    android:background="@drawable/he_bg_toolbar"
     android:layout_height="@dimen/_45sdp"
     android:theme="@style/Theme.ToolBar">
 

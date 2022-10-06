@@ -139,19 +139,33 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
     }
 
     private fun handleCaseHistoryListData(resource: Resource<CaseEnquiryHistoryResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
-                resource.data?.serviceRequestList?.serviceRequest?.let {
-                    if (it.isNotEmpty()) {
-                        binding.emptyDataMessage.gone()
-                        showDataInView(it)
-                    } else {
+                resource.data?.serviceRequestList?.let {
+                    it.serviceRequest?.let { list ->
+                        if (list.isNotEmpty()) {
+                            binding.rvCaseHistory.visible()
+                            binding.emptyDataMessage.gone()
+                            showDataInView(list)
+                        } else {
+                            binding.emptyDataMessage.visible()
+                            binding.rvCaseHistory.gone()
+                        }
+                    } ?: run {
                         binding.emptyDataMessage.visible()
+                        binding.rvCaseHistory.gone()
                     }
+                } ?: run {
+                    binding.emptyDataMessage.visible()
+                    binding.rvCaseHistory.gone()
                 }
             }
             is Resource.DataError -> {
+                binding.emptyDataMessage.visible()
+                binding.rvCaseHistory.gone()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
