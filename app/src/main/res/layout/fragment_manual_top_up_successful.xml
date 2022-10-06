@@ -41,8 +41,8 @@
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -52,7 +52,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/receipt_number"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="HDJ2123F"
-                android:textColor="@color/text_input_place_holder"
+                android:textColor="@color/btn_disable_txt_color"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvLabelReceiptNo"
@@ -77,15 +77,15 @@
                 android:layout_marginEnd="16dp"
                 android:textSize="@dimen/_13sdp"
                 android:text="@string/download_receipt"
-                android:textColor="@color/high_lighted_text_color"
+                android:textColor="@color/dark_blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@color/color_B8B8B8"
+                android:layout_height="1dp"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -99,10 +99,9 @@
             android:layout_height="64dp"
             android:layout_marginTop="1dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clPaymentMethod">
-
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/clPaymentMethod">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvLabelEmail"
@@ -112,13 +111,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/confirmation_email_sent"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEmail"
@@ -126,18 +124,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="janedoe@gmail.com"
-                android:textColor="@color/text_input_place_holder"
+                android:textColor="@color/btn_disable_txt_color"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/tvLabelEmail"
                 app:layout_constraintStart_toStartOf="@+id/tvLabelEmail"
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelEmail" />
 
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@color/color_B8B8B8"
+                android:layout_height="1dp"
+                android:background="@color/blue_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -152,10 +149,9 @@
             android:layout_height="64dp"
             android:layout_marginTop="1dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clEmailAddress">
-
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/clEmailAddress">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvLabelDate"
@@ -165,13 +161,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:text="Date"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDate"
@@ -179,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="12/04/2024"
-                android:textColor="@color/text_input_place_holder"
+                android:textColor="@color/btn_disable_txt_color"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/tvLabelDate"
@@ -189,7 +184,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
+                android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@color/color_B8B8B8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -211,9 +207,9 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:cornerRadius="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/glBottom"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart" />
+            app:layout_constraintBottom_toTopOf="@id/glBottom"
+            app:layout_constraintEnd_toStartOf="@id/glEnd"
+            app:layout_constraintStart_toStartOf="@id/glStart" />
 
 
 
@@ -240,8 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="0dp"
-            />
+            app:layout_constraintGuide_begin="0dp" />
 
 
         <androidx.constraintlayout.widget.Guideline
