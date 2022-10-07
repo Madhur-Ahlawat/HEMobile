@@ -11,6 +11,7 @@ import com.heandroid.R
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewNominatedContactUserProfileBinding
 import com.heandroid.databinding.FragmentViewPaygAccountUserBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -25,7 +26,7 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
-    private var loader: LoaderDialog? = null
+//    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -36,9 +37,11 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     ) = FragmentViewPaygAccountUserBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        loader = LoaderDialog()
+//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        (requireActivity() as ProfileActivity).showLoader()
+
         viewModel.accountDetail()
     }
 
@@ -77,9 +80,8 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        (requireActivity() as ProfileActivity).hideLoader()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {

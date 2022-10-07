@@ -36,9 +36,11 @@ class ViewBusinessAccountProfileFragment :
 
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        loader = LoaderDialog()
+//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        (requireActivity() as ProfileActivity).showLoader()
+
         viewModel.accountDetail()
     }
 
@@ -64,9 +66,7 @@ class ViewBusinessAccountProfileFragment :
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        (requireActivity() as ProfileActivity).hideLoader()
         when (status) {
             is Resource.Success -> {
                 status.data?.run {

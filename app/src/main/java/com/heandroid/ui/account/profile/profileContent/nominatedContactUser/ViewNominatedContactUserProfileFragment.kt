@@ -12,6 +12,7 @@ import com.heandroid.data.model.nominatedcontacts.NominatedContactRes
 import com.heandroid.data.model.nominatedcontacts.SecondaryAccountData
 import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentViewNominatedContactUserProfileBinding
+import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -37,9 +38,11 @@ class ViewNominatedContactUserProfileFragment :
     ) = FragmentViewNominatedContactUserProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        loader = LoaderDialog()
+//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+       // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        (requireActivity() as ProfileActivity).showLoader()
+
         viewModel.accountDetail()
     }
 
@@ -55,7 +58,9 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleNominatedContactData(status: Resource<NominatedContactRes?>?) {
-            loader?.dismiss()
+          //  loader?.dismiss()
+        (requireActivity() as ProfileActivity).hideLoader()
+
         when (status) {
             is Resource.Success -> {
                 if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
@@ -105,7 +110,8 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-            loader?.dismiss()
+//            loader?.dismiss()
+        (requireActivity() as ProfileActivity).hideLoader()
 
         when (status) {
             is Resource.Success -> {
@@ -113,6 +119,8 @@ class ViewNominatedContactUserProfileFragment :
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         ncId = status.data.accountInformation?.ncId ?: ""
+                        (requireActivity() as ProfileActivity).showLoader()
+
                         viewModel.getNominatedContacts()
                         binding.model = this
                     }

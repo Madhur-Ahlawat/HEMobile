@@ -2,15 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profile_navigation_graph"
+    android:id="@+id/navigation_profile"
     app:startDestination="@id/viewNominatedUserAccountProfileFragment">
 
     <fragment
         android:id="@+id/viewProfile"
+
         android:name="com.heandroid.ui.account.profile.profileContent.personalAccount.ViewProfileFragment"
         tools:layout="@layout/fragment_view_profile">
         <action
             android:id="@+id/action_viewProfile_to_personalInfoFragment"
+            app:restoreState="true"
             app:destination="@id/personalInfoFragment" />
     </fragment>
 
@@ -21,6 +23,8 @@
         tools:layout="@layout/fragment_profile_personal_info">
         <action
             android:id="@+id/action_personalInfoFragment_to_postCodeFragment"
+            app:restoreState="true"
+
             app:destination="@id/postCodeFragment" />
         <action
             android:id="@+id/action_personalInfoFragment_to_emailFragment"
@@ -89,12 +93,14 @@
 
         <action
             android:id="@+id/action_pinFragment_to_viewNominatedAccountProfile"
+            app:restoreState="true"
             app:destination="@id/viewNominatedUserAccountProfileFragment"
             app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
             app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_pinFragment_to_viewNominatedPrimaryProfileFragment"
+            app:restoreState="true"
             app:destination="@id/viewPrimaryAccountUserProfileFragment"
             app:popUpTo="@id/viewPrimaryAccountUserProfileFragment"
             app:popUpToInclusive="true" />

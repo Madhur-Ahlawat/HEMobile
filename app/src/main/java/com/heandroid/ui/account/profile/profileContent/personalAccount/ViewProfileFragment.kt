@@ -26,7 +26,7 @@ import java.lang.Exception
 class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
-    private var loader: LoaderDialog? = null
+//    private var loader: LoaderDialog? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -34,9 +34,10 @@ class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnC
     ): FragmentViewProfileBinding = FragmentViewProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+//        loader = LoaderDialog()
+//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 //        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        (requireActivity() as ProfileActivity).showLoader()
         viewModel.accountDetail()
     }
 
@@ -62,15 +63,15 @@ class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnC
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        (requireActivity() as ProfileActivity).hideLoader()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {
                     if (status.equals("500")) showError(binding.root, message)
                     else binding.model = this
                 }
+
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
