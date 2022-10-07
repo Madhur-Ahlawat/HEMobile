@@ -2,6 +2,7 @@ package com.heandroid.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.error.mapper.ErrorMapper
 import com.heandroid.utils.common.SessionManager
@@ -24,8 +25,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    internal fun provideSessionManager(context: Context): SessionManager {
-        return SessionManager(context)
+    internal fun provideSessionManager(sharedPreferences: SharedPreferences): SessionManager {
+        return SessionManager(sharedPreferences)
     }
 
     @Provides

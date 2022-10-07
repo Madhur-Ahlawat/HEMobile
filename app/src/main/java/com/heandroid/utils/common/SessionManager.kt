@@ -14,9 +14,9 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class SessionManager @Inject constructor(@ApplicationContext context: Context) {
-    private var prefs: SharedPreferences =
-        context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)
+class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
+    /*private var prefs: SharedPreferences =
+        context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)*/
 
     companion object {
         const val USER_TOKEN = "user_token"

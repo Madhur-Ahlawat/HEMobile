@@ -158,6 +158,9 @@ android {
         kapt "androidx.hilt:hilt-compiler:$hiltLifeCycleVersion"
         kapt "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
+        //Crypto
+        implementation("androidx.security:security-crypto:1.0.0")
+
         // -------------- Testing Dependencies -------------- //
 
         def espressoTestVersion = '3.4.0'
