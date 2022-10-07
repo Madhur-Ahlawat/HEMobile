@@ -85,6 +85,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
         sessionManager.fetchAccountType()?.let {
             if (it == Constants.BUSINESS_ACCOUNT) {
                 isBusinessAccount = true
+                binding.download.visible()
             }
         }
 

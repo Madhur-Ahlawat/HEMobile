@@ -3,6 +3,7 @@ package com.heandroid.ui.account.profile
 import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
 import com.heandroid.databinding.ActivityProfileBinding
 import com.heandroid.ui.base.BaseActivity
@@ -29,6 +30,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar(getString(R.string.str_account_management))
+
         navController = findNavController(R.id.fragmentContainerView)
         accountType = sessionManager.getAccountType()
         isSecondaryUser = sessionManager.getSecondaryUser()
@@ -58,16 +60,19 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
     }
 
     private fun setFragmentInView() {
-        val navGraph = navController.graph
+        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
+        val inflater = navHostFragment.navController.navInflater
+        val navGraph = inflater.inflate(R.navigation.navigation_profile)
+
 
         when {
             !isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
                 // oldGraph.startDestination = R.id.viewProfile
                 navGraph.setStartDestination(R.id.viewProfile)
-                val startDestId = R.id.viewProfile
-                navGraph.apply {
-                    setStartDestination(startDestId)
-                }
+//                val startDestId = R.id.viewProfile
+//                navGraph.apply {
+//                    setStartDestination(startDestId)
+//                }
 
             }
             !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {

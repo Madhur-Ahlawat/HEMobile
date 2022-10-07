@@ -55,9 +55,7 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleNominatedContactData(status: Resource<NominatedContactRes?>?) {
-        if (loader?.isVisible == true) {
             loader?.dismiss()
-        }
         when (status) {
             is Resource.Success -> {
                 if (!status.data?.secondaryAccountDetailsType?.secondaryAccountList.isNullOrEmpty()) {
@@ -107,9 +105,8 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
             loader?.dismiss()
-        }
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {

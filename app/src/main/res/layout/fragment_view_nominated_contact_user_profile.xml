@@ -401,12 +401,11 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEditDetail"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
-                android:backgroundTint="@color/btn_color"
+                android:backgroundTint="@color/blue_color"
                 android:gravity="center"
                 android:text="@string/edit_details"
                 android:textAllCaps="false"

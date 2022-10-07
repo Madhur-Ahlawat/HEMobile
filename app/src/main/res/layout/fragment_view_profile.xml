@@ -343,12 +343,13 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAddress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_180sdp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:gravity="end"
                     android:layout_centerVertical="true"
-                    android:inputType="number"
                     android:text="@{model.personalInformation.addressLine1}"
+                    android:inputType="textMultiLine"
                     android:textColor="#474747"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -375,6 +376,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:background="@color/white"
                 android:paddingStart="16dp"
+                android:visibility="gone"
                 android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -477,7 +479,7 @@
                 android:id="@+id/btnEditDetail"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
-                android:backgroundTint="@color/btn_color"
+                android:backgroundTint="@color/blue_color"
                 android:gravity="center"
                 android:text="@string/edit_details"
                 android:textAllCaps="false"

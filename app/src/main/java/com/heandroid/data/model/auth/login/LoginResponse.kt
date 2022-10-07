@@ -61,6 +61,9 @@ data class LoginResponse(
 
     @SerializedName("require2FA")
     var require2FA: Boolean?,
+
+    var mfaEnabled:String?,
+
 )
 
 data class LogOutResp(val success: String)

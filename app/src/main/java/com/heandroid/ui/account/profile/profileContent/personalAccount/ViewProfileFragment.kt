@@ -36,7 +36,7 @@ class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnC
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.accountDetail()
     }
 

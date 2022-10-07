@@ -153,9 +153,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.messageList?.let { alerts ->
                     if (alerts.isNotEmpty()) {
-                        binding.notificationView.visible()
-                        binding.viewAllNotifi.text =
-                            getString(R.string.str_view_all, alerts.size.toString())
+//                        binding.notificationView.visible()
+//                        binding.viewAllNotifi.text =
+//                            getString(R.string.str_view_all, alerts.size.toString())
 //                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
                             (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->

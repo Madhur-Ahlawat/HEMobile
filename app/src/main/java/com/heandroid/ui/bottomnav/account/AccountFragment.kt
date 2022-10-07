@@ -43,6 +43,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     private val viewModel: NominatedContactListViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var isSecondaryUser: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -56,6 +57,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        isSecondaryUser = sessionManager.getSecondaryUser()
+
         if (sessionManager.fetchAccountType()
                 .equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
                 .equals(Constants.PAYG, true)
@@ -68,6 +71,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         ) {
             binding.payment.gone()
         }
+
+        if (isSecondaryUser)
+            binding.nominatedContactsLyt.gone()
 
     }
 

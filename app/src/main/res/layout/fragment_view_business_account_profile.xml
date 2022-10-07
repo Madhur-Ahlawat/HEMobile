@@ -444,6 +444,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:background="@color/white"
                 android:paddingStart="16dp"
+                android:visibility="gone"
                 android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
