@@ -3,6 +3,8 @@ package com.heandroid.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.heandroid.data.error.errorUsecase.ErrorManager
 import com.heandroid.data.error.mapper.ErrorMapper
 import com.heandroid.utils.common.SessionManager
@@ -21,6 +23,19 @@ class AppModule {
     @Provides
     internal fun provideContext(application: Application): Context {
         return application
+    }
+
+    @Provides
+    @Singleton
+    fun provideEncryptedSharedPref(@ApplicationContext context: Context): SharedPreferences {
+        val masterAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+        return EncryptedSharedPreferences.create(
+            "HE_MOBILE",
+            masterAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
     }
 
     @Singleton

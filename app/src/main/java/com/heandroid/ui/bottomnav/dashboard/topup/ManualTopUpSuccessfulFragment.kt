@@ -28,21 +28,23 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 @AndroidEntryPoint
-class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessfulBinding>(), View.OnClickListener {
+class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessfulBinding>(),
+    View.OnClickListener {
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)=FragmentManualTopUpSuccessfulBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentManualTopUpSuccessfulBinding.inflate(inflater, container, false)
 
     private var pageHeight = 1120
     private var pageWidth = 792
     private val PERMISSION_REQUEST_CODE = 200
-    private var model : PaymentMethodDeleteResponseModel? = null
+    private var model: PaymentMethodDeleteResponseModel? = null
 
     override fun init() {
-        binding.tvAmount.text="£ ${arguments?.getString("amount")}"
-        model=arguments?.getParcelable(Constants.DATA)
-        binding.tvReceiptNo.text=model?.transactionId
-        binding.tvEmail.text=model?.emailMessage
-        binding.tvDate.text=DateUtils.currentDate()
+        binding.tvAmount.text = "£ ${arguments?.getString("amount")}"
+        model = arguments?.getParcelable(Constants.DATA)
+        binding.tvReceiptNo.text = model?.transactionId
+        binding.tvEmail.text = model?.emailMessage
+        binding.tvDate.text = DateUtils.currentDateAs()
     }
 
     override fun initCtrl() {
@@ -54,10 +56,10 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.btnContinue ->{
+        when (v?.id) {
+            R.id.btnContinue -> {
                 requireActivity().finish()
-                requireActivity().startNormalActivity(HomeActivityMain::class.java)
+                //requireActivity().startNormalActivity(HomeActivityMain::class.java)
             }
 
             R.id.downloadReceipt -> {
@@ -82,14 +84,23 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
         }
 
 
-    private var onPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        var permission = true
-        permissions.entries.forEach { if (!it.value) { permission = it.value } }
-        when (permission) {
-            true -> { binding.downloadReceipt.performClick() }
-            else -> { requireActivity().showToast("Please enable permission to download") }
+    private var onPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission = true
+            permissions.entries.forEach {
+                if (!it.value) {
+                    permission = it.value
+                }
+            }
+            when (permission) {
+                true -> {
+                    binding.downloadReceipt.performClick()
+                }
+                else -> {
+                    requireActivity().showToast("Please enable permission to download")
+                }
+            }
         }
-    }
 
     private fun generatePDF(model: PaymentMethodDeleteResponseModel?) {
         val pdfDocument = PdfDocument()
@@ -111,14 +122,21 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
 
         try {
             pdfDocument.writeTo(FileOutputStream(file))
-            Toast.makeText(requireContext(), "PDF file generated successfully.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "PDF file generated successfully.", Toast.LENGTH_SHORT)
+                .show()
         } catch (e: IOException) {
             e.printStackTrace()
         }
         pdfDocument.close()
     }
 
-    private fun addText(canvas: Canvas, horizontalSpace: Float, verticalSpace: Float, style: Int, text: String){
+    private fun addText(
+        canvas: Canvas,
+        horizontalSpace: Float,
+        verticalSpace: Float,
+        style: Int,
+        text: String
+    ) {
         val title = Paint()
         title.typeface = Typeface.create(Typeface.DEFAULT, style)
         title.textSize = 30F

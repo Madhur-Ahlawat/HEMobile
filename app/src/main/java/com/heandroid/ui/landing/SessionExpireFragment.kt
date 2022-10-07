@@ -20,19 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View.OnClickListener {
+
     private var type: String? = null
 
-    override fun onResume() {
-        super.onResume()
-        if (requireActivity() is LandingActivity) {
-            val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
-            toolbar.findViewById<TextView>(R.id.btn_login).gone()
-        }
-    }
-
     override fun init() {
-
-
         type = arguments?.getBundle(Constants.TYPE)?.getString(Constants.TYPE)
 
         when (type) {

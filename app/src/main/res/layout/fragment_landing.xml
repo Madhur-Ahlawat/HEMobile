@@ -2,206 +2,323 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="model"
-            type="com.heandroid.data.model.landing.LandingModel" />
-    </data>
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/he_bg">
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/pay_dart_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="start"
-            android:text="@string/str_pay_dart_ford_crossing"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toTopOf="@+id/glTop" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/id_title_lyt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:gravity="start"
-            android:text="@string/str_what_would_you_like_to_do"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart"
-            app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />
-
-        <LinearLayout
-            android:id="@+id/radioButtonsView"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/white"
-            android:gravity="start"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@id/btnLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_title_lyt">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:id="@+id/rgOptions"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="start"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbMakeOffPayment"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maintainance_lyt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_make_one_of_payment"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/drawable_bg_maintainance"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maintainance_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:background="@color/radio_btn_color"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:text="@string/str_maintainance_notify"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_17ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/maintainance_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_12sdp"
+                        android:text="@string/str_maintainance_desc"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/maintainance_title" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pay_dart_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:text="@string/str_pay_dart_ford_crossing"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintTop_toBottomOf="@+id/maintainance_lyt" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/blue_color" />
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbCreateAccount"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/id_title_lyt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:text="@string/str_what_would_you_like_to_do"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_create_account"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/id_title_lyt">
 
-                <View
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutCreateAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/white"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_create_account"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_11sdp"
+                            android:paddingVertical="@dimen/_8sdp"
+                            android:src="@drawable/ic_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutMakePayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/white"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_make_one_of_payment"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_11sdp"
+                            android:paddingVertical="@dimen/_8sdp"
+                            android:src="@drawable/ic_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutPenaltyCharge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/white"
+                        android:minHeight="@dimen/_40sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingVertical="@dimen/_5sdp"
+                            android:text="@string/str_resolve_penalty_charge"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/endIcon"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/endIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_11sdp"
+                            android:paddingVertical="@dimen/_8sdp"
+                            android:src="@drawable/ic_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutPaidCrossing"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/white"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_check_for_paid_crossing"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_11sdp"
+                            android:paddingVertical="@dimen/_8sdp"
+                            android:src="@drawable/ic_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutGuidance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/white"
+                        android:minHeight="@dimen/_40sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingVertical="@dimen/_5sdp"
+                            android:text="@string/str_dart_charge_guidance_and_documents"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/appCompatImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/_11sdp"
+                            android:paddingVertical="@dimen/_8sdp"
+                            android:src="@drawable/ic_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
                     android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/blue_color" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbResolvePenalty"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_resolve_penalty_charge"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_12sdp" />
 
-
-                <View
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glTop"
                     android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/blue_color" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="@dimen/_2sdp" />
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbCheckForPaid"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glBottom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_check_for_paid_crossing"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/_11sdp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/blue_color" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbViewCharges"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_13sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="0dp"
-                    android:text="@string/str_view_charges"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
-
-            </RadioGroup>
-
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnContinue"
-            android:layout_width="0dp"
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:backgroundTint="@{model.enable==false?@color/btn_disable_color:@color/blue_color}"
-            android:enabled="@{model.enable}"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/blue_color"
             android:gravity="center"
-            android:text="@string/str_continue"
+            android:text="@string/login"
             android:textAllCaps="false"
-            android:textColor="@{model.enable==false?@color/btn_disable_txt_color:@color/white}"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
-            app:cornerRadius="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/glBottom"
-            app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintStart_toStartOf="@+id/glStart" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glStart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glEnd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glTop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/_2sdp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glBottom"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/_11sdp" />
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -528,6 +528,7 @@
     <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
     <string name="str_text_phone_val">18001 0300 300 0120</string>
     <string name="str_make_enquiry"><u> Make an enquiry </u></string>
+    <string name="make_enquiry">Make an enquiry</string>
     <string name="str_text_phone">Textphone</string>
     <string name="str_do_you_have">Do you have a Dart Charge account?</string>
     <string name="cases_and_enquiry">Cases and enquiry</string>
@@ -685,6 +686,7 @@
     <string name="set_this_as_default_payment_method">Set this as default payment method</string>
     <string name="how_much_amount_would_you_like_to_top_up">How much amount would you like to top-up?</string>
     <string name="dashboard">Dashboard</string>
+    <string name="back_dashboard">Back to dashboard</string>
     <string name="enter_amount_top_up">Please enter amount for top up</string>
     <string name="validation_manual_top_up">Please enter amount greater than 0</string>
 

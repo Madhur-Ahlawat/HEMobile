@@ -5,53 +5,45 @@
     android:id="@+id/nav_graph_manual_top"
     app:startDestination="@id/manualTopUpFragment">
 
-
-
-    <!--    // Topup-->
-
-
     <fragment
         android:id="@+id/manualTopUpFragment"
         android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpFragment"
-        tools:layout="@layout/fragment_manual_top_up"
-        >
+        tools:layout="@layout/fragment_manual_top_up">
         <action
             android:id="@+id/action_manualTopUpFragment_to_manualTopUpCardFragment"
             app:destination="@id/manualTopUpCardFragment" />
     </fragment>
 
 
-
     <fragment
         android:id="@+id/manualTopUpCardFragment"
         android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpCardFragment"
-        tools:layout="@layout/fragment_manual_top_up_card"
-        >
+        tools:layout="@layout/fragment_manual_top_up_card">
         <action
             android:id="@+id/action_manualTopUpCardFragment_to_manualTopUpAddCardFragment"
             app:destination="@id/manualTopUpAddCardFragment" />
         <action
             android:id="@+id/action_manualTopUpCardFragment_to_manualTopUpSuccessfulFragment"
-            app:destination="@id/manualTopUpSuccessfulFragment" />
+            app:destination="@id/manualTopUpSuccessfulFragment"
+            app:popUpTo="@id/manualTopUpFragment" />
     </fragment>
 
 
     <fragment
         android:id="@+id/manualTopUpAddCardFragment"
         android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpAddCardFragment"
-        tools:layout="@layout/fragment_payment_method_card"
-        >
+        tools:layout="@layout/fragment_payment_method_card">
         <action
             android:id="@+id/action_manualTopUpAddCardFragment_to_manualTopUpSuccessfulFragment"
-            app:destination="@id/manualTopUpSuccessfulFragment" />
+            app:destination="@id/manualTopUpSuccessfulFragment"
+            app:popUpTo="@id/manualTopUpFragment" />
     </fragment>
 
 
     <fragment
         android:id="@+id/manualTopUpSuccessfulFragment"
         android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpSuccessfulFragment"
-        tools:layout="@layout/fragment_manual_top_up_successful"
-        />
+        tools:layout="@layout/fragment_manual_top_up_successful" />
 
 
 </navigation>

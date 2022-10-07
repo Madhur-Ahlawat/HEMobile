@@ -1,139 +1,123 @@
 package com.heandroid.ui.landing
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
-import android.widget.TextView
-import com.google.android.material.appbar.MaterialToolbar
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.heandroid.R
-import com.heandroid.data.model.landing.LandingModel
+import com.heandroid.data.model.webstatus.WebSiteStatus
 import com.heandroid.databinding.FragmentLandingBinding
-import com.heandroid.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.heandroid.ui.account.creation.controller.CreateAccountActivity
+import com.heandroid.ui.auth.controller.AuthActivity
 import com.heandroid.ui.base.BaseFragment
-import com.heandroid.ui.futureModule.InProgressActivity
+import com.heandroid.ui.checkpaidcrossings.CheckPaidCrossingActivity
+import com.heandroid.ui.loader.LoaderDialog
+import com.heandroid.ui.loader.OnRetryClickListener
 import com.heandroid.ui.payment.MakeOffPaymentActivity
-import com.heandroid.ui.viewcharges.ViewChargesActivity
+import com.heandroid.ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity
+import com.heandroid.ui.websiteservice.WebSiteServiceViewModel
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.Constants.CHECK_FOR_PAID
-import com.heandroid.utils.common.Constants.CREATE_ACCOUNT
-import com.heandroid.utils.common.Constants.ONE_OFF_PAYMENT
-import com.heandroid.utils.common.Constants.RESOLVE_PENALTY
-import com.heandroid.utils.common.Constants.VIEW_CHARGES
-import com.heandroid.utils.common.VehicleHelper
-import com.heandroid.utils.extn.*
+import com.heandroid.utils.common.ErrorUtil
+import com.heandroid.utils.common.Resource
+import com.heandroid.utils.common.observe
+import com.heandroid.utils.extn.gone
+import com.heandroid.utils.extn.startNormalActivity
+import com.heandroid.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickListener,
-    RadioGroup.OnCheckedChangeListener {
+class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickListener {
+
+    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
+    private var loader: LoaderDialog? = null
+    private var isChecked = true
+    private var count = 1
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentLandingBinding = FragmentLandingBinding.inflate(inflater, container, false)
-
-    override fun onResume() {
-        super.onResume()
-        if (requireActivity() is LandingActivity) {
-            val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
-            toolbar.findViewById<TextView>(R.id.btn_login).visible()
-            requireActivity().setRightButtonText(getString(R.string.login))
-        }
-    }
+    ) = FragmentLandingBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.model = LandingModel(enable = false)
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (isChecked) {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            webServiceViewModel.checkServiceStatus()
+        }
     }
-
 
     override fun initCtrl() {
-        binding.rgOptions.setOnCheckedChangeListener(this)
-        binding.btnContinue.setOnClickListener(this@LandingFragment)
-    }
-
-    override fun observer() {}
-
-    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-        when (checkedId) {
-            R.id.rbCreateAccount -> {
-                VehicleHelper.list?.clear()
-                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = CREATE_ACCOUNT
-
-            }
-
-            R.id.rbMakeOffPayment -> {
-                VehicleHelper.list?.clear()
-                val spannableString =
-                    SpannableString(getString(R.string.str_make_one_of_payment_continue))
-                val boldSpan = StyleSpan(Typeface.BOLD)
-                spannableString.setSpan(boldSpan, 0, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                binding.rbMakeOffPayment.text = spannableString
-                binding.model?.selectType = ONE_OFF_PAYMENT
-            }
-
-            R.id.rbResolvePenalty -> {
-                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = RESOLVE_PENALTY
-            }
-
-            R.id.rbCheckForPaid -> {
-                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = CHECK_FOR_PAID
-            }
-
-            R.id.rbViewCharges -> {
-                binding.rbMakeOffPayment.text = getString(R.string.str_make_one_of_payment)
-                binding.model?.selectType = VIEW_CHARGES
-            }
+        binding.layoutCreateAccount.setOnClickListener {
+            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
         }
-        enableBtn()
-    }
-
-    private fun enableBtn() {
-        binding.model = binding.model?.apply {
-            enable = true
+        binding.layoutMakePayment.setOnClickListener {
+            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+        }
+        binding.layoutPenaltyCharge.setOnClickListener {
+            openUrlInWebBrowser()
+        }
+        binding.layoutPaidCrossing.setOnClickListener {
+            requireActivity().startNormalActivity(
+                CheckPaidCrossingActivity::class.java
+            )
+        }
+        binding.layoutGuidance.setOnClickListener {
+            findNavController().navigate(R.id.action_landingFragment_to_startNow)
+        }
+        binding.btnLogin.setOnClickListener {
+            requireActivity().startNormalActivity(
+                AuthActivity::class.java
+            )
         }
     }
 
+    override fun observer() {
+        observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
+    }
 
-    override fun onClick(v: View?) {
-        v?.let {
-            when (v.id) {
-                R.id.btnContinue -> {
-                    when (binding.model?.selectType) {
-                        VIEW_CHARGES -> {
-                            requireActivity().startNormalActivity(ViewChargesActivity::class.java)
-                        }
-                        ONE_OFF_PAYMENT -> {
-                            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
-                        }
-                        CHECK_FOR_PAID -> {
-                            requireActivity().startNormalActivity(
-                                CheckPaidCrossingActivity::class.java
-                            )
-                        }
-                        RESOLVE_PENALTY -> {
-                            openUrlInWebBrowser()
-                        }
-                        CREATE_ACCOUNT -> {
-                            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
-                        }
-                        else -> {
-                            requireActivity().startNormalActivity(InProgressActivity::class.java)
+    private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
+        if (isChecked) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.apply {
+                        if (!state.equals(Constants.LIVE, true) && title != null) {
+                            binding.maintainanceLyt.visible()
+                            binding.maintainanceTitle.text = title
+                            if (message != null)
+                                binding.maintainanceDesc.text = message
+                        } else {
+                            binding.maintainanceLyt.gone()
                         }
                     }
                 }
+                is Resource.DataError -> {
+                    if (resource.errorMsg.contains("Connect your VPN", true)) {
+                        if (count > Constants.RETRY_COUNT) {
+                            requireActivity().startActivity(
+                                Intent(context, LandingActivity::class.java)
+                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        }
+                        ErrorUtil.showRetry(this)
+                    } else {
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
+                }
+                else -> {
+                    // do nothing
+                }
             }
+            isChecked = false
         }
+
     }
 
     private fun openUrlInWebBrowser() {
@@ -141,5 +125,12 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), View.OnClickList
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
             startActivity(Intent.createChooser(this, "Browse with"))
         }
+    }
+
+    override fun onRetryClick() {
+        count++
+        isChecked = true
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        webServiceViewModel.checkServiceStatus()
     }
 }

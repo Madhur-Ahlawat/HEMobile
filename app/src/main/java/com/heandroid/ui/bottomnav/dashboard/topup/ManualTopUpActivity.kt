@@ -11,7 +11,6 @@ import com.heandroid.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
 
@@ -23,8 +22,7 @@ class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
     override fun initViewBinding() {
         binding=ActivityManualTopUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbar("Manual top-up")
-
+        toolbar(getString(R.string.manual_top_up))
     }
 
     override fun onStart() {

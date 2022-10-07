@@ -1,82 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <data>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    </data>
-
-<com.google.android.material.appbar.MaterialToolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:background="@drawable/he_bg_toolbar"
-    android:layout_height="@dimen/_45sdp"
-    android:theme="@style/Theme.ToolBar">
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/_45sdp"
+        android:background="@drawable/he_bg_toolbar">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:padding="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gov_title"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_dart_charge_logo" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/crown_img"
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_17sdp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/gov_title"
-            android:layout_width="@dimen/_118sdp"
-            android:layout_height="@dimen/_21sdp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/crown_img"
-            android:visibility="gone"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_gov_uk" />
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_toEndOf="@+id/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_dart_charge_text" />
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/login_bg"
-            android:gravity="center"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:text="@string/str_login"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imv_menu"
-            android:visibility="gone"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:gravity="center"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-           android:src="@drawable/ic_menu" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.23" />
 
-    </RelativeLayout>
-
-</com.google.android.material.appbar.MaterialToolbar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

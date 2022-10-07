@@ -12,7 +12,11 @@ object DateUtils {
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
 
     fun currentDate(): String? {
-        return dateFormat.format(Calendar.getInstance()?.time)
+        return dateFormat.format(Calendar.getInstance().time)
+    }
+
+    fun currentDateAs(): String? {
+        return SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(Calendar.getInstance().time)
     }
 
     fun lastPriorDate(day: Int): String? {

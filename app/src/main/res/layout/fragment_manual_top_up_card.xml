@@ -1,228 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clMain"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@id/btnContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/how_much_amount_would_you_like_to_top_up"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/glStart"
-                app:layout_constraintTop_toTopOf="@+id/glTop" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilAmount"
-                style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/enter_amount"
-                app:endIconDrawable="@drawable/ic_screenshot__121__2"
-                app:layout_constraintEnd_toStartOf="@+id/glEnd"
-                app:layout_constraintStart_toStartOf="@+id/glStart"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabel"
-                app:prefixText="£"
-                app:prefixTextColor="@color/white">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tieAmount"
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:digits="0123456789."
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    style="@style/AppEditTextTransparent"
+                    android:text="@string/how_much_amount_would_you_like_to_top_up"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintTop_toTopOf="@+id/glTop" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilAmount"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:focusable="false"
-                    android:maxLength="6"
-                    android:textSize="@dimen/_13ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/enter_amount"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    app:layout_constraintEnd_toStartOf="@+id/glEnd"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabel"
+                    app:prefixText="£"
+                    app:prefixTextColor="@color/white">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDefaultLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/default_payment_method"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="34dp"
-                app:layout_constraintTop_toBottomOf="@+id/tilAmount"
-                app:layout_constraintStart_toStartOf="@+id/glStart" />
-
-            <RadioGroup
-                android:id="@+id/rgPayment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="start"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@id/glEnd"
-                app:layout_constraintStart_toStartOf="@id/glStart"
-                app:layout_constraintTop_toBottomOf="@+id/tvDefaultLabel">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbDefaultMethod"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@color/black"
-                    android:background="@color/white"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="9dp"
-                        android:text="@string/other_debit_credit_card"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvOtherPayment"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieAmount"
+                        style="@style/AppEditTextTransparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false" />
+                        android:digits="0123456789."
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDefaultLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp"
+                    android:text="@string/default_payment_method"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintTop_toBottomOf="@+id/tilAmount" />
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbAddCard"
+                <RadioGroup
+                    android:id="@+id/rgPayment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@id/glEnd"
+                    app:layout_constraintStart_toStartOf="@id/glStart"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDefaultLabel">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbDefaultMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@color/white"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        app:buttonTint="@color/radio_btn_color" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginBottom="9dp"
+                            android:text="@string/other_debit_credit_card"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvOtherPayment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbAddCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@color/white"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/add_new_debit_credit_card"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        app:buttonTint="@color/radio_btn_color" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginBottom="9dp"
+                            android:text="@string/other_payment_method"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbDirectDebit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginBottom="@dimen/_50sdp"
+                        android:background="@color/white"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/direct_debit"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        app:buttonTint="@color/radio_btn_color" />
+
+                </RadioGroup>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glStart"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:paddingLeft="22dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/add_new_debit_credit_card"
-                    android:background="@color/white"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glEnd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/_12sdp" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="9dp"
-                        android:text="@string/other_payment_method"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
 
-                </LinearLayout>
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbDirectDebit"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glTop"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:paddingLeft="22dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/direct_debit"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    android:background="@color/white"
-                    app:buttonTint="@color/radio_btn_color" />
-
-            </RadioGroup>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="@dimen/_12sdp" />
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/blue_color"
-                android:gravity="center"
-                android:shadowRadius="6"
-                android:text="@string/str_continue"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
-                app:cornerRadius="@dimen/_4sdp"
-                app:layout_constraintBottom_toTopOf="@+id/glBottom"
-                app:layout_constraintEnd_toEndOf="@id/glEnd"
-                app:layout_constraintStart_toStartOf="@id/glStart"
-                app:layout_constraintTop_toBottomOf="@+id/rgPayment"
-                app:layout_constraintVertical_bias="1.0" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/glBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/_12sdp" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glStart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
+        </androidx.core.widget.NestedScrollView>
 
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glEnd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glTop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/_12sdp" />
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/glBottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_end="@dimen/_12sdp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:backgroundTint="@color/blue_color"
+            android:text="@string/str_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,11 +1,8 @@
 package com.heandroid.utils.common
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.heandroid.data.model.auth.forgot.password.SecurityCodeResponseModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,11 +35,11 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
      * Function to save time out
      */
     fun saveAuthTokenTimeOut(time: Int?) {
-        val editor = prefs.edit()
-        if (time != null) {
-            editor.putInt(USER_TOKEN_TIME_OUT, time)
+        time?.let {
+            prefs.edit().apply {
+                putInt(USER_TOKEN_TIME_OUT, time)
+            }.apply()
         }
-        editor.apply()
     }
 
     /**
@@ -56,21 +53,18 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
      * Function to save auth token
      */
     fun saveAuthToken(token: String?) {
-        Log.d("Session Manager::", token ?: "")
-        // todo use scope variable
-        val editor = prefs.edit()
-        editor.putString(USER_TOKEN, token)
-        editor.apply()
+        prefs.edit().apply {
+            putString(USER_TOKEN, token)
+        }.apply()
     }
 
     /**
      * Function to save auth token
      */
     fun saveRefreshToken(token: String) {
-        Log.d("Session Manager::", token)
-        val editor = prefs.edit()
-        editor.putString(Refresh_TOKEN, token)
-        editor.apply()
+        prefs.edit().apply {
+            putString(Refresh_TOKEN, token)
+        }.apply()
     }
 
     /**
@@ -88,10 +82,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun saveAccountNumber(accountNumber: String) {
-        Log.d("Session Manager::", accountNumber)
-        val editor = prefs.edit()
-        editor.putString(ACCOUNT_NUMBER, accountNumber)
-        editor.apply()
+        prefs.edit().apply {
+            putString(ACCOUNT_NUMBER, accountNumber)
+        }.apply()
     }
 
     fun fetchAccountNumber(): String? {
@@ -99,10 +92,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun saveCode(code: String) {
-        Log.d("Session Manager::", code)
-        val editor = prefs.edit()
-        editor.putString(SECURITY_CODE, code)
-        editor.apply()
+        prefs.edit().apply {
+            putString(SECURITY_CODE, code)
+        }.apply()
     }
 
     fun fetchCode(): String? {
@@ -110,42 +102,41 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun saveAccountType(accountType: String) {
-        Log.d("Session Manager::", accountType)
-        val editor = prefs.edit()
-        editor.putString(ACCOUNT_TYPE, accountType)
-        editor.apply()
+        prefs.edit().apply {
+            putString(ACCOUNT_TYPE, accountType)
+        }.apply()
     }
+
     fun saveSubAccountType(subAccountType: String) {
-        Log.d("Session Manager::", subAccountType)
-        val editor = prefs.edit()
-        editor.putString(SUB_ACCOUNT_TYPE, subAccountType)
-        editor.apply()
+        prefs.edit().apply {
+            putString(SUB_ACCOUNT_TYPE, subAccountType)
+        }.apply()
     }
 
     fun fetchSubAccountType(): String? {
         return prefs.getString(SUB_ACCOUNT_TYPE, null)
     }
+
     fun fetchAccountType(): String? {
         return prefs.getString(ACCOUNT_TYPE, null)
     }
 
     fun saveSecurityCodeObject(myObject: SecurityCodeResponseModel?) {
-        val editor = prefs.edit()
-        val gson = Gson()
-        val jsonString = gson.toJson(myObject)
-        editor.putString(SECURITY_CODE_OBJ, jsonString)
-        editor.apply()
+        prefs.edit().apply {
+            val gson = Gson()
+            val jsonString = gson.toJson(myObject)
+            putString(SECURITY_CODE_OBJ, jsonString)
+        }.apply()
     }
 
     fun clearAll() {
         prefs.edit().clear().apply()
-
     }
 
     fun setSessionTime(code: Long?) {
-        val editor = prefs.edit()
-        editor.putLong(SESSION_TIME, code ?: 0L)
-        editor.apply()
+        prefs.edit().apply {
+            putLong(SESSION_TIME, code ?: 0L)
+        }.apply()
     }
 
     fun getSessionTime(): Long {
@@ -167,9 +158,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
 
     fun setAccountType(type: String?) {
-        val editor = prefs.edit()
-        editor.putString(ACCOUNT_TYPE, type)
-        editor.apply()
+        prefs.edit().apply {
+            putString(ACCOUNT_TYPE, type)
+        }.apply()
     }
 
     fun getAccountType(): String? {
@@ -177,9 +168,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun isSecondaryUser(isSecondaryUser: Boolean) {
-        val editor = prefs.edit()
-        editor.putBoolean(IS_SECONDARY, isSecondaryUser)
-        editor.apply()
+        prefs.edit().apply {
+            putBoolean(IS_SECONDARY, isSecondaryUser)
+        }.apply()
     }
 
     fun getSecondaryUser(): Boolean {
@@ -187,9 +178,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun setLoggedInUser(loggedIn: Boolean) {
-        val editor = prefs.edit()
-        editor.putBoolean(LOGGED_IN_USER, loggedIn)
-        editor.apply()
+        prefs.edit().apply {
+            putBoolean(LOGGED_IN_USER, loggedIn)
+        }.apply()
     }
 
     fun getLoggedInUser(): Boolean {
@@ -197,14 +188,13 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun setNCId(type: String?) {
-        val editor = prefs.edit()
-        editor.putString(NC_ID, type)
-        editor.apply()
+        prefs.edit().apply {
+            putString(NC_ID, type)
+        }.apply()
     }
 
     fun getNCId(): String? {
         return prefs.getString(NC_ID, null)
     }
-
 
 }

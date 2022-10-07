@@ -29,15 +29,6 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnC
         container: ViewGroup?
     ) = FragmentFailedRetryBinding.inflate(inflater, container, false)
 
-    override fun onResume() {
-        super.onResume()
-        if (requireActivity() is LandingActivity) {
-            val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.tool_bar_lyt)
-            toolbar.findViewById<TextView>(R.id.btn_login).gone()
-        }
-
-    }
-
     override fun init() {
         binding.desc3.movementMethod = LinkMovementMethod.getInstance()
         makeLinksInLicenseAgreementDescription()

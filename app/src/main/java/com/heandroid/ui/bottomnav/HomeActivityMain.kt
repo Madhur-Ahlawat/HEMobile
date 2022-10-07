@@ -40,7 +40,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun setView() {
-        dataBinding.idToolBarLyt.btnLogin.visibility = View.GONE
         dataBinding.bottomNavigationView.setActiveNavigationIndex(0)
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView

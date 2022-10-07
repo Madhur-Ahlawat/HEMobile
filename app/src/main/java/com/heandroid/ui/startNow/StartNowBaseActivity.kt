@@ -1,27 +1,17 @@
 package com.heandroid.ui.startNow
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import android.view.WindowManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.heandroid.R
-import com.heandroid.databinding.ActivityAuthBinding
 import com.heandroid.databinding.ActivityStartNowBaseBinding
 import com.heandroid.ui.base.BaseActivity
 import com.heandroid.utils.common.AdobeAnalytics
 import com.heandroid.utils.common.Constants
-import com.heandroid.utils.common.Logg
-import com.heandroid.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.HashMap
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
+class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
 
     private lateinit var navController: NavController
     private var screenType: String = ""
@@ -43,7 +33,14 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
             }
         }
 
-        AdobeAnalytics.setScreenTrack("about this service","about this service","english","about this service","landing","about this service")
+        AdobeAnalytics.setScreenTrack(
+            "about this service",
+            "about this service",
+            "english",
+            "about this service",
+            "landing",
+            "about this service"
+        )
 
     }
 
@@ -57,13 +54,11 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
         AdobeAnalytics.setLifeCycleCallAdobe(true)
     }
 
-    override fun observeViewModel() {
-    }
+    override fun observeViewModel() {}
 
     private fun setFragmentInView() {
-        Logg.logging("Testing","StartNowBaseActivity,  calledd")
-//        var oldGraph = navController.graph
-        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment)
+        val navHostFragment =
+            (supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
         val oldGraph = inflater.inflate(R.navigation.nav_graph_start_now)
 
@@ -81,16 +76,5 @@ class StartNowBaseActivity : BaseActivity<Any?>(), View.OnClickListener {
         }
         navController.graph = oldGraph
     }
-
-    override fun onClick(v: View?) {
-
-        v?.let {
-            when (v.id) {
-
-
-            }
-        }
-    }
-
 
 }
