@@ -144,13 +144,20 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         }
         when (resource) {
             is Resource.Success -> {
-                resource.data?.serviceRequestList?.let {
-                    it.serviceRequest?.let { list ->
-                        if (list.isNotEmpty()) {
-                            binding.rvCaseHistory.visible()
-                            binding.emptyDataMessage.gone()
-                            showDataInView(list)
-                        } else {
+                if (resource.data?.statusCode == Constants.CASES_GIVEN_DATE_WRONG.toString()) {
+                    ErrorUtil.showError(binding.root, resource.data.message)
+                } else {
+                    resource.data?.serviceRequestList?.let {
+                        it.serviceRequest?.let { list ->
+                            if (list.isNotEmpty()) {
+                                binding.rvCaseHistory.visible()
+                                binding.emptyDataMessage.gone()
+                                showDataInView(list)
+                            } else {
+                                binding.emptyDataMessage.visible()
+                                binding.rvCaseHistory.gone()
+                            }
+                        } ?: run {
                             binding.emptyDataMessage.visible()
                             binding.rvCaseHistory.gone()
                         }
@@ -158,9 +165,6 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                         binding.emptyDataMessage.visible()
                         binding.rvCaseHistory.gone()
                     }
-                } ?: run {
-                    binding.emptyDataMessage.visible()
-                    binding.rvCaseHistory.gone()
                 }
             }
             is Resource.DataError -> {
