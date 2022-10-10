@@ -165,7 +165,7 @@
     <string name="str_minus_symbol">-</string>
     <string name="str_future_crossings_full_content">Future crossings are valid for 12 months from the date you make them</string>
     <string name="str_phone">Phone</string>
-    <string name="str_confirm_phone">Confirm phone</string>
+    <string name="str_confirm_phone">Confirm mobile number</string>
     <string name="plz_enter_email">Please enter your email</string>
     <string name="plz_enter_confirm_email">Please enter your confirm email</string>
     <string name="email_and_confirm_email_not_same">Email and confirm email are not same</string>

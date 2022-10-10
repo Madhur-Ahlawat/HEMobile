@@ -53,7 +53,7 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
                 mOption = parent.getItemAtPosition(position) as String
                 if (mOption == "SMS") {
                     binding.tilEmail.hint = getString(R.string.str_mobile_number)
-                    binding.tilConfirmEmail.hint = getString(R.string.str_mobile_number)
+                    binding.tilConfirmEmail.hint = getString(R.string.str_confirm_phone)
                     binding.tieEmail.inputType = InputType.TYPE_CLASS_PHONE
                     binding.tieConfirmEmail.inputType = InputType.TYPE_CLASS_PHONE
                     type =1
@@ -62,7 +62,7 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
                     type =0
                     mOption="Email"
                     binding.tilEmail.hint = getString(R.string.str_email)
-                    binding.tilConfirmEmail.hint = getString(R.string.str_email)
+                    binding.tilConfirmEmail.hint = getString(R.string.str_confirm_email)
                     binding.tieEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     binding.tieConfirmEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
