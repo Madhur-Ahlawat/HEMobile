@@ -39,12 +39,9 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
 
     override fun initCtrl() {
         binding.apply {
-            tvAboutService.setOnClickListener(this@StartNowFragment)
             rlAboutService.setOnClickListener(this@StartNowFragment)
-            tvCrossingServiceUpdates.setOnClickListener(this@StartNowFragment)
             rlCrossingServiceUpdate.setOnClickListener(this@StartNowFragment)
             rlContactDartCharge.setOnClickListener(this@StartNowFragment)
-            tvContactDartCharge.setOnClickListener(this@StartNowFragment)
             rlViewCharges.setOnClickListener(this@StartNowFragment)
         }
     }
