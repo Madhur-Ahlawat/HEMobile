@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +11,6 @@
             layout="@layout/tool_bar_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -21,31 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/he_bg"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_14sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_charge_and_fines"
             android:textColor="@color/white"
-            android:visibility="gone"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tool_bar_lyt" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/title_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:backgroundTint="@color/white"
-            android:id="@+id/title_card"
             android:visibility="gone"
+            app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_title">
@@ -53,7 +52,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_8sdp">
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_5sdp">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_line_vertical1"
@@ -81,12 +81,12 @@
                     android:id="@+id/title1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:padding="@dimen/_2sdp"
                     android:gravity="center"
+                    android:padding="@dimen/_2sdp"
                     android:text="@string/str_type_of_vehicle"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,42 +96,42 @@
                     android:id="@+id/title2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:padding="@dimen/_2sdp"
                     android:gravity="center"
+                    android:padding="@dimen/_2sdp"
                     android:text="@string/str_one_of_payment"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:padding="@dimen/_2sdp"
                     android:gravity="center"
+                    android:padding="@dimen/_2sdp"
                     android:text="@string/str_pay_g_service"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical2"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical2"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:padding="@dimen/_2sdp"
                     android:text="@string/str_pre_pay_service"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
@@ -143,13 +143,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/recycler_view"
-            android:layout_marginTop="@dimen/_2sdp"
-            app:layout_constraintTop_toBottomOf="@+id/title_card"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

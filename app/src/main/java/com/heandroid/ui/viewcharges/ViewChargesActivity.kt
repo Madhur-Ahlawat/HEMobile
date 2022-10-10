@@ -57,16 +57,44 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                     val mTollRatesList = ArrayList<TollRatesResp>()
                     status.data?.forEach {
                         if (it?.vehicleType == "A") {
-                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Motorcycle, \nmopeds,\nquad bikes",it?.videoRate,it?.etcRate))
+                            mTollRatesList.add(
+                                TollRatesResp(
+                                    it?.vehicleId,
+                                    "Motorcycle, \nmopeds,\nquad bikes",
+                                    it?.videoRate,
+                                    it?.etcRate
+                                )
+                            )
 
                         } else if (it?.vehicleType == "B") {
-                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Cars, \nmotorhomes,\nminibuses",it?.videoRate,it?.etcRate))
+                            mTollRatesList.add(
+                                TollRatesResp(
+                                    it?.vehicleId,
+                                    "Cars, \nmotorhomes,\nminibuses",
+                                    it?.videoRate,
+                                    it?.etcRate
+                                )
+                            )
 
                         } else if (it?.vehicleType == "C") {
-                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Vehicles with \n2 axles",it?.videoRate,it?.etcRate))
+                            mTollRatesList.add(
+                                TollRatesResp(
+                                    it?.vehicleId,
+                                    "Vehicles with \n2 axles",
+                                    it?.videoRate,
+                                    it?.etcRate
+                                )
+                            )
 
                         } else if (it?.vehicleType == "D") {
-                            mTollRatesList.add(TollRatesResp(it?.vehicleId,"Vehicles with\n more than 2\n axles",it?.videoRate,it?.etcRate))
+                            mTollRatesList.add(
+                                TollRatesResp(
+                                    it?.vehicleId,
+                                    "Vehicles with\n more than 2\n axles",
+                                    it?.videoRate,
+                                    it?.etcRate
+                                )
+                            )
 
                         } else {
 
@@ -74,7 +102,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
 
                     }
 
-                    adapter = TollRateAdapter(this@ViewChargesActivity,mTollRatesList)
+                    adapter = TollRateAdapter(this@ViewChargesActivity, mTollRatesList)
                 }
             }
             is Resource.DataError -> {
