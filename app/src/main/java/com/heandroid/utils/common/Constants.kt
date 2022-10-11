@@ -187,6 +187,11 @@ object Constants {
     const val LIVE = "LIVE"
     const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
 
+
+    const val EMAIL_ADDRESS = "Email address"
+    const val PHONE_NUMBER = "Phone number"
+
+
     //Error code for api response
     const val NO_DATA_FOR_GIVEN_INDEX = 1020
     const val NO_DATA_FOR_NOTIFICATIONS = 1220

@@ -23,6 +23,7 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
     @Inject
     lateinit var sessionManager: SessionManager
 
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -30,7 +31,6 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
-        requireActivity().findViewById<AppCompatImageView>(R.id.back_button).visibility = View.INVISIBLE
     }
 
     override fun initCtrl() {

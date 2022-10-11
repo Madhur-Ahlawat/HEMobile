@@ -1,6 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="model"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -9,6 +16,7 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,7 +46,7 @@
                     android:layout_marginVertical="@dimen/_7sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/payment_top_up_contents"
-                    android:textColor="@color/text_input_place_holder"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="normal" />
 
@@ -53,32 +61,6 @@
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/top_up_my_account_layout"
-                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="@string/enter_amount"
-                    android:textColorHint="@color/text_input_place_holder"
-                    app:errorEnabled="true"
-                    app:prefixTextColor="@color/white"
-                    app:prefixText="@string/txt_pound">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/top_up_my_account"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal"
-                        android:maxLength="6"
-                        android:singleLine="true"
-                        style="@style/AppEditTextTransparent"
-                        android:textSize="@dimen/_13ssp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -90,7 +72,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="@string/suggested_amount"
-                        android:textColor="@color/text_input_place_holder"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -101,10 +83,36 @@
                         android:layout_toEndOf="@+id/suggestedAmount"
                         android:fontFamily="@font/roboto_regular"
                         android:text="50"
-                        android:textColor="@color/text_input_place_holder"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
                 </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/top_up_my_account_layout"
+                    style="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/enter_amount"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:prefixText="@string/txt_pound"
+                    app:prefixTextColor="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/top_up_my_account"
+                        style="@style/AppEditTextTransparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_13ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -128,7 +136,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:text="@string/suggested_amount"
-                        android:textColor="@color/text_input_place_holder"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -141,7 +149,7 @@
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_toEndOf="@+id/suggestedThreshold"
                         android:text="15"
-                        android:textColor="@color/text_input_place_holder"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
 
@@ -150,26 +158,26 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_last_name"
                     style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="@string/enter_amount"
-                    android:textColorHint="@color/text_input_place_holder"
+                    android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
                     app:errorEnabled="true"
-                    app:prefixTextColor="@color/white"
-                    app:prefixText="@string/txt_pound">
+                    app:errorIconDrawable="@null"
+                    app:prefixText="@string/txt_pound"
+                    app:prefixTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/top_up_falls_amount"
+                        style="@style/AppEditTextTransparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:maxLength="6"
                         android:singleLine="true"
-                        style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,12 +188,12 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20ssp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:backgroundTint="@color/blue_color"
-                    android:fontFamily="@font/roboto_medium"
+                    android:backgroundTint="@{model==true?@color/blue_color:@color/btn_disable_color}"
+                    android:clickable="@{model}"
                     android:text="@string/str_update"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@{model==true?@color/white:@color/btn_disable_txt_color}"
+                    android:textSize="@dimen/_13ssp"
                     app:cornerRadius="@dimen/_5sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

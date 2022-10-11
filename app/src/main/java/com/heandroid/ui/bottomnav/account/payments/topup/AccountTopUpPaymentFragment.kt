@@ -1,15 +1,11 @@
 package com.heandroid.ui.bottomnav.account.payments.topup
 
-import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.heandroid.R
-import com.heandroid.data.model.account.ThresholdAmountApiResponse
 import com.heandroid.data.model.accountpayment.AccountGetThresholdResponse
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.heandroid.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
@@ -21,6 +17,7 @@ import com.heandroid.utils.common.ErrorUtil
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.showToast
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,20 +26,27 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
 
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var topUpAmount = 0.0f
+    private var thresholdAmount = 0.0f
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
 
-
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         getThresholdAmount()
+        checkButton()
     }
 
     override fun initCtrl() {
         binding.updateBtn.setOnClickListener(this)
+        binding.topUpFallsAmount.onTextChanged {
+            checkButton()
+        }
+        binding.topUpMyAccount.onTextChanged {
+            checkButton()
+        }
     }
 
     override fun observer() {
@@ -52,122 +56,121 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
 
     private fun getThresholdAmount() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
         viewModel.getThresholdAmount()
     }
 
     private fun getThresholdApiResponse(resource: Resource<AccountGetThresholdResponse?>?) {
-        loader?.dismiss()
-        try {
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.apply {
-                        if (statusCode == "0") {
-                            thresholdAmountVo.let {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.apply {
+                    if (statusCode == "0") {
+                        binding.apply {
+                            if (thresholdAmountVo?.suggestedAmount?.isEmpty() == true)
+                                customerAmount.text = "50.00"
+                            else
+                                customerAmount.text =
+                                    "${thresholdAmountVo?.suggestedAmount}.00"
 
-                                binding.apply {
+                            if (thresholdAmountVo?.suggestedThresholdAmount?.isEmpty() == true)
+                                suggestedThresholdAmount.text = "15.00"
+                            else
+                                suggestedThresholdAmount.text =
+                                    "${thresholdAmountVo?.suggestedThresholdAmount}.00"
 
-                                    if(thresholdAmountVo?.suggestedAmount!!.isEmpty())
-                                        customerAmount.text = "50.00"
-                                    else
-                                        customerAmount.text = "${thresholdAmountVo.suggestedAmount}.00"
-
-
-                                    if(thresholdAmountVo.suggestedThresholdAmount!!.isEmpty())
-                                        suggestedThresholdAmount.text = "15.00"
-                                    else
-                                        suggestedThresholdAmount.text = "${thresholdAmountVo.suggestedThresholdAmount}.00"
-
-                                    topUpMyAccount.setText("${thresholdAmountVo.customerAmount}.00")
-                                    topUpFallsAmount.setText("${thresholdAmountVo.thresholdAmount}.00")
-                                }
-
-                            }
+                            topUpMyAccount.setText("${thresholdAmountVo?.customerAmount}.00")
+                            topUpAmount = thresholdAmountVo?.customerAmount?.toFloat() ?: 0.0f
+                            topUpFallsAmount.setText("${thresholdAmountVo?.thresholdAmount}.00")
+                            thresholdAmount = thresholdAmountVo?.thresholdAmount?.toFloat() ?: 0.0f
                         }
                     }
                 }
-
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-                else -> {
-
-                }
-
             }
-        } catch (e: Exception) {
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
         }
+        checkButton()
     }
 
     private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
-       loader?.dismiss()
-        try {
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.apply {
-                        if (statusCode == "0") {
-                            ErrorUtil.showError(binding.root, "Threshold amount updated successfully")
-
-                            requireActivity().finish()
-
-                        }
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.apply {
+                    if (statusCode == "0") {
+                        requireActivity().showToast("data updated successfully")
+                        viewModel.getThresholdAmount()
                     }
                 }
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-                else -> {
-
-                }
             }
-        } catch (e: Exception) {
-
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
         }
+        checkButton()
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.update_btn -> {
-
                 binding.apply {
+                    val autoTopUP: Double = topUpMyAccount.text.toString().toDouble()
+                    val thresholdAmount: Double = topUpFallsAmount.text.toString().toDouble()
+
                     when {
-                        topUpMyAccount.text?.toString()?.isNotEmpty() == false -> {
-                            requireActivity().showToast("Please enter the amount in my account")
+                        autoTopUP < 10.0 -> {
+                            ErrorUtil.showError(
+                                binding.root,
+                                resources.getString(R.string.customer_amount_err_msg)
+                            )
                         }
-                        TextUtils.isEmpty(topUpFallsAmount.text.toString()) -> {
-                            requireActivity().showToast("Please enter the amount when top up falls")
+                        thresholdAmount < 5.0 -> {
+                            ErrorUtil.showError(
+                                binding.root,
+                                resources.getString(R.string.threshold_amount_err_msg)
+                            )
                         }
                         else -> {
-                            val customerAmount: Double = topUpMyAccount.text.toString().toDouble()
-                            val thresholdAmount: Double =
-                                topUpFallsAmount.text.toString().toDouble()
-
-                            when {
-                                customerAmount < 5.0 -> {
-                                    topUpMyAccountLayout.error =
-                                        resources.getString(R.string.customer_amount_err_msg)
-                                }
-                                thresholdAmount < 10.0 -> {
-                                    tfLastName.error =
-                                        resources.getString(R.string.threshold_amount_err_msg)
-                                }
-                                else -> {
-                                    tfLastName.error = null
-                                    topUpMyAccountLayout.error = null
-                                    val request = AccountTopUpUpdateThresholdRequest(
-                                        thresholdAmount.toString(),
-                                        customerAmount.toString()
-                                    )
-                                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
-                                    viewModel.updateThresholdAmount(request)
-                                }
-                            }
+                            val request = AccountTopUpUpdateThresholdRequest(
+                                thresholdAmount.toString(),
+                                customerAmount.toString()
+                            )
+                            loader?.show(
+                                requireActivity().supportFragmentManager,
+                                Constants.LOADER_DIALOG
+                            )
+                            viewModel.updateThresholdAmount(request)
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun checkButton() {
+        val topUpValue = binding.topUpMyAccount.text.toString().trim()
+        val thresholdValue = binding.topUpFallsAmount.text.toString().trim()
+        val topUp = try {
+            topUpValue.toFloat()
+        } catch (ex: NumberFormatException) {
+            0f
+        }
+        val threshold = try {
+            thresholdValue.toFloat()
+        } catch (ex: NumberFormatException) {
+            0f
+        }
+        binding.model = topUpValue.isNotEmpty() && thresholdValue.isNotEmpty()
+                && (topUp.compareTo(topUpAmount) != 0 || threshold.compareTo(thresholdAmount) != 0)
     }
 
 }
