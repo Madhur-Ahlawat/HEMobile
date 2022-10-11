@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,6 @@ import com.heandroid.R
 import com.heandroid.data.model.profile.UpdateAccountPassword
 import com.heandroid.data.model.profile.UpdatePasswordResponseModel
 import com.heandroid.databinding.FragmentProfilePasswordUpdateBinding
-import com.heandroid.ui.account.profile.ProfileActivity
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
@@ -20,7 +18,6 @@ import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.ErrorUtil.showError
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
-import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +32,7 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
         FragmentProfilePasswordUpdateBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.enable = false
+        checkButton()
         binding.data = UpdateAccountPassword(
             currentPassword = "", newPassword = "", confirmPassword = ""
         )

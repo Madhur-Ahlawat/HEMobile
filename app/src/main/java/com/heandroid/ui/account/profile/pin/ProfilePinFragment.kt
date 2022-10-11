@@ -12,21 +12,16 @@ import androidx.navigation.fragment.findNavController
 import com.heandroid.R
 import com.heandroid.data.model.EmptyApiResponse
 import com.heandroid.data.model.account.UpdateProfileRequest
-import com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel
 import com.heandroid.data.model.profile.AccountPinChangeModel
-import com.heandroid.data.model.profile.ProfileDetailModel
 import com.heandroid.databinding.FragmentProfilePinBinding
 import com.heandroid.ui.account.profile.ProfileViewModel
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.ui.loader.LoaderDialog
-import com.heandroid.ui.nominatedcontacts.invitation.NominatedInvitationViewModel
-import com.heandroid.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.heandroid.utils.common.*
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnClickListener {
@@ -35,22 +30,17 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     lateinit var sessionManager: SessionManager
     private var accountType: String = Constants.PERSONAL_ACCOUNT
     private var isSecondaryUser: Boolean = false
-
-
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
-    private val nominatedContactViewModel: NominatedInvitationViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentProfilePinBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
         isSecondaryUser = sessionManager.getSecondaryUser()
 
-        binding.enable = false
-        binding.enable = true
+        checkButton()
         if (sessionManager.getSecondaryUser()) {
             // binding.nominated = arguments?.getParcelable(Constants.DATA)
         } else {
@@ -140,7 +130,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                 updateBusinessUserProfile()
             }
             isSecondaryUser -> {
-               // updateAccountHolderByNominated()
+                // updateAccountHolderByNominated()
                 updateStandardUserProfile()
             }
             else -> {
@@ -287,7 +277,6 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
-
             }
         }
     }

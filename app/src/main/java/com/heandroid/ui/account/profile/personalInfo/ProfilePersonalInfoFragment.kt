@@ -11,9 +11,11 @@ import com.heandroid.databinding.FragmentProfilePersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.visible
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,17 +33,18 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
         FragmentProfilePersonalInfoBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.enable = true
         binding.data = arguments?.getParcelable(Constants.DATA)
-
         accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
         isSecondary = sessionManager.getSecondaryUser()
         setView()
+        checkButton()
+    }
 
+    private fun checkButton() {
+        binding.enable = Utils.isEmailValid(binding.tieEmailId.text.toString().trim())
     }
 
     private fun setView() {
-
         when (accountType) {
             Constants.PERSONAL_ACCOUNT -> {
                 // hide business account view
@@ -73,6 +76,9 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
     override fun initCtrl() {
         binding.btnAction.setOnClickListener(this)
         binding.btnChangeEmail.setOnClickListener(this)
+        binding.tieEmailId.onTextChanged {
+            checkButton()
+        }
     }
 
     override fun observer() {}

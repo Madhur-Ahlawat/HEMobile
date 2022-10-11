@@ -21,7 +21,7 @@ class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(),
         FragmentProfilePasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.enable = true
+        checkButton()
         binding.data = arguments?.getParcelable(Constants.DATA)
         binding.data?.personalInformation?.confirmPassword =
             binding.data?.accountInformation?.password

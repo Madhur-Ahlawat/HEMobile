@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/underline_personal_info"
             android:layout_marginTop="17dp"
-            android:textColor="@color/white"
+            android:textColor="@color/high_lighted_color"
             android:textStyle="bold"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
@@ -284,18 +284,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{enable}"
-            android:gravity="center"
-            android:padding="@dimen/_7sdp"
             android:text="@string/str_next"
             android:textAllCaps="false"
             android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toTopOf="@+id/btnChangeEmail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -307,15 +304,12 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{enable}"
-            android:gravity="center"
-            android:padding="@dimen/_7sdp"
-            android:text="Change Email Id"
+            android:text="@string/change_email_id"
             android:textAllCaps="false"
             android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent" />
 
 

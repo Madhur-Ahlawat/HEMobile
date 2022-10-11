@@ -7,13 +7,12 @@
 
     <fragment
         android:id="@+id/viewProfile"
-
         android:name="com.heandroid.ui.account.profile.profileContent.personalAccount.ViewProfileFragment"
         tools:layout="@layout/fragment_view_profile">
         <action
             android:id="@+id/action_viewProfile_to_personalInfoFragment"
-            app:restoreState="true"
-            app:destination="@id/personalInfoFragment" />
+            app:destination="@id/personalInfoFragment"
+            app:restoreState="true" />
     </fragment>
 
 
@@ -23,9 +22,8 @@
         tools:layout="@layout/fragment_profile_personal_info">
         <action
             android:id="@+id/action_personalInfoFragment_to_postCodeFragment"
-            app:restoreState="true"
-
-            app:destination="@id/postCodeFragment" />
+            app:destination="@id/postCodeFragment"
+            app:restoreState="true" />
         <action
             android:id="@+id/action_personalInfoFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
@@ -93,17 +91,17 @@
 
         <action
             android:id="@+id/action_pinFragment_to_viewNominatedAccountProfile"
-            app:restoreState="true"
             app:destination="@id/viewNominatedUserAccountProfileFragment"
             app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:restoreState="true" />
 
         <action
             android:id="@+id/action_pinFragment_to_viewNominatedPrimaryProfileFragment"
-            app:restoreState="true"
             app:destination="@id/viewPrimaryAccountUserProfileFragment"
             app:popUpTo="@id/viewPrimaryAccountUserProfileFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:restoreState="true" />
     </fragment>
 
 
@@ -225,9 +223,9 @@
         android:id="@+id/nominatedPostCodeFragment"
         android:name="com.heandroid.ui.account.profile.postcode.NominatedProfilePostCodeFragment"
         tools:layout="@layout/fragment_nominated_profile_postcode">
-<action
-    android:id="@+id/action_nominatedPostcodeFragment_to_nominatedPasswordFragment"
-    app:destination="@id/nominatedProfilePasswordFragment"/>
+        <action
+            android:id="@+id/action_nominatedPostcodeFragment_to_nominatedPasswordFragment"
+            app:destination="@id/nominatedProfilePasswordFragment" />
     </fragment>
 
     <fragment
@@ -246,6 +244,6 @@
         tools:layout="@layout/fragment_nominated_profile_password">
         <action
             android:id="@+id/action_nominatedPasswordFragment_to_nominatedPinFragment"
-            app:destination="@id/nominatedPinFragment"/>
+            app:destination="@id/nominatedPinFragment" />
     </fragment>
 </navigation>

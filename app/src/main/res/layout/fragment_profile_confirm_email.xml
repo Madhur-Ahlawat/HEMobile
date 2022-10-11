@@ -75,7 +75,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/str_resend"
-                android:textColor="@color/dark_blue_color" />
+                android:textColor="@color/high_lighted_color" />
 
         </RelativeLayout>
 
@@ -86,7 +86,8 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/send_security_code_msg"
             android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_12ssp"
+            android:lineSpacingExtra="@dimen/_5sdp"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/otpView" />
@@ -130,15 +131,13 @@
             android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@{enable==true?@color/btn_color:@color/color_C9C9C9}"
             android:enabled="@{enable}"
-            android:gravity="center"
             android:text="@string/str_verify_security_code"
             android:textAllCaps="false"
             android:textColor="@{enable==false?@color/color_7D7D7D:@color/white}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/glStart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,11 @@ import com.heandroid.databinding.FragmentProfilePersonalInfoBinding
 import com.heandroid.ui.base.BaseFragment
 import com.heandroid.utils.common.Constants
 import com.heandroid.utils.common.SessionManager
+import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.hideKeyboard
 import com.heandroid.utils.extn.visible
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,7 +40,12 @@ class NominatedPersonalInfoFragment : BaseFragment<FragmentNominatedPersonalInfo
         accountType = sessionManager.getAccountType() ?: Constants.PERSONAL_ACCOUNT
         isSecondary = sessionManager.getSecondaryUser()
         setView()
+        checkButton()
 
+    }
+
+    private fun checkButton() {
+        binding.enable = Utils.isEmailValid(binding.tieEmailId.text.toString().trim())
     }
 
     private fun setView() {
@@ -74,6 +81,9 @@ class NominatedPersonalInfoFragment : BaseFragment<FragmentNominatedPersonalInfo
     override fun initCtrl() {
         binding.btnAction.setOnClickListener(this)
         binding.btnChangeEmail.setOnClickListener(this)
+        binding.tieEmailId.onTextChanged {
+            checkButton()
+        }
     }
 
     override fun observer() {}
