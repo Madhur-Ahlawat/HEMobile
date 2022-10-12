@@ -9,32 +9,13 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_45sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:padding="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/gov_title"
-            app:layout_constraintStart_toStartOf="@id/guideline1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_dart_charge_logo" />
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/gov_title"
-            android:layout_width="@dimen/_110sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_toEndOf="@+id/logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/logo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_dart_charge_text" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.23" />
+            android:layout_height="@dimen/_45sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/toolbar_logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
