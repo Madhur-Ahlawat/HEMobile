@@ -6,6 +6,7 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'androidx.navigation.safeargs'
 
 apply from: '../jacoco.gradle'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 31
@@ -235,5 +236,9 @@ android {
         enableAggregatingTask = true
     }
 
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
 }
 

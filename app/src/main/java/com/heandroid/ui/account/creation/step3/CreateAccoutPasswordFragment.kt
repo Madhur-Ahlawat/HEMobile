@@ -94,8 +94,7 @@ class CreateAccoutPasswordFragment : BaseFragment<FragmentCreateAccountPosswordB
                         "•Be at least 8 characters long\n" +
                         "•1 uppercase letter\n" +
                         "•1 lowercase letter\n" +
-                        "•1 number\n" +
-                        "•1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n")
+                        "•1 number\n" )
             }}
 
         }

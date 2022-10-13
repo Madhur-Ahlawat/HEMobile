@@ -225,7 +225,7 @@ interface ApiService {
         @Body request: CaseHistoryRangeModel?,
     ): Response<CaseEnquiryHistoryResponse?>?
 
-    @GET(ACCOUNT_DETAIL)
+    @GET(ACCOUNT_DETAILS)
     suspend fun accountDetail(
         @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<ProfileDetailModel?>?
@@ -320,7 +320,7 @@ interface ApiService {
         @Body request: PaymentReceiptDeliveryTypeSelectionRequest?
     ): Response<ResponseBody?>?
 
-    @GET(ACCOUNT_DETAIL)
+    @GET(ACCOUNT_DETAILS)
     suspend fun getUserProfileData(): Response<ProfileDetailModel?>?
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)

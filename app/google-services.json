@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "933723432919",
+    "project_id": "national-highways-non-prod",
+    "storage_bucket": "national-highways-non-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933723432919:android:82182327ea374181fd0d92",
+        "android_client_info": {
+          "package_name": "com.heandroid.qapublic"
+        },
+      },
+      "oauth_client": [
+        {
+          "client_id": "933723432919-ei1ru35u2fj8j4h9nrmug65lbdsa8b4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSyNnDZSIVr0FMK599FbxHbQTmTsV8jLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933723432919-ei1ru35u2fj8j4h9nrmug65lbdsa8b4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -650,16 +650,14 @@
                 \n\u25CF Be at least 8 characters long
                 \n\u25CF 1 uppercase letter
                 \n\u25CF 1 lowercase letter
-                \n\u25CF 1 number
-                \n\u25CF 1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
+                \n\u25CF 1 number\n</string>
 
     <string name="new_password_validation">\u25CFNew Password
                 \n\u25CF Must begin with a letter
                 \n\u25CF Be at least 8 characters long
                 \n\u25CF 1 uppercase letter
                 \n\u25CF 1 lowercase letter
-                \n\u25CF 1 number
-                \n\u25CF 1 special character: ! @ # \$ % * ( ) - _ + = ~ ; , .\n</string>
+                \n\u25CF 1 number \n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsuccessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
     <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
