@@ -127,7 +127,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart" />

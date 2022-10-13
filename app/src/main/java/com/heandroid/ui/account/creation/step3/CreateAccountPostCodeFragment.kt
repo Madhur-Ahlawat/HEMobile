@@ -32,6 +32,7 @@ import com.heandroid.utils.common.Logg
 import com.heandroid.utils.common.Resource
 import com.heandroid.utils.common.observe
 import com.heandroid.utils.extn.*
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -52,7 +53,6 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         FragmentCreateAccountPostcodeBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.enable = false
         model = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
             isEditAccountType =
@@ -79,6 +79,23 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+        checkButton()
+    }
+
+
+    private fun checkButton() {
+        binding.enable = if (mCountry == "UK") {
+            (binding.tieStreetName.text.toString().trim().isNotEmpty() &&
+                    binding.tieCity.text.toString().trim().isNotEmpty() &&
+                    binding.tieHouseNumber.text.toString().trim().isNotEmpty())
+        } else {
+            (binding.tieCountry.text.toString().trim().isNotEmpty() &&
+                    binding.tieHouseNumber.text.toString().trim().isNotEmpty() &&
+                    binding.tieStreetName.text.toString().trim().isNotEmpty() &&
+                    binding.tieCity.text.toString().trim().isNotEmpty() &&
+                    binding.tieNonUkPostCode.text.toString().trim().isNotEmpty()
+                    && mCountry != "UK" && mCountry != "" && !mCountry.contains("Select country"))
+        }
     }
 
     private fun accountType() {
@@ -90,6 +107,34 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
     }
 
     override fun initCtrl() {
+        binding.tieStreetName.onTextChanged {
+            checkButton()
+        }
+        binding.tieCity.onTextChanged {
+            checkButton()
+        }
+        binding.tieCountry.onTextChanged {
+            checkButton()
+        }
+        binding.tieHouseNumber.onTextChanged {
+            checkButton()
+        }
+        binding.tieStreetName.onTextChanged {
+            checkButton()
+        }
+        binding.tieCity.onTextChanged {
+            checkButton()
+        }
+        binding.tieNonUkPostCode.onTextChanged {
+            checkButton()
+        }
+
+        binding.switchViewBusiness.setOnCheckedChangeListener { _, isChecked ->
+            mCountry = if (isChecked) {
+                "UK"
+            } else ""
+            checkButton()
+        }
 
         binding.apply {
             tilNonUkPostCode.gone()
@@ -154,6 +199,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
+                countriesList.add(0, getString(R.string.select_country))
                 response.data?.forEach {
                     it?.countryName?.let { it1 -> countriesList.add(it1) }
                 }
@@ -187,7 +233,9 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
     private fun navigate() {
 
-        val mPostCode = if (binding.tiePostCode.text.toString().isEmpty()) binding.tieNonUkPostCode.text.toString() else binding.tiePostCode.text.toString()
+        val mPostCode = if (binding.tiePostCode.text.toString()
+                .isEmpty()
+        ) binding.tieNonUkPostCode.text.toString() else binding.tiePostCode.text.toString()
 
         model?.city = binding.tieCity.text.toString()
         model?.stateType = "HE"
@@ -279,12 +327,10 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
                     TextUtils.isEmpty(tieCity.text?.toString()) ->
                         setError(tieCity, "Please enter city")
-
                     else -> {
                         navigate()
                     }
                 }
-
 
             } else {
                 when {
@@ -350,7 +396,7 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                             model?.countryType = null
                             model?.city = null
                             model?.stateType = null
-                            enable = true
+                            checkButton()
                         }
                     }
 
@@ -394,7 +440,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
                     model?.zipCode1 = null
                 }
                 else -> {
-                    if (binding.tiePostCode.text?.isNotEmpty() == true) binding.enable = true
+                    if (binding.tiePostCode.text?.isNotEmpty() == true)
+                        checkButton()
                 }
             }
 
@@ -408,9 +455,8 @@ class CreateAccountPostCodeFragment : BaseFragment<FragmentCreateAccountPostcode
 
         override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
             binding.tieCountry.setText("${parent.getItemAtPosition(position)}")
-            binding.enable = true
             mCountry = "${parent.getItemAtPosition(position)}"
-
+            checkButton()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {

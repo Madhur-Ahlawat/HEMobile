@@ -1,8 +1,10 @@
 package com.heandroid.ui.account.creation.step3
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableString
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -22,15 +24,15 @@ import com.heandroid.utils.common.Constants.PERSONAL_ACCOUNT
 import com.heandroid.utils.common.Utils
 import com.heandroid.utils.extn.gone
 import com.heandroid.utils.extn.visible
+import com.heandroid.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPersonalInfoBinding>(),
     View.OnClickListener {
 
     private var model: CreateAccountRequestModel? = null
-    private var isEditAccountType : Int? = null
+    private var isEditAccountType: Int? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoBinding.inflate(inflater, container, false)
@@ -38,36 +40,75 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
     override fun init() {
         model = arguments?.getParcelable(CREATE_ACCOUNT_DATA)
         if (arguments?.containsKey(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE) == true) {
-            isEditAccountType = arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
+            isEditAccountType =
+                arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
         model?.firstName = ""
         model?.lastName = ""
         model?.cellPhone = ""
         model?.eveningPhone = ""
-        model?.enable = false
         binding.model = model
         binding.tvStep.text = getString(R.string.str_step_f_of_l, 3, 6)
 
         accountType()
         planType()
+        checkButtons()
+    }
+
+    private fun checkButtons() {
+        binding.button = if (model?.accountType == BUSINESS_ACCOUNT) {
+            (binding.companyName.text.toString().trim().isNotEmpty() &&
+//            binding.companyRegNumber.text.toString().trim().isNotEmpty() &&
+                    binding.firstName.text.toString().trim().isNotEmpty() &&
+                    binding.lastName.text.toString().trim().isNotEmpty() &&
+                    binding.businessMobNo.text.toString().trim().length >= 10 &&
+                    (binding.alternateNo.text.toString().trim().length >= 10 ||
+                            binding.alternateNo.text.toString().trim().isEmpty()))
+        } else if (model?.accountType == PERSONAL_ACCOUNT && model?.planType == null) {
+            (binding.tieFullName.text.toString().trim().isNotEmpty() &&
+                    binding.tieLastName.text.toString().trim().isNotEmpty() &&
+                    binding.tieMobileNo.text.toString().trim().length >= 10)
+        } else {
+            (binding.tieFullName.text.toString().trim().isNotEmpty() &&
+                    binding.tieLastName.text.toString().trim().isNotEmpty())
+        }
     }
 
     override fun initCtrl() {
-        binding.btnAction.setOnClickListener(this)
-
-        if (model?.accountType == PERSONAL_ACCOUNT) {
-            binding.tieFullName.doAfterTextChanged {
-                model?.enable = (it?.length ?: 0) > 2
-                binding.model = model
-            }
+        binding.tieFullName.onTextChanged {
+            checkButtons()
         }
+        binding.tieLastName.onTextChanged {
+            checkButtons()
+        }
+        binding.tieMobileNo.onTextChanged {
+            checkButtons()
+        }
+        binding.companyName.onTextChanged {
+            checkButtons()
+        }
+        binding.companyRegNumber.onTextChanged {
+            checkButtons()
+        }
+        binding.firstName.onTextChanged {
+            checkButtons()
+        }
+        binding.lastName.onTextChanged {
+            checkButtons()
+        }
+        binding.businessMobNo.onTextChanged {
+            checkButtons()
+        }
+        binding.alternateNo.onTextChanged {
+            checkButtons()
+        }
+        binding.btnAction.setOnClickListener(this)
     }
 
     override fun observer() {}
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAction -> {
-
                 if (model?.accountType == PERSONAL_ACCOUNT) {
                     onClickPersonalAccountValidation()
                 } else {
@@ -79,7 +120,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
 
     private fun onClickPersonalAccountValidation() {
 
-        if(model?.planType == PAYG){
+        if (model?.planType == PAYG) {
             binding.apply {
 
                 when {
@@ -109,7 +150,10 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                         val bundle = Bundle()
                         bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
                         isEditAccountType?.let {
-                            bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                            bundle.putInt(
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                            )
                         }
                         findNavController().navigate(
                             R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
@@ -119,7 +163,7 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 }
             }
 
-        }else{
+        } else {
             binding.apply {
 
                 when {
@@ -157,7 +201,10 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                         val bundle = Bundle()
                         bundle.putParcelable(CREATE_ACCOUNT_DATA, binding.model)
                         isEditAccountType?.let {
-                            bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                            bundle.putInt(
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                                Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                            )
                         }
                         findNavController().navigate(
                             R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
@@ -219,7 +266,10 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                     val bundle = Bundle()
                     bundle.putParcelable(CREATE_ACCOUNT_DATA, model)
                     isEditAccountType?.let {
-                        bundle.putInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY)
+                        bundle.putInt(
+                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE,
+                            Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY
+                        )
                     }
                     findNavController().navigate(
                         R.id.action_personalDetailsEntryFragment_to_postcodeFragment,
@@ -241,7 +291,6 @@ class CreateAccountPersonalInfoFragment : BaseFragment<FragmentCreateAccountPers
                 content.setSpan(UnderlineSpan(), 0, content.length, 0)
                 binding.tvPersonaleInfo.text = content
                 model?.planType = BUSINESS_ACCOUNT
-                model?.enable = true
                 binding.businessAccountParent.visible()
                 binding.personalAccountParent.gone()
             }

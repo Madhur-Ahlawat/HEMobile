@@ -150,7 +150,7 @@
                     android:text="@string/str_continue"
                     android:textAllCaps="false"
                     android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

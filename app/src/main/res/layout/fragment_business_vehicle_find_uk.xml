@@ -90,7 +90,7 @@
             android:text="@string/str_find_vehicle"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

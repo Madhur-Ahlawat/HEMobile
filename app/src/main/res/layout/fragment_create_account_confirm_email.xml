@@ -128,7 +128,7 @@
             android:text="@string/str_verify_security_code"
             android:textAllCaps="false"
             android:textColor="@{model.enable==true?@color/white:@color/btn_disable_txt_color}"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

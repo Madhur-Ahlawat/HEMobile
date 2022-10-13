@@ -119,6 +119,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:singleLine="true"
+                        android:imeOptions="actionNext"
                         style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -149,6 +150,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:singleLine="true"
+                        android:imeOptions="actionDone"
                         style="@style/AppEditTextTransparent"
                         android:textSize="@dimen/_13ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -166,7 +168,7 @@
                     android:text="@string/str_continue"
                     android:textAllCaps="false"
                     android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_13ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

@@ -426,7 +426,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/proceed_to_pay"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_13ssp"
                 app:cornerRadius="@dimen/_6sdp" />
 
             <com.google.android.material.button.MaterialButton
@@ -441,7 +441,7 @@
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/blue_color"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_13ssp"
                 app:strokeColor="@color/blue_color" />
 
         </LinearLayout>

@@ -129,32 +129,31 @@ class CreateAccountEmailVerificationFragment :
     }
 
     private fun checkUserNameAvailable(resource: Resource<Boolean?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
         isCodeCheckApi = true
         if (isLiveDateClicked) {
             when (resource) {
                 is Resource.Success -> {
                     if (resource.data == true) {
                         count = 1
-                        loader?.show(requireActivity().supportFragmentManager, "")
-
                         val request =
                             EmailVerificationRequest(
                                 Constants.EMAIL_SELECTION_TYPE,
                                 binding.model?.email ?: ""
                             )
-
                         isNavigate = true
                         createAccountViewModel.emailVerificationApi(request)
-
                     } else {
+                        if (loader?.isVisible == true) {
+                            loader?.dismiss()
+                        }
                         showError(binding.root, getString(R.string.str_username_exits_message))
                     }
 
                 }
                 is Resource.DataError -> {
+                    if (loader?.isVisible == true) {
+                        loader?.dismiss()
+                    }
                     if (resource.errorMsg.contains("Connect your VPN", true)) {
                         if (count > Constants.RETRY_COUNT) {
                             requireActivity().startActivity(
