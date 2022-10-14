@@ -1,0 +1,55 @@
+package com.conduent.nationalhighways.ui.payment.adapter
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
+import com.conduent.nationalhighways.databinding.AdapterMakeOffPaymentVechileBinding
+
+class MakeOffPaymentVehicleAdapter(
+    private val context: Context?,
+    private var list: MutableList<VehicleResponse>,
+    private var listener: OnVehicleItemClickedListener
+) : RecyclerView.Adapter<MakeOffPaymentVehicleAdapter.MyViewHolder>() {
+
+    interface OnVehicleItemClickedListener {
+
+        fun onViewClicked() {
+
+        }
+
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolder = MyViewHolder(
+        AdapterMakeOffPaymentVechileBinding.inflate(
+            LayoutInflater.from(context),
+            parent,
+            false
+        )
+    )
+
+    override fun onBindViewHolder(
+        holder: MyViewHolder,
+        position: Int
+    ) {
+        val mResp = list[position]
+        holder.setView(mResp)
+    }
+
+    override fun getItemCount(): Int = list.size
+    inner class MyViewHolder(var binding: AdapterMakeOffPaymentVechileBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun setView(resp: VehicleResponse) {
+            binding.clRoot.setOnClickListener {
+                listener.onViewClicked()
+            }
+            binding.totalPrice.text = "£ ${resp.price}"
+            binding.vrmRegNo.text = "${resp.newPlateInfo?.number}"
+        }
+    }
+}

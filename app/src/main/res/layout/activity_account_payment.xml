@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.payment.PaymentScreenModel" />
+            type="com.conduent.nationalhighways.data.model.payment.PaymentScreenModel" />
 
     </data>
 

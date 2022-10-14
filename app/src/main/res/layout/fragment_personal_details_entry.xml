@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.account.AccountDetailsRequesstModel" />
+            type="com.conduent.nationalhighways.data.model.account.AccountDetailsRequesstModel" />
     </data>
 
 
@@ -71,7 +71,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/rl_post_code_view"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.heandroid.ui.customviews.CustomTabView
+                <com.conduent.nationalhighways.ui.customviews.CustomTabView
                     android:id="@+id/tvPersonalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/rlPassword"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.heandroid.ui.customviews.CustomTabView
+                <com.conduent.nationalhighways.ui.customviews.CustomTabView
                     android:id="@+id/tvPostCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/rlPin"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.heandroid.ui.customviews.CustomTabView
+                <com.conduent.nationalhighways.ui.customviews.CustomTabView
                     android:id="@+id/tvPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.heandroid.ui.customviews.CustomTabView
+                <com.conduent.nationalhighways.ui.customviews.CustomTabView
                     android:id="@+id/tvPin"
                     android:text="@string/str_pin"
                     android:layout_width="match_parent"

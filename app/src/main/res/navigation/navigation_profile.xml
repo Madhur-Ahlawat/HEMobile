@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/viewProfile"
-        android:name="com.heandroid.ui.account.profile.profileContent.personalAccount.ViewProfileFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.personalAccount.ViewProfileFragment"
         tools:layout="@layout/fragment_view_profile">
         <action
             android:id="@+id/action_viewProfile_to_personalInfoFragment"
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/personalInfoFragment"
-        android:name="com.heandroid.ui.account.profile.personalInfo.ProfilePersonalInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.personalInfo.ProfilePersonalInfoFragment"
         tools:layout="@layout/fragment_profile_personal_info">
         <action
             android:id="@+id/action_personalInfoFragment_to_postCodeFragment"
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/emailUpdatedFragment"
-        android:name="com.heandroid.ui.account.profile.email.ProfileEmailSuccessfulFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.ProfileEmailSuccessfulFragment"
         tools:layout="@layout/fragment_profile_email_successful">
 
     </fragment>
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/postCodeFragment"
-        android:name="com.heandroid.ui.account.profile.postcode.ProfilePostCodeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.postcode.ProfilePostCodeFragment"
         tools:layout="@layout/fragment_profile_postcode">
         <action
             android:id="@+id/action_postCodeFragment_to_passwordFragment"
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/passwordFragment"
-        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.ProfilePasswordFragment"
         tools:layout="@layout/fragment_profile_password">
         <action
             android:id="@+id/action_passwordFragment_to_pinFragment"
@@ -63,7 +63,7 @@
 
     <fragment
         android:id="@+id/pinFragment"
-        android:name="com.heandroid.ui.account.profile.pin.ProfilePinFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.pin.ProfilePinFragment"
         tools:layout="@layout/fragment_profile_pin">
 
         <action
@@ -107,7 +107,7 @@
 
     <fragment
         android:id="@+id/emailFragment"
-        android:name="com.heandroid.ui.account.profile.email.ProfileEmailVerificationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.ProfileEmailVerificationFragment"
         tools:layout="@layout/fragment_profile_email_verification">
 
         <action
@@ -118,7 +118,7 @@
 
     <fragment
         android:id="@+id/confirmEmailFragment"
-        android:name="com.heandroid.ui.account.profile.email.ProfileConfirmEmailFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.ProfileConfirmEmailFragment"
         tools:layout="@layout/fragment_profile_confirm_email">
 
         <action
@@ -129,7 +129,7 @@
 
     <fragment
         android:id="@+id/updatePasswordFragment"
-        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordUpdateFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.ProfilePasswordUpdateFragment"
         tools:layout="@layout/fragment_profile_password_update">
         <action
             android:id="@+id/action_updatePasswordFragment_to_updatePasswordSuccessfulFragment"
@@ -139,7 +139,7 @@
 
     <fragment
         android:id="@+id/updatePasswordSuccessfulFragment"
-        android:name="com.heandroid.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
         tools:layout="@layout/fragment_profile_password_successful">
         <action
             android:id="@+id/action_updatePasswordSuccessfulFragment_to_viewProfile"
@@ -156,7 +156,7 @@
 
     <fragment
         android:id="@+id/viewBusinessAccountProfileFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.businessAccount.ViewBusinessAccountProfileFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.businessAccount.ViewBusinessAccountProfileFragment"
         tools:layout="@layout/fragment_view_business_account_profile">
         <action
             android:id="@+id/action_viewBusinessAccountProfile_to_UpdatePersonalInfo"
@@ -167,7 +167,7 @@
 
     <fragment
         android:id="@+id/viewNominatedUserAccountProfileFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
         tools:layout="@layout/fragment_view_nominated_contact_user_profile">
         <action
             android:id="@+id/action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo"
@@ -179,7 +179,7 @@
 
     <fragment
         android:id="@+id/viewPrimaryAccountUserProfileFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.nominatedContactUser.ViewPrimaryUserAccountProfileFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.nominatedContactUser.ViewPrimaryUserAccountProfileFragment"
         tools:layout="@layout/fragment_view_primary_user_account_profile">
 
         <action
@@ -189,7 +189,7 @@
 
     <fragment
         android:id="@+id/viewPayGAccountProfileFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.payGAccount.ViewPayGAccountUserProfileFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.payGAccount.ViewPayGAccountUserProfileFragment"
         tools:layout="@layout/fragment_view_payg_account_user">
         <action
             android:id="@+id/action_viewPaygAccountProfile_to_UpdatePersonalInfo"
@@ -200,7 +200,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewPayGAccountAdditionalDetailsFragment"
-        android:name="com.heandroid.ui.account.profile.profileContent.payGAccount.ViewPAYGAccountAdditionalDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.payGAccount.ViewPAYGAccountAdditionalDetailsFragment"
         tools:layout="@layout/fragment_view_payg_account_user">
 
         <action
@@ -210,7 +210,7 @@
 
     <fragment
         android:id="@+id/nominatedPersonalInfoFragment"
-        android:name="com.heandroid.ui.account.profile.personalInfo.NominatedPersonalInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.personalInfo.NominatedPersonalInfoFragment"
         tools:layout="@layout/fragment_nominated_personal_info">
         <action
             android:id="@+id/action_nominatedPersonalInfoFragment_to_nominatedPostCodeFragment"
@@ -221,7 +221,7 @@
     </fragment>
     <fragment
         android:id="@+id/nominatedPostCodeFragment"
-        android:name="com.heandroid.ui.account.profile.postcode.NominatedProfilePostCodeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.postcode.NominatedProfilePostCodeFragment"
         tools:layout="@layout/fragment_nominated_profile_postcode">
         <action
             android:id="@+id/action_nominatedPostcodeFragment_to_nominatedPasswordFragment"
@@ -230,7 +230,7 @@
 
     <fragment
         android:id="@+id/nominatedPinFragment"
-        android:name="com.heandroid.ui.account.profile.pin.NominatedProfilePinFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.pin.NominatedProfilePinFragment"
         tools:layout="@layout/fragment_nominated_profile_pin">
         <action
             android:id="@+id/action_nominatedPinFragment_to_viewNominatedAccountProfile"
@@ -240,7 +240,7 @@
     </fragment>
     <fragment
         android:id="@+id/nominatedProfilePasswordFragment"
-        android:name="com.heandroid.ui.account.profile.password.NominatedProfilePasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.NominatedProfilePasswordFragment"
         tools:layout="@layout/fragment_nominated_profile_password">
         <action
             android:id="@+id/action_nominatedPasswordFragment_to_nominatedPinFragment"

@@ -6,13 +6,13 @@
     app:startDestination="@id/landingFragment">
     <fragment
         android:id="@+id/startNow"
-        android:name="com.heandroid.ui.landing.StartNowFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.StartNowFragment"
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now"/>
 
     <fragment
         android:id="@+id/landingFragment"
-        android:name="com.heandroid.ui.landing.LandingFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/logoutFragment"
-        android:name="com.heandroid.ui.landing.LogoutFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.LogoutFragment"
         android:label="@string/str_log_out"
         tools:layout="@layout/fragment_logout">
         <action
@@ -35,12 +35,12 @@
 
     <fragment
         android:id="@+id/sessionTimeOutFragment"
-        android:name="com.heandroid.ui.landing.SessionExpireFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.SessionExpireFragment"
         android:label="@string/str_session_time_out"
         tools:layout="@layout/fragment_session_expire" />
     <fragment
         android:id="@+id/failedRetryFragment"
-        android:name="com.heandroid.ui.landing.FailedRetryFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.FailedRetryFragment"
         android:label="FailedRetryFragment"
         tools:layout="@layout/fragment_failed_retry"/>
 

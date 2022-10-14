@@ -6,7 +6,7 @@
     app:startDestination="@id/vehicleListFragment">
     <fragment
         android:id="@+id/vehicleListFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclelist.VehicleListFragment"
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/vehicleManagementDetailFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListManagementDetailFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclelist.VehicleListManagementDetailFragment"
         android:label="VehicleManagementDetail"
         tools:layout="@layout/fragment_vehicle_list_management_detail">
 
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
         android:label="AddVehicleDetailsFragment"
         tools:layout="@layout/fragment_add_vehicle_details">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleClassesFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleClassesFragment"
         android:label="AddVehicleClassesFragment"
         tools:layout="@layout/fragment_add_vehicle_classes">
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleDoneFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDoneFragment"
         android:label="AddVehicleDoneFragment"
         tools:layout="@layout/fragment_add_vehicle_done">
 

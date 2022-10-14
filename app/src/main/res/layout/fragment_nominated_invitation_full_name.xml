@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.nominatedcontacts.CreateAccountRequestModel" />
+            type="com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountRequestModel" />
 
     </data>
 

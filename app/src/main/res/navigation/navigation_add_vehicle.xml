@@ -6,7 +6,7 @@
     app:startDestination="@id/addVehicleFragment">
     <fragment
         android:id="@+id/addVehicleFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleFragment"
         android:label="AddVehicleFragment"
         tools:layout="@layout/fragment_add_vehicle">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
         android:label="AddVehicleDetailsFragment"
         tools:layout="@layout/fragment_add_vehicle_details">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleClassesFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleClassesFragment"
         android:label="AddVehicleClassesFragment"
         tools:layout="@layout/fragment_add_vehicle_classes">
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleDoneFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDoneFragment"
         android:label="AddVehicleDoneFragment"
         tools:layout="@layout/fragment_add_vehicle_done">
         <action
@@ -56,13 +56,13 @@
 
     <fragment
         android:id="@+id/addVehicleSuccessFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleSuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleSuccessFragment"
         android:label="AddVehicleSuccessFragment"
         tools:layout="@layout/fragment_add_vehicle_success" />
 
     <fragment
         android:id="@+id/vehicleListFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclelist.VehicleListFragment"
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list">
 

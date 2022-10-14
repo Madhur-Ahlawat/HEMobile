@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:background="@color/color_EFEFEF">
 
-        <com.heandroid.ui.customviews.CustomTextView
+        <com.conduent.nationalhighways.ui.customviews.CustomTextView
             android:id="@+id/category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/ic_priority_icon" />
 
 
-        <com.heandroid.ui.customviews.CustomTextView
+        <com.conduent.nationalhighways.ui.customviews.CustomTextView
             android:id="@+id/view_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,0 +1,62 @@
+package com.conduent.nationalhighways.data.model.account
+
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class PersonalInformation(
+
+    @SerializedName("userName") val userName: String?,
+    @SerializedName("title") val title: String?,
+    @SerializedName("firstName") val firstName: String?,
+    @SerializedName("middleInitial") val middleInitial: String?,
+    @SerializedName("lastName") val lastName: String?,
+    @SerializedName("suffix") val suffix: String?,
+    @SerializedName("addressLine1") val addressLine1: String?,
+    @SerializedName("addressLine2") val addressLine2: String?,
+    @SerializedName("city") val city: String?,
+    @SerializedName("state") val state: String?,
+    @SerializedName("zipCode") val zipCode: String?,
+    @SerializedName("zipCodePlus") val zipCodePlus: String?,
+    @SerializedName("country") val country: String?,
+    @SerializedName("daytimePhone") val daytimePhone: String?,
+    @SerializedName("cellPhone") val cellPhone: String?=null,
+    @SerializedName("eveningPhone") val eveningPhone: String?,
+    @SerializedName("fax") val fax: String?,
+    @SerializedName("emailAddress") val emailAddress: String?,
+    @SerializedName("mobileAlerts") val mobileAlerts: String?,
+    @SerializedName("surveyOptIn") val surveyOptIn: String?,
+    @SerializedName("vrAlexaTc") val vrAlexaTc: Boolean?,
+    @SerializedName("vrGoogleTc") val vrGoogleTc: Boolean?,
+    @SerializedName("vrSmsTc") val vrSmsTc: Boolean?,
+    @SerializedName("pushNotifications") val pushNotifications: Boolean?,
+    @SerializedName("isNixeAddress") val isNixeAddress: String?,
+    @SerializedName("reEmailAddress") val reEmailAddress: String?,
+    @SerializedName("secondaryEmailAddress") val secondaryEmailAddress: String?,
+    @SerializedName("emailCount") val emailCount: String?,
+    @SerializedName("pemailUniqueCode") val pemailUniqueCode: String?,
+    @SerializedName("primaryEmailStatus") val primaryEmailStatus: String?,
+    @SerializedName("phoneLandLine") val phoneLandLine: String?,
+    @SerializedName("phoneNumber") val phoneNumber: String?,
+    @SerializedName("stateType") val stateType: String?,
+    @SerializedName("countryType") val countryType: String?,
+    @SerializedName("language") val language: String?,
+    @SerializedName("password") val password: String?,
+    @SerializedName("securityPin") val securityPin: String?,
+    @SerializedName("challengeQuestion") val challengeQuestion: String?,
+    @SerializedName("challengeAnswer") val challengeAnswer: String?,
+    @SerializedName("challengeQuestionTwo") val challengeQuestionTwo: String?,
+    @SerializedName("challengeAnswerTwo") val challengeAnswerTwo: String?,
+    @SerializedName("challengeQuestionThree") val challengeQuestionThree: String?,
+    @SerializedName("challengeAnswerThree") val challengeAnswerThree: String?,
+    @SerializedName("postLoginChallengeQuestionChange") val postLoginChallengeQuestionChange: String?,
+    @SerializedName("accountDetail") val accountDetail: String?,
+    @SerializedName("accountNumber") val accountNumber: String?,
+    @SerializedName("customerName") val customerName: String?,
+    @SerializedName("zipcode") val zipcode: String?,
+    @SerializedName("phoneDay") val phoneDay: String?,
+    @SerializedName("tempPwdValid") val tempPwdValid: String?,
+    @SerializedName("epseligible") val epseligible: String?,
+    @SerializedName("emailTemp") val emailTemp: String?
+) : Parcelable

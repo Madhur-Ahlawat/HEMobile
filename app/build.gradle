@@ -15,7 +15,7 @@ android {
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 30
-        applicationId "com.heandroid.dev"
+        applicationId "com.conduent.nationalhighways"
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true

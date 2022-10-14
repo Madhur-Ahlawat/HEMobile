@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/crossingHistoryFragment"
-        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
         tools:layout="@layout/fragment_crossing_history"
         android:label="CrossingHistoryFragment" >
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/crossingHistoryMakePaymentFragment"
-        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
         tools:layout="@layout/fragment_crossing_history_make_payment"
         android:label="CrossingHistoryMakePaymentFragment" />
 

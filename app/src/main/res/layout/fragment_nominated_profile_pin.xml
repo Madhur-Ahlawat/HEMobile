@@ -6,11 +6,11 @@
     <data>
         <variable
             name="nominated"
-            type="com.heandroid.data.model.nominatedcontacts.SecondaryAccountData" />
+            type="com.conduent.nationalhighways.data.model.nominatedcontacts.SecondaryAccountData" />
 
         <variable
             name="data"
-            type="com.heandroid.data.model.profile.ProfileDetailModel" />
+            type="com.conduent.nationalhighways.data.model.profile.ProfileDetailModel" />
         <variable
             name="enable"
             type="Boolean" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.heandroid.ui.auth.login.LoginFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -20,13 +20,13 @@
 
     <fragment
         android:id="@+id/forgotEmailFragment"
-        android:name="com.heandroid.ui.auth.forgot.email.ForgotEmailFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.email.ForgotEmailFragment"
         android:label="ForgotEmailFragment"
         tools:layout="@layout/fragment_forgot_email" />
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.ForgotPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password">
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/chooseOptionFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.ChooseOptionForgotFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ChooseOptionForgotFragment"
         android:label="ChooseOptionFragment"
         tools:layout="@layout/fragment_forgot_choose_option">
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/postalEmailFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.PostEmailForgotFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.PostEmailForgotFragment"
         android:label="PostatEmailFragment"
         tools:layout="@layout/fragment_forgot_password_postal_email">
         <action
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.OTPForgotPassword"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.OTPForgotPassword"
         android:label="OTPFragment"
         tools:layout="@layout/fragment_forgot_otp">
         <action
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/createPasswordFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.CreateNewPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.CreateNewPasswordFragment"
         android:label="PostatEmailFragment"
         tools:layout="@layout/fragment_forgot_create_new_password">
         <action
@@ -80,7 +80,7 @@
 
     <fragment
         android:id="@+id/resetFragment"
-        android:name="com.heandroid.ui.auth.forgot.password.ResetForgotPassword"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="ResetFragment"
         tools:layout="@layout/fragment_forgot_reset">
         <action

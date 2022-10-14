@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/id_tool_bar_lyt"
             app:navGraph="@navigation/bottom_navigation_graph" />
 
-        <com.heandroid.ui.customviews.BottomNavigationView
+        <com.conduent.nationalhighways.ui.customviews.BottomNavigationView
             android:orientation="horizontal"
             app:active_color="@color/dark_blue_color"
             app:passive_color="@color/bottomPassiveColor"

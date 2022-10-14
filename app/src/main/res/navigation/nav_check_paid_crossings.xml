@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/crossingCheck"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingsFragment"
         tools:layout="@layout/fragment_paid_crossing_check">
 
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/checkChargesOption"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidOptionsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidOptionsFragment"
         tools:layout="@layout/fragment_used_unused_options">
 
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/unUsedCharges"
-        android:name="com.heandroid.ui.checkpaidcrossings.UnUsedChargesFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.UnUsedChargesFragment"
         tools:layout="@layout/fragment_unused_charges">
 
         <action
@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/usedCharges"
-        android:name="com.heandroid.ui.checkpaidcrossings.UsedChargesFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.UsedChargesFragment"
         tools:layout="@layout/fragment_used_charges">
 
     </fragment>
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/enterVrmFragment"
-        android:name="com.heandroid.ui.checkpaidcrossings.EnterVrmFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.EnterVrmFragment"
         tools:layout="@layout/fragment_enter_vrm_check">
 
         <action
@@ -73,7 +73,7 @@
 
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossAddVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossAddVehicleDetailsFragment"
         tools:layout="@layout/fragment_add_vehicle_details">
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/addVehicleClassesFragment"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossAddVehicleClassesFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossAddVehicleClassesFragment"
         tools:layout="@layout/fragment_paid_cross_add_vehicle_classes">
 
         <action
@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/checkPaidCrossingChangeVrm"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentChangeVrm"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossFragmentChangeVrm"
         tools:layout="@layout/fragment_check_paid_crossing_change_vrm">
         <action
             android:id="@+id/action_checkPaidCrossingChangeVrm_to_addVehicleDetailsFragment"
@@ -116,7 +116,7 @@
 
     <fragment
         android:id="@+id/checkPaidCrossingChangeVrmConformSuccess"
-        android:name="com.heandroid.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrmSuccessFull"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossFragmentConformChangeVrmSuccessFull"
         tools:layout="@layout/fragment_enter_vrm_check_change_conform_success">
 
         <action

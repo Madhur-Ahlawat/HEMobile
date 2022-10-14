@@ -1,0 +1,3 @@
+package com.conduent.nationalhighways.ui.account.profile.email
+
+class ProfileEmailSuccessfulFragmentTest

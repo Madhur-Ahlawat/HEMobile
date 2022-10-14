@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.profile.ProfileDetailModel" />
+            type="com.conduent.nationalhighways.data.model.profile.ProfileDetailModel" />
 
     </data>
 

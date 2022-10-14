@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/accountPaymentHistoryFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment"
         android:label="Payment History"
         tools:layout="@layout/fragment_account_payment_history">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/accountPaymentHistoryItemDetailFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.history.AccountPaymentHistoryItemDetailFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.history.AccountPaymentHistoryItemDetailFragment"
         android:label="AccountPaymentHistoryItemDetailFragment"
         tools:layout="@layout/account_payment_history_item_detail" />
 
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/paymentMethodFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodFragment"
         tools:layout="@layout/fragment_payment_method">
 
 
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/paymentMethodCardFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodCardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodCardFragment"
         tools:layout="@layout/fragment_payment_method_card">
 
 
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/paymentMethodErrorFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodErrorFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodErrorFragment"
         tools:layout="@layout/fragment_payment_method_error">
 
         <action
@@ -73,7 +73,7 @@
 
     <fragment
         android:id="@+id/paymentMethodEditCardFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodEditCardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodEditCardFragment"
         tools:layout="@layout/fragment_payment_method_edit_card">
 
 
@@ -91,7 +91,7 @@
 
     <fragment
         android:id="@+id/paymentMethodConfirmCardFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.method.PaymentMethodConfirmCardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodConfirmCardFragment"
         tools:layout="@layout/fragment_payment_method_confirm_card" />
 
 
@@ -100,7 +100,7 @@
 
     <fragment
         android:id="@+id/paymentTopUpFragment"
-        android:name="com.heandroid.ui.bottomnav.account.payments.topup.AccountTopUpPaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentFragment"
         android:label="AccountTopUpPaymentFragment"
         tools:layout="@layout/fragment_account_topup_payment">
 

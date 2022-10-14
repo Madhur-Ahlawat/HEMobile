@@ -6,7 +6,7 @@
 
         <variable
             name="vehicleData"
-            type="com.heandroid.data.model.vehicle.VehicleResponse" />
+            type="com.conduent.nationalhighways.data.model.vehicle.VehicleResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/sessionExpireFragment"
-        android:name="com.heandroid.ui.landing.SessionExpireFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.SessionExpireFragment"
         tools:layout="@layout/fragment_session_expire"
         android:label="SessionExpireFragment" />
 
 
     <fragment
         android:id="@+id/signOutFragment"
-        android:name="com.heandroid.ui.landing.LogoutFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.LogoutFragment"
         tools:layout="@layout/fragment_signout"
         android:label="SignoutFragment" />
 </navigation>

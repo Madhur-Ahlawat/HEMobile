@@ -10,7 +10,7 @@
    <!-- Step 1 -->
     <fragment
         android:id="@+id/emailVerification"
-        android:name="com.heandroid.ui.account.creation.step1.CreateAccountEmailVerificationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailVerificationFragment"
         android:label="@string/str_email_verification"
         tools:layout="@layout/fragment_create_account_email_verification">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/confirmEmailFragment"
-        android:name="com.heandroid.ui.account.creation.step1.CreateAccountConfirmEmailFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountConfirmEmailFragment"
         android:label="ConfirmEmailFragment"
         tools:layout="@layout/fragment_create_account_confirm_email">
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/accountTypeSelectionFragment"
-        android:name="com.heandroid.ui.account.creation.step2.CreateAccountTypeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.CreateAccountTypeFragment"
         android:label="@string/str_select_account_type"
         tools:layout="@layout/fragment_create_account_type">
 
@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/personalTypeFragment"
-        android:name="com.heandroid.ui.account.creation.step2.CreateAccountPersonalSetupFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.CreateAccountPersonalSetupFragment"
         android:label="@string/str_select_account_type"
         tools:layout="@layout/fragment_create_account_personal_setup">
 
@@ -71,7 +71,7 @@
     <!-- Business Account -->
     <fragment
         android:id="@+id/businessInfoFragment"
-        android:name="com.heandroid.ui.account.creation.step2.businessaccount.BusinessInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessInfoFragment"
         android:label="@string/business_info_fragment"
         tools:layout="@layout/fragment_business_info">
 
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/businessPrepayInfoFragment"
-        android:name="com.heandroid.ui.account.creation.step2.businessaccount.BusinessPrePayInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessPrePayInfoFragment"
         android:label="@string/business_prepay"
         tools:layout="@layout/fragment_business_prepay_info" >
 
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/businessPrePayAutoTopUpFragment"
-        android:name="com.heandroid.ui.account.creation.step2.businessaccount.BusinessPrePayAutoTopUpFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessPrePayAutoTopUpFragment"
         android:label="@string/business_prepay_auto_topup"
         tools:layout="@layout/fragment_business_prepay_auto_topup" >
 
@@ -105,7 +105,7 @@
 
     <fragment
         android:id="@+id/businessTopUpRecommendataionFragment"
-        android:name="com.heandroid.ui.account.creation.step2.businessaccount.BusinessTopUpRecommendationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessTopUpRecommendationFragment"
         android:label="@string/business_topup_recommendation"
         tools:layout="@layout/fragment_business_top_up_recommendation" >
 
@@ -123,7 +123,7 @@
 
     <fragment
         android:id="@+id/personalDetailsEntryFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountPersonalInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPersonalInfoFragment"
         android:label="Personal Info"
         tools:layout="@layout/fragment_create_account_personal_info" >
         <action
@@ -135,7 +135,7 @@
 
     <fragment
         android:id="@+id/postcodeFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountPostCodeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeFragment"
         android:label="Personal Info"
         tools:layout="@layout/fragment_create_account_postcode" >
         <action
@@ -145,7 +145,7 @@
 
     <fragment
         android:id="@+id/createAccoutPasswordFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccoutPasswordFragment"
         android:label="CreateAccoutPasswordFragment"
         tools:layout="@layout/fragment_create_account_possword">
         <action
@@ -156,7 +156,7 @@
 
     <fragment
         android:id="@+id/createAccoutPinFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccoutPinFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccoutPinFragment"
         android:label="CreateAccoutPinFragment"
         tools:layout="@layout/fragment_create_account_pin">
         <action
@@ -174,7 +174,7 @@
 
     <fragment
         android:id="@+id/createAccoutInfoFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountSetupPrePayFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountSetupPrePayFragment"
         android:label="CreateAccoutInfoFragment"
         tools:layout="@layout/fragment_create_account_setup_prepay">
 
@@ -187,7 +187,7 @@
 
     <fragment
         android:id="@+id/createAccoutInfoConfirmationFragment"
-        android:name="com.heandroid.ui.account.creation.step3.CreateAccountTopUpFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountTopUpFragment"
         android:label="createAccoutInfoConfirmationFragment"
         tools:layout="@layout/fragment_create_account_top_up">
         <action
@@ -197,7 +197,7 @@
     <!-- Step 4 -->
     <fragment
         android:id="@+id/createCommunicationPrefsFragment"
-        android:name="com.heandroid.ui.account.creation.step4.CreateCommunicationPrefsFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step4.CreateCommunicationPrefsFragment"
         android:label="createAccoutInfoConfirmationFragment"
         tools:layout="@layout/fragment_select_communication_preference">
         <action
@@ -219,7 +219,7 @@
 
     <fragment
         android:id="@+id/findYourVehicleFragment"
-        android:name="com.heandroid.ui.account.creation.step5.CreateAccountFindVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountFindVehicleFragment"
         android:label="FindYourVehicleFragment"
         tools:layout="@layout/fragment_create_account_find_vehicle">
 
@@ -262,7 +262,7 @@
 
     <fragment
         android:id="@+id/businessVehicleUKListFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK"
         android:label="BusinessUKVehicleList"
         tools:layout="@layout/fragment_business_vehicle_find_uk">
 
@@ -279,7 +279,7 @@
 
     <fragment
         android:id="@+id/businessNonUKMakeFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment"
         android:label="BusinessNonUKMake"
         tools:layout="@layout/fragment_business_vehicle_non_uk_make">
 
@@ -291,7 +291,7 @@
 
     <fragment
         android:id="@+id/businessNonUKClassFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKClassFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKClassFragment"
         android:label="BusinessNonUkDetails"
         tools:layout="@layout/fragment_business_vehicle_non_uk_details">
 
@@ -310,7 +310,7 @@
 
     <fragment
         android:id="@+id/businessVehicleDetailFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
         android:label="BusinessVehicleDetail"
         tools:layout="@layout/fragment_business_vehicle_detail">
 
@@ -328,7 +328,7 @@
 
     <fragment
         android:id="@+id/paymentSummaryFragment"
-        android:name="com.heandroid.ui.account.creation.step6.CreateAccountPaymentSummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountPaymentSummaryFragment"
         android:label="Payment Summary Screen"
         tools:layout="@layout/fragment_create_account_payment_summary">
 
@@ -355,7 +355,7 @@
 
     <fragment
         android:id="@+id/choosePaymentFragment"
-        android:name="com.heandroid.ui.account.creation.step6.CreateAccountChoosePaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountChoosePaymentFragment"
         android:label="Choose Payment Fragment"
         tools:layout="@layout/fragment_create_account_choose_payment">
 
@@ -366,7 +366,7 @@
 
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.heandroid.ui.account.creation.step6.CreateAccountCardFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountCardFragment"
         android:label="Card Fragment"
         tools:layout="@layout/fragment_create_account_card">
         <action
@@ -376,7 +376,7 @@
 
     <fragment
         android:id="@+id/successfulFragment"
-        android:name="com.heandroid.ui.account.creation.step6.CreateAccountSuccessfulFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
 

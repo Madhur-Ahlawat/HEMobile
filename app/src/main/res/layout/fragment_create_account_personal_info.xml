@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.account.CreateAccountRequestModel" />
+            type="com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,7 +6,7 @@
     app:startDestination="@id/vehicleGroupMngmtFragment">
     <fragment
         android:id="@+id/vehicleGroupMngmtFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupMngmtFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupMngmtFragment"
         android:label="VehicleGroupMngmtFragment"
         tools:layout="@layout/fragment_vehicle_group_mngmt">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAndRenameVehicleGroupFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.CreateAndRenameVehicleGroupFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.CreateAndRenameVehicleGroupFragment"
         android:label="CreateAndRenameVehicleGroupFragment"
         tools:layout="@layout/fragment_create_rename_vehicle_group">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleGroupFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupFragment"
         android:label="VehicleGroupFragment"
         tools:layout="@layout/fragment_vehicle_group">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleGroupVehicleDetailsFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupVehicleDetailsFragment"
         android:label="VehicleGroupVehicleDetailsFragment"
         tools:layout="@layout/fragment_group_vehicle_detail">
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleGroupAddVehicleFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupAddVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupAddVehicleFragment"
         android:label="VehicleGroupAddVehicleFragment"
         tools:layout="@layout/fragment_vehicle_group_add_vehicle">
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleGroupVehicleEditDetailsFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupVehicleEditDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupVehicleEditDetailsFragment"
         android:label="VehicleGroupVehicleEditDetailsFragment"
         tools:layout="@layout/fragment_group_vehicle_edit_detail">
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleGroupCrossingHistoryFragment"
-        android:name="com.heandroid.ui.vehicle.vehiclegroup.VehicleGroupCrossingHistoryFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupCrossingHistoryFragment"
         android:label="VehicleGroupCrossingHistoryFragment"
         tools:layout="@layout/fragment_vehicle_group_crossing_history"/>
 </navigation>

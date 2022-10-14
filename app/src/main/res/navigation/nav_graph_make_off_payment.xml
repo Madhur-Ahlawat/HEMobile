@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/makeOneOffPaymentFragment"
-        android:name="com.heandroid.ui.payment.MakeOneOffPaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOneOffPaymentFragment"
         tools:layout="@layout/fragment_make_off_payment"
         android:label="MakeOneOffPaymentFragment" >
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/addVehicleDetailsFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
         android:label="AddVehicleDetailsFragment"
         tools:layout="@layout/fragment_add_vehicle_details">
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/addVehicleClassesFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleClassesFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleClassesFragment"
         android:label="AddVehicleClassesFragment"
         tools:layout="@layout/fragment_add_vehicle_classes">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleDoneFragment"
-        android:name="com.heandroid.ui.vehicle.addvehicle.AddVehicleDoneFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDoneFragment"
         android:label="AddVehicleDoneFragment"
         tools:layout="@layout/fragment_add_vehicle_done">
         <action
@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/makeOneOffPaymentCrossingFragment"
-        android:name="com.heandroid.ui.payment.MakeOffPaymentCrossingFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentCrossingFragment"
         tools:layout="@layout/fragment_make_off_payment_crossing"
         android:label="MakeOneOffPaymentFragment" >
         <action
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/makeOffPaymentReceiptFragment"
-        android:name="com.heandroid.ui.payment.MakeOffPaymentReceiptFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentReceiptFragment"
         tools:layout="@layout/fragment_make_off_payment_receipt"
         android:label="MakeOffPaymentReceiptFragment" >
         <action
@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/makeOffPaymentCardFragment"
-        android:name="com.heandroid.ui.payment.MakeOffPaymentCardFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentCardFragment"
         tools:layout="@layout/fragment_make_off_payment_card"
         android:label="MakeOffPaymentCardFragment" >
         <action
@@ -86,7 +86,7 @@
 
     <fragment
         android:id="@+id/makeOffPaymentConfirmationFragment"
-        android:name="com.heandroid.ui.payment.MakeOffPaymentConfirmationFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentConfirmationFragment"
         tools:layout="@layout/fragment_make_off_payment_confirmation"
         android:label="MakeOffPaymentCardFragment" >
         <action
@@ -97,13 +97,13 @@
 
     <fragment
         android:id="@+id/makeOffPaymentSuccessfulFragment"
-        android:name="com.heandroid.ui.payment.MakeOffPaymentSuccessfulFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentSuccessfulFragment"
         tools:layout="@layout/fragment_make_off_payment_successful"
         android:label="MakeOffPaymentCardFragment" />
 
     <fragment
         android:id="@+id/makePaymentAddVehicleFragment"
-        android:name="com.heandroid.ui.payment.MakePaymentAddVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.MakePaymentAddVehicleFragment"
         android:label="MakePaymentAddVehicleFragment"
         tools:layout="@layout/fragment_make_payment_add_vehicle">
 

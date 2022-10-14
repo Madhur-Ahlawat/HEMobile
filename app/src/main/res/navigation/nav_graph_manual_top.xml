@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/manualTopUpFragment"
-        android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpFragment"
         tools:layout="@layout/fragment_manual_top_up">
         <action
             android:id="@+id/action_manualTopUpFragment_to_manualTopUpCardFragment"
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/manualTopUpCardFragment"
-        android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpCardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpCardFragment"
         tools:layout="@layout/fragment_manual_top_up_card">
         <action
             android:id="@+id/action_manualTopUpCardFragment_to_manualTopUpAddCardFragment"
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/manualTopUpAddCardFragment"
-        android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpAddCardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpAddCardFragment"
         tools:layout="@layout/fragment_payment_method_card">
         <action
             android:id="@+id/action_manualTopUpAddCardFragment_to_manualTopUpSuccessfulFragment"
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/manualTopUpSuccessfulFragment"
-        android:name="com.heandroid.ui.bottomnav.dashboard.topup.ManualTopUpSuccessfulFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpSuccessfulFragment"
         tools:layout="@layout/fragment_manual_top_up_successful" />
 
 

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.account.EmailValidationModel" />
+            type="com.conduent.nationalhighways.data.model.account.EmailValidationModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

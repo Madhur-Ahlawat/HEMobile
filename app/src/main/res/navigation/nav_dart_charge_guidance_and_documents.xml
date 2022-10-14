@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/GuidanceAndDocumentsQuestions"
-        android:name="com.heandroid.ui.startNow.guidancedocuments.GuidanceAndDocumentsQuestionsFragment"
+        android:name="com.conduent.nationalhighways.ui.startNow.guidancedocuments.GuidanceAndDocumentsQuestionsFragment"
         tools:layout="@layout/fragments_guidance_and_documents_faq">
 
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/GuidanceAndDocumentsAnswers"
-        android:name="com.heandroid.ui.startNow.guidancedocuments.GuidanceAndDocumentsAnswersFragment"
+        android:name="com.conduent.nationalhighways.ui.startNow.guidancedocuments.GuidanceAndDocumentsAnswersFragment"
         tools:layout="@layout/guidance_documents_answers_fragment">
 
     </fragment>

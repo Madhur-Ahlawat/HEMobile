@@ -5,7 +5,7 @@
 
         <variable
             name="model"
-            type="com.heandroid.data.model.account.AccountTypeSelectionModel" />
+            type="com.conduent.nationalhighways.data.model.account.AccountTypeSelectionModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

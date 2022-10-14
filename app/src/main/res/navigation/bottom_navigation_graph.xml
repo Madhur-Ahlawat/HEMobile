@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.heandroid.ui.bottomnav.dashboard.DashboardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragment"
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard">
 
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/vehicleFragment"
-        android:name="com.heandroid.ui.bottomnav.vehicle.VehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.vehicle.VehicleFragment"
         android:label="Vehicle Management"
         tools:layout="@layout/fragment_vehicle">
 
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.heandroid.ui.bottomnav.account.AccountFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.AccountFragment"
         android:label="Account Management"
         tools:layout="@layout/fragment_account">
 
@@ -39,20 +39,20 @@
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.heandroid.ui.bottomnav.notification.NotificationFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment"
         android:label="Notification Screen"
         tools:layout="@layout/fragment_notification">
 
     </fragment>
     <fragment
         android:id="@+id/vehicleListFragment2"
-        android:name="com.heandroid.ui.vehicle.vehiclelist.VehicleListFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.vehiclelist.VehicleListFragment"
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list"/>
 
     <fragment
         android:id="@+id/crossingHistoryFragment"
-        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
         tools:layout="@layout/fragment_crossing_history"
         android:label="CrossingHistoryFragment" >
 
@@ -63,7 +63,7 @@
 
     <fragment
         android:id="@+id/crossingHistoryMakePaymentFragment"
-        android:name="com.heandroid.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
         tools:layout="@layout/fragment_crossing_history_make_payment"
         android:label="CrossingHistoryMakePaymentFragment" />
 

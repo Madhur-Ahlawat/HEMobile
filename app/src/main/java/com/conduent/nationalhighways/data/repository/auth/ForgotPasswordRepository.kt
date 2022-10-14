@@ -1,0 +1,17 @@
+package com.conduent.nationalhighways.data.repository.auth
+
+import com.conduent.nationalhighways.BuildConfig
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
+import com.conduent.nationalhighways.data.remote.ApiService
+import javax.inject.Inject
+
+
+class ForgotPasswordRepository @Inject constructor(private val apiService: ApiService)  {
+
+    suspend fun confirmOptionForForgot(model: ConfirmOptionModel?) = apiService.confirmOptionForForgot(BuildConfig.AGENCY_ID,model)
+    suspend fun requestOTP(model: RequestOTPModel?) = apiService.requestOTP(BuildConfig.AGENCY_ID,model)
+    suspend fun resetPassword(model: ResetPasswordModel?) = apiService.resetPassword(BuildConfig.AGENCY_ID,model)
+
+}

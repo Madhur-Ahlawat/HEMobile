@@ -1,0 +1,307 @@
+package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
+
+import android.app.Activity
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryItem
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
+import com.conduent.nationalhighways.databinding.FragmentVehicleHistoryCrossingHistoryBinding
+import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.vehicle.SelectedVehicleViewModel
+import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
+import com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryAdapter
+import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
+import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
+import com.conduent.nationalhighways.utils.StorageHelper
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.showToast
+import com.conduent.nationalhighways.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import java.io.*
+
+@AndroidEntryPoint
+class VehicleHistoryCrossingHistoryFragment :
+    BaseFragment<FragmentVehicleHistoryCrossingHistoryBinding>(), View.OnClickListener,
+    DownloadFilterDialogListener {
+
+    private val viewModel: VehicleMgmtViewModel by viewModels()
+    private val selectedViewModel: SelectedVehicleViewModel by activityViewModels()
+    private lateinit var mVehicleDetails: VehicleResponse
+    private var list: MutableList<CrossingHistoryItem?>? = ArrayList()
+    private var isLoading = false
+    private var isFirstTime = true
+    private val count: Long = 5
+    private var totalCount: Int = 0
+    private var startIndex: Long = 1
+    private lateinit var request: CrossingHistoryRequest
+    private var isCrossingHistory = false
+    private var selectionType: String = Constants.PDF
+    private var isDownload = false
+    private val startOne = "1"
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentVehicleHistoryCrossingHistoryBinding.inflate(inflater, container, false)
+
+    override fun init() {
+        binding.rvVehicleCrossingHistory.apply {
+            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = CrossingHistoryAdapter(this@VehicleHistoryCrossingHistoryFragment, list)
+        }
+    }
+
+    override fun initCtrl() {
+        binding.apply {
+            downloadCrossingHistoryBtn.setOnClickListener(this@VehicleHistoryCrossingHistoryFragment)
+            backToVehicleListBtn.setOnClickListener(this@VehicleHistoryCrossingHistoryFragment)
+        }
+    }
+
+    override fun observer() {
+        observe(selectedViewModel.selectedVehicleResponse, ::handleSelectedVehicleResponse)
+        observe(viewModel.crossingHistoryVal, ::handleVehicleCrossingHistoryResponse)
+        observe(viewModel.crossingHistoryDownloadVal, ::handleDownloadCrossingHistoryData)
+    }
+
+    private fun handleDownloadCrossingHistoryData(resource: Resource<ResponseBody?>?) {
+        if (isDownload) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        callCoroutines(resource.data)
+                    }
+                }
+                is Resource.DataError -> {
+                    requireContext().showToast("failed to download the document")
+                }
+                else -> {
+
+                }
+            }
+            isDownload = false
+        }
+    }
+
+    private fun handleVehicleCrossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
+        binding.rvVehicleCrossingHistory.visible()
+        binding.progressBar.gone()
+        if (isCrossingHistory) {
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let {
+                        val response = resource.data
+                        totalCount = response.transactionList?.transaction?.size ?: 0
+                        if (response.transactionList != null) {
+                            response.transactionList.transaction?.let { it1 -> list?.addAll(it1) }
+                        }
+                        isLoading = false
+                        Looper.myLooper()?.let { it1 ->
+                            Handler(it1).postDelayed({
+                                binding.rvVehicleCrossingHistory.adapter?.notifyDataSetChanged()
+                            }, 100)
+                        }
+                        if (list?.size == 0) {
+                            binding.downloadCrossingHistoryBtn.gone()
+                            binding.rvVehicleCrossingHistory.gone()
+                            binding.tvNoCrossing.visible()
+                            binding.progressBar.gone()
+                        } else {
+                            binding.downloadCrossingHistoryBtn.visible()
+                            binding.rvVehicleCrossingHistory.visible()
+                            binding.progressBar.gone()
+                            binding.tvNoCrossing.gone()
+                        }
+                        endlessScroll()
+                    }
+                }
+                is Resource.DataError -> {
+                    binding.rvVehicleCrossingHistory.gone()
+                    binding.progressBar.gone()
+                    binding.tvNoCrossing.visible()
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+                else -> {
+
+                }
+            }
+        }
+        isCrossingHistory = false
+    }
+
+    private fun handleSelectedVehicleResponse(vehicleResponse: VehicleResponse?) {
+        vehicleResponse?.let {
+            mVehicleDetails = it
+            getVehicleCrossingHistoryData()
+        }
+    }
+
+    private fun getVehicleCrossingHistoryData() {
+        // todo check this individual vehicle crossing history request
+        request = CrossingHistoryRequest(
+            startIndex = startIndex,
+            count = count,
+            transactionType = Constants.ALL_TRANSACTION,  //Constants.TOLL_TRANSACTION
+            plateNumber = mVehicleDetails.plateInfo?.number
+        )
+        isCrossingHistory = true
+        viewModel.crossingHistoryApiCall(request)
+        binding.tvNoCrossing.gone()
+        binding.rvVehicleCrossingHistory.gone()
+        binding.progressBar.visible()
+    }
+
+    private fun callCoroutines(body: ResponseBody) {
+        lifecycleScope.launch(Dispatchers.IO) {
+
+            val ret = async {
+                return@async StorageHelper.writeResponseBodyToDisk(
+                    requireActivity(),
+                    selectionType,
+                    body
+                )
+            }.await()
+
+            if (ret) {
+                withContext(Dispatchers.Main) {
+                    binding.progressBar.visibility = View.GONE
+                    requireActivity().showToast("Document downloaded successfully")
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    binding.progressBar.visibility = View.GONE
+                    requireActivity().showToast("Document download failed")
+                }
+            }
+        }
+    }
+
+    private fun endlessScroll() {
+        if (isFirstTime) {
+            isFirstTime = false
+            binding.rvVehicleCrossingHistory.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.layoutManager is LinearLayoutManager) {
+                        val linearLayoutManager =
+                            recyclerView.layoutManager as LinearLayoutManager?
+                        if (!isLoading) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size
+                                    ?: 0) - 1) && totalCount > 4
+                            ) {
+                                startIndex += count
+                                isLoading = true
+                                request.startIndex = startIndex
+                                binding.progressBar.visible()
+                                isCrossingHistory = true
+                                viewModel.crossingHistoryApiCall(request)
+                            }
+                        }
+                    }
+                }
+
+            })
+        }
+    }
+
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.download_crossing_history_btn -> {
+                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+                    StorageHelper.requestStoragePermission(
+                        requireActivity(),
+                        onScopeResultLaucher = onScopeResultLauncher,
+                        onPermissionlaucher = onPermissionLauncher
+                    )
+                } else {
+                    if (list?.isEmpty() == true) {
+                        requireContext().showToast("No crossings to download")
+                    } else {
+                        val dialog = DownloadFormatSelectionFilterDialog()
+                        dialog.setListener(this)
+                        dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                        dialog.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
+                        )
+                    }
+                }
+            }
+            R.id.back_to_vehicle_list_btn -> {
+                findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)
+            }
+        }
+    }
+
+    override fun onOkClickedListener(type: String) {
+        selectionType = type
+        downloadCrossingHistory()
+    }
+
+    override fun onCancelClicked() {}
+
+    private fun downloadCrossingHistory() {
+        val downloadRequest = TransactionHistoryDownloadRequest().apply {
+            startIndex = startOne
+            downloadType = selectionType
+            transactionType = Constants.ALL_TRANSACTION
+        }
+        isDownload = true
+        requireContext().showToast("Document download started")
+        viewModel.downloadCrossingHistoryApiCall(downloadRequest)
+    }
+
+
+    private var onScopeResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                binding.downloadCrossingHistoryBtn.performClick()
+            }
+        }
+
+
+    private var onPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission = true
+            permissions.entries.forEach {
+                if (!it.value) {
+                    permission = it.value
+                }
+            }
+            when (permission) {
+                true -> {
+                    binding.downloadCrossingHistoryBtn.performClick()
+                }
+                else -> {
+                    requireActivity().showToast("Please enable permission to download")
+                }
+            }
+        }
+
+}
