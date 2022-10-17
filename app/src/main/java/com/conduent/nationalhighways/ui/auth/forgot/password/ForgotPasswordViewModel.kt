@@ -35,6 +35,10 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _otp = MutableLiveData<Resource<SecurityCodeResponseModel?>?>()
     val otp: LiveData<Resource<SecurityCodeResponseModel?>?> get() = _otp
 
+ @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _verifyRequestCode = MutableLiveData<Resource<VerifyRequestOtpResp?>?>()
+    val verifyRequestCode: LiveData<Resource<VerifyRequestOtpResp?>?> get() = _verifyRequestCode
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _resetPassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
@@ -72,6 +76,15 @@ class ForgotPasswordViewModel @Inject constructor(
                 _otp.postValue(success(repository.requestOTP(model), errorManager))
             } catch (e: Exception) {
                 _otp.postValue(failure(e))
+            }
+        }
+    }
+    fun verifyRequestCode(model: VerifyRequestOtpReq?) {
+        viewModelScope.launch {
+            try {
+                _verifyRequestCode.postValue(success(repository.verifyRequestCode(model), errorManager))
+            } catch (e: Exception) {
+                _verifyRequestCode.postValue(failure(e))
             }
         }
     }

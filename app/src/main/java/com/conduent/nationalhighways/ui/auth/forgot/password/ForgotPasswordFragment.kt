@@ -40,7 +40,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     override fun init() {
         sessionManager.clearAll()
         requireActivity().toolbar(getString(R.string.forgot_password))
-        binding.model = ConfirmOptionModel(identifier = "", zipCode = "", enable = false)
+        binding.model = ConfirmOptionModel(identifier = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -100,16 +100,14 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     private fun isEnable() {
-        if (binding.edtEmail.length() > 0 && binding.edtPostcode.length() > 0) binding.model =
+        if (binding.edtEmail.length() > 0 ) binding.model =
             ConfirmOptionModel(
                 enable = true,
-                identifier = binding.edtEmail.text.toString(),
-                zipCode = binding.edtPostcode.text.toString()
+                identifier = binding.edtEmail.text.toString()
             )
         else binding.model = ConfirmOptionModel(
             enable = false,
-            identifier = binding.edtEmail.text.toString(),
-            zipCode = binding.edtPostcode.text.toString()
+            identifier = binding.edtEmail.text.toString()
         )
     }
 

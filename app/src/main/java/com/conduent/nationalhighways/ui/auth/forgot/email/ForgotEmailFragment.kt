@@ -42,7 +42,7 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
     override fun init() {
         sessionManager.clearAll()
         requireActivity().toolbar(getString(R.string.txt_recovery_mail_address))
-        binding.model = ForgotEmailModel(enable = false, accountNumber = "", zipCode = "")
+        binding.model = ForgotEmailModel(enable = false, accountNumber = "")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
@@ -96,20 +96,19 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
 
     private fun loadData(status: Resource.Success<ForgotEmailResponseModel?>) {
         val username = viewModel.loadUserName(status.data?.userName ?: "")
-        binding.tvUsername.text = username.toString()
+        binding.tvUsername.text = username.toString().lowercase()
     }
 
     private fun isEnable() {
-        if (binding.edtAccountNumber.length() > 0 && binding.edtPostCode.length() > 0) binding.model =
+        if (binding.edtAccountNumber.length() > 0) binding.model =
             ForgotEmailModel(
                 enable = true,
-                accountNumber = binding.edtAccountNumber.text.toString(),
-                zipCode = binding.edtPostCode.text.toString()
+                accountNumber = binding.edtAccountNumber.text.toString()
             )
         else binding.model = ForgotEmailModel(
             enable = false,
-            accountNumber = binding.edtAccountNumber.text.toString(),
-            zipCode = binding.edtPostCode.text.toString()
+            accountNumber = binding.edtAccountNumber.text.toString()
+
         )
     }
 }

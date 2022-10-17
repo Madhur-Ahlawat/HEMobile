@@ -8,14 +8,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
-import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
-import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.*
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -47,16 +46,23 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             confirmPassword = "",
             enable = false
         )
+//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val mVerifyRequestOtpReq =
+            VerifyRequestOtpReq(data?.code, data?.referenceId)
+        Logg.logging("NewPassword","mVerifyRequestOtpReq $mVerifyRequestOtpReq")
+
+//        viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
     override fun initCtrl() {
         binding.btnSubmit.setOnClickListener(this)
-        binding.edtNewPassword.addTextChangedListener{ isEnable() }
+        binding.edtNewPassword.addTextChangedListener { isEnable() }
         binding.edtConformPassword.addTextChangedListener { isEnable() }
     }
 
     override fun observer() {
         observe(viewModel.resetPassword, ::handleResetResponse)
+        observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
 
     override fun onClick(v: View?) {
@@ -66,10 +72,29 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    Logg.logging("NewPassword","binding.model ${binding.model}")
                     viewModel.resetPassword(binding.model)
                 } else {
                     showError(binding.root, validation.second)
                 }
+            }
+        }
+    }
+
+
+    private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+            }
+            is Resource.DataError -> {
+                Logg.logging("NewPassword","status.errorMsg ${status.errorMsg}")
+
+                showError(binding.root, status.errorMsg)
+            }
+            else -> {
             }
         }
     }

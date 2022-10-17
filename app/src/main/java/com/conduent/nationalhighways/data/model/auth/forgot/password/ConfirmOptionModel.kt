@@ -6,6 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ConfirmOptionModel(
     var identifier: String?,
-    var zipCode: String?,
-    var enable: Boolean
+        var enable: Boolean
 ) : Parcelable

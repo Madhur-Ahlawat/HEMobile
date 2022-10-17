@@ -99,6 +99,11 @@ interface ApiService {
         @Body model: RequestOTPModel?
     ): Response<SecurityCodeResponseModel?>?
 
+    @POST(VERIFY_REQUEST_CODE)
+    suspend fun verifyRequestCode(
+        @Body model: VerifyRequestOtpReq?
+    ): Response<VerifyRequestOtpResp?>?
+
     @POST(RESET_PASSWORD)
     suspend fun resetPassword(
         @Query("agencyId") agencyId: String?,

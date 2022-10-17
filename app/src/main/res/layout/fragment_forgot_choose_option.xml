@@ -86,6 +86,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:visibility="gone"
                 android:background="@color/blue_color" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -93,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:visibility="gone"
                 android:buttonTint="@color/radio_btn_color"
                 android:focusable="true"
                 android:paddingHorizontal="@dimen/_10sdp"

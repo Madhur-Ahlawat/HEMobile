@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +34,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     private var loader: LoaderDialog? = null
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
-    private var isCalled = false
+    private var isCalled = true
 
 
     override fun getFragmentBinding(
@@ -67,10 +68,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_verify -> {
+
                 if (!timeFinish) {
                     val bundle = Bundle()
                     response?.code = binding.edtOtp.text.toString()
                     bundle.putParcelable("data", response)
+                    Logg.logging("NewPassword","response $response")
+
                     findNavController().navigate(
                         R.id.action_otpFragment_to_createPasswordFragment,
                         bundle
@@ -102,6 +106,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     }
 
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
+        Logg.logging("NewPassword","response handleOTPResponse called  $response")
+
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -109,6 +115,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
             when (status) {
                 is Resource.Success -> {
                     response = status.data
+                    Logg.logging("NewPassword","response api call  $response")
 
                     timer = object : CountDownTimer(response?.otpExpiryInSeconds ?: 0L, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
