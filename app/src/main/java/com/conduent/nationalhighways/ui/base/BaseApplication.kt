@@ -9,12 +9,14 @@ import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
-
 
 @HiltAndroidApp
 class BaseApplication : Application() {
@@ -36,6 +38,12 @@ class BaseApplication : Application() {
     override fun onCreate() {
         INSTANCE = this@BaseApplication
         super.onCreate()
+
+        getFireBaseToken()
+        setAdobeAnalytics()
+    }
+
+    private fun setAdobeAnalytics() {
         MobileCore.setApplication(this)
         MobileCore.setLogLevel(LoggingMode.DEBUG)
 
@@ -45,21 +53,17 @@ class BaseApplication : Application() {
             Lifecycle.registerExtension()
             Signal.registerExtension()
             UserProfile.registerExtension()
-//            Edge.registerExtension()
-//            Assurance.registerExtension()
+            //Edge.registerExtension()
+            //Assurance.registerExtension()
             MobileCore.start {
                 MobileCore.configureWithAppID(ADOBE_ENVIRONMENT_KEY)
-
-
-                Logg.logging("BaseApplication ","ADOBE_ENVIRONMENT_KEY $ADOBE_ENVIRONMENT_KEY")
-                Logg.logging("BaseApplication ","it  ${it.toString()}")
+                Logg.logging("BaseApplication ", "ADOBE_ENVIRONMENT_KEY $ADOBE_ENVIRONMENT_KEY")
+                Logg.logging("BaseApplication ", "it  ${it.toString()}")
             }
         } catch (e: java.lang.Exception) {
-            Logg.logging("BaseApplication ","it InvalidInitException  ${e.toString()}")
-
+            Logg.logging("BaseApplication ", "it InvalidInitException  ${e.toString()}")
         }
         MobileCore.setPrivacyStatus(MobilePrivacyStatus.OPT_IN)
-
     }
 
     fun setSessionTime() {
@@ -139,5 +143,17 @@ class BaseApplication : Application() {
 //                .putExtra(Constants.TYPE, Constants.LOGIN)
 //        )
 //    }
+
+    private fun getFireBaseToken() {
+        FirebaseApp.initializeApp(this)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            sessionManager.setFirebasePushToken(task.result)
+            Log.i("teja1234", "firebase token is : ${task.result}")
+        })
+    }
 
 }

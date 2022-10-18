@@ -29,6 +29,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val IS_SECONDARY = "is_secondary_user"
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
+        const val PUSH_TOKEN = "firebase_notification_token"
     }
 
     /**
@@ -195,6 +196,16 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun getNCId(): String? {
         return prefs.getString(NC_ID, null)
+    }
+
+    fun setFirebasePushToken(token: String) {
+        prefs.edit().apply {
+            putString(PUSH_TOKEN, token)
+        }.apply()
+    }
+
+    fun getFirebaseToken(): String? {
+        return prefs.getString(PUSH_TOKEN, null)
     }
 
 }

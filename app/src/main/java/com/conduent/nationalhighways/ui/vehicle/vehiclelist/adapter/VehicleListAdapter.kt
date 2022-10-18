@@ -91,7 +91,7 @@ class VehicleListAdapter(
             val mAdapter = VehicleDetailsAdapter(context)
             mAdapter.setList(mList)
             mRecyclerView.layoutManager = LinearLayoutManager(context)
-            mRecyclerView.setHasFixedSize(true)
+            // mRecyclerView.setHasFixedSize(true)
             mRecyclerView.adapter = mAdapter
         }
     }
