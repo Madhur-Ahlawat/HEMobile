@@ -1,5 +1,10 @@
 package com.conduent.nationalhighways.utils
 
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings
+import android.util.Log
+import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricPrompt
@@ -8,6 +13,75 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 object BiometricUtils {
+
+    fun checkBioMetricAvailability(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d("MY_APP_TAG", "App can authenticate using biometrics.")
+                return true
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Toast.makeText(
+                    context,
+                    "No biometric features available on this device.", Toast.LENGTH_SHORT
+                ).show()
+
+                Log.e("MY_APP_TAG", "No biometric features available on this device.")
+                return false
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Toast.makeText(
+                    context,
+                    "Biometric features are currently unavailable.", Toast.LENGTH_SHORT
+                ).show()
+                Log.e("MY_APP_TAG", "Biometric features are currently unavailable.")
+                return false
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                Toast.makeText(
+                    context,
+                    "Please add biometrics", Toast.LENGTH_SHORT
+                ).show()
+                return false
+
+                // Prompts the user to create credentials that your app accepts.
+//                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+//                    putExtra(
+//                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+//                        BIOMETRIC_STRONG or
+//                                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+//                    )
+//                }
+//                startActivityForResult(enrollIntent, 100)
+            }
+            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
+                Toast.makeText(
+                    context,
+                    "update biometric", Toast.LENGTH_SHORT
+                ).show()
+                return false
+            }
+            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
+                Toast.makeText(
+                    context,
+                    "Unsupported biometric", Toast.LENGTH_SHORT
+                ).show()
+                return false
+            }
+            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
+                Toast.makeText(
+                    context,
+                    "un known biometric", Toast.LENGTH_SHORT
+                ).show()
+                return false
+            }
+        }
+        return false
+    }
 
     fun showBiometricForStrongAuthWithCrypto(
         context: Fragment,
