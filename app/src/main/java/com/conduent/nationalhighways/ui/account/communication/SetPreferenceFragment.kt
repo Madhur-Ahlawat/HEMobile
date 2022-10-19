@@ -187,7 +187,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
         when (resource) {
             is Resource.Success -> {
                 resource.let {
-
+                    requireActivity().finish()
                 }
             }
 
@@ -255,7 +255,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                             receiptId = it?.id.toString()
                             mCat = it?.category.toString()
                             mReceiptModel = it
-                            if (it?.mailFlag.equals("Y", true)) {
+                            if (it?.emailFlag.equals("Y", true)) {
                                 binding.rbEmail.isChecked = true
                                 binding.rbPost.gone()
                             }
