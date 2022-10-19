@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
@@ -134,10 +135,16 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
             is Resource.Success -> {
                 cardsList?.clear()
                 cardsList = status.data?.creditCardListType?.cardsList
-                defaultCardModel =
-                    status.data?.creditCardListType?.cardsList?.filter { it?.primaryCard == true }
-                        ?.get(0)
-                defaultConstantCardModel = defaultCardModel
+                if (status.data?.creditCardListType?.cardsList?.filter { it?.primaryCard == true }
+                        ?.isNotEmpty() == true) {
+                    defaultCardModel =
+                        status.data?.creditCardListType?.cardsList?.filter { it?.primaryCard == true }
+                            ?.get(0)
+                    defaultConstantCardModel = defaultCardModel
+
+                } else {
+                    defaultCardModel = null
+                }
                 if (defaultCardModel == null) {
                     binding.tvDefaultLabel.gone()
                     binding.rbDefaultMethod.gone()
@@ -148,7 +155,9 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                     binding.rbDefaultMethod.visible()
 //                    binding.viewDefault.visible()
                     val spannableString =
-                        if (defaultCardModel?.bankAccount == true) SpannableString(defaultCardModel?.bankAccountType + "\n" + defaultCardModel?.bankAccountNumber)
+                        if (defaultCardModel?.bankAccount == true) SpannableString(
+                            defaultCardModel?.bankAccountType + "\n" + defaultCardModel?.bankAccountNumber
+                        )
                         else SpannableString(defaultCardModel?.cardType + "\n" + defaultCardModel?.cardNumber)
                     spannableString.setSpan(
                         ForegroundColorSpan(
@@ -168,6 +177,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
                     cardsList?.remove(defaultCardModel)
                     binding.enable = false
                 }
+
 
                 binding.rvOtherPayment.layoutManager = LinearLayoutManager(requireActivity())
                 binding.rvOtherPayment.adapter =

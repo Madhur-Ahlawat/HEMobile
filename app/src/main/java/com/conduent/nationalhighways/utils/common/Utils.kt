@@ -141,7 +141,8 @@ object Utils {
     }
 
     fun isValidPassword(password: String?): Boolean {
-        val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$"
+//        val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$"
+        val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z]).*$"
         val pattern = Pattern.compile(PASSWORD_PATTERN)
         val matcher: Matcher = pattern.matcher(password)
         return matcher.matches()
