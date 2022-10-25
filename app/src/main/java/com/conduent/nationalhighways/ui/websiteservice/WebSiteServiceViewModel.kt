@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.data.repository.websiteservice.WebsiteServiceRepository
 import com.conduent.nationalhighways.utils.common.Resource
@@ -24,6 +26,9 @@ class WebSiteServiceViewModel @Inject constructor(
     private val _webService = MutableLiveData<Resource<WebSiteStatus?>>()
     val webServiceLiveData: LiveData<Resource<WebSiteStatus?>> get() = _webService
 
+    private val _pushNotification = MutableLiveData<Resource<EmptyApiResponse?>>()
+    val pushNotification: LiveData<Resource<EmptyApiResponse?>> get() = _pushNotification
+
     fun checkServiceStatus() {
         viewModelScope.launch {
             try {
@@ -35,6 +40,21 @@ class WebSiteServiceViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _webService.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun allowPushNotification(request: PushNotificationRequest) {
+        viewModelScope.launch {
+            try {
+                _pushNotification.postValue(
+                    ResponseHandler.success(
+                        repository.allowPushNotification(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _pushNotification.postValue(ResponseHandler.failure(e))
             }
         }
     }

@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountR
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.*
 import com.conduent.nationalhighways.data.model.profile.*
+import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.utils.common.Constants.AGENCY_ID
@@ -453,6 +454,11 @@ interface ApiService {
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Query("codeType") request: String? = PHONE_COUNTRY_CODE
     ): Response<List<CountryCodes?>?>?
+
+    @POST(PUSH_NOTIFICATION)
+    suspend fun allowPushNotification(
+        @Body request: PushNotificationRequest
+    ): Response<EmptyApiResponse?>?
 
 
 }

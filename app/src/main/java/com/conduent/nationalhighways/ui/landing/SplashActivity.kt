@@ -110,7 +110,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateLandingActivity() {
-        sessionManager.clearAll()
+        sessionManager.saveAuthToken(null)
         startActivity(
             Intent(this, LandingActivity::class.java)
         )
@@ -118,4 +118,28 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
+//    BiometricUtils.createPinBiometric(
+//    this,
+//    getString(R.string.verify_credentials),
+//    getString(R.string.confirm_identity),
+//    createPinCallBack
+//    )
+//
+//    private val createPinCallBack = object : BiometricPrompt.AuthenticationCallback() {
+//
+//        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+//            super.onAuthenticationError(errorCode, errString)
+//            if (errorCode == BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL ||
+//                errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS
+//            ) {
+//
+//            }
+//
+//        }
+//
+//        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+//            super.onAuthenticationSucceeded(result)
+//
+//        }
+//    }
 }

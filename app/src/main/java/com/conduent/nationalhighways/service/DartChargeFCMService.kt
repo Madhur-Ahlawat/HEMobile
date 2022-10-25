@@ -30,7 +30,7 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
     }
 
     override fun onNewToken(token: String) {
-        // authenticate with new token
+        super.onNewToken(token)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)

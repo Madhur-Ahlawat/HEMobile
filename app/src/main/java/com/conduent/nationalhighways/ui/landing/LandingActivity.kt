@@ -50,7 +50,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         BaseApplication.INSTANCE?.stopTimerAPi()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         initCtrl()
     }
 
