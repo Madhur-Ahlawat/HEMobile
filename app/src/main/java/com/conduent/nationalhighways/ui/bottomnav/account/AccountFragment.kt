@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,23 +55,36 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         isSecondaryUser = sessionManager.getSecondaryUser()
-
-        if (sessionManager.fetchAccountType()
-                .equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
-                .equals(Constants.PAYG, true)
-        ) {
-            binding.nominatedContactsLyt.gone()
-        }
-
-        if (sessionManager.fetchAccountType()
-                .equals("NonRevenue", true)
-        ) {
-            binding.payment.gone()
-        }
-
+        setPaymentsVisibility()
         if (isSecondaryUser)
             binding.nominatedContactsLyt.gone()
 
+//        if (sessionManager.fetchAccountType()
+//                .equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
+//                .equals(Constants.PAYG, true)
+//        ) {
+//            binding.nominatedContactsLyt.gone()
+//        }
+//
+//        if (sessionManager.fetchAccountType()
+//                .equals("NonRevenue", true)
+//        ) {
+//            binding.payment.gone()
+//        }
+
+    }
+
+    private fun setPaymentsVisibility() {
+        if (sessionManager.fetchAccountType().equals("BUSINESS", true)
+            || (sessionManager.fetchSubAccountType().equals("STANDARD", true) &&
+                    sessionManager.fetchAccountType().equals("PRIVATE", true))
+        ) {
+            binding.payment.visible()
+            binding.nominatedContactsLyt.visible()
+        } else {
+            binding.payment.gone()
+            binding.nominatedContactsLyt.gone()
+        }
     }
 
     override fun initCtrl() {
@@ -142,13 +156,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         }
         when (status) {
             is Resource.Success -> {
-
-                Logg.logging("AccountFragment", "nominated count data ${status.data}")
-
-                Logg.logging(
-                    "AccountFragment",
-                    "nominated count ${status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size}"
-                )
                 Intent(requireActivity(), NominatedContactActivity::class.java).run {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     putExtra(

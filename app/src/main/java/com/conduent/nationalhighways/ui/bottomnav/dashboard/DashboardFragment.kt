@@ -215,7 +215,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             is Resource.Success -> {
                 status.data?.let {
                     setAccountDetailsView(it)
-
+                    setTopUpVisibility(it)
                 }
             }
             is Resource.DataError -> {
@@ -224,6 +224,16 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             else -> {
 
             }
+        }
+    }
+
+    private fun setTopUpVisibility(data: AccountResponse) {
+        if (data.accountInformation?.accountType.equals("BUSINESS", true)
+            || (data.accountInformation?.accSubType.equals("STANDARD", true) &&
+                    data.accountInformation?.accountType.equals("PRIVATE", true))) {
+            binding.topUpView.visible()
+        } else {
+            binding.topUpView.gone()
         }
     }
 
@@ -244,10 +254,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             }
             data.accountInformation?.type?.let {
                 DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
-                sessionManager.saveSubAccountType(data?.accountInformation!!.accSubType!!)
-                sessionManager.saveAccountType(it)
-
-
+                sessionManager.saveSubAccountType(data.accountInformation.accSubType)
+                sessionManager.saveAccountType(data.accountInformation.accountType)
             }
 
         }

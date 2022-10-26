@@ -41,7 +41,7 @@ object DashboardUtils {
             type.equals("BUSINESS", true) -> {
                 tvTitle.text = tvTitle.context.getString(R.string.business)
             }
-            type.equals("NonRevenue", true) -> {
+            type.equals("NONREVENUE", true) -> {
                 tvTitle.text = tvTitle.context.getString(R.string.exempt_partner)
             }
             type.equals("PRIVATE", true) -> {
@@ -57,6 +57,9 @@ object DashboardUtils {
                         tvTitle.text = tvTitle.context.getString(R.string.personal_pre_pay_acc)
                     }
                 }
+            }
+            else -> {
+                tvTitle.text = "$type $subType"
             }
         }
     }

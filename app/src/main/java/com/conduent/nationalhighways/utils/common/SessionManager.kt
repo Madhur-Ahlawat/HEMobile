@@ -102,13 +102,13 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getString(SECURITY_CODE, null)
     }
 
-    fun saveAccountType(accountType: String) {
+    fun saveAccountType(accountType: String?) {
         prefs.edit().apply {
             putString(ACCOUNT_TYPE, accountType)
         }.apply()
     }
 
-    fun saveSubAccountType(subAccountType: String) {
+    fun saveSubAccountType(subAccountType: String?) {
         prefs.edit().apply {
             putString(SUB_ACCOUNT_TYPE, subAccountType)
         }.apply()
