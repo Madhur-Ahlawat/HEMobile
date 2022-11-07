@@ -53,7 +53,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
             webServiceViewModel.checkServiceStatus()
         }
         if (isPushNotificationChecked) {
-           // callPushNotificationApi()
+            callPushNotificationApi()
         }
     }
 

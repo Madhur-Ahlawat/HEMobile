@@ -120,7 +120,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+//                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
             }
@@ -141,7 +141,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+//                ErrorUtil.showError(binding.root, status.errorMsg)
             }
             else -> {
 
@@ -178,7 +178,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 if (status.errorModel?.errorCode == Constants.NO_DATA_FOR_NOTIFICATIONS) {
                     hideNotification()
                 } else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+//                    ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }
             else -> {
@@ -219,7 +219,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+//                ErrorUtil.showError(binding.root, status.errorMsg)
             }
             else -> {
 

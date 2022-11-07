@@ -11,6 +11,14 @@ object AdobeAnalytics {
     const val languageKey = "ruc.app.language"
     const val sectionKey = "ruc.app.section"
     const val prevPageNameKey = "ruc.page.prevPageName"
+    const val loggedIn = "ruc.account.loggedIn"
+    const val timeOut = "ruc.account.timeout"
+    const val login = "ruc.account.login"
+    const val loginMethod = "ruc.account.loginMethod"
+    const val paymentMethod = "ruc.order.paymentMethod"
+    const val orderId = "ruc.order.orderId"
+    const val orderPlaced = "ruc.order.orderPlaced"
+    const val paymentError  = "ruc.page.error"
 
     fun trackState(state: String, contextData: MutableMap<String, String>) {
         MobileCore.trackState(state, contextData)
@@ -64,7 +72,7 @@ object AdobeAnalytics {
         mContextData[languageKey] = language
         mContextData[sectionKey] = section
         mContextData[prevPageNameKey] = prevPageName
-        AdobeAnalytics.trackAction(actionKey, mContextData)
+        trackAction(actionKey, mContextData)
 
 
     }

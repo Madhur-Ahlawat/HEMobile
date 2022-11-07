@@ -82,7 +82,14 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             binding.payment.visible()
             binding.nominatedContactsLyt.visible()
         } else {
-            binding.payment.gone()
+            if(sessionManager.fetchSubAccountType().equals(Constants.PAYG, true) &&
+                    sessionManager.fetchAccountType().equals("PRIVATE", true)){
+                binding.payment.visible()
+
+            }else{
+                binding.payment.gone()
+
+            }
             binding.nominatedContactsLyt.gone()
         }
     }
