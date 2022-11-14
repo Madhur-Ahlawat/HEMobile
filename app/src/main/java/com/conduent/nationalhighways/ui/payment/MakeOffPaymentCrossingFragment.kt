@@ -26,7 +26,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     FutureCrossingQuantityListner, View.OnClickListener {
 
     var list: MutableList<VehicleResponse?>? = ArrayList()
-    private var totalPrice: Double? = 0.0
+    private var totalPrice: Double = 0.0
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var mScreeType = 0
@@ -87,7 +87,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     }
 
     private lateinit var adapter: MakeOffPaymentCrossingAdapter
-    private var payableCrossingAmount=0.0
+    private var payableCrossingAmount = 0.0
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
         if (loader?.isVisible == true) {
@@ -115,7 +115,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
 
 //                        val payableCrossingAmount = (list?.get(0)?.classRate
 //                            ?: 0.0).times(list?.get(0)?.pastQuantity?.toDouble() ?: 0.0)
-                         payableCrossingAmount = it.unPaidAmt!!.toDouble()
+                        payableCrossingAmount = it.unPaidAmt!!.toDouble()
                         list?.get(0)?.pendingDues = payableCrossingAmount
 
                         val mTempPrice = payableCrossingAmount.plus(futureCrossingAmount)
@@ -132,7 +132,8 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
-            else -> {}
+            else -> {
+            }
         }
 
     }
@@ -169,13 +170,19 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
-                val bundle = Bundle()
-                bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
-                bundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
-                findNavController().navigate(
-                    R.id.action_makeOneOffPaymentCrossingFragment_to_makeOffPaymentReceiptFragment,
-                    bundle
-                )
+                if (totalPrice > 0) {
+                    val bundle = Bundle()
+                    bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                    bundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
+                    findNavController().navigate(
+                        R.id.action_makeOneOffPaymentCrossingFragment_to_makeOffPaymentReceiptFragment,
+                        bundle
+                    )
+
+                }else{
+                    ErrorUtil.showError(binding.root, "No crossings found")
+
+                }
             }
         }
     }

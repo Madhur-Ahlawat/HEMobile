@@ -98,7 +98,7 @@ class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBindin
             val url: String = consoleMessage.message()
             val check: Boolean = "tokenType" in url
             if (check) {
-                Toast.makeText(context, url, Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, url, Toast.LENGTH_LONG).show()
                 binding.webview.gone()
                 binding.mcvContainer.visible()
                 val responseModel: CardResponseModel =

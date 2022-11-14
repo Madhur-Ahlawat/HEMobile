@@ -197,7 +197,7 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>(), View
         }
         when (status) {
             is Resource.Success -> {
-                requireActivity().showToast(status.data?.message)
+//                requireActivity().showToast(status.data?.message)
                 findNavController().navigate(R.id.paymentMethodFragment)
             }
             is Resource.DataError -> {

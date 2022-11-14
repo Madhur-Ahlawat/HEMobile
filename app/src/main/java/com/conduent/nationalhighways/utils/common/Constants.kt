@@ -67,7 +67,7 @@ object Constants {
     const val TRANSACTION_DATE = "Transaction Date"
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
-    const val VPN_ERROR = "Connect your VPN to access network."
+    const val VPN_ERROR = "Check your network connection."
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE = "type"
     const val LOGIN = "login"
