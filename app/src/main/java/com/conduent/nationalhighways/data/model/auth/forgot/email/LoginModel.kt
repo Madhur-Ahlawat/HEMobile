@@ -1,8 +1,8 @@
 package com.conduent.nationalhighways.data.model.auth.forgot.email
 
 data class LoginModel(
-    var value: String? = "100312942",
-    var password: String? = "Welcome12",
+    var value: String? = "",
+    var password: String? = "",
     val validatePasswordCompliance: String? = "true",
     val enable: Boolean = false
 )
