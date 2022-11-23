@@ -892,6 +892,7 @@
     <string name="number_plate_optional">Number Plate(Optional)</string>
     <string name="change_email_id">Change Email Id</string>
     <string name="change_pin">Change pin</string>
+    <string name="add_new_card_details">Add new card details</string>
 
 </resources>
 

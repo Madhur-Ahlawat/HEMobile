@@ -22,7 +22,12 @@ class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
     override fun initViewBinding() {
         binding=ActivityManualTopUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbar(getString(R.string.manual_top_up))
+        init()
+    }
+
+    private fun init() {
+        binding.toolBarLyt.tvHeader.text = getString(R.string.manual_top_up)
+        binding.toolBarLyt.btnBack.setOnClickListener { onBackPressed() }
     }
 
     override fun onStart() {

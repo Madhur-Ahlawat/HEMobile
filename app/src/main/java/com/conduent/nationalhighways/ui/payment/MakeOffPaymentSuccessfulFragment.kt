@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +50,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentMakeOffPaymentSuccessfulBinding =
-        FragmentMakeOffPaymentSuccessfulBinding.inflate(inflater, container, false)
+    ) = FragmentMakeOffPaymentSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
@@ -173,7 +173,13 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
 
         pdfDocument.finishPage(myPage)
 
-        val file = File(requireContext().getExternalFilesDir(null), "Payment Receipt.pdf")
+        //val file = File(requireContext().getExternalFilesDir(null), "Payment Receipt.pdf")
+
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS
+            ).path + "/" + "Payment Receipt ${System.currentTimeMillis()}.pdf"
+        )
 
         try {
             pdfDocument.writeTo(FileOutputStream(file))

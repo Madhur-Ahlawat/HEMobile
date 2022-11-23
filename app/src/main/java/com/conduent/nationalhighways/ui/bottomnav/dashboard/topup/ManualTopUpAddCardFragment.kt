@@ -29,13 +29,11 @@ import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
 @AndroidEntryPoint
 class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>(),
     View.OnClickListener {
 
     private var loader: LoaderDialog? = null
-
     private var cardModel: PaymentWithNewCardModel? = null
     private val viewModel: ManualTopUpViewModel by viewModels()
     private val paymentViewModel: PaymentMethodViewModel by viewModels()
@@ -84,6 +82,7 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
 
     private val progressListener = object : WebViewClient() {
 
+
         override fun shouldOverrideUrlLoading(
             view: WebView?,
             request: WebResourceRequest?
@@ -116,12 +115,12 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                     cvv = responseModel.card?.hash,
                     expMonth = responseModel.card?.exp?.substring(0, 2),
                     expYear = "20${responseModel.card?.exp?.substring(2, 4)}",
-                    saveCard = "Y",
+                    saveCard = "N",
                     useAddressCheck = "N",
                     bankRoutingNumber = "",
                     paymentType = "card",
                     maskedNumber = responseModel.card?.number,
-                    firstName = "",
+                    firstName = responseModel.check?.name ?: "",
                     middleName = "",
                     lastName = "",
                     primaryCard = "N",
@@ -210,12 +209,13 @@ class ManualTopUpAddCardFragment : BaseFragment<FragmentPaymentMethodCardBinding
                         val data = status.data.personalInformation
                         cardModel?.run {
                             city = data?.city
-                            addressline1 = data?.addressLine1
-                            addressline2 = data?.addressLine2
+                            addressLine1 = data?.addressLine1
+                            addressLine2 = ""
                             country = data?.country
                             state = data?.state ?: ""
                             zipcode1 = data?.zipcode ?: ""
                             zipcode2 = ""
+                            lastName = data?.lastName ?: ""
                         }
 
                         viewModel.paymentWithNewCard(cardModel)

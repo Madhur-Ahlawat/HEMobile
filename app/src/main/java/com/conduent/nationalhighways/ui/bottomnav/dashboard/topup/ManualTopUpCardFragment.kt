@@ -37,14 +37,11 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
 
     private val paymentViewModel: PaymentMethodViewModel by viewModels()
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
-
-
     private var loader: LoaderDialog? = null
     private var rowId: String? = null
     private var isDefaultDeleted = false
     private var cardsList: MutableList<CardListResponseModel?>? = ArrayList()
     private var position: Int? = 0
-
     private var defaultCardModel: CardListResponseModel? = null
     private var defaultConstantCardModel: CardListResponseModel? = null
 
@@ -54,7 +51,6 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         paymentViewModel.saveCardList()
         binding.tieAmount.setText(arguments?.getString("amount"))
     }
@@ -62,6 +58,27 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
 
     override fun initCtrl() {
         binding.apply {
+            binding.rbDefaultMethod.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked && cardsList?.isNotEmpty() == true) {
+                    binding.rvOtherPayment.adapter?.let { adapter ->
+                        (adapter as PaymentCardAdapter).clearAllChecks()
+                    }
+                }
+            }
+            binding.rbAddCard.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked && cardsList?.isNotEmpty() == true) {
+                    binding.rvOtherPayment.adapter?.let { adapter ->
+                        (adapter as PaymentCardAdapter).clearAllChecks()
+                    }
+                }
+            }
+            binding.rbDirectDebit.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked && cardsList?.isNotEmpty() == true) {
+                    binding.rvOtherPayment.adapter?.let { adapter ->
+                        (adapter as PaymentCardAdapter).clearAllChecks()
+                    }
+                }
+            }
             btnContinue.setOnClickListener(this@ManualTopUpCardFragment)
         }
     }
@@ -76,7 +93,6 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
         }
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
     }
 
     override fun onClick(v: View?) {
@@ -93,7 +109,7 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
                         )
                     }
                     R.id.rbDirectDebit -> {
-                        showError(binding.root, "Under Developement")
+                        showError(binding.root, "Development is in progress")
                     }
                     else -> {
                         loader?.show(

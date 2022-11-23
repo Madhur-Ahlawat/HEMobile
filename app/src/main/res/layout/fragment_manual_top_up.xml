@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="model"
+            type="Boolean" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clMain"
@@ -24,13 +31,10 @@
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:layout_marginTop="@dimen/_15sdp"
             android:hint="@string/enter_amount"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:textColorHint="@color/text_input_place_holder"
-            app:endIconDrawable="@drawable/ic_screenshot__121__2"
+            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:layout_constraintEnd_toStartOf="@+id/glEnd"
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/tvDefaultLabel"
@@ -39,14 +43,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieAmount"
+                style="@style/AppEditTextTransparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="0123456789."
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="6"
+                android:text="10"
                 android:singleLine="true"
-                style="@style/AppEditTextTransparent"
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,12 +60,13 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/blue_color"
+            android:backgroundTint="@{model==true?@color/blue_color:@color/btn_disable_color}"
+            android:enabled="@{model}"
             android:gravity="center"
-            android:shadowRadius="6"
             android:text="@string/str_next"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@{model==false?@color/btn_disable_txt_color:@color/white}"
             android:textSize="@dimen/_15ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/glBottom"

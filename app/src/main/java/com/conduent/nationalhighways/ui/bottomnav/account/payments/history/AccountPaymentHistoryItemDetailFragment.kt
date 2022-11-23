@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.pdf.PdfDocument
 import android.os.Build
+import android.os.Environment
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -46,14 +47,14 @@ class AccountPaymentHistoryItemDetailFragment :
             downloadReceiptBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
             backBtn.setOnClickListener(this@AccountPaymentHistoryItemDetailFragment)
         }
-        if(requireActivity() is AccountPaymentActivity) {
+        if (requireActivity() is AccountPaymentActivity) {
             (requireActivity() as AccountPaymentActivity).hideTabLayout()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if(requireActivity() is AccountPaymentActivity) {
+        if (requireActivity() is AccountPaymentActivity) {
             (requireActivity() as AccountPaymentActivity).showTabLayout()
         }
     }
@@ -125,11 +126,17 @@ class AccountPaymentHistoryItemDetailFragment :
         bitmap?.let { page.canvas.drawBitmap(it, 0F, 0F, null) }
         pdfDocument.finishPage(page)
 
-        val path = "${activity?.getExternalFilesDir(null)}${File.separator}paymentReceipt${
-            System.currentTimeMillis()
-        }.pdf"
+//        val path = "${activity?.getExternalFilesDir(null)}${File.separator}paymentReceipt${
+//            System.currentTimeMillis()
+//        }.pdf"
+//        val file = File(path)
 
-        val file = File(path)
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS
+            ).path + "/" + "Payment Receipt ${System.currentTimeMillis()}.pdf"
+        )
+
         pdfDocument.writeTo(FileOutputStream(file))
         pdfDocument.close()
         activity?.showToast("Payment receipt downloaded successfully")
@@ -144,12 +151,21 @@ class AccountPaymentHistoryItemDetailFragment :
         }
 
 
-    private var onPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        var permission = true
-        permissions.entries.forEach { if (!it.value) { permission = it.value } }
-        when (permission) {
-            true -> { binding.downloadReceiptBtn.performClick() }
-            else -> { requireActivity().showToast("Please enable permission to download") }
+    private var onPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission = true
+            permissions.entries.forEach {
+                if (!it.value) {
+                    permission = it.value
+                }
+            }
+            when (permission) {
+                true -> {
+                    binding.downloadReceiptBtn.performClick()
+                }
+                else -> {
+                    requireActivity().showToast("Please enable permission to download")
+                }
+            }
         }
-    }
 }

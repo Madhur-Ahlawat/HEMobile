@@ -77,15 +77,17 @@ object StorageHelper {
         val fileExtension =
             if (selectionType == Constants.PDF) Constants.PDF_EXTENSION else Constants.CSV_EXTENSION
         try {
-            val filePath ="${activity.getExternalFilesDir(null)}${File.separator}${
-                    System.currentTimeMillis()
-                }$fileExtension"
+//            val filePath ="${activity.getExternalFilesDir(null)}${File.separator}${
+//                    System.currentTimeMillis()
+//                }$fileExtension"
+//            val currentFile = File(filePath)
 
-            val currentFile = File(filePath)
-//            val currentFile = File(
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-//                System.currentTimeMillis().toString() + fileExtension
-//            )
+            val filePath = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS
+            ).path + "/" + System.currentTimeMillis().toString() + fileExtension
+            val currentFile = File(
+                filePath
+            )
             if (!currentFile.exists())
                 currentFile.parentFile?.mkdirs()
 

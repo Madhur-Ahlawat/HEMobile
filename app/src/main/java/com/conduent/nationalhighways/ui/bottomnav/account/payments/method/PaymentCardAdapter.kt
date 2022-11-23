@@ -20,11 +20,15 @@ class PaymentCardAdapter(
 ) : RecyclerView.Adapter<PaymentCardAdapter.MyViewHolder>() {
 
     override fun getItemCount(): Int = list?.size ?: 0
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PaymentCardAdapter.MyViewHolder =
-        MyViewHolder(AdapterPaymentCardBinding.inflate(LayoutInflater.from(context), parent, false))
+    ) = MyViewHolder(
+        AdapterPaymentCardBinding.inflate(
+            LayoutInflater.from(context), parent, false
+        )
+    )
 
     override fun onBindViewHolder(holder: PaymentCardAdapter.MyViewHolder, position: Int) {
         holder.bind(list?.get(position))
@@ -45,7 +49,7 @@ class PaymentCardAdapter(
                         if (bankAccount!!) SpannableString(bankAccountType + "\n" + bankAccountNumber) else SpannableString(
                             cardType + "\n" + cardNumber
                         )
-                    spannableString?.setSpan(
+                    spannableString.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
                                 context!!,
@@ -75,5 +79,12 @@ class PaymentCardAdapter(
             notifyItemRangeChanged(0, list?.size ?: 0)
 
         }
+    }
+
+    fun clearAllChecks() {
+        for (i in list?.indices!!) {
+            list?.get(i)?.check = false
+        }
+        notifyDataSetChanged()
     }
 }

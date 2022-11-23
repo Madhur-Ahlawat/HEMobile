@@ -6,37 +6,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/rgDefaultPayment"
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbDefaultMethod"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_45sdp"
             android:background="@color/white"
-            android:gravity="start"
-            android:orientation="vertical"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="HDFC bank credit card \n *** **** *** 4567"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:buttonTint="@color/radio_btn_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbDefaultMethod"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
-                android:background="@color/white"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="HDFC bank credit card \n *** **** *** 4567"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/radio_btn_color" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/blue_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rbDefaultMethod" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:background="@color/blue_color" />
-
-        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

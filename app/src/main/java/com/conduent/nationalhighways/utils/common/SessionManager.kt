@@ -22,6 +22,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val ACCOUNT_NUMBER = "account_number"
         const val ACCOUNT_TYPE = "account_type"
         const val SUB_ACCOUNT_TYPE = "sub_account_type"
+        const val USER_EMAIL_ID = "user_email_id"
         const val SECURITY_CODE = "security_code"
         const val SESSION_TIME = "session_time"
         const val SECURITY_CODE_OBJ = "security_code_obj"
@@ -206,6 +207,16 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun getFirebaseToken(): String? {
         return prefs.getString(PUSH_TOKEN, null)
+    }
+
+    fun saveAccountEmailId(email: String?) {
+        prefs.edit().apply {
+            putString(USER_EMAIL_ID, email)
+        }.apply()
+    }
+
+    fun fetchAccountEmailId(): String? {
+        return prefs.getString(USER_EMAIL_ID, null)
     }
 
 }

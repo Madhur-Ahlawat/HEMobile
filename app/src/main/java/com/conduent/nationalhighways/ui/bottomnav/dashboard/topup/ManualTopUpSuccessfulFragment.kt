@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,23 +20,28 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessfulBinding>(),
     View.OnClickListener {
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentManualTopUpSuccessfulBinding.inflate(inflater, container, false)
-
     private var pageHeight = 1120
     private var pageWidth = 792
     private val PERMISSION_REQUEST_CODE = 200
     private var model: PaymentMethodDeleteResponseModel? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentManualTopUpSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
         binding.tvAmount.text = "£ ${arguments?.getString("amount")}"
@@ -43,6 +49,9 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
         binding.tvReceiptNo.text = model?.transactionId
         binding.tvEmail.text = model?.emailMessage
         binding.tvDate.text = DateUtils.currentDateAs()
+        sessionManager.fetchAccountEmailId()?.let {
+            binding.tvEmail.text = it
+        }
     }
 
     override fun initCtrl() {
@@ -110,13 +119,17 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
         addText(canvas, 80F, 80F, Typeface.BOLD, "Receipt Number")
         addText(canvas, 80F, 120F, Typeface.NORMAL, model?.transactionId.toString())
         addText(canvas, 80F, 200F, Typeface.BOLD, "Confirmation Email sent")
-        addText(canvas, 80F, 240F, Typeface.NORMAL, model?.emailMessage.toString())
+        addText(canvas, 80F, 240F, Typeface.NORMAL, sessionManager.fetchAccountEmailId() ?: "")
         addText(canvas, 80F, 300F, Typeface.BOLD, "Date")
         addText(canvas, 80F, 340F, Typeface.NORMAL, DateUtils.currentDate().toString())
 
         pdfDocument.finishPage(myPage)
 
-        val file = File(requireContext().getExternalFilesDir(null), "Payment Receipt.pdf")
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS
+            ).path + "/" + "Payment Receipt ${System.currentTimeMillis()}.pdf"
+        )
 
         try {
             pdfDocument.writeTo(FileOutputStream(file))

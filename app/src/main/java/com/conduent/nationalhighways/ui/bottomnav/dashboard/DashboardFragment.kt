@@ -257,6 +257,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 sessionManager.saveSubAccountType(data.accountInformation.accSubType)
                 sessionManager.saveAccountType(data.accountInformation.accountType)
             }
+            data.personalInformation?.emailAddress?.let {email ->
+                sessionManager.saveAccountEmailId(email)
+            }
 
         }
     }
