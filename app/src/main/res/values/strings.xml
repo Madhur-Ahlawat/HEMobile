@@ -893,6 +893,10 @@
     <string name="change_email_id">Change Email Id</string>
     <string name="change_pin">Change pin</string>
     <string name="add_new_card_details">Add new card details</string>
+    <string name="str_request_subimmited_txt">"Your request has been submitted and you will receive the monthly account statement via email withing 48 hours. You can monitor the request via Check enquiry status, the case number is %s. "</string>
+    <string name="str_annual_request_subimmited_txt">"Your request has been submitted and you will receive the annual account summary via email withing 48 hours. You can monitor the request via Check enquiry status, the case number is %s. "</string>
+    <string name="str_select">Select</string>
+    <string name="str_notifications_not_found">Notifications not found</string>
 
 </resources>
 

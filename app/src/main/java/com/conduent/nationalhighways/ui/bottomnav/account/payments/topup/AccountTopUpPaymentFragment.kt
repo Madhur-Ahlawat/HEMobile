@@ -142,7 +142,7 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                         else -> {
                             val request = AccountTopUpUpdateThresholdRequest(
                                 thresholdAmount.toString(),
-                                customerAmount.toString()
+                                customerAmount.text.toString()
                             )
                             loader?.show(
                                 requireActivity().supportFragmentManager,

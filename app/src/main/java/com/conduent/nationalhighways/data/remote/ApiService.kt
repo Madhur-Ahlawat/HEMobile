@@ -411,6 +411,9 @@ interface ApiService {
         @Body request: VehicleListManagementEditRequest?
     ): Response<String?>?
 
+    @POST(VIEW_STATEMENTS)
+    suspend fun viewStatements(@Body request : ViewStatementsReqModel): Response<EmptyApiResponse?>?
+
     @GET(ACCOUNT_STATEMENT)
     suspend fun getAccountStatements(): Response<List<StatementListModel?>?>?
 

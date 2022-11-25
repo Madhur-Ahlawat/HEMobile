@@ -52,11 +52,21 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             )
         )
         handleVisibility()
-        binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
+        binding.priority.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.high_lighted_text_color
+            )
+        )
 
         binding.priority.setOnClickListener {
+            viewModel.getAlertsApi(Constants.LANGUAGE)
+
             binding.standard.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.text_unselected_transparent_bg
+                )
             binding.priority.background =
                 ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
             binding.standard.setTextColor(
@@ -65,13 +75,22 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     R.color.white
                 )
             )
-            binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
+            binding.priority.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.high_lighted_text_color
+                )
+            )
             handleVisibility()
-            setPriorityNotifications()
+//            setPriorityNotifications()
         }
         binding.standard.setOnClickListener {
+            viewModel.getAlertsApi(Constants.LANGUAGE)
             binding.priority.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.text_unselected_transparent_bg
+                )
             binding.standard.background =
                 ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
             binding.priority.setTextColor(
@@ -81,12 +100,17 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                 )
             )
             binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            binding.standard.setTextColor(ContextCompat.getColor(requireContext(), R.color.high_lighted_text_color))
+            binding.standard.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.high_lighted_text_color
+                )
+            )
             binding.clearFilterLyt.visible()
             binding.clearSelectAllLyt.gone()
             binding.filterTxt.visible()
 
-            setStandardNotifications()
+//            setStandardNotifications()
         }
 
         binding.clearNotificationTxt.setOnClickListener {
@@ -126,12 +150,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.messageList?.isNullOrEmpty() == false) {
-                    setPriorityNotifications()
-                    //setNotificationAlert(resource.data?.messageList)
+//                    setPriorityNotifications()
+                    setNotificationAlert(resource.data?.messageList)
                 }
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+                binding.notificationsRecyclerview.gone()
+                binding.noNotificationsTxt.visible()
+
             }
             else -> {
                 // do nothing
@@ -150,18 +177,24 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                 list.add(element)
                 hashmap[element?.category] = list
             } else {
-                hashmap.put(element?.category, listOf(element))
+                hashmap[element?.category] = listOf(element)
             }
         }
 
 //        hashmap.toSortedMap()
+        if (hashmap.isNotEmpty()) {
+            binding.notificationsRecyclerview.visible()
+            binding.noNotificationsTxt.gone()
 
+            val mAdapter = NotificationSectionAdapter(requireActivity(), hashmap)
 
-        val mAdapter = NotificationSectionAdapter(requireActivity(), hashmap)
-
-        binding.notificationsRecyclerview.apply {
-            layoutManager = LinearLayoutManager(requireActivity())
-            adapter = mAdapter
+            binding.notificationsRecyclerview.apply {
+                layoutManager = LinearLayoutManager(requireActivity())
+                adapter = mAdapter
+            }
+        } else {
+            binding.notificationsRecyclerview.gone()
+            binding.noNotificationsTxt.visible()
         }
     }
 
@@ -172,7 +205,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     override fun onApplyCLickListener(cat: String) {
 
-        setCategoryBasedNotifications()
+//        setCategoryBasedNotifications()
     }
 
     override fun onCancelClickedListener() {

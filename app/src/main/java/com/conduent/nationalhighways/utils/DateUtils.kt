@@ -93,6 +93,21 @@ object DateUtils {
         }
     }
 
+
+    //01/10/2022
+    fun convertMonthNameAndDateFormat(date: String?): String {
+        val dateFormatter: DateFormat?
+        return try {
+            dateFormatter = SimpleDateFormat("MM/dd/yyyy")
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("d MMM")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date ?: ""
+        }
+    }
+
+
     fun getDateForCasesAndEnquiry(date: String?): String {
         val list = mutableListOf<DateFormat>()
         val dateFormatter1: DateFormat = SimpleDateFormat("MMM dd,yyyy, hh:mm")

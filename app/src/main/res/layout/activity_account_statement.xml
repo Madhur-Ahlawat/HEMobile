@@ -87,9 +87,27 @@
                     android:background="@drawable/spinner"
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown"
+                    android:prompt="@string/str_select"
                     app:layout_constraintEnd_toEndOf="@id/yearPdf"
                     app:layout_constraintStart_toStartOf="@id/yearPdf"
                     app:layout_constraintTop_toBottomOf="@id/yearPdf" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:text="@string/select"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:id="@+id/selectPdfYearTxt"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/spYearPdf"
+                    app:layout_constraintEnd_toEndOf="@+id/spYearPdf"
+                    app:layout_constraintTop_toTopOf="@+id/spYearPdf"
+                    app:layout_constraintBottom_toBottomOf="@+id/spYearPdf"
+                    android:layout_height="0dp"/>
+
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spPeriodPdf"
@@ -97,10 +115,28 @@
                     android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/spinner"
                     android:overlapAnchor="false"
+                    android:prompt="@string/str_select"
                     android:spinnerMode="dropdown"
                     app:layout_constraintEnd_toEndOf="@id/periodPdf"
                     app:layout_constraintStart_toStartOf="@id/periodPdf"
                     app:layout_constraintTop_toBottomOf="@id/periodPdf" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:text="@string/select"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:id="@+id/selectPdfPeriodsTxt"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/spPeriodPdf"
+                    app:layout_constraintEnd_toEndOf="@+id/spPeriodPdf"
+                    app:layout_constraintTop_toTopOf="@+id/spPeriodPdf"
+                    app:layout_constraintBottom_toBottomOf="@+id/spPeriodPdf"
+                    android:layout_height="0dp"/>
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/downloadPdf"
@@ -176,9 +212,27 @@
                     android:background="@drawable/spinner"
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown"
+                    android:prompt="@string/str_select"
                     app:layout_constraintEnd_toEndOf="@id/yearCsv"
                     app:layout_constraintStart_toStartOf="@id/yearCsv"
                     app:layout_constraintTop_toBottomOf="@id/yearCsv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:text="@string/select"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:id="@+id/selectCsvYearTxt"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/spYearCsv"
+                    app:layout_constraintEnd_toEndOf="@+id/spYearCsv"
+                    app:layout_constraintTop_toTopOf="@+id/spYearCsv"
+                    app:layout_constraintBottom_toBottomOf="@+id/spYearCsv"
+                    android:layout_height="0dp"/>
+
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spPeriodCsv"
@@ -187,9 +241,27 @@
                     android:background="@drawable/spinner"
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown"
+                    android:prompt="@string/str_select"
                     app:layout_constraintEnd_toEndOf="@id/periodCsv"
                     app:layout_constraintStart_toStartOf="@id/periodCsv"
                     app:layout_constraintTop_toBottomOf="@id/periodCsv" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:text="@string/select"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:id="@+id/selectCsvPeriodsTxt"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/spPeriodCsv"
+                    app:layout_constraintEnd_toEndOf="@+id/spPeriodCsv"
+                    app:layout_constraintTop_toTopOf="@+id/spPeriodCsv"
+                    app:layout_constraintBottom_toBottomOf="@+id/spPeriodCsv"
+                    android:layout_height="0dp"/>
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/downloadCsv"
@@ -204,18 +276,53 @@
                     app:layout_constraintEnd_toEndOf="@id/glEnd"
                     app:layout_constraintTop_toBottomOf="@+id/periodCsv" />
 
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/caseCsvResRl"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintEnd_toEndOf="@id/downloadCsv"
+                    app:layout_constraintTop_toBottomOf="@+id/yearCsv"
+                    android:layout_height="@dimen/_100sdp">
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:id="@+id/lineView"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/light_grey"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:padding="@dimen/_10sdp"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/respCsvCaseTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/lineView"
+                        android:layout_centerVertical="true"
+                        android:text="@string/str_request_subimmited_txt"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/annualAccountSummary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
                     android:text="@string/annual_account_summary"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
-                    app:layout_constraintTop_toBottomOf="@+id/spPeriodCsv" />
+                    app:layout_constraintTop_toBottomOf="@+id/caseCsvResRl" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/accountTitleText"
@@ -255,6 +362,23 @@
                     app:layout_constraintStart_toStartOf="@id/yearAccount"
                     app:layout_constraintTop_toBottomOf="@id/yearAccount" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:text="@string/select"
+                    android:background="@color/white"
+                    android:textColor="@color/black"
+                    android:id="@+id/selectAnnualTxt"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/spYearAccount"
+                    app:layout_constraintEnd_toEndOf="@+id/spYearAccount"
+                    app:layout_constraintTop_toTopOf="@+id/spYearAccount"
+                    app:layout_constraintBottom_toBottomOf="@+id/spYearAccount"
+                    android:layout_height="0dp"/>
+
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/submitAccount"
                     android:layout_width="wrap_content"
@@ -267,6 +391,45 @@
                     app:layout_constraintBottom_toBottomOf="@id/spYearAccount"
                     app:layout_constraintEnd_toEndOf="@id/glEnd"
                     app:layout_constraintTop_toBottomOf="@+id/yearAccount" />
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/annualResRl"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/_100sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@+id/glStart"
+                    app:layout_constraintEnd_toEndOf="@id/downloadCsv"
+                    app:layout_constraintTop_toBottomOf="@+id/spYearAccount"
+                    android:layout_height="@dimen/_100sdp">
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:id="@+id/lineViewAnnual"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/light_grey"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:padding="@dimen/_10sdp"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/respAnnualCaseTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/lineViewAnnual"
+                        android:text="@string/str_annual_request_subimmited_txt"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/glStart"

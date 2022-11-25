@@ -29,7 +29,7 @@ class VehicleFragment : BaseFragment<FragmentVehicleBinding>() {
 
     override fun init() {
         sessionManager.fetchAccountType()?.let {
-            if (it == Constants.BUSINESS_ACCOUNT) {
+            if (it == Constants.BUSINESS_ACCOUNT||it==Constants.EXEMPT_ACCOUNT) {
                 isBusinessAccount = true
             }
         }

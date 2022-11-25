@@ -132,6 +132,7 @@ object Constants {
     const val ALERT_ITEM_KEY = "cscLookupKey"
     const val PERSONAL_ACCOUNT = "PRIVATE"
     const val BUSINESS_ACCOUNT = "BUSINESS"
+    const val EXEMPT_ACCOUNT = "NONREVENUE"
     const val PRE_PAY_ACCOUNT = "pre_pay_account"
     const val STANDARD ="STANDARD"
     const val PAYG_ACCOUNT = "pay_as_you_go_account"
