@@ -55,6 +55,17 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
+
+        AdobeAnalytics.setScreenTrack(
+            "home",
+            "home",
+            "english",
+            "home",
+            "splash",
+            "landing",
+            false
+        )
+
     }
 
     private fun callPushNotificationApi() {
@@ -72,23 +83,72 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
 
     override fun initCtrl() {
         binding.layoutCreateAccount.setOnClickListener {
+
+            AdobeAnalytics.setActionTrack(
+                "create account",
+                "home",
+                "home",
+                "englsh",
+                "home",
+                "splash",
+                false
+            )
+
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
         }
         binding.layoutMakePayment.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "one of payment",
+                "home",
+                "home",
+                "englsh",
+                "home",
+                "splash",
+                false
+            )
+
             requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
         }
         binding.layoutPenaltyCharge.setOnClickListener {
             openUrlInWebBrowser()
         }
         binding.layoutPaidCrossing.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "check crossings",
+                "home",
+                "home",
+                "englsh",
+                "home",
+                "splash",
+                false
+            )
+
             requireActivity().startNormalActivity(
                 CheckPaidCrossingActivity::class.java
             )
         }
         binding.layoutGuidance.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "dart charge guidance and documents",
+                "home",
+                "home",
+                "englsh",
+                "home",
+                "splash",
+                false
+            )
             findNavController().navigate(R.id.action_landingFragment_to_startNow)
         }
         binding.btnLogin.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "login",
+                "home",
+                "home",
+                "englsh",
+                "home",
+                "splash",
+                false
+            )
             requireActivity().startNormalActivity(
                 AuthActivity::class.java
             )

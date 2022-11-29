@@ -44,7 +44,8 @@ object AdobeAnalytics {
         language: String,
         section: String,
         prevPageName: String,
-        stateName: String
+        stateName: String,
+        logIn:Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -53,25 +54,29 @@ object AdobeAnalytics {
         mContextData[languageKey] = language
         mContextData[sectionKey] = section
         mContextData[prevPageNameKey] = prevPageName
+        mContextData[loggedIn] = logIn.toString()
         trackState(stateName, mContextData)
 
     }
 
     fun setActionTrack(
-        actionName: String,
+        actionKey:String,
+        pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        actionKey: String
+        logIn:Any
     ) {
 
         val mContextData = HashMap<String, String>()
-        mContextData[pageNameKey] = actionName
+        mContextData[pageNameKey] = pageName
         mContextData[pageTypeKey] = pageType
         mContextData[languageKey] = language
         mContextData[sectionKey] = section
         mContextData[prevPageNameKey] = prevPageName
+        mContextData[loggedIn] = logIn.toString()
+
         trackAction(actionKey, mContextData)
 
 

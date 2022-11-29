@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.utils.common.Constants.LANDING_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.LOGOUT_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.SESSION_TIME_OUT
 import com.conduent.nationalhighways.utils.common.Constants.START_NOW_SCREEN
+import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,16 +35,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         setContentView(binding.root)
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
+        Logg.logging("landingActivy","test called $screenType")
         loadFragment()
 
-        AdobeAnalytics.setScreenTrack(
-            "landing",
-            "landing",
-            "english",
-            "landing",
-            "splash",
-            "landing"
-        )
     }
 
     override fun onResume() {
@@ -69,6 +63,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
         val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
+        Logg.logging("landingActivy","test called  loadFragment $screenType")
 
         if (intent.extras != null)
             oldGraph.addArgument(

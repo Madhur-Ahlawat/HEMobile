@@ -13,7 +13,7 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
     override fun initViewBinding() {
         binding = ActivityGuidanceAndDocumentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        AdobeAnalytics.setScreenTrack("dart charge guidance and documents","dart charge guidance and documents","english","dart charge guidance and documents","landing","dart charge guidance and documents")
+//        AdobeAnalytics.setScreenTrack("dart charge guidance and documents","dart charge guidance and documents","english","dart charge guidance and documents","landing","dart charge guidance and documents")
 
     }
 

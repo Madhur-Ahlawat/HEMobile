@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityCheckPaidCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.customToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,16 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCheckPaidCrossingsBinding
         setContentView(binding.root)
         customToolbar(getString(R.string.str_check_for_paid_crossing))
         initCtrl()
+        AdobeAnalytics.setScreenTrack(
+            "check crossings",
+            "check crossings",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings",
+            false
+        )
+
     }
 
     private fun initCtrl() {

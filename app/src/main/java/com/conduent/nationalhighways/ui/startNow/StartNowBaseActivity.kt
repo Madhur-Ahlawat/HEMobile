@@ -33,6 +33,7 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
             }
         }
 
+/*
         AdobeAnalytics.setScreenTrack(
             "about this service",
             "about this service",
@@ -41,6 +42,7 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
             "landing",
             "about this service"
         )
+*/
 
     }
 

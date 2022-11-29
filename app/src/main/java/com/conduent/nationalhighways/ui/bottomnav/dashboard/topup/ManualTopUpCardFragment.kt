@@ -116,28 +116,22 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
                             requireActivity().supportFragmentManager,
                             Constants.LOADER_DIALOG
                         )
-                        var savedCard = "N"
-                        savedCard = if ((defaultCardModel?.primaryCard != null) && defaultCardModel?.primaryCard!!) {
-                            "Y"
-                        } else {
-                            "N"
-                        }
 
                         val model = PaymentWithExistingCardModel(
                             transactionAmount = arguments?.getString("amount"),
-                            cardType = defaultCardModel?.cardType,
+                            cardType = "",
                             cardNumber = "",
                             cvv = "",
                             rowId = defaultCardModel?.rowId,
-                            saveCard ="N",
+                            saveCard ="",
                             useAddressCheck = "N",
                             firstName = defaultCardModel?.firstName,
-                            middleName = defaultCardModel?.middleName,
+                            middleName = defaultCardModel?.middleName?:"",
                             lastName = defaultCardModel?.lastName,
-                            paymentType ="card",
-                            primaryCard = savedCard,
+                            paymentType ="",
+                            primaryCard = "",
                             maskedCardNumber = "",
-                            easyPay = "Y"
+                            easyPay = ""
                         )
                         manualTopUpViewModel.paymentWithExistingCard(model)
                     }

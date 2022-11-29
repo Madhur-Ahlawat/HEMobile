@@ -46,6 +46,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         } else {
             oldGraph.setStartDestination(R.id.contactDartCharge)
         }
+/*
         AdobeAnalytics.setScreenTrack(
             "contact dart charge",
             "contact dart charge",
@@ -54,6 +55,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
             "landing",
             "contact dart charge"
         )
+*/
 
         navController.graph = oldGraph
 
