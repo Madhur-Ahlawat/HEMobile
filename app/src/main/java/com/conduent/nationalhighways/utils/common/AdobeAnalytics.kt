@@ -12,6 +12,7 @@ object AdobeAnalytics {
     const val sectionKey = "ruc.app.section"
     const val prevPageNameKey = "ruc.page.prevPageName"
     const val loggedIn = "ruc.account.loggedIn"
+    const val accountOption = "ruc.app.account"
     const val timeOut = "ruc.account.timeout"
     const val login = "ruc.account.login"
     const val loginMethod = "ruc.account.loginMethod"
@@ -75,6 +76,30 @@ object AdobeAnalytics {
         mContextData[languageKey] = language
         mContextData[sectionKey] = section
         mContextData[prevPageNameKey] = prevPageName
+        mContextData[loggedIn] = logIn.toString()
+
+        trackAction(actionKey, mContextData)
+
+
+    }
+    fun setActionTrack1(
+        actionKey:String,
+        pageName: String,
+        pageType: String,
+        language: String,
+        section: String,
+        prevPageName: String,
+        accountOpt:String,
+        logIn:Any
+    ) {
+
+        val mContextData = HashMap<String, String>()
+        mContextData[pageNameKey] = pageName
+        mContextData[pageTypeKey] = pageType
+        mContextData[languageKey] = language
+        mContextData[sectionKey] = section
+        mContextData[prevPageNameKey] = prevPageName
+        mContextData[accountOption] = accountOpt
         mContextData[loggedIn] = logIn.toString()
 
         trackAction(actionKey, mContextData)

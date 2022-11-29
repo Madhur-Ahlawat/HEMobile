@@ -57,6 +57,17 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         )
 */
 
+        AdobeAnalytics.setScreenTrack(
+            "dart charge",
+            "dart charge",
+            "english",
+            "dart charge",
+            "home",
+            "dart charge",
+            false
+        )
+
+
         navController.graph = oldGraph
 
     }

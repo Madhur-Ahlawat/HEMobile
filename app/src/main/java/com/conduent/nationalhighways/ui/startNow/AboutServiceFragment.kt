@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentAboutServiceBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.extn.toolbar
 
 class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.OnClickListener {
@@ -20,6 +21,17 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
 
     override fun init() {
         // not need to set any toolbar
+
+        AdobeAnalytics.setScreenTrack(
+            "about service",
+            "about service",
+            "english",
+            "about service",
+            "dart charge",
+            "dart charge",
+            false
+        )
+
     }
 
     override fun initCtrl() {

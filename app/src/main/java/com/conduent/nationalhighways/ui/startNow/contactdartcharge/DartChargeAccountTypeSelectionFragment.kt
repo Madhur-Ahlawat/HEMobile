@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.data.model.account.AccountTypeSelectionMode
 import com.conduent.nationalhighways.databinding.FragmentDartChargeAccountTypeSelectionBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.extn.*
@@ -29,6 +30,17 @@ class DartChargeAccountTypeSelectionFragment :
     override fun init() {
         requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
         accountModel = AccountTypeSelectionModel()
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have dart charge account",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have dart charge account",
+            false
+        )
+
     }
 
     override fun initCtrl() {
@@ -45,6 +57,8 @@ class DartChargeAccountTypeSelectionFragment :
         when (checkedId) {
             R.id.yes -> {
                 binding.model = AccountTypeSelectionModel(true)
+
+
             }
             R.id.no -> {
                 binding.model = AccountTypeSelectionModel(true)
@@ -58,15 +72,38 @@ class DartChargeAccountTypeSelectionFragment :
                 R.id.btnContinue -> {
                     if (binding.yes.isChecked) {
                         Logg.logging("TestBase", " Yes Clicked ")
+
+                        AdobeAnalytics.setActionTrack1(
+                            "continue",
+                            "home:contact dart charge:case and enquiry:do u have dart charge account",
+                            "contact dart charge",
+                            "english",
+                            "case and enquiry",
+                            "home",
+                            "yes",
+                            false
+                        )
+
                         requireActivity().openActivityWithData(AuthActivity::class.java) {
                             putInt(Constants.FROM_DART_CHARGE_FLOW, Constants.DART_CHARGE_FLOW_CODE)
                         }
                     } else {
+                        AdobeAnalytics.setActionTrack1(
+                            "continue",
+                            "home:contact dart charge:case and enquiry:do u have dart charge account",
+                            "contact dart charge",
+                            "english",
+                            "case and enquiry",
+                            "home",
+                            "no",
+                            false
+                        )
 
                         findNavController().navigate(R.id.action_dartChargeAccountTypeSelectionFragment_to_provideDetailsDartChargeFragment)
                     }
                 }
-                else -> { }
+                else -> {
+                }
             }
         }
     }

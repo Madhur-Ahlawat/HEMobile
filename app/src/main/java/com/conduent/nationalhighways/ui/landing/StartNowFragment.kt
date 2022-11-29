@@ -52,20 +52,60 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
         v?.let {
             when (v.id) {
                 R.id.rl_about_service -> {
+                    AdobeAnalytics.setActionTrack(
+                        "about service",
+                        "dart charge",
+                        "dart charge",
+                        "englsh",
+                        "dart charge",
+                        "home",
+                        false
+                    )
+
                     screenType = Constants.ABOUT_SERVICE
                     startServicesActivity()
                 }
 
                 R.id.rl_contact_dart_charge -> {
+                    AdobeAnalytics.setActionTrack(
+                        "contact dart charge",
+                        "dart charge",
+                        "dart charge",
+                        "englsh",
+                        "dart charge",
+                        "home",
+                        false
+                    )
+
                     screenType = Constants.CONTACT_DART_CHARGES
                     startContactDartChargeActivity()
                 }
 
                 R.id.rl_crossing_service_update -> {
+                    AdobeAnalytics.setActionTrack(
+                        "crossing service update",
+                        "dart charge",
+                        "dart charge",
+                        "englsh",
+                        "dart charge",
+                        "home",
+                        false
+                    )
+
                     screenType = Constants.CROSSING_SERVICE_UPDATE
                     startServicesActivity()
                 }
                 R.id.rl_view_charges -> {
+                    AdobeAnalytics.setActionTrack(
+                        "view charges",
+                        "dart charge",
+                        "dart charge",
+                        "englsh",
+                        "dart charge",
+                        "home",
+                        false
+                    )
+
                     requireActivity().startNormalActivity(ViewChargesActivity::class.java)
                 }
             }

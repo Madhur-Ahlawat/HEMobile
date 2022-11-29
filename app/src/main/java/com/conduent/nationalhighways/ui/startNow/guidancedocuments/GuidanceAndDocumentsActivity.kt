@@ -15,6 +15,17 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
         setContentView(binding.root)
 //        AdobeAnalytics.setScreenTrack("dart charge guidance and documents","dart charge guidance and documents","english","dart charge guidance and documents","landing","dart charge guidance and documents")
 
+        AdobeAnalytics.setScreenTrack(
+            "dart charges guidance and documents",
+            "dart charges guidance and documents",
+            "english",
+            "dart charges guidance and documents",
+            "home",
+            "dart charges guidance and documents",
+            false
+        )
+
+
     }
 
     override fun onResume() {

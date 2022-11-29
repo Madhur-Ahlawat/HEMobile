@@ -9,10 +9,7 @@ import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +28,18 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar(getString(R.string.str_charges_6am_10pm))
+
+
+
+        AdobeAnalytics.setScreenTrack(
+            "view charges",
+            "view charges",
+            "english",
+            "dart charge",
+            "home",
+            "view charges",
+            false
+        )
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.data.model.account.AccountTypeSelectionMode
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.conduent.nationalhighways.databinding.FragmentProvideDetailsDartChargeBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.*
@@ -29,6 +30,17 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
     override fun init() {
         requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
         accountModel = AccountTypeSelectionModel(false)
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page",
+            false
+        )
+
     }
 
     override fun initCtrl() {
