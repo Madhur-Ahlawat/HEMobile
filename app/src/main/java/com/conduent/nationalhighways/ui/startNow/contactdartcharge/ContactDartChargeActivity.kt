@@ -46,16 +46,6 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         } else {
             oldGraph.setStartDestination(R.id.contactDartCharge)
         }
-/*
-        AdobeAnalytics.setScreenTrack(
-            "contact dart charge",
-            "contact dart charge",
-            "english",
-            "contact dart charge",
-            "landing",
-            "contact dart charge"
-        )
-*/
 
         AdobeAnalytics.setScreenTrack(
             "dart charge",
@@ -64,7 +54,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
             "dart charge",
             "home",
             "dart charge",
-            false
+            sessionManager.getLoggedInUser()
         )
 
 

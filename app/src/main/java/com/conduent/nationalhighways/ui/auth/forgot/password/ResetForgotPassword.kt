@@ -8,16 +8,35 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentForgotResetBinding = FragmentForgotResetBinding.inflate(inflater,container,false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentForgotResetBinding = FragmentForgotResetBinding.inflate(inflater, container, false)
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun init() {
         binding.btnSubmit.setOnClickListener(this)
+
+        AdobeAnalytics.setScreenTrack(
+            "login:forgot password:choose options:otp:new password set:password reset success",
+            "forgot password",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login:forgot password:choose options:otp:new password set:password reset success",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -27,8 +46,18 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btn_submit -> {
+                AdobeAnalytics.setActionTrack(
+                    "submit",
+                    "login:forgot password:choose options:otp:new password set:password reset success",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    sessionManager.getLoggedInUser()
+                )
+
                 requireActivity().startNormalActivity(AuthActivity::class.java)
                 requireActivity().finish()
             }

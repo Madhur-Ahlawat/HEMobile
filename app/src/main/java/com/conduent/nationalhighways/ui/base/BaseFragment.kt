@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 
 abstract class BaseFragment<B: ViewBinding> : Fragment() {
 
@@ -27,5 +28,16 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
     abstract fun init()
     abstract fun initCtrl()
     abstract fun observer()
+
+    override fun onResume() {
+        super.onResume()
+        AdobeAnalytics.setLifeCycleCallAdobe(true)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AdobeAnalytics.setLifeCycleCallAdobe(false)
+    }
     
 }

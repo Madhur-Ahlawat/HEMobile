@@ -61,6 +61,17 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             binding.btnGoStart.visible()
             binding.tvFilter.gone()
         }
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries:case number entry:case history details",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries:case number entry:case history details",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     private fun getCasesForLoginUserApi() {
@@ -190,20 +201,71 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         view?.let {
             when (it.id) {
                 R.id.btnGoStart -> {
+                    AdobeAnalytics.setActionTrack(
+                        "go start",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     requireActivity().finish()
+
                 }
                 R.id.btnRaiseNewQuery -> {
+                    AdobeAnalytics.setActionTrack(
+                        "raise new enquiry",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     findNavController().navigate(R.id.action_caseHistoryDartChargeFragment_to_newCaseCategoryFragment)
                 }
                 R.id.tvFilter -> {
+                    AdobeAnalytics.setActionTrack(
+                        "filter",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     openFilterDrawer()
                     checkFilterApplyBtn()
                 }
                 R.id.closeImage -> {
+                    AdobeAnalytics.setActionTrack(
+                        "close",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     closeFilterDrawer()
                 }
 
                 R.id.clearCaseNumber -> {
+                    AdobeAnalytics.setActionTrack(
+                        "clear",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     binding.edtCaseNumber.text?.clear()
                     checkFilterApplyBtn()
                 }
@@ -237,6 +299,16 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
                     )
                 }
                 R.id.applyBtn -> {
+                    AdobeAnalytics.setActionTrack(
+                        "apply",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry:case history details",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     closeFilterDrawer()
                     clickApplyBtn()
                 }

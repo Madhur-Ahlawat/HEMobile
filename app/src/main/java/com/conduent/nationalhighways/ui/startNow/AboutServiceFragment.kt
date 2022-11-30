@@ -7,9 +7,14 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentAboutServiceBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.toolbar
+import javax.inject.Inject
 
 class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.OnClickListener {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,8 +33,8 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
             "english",
             "about service",
             "dart charge",
-            "dart charge",
-            false
+            "about service",
+            sessionManager.getLoggedInUser()
         )
 
     }

@@ -12,14 +12,18 @@ import com.conduent.nationalhighways.databinding.FragmentProvideDetailsDartCharg
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.onTextChanged
+import javax.inject.Inject
 
 class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDartChargeBinding>(),
     View.OnClickListener {
     private lateinit var accountModel: AccountTypeSelectionModel
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -38,7 +42,7 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
             "case and enquiry",
             "home",
             "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }
@@ -75,6 +79,17 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
         view?.let {
             when (it.id) {
                 R.id.btnContinue -> {
+
+                    AdobeAnalytics.setActionTrack(
+                        "continue",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     val mCaseModel = CaseProvideDetailsModel(
                         binding.etFistName.text.toString(),
                         binding.etLastName.text.toString(),

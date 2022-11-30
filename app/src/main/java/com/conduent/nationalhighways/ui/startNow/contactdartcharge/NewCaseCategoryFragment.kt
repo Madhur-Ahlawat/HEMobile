@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
@@ -29,6 +30,8 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
     private var mSelSubCat = ""
     private val mCatListName = ArrayList<String>()
     private val mSubCatListName = ArrayList<String>()
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,6 +43,17 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
         checkButton()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category",
+            sessionManager.getLoggedInUser()
+        )
+
 
     }
 
@@ -146,6 +160,16 @@ class NewCaseCategoryFragment : BaseFragment<FragmentNewCaseCategoryBinding>(),
     override fun onClick(it: View?) {
         when (it?.id) {
             R.id.btnNext -> {
+                AdobeAnalytics.setActionTrack(
+                    "next",
+                    "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category",
+                    "contact dart charge",
+                    "english",
+                    "case and enquiry",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 findNavController().navigate(
                     R.id.action_newCaseCategoryFragment_to_NewCaseCommentsFragment,
                     Bundle().apply {

@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
@@ -23,12 +24,13 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
     private lateinit var binding: ActivityViewChargesBinding
     private var loader: LoaderDialog? = null
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar(getString(R.string.str_charges_6am_10pm))
-
 
 
         AdobeAnalytics.setScreenTrack(
@@ -38,7 +40,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
             "dart charge",
             "home",
             "view charges",
-            false
+            sessionManager.getLoggedInUser()
         )
 
         loader = LoaderDialog()

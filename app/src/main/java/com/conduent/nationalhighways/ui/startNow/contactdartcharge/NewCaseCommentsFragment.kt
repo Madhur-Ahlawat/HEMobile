@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.utils.onTextChanged
 import okhttp3.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -50,6 +51,10 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     private val mList = mutableListOf<String>()
     private val viewModel: ContactDartChargeViewModel by viewModels()
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -60,6 +65,17 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         setView()
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     private fun setView() {
@@ -190,6 +206,17 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     override fun onClick(it: View?) {
         when (it?.id) {
             R.id.btnNext -> {
+
+                AdobeAnalytics.setActionTrack(
+                    "next",
+                    "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments",
+                    "contact dart charge",
+                    "english",
+                    "case and enquiry",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 arguments?.putStringArrayList(Constants.FILE_NAMES_KEY, ArrayList(mList))
                 findNavController().navigate(
                     R.id.action_NewCaseCommentsFragment_to_NewCaseSummeryFragment,

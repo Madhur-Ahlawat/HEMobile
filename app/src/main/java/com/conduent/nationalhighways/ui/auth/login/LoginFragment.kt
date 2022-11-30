@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.databinding.FragmentLoginBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -39,16 +40,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     override fun onResume() {
         super.onResume()
         requireActivity().toolbar(getString(R.string.str_log_in_dart_system))
-        BaseApplication.INSTANCE?.let {
-            MobileCore.setApplication(it)
-            MobileCore.lifecycleStart(null)
-        }
     }
 
     override fun init() {
         binding.model = LoginModel(value = "100314741", password = "Welcome1", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+
+        AdobeAnalytics.setScreenTrack(
+            "login",
+            "login",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login",
+            sessionManager.getLoggedInUser()
+        )
+
 
     }
 
@@ -68,7 +77,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
     override fun onPause() {
         super.onPause()
-        MobileCore.lifecyclePause()
     }
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
@@ -81,6 +89,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
+                AdobeAnalytics.setLoginActionTrackError(
+                    "login",
+                    "login",
+                    "login",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    "true",
+                    "manual",
+                    sessionManager.getLoggedInUser()
+                )
             }
             else -> {
 
@@ -99,6 +118,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
         }
+        AdobeAnalytics.setLoginActionTrackError(
+            "login",
+            "login",
+            "login",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "false",
+            "manual",
+            sessionManager.getLoggedInUser()
+        )
+
         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
     }
 
@@ -109,14 +140,36 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.login(binding.model)
-                
+
 
             }
 
             R.id.tv_forgot_username -> {
+                AdobeAnalytics.setActionTrackError(
+                    "forgot username",
+                    "login",
+                    "login",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    "success",
+                    sessionManager.getLoggedInUser()
+                )
+
                 findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
             }
             R.id.tv_forgot_password -> {
+                AdobeAnalytics.setActionTrackError(
+                    "forgot password",
+                    "login",
+                    "login",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    "success",
+                    sessionManager.getLoggedInUser()
+                )
+
                 findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
             }
         }

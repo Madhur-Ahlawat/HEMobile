@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.databinding.FragmentForgotPasswordBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -43,6 +44,17 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
         binding.model = ConfirmOptionModel(identifier = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        AdobeAnalytics.setScreenTrack(
+            "login:forgot password",
+            "forgot password",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login:forgot password",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -76,9 +88,30 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
                             )
                         }
                     }
+                    AdobeAnalytics.setActionTrackError(
+                        "next",
+                        "login:forgot password",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen, "success",
+                        sessionManager.getLoggedInUser()
+                    )
+
                 }
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
+
+                    AdobeAnalytics.setActionTrackError(
+                        "next",
+                        "login:forgot password",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
+
                 }
                 else -> {
                 }
@@ -100,7 +133,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     private fun isEnable() {
-        if (binding.edtEmail.length() > 0 ) binding.model =
+        if (binding.edtEmail.length() > 0) binding.model =
             ConfirmOptionModel(
                 enable = true,
                 identifier = binding.edtEmail.text.toString()

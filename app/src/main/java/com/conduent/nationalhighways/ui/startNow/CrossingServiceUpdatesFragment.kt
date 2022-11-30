@@ -6,9 +6,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCrosssingServiceUpdateBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.toolbar
+import javax.inject.Inject
 
 class CrossingServiceUpdatesFragment : BaseFragment<FragmentCrosssingServiceUpdateBinding>() {
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -30,7 +34,7 @@ class CrossingServiceUpdatesFragment : BaseFragment<FragmentCrosssingServiceUpda
             "crossing service update",
             "dart charge",
             "crossing service update",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }

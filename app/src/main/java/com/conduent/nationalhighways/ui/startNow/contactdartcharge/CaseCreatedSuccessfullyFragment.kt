@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.*
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -29,6 +30,16 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
     ) = FragmentRaiseNewEnquirySuccessBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery:case created success",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery:case created success",
+            sessionManager.getLoggedInUser()
+        )
+
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
     }
 
@@ -60,15 +71,37 @@ class CaseCreatedSuccessfullyFragment : BaseFragment<FragmentRaiseNewEnquirySucc
     override fun onClick(it: View?) {
         when (it?.id) {
             R.id.check_enquiry_status -> {
+                AdobeAnalytics.setActionTrack(
+                    "check enquiry status",
+                    "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery:case created success",
+                    "contact dart charge",
+                    "english",
+                    "case and enquiry",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 if (sessionManager.getLoggedInUser()) {
+
                     requireActivity().finish()
                 } else {
+
                     findNavController().navigate(
                         R.id.action_CaseCreatedSuccessfullyFragment_to_caseDetailsDartChargeFragment
                     )
                 }
             }
             R.id.go_to_start_menu -> {
+                AdobeAnalytics.setActionTrack(
+                    "go to start menu",
+                    "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery:case created success",
+                    "contact dart charge",
+                    "english",
+                    "case and enquiry",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 if (sessionManager.getLoggedInUser()) {
                     requireActivity().finish()
                 } else {

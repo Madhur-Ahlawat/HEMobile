@@ -9,13 +9,18 @@ import com.conduent.nationalhighways.databinding.FragmentContactDartChargeBindin
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.customToolbar
+import javax.inject.Inject
 
 class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentContactDartChargeBinding.inflate(inflater, container, false)
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_contact_dart_charge))
@@ -27,7 +32,7 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
             "contact dart charge",
             "dart charge",
             "contact dart charge",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }
@@ -42,7 +47,7 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
                 "english",
                 "contact dart charge",
                 "contact dart charge",
-                false
+                sessionManager.getLoggedInUser()
             )
 
             findNavController().navigate(R.id.action_contactDartCharge_to_dartChargeAccountTypeSelectionFragment)

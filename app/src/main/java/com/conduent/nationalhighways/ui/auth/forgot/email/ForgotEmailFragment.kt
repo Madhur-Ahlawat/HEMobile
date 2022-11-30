@@ -12,14 +12,12 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.email.ForgotEmailModel
 import com.conduent.nationalhighways.data.model.auth.forgot.email.ForgotEmailResponseModel
 import com.conduent.nationalhighways.databinding.FragmentForgotEmailBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,6 +43,17 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
         binding.model = ForgotEmailModel(enable = false, accountNumber = "")
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        AdobeAnalytics.setScreenTrack(
+            "login:forgot email",
+            "forgot email",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login:forgot email",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -64,12 +73,23 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
         v?.let {
             when (v.id) {
                 R.id.btn_next -> {
+
                     hideKeyboard()
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     viewModel.forgotEmail(binding.model)
                 }
 
                 R.id.btn_login -> {
+                    AdobeAnalytics.setActionTrack(
+                        "login",
+                        "login:forgot email",
+                        "forgot email",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        sessionManager.getLoggedInUser()
+                    )
+
                     requireActivity().onBackPressed()
                 }
             }
@@ -85,8 +105,30 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
                 binding.llEnterDetails.visibility = GONE
                 binding.llUsername.visibility = VISIBLE
                 loadData(status)
+                AdobeAnalytics.setActionTrackError(
+                    "login",
+                    "login:forgot email",
+                    "forgot email",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    "success",
+                    sessionManager.getLoggedInUser()
+                )
+
             }
             is Resource.DataError -> {
+                AdobeAnalytics.setActionTrackError(
+                    "login",
+                    "login:forgot email",
+                    "forgot email",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    status.errorMsg,
+                    sessionManager.getLoggedInUser()
+                )
+
                 showError(binding.root, status.errorMsg)
             }
             else -> {

@@ -9,14 +9,19 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountTypeSelectionModel
 import com.conduent.nationalhighways.databinding.FragmentCaseDetailsDartChargeBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.onTextChanged
+import javax.inject.Inject
 
 class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartChargeBinding>(),
     View.OnClickListener {
     private lateinit var accountModel: AccountTypeSelectionModel
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -27,6 +32,17 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
     override fun init() {
         requireActivity().customToolbar(getString(R.string.str_enquiry_status))
         accountModel = AccountTypeSelectionModel(false)
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries:case number entry",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries:case number entry",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -58,6 +74,17 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
         view?.let {
             when (it.id) {
                 R.id.btnContinue -> {
+
+                    AdobeAnalytics.setActionTrack(
+                        "continue",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     val bundle = Bundle().apply {
                         putString(Constants.CASE_NUMBER, binding.etCaseNumber.text.toString().trim())
                         putString(Constants.LAST_NAME, binding.etLastName.text.toString().trim())
@@ -67,6 +94,17 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
                 }
 
                 R.id.btnRaiseNewQuery -> {
+
+                    AdobeAnalytics.setActionTrack(
+                        "raise new enquiry",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:case number entry",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_newCaseCategoryFragment)
                 }
                 else -> {

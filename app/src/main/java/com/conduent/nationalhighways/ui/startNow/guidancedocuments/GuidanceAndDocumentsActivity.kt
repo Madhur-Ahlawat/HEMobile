@@ -3,13 +3,17 @@ package com.conduent.nationalhighways.ui.startNow.guidancedocuments
 import com.conduent.nationalhighways.databinding.ActivityGuidanceAndDocumentsBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
 
     private lateinit var binding: ActivityGuidanceAndDocumentsBinding
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun initViewBinding() {
         binding = ActivityGuidanceAndDocumentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -22,7 +26,7 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
             "dart charges guidance and documents",
             "home",
             "dart charges guidance and documents",
-            false
+            sessionManager.getLoggedInUser()
         )
 
 

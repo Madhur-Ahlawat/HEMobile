@@ -31,7 +31,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCheckPaidCrossingsBinding
             "check crossings",
             "home",
             "check crossings",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }

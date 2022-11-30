@@ -37,6 +37,17 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     ) = FragmentNewCaseSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery",
+            sessionManager.getLoggedInUser()
+        )
+
         requireActivity().customToolbar(getString(R.string.str_raise_new_enquiry))
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -88,6 +99,17 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             is Resource.Success -> {
                 resource.data?.let {
                     if (it.statusCode == "0") {
+                        AdobeAnalytics.setActionTrackError(
+                            "next",
+                            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery",
+                            "contact dart charge",
+                            "english",
+                            "case and enquiry",
+                            "home",
+                            resource.data.message!!,
+                            sessionManager.getLoggedInUser()
+                        )
+
                         findNavController().navigate(
                             R.id.action_NewCaseSummeryFragment_to_CaseCreatedSuccessfullyFragment,
                             arguments?.apply {
@@ -114,6 +136,17 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+                AdobeAnalytics.setActionTrackError(
+                    "next",
+                    "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries:raise a new enquiry category:comments:summery",
+                    "contact dart charge",
+                    "english",
+                    "case and enquiry",
+                    "home",
+                    resource.errorMsg,
+                    sessionManager.getLoggedInUser()
+                )
+
             }
             else -> {
 
@@ -124,6 +157,8 @@ class NewCaseSummeryFragment : BaseFragment<FragmentNewCaseSummaryBinding>(),
     override fun onClick(it: View?) {
         when (it?.id) {
             R.id.btnNext -> {
+
+
                 mModel = arguments?.getParcelable(Constants.CASES_PROVIDE_DETAILS_KEY)
                 val mCat = arguments?.getString(Constants.CASES_CATEGORY)
                 val mSubCat = arguments?.getString(Constants.CASES_SUB_CATEGORY)

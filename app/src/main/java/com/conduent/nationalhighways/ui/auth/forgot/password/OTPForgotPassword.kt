@@ -13,14 +13,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Logg
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.getValue
 
 
@@ -35,6 +34,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
     private var isCalled = true
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     override fun getFragmentBinding(
@@ -51,6 +52,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
         binding.isEnable = false
         loadUI()
         viewModel.requestOTP(data)
+
+        AdobeAnalytics.setScreenTrack(
+            "login:forgot password:choose options:otp",
+            "forgot password",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login:forgot password:choose options:otp",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -74,6 +86,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
                     response?.code = binding.edtOtp.text.toString()
                     bundle.putParcelable("data", response)
                     Logg.logging("NewPassword","response $response")
+                    AdobeAnalytics.setActionTrack(
+                        "verify",
+                        "login:forgot password:choose options:otp",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        sessionManager.getLoggedInUser()
+                    )
 
                     findNavController().navigate(
                         R.id.action_otpFragment_to_createPasswordFragment,
@@ -85,6 +106,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
             }
 
             R.id.resend_txt -> {
+                AdobeAnalytics.setActionTrack(
+                    "resend",
+                    "login:forgot password:choose options:otp",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    sessionManager.getLoggedInUser()
+                )
+
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.requestOTP(data)

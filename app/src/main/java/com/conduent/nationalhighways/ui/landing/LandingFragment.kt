@@ -62,8 +62,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
             "english",
             "home",
             "splash",
-            "landing",
-            false
+            "home",
+            sessionManager.getLoggedInUser()
         )
 
     }
@@ -91,7 +91,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "englsh",
                 "home",
                 "splash",
-                false
+                sessionManager.getLoggedInUser()
             )
 
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
@@ -104,7 +104,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "englsh",
                 "home",
                 "splash",
-                false
+                sessionManager.getLoggedInUser()
             )
 
             requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
@@ -120,7 +120,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "englsh",
                 "home",
                 "splash",
-                false
+                sessionManager.getLoggedInUser()
             )
 
             requireActivity().startNormalActivity(
@@ -135,7 +135,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "englsh",
                 "home",
                 "splash",
-                false
+                sessionManager.getLoggedInUser()
             )
             findNavController().navigate(R.id.action_landingFragment_to_startNow)
         }
@@ -147,7 +147,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "englsh",
                 "home",
                 "splash",
-                false
+                sessionManager.getLoggedInUser()
             )
             requireActivity().startNormalActivity(
                 AuthActivity::class.java

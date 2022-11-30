@@ -4,12 +4,16 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateAccountActivity : BaseActivity<Any>() {
     lateinit var binding: ActivityCreateAccountBinding
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
@@ -29,7 +33,7 @@ class CreateAccountActivity : BaseActivity<Any>() {
             "create account",
             "home",
             "create account",
-            false
+            sessionManager.getLoggedInUser()
         )
 
 

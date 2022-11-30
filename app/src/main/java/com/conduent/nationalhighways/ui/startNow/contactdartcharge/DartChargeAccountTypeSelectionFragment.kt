@@ -13,7 +13,9 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
+import javax.inject.Inject
 
 class DartChargeAccountTypeSelectionFragment :
     BaseFragment<FragmentDartChargeAccountTypeSelectionBinding>(),
@@ -21,6 +23,8 @@ class DartChargeAccountTypeSelectionFragment :
     RadioGroup.OnCheckedChangeListener {
 
     private lateinit var accountModel: AccountTypeSelectionModel
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -38,7 +42,7 @@ class DartChargeAccountTypeSelectionFragment :
             "case and enquiry",
             "home",
             "home:contact dart charge:case and enquiry:do u have dart charge account",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }
@@ -81,7 +85,7 @@ class DartChargeAccountTypeSelectionFragment :
                             "case and enquiry",
                             "home",
                             "yes",
-                            false
+                            sessionManager.getLoggedInUser()
                         )
 
                         requireActivity().openActivityWithData(AuthActivity::class.java) {
@@ -96,7 +100,7 @@ class DartChargeAccountTypeSelectionFragment :
                             "case and enquiry",
                             "home",
                             "no",
-                            false
+                            sessionManager.getLoggedInUser()
                         )
 
                         findNavController().navigate(R.id.action_dartChargeAccountTypeSelectionFragment_to_provideDetailsDartChargeFragment)

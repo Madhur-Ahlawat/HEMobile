@@ -9,12 +9,17 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.conduent.nationalhighways.databinding.FragmentCaseEnquiriesOptionsWhatBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
+import javax.inject.Inject
 
 class CaseEnquiriesNewCheckFragment :
     BaseFragment<FragmentCaseEnquiriesOptionsWhatBinding>(),
     View.OnClickListener {
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private var mDetails: CaseProvideDetailsModel? = null
     override fun getFragmentBinding(
@@ -27,6 +32,17 @@ class CaseEnquiriesNewCheckFragment :
             .apply {
 
             }
+
+        AdobeAnalytics.setScreenTrack(
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries",
+            "contact dart charge",
+            "english",
+            "case and enquiry",
+            "home",
+            "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun initCtrl() {
@@ -53,6 +69,17 @@ class CaseEnquiriesNewCheckFragment :
                             )
                         })
 
+                    AdobeAnalytics.setActionTrack(
+                        "raise a new enquiry",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case case and enquiries",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
+
                 }
                 R.id.rl_check_enquiry_status -> {
                     findNavController().navigate(
@@ -64,6 +91,17 @@ class CaseEnquiriesNewCheckFragment :
                             )
 
                         })
+
+                    AdobeAnalytics.setActionTrack(
+                        "check enquiry status",
+                        "home:contact dart charge:case and enquiry:do u have a dart charge account:details entry page:check case and enquiries",
+                        "contact dart charge",
+                        "english",
+                        "case and enquiry",
+                        "home",
+                        sessionManager.getLoggedInUser()
+                    )
+
                 }
 
                 else -> {

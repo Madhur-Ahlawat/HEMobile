@@ -4,12 +4,16 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityMakeOffPaymentBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MakeOffPaymentActivity : BaseActivity<Any>() {
     private lateinit var binding : ActivityMakeOffPaymentBinding
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding=ActivityMakeOffPaymentBinding.inflate(layoutInflater)
@@ -24,7 +28,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>() {
             "one of payment",
             "home",
             "one of payment",
-            false
+            sessionManager.getLoggedInUser()
         )
 
     }

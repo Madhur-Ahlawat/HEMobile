@@ -10,15 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.*
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Logg
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBinding>(),
@@ -27,6 +26,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -49,7 +50,16 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 //        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val mVerifyRequestOtpReq =
             VerifyRequestOtpReq(data?.code, data?.referenceId)
-        Logg.logging("NewPassword","mVerifyRequestOtpReq $mVerifyRequestOtpReq")
+        Logg.logging("NewPassword", "mVerifyRequestOtpReq $mVerifyRequestOtpReq")
+        AdobeAnalytics.setScreenTrack(
+            "login:forgot password:choose options:otp:new password set",
+            "forgot password",
+            "english",
+            "login",
+            (requireActivity() as AuthActivity).previousScreen,
+            "login:forgot password:choose options:otp:new password set",
+            sessionManager.getLoggedInUser()
+        )
 
 //        viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
@@ -72,7 +82,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    Logg.logging("NewPassword","binding.model ${binding.model}")
+                    Logg.logging("NewPassword", "binding.model ${binding.model}")
                     viewModel.resetPassword(binding.model)
                 } else {
                     showError(binding.root, validation.second)
@@ -88,9 +98,31 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         when (status) {
             is Resource.Success -> {
+                AdobeAnalytics.setActionTrack1(
+                    "verify",
+                    "login:forgot password:choose options:otp:new password set",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen, "success",
+                    sessionManager.getLoggedInUser()
+                )
+
             }
             is Resource.DataError -> {
-                Logg.logging("NewPassword","status.errorMsg ${status.errorMsg}")
+                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+
+                AdobeAnalytics.setActionTrack1(
+                    "verify",
+                    "login:forgot password:choose options:otp:new password set",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    status.errorMsg,
+                    sessionManager.getLoggedInUser()
+                )
+
 
                 showError(binding.root, status.errorMsg)
             }
@@ -105,12 +137,34 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.success == true)
+                if (status.data?.success == true) {
+                    AdobeAnalytics.setActionTrack1(
+                        "submit",
+                        "login:forgot password:choose options:otp:new password set",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        "success",
+                        sessionManager.getLoggedInUser()
+                    )
+
                     findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment)
-                else
+                } else
                     showError(binding.root, status.data?.message)
             }
             is Resource.DataError -> {
+                AdobeAnalytics.setActionTrack1(
+                    "submit",
+                    "login:forgot password:choose options:otp:new password set",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen,
+                    status.errorMsg,
+                    sessionManager.getLoggedInUser()
+                )
+
                 showError(binding.root, status.errorMsg)
             }
             else -> {
