@@ -159,7 +159,8 @@ class VehicleGroupAddVehicleFragment : BaseFragment<FragmentVehicleGroupAddVehic
             }
             is Resource.DataError -> {
                 handleVehicleData()
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX)
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
             }
             else -> {
             }

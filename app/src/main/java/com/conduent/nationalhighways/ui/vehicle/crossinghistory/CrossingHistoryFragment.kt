@@ -56,7 +56,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     private val startOne = "1"
     private var startIndex: Long = 1
-    private val count: Long = 5
+    private val count: Long = 20
     private var isLoading = false
     private var isFirstTime = true
     private var list: MutableList<CrossingHistoryItem?>? = ArrayList()
@@ -97,8 +97,8 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
             val request = CrossingHistoryRequest(
                 startIndex = 1,
-                count = 5,
-                transactionType = Constants.TOLL_TRANSACTION,
+                count = count,
+                transactionType = Constants.ALL_TRANSACTION,
                 searchDate = Constants.TRANSACTION_DATE,
                 startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
                 endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
@@ -225,7 +225,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
                         val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
                         if (!isLoading) {
                             if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == ((list?.size
-                                    ?: 0) - 1) && totalCount > 4
+                                    ?: 0) - 1) && totalCount > count -1
                             ) {
                                 startIndex += count
                                 isLoading = true
@@ -305,7 +305,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     private fun loadRequest(dataModel: DateRangeModel?): CrossingHistoryRequest {
         return when (dataModel?.type) {
-            Constants.TOLL_TRANSACTION -> {
+            Constants.ALL_TRANSACTION -> {
                 CrossingHistoryRequest(
                     startIndex = startIndex,
                     count = count,
@@ -329,7 +329,7 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
 
     private fun loadDownloadRequest(): TransactionHistoryDownloadRequest {
         return when (dateRangeModel?.type) {
-            Constants.TOLL_TRANSACTION -> {
+            Constants.ALL_TRANSACTION -> {
                 TransactionHistoryDownloadRequest().apply {
                     startIndex = startOne
                     downloadType = selectionType

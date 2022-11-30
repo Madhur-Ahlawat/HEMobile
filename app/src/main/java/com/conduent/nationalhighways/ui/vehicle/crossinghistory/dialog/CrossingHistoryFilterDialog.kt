@@ -117,20 +117,20 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
 
             R.id.rbLast30Days -> {
                 dateRangeModel?.title = getString(R.string.last_30_days)
-                dateRangeModel?.type = TOLL_TRANSACTION
+                dateRangeModel?.type = ALL_TRANSACTION
                 customSectionUI(false)
                 setBtnEnable()
             }
             R.id.rbLast90Days -> {
                 dateRangeModel?.title = getString(R.string.last_90_days)
-                dateRangeModel?.type = TOLL_TRANSACTION
+                dateRangeModel?.type = ALL_TRANSACTION
                 customSectionUI(false)
                 setBtnEnable()
             }
 
             R.id.rbCustom -> {
                 dateRangeModel?.title = getString(R.string.custom)
-                dateRangeModel?.type = TOLL_TRANSACTION
+                dateRangeModel?.type = ALL_TRANSACTION
                 customSectionUI(true)
                 checkButton()
                 binding.edFrom.onTextChanged {

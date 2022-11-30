@@ -152,7 +152,8 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 }
                 is Resource.DataError -> {
                     handleVehicleData()
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX)
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
                     handleVehicleData()
@@ -205,7 +206,8 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
                 }
                 is Resource.DataError -> {
                     handleVehicleData()
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX)
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
                     handleVehicleData()
@@ -319,6 +321,7 @@ class VehicleGroupFragment : BaseFragment<FragmentVehicleGroupBinding>(),
             binding.rvVehicleList.gone()
             searchVehicleNumber = plateNumber
             vehicleGroup?.let {
+                isGetVehicleListData = true
                 vehicleGroupMgmtViewModel.getSearchVehiclesForGroup(
                     it.groupName!!,
                     plateNumber
