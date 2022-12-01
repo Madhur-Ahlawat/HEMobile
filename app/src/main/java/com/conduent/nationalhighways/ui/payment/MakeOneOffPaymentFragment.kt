@@ -70,7 +70,7 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
                 AdobeAnalytics.setActionTrack(
                     "continue",
                     "one of  payment:details",
-                    "one of payment details",
+                    "vehicle",
                     "english",
                     "one of payment",
                     "home",

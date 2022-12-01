@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), ItemClickListener {
@@ -35,6 +36,10 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -45,6 +50,16 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
     }
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:add vehicle done",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: add vehicle done",
+            sessionManager.getLoggedInUser()
+        )
+
         mVehicleDetails = arguments?.getParcelable(Constants.DATA)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -69,6 +84,17 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
 
     override fun initCtrl() {
         binding.conformBtn.setOnClickListener {
+
+            AdobeAnalytics.setActionTrack(
+                "confirm",
+                "one of  payment:add vehicle done",
+                "vehicle",
+                "english",
+                "one of payment",
+                "home",
+                sessionManager.getLoggedInUser()
+            )
+
             if (mScreeType == Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT) {
 
                 val bundle = Bundle()

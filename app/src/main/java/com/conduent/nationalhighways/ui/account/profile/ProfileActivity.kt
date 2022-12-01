@@ -84,13 +84,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
             Navigation.findNavController(this, R.id.fragmentContainerView)
         val navGraph = navController.navInflater.inflate(R.navigation.navigation_profile)
 
-
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        val oldGraph = navController.navInflater.inflate(R.navigation.navigation_profile)
-
-
         when {
             !isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
                 navGraph.setStartDestination(R.id.viewProfile)

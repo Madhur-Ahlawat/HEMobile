@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>(),
@@ -30,6 +31,9 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     private var loader: LoaderDialog? = null
     private var mClassType = ""
     private var mScreeType = 0
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,6 +54,17 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
         mClassType = "2"
         binding.classBDesc.visible()
         checkButton()
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:vehicle class declaration",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment:vehicle class declaration",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     private fun checkButton() {
@@ -189,11 +204,23 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
     }
 
     private fun navigateToAddVehicleDoneScreen() {
+
+        AdobeAnalytics.setActionTrack(
+            "add vehicle",
+            "one of  payment:vehicle class declaration",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            sessionManager.getLoggedInUser()
+        )
+
         val vehicleData = mVehicleDetails
         vehicleData?.apply {
             vehicleInfo?.vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
             vehicleInfo?.effectiveStartDate = Utils.currentDateAndTime()
         }
+
         val bundle = Bundle().apply {
             putParcelable(Constants.DATA, vehicleData)
             putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
@@ -202,6 +229,8 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             R.id.action_addVehicleClassesFragment_to_addVehicleDoneFragment,
             bundle
         )
+
+
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {

@@ -25,7 +25,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>() {
 
         AdobeAnalytics.setScreenTrack(
             "one of  payment",
-            "one of payment",
+            "vehicle",
             "english",
             "one of payment",
             "home",

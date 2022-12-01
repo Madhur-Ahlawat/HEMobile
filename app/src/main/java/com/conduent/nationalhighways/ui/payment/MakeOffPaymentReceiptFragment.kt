@@ -10,12 +10,15 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentMakeOffPaymentReceiptBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.setSpinnerAdapterData
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceiptBinding>(),
@@ -23,6 +26,8 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
 
     private var mScreeType = 0
     private var mOption = Constants.EMAIL_ADDRESS
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -30,6 +35,17 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
     ) = FragmentMakeOffPaymentReceiptBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:email/mobile",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: email/mobile",
+            sessionManager.getLoggedInUser()
+        )
+
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }

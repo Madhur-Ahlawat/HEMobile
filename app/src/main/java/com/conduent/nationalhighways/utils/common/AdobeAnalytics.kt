@@ -134,6 +134,62 @@ object AdobeAnalytics {
 
 
     }
+    fun setActionTrackPaymentMethodOrderId(
+        actionKey:String,
+        pageName: String,
+        pageType: String,
+        language: String,
+        section: String,
+        prevPageName: String,
+        apiErr:String,
+        paymentM:String,
+        ordId:String,
+        ordPlcd:String,
+        logIn:Any
+    ) {
+
+        val mContextData = HashMap<String, String>()
+        mContextData[pageNameKey] = pageName
+        mContextData[pageTypeKey] = pageType
+        mContextData[languageKey] = language
+        mContextData[sectionKey] = section
+        mContextData[prevPageNameKey] = prevPageName
+        mContextData[apiErr] = apiError
+        mContextData[paymentMethod] = paymentM
+        mContextData[ordId] = orderId
+        mContextData[ordPlcd] = orderPlaced
+        mContextData[loggedIn] = logIn.toString()
+
+        trackAction(actionKey, mContextData)
+
+
+    }
+    fun setActionTrackPaymentMethod(
+        actionKey:String,
+        pageName: String,
+        pageType: String,
+        language: String,
+        section: String,
+        prevPageName: String,
+        apiErr:String,
+        paymentM:String,
+        logIn:Any
+    ) {
+
+        val mContextData = HashMap<String, String>()
+        mContextData[pageNameKey] = pageName
+        mContextData[pageTypeKey] = pageType
+        mContextData[languageKey] = language
+        mContextData[sectionKey] = section
+        mContextData[prevPageNameKey] = prevPageName
+        mContextData[apiErr] = apiError
+        mContextData[paymentMethod] = paymentM
+        mContextData[loggedIn] = logIn.toString()
+
+        trackAction(actionKey, mContextData)
+
+
+    }
     fun setActionTrack1(
         actionKey:String,
         pageName: String,

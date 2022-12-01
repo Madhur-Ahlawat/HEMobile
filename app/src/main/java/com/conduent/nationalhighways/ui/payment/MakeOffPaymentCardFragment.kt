@@ -14,15 +14,18 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentMakeOffPaymentCardBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.utils.common.CardNumberFormatterTextWatcher
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Logg
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBinding>(),
     View.OnClickListener {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -30,6 +33,16 @@ class MakeOffPaymentCardFragment : BaseFragment<FragmentMakeOffPaymentCardBindin
         FragmentMakeOffPaymentCardBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:card info",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: card info",
+            sessionManager.getLoggedInUser()
+        )
+
         binding.webview.loadSetting("file:///android_asset/NMI.html")
     }
 

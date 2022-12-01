@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.payment.adapter.MakeOffPaymentCrossingAd
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossingBinding>(),
@@ -30,6 +31,8 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var mScreeType = 0
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     override fun getFragmentBinding(
@@ -39,6 +42,16 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
         FragmentMakeOffPaymentCrossingBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:trips info",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: trips info",
+            sessionManager.getLoggedInUser()
+        )
         list = arguments?.getParcelableArrayList<VehicleResponse?>(Constants.DATA)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

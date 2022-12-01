@@ -22,15 +22,13 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.openKeyboardForced
 import com.conduent.nationalhighways.utils.extn.showToast
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
@@ -44,6 +42,8 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     private var plateInfoResponse: PlateInfoResponse? = null
     private var vehicleResponse: VehicleResponse? = null
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?) =
         DialogAddVehicleBinding.inflate(inflater, container, false)
@@ -66,6 +66,17 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
 
         loader = LoaderDialog()
         loader?.setStyle(STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:add vehicle:enter vrm dialog",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment:add vehicle:enter vrm dialog",
+            sessionManager.getLoggedInUser()
+        )
+
     }
 
     override fun onPause() {
@@ -91,6 +102,16 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
             dismiss()
         }
         binding.addVehicleBtn.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "add vehicle",
+                "one of  payment:add vehicle:enter vrm dialog",
+                "vehicle",
+                "english",
+                "one of payment",
+                "home",
+                sessionManager.getLoggedInUser()
+            )
+
             binding.addVrmInput.hideKeyboard()
             if (binding.addVrmInput.text.toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
@@ -118,6 +139,15 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         }
 
         binding.cancelBtn.setOnClickListener {
+            AdobeAnalytics.setActionTrack(
+                "cancel",
+                "one of  payment:add vehicle:enter vrm dialog",
+                "vehicle",
+                "english",
+                "one of payment",
+                "home",
+                sessionManager.getLoggedInUser()
+            )
             binding.addVrmInput.hideKeyboard()
             dismiss()
         }

@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicleBinding>(),
@@ -32,6 +33,9 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
     private var vehicleList = VehicleHelper.list
     private var mScreeType = 0
     private var isMakePaymentScreen = true
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -47,6 +51,16 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
         binding.rvVehiclesList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvVehiclesList.setHasFixedSize(true)
         binding.rvVehiclesList.adapter = mAdapter
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:add vehicle",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment:add vehicle",
+            sessionManager.getLoggedInUser()
+        )
+
 
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
@@ -73,11 +87,31 @@ class MakePaymentAddVehicleFragment : BaseFragment<FragmentMakePaymentAddVehicle
                 )
                 addDialog?.show(childFragmentManager, AddVehicleDialog.TAG)
 
+                AdobeAnalytics.setActionTrack(
+                    "add vehicle",
+                    "one of  payment:add vehicle",
+                    "vehicle",
+                    "english",
+                    "one of payment",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
+
             }
             R.id.findVehicle -> {
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
                 bundle.putParcelable(Constants.DATA, mVDetails)
+                AdobeAnalytics.setActionTrack(
+                    "find vehicle",
+                    "one of  payment:add vehicle",
+                    "vehicle",
+                    "english",
+                    "one of payment",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
 
                 findNavController().navigate(R.id.action_makePaymentAddVehicleFragment_to_addVehicleDoneFragment, bundle)
             }

@@ -32,10 +32,14 @@ import okhttp3.ResponseBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSuccessfulBinding>(),
     RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -53,6 +57,16 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
     ) = FragmentMakeOffPaymentSuccessfulBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:payment success",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: payment success",
+            sessionManager.getLoggedInUser()
+        )
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         mEmail = arguments?.getString(Constants.EMAIL)!!

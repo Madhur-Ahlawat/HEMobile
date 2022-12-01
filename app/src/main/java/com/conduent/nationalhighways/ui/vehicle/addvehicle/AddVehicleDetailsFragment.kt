@@ -8,16 +8,23 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.DATA
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
     private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -33,7 +40,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-
         binding.title.text = getString(
             R.string.vehicle_reg_num,
             mVehicleDetails?.plateInfo?.number
@@ -42,6 +48,16 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
             R.string.country_reg,
             mVehicleDetails?.plateInfo?.country
         )//"Country of registration ${mVehicleDetails?.plateInfo?.country}"
+
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:vehicle details manual entry",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment:vehicle details manual entry",
+            sessionManager.getLoggedInUser()
+        )
     }
 
     override fun initCtrl() {
@@ -56,6 +72,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         }
 
         binding.nextBtn.setOnClickListener {
+
+            AdobeAnalytics.setActionTrack(
+                "next",
+                "one of  payment:vehicle details manual entry",
+                "vehicle",
+                "english",
+                "one of payment",
+                "home",
+                sessionManager.getLoggedInUser()
+            )
+
             if (binding.makeInputEditText.text.toString().trim().isNotEmpty()
                 && binding.modelInputEditText.text.toString().trim().isNotEmpty()
                 && binding.colorInputEditText.text.toString().trim().isNotEmpty()

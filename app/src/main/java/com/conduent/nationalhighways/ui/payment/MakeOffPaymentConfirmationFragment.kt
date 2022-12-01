@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.payment.adapter.MakeOffPaymentVehicleAda
 import com.conduent.nationalhighways.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -37,12 +38,26 @@ class MakeOffPaymentConfirmationFragment :
     private var mail = ""
     private var mOptionsType = ""
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentMakeOffPaymentConfirmationBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:payment confirm",
+            "vehicle",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment: payment confirm",
+            sessionManager.getLoggedInUser()
+        )
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -92,6 +107,15 @@ class MakeOffPaymentConfirmationFragment :
                             arguments?.getString(Constants.OPTIONS_TYPE)
                         )
                         mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
+                        AdobeAnalytics.setActionTrackPaymentMethodOrderId( "Confirm ",
+                            " one of payment: payment confirm",
+                            "payment ",
+                            "english",
+                            " one of payment",
+                            "home",
+                            "success","card",it.refrenceNumber!!,"1",sessionManager.getLoggedInUser()
+                        )
+
                         findNavController().navigate(
                             R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
                             mBundle
@@ -102,6 +126,16 @@ class MakeOffPaymentConfirmationFragment :
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
+
+                AdobeAnalytics.setActionTrackPaymentMethod( "Confirm ",
+                 " one of payment: payment confirm",
+                "payment ",
+                "english",
+                 " one of payment",
+                "home",
+                resource.errorMsg,"card",sessionManager.getLoggedInUser()
+                )
+
             }
             else -> {
             }
