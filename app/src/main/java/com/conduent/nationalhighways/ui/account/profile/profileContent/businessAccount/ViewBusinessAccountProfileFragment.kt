@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -33,10 +34,10 @@ class ViewBusinessAccountProfileFragment :
 
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        (requireActivity() as ProfileActivity).showLoader()
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        (requireActivity() as ProfileActivity).showLoader()
 
         viewModel.accountDetail()
     }
@@ -63,7 +64,9 @@ class ViewBusinessAccountProfileFragment :
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        (requireActivity() as ProfileActivity).hideLoader()
+//        (requireActivity() as ProfileActivity).hideLoader()
+        loader?.dismiss()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {

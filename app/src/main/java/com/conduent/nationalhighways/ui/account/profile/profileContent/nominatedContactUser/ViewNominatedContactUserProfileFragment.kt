@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -37,10 +38,10 @@ class ViewNominatedContactUserProfileFragment :
     ) = FragmentViewNominatedContactUserProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-       // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        (requireActivity() as ProfileActivity).showLoader()
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//        (requireActivity() as ProfileActivity).showLoader()
 
         viewModel.accountDetail()
     }
@@ -57,8 +58,8 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleNominatedContactData(status: Resource<NominatedContactRes?>?) {
-          //  loader?.dismiss()
-        (requireActivity() as ProfileActivity).hideLoader()
+            loader?.dismiss()
+//        (requireActivity() as ProfileActivity).hideLoader()
 
         when (status) {
             is Resource.Success -> {
@@ -109,8 +110,8 @@ class ViewNominatedContactUserProfileFragment :
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-//            loader?.dismiss()
-        (requireActivity() as ProfileActivity).hideLoader()
+            loader?.dismiss()
+//        (requireActivity() as ProfileActivity).hideLoader()
 
         when (status) {
             is Resource.Success -> {
@@ -118,7 +119,8 @@ class ViewNominatedContactUserProfileFragment :
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         ncId = status.data.accountInformation?.ncId ?: ""
-                        (requireActivity() as ProfileActivity).showLoader()
+//                        (requireActivity() as ProfileActivity).showLoader()
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                         viewModel.getNominatedContacts()
                         binding.model = this

@@ -218,7 +218,8 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEmailId"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_160sdp"
+                    android:gravity="end|center_vertical"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"

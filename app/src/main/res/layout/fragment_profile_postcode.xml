@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
             android:text="@string/pin"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold"

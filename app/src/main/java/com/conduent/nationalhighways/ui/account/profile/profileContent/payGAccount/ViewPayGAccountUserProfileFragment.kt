@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -12,6 +13,7 @@ import com.conduent.nationalhighways.databinding.FragmentViewPaygAccountUserBind
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,7 +23,7 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
-//    private var loader: LoaderDialog? = null
+    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -32,10 +34,9 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     ) = FragmentViewPaygAccountUserBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        loader = LoaderDialog()
-//        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        (requireActivity() as ProfileActivity).showLoader()
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         viewModel.accountDetail()
     }
@@ -75,8 +76,8 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
     }
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        (requireActivity() as ProfileActivity).hideLoader()
-
+//        (requireActivity() as ProfileActivity).hideLoader()
+        loader?.dismiss()
         when (status) {
             is Resource.Success -> {
                 status.data?.run {

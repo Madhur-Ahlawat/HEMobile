@@ -65,6 +65,7 @@
             android:id="@+id/tvPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginStart="17dp"
             android:text="@string/underline_cap_pin"
             android:textColor="@color/high_lighted_color"

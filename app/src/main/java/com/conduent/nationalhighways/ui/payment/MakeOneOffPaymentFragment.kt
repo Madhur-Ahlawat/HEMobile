@@ -12,10 +12,17 @@ import android.text.Spanned
 import android.text.style.BulletSpan
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     View.OnClickListener {
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -27,6 +34,15 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
             requireContext().getString(R.string.str_payment_des1),
             requireContext().getString(R.string.str_payment_des2)
             //requireContext().getString(R.string.str_payment_des3)
+        )
+        AdobeAnalytics.setScreenTrack(
+            "one of  payment:details",
+            "one of payment details",
+            "english",
+            "one of payment",
+            "home",
+            "one of  payment:details",
+            sessionManager.getLoggedInUser()
         )
 
         val bulletGap = dp(10).toInt()
@@ -51,6 +67,16 @@ class MakeOneOffPaymentFragment : BaseFragment<FragmentMakeOffPaymentBinding>(),
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnContinue -> {
+                AdobeAnalytics.setActionTrack(
+                    "continue",
+                    "one of  payment:details",
+                    "one of payment details",
+                    "english",
+                    "one of payment",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_SCREEN_KEY,Constants.VEHICLE_SCREEN_TYPE_ADD_ONE_OF_PAYMENT)
                 findNavController().navigate(R.id.action_makeOneOffPaymentFragment_to_makePaymentAddVehicleFragment, bundle)

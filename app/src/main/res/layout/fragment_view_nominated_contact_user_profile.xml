@@ -223,13 +223,15 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEmailId"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_160sdp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:gravity="end|center_vertical"
                     android:text="@{nominated.emailAddress}"
                     android:textColor="#474747"
                     android:textSize="16sp"
+                    android:ellipsize="end"
                     android:textStyle="normal" />
 
 

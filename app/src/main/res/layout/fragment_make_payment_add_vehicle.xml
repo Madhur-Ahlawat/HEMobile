@@ -108,6 +108,7 @@
             android:backgroundTint="@{findButton==true?@color/blue_color:@color/btn_disable_color}"
             android:clickable="@{findButton}"
             android:text="@string/str_find_vehicle"
+            android:visibility="invisible"
             android:textAllCaps="false"
             android:textColor="@{findButton==true?@color/white:@color/btn_disable_txt_color}"
             android:textSize="@dimen/_14ssp"

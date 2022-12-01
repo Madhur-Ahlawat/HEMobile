@@ -11,14 +11,16 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentActivity : BaseActivity<Any>() {
-    private lateinit var binding : ActivityMakeOffPaymentBinding
+    private lateinit var binding: ActivityMakeOffPaymentBinding
+
     @Inject
     lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
-        binding=ActivityMakeOffPaymentBinding.inflate(layoutInflater)
+        binding = ActivityMakeOffPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.include.titleTxt.text = applicationContext.getString(R.string.str_make_one_of_payment)
+        binding.include.titleTxt.text =
+            applicationContext.getString(R.string.str_make_one_of_payment)
         binding.include.backButton.setOnClickListener { onBackPressed() }
 
         AdobeAnalytics.setScreenTrack(
@@ -33,6 +35,6 @@ class MakeOffPaymentActivity : BaseActivity<Any>() {
 
     }
 
-    override fun observeViewModel() { }
+    override fun observeViewModel() {}
 
 }

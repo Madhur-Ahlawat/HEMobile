@@ -58,6 +58,39 @@
         <action
             android:id="@+id/action_passwordFragment_to_updatePasswordFragment"
             app:destination="@id/updatePasswordFragment" />
+
+
+        <action
+            android:id="@+id/action_passwordFragment_to_viewProfileFragment"
+            app:destination="@id/viewProfile"
+            app:popUpTo="@id/viewProfile"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_passwordFragment_to_viewBusinessAccountProfile"
+            app:destination="@id/viewBusinessAccountProfileFragment"
+            app:popUpTo="@id/viewBusinessAccountProfileFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_passwordFragment_to_viewPaygAccountProfile"
+            app:destination="@id/viewPayGAccountProfileFragment"
+            app:popUpTo="@id/viewPayGAccountProfileFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_passwordFragment_to_viewNominatedAccountProfile"
+            app:destination="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
+            app:popUpToInclusive="true"
+            app:restoreState="true" />
+
+        <action
+            android:id="@+id/action_passwordFragment_to_viewNominatedPrimaryProfileFragment"
+            app:destination="@id/viewPrimaryAccountUserProfileFragment"
+            app:popUpTo="@id/viewPrimaryAccountUserProfileFragment"
+            app:popUpToInclusive="true"
+            app:restoreState="true" />
     </fragment>
 
 

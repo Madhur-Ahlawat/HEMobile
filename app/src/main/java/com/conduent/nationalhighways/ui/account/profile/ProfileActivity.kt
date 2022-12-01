@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.account.profile
 
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.NavHostFragment
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityProfileBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -14,6 +12,12 @@ import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
+
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.conduent.nationalhighways.R
+
 
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
@@ -30,8 +34,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar(getString(R.string.str_account_management))
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         accountType = sessionManager.getAccountType()
         isSecondaryUser = sessionManager.getSecondaryUser()
@@ -45,11 +49,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
         loadSession()
     }
 
-    public fun showLoader(){
+    fun showLoader() {
+
         loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
 
     }
-    public fun hideLoader(){
+
+    fun hideLoader() {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -74,34 +80,39 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
 
     private fun setFragmentInView() {
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
-        val oldGraph = navController.navInflater.inflate(R.navigation.navigation_profile)
+        val navController: NavController =
+            Navigation.findNavController(this, R.id.fragmentContainerView)
+        val navGraph = navController.navInflater.inflate(R.navigation.navigation_profile)
+
+
+//        val navHostFragment =
+//            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+//        val navController = navHostFragment.navController
+//        val oldGraph = navController.navInflater.inflate(R.navigation.navigation_profile)
 
 
         when {
             !isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
-                oldGraph.setStartDestination(R.id.viewProfile)
+                navGraph.setStartDestination(R.id.viewProfile)
             }
 
             !isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {
-                oldGraph.setStartDestination(R.id.viewBusinessAccountProfileFragment)
+                navGraph.setStartDestination(R.id.viewBusinessAccountProfileFragment)
             }
 
             isSecondaryUser && accountType == Constants.PERSONAL_ACCOUNT -> {
-                oldGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
+                navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
             isSecondaryUser && accountType == Constants.BUSINESS_ACCOUNT -> {
-                oldGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
+                navGraph.setStartDestination(R.id.viewNominatedUserAccountProfileFragment)
             }
             else -> {
-                oldGraph.setStartDestination(R.id.viewPayGAccountProfileFragment)
+                navGraph.setStartDestination(R.id.viewPayGAccountProfileFragment)
             }
 
         }
 
-        navController.graph = oldGraph
+        navController.graph = navGraph
 
     }
 
