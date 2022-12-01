@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
@@ -28,6 +29,8 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
     val mList = mutableListOf<UsedChargesModel?>()
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var isClicked = false
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -35,6 +38,16 @@ class UsedChargesFragment : BaseFragment<FragmentUsedChargesBinding>(),
     ) = FragmentUsedChargesBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:used crossings",
+            "used crossings",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:used crossings",
+            sessionManager.getLoggedInUser()
+        )
+
         binding.rvHistory.layoutManager = LinearLayoutManager(requireActivity())
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

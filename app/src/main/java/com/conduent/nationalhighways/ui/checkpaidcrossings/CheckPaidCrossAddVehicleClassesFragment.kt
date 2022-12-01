@@ -10,10 +10,13 @@ import com.conduent.nationalhighways.databinding.FragmentPaidCrossAddVehicleClas
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentPaidCrossAddVehicleClassesBinding>() {
@@ -23,12 +26,26 @@ class CheckPaidCrossAddVehicleClassesFragment : BaseFragment<FragmentPaidCrossAd
     private var exists: Boolean? = null
     private var vrm = ""
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentPaidCrossAddVehicleClassesBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:vehicle class declaration",
+            "vehicle",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:vehicle class declaration",
+            sessionManager.getLoggedInUser()
+        )
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         vrm = arguments?.getString(Constants.CHECK_PAID_CROSSING_VRM_ENTERED).toString()

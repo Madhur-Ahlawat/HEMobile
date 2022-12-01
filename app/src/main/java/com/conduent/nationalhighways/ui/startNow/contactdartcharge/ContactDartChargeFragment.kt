@@ -11,8 +11,10 @@ import com.conduent.nationalhighways.ui.startNow.guidancedocuments.GuidanceAndDo
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.customToolbar
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,

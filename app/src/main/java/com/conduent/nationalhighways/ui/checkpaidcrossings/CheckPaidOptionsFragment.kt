@@ -7,18 +7,37 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentUsedUnusedOptionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckPaidOptionsFragment : BaseFragment<FragmentUsedUnusedOptionsBinding>(),
     View.OnClickListener {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentUsedUnusedOptionsBinding.inflate(inflater, container, false)
 
-    override fun init() {}
+    override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:select crossing type",
+            "select crossing type",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:select crossing type",
+            sessionManager.getLoggedInUser()
+        )
+
+
+    }
 
     override fun initCtrl() {
         binding.rlUnUsedCrossings.setOnClickListener(this)

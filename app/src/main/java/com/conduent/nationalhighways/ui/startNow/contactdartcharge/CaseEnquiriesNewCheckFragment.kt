@@ -13,8 +13,10 @@ import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CaseEnquiriesNewCheckFragment :
     BaseFragment<FragmentCaseEnquiriesOptionsWhatBinding>(),
     View.OnClickListener {

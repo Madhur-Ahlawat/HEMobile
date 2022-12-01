@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentStartNowBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.startNow.StartNowBaseActivity
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
@@ -13,11 +14,14 @@ import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickListener {
 
     private var screenType: String = ""
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,6 +47,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             rlCrossingServiceUpdate.setOnClickListener(this@StartNowFragment)
             rlContactDartCharge.setOnClickListener(this@StartNowFragment)
             rlViewCharges.setOnClickListener(this@StartNowFragment)
+            btnLogin.setOnClickListener(this@StartNowFragment)
         }
     }
 
@@ -107,6 +112,22 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                     )
 
                     requireActivity().startNormalActivity(ViewChargesActivity::class.java)
+                }
+
+                R.id. btnLogin ->{
+                    AdobeAnalytics.setActionTrack(
+                        "login",
+                        "home",
+                        "home",
+                        "englsh",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
+                    requireActivity().startNormalActivity(
+                        AuthActivity::class.java
+                    )
+
                 }
             }
         }

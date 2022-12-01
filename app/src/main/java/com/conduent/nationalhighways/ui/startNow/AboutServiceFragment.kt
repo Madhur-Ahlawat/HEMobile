@@ -9,8 +9,10 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.toolbar
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.OnClickListener {
 
     @Inject

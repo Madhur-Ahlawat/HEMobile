@@ -15,12 +15,11 @@ import com.conduent.nationalhighways.data.model.checkpaidcrossings.EnterVrmOptio
 import com.conduent.nationalhighways.databinding.FragmentEnterVrmCheckBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnClickListener {
@@ -29,6 +28,8 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     private var loader: LoaderDialog? = null
     private var country = "UK"
     private var isCalled = false
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -36,6 +37,16 @@ class EnterVrmFragment : BaseFragment<FragmentEnterVrmCheckBinding>(), View.OnCl
     ) = FragmentEnterVrmCheckBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:enter vehicle",
+            "vehicle",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:enter vehicle",
+            sessionManager.getLoggedInUser()
+        )
+
         binding.model = EnterVrmOptionsModel(vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

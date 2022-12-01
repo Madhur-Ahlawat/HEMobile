@@ -16,14 +16,12 @@ import com.conduent.nationalhighways.ui.checkpaidcrossings.dialog.ConfirmChangeD
 import com.conduent.nationalhighways.ui.checkpaidcrossings.dialog.ConfirmChangeListener
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingChangeVrmBinding>(),
@@ -35,12 +33,25 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
     private var loader: LoaderDialog? = null
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentCheckPaidCrossingChangeVrmBinding.inflate(inflater, container, false)
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:change vrm",
+            "vehicle",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:change vrm",
+            sessionManager.getLoggedInUser()
+        )
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         val country = arguments?.getString(Constants.COUNTRY_TYPE)

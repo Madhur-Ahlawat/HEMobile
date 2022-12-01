@@ -14,8 +14,10 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.onTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartChargeBinding>(),
     View.OnClickListener {
     private lateinit var accountModel: AccountTypeSelectionModel

@@ -8,15 +8,21 @@ import com.conduent.nationalhighways.data.model.account.RetrievePlateInfoDetails
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
 
     private var exists: Boolean? = null
     private var vrm = ""
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -26,6 +32,16 @@ class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleD
     override fun observer() {}
 
     override fun init() {
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:vehicle details manual entry",
+            "vehicle",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:vehicle details manual entry",
+            sessionManager.getLoggedInUser()
+        )
+
         binding.model = false
         val country =
             arguments?.getString(Constants.COUNTRY_TYPE)

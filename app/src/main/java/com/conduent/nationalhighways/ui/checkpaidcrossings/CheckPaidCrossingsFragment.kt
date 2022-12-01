@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
@@ -28,6 +29,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isCalled = false
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -35,6 +38,17 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     ) = FragmentPaidCrossingCheckBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:login",
+            "login",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:login",
+            sessionManager.getLoggedInUser()
+        )
+
         binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -70,6 +84,17 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.continue_btn -> {
+
+                AdobeAnalytics.setActionTrack(
+                    "continue",
+                    "check crossings:login",
+                    "login",
+                    "english",
+                    "check crossings",
+                    "home",
+                    sessionManager.getLoggedInUser()
+                )
+
                 hideKeyboard()
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

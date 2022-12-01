@@ -12,15 +12,20 @@ import com.conduent.nationalhighways.databinding.FragmentUnusedChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.checkpaidcrossings.adapter.OnChangeClickListener
 import com.conduent.nationalhighways.ui.checkpaidcrossings.adapter.UnUsedChargesAdapter
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(), OnChangeClickListener {
 
     private val mList = mutableListOf<UnUsedChargesModel?>()
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,6 +33,17 @@ class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(), OnCh
     ) = FragmentUnusedChargesBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        AdobeAnalytics.setScreenTrack(
+            "check crossings:unused crossings",
+            "unused crossings",
+            "english",
+            "check crossings",
+            "home",
+            "check crossings:unused crossings",
+            sessionManager.getLoggedInUser()
+        )
+
         val mData =
             arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
         val mDataVrmRef =
@@ -48,6 +64,16 @@ class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(), OnCh
     override fun observer() {}
 
     override fun clickChange(index: Int) {
+        AdobeAnalytics.setActionTrack(
+            "click vehicle",
+            "check crossings:unused crossings",
+            "unused crossings",
+            "english",
+            "check crossings",
+            "home",
+            sessionManager.getLoggedInUser()
+        )
+
         findNavController().navigate(
             R.id.action_unUsedCharges_to_enterVrmFragment
         )

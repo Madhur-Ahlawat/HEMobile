@@ -15,14 +15,17 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DartChargeAccountTypeSelectionFragment :
     BaseFragment<FragmentDartChargeAccountTypeSelectionBinding>(),
     View.OnClickListener,
     RadioGroup.OnCheckedChangeListener {
 
     private lateinit var accountModel: AccountTypeSelectionModel
+
     @Inject
     lateinit var sessionManager: SessionManager
 
