@@ -21,7 +21,13 @@ object AdobeAnalytics {
     const val paymentMethod = "ruc.order.paymentMethod"
     const val orderId = "ruc.order.orderId"
     const val orderPlaced = "ruc.order.orderPlaced"
-    const val apiError  = "ruc.page.error"
+    const val apiError = "ruc.page.error"
+    const val userType = "ruc.account.usertype"
+    const val userLevel = "ruc.account.userlevel"
+    const val financialStatus = "ruc.account.financialstatus"
+    const val paymentType = "ruc.account.paymenttype"
+    const val accountStatus = "ruc.account.accountstatus"
+
 
     fun trackState(state: String, contextData: MutableMap<String, String>) {
         MobileCore.trackState(state, contextData)
@@ -48,7 +54,7 @@ object AdobeAnalytics {
         section: String,
         prevPageName: String,
         stateName: String,
-        logIn:Any
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -62,14 +68,45 @@ object AdobeAnalytics {
 
     }
 
-    fun setActionTrack(
-        actionKey:String,
+    fun setDashBoardScreenTrack(
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        logIn:Any
+        stateName: String,
+        userT: String,
+        userL: String,
+        financialS: String,
+        paymentT: String,
+        accountS: String,
+        logIn: Any
+    ) {
+
+        val mContextData = HashMap<String, String>()
+        mContextData[pageNameKey] = pageName
+        mContextData[pageTypeKey] = pageType
+        mContextData[languageKey] = language
+        mContextData[sectionKey] = section
+        mContextData[prevPageNameKey] = prevPageName
+        mContextData[userT] = userType
+        mContextData[userL] = userLevel
+        mContextData[financialS] = financialStatus
+        mContextData[paymentT] = paymentType
+        mContextData[accountS] = accountStatus
+        mContextData[loggedIn] = logIn.toString()
+        trackState(stateName, mContextData)
+
+    }
+
+    fun setActionTrack(
+        actionKey: String,
+        pageName: String,
+        pageType: String,
+        language: String,
+        section: String,
+        prevPageName: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -84,15 +121,16 @@ object AdobeAnalytics {
 
 
     }
+
     fun setActionTrackError(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        apiErrorMsg:String,
-        logIn:Any
+        apiErrorMsg: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -108,16 +146,17 @@ object AdobeAnalytics {
 
 
     }
+
     fun setLoginActionTrackError(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        apiTimeOut:String,
-        loginType:String,
-        logIn:Any
+        apiTimeOut: String,
+        loginType: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -134,18 +173,19 @@ object AdobeAnalytics {
 
 
     }
+
     fun setActionTrackPaymentMethodOrderId(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        apiErr:String,
-        paymentM:String,
-        ordId:String,
-        ordPlcd:String,
-        logIn:Any
+        apiErr: String,
+        paymentM: String,
+        ordId: String,
+        ordPlcd: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -164,16 +204,17 @@ object AdobeAnalytics {
 
 
     }
+
     fun setActionTrackPaymentMethod(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        apiErr:String,
-        paymentM:String,
-        logIn:Any
+        apiErr: String,
+        paymentM: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -190,15 +231,16 @@ object AdobeAnalytics {
 
 
     }
+
     fun setActionTrack1(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        accountOpt:String,
-        logIn:Any
+        accountOpt: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
@@ -214,15 +256,16 @@ object AdobeAnalytics {
 
 
     }
+
     fun setActionTrack2(
-        actionKey:String,
+        actionKey: String,
         pageName: String,
         pageType: String,
         language: String,
         section: String,
         prevPageName: String,
-        resetOption:String,
-        logIn:Any
+        resetOption: String,
+        logIn: Any
     ) {
 
         val mContextData = HashMap<String, String>()
