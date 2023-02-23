@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- code_review_development
+- development-2.0
 
 pool:
   vmImage: 'macOS-latest'
@@ -15,13 +15,10 @@ steps:
       gradleWrapperFile: 'gradlew'
       workingDirectory: ''
       tasks: 'assembleDebug'
-      publishJUnitResults: true
+      publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      javaHomeOption: 'JDKVersion'
       jdkVersionOption: '1.11'
       gradleOptions: '-Xmx3072m'
-      sonarQubeRunAnalysis: false
-      spotBugsAnalysis: false
 
   - task: CopyFiles@2
     inputs:
@@ -34,26 +31,4 @@ steps:
           ArtifactName: 'HE-MAPP-ANDROID'
           publishLocation: 'Container'
 
-  - task: Bash@3
-    inputs:
-      filePath: 'bash_script'
-
-  - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '11'
-      jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'PreInstalled'
-
-  - script: ./gradlew jacocoTestReport
-
-  - task: PublishCodeCoverageResults@1
-    inputs:
-     codeCoverageTool: 'JaCoCo'
-     summaryFileLocation: '/Users/runner/work/1/s/app/build/coverage/report/testReport.xml'
-     pathToSources: '/Users/runner/work/1/s/app/src/main/java/'
-     
-  - task: PublishTestResults@2
-    inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/testDevDebugUnitTest/TEST-*.xml'
-        searchFolder: $(System.DefaultWorkingDirectory)
+ 
