@@ -30,5 +30,14 @@ steps:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'HE-MAPP-ANDROID'
           publishLocation: 'Container'
+          FileCopyOptions: 
+  - task: AppCenterDistribute@3
+    inputs:
+        serverEndpoint: 'NHE_Android'
+        appSlug: 'shivam.gupta-conduent.com/NHE'
+        appFile: '**/*.apk'
+        releaseNotesOption: 'input'
+        releaseNotesInput: 'App Releases'
+        destinationType: 'groups'
 
  
