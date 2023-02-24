@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/he_bg"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/tool_bar_lyt"
+            layout="@layout/tool_bar_with_title_back" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <TextView
+                android:id="@+id/txt_fingerprint_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="@string/biometriclogin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_fingerprint_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:switchPadding="20dp"
+                android:textColor="@color/white"
+                android:checked="true"
+                android:textSize="@dimen/_13ssp"
+                android:theme="@style/Color1SwitchStyle"
+                android:text="@string/usefingerprinttologin" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+                android:textAllCaps="false"
+                android:text="@string/str_save"
+                android:background="@color/btn_color" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_medium"
+                android:id="@+id/biometric_cancel"
+                android:textSize="@dimen/_12sdp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
