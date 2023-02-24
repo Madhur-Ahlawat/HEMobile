@@ -4,10 +4,10 @@
 # https://aka.ms/yaml
 
 trigger:
-- development-2.0
+- CICD_TestNew
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
   - task: Gradle@2
@@ -22,7 +22,7 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-        Contents: '**/*_1.apk'
+        Contents: '**/*.apk'
         TargetFolder:  '$(build.artifactStagingDirectory)'
         OverWrite: true
 
@@ -36,7 +36,7 @@ steps:
     inputs:
         serverEndpoint: 'NHE_Android'
         appSlug: 'shivam.gupta-conduent.com/NHE'
-        appFile: '**/*_1.apk'
+        appFile: '**/*.apk'
         releaseNotesOption: 'input'
         releaseNotesInput: 'App Releases'
         destinationType: 'groups'
