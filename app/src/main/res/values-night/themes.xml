@@ -170,4 +170,9 @@
         <item name="android:colorControlActivated">@color/dark_blue_color</item>
     </style>
 
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/login_blue_border</item>
+        <item name="trackTint">@color/white</item>
+
+    </style>
 </resources>

@@ -160,6 +160,7 @@ class NominatedInvitationAccessRightFragment :
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
                 }
+                else -> {}
             }
         } catch (e: Exception) {
         }

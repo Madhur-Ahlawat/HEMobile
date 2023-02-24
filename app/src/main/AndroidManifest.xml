@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.account.biometric.BiometricActivity"
+            android:exported="false">
 
+        </activity>
         <activity
             android:name="com.conduent.nationalhighways.ui.landing.SplashActivity"
             android:exported="true"
@@ -125,7 +129,6 @@
             android:name=".receiver.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
-
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:exported="false"
@@ -135,7 +138,6 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

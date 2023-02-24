@@ -8,7 +8,7 @@
     <!-- Base application theme. -->
     <style name="Theme.HEMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/blue_color</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->s
@@ -168,6 +168,13 @@
         <item name="hintTextColor">@color/dark_blue_color</item>
         <item name="android:textColor">@color/dark_blue_color</item>
         <item name="android:colorControlActivated">@color/dark_blue_color</item>
+    </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/login_blue_border</item>
+        <item name="trackTint">@color/white</item>
+
+
     </style>
 
 </resources>

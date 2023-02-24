@@ -898,6 +898,13 @@
     <string name="str_select">Select</string>
     <string name="str_notifications_not_found">Notifications not found</string>
 
+    //Biometric
+    <string name="doyouwantenablebiometric">Do you want to enable Biometrics?</string>
+    <string name="biometriclogin">Biometric Login</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="usefingerprinttologin">Use fingerprint or face to login</string>
+    <string name="pleaseenablebiometric">Please enable Biometric login in Settings.</string>
+
 </resources>
 
 

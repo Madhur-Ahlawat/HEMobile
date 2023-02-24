@@ -3,8 +3,8 @@ import java.util.regex.Pattern
 
 buildscript {
 
-    ext.kotlin_version = "1.6.10"
-    ext.daggerHiltVersion = '2.40.5'
+    ext.kotlin_version = "1.7.20"
+    ext.daggerHiltVersion = '2.42'
     ext.nav_version = "2.3.5"
     ext.jacocoVersion = '0.8.7'
 
@@ -13,12 +13,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
-        classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.google.gms:google-services:4.3.15'
     }
 }
 

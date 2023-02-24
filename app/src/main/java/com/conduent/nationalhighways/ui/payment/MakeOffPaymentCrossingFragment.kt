@@ -72,7 +72,7 @@ class MakeOffPaymentCrossingFragment : BaseFragment<FragmentMakeOffPaymentCrossi
                 (list?.get(i)?.classRate ?: 0.0).times(
                     list?.get(i)?.pastQuantity?.toDouble() ?: 0.0
                 )
-            totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount ?: 0.0))
+            totalPrice = totalPrice?.plus(payableCrossingAmount.plus(futureCrossingAmount ?: 0.0))!!
         }
 
         Logg.logging("testing", " MakeOffPaymentCrossingFragment list  $list")

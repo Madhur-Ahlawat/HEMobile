@@ -11,6 +11,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.databinding.FragmentAccountBinding
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.communication.CommunicationActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutDialog
@@ -59,18 +60,17 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         if (isSecondaryUser)
             binding.nominatedContactsLyt.gone()
 
-//        if (sessionManager.fetchAccountType()
-//                .equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
-//                .equals(Constants.PAYG, true)
-//        ) {
-//            binding.nominatedContactsLyt.gone()
-//        }
-//
-//        if (sessionManager.fetchAccountType()
-//                .equals("NonRevenue", true)
-//        ) {
-//            binding.payment.gone()
-//        }
+       if (sessionManager.fetchAccountType().equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
+               .equals(Constants.PAYG, true)
+      ) {
+            binding.nominatedContactsLyt.gone()
+        }
+
+       if (sessionManager.fetchAccountType()
+               .equals("NonRevenue", true)
+        ) {
+           binding.payment.gone()
+      }
 
     }
 
@@ -103,6 +103,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             nominatedContactsLyt.setOnClickListener(this@AccountFragment)
             rlAccountStatement.setOnClickListener(this@AccountFragment)
+            rlBiometrics.setOnClickListener(this@AccountFragment)
         }
 
     }
@@ -146,6 +147,14 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
 
             R.id.rl_account_statement -> {
                 requireActivity().startNormalActivity(AccountStatementActivity::class.java)
+            }
+            R.id.rl_biometrics->{
+                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
+                    putInt(
+                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
+                    )
+                }
             }
 
             R.id.log_out_lyt -> {

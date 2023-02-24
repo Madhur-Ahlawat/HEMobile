@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.utils.common
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import java.security.PublicKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +15,8 @@ import javax.inject.Singleton
 class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     /*private var prefs: SharedPreferences =
         context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)*/
+
+
 
     companion object {
         const val USER_TOKEN = "user_token"
@@ -31,6 +34,12 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
         const val PUSH_TOKEN = "firebase_notification_token"
+        const val USER_NAME="username"
+
+        val BIOMETRICTOKEN: String="ACSInrixTrafficApp"
+        val TOUCH_ID_ENABLED: String="touch_ID"
+        val PRIVATE_KEY: String=""
+        val PUBLIC_KEY: String=""
     }
 
     /**
@@ -217,6 +226,53 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun fetchAccountEmailId(): String? {
         return prefs.getString(USER_EMAIL_ID, null)
+    }
+
+    fun saveUserName(email: String?) {
+        prefs.edit().apply {
+            putString(USER_NAME, email)
+        }.apply()
+    }
+
+    fun fetchUserName(): String? {
+        return prefs.getString(USER_NAME, null)
+    }
+
+    fun savePublicKey(publicKey: String?) {
+        prefs.edit().apply {
+            putString(PUBLIC_KEY, publicKey)
+        }.apply()
+    }
+
+    fun fetchPublicKey(): String? {
+        return prefs.getString(PUBLIC_KEY, null)
+    }
+
+    fun savePrivateKey(privateKey: String?) {
+        prefs.edit().apply {
+            putString(PRIVATE_KEY, privateKey)
+        }.apply()
+    }
+
+    fun fetchPrivateKey(): String? {
+        return prefs.getString(PRIVATE_KEY, null)
+    }
+
+    fun saveTouchIdEnabled(privateKey: Boolean) {
+        prefs.edit().apply {
+            putBoolean(TOUCH_ID_ENABLED, privateKey)
+        }.apply()
+    }
+
+    fun fetchTouchIdEnabled(): Boolean {
+        return prefs.getBoolean(TOUCH_ID_ENABLED, false)
+    }
+
+    /**
+     * Function to fetch bio metric token
+     */
+    fun fetchBiometricToken(): String? {
+        return prefs.getString(BIOMETRICTOKEN, "ACSInrixTrafficApp")
     }
 
 }

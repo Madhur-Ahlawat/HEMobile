@@ -192,9 +192,17 @@ object Constants {
     const val EMAIL_ADDRESS = "Email address"
     const val PHONE_NUMBER = "Phone number"
 
+    //Biometric
+    const val FROM_LOGIN_TO_BIOMETRIC = "FROM_LOGIN_TO_BIOMETRIC"
+    const val FROM_LOGIN_TO_BIOMETRIC_VALUE = 1003
+    const val FROM_ACCOUNT_TO_BIOMETRIC_VALUE = 1004
+
 
     //Error code for api response
     const val NO_DATA_FOR_GIVEN_INDEX = 1020
     const val NO_DATA_FOR_NOTIFICATIONS = 1220
     const val CASES_GIVEN_DATE_WRONG = 1042
+
+
+
 }

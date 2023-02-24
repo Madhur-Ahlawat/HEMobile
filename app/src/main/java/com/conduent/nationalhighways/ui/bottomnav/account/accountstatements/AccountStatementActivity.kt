@@ -6,12 +6,10 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.StatementListModel
 import com.conduent.nationalhighways.data.model.account.ViewStatementsReqModel
-import com.conduent.nationalhighways.data.model.contactdartcharge.CaseProvideDetailsModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseReq
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseResp
 import com.conduent.nationalhighways.databinding.ActivityAccountStatementBinding
@@ -23,7 +21,6 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.setSpinnerAdapterData
 import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.onTextChanged
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint

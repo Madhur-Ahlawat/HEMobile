@@ -1,20 +1,23 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
+
+}
 
 apply from: '../jacoco.gradle'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdkVersion 33
         applicationId "com.conduent.nationalhighways"
         versionCode 1
         versionName "1.0"
@@ -49,10 +52,10 @@ android {
 
     signingConfigs {
         conduentdev {
-            storeFile file("test_conduent.jks")
-            storePassword "conduent"
-            keyAlias "conduent_key"
-            keyPassword "conduent"
+            storeFile file("keystore.jks")
+            storePassword "Conduent@123"
+            keyAlias "conduent"
+            keyPassword "Conduent@123"
         }
     }
 
@@ -123,15 +126,15 @@ android {
     dependencies {
 
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def nav_version = "2.4.2"
-        def lifecycle_version = "2.4.1"
+        def nav_version = "2.5.3"
+        def lifecycle_version = "2.5.1"
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation 'androidx.core:core-ktx:1.7.0'
+        implementation 'androidx.core:core-ktx:1.9.0'
         implementation 'androidx.appcompat:appcompat:1.4.2'
         implementation 'com.google.android.material:material:1.6.1'
         implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-        implementation 'androidx.test:core-ktx:1.4.0'
+        implementation 'androidx.test:core-ktx:1.5.0'
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
         // Navigation
@@ -145,10 +148,10 @@ android {
         kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
         // coroutines
-        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
         //UI
-        implementation "androidx.recyclerview:recyclerview:1.3.0-alpha02"
+        implementation "androidx.recyclerview:recyclerview:1.3.0-rc01"
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -161,14 +164,14 @@ android {
         implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
         implementation 'com.squareup.okhttp3:okhttp:4.9.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-        implementation 'com.google.code.gson:gson:2.8.6'
+        implementation 'com.google.code.gson:gson:2.8.9'
 
         //Hilt for DI
         implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
         annotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
         // Hilt ViewModel extension
-        implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifeCycleVersion"
+       // implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifeCycleVersion"
         kapt "androidx.hilt:hilt-compiler:$hiltLifeCycleVersion"
         kapt "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
@@ -178,7 +181,7 @@ android {
         implementation 'com.adobe.marketing.mobile:userprofile:1.1.0'
 
         // Firebase cloud messaging
-        implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
+        implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
 
         //Crypto shared pref
         implementation "androidx.security:security-crypto:1.0.0"
@@ -188,20 +191,20 @@ android {
 
         // -------------- Testing Dependencies -------------- //
 
-        def espressoTestVersion = '3.4.0'
+        def espressoTestVersion = '3.5.1'
         def hamcrestVersion = '1.3'
         def testCoreVersion = '1.4.0'
         def kotlinRunnerVersion = '1.1.1'
         def mockitoTestVersion = '2.13.0'
         def mockk_version = "1.10.0"
-        def nav_test_version = "2.4.2"
+        def nav_test_version = "2.5.3"
         def test_version = "1.2.0"
 
-        implementation 'androidx.test:runner:1.4.0'
+        implementation 'androidx.test:runner:1.5.2'
         testImplementation 'junit:junit:4.13.2'
-        testImplementation 'androidx.test.ext:junit-ktx:1.1.3'
+        testImplementation 'androidx.test.ext:junit-ktx:1.1.5'
         testImplementation "androidx.test.ext:junit:$kotlinRunnerVersion"
-        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.5'
         testImplementation 'com.google.truth:truth:1.0.1'
         androidTestImplementation 'com.google.truth:truth:1.0.1'
 
@@ -212,17 +215,17 @@ android {
         // UI Test
         testImplementation "androidx.test.espresso:espresso-core:$espressoTestVersion"
         testImplementation "androidx.test.espresso:espresso-contrib:$espressoTestVersion"
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
         testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
 
         // For Core Test
         testImplementation "androidx.test:core-ktx:$testCoreVersion"
         androidTestImplementation "androidx.test:core-ktx:$test_version"
-        testImplementation 'androidx.arch.core:core-testing:2.1.0'
-        testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+        testImplementation 'androidx.arch.core:core-testing:2.2.0'
+        testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
         // Fragment testing
-        debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
+        debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
 
         // Navigation testing
         implementation "androidx.navigation:navigation-testing:$nav_test_version"
@@ -247,6 +250,15 @@ android {
         androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
         testAnnotationProcessor "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
+        // for biometric
+        implementation 'androidx.biometric:biometric:1.1.0'
+
+        implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+        implementation 'org.bouncycastle:bcpkix-jdk15to18:1.68'
+        implementation 'org.bouncycastle:bcprov-jdk15to18:1.68'
+
+
+
     }
 
     hilt {
@@ -255,3 +267,8 @@ android {
 
 }
 
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+}

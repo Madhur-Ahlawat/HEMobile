@@ -1,33 +1,51 @@
 package com.conduent.nationalhighways.ui.auth.login
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.arch.core.executor.ArchTaskExecutor
+import androidx.biometric.BiometricPrompt
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.adobe.marketing.mobile.MobileCore
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.databinding.FragmentLoginBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
+import com.conduent.nationalhighways.utils.KeystoreHelper
+import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener {
 
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -47,6 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+        initBiometric()
 
         AdobeAnalytics.setScreenTrack(
             "login",
@@ -61,6 +80,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initCtrl() {
         binding.apply {
             tvForgotUsername.setOnClickListener(this@LoginFragment)
@@ -69,15 +89,44 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             edtPwd.doAfterTextChanged { checkButton() }
             btnLogin.setOnClickListener(this@LoginFragment)
         }
+
+        binding.tfEmail.setEndIconOnClickListener{
+            if (!displayFingerPrintPopup()){
+
+                displayMessage(
+                    getString(R.string.app_name),
+                    getString(R.string.pleaseenablebiometric),
+                    getString(R.string.str_ok),
+                    "",null,null
+                )
+            }else{
+                fingerPrintLogin()
+            }
+
+        }
+
+
     }
 
     override fun observer() {
         observe(viewModel.login, ::handleLoginResponse)
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun displayFingerPrintPopup(): Boolean {
+        if (sessionManager.fetchTouchIdEnabled()) {
+
+            return true
+        }
+        return false
     }
+
+    private fun fingerPrintLogin() {
+        Handler(Looper.getMainLooper()).post {
+            biometricPrompt.authenticate(promptInfo)
+        }
+    }
+
+
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
         if (loader?.isVisible == true) {
@@ -89,6 +138,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
+
+
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
                     "login",
@@ -109,6 +160,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
     }
 
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveRefreshToken(response.data?.refreshToken ?: "")
@@ -118,6 +170,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
         }
+
+        if (sessionManager.fetchUserName()!=binding.edtEmail.text.toString()){
+              displayBiometricDialog()
+        }else{
+            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+        }
+        sessionManager.saveUserName(binding.edtEmail.text.toString())
+
         AdobeAnalytics.setLoginActionTrackError(
             "login",
             "login",
@@ -130,9 +191,30 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
             sessionManager.getLoggedInUser()
         )
 
-        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
     }
 
+    private fun displayBiometricDialog(){
+        displayMessage(getString(R.string.app_name),getString(R.string.doyouwantenablebiometric),getString(R.string.str_yes),getString(R.string.str_no),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+                    requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
+                        putInt(
+                            Constants.FROM_LOGIN_TO_BIOMETRIC,
+                            Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
+                        )
+                    }
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                   // dialog.dismiss()
+                }
+            })
+    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -189,6 +271,104 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener
                 enable = false
             )
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun initBiometric() {
+        biometricPrompt = BiometricPrompt(this, ArchTaskExecutor.getMainThreadExecutor(),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+
+                    // Too many attempts. try again later ( customised the toast message to below one)
+                    if (errorCode == 7) {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Biometric is Disabled",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Biometric authentication $errString",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+
+                    onBiometricSuccessful()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Biometric authentication failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
+        val language = Locale.getDefault().displayLanguage
+        if (language == "español") {
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Inicio de sesión biométrico")
+                .setSubtitle("")
+                .setDescription("Inicie sesión con sus credenciales de biometría o seleccione Cancelar e introduzca la información de su cuenta y la contraseña.")
+                .setNegativeButtonText("CANCELAR")
+                .setConfirmationRequired(false)
+                .build()
+        } else {
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric Login")
+                .setSubtitle("")
+                .setDescription("Place your fingerprint on the sensor to login or select Cancel and enter your account information and password.")
+                .setNegativeButtonText("CANCEL")
+                .setConfirmationRequired(false)
+                .build()
+        }
+    }
+
+
+    private fun onBiometricSuccessful() {
+        val dateTime = System.currentTimeMillis().toString()
+
+        val verificationToken = Utility.getSHA256HashedValue(
+            "vendeor Id" + "|" +
+                    BuildConfig.VERSION_NAME + "|" + Build.MODEL + "|" + Build.VERSION.SDK_INT.toString() + "|" +
+                    sessionManager.fetchBiometricToken()
+        )
+
+        val keyHelper = KeystoreHelper.getInstance(requireActivity())
+        val decryptedUserId = keyHelper?.decrypt(
+            requireActivity(),
+            "username"
+        )
+
+        val dataToBeSigned =
+            "$decryptedUserId|firebase token|$verificationToken|$dateTime"
+
+
+        val intent = Intent(requireActivity(), HomeActivityMain::class.java)
+        startActivity(intent)
+
+        // call login api
+        /*  doLoginWithTouchID(
+              decryptedUserId,
+              SignatureHelper.getSignature(this, dataToBeSigned),
+              dateTime
+          )*/
     }
 
 }

@@ -119,7 +119,7 @@ class VehicleRepositoryTest {
             ).thenReturn(null)
             vehicleRepository?.let {
                 assertEquals(
-                    it.getVehicleListApiCall(), null
+                    it.getVehicleListApiCall("",""), null
                 )
             }
         }
