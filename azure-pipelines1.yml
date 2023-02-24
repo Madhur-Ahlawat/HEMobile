@@ -22,7 +22,7 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-        Contents: '**/*.apk'
+        Contents: '$(Build.ArtifactStagingDirectory)**/*.apk'
         TargetFolder:  '$(build.artifactStagingDirectory)'
         OverWrite: true
 
@@ -31,13 +31,13 @@ steps:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'HE-MAPP-ANDROID'
           publishLocation: 'Container'
-  # - task: AppCenterDistribute@3
-  #   inputs:
-  #       serverEndpoint: 'NHE_Android'
-  #       appSlug: 'shivam.gupta-conduent.com/NHE'
-  #       appFile: '**/*.apk'
-  #       releaseNotesOption: 'input'
-  #       releaseNotesInput: 'App Releases'
-  #       destinationType: 'groups'
+  - task: AppCenterDistribute@3
+    inputs:
+        serverEndpoint: 'NHE_Android'
+        appSlug: 'shivam.gupta-conduent.com/NHE'
+        appFile: '$(Build.ArtifactStagingDirectory)**/*.apk'
+        releaseNotesOption: 'input'
+        releaseNotesInput: 'App Releases'
+        destinationType: 'groups'
 
  
