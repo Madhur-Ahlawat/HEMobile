@@ -22,7 +22,7 @@ steps:
 
   - task: CopyFiles@2
     inputs:
-        Contents: '$(Build.ArtifactStagingDirectory)**/*.apk'
+        Contents: '$(Build.ArtifactStagingDirectory)/app.release.apk'
         TargetFolder:  '$(build.artifactStagingDirectory)'
         OverWrite: true
 
@@ -35,9 +35,9 @@ steps:
     inputs:
         serverEndpoint: 'NHE_Android1'
         appSlug: 'shivam.gupta-conduent.com/NHE'
-        appFile: '$(Build.ArtifactStagingDirectory)**/*.apk'
+        appFile: '$(Build.ArtifactStagingDirectory)/app.release.apk'
         releaseNotesOption: 'input'
-        releaseNotesInput: 'App Releases'
+        releaseNotesInput: 'Automated build from App Center'
         destinationType: 'groups'
 
  
