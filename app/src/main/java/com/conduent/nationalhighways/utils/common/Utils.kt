@@ -21,6 +21,10 @@ import java.lang.reflect.Field
 
 object Utils {
 
+    var PASSWORD_RULE1 = ".{8,64}"
+    var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
+    var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
+    var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
     fun hasInternetConnection(application: BaseApplication): Boolean {
         val connectivityManager = application.getSystemService(
             Context.CONNECTIVITY_SERVICE
@@ -70,6 +74,7 @@ object Utils {
             password.trim { it <= ' ' }.length >= MIN_PASSWORD_LENGTH
         }
     }
+
 
     fun currentDateAndTime(): String {
         val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.getDefault())
@@ -146,6 +151,12 @@ object Utils {
         val pattern = Pattern.compile(PASSWORD_PATTERN)
         val matcher: Matcher = pattern.matcher(password)
         return matcher.matches()
+    }
+
+    fun validateString(target: String, pattern: String): Boolean {
+        val mPattern =
+            Pattern.compile(pattern)
+        return mPattern.matcher(target).matches()
     }
 
     fun mobileNumber(mobNo: String?): String {

@@ -23,7 +23,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/str_check_your_mail"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +70,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/message_received_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="start"
+            android:lineSpacingExtra="@dimen/_4sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/sfregular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp_input" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/not_received_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,33 +94,35 @@
             android:lineSpacingExtra="@dimen/_4sdp"
             android:text="@string/str_not_received_otp_txt"
             android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
+            android:fontFamily="@font/sfregular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/otp_input" />
+            app:layout_constraintTop_toBottomOf="@+id/message_received_txt" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/resend_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:text="@string/str_resend_one_time_code"
-            android:textColor="@color/high_lighted_color"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="normal"
+            android:text="@string/ifyoudidnot"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/sfregular"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/not_received_txt" />
+            app:layout_constraintBottom_toTopOf="@id/btn_verify"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@{isEnable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{isEnable}"
             android:gravity="center"
@@ -115,7 +132,26 @@
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resend_txt" />
+            app:layout_constraintBottom_toTopOf="@id/btn_Resend" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_Resend"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:text="@string/resendcode"
+            android:textAllCaps="false"
+            android:textColor="@color/resendcolor"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

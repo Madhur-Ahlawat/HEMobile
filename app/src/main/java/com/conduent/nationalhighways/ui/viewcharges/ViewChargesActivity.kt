@@ -68,6 +68,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                     val mTollRatesList = ArrayList<TollRatesResp>()
                     status.data?.forEach {
                         if (it?.vehicleType == "A") {
+
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,

@@ -44,7 +44,13 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateNextScreen() {
         return sessionManager.fetchAuthToken()?.let {
             if (Calendar.getInstance().timeInMillis - sessionManager.getSessionTime() < LogoutUtil.LOGOUT_TIME) {
-                showBiometrics()
+                if (sessionManager.fetchTouchIdEnabled()){
+                    showBiometrics()
+
+                }else{
+                    navigateHomeActivity()
+
+                }
             } else {
                 navigateLandingActivity()
             }

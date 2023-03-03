@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.GuidanceDocumentsAnswersFragmentBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.extn.customToolbar
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.toolbar
 
@@ -22,6 +23,8 @@ class GuidanceAndDocumentsAnswersFragment :
 
     override fun init() {
         // not need to set any toolbar
+        requireActivity().customToolbar(getString(R.string.str_guidance_and_documents))
+
         binding.tvAnswers.makeLinks(Pair("alternative languages.", View.OnClickListener {
 
         }), Pair("Dart Charge Online", View.OnClickListener {
@@ -31,6 +34,8 @@ class GuidanceAndDocumentsAnswersFragment :
     }
 
     override fun initCtrl() {
+
+
     }
 
     override fun observer() {

@@ -40,7 +40,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
-import java.io.*
 
 @AndroidEntryPoint
 class VehicleGroupCrossingHistoryFragment :

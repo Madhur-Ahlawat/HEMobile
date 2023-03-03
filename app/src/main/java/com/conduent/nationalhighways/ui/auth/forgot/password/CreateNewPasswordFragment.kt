@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import org.bouncycastle.jce.provider.BrokenPBE.Util
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,13 +62,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             sessionManager.getLoggedInUser()
         )
 
-//        viewModel.verifyRequestCode(mVerifyRequestOtpReq)
+     //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
     override fun initCtrl() {
         binding.btnSubmit.setOnClickListener(this)
-        binding.edtNewPassword.addTextChangedListener { isEnable() }
-        binding.edtConformPassword.addTextChangedListener { isEnable() }
+        binding.edtNewPassword.addTextChangedListener {
+            isEnable(it.toString()) }
+        binding.edtConformPassword.addTextChangedListener { isEnable1() }
     }
 
     override fun observer() {
@@ -172,11 +174,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
     }
 
-    private fun isEnable() {
+    private fun isEnable1() {
         if (binding.model?.newPassword?.isEmpty() == false
             && binding.model?.confirmPassword?.isEmpty() == false
-            && ((binding.model?.newPassword?.length ?: 0) > 4)
-            && ((binding.model?.confirmPassword?.length ?: 0) > 4)
+            && ((binding.model?.newPassword?.length ?: 0) > 7)
+            && ((binding.model?.confirmPassword?.length ?: 0) > 7&&Utils.isValidPassword(binding.model?.newPassword)&&Utils.isValidPassword(binding.model?.confirmPassword))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
@@ -196,5 +198,56 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             )
 
         }
+
+
     }
+
+    private fun isEnable(text: String) {
+        if (binding.model?.newPassword?.isEmpty() == false
+            && binding.model?.confirmPassword?.isEmpty() == false
+            && ((binding.model?.newPassword?.length ?: 0) > 7)
+            && ((binding.model?.confirmPassword?.length ?: 0) > 7&&Utils.isValidPassword(binding.model?.newPassword)&&Utils.isValidPassword(binding.model?.confirmPassword))
+        ) {
+            binding.model = ResetPasswordModel(
+                code = data?.code,
+                referenceId = data?.referenceId,
+                newPassword = binding.edtNewPassword.text.toString(),
+                confirmPassword = binding.edtConformPassword.text.toString(),
+                enable = true
+            )
+
+        } else {
+            binding.model = ResetPasswordModel(
+                code = data?.code,
+                referenceId = data?.referenceId,
+                newPassword = binding.edtNewPassword.text.toString(),
+                confirmPassword = binding.edtConformPassword.text.toString(),
+                enable = false
+            )
+
+        }
+
+        if (Utils.validateString(text,Utils.PASSWORD_RULE1)){
+            binding.imgDot1.setImageResource(R.drawable.ic_tick)
+        }else{
+            binding.imgDot1.setImageResource(R.drawable.white_circular)
+        }
+
+        if (Utils.validateString(text,Utils.PASSWORD_RULE2)){
+            binding.imgDot2.setImageResource(R.drawable.ic_tick)
+            binding.imgDot3.setImageResource(R.drawable.ic_tick)
+
+        }else{
+            binding.imgDot2.setImageResource(R.drawable.white_circular)
+            binding.imgDot3.setImageResource(R.drawable.white_circular)
+
+        }
+
+        if (Utils.validateString(text,Utils.PASSWORD_RULE3)){
+            binding.imgDot4.setImageResource(R.drawable.ic_tick)
+        }else{
+            binding.imgDot4.setImageResource(R.drawable.ic_tick)
+        }
+    }
+
 }

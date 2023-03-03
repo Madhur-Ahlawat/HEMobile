@@ -36,7 +36,7 @@ class ForgotEmailViewModelTest {
 
     private var forgotEmailViewModel: ForgotEmailViewModel? = null
 
-    private val forgotEmailRequest = ForgotEmailModel(false, "", "")
+    private val forgotEmailRequest = ForgotEmailModel(false, "")
     private val unknownException = "unknown exception"
 
     @Mock

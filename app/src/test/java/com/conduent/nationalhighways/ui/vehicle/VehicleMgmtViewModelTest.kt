@@ -44,6 +44,7 @@ class VehicleMgmtViewModelTest {
 
     private val vehicleRequest: VehicleResponse =
         VehicleResponse(PlateInfoResponse(), PlateInfoResponse(), VehicleInfoResponse(), false)
+    private val list:List<String> =ArrayList()
     private val deleteRequest: DeleteVehicleRequest =
         DeleteVehicleRequest("vehicle id")
     private val downloadRequest: TransactionHistoryDownloadRequest =
@@ -436,7 +437,7 @@ class VehicleMgmtViewModelTest {
             Mockito.lenient().`when`(response.body()).thenReturn(EmptyApiResponse(status, message))
             Mockito.`when`(repository.deleteVehicleListApiCall(deleteRequest)).thenReturn(response)
             vehicleMgmtViewModel?.let {
-                it.deleteVehicleApi(deleteRequest)
+                it.deleteVehicleApi(list)
                 assertEquals(
                     response.body(), it.deleteVehicleApiVal.value?.data
                 )
@@ -469,7 +470,7 @@ class VehicleMgmtViewModelTest {
             Mockito.lenient().`when`(response.errorBody()).thenReturn(responseBody)
             Mockito.`when`(repository.deleteVehicleListApiCall(deleteRequest)).thenReturn(response)
             vehicleMgmtViewModel?.let {
-                it.deleteVehicleApi(deleteRequest)
+                it.deleteVehicleApi(list)
                 assertEquals(
                     null, it.deleteVehicleApiVal.value?.data
                 )
@@ -488,7 +489,7 @@ class VehicleMgmtViewModelTest {
                     throw NoConnectivityException()
                 }
             vehicleMgmtViewModel?.let {
-                it.deleteVehicleApi(deleteRequest)
+                it.deleteVehicleApi(list)
                 assertEquals(
                     null, it.deleteVehicleApiVal.value?.data
                 )
@@ -507,7 +508,7 @@ class VehicleMgmtViewModelTest {
                     throw SocketTimeoutException()
                 }
             vehicleMgmtViewModel?.let {
-                it.deleteVehicleApi(deleteRequest)
+                it.deleteVehicleApi(list)
                 assertEquals(
                     null, it.deleteVehicleApiVal.value?.data
                 )
@@ -526,7 +527,7 @@ class VehicleMgmtViewModelTest {
                     throw Exception(unknownException)
                 }
             vehicleMgmtViewModel?.let {
-                it.deleteVehicleApi(deleteRequest)
+                it.deleteVehicleApi(list)
                 assertEquals(
                     null, it.deleteVehicleApiVal.value?.data
                 )
@@ -557,9 +558,9 @@ class VehicleMgmtViewModelTest {
             )
             val vehicleList = listOf(v1, v2)
             Mockito.lenient().`when`(vehicleListResponse.body()).thenReturn(vehicleList)
-            Mockito.`when`(repository.getVehicleListApiCall()).thenReturn(vehicleListResponse)
+            Mockito.`when`(repository.getVehicleListApiCall("","")).thenReturn(vehicleListResponse)
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     vehicleList.size, it.vehicleListVal.value?.data?.size
                 )
@@ -577,9 +578,9 @@ class VehicleMgmtViewModelTest {
             Mockito.lenient().`when`(vehicleListResponse.code()).thenReturn(200)
             val vehicleList = listOf<VehicleResponse>()
             Mockito.lenient().`when`(vehicleListResponse.body()).thenReturn(vehicleList)
-            Mockito.`when`(repository.getVehicleListApiCall()).thenReturn(vehicleListResponse)
+            Mockito.`when`(repository.getVehicleListApiCall("","")).thenReturn(vehicleListResponse)
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     vehicleList.size, it.vehicleListVal.value?.data?.size
                 )
@@ -607,9 +608,9 @@ class VehicleMgmtViewModelTest {
             val jsonString: String = Gson().toJson(testValidData)
             Mockito.lenient().`when`(responseBody.string()).thenReturn(jsonString)
             Mockito.lenient().`when`(vehicleListResponse.errorBody()).thenReturn(responseBody)
-            Mockito.`when`(repository.getVehicleListApiCall()).thenReturn(vehicleListResponse)
+            Mockito.`when`(repository.getVehicleListApiCall("","")).thenReturn(vehicleListResponse)
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     null, it.vehicleListVal.value?.data
                 )
@@ -623,12 +624,12 @@ class VehicleMgmtViewModelTest {
     @Test
     fun `test get vehicle list api call for no internet connection`() {
         runTest {
-            Mockito.`when`(repository.getVehicleListApiCall())
+            Mockito.`when`(repository.getVehicleListApiCall("",""))
                 .thenAnswer {
                     throw NoConnectivityException()
                 }
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     null, it.vehicleListVal.value?.data
                 )
@@ -642,12 +643,12 @@ class VehicleMgmtViewModelTest {
     @Test
     fun `test get vehicle list api call for timed out exception`() {
         runTest {
-            Mockito.`when`(repository.getVehicleListApiCall())
+            Mockito.`when`(repository.getVehicleListApiCall("",""))
                 .thenAnswer {
                     throw SocketTimeoutException()
                 }
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     null, it.vehicleListVal.value?.data
                 )
@@ -661,12 +662,12 @@ class VehicleMgmtViewModelTest {
     @Test
     fun `test get vehicle list api call for unknown exception`() {
         runTest {
-            Mockito.`when`(repository.getVehicleListApiCall())
+            Mockito.`when`(repository.getVehicleListApiCall("",""))
                 .thenAnswer {
                     throw Exception(unknownException)
                 }
             vehicleMgmtViewModel?.let {
-                it.getVehicleInformationApi()
+                it.getVehicleInformationApi("","")
                 assertEquals(
                     null, it.vehicleListVal.value?.data
                 )

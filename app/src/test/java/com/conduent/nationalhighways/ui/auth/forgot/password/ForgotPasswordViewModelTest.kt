@@ -40,7 +40,7 @@ class ForgotPasswordViewModelTest {
 
     private val resetPasswordRequest = ResetPasswordModel("", "", "", "", false)
     private val otpRequest = RequestOTPModel("", "")
-    private val confirmOptionRequest = ConfirmOptionModel("", "", false)
+    private val confirmOptionRequest = ConfirmOptionModel("", false)
     private val unknownException = "unknown exception"
 
     @Mock

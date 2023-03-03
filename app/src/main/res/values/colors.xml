@@ -98,5 +98,6 @@
     <color name="color_909090">#909090</color>
     <color name="color_99999">#999999</color>
     <color name="splash_background">#204489</color>
+    <color name="resendcolor">#073165</color>
 
 </resources>

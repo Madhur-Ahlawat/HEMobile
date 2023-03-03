@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/GuidanceAndDocumentsQuestions"
+    app:startDestination="@id/GuidanceAndDocumentsAnswers"
     android:id="@+id/nav_dart_charge_guidance_and_documents">
 
     <fragment

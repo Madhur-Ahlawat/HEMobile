@@ -12,7 +12,6 @@ import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedConta
 import com.conduent.nationalhighways.data.model.nominatedcontacts.SecondaryAccountData
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentViewNominatedContactUserProfileBinding
-import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog

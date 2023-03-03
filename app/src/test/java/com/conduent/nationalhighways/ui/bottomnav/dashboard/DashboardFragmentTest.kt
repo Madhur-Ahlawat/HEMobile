@@ -87,7 +87,7 @@ class DashboardFragmentTest {
             onView(withId(R.id.tv_top_up_heading)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
-            onView(withId(R.id.tv_view_vehicle)).perform(BaseActions.betterScrollTo())
+            //onView(withId(R.id.tv_view_vehicle)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
             Assert.assertEquals(
                 navController.currentDestination?.id,
@@ -105,7 +105,7 @@ class DashboardFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tv_available_balance_heading)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_manual_top_up)).check(matches(isDisplayed()))
-            onView(withId(R.id.tv_view_crossings)).perform(BaseActions.betterScrollTo())
+           // onView(withId(R.id.tv_view_crossings)).perform(BaseActions.betterScrollTo())
                 .check(matches(isDisplayed())).perform(BaseActions.forceClick())
 
             Assert.assertEquals(

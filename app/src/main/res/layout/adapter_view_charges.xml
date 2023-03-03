@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.25" />
+            app:layout_constraintGuide_begin="98dp" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -71,8 +71,8 @@
             android:textStyle="normal"
             android:padding="@dimen/_2sdp"
             android:gravity="center"
-            android:text="@{@string/price(``+data.videoRate)}"
             android:textSize="@dimen/_13ssp"
+            android:text="@{data.videoRate != 0.0 ? @string/price(``+data.videoRate) : `Free` }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
             app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
@@ -86,7 +86,7 @@
             android:textStyle="normal"
             android:padding="@dimen/_2sdp"
             android:gravity="center"
-            android:text="@{@string/price(``+data.etcRate)}"
+            android:text="@{data.etcRate != 0.0 ? @string/price(``+data.etcRate) : `Free` }"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guide_line_vertical2"
@@ -101,7 +101,7 @@
             android:textStyle="normal"
             android:gravity="center"
             android:padding="@dimen/_2sdp"
-            android:text="@{@string/price(``+data.etcRate)}"
+            android:text="@{data.etcRate != 0.0 ? @string/price(``+data.etcRate) : `Free` }"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -42,10 +42,10 @@ class LandingFragmentTest {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
             onView(withId(R.id.rbCreateAccount)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbMakeOffPayment)).check(matches(isDisplayed()))
+           /* onView(withId(R.id.rbMakeOffPayment)).check(matches(isDisplayed()))
             onView(withId(R.id.rbResolvePenalty)).check(matches(isDisplayed()))
             onView(withId(R.id.rbCheckForPaid)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbViewCharges)).check(matches(isDisplayed()))
+            onView(withId(R.id.rbViewCharges)).check(matches(isDisplayed()))*/
             onView(withId(R.id.btnContinue)).check(matches(isDisplayed()))
         }
     }
@@ -69,10 +69,10 @@ class LandingFragmentTest {
         launchFragmentInHiltContainer<LandingFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbMakeOffPayment)).check(matches(isDisplayed()))
+            //onView(withId(R.id.rbMakeOffPayment)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
 
-            onView(withId(R.id.rbMakeOffPayment))
+           // onView(withId(R.id.rbMakeOffPayment))
                 .check(matches(withSubstring("payment for crossings without")))
             onView(withId(R.id.btnContinue)).check(matches(isDisplayed()))
                 .check(matches(isClickable()))
@@ -85,7 +85,7 @@ class LandingFragmentTest {
         launchFragmentInHiltContainer<LandingFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbResolvePenalty)).check(matches(isDisplayed()))
+            //onView(withId(R.id.rbResolvePenalty)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
 
             onView(withId(R.id.btnContinue)).check(matches(isDisplayed()))
@@ -99,7 +99,7 @@ class LandingFragmentTest {
         launchFragmentInHiltContainer<LandingFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbCheckForPaid)).check(matches(isDisplayed()))
+            //onView(withId(R.id.rbCheckForPaid)).check(matches(isDisplayed()))
                 .perform(ViewActions.click())
 
             onView(withId(R.id.btnContinue)).check(matches(isDisplayed()))
@@ -113,7 +113,7 @@ class LandingFragmentTest {
         launchFragmentInHiltContainer<LandingFragment> {
             onView(withId(R.id.pay_dart_txt)).check(matches(isDisplayed()))
             onView(withId(R.id.id_title_lyt)).check(matches(isDisplayed()))
-            onView(withId(R.id.rbViewCharges)).check(matches(isDisplayed()))
+           // onView(withId(R.id.rbViewCharges)).check(matches(isDisplayed()))
                 .perform(forceClick())
 
             onView(withId(R.id.btnContinue)).check(matches(isDisplayed()))

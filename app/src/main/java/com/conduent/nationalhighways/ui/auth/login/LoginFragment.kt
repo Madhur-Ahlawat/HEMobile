@@ -28,7 +28,6 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.KeystoreHelper
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*

@@ -99,5 +99,6 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
 
         alertDialog.show()
     }
-    
+
+
 }

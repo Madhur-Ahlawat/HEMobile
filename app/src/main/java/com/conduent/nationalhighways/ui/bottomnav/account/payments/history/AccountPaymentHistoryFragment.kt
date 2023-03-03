@@ -43,8 +43,6 @@ import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
-import com.conduent.nationalhighways.utils.logout.LogoutListener
-import com.conduent.nationalhighways.utils.logout.LogoutUtil
 
 @AndroidEntryPoint
 class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistoryBinding>(),

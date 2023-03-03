@@ -23,7 +23,6 @@ import com.conduent.nationalhighways.utils.FilePath
 import com.conduent.nationalhighways.utils.MimeType
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.onTextChanged
-import okhttp3.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject

@@ -48,7 +48,7 @@ class CaseHistoryDetailsDartChargeFragmentTest {
                 ServiceRequest(
                     "012345", "24 may 2022", "active", "catogory",
                     "sub", "desc", null,
-                    null, "12 may 2022", ""
+                    null, "12 may 2022"
                 )
             )
         }

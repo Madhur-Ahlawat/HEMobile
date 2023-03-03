@@ -123,17 +123,20 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_next -> {
-                hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
-                isCalled = true
-                viewModel.confirmOptionForForgot(binding.model)
+
+                    hideKeyboard()
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    sessionManager.saveAccountNumber(binding.edtEmail.text.toString().trim())
+                    isCalled = true
+                    viewModel.confirmOptionForForgot(binding.model)
+
+
             }
         }
     }
 
     private fun isEnable() {
-        if (binding.edtEmail.length() > 0) binding.model =
+        if (Utils.isEmailValid(binding.edtEmail.text.toString())) binding.model =
             ConfirmOptionModel(
                 enable = true,
                 identifier = binding.edtEmail.text.toString()

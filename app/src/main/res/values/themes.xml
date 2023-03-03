@@ -73,8 +73,7 @@
     </style>
 
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
-        </item>
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText</item>
         <item name="hintTextColor">@color/black</item>
         <item name="boxStrokeColor">@color/black</item>
     </style>
