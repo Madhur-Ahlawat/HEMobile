@@ -33,7 +33,7 @@ steps:
           publishLocation: 'Container'
   - task: AppCenterDistribute@3
     inputs:
-        serverEndpoint: 'NHE_Android'
+        serverEndpoint: 'NHE_Android1'
         appSlug: 'shivam.gupta-conduent.com/NHE'
         appFile: '$(Build.ArtifactStagingDirectory)**/*.apk'
         releaseNotesOption: 'input'
