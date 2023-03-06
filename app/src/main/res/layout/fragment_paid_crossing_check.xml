@@ -124,7 +124,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:singleLine="true"
-                    android:text="1-94687171"
                     style="@style/AppEditTextTransparent"
                     android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -160,7 +159,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:singleLine="true"
-                    android:text="FY02BCL"
                     style="@style/AppEditTextTransparent"
                     android:textSize="@dimen/_13ssp" />
             </com.google.android.material.textfield.TextInputLayout>

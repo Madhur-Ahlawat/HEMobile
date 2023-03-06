@@ -72,8 +72,8 @@
                     android:gravity="start"
                     android:text="@string/str_pay_dart_ford_crossing"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/sfregular"
                     app:layout_constraintEnd_toStartOf="@+id/glEnd"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
                     app:layout_constraintTop_toBottomOf="@+id/maintainance_lyt" />
@@ -87,8 +87,8 @@
                     android:gravity="start"
                     android:text="@string/str_what_would_you_like_to_do"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/_13ssp"
+                    android:fontFamily="@font/sfregular"
                     app:layout_constraintEnd_toStartOf="@+id/glEnd"
                     app:layout_constraintStart_toStartOf="@+id/glStart"
                     app:layout_constraintTop_toBottomOf="@+id/pay_dart_txt" />

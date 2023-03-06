@@ -256,7 +256,7 @@
                 android:layout_centerVertical="true"
                 android:paddingHorizontal="@dimen/_11sdp"
                 android:paddingVertical="@dimen/_8sdp"
-                android:text="@string/str_understanding_charges_fines"
+                android:text="@string/str_accessibility"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />

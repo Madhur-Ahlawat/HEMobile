@@ -1,6 +1,10 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.annotation.SuppressLint
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
@@ -26,6 +30,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
+    private var passwordVisibile: Boolean = false
+    private var confirmPasswordVisibile: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -65,11 +71,75 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
      //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
+    @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
         binding.btnSubmit.setOnClickListener(this)
         binding.edtNewPassword.addTextChangedListener {
             isEnable(it.toString()) }
         binding.edtConformPassword.addTextChangedListener { isEnable1() }
+
+        binding.text1.text=getString(R.string.dotunicode)+" "+getString(R.string.str_at_least_8_character)
+        binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+        binding.text3.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
+        binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+
+
+        binding.edtNewPassword.setOnTouchListener { _, event ->
+
+            val right = 2
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.compoundDrawables[right].bounds.width()) {
+
+                    if (passwordVisibile) {
+                        binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
+                        )
+                        binding.edtNewPassword.transformationMethod =
+                            PasswordTransformationMethod.getInstance()
+                        passwordVisibile = false
+                    } else {
+                        binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            0, 0, R.drawable.ic_baseline_visibility_24, 0
+                        )
+                        binding.edtNewPassword.transformationMethod =
+                            HideReturnsTransformationMethod.getInstance()
+                        passwordVisibile = true
+                    }
+                }
+            }
+
+            false
+        }
+
+
+        binding.edtConformPassword.setOnTouchListener { _, event ->
+
+            val right = 2
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= binding.edtConformPassword.right - binding.edtConformPassword.compoundDrawables[right].bounds.width()) {
+
+                    if (confirmPasswordVisibile) {
+                        binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
+                        )
+                        binding.edtConformPassword.transformationMethod =
+                            PasswordTransformationMethod.getInstance()
+                        confirmPasswordVisibile = false
+                    } else {
+                        binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            0, 0, R.drawable.ic_baseline_visibility_24, 0
+                        )
+                        binding.edtConformPassword.transformationMethod =
+                            HideReturnsTransformationMethod.getInstance()
+                        confirmPasswordVisibile = true
+                    }
+                }
+            }
+
+            false
+        }
+
+
     }
 
     override fun observer() {
@@ -228,25 +298,26 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE1)){
-            binding.imgDot1.setImageResource(R.drawable.ic_tick)
+            binding.text1.text=getString(R.string.tickunicode)+" "+getString(R.string.str_at_least_8_character)
         }else{
-            binding.imgDot1.setImageResource(R.drawable.white_circular)
+            binding.text1.text=getString(R.string.dotunicode)+" "+getString(R.string.str_at_least_8_character)
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE2)){
-            binding.imgDot2.setImageResource(R.drawable.ic_tick)
-            binding.imgDot3.setImageResource(R.drawable.ic_tick)
+            binding.text2.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+            binding.text3.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
+
 
         }else{
-            binding.imgDot2.setImageResource(R.drawable.white_circular)
-            binding.imgDot3.setImageResource(R.drawable.white_circular)
+            binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+            binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
 
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE3)){
-            binding.imgDot4.setImageResource(R.drawable.ic_tick)
+            binding.text4.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
         }else{
-            binding.imgDot4.setImageResource(R.drawable.ic_tick)
+            binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
         }
     }
 

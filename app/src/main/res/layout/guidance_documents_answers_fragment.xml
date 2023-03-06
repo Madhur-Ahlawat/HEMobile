@@ -15,17 +15,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_header">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_answers"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            android:lineSpacingExtra="@dimen/_4sdp"
-            android:text="@string/str_guidance_and_documents_answers"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            >
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/sfsemibold"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="@dimen/_4sdp"
+                android:text="@string/str_guidance_and_documents_answers"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

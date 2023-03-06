@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.BiometricUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -44,13 +45,14 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateNextScreen() {
         return sessionManager.fetchAuthToken()?.let {
             if (Calendar.getInstance().timeInMillis - sessionManager.getSessionTime() < LogoutUtil.LOGOUT_TIME) {
-                if (sessionManager.fetchTouchIdEnabled()){
+                navigateAuthActivity()
+               /* if (sessionManager.fetchTouchIdEnabled()){
                     showBiometrics()
 
                 }else{
                     navigateHomeActivity()
 
-                }
+                }*/
             } else {
                 navigateLandingActivity()
             }
@@ -111,6 +113,12 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateHomeActivity() {
         startActivity(
             Intent(this, HomeActivityMain::class.java)
+        )
+        finish()
+    }
+    private fun navigateAuthActivity() {
+        startActivity(
+            Intent(this, AuthActivity::class.java)
         )
         finish()
     }

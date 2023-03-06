@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.biometric
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -14,6 +15,7 @@ import androidx.biometric.BiometricPrompt
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.SignatureHelper
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -25,9 +27,10 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickListener {
+class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener {
 
     lateinit var binding: ActivityBiometricBinding
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -54,13 +57,16 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
         }
 
         intent?.apply {
-            mValue = getIntExtra(Constants.FROM_LOGIN_TO_BIOMETRIC, Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE)
+            mValue = getIntExtra(
+                Constants.FROM_LOGIN_TO_BIOMETRIC,
+                Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
+            )
         }
 
-        if (mValue==Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE){
+        if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
             binding.toolBarLyt.backButton.gone()
 
-        }else{
+        } else {
             binding.toolBarLyt.backButton.visible()
         }
 
@@ -74,14 +80,18 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
                 val biometricManager = BiometricManager.from(this)
                 when (biometricManager.canAuthenticate()) {
                     BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                        Toast.makeText(this,"No Hardware found",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "No Hardware found", Toast.LENGTH_SHORT).show()
                     }
                     BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                        Toast.makeText(this,"No Hardware unavailable",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "No Hardware unavailable", Toast.LENGTH_SHORT).show()
 
                     }
                     BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                        Toast.makeText(this,"Please enable the biometric from your device",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Please enable the biometric from your device",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
 
                     }
@@ -93,11 +103,13 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
         }
 
     }
+
     private fun displayFingerPrintPopup() {
         Handler(Looper.getMainLooper()).post {
             biometricPrompt.authenticate(promptInfo)
         }
     }
+
     override fun observeViewModel() {
     }
 
@@ -113,7 +125,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
                     if (errorCode == 7) // Too many attempts. try again later ( customised the toast message to below one)
                     {
                         Toast.makeText(context, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
-                    }else {
+                    } else {
                         Toast.makeText(
                             context,
                             "Biometric authentication ${errString.toString().toLowerCase()}",
@@ -129,8 +141,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    binding.switchFingerprintLogin.isChecked=true
-                // btnSave.enable()
+                    binding.switchFingerprintLogin.isChecked = true
+                    // btnSave.enable()
                 }
 
                 override fun onAuthenticationFailed() {
@@ -146,47 +158,63 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
             })
 
 
-            promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Login")
-                .setSubtitle("")
-                .setDescription("Place your fingerprint on the sensor to login or select Cancel and enter your account information and password.")
-                .setNegativeButtonText("CANCEL")
-                .setConfirmationRequired(false)
-                .build()
-
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Login")
+            .setSubtitle("")
+            .setDescription("Place your fingerprint on the sensor to login or select Cancel and enter your account information and password.")
+            .setNegativeButtonText("CANCEL")
+            .setConfirmationRequired(false)
+            .build()
 
 
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.back_button->{
-                finish()
-            }
-            R.id.btn_save->{
-                if (binding.switchFingerprintLogin.isChecked) {
-                    touchIdApiCall()
-                    sessionManager.saveTouchIdEnabled(true)
-
-                    Toast.makeText(this,"Biometric is Enabled",Toast.LENGTH_SHORT).show()
+            R.id.back_button -> {
+                if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
+                    binding.toolBarLyt.backButton.gone()
 
                 } else {
-                    sessionManager.saveTouchIdEnabled(false)
-
-                    Toast.makeText(this,"Biometric is Disabled",Toast.LENGTH_SHORT).show()
-
-
+                    binding.toolBarLyt.backButton.visible()
                 }
-                finish()
             }
-            R.id.biometric_cancel->{
+            R.id.btn_save -> {
+                saveBiometric()
+
+            }
+            R.id.biometric_cancel -> {
                 finish()
             }
         }
     }
 
-    private fun touchIdApiCall(){
+    private fun saveBiometric() {
+        if (binding.switchFingerprintLogin.isChecked) {
+            touchIdApiCall()
+            sessionManager.saveTouchIdEnabled(true)
+
+            Toast.makeText(this, "Biometric is Enabled", Toast.LENGTH_SHORT).show()
+
+        } else {
+            sessionManager.saveTouchIdEnabled(false)
+
+            Toast.makeText(this, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
+
+
+        }
+        if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
+            navigateHomeActivity()
+            finish()
+        } else {
+            finish()
+        }
+
+
+    }
+
+    private fun touchIdApiCall() {
 
         val handler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(msg: Message) {
@@ -202,4 +230,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(),View.OnClickL
         }.start()
     }
 
+    private fun navigateHomeActivity() {
+        startActivity(
+            Intent(this, HomeActivityMain::class.java)
+        )
+        finish()
+    }
 }

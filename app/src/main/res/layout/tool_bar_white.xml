@@ -26,10 +26,8 @@
                 android:id="@+id/tv_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_toEndOf="@+id/btn_back"
                 android:text="@string/str_password_recovery"
+                android:layout_centerInParent="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold" />

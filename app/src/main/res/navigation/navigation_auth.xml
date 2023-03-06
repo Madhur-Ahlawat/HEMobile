@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_auth"
-    app:startDestination="@id/createPasswordFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.conduent.nationalhighways.ui.auth.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
+        tools:layout="@layout/fragment_login_changes">
         <action
             android:id="@+id/action_loginFragment_to_forgotEmailFragment"
             app:destination="@id/forgotEmailFragment" />
@@ -28,7 +28,7 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
-        tools:layout="@layout/fragment_forgot_password">
+        tools:layout="@layout/forgotpassword_changes">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_chooseOptionFragment"
             app:destination="@id/chooseOptionFragment" />
@@ -38,7 +38,7 @@
         android:id="@+id/chooseOptionFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ChooseOptionForgotFragment"
         android:label="ChooseOptionFragment"
-        tools:layout="@layout/fragment_forgot_choose_option">
+        tools:layout="@layout/fragment_forgot_choose_optionchanges">
         <action
             android:id="@+id/action_chooseOptionFragment_to_postalEmailFragment"
             app:destination="@id/postalEmailFragment" />
@@ -62,7 +62,7 @@
         android:id="@+id/otpFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.OTPForgotPassword"
         android:label="OTPFragment"
-        tools:layout="@layout/fragment_forgot_otp">
+        tools:layout="@layout/fragment_forgot_otpchanges">
         <action
             android:id="@+id/action_otpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />

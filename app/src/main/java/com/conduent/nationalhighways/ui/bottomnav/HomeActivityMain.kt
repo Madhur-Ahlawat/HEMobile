@@ -111,8 +111,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         LogoutUtil.stopLogoutTimer()
         BaseApplication.INSTANCE?.stopTimerAPi()
+        super.onDestroy()
+
     }
 }

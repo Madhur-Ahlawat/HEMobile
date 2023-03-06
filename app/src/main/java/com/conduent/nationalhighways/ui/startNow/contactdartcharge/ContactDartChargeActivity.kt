@@ -41,10 +41,17 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
         val inflater = navHostFragment.navController.navInflater
         val oldGraph = inflater.inflate(R.navigation.nav_graph_contact_dart_charge)
 
-        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-            oldGraph.setStartDestination(R.id.caseHistoryDartChargeFragment)
-        } else {
-            oldGraph.setStartDestination(R.id.contactDartCharge)
+        when (mValue) {
+            Constants.FROM_LOGIN_TO_CASES_VALUE -> {
+                oldGraph.setStartDestination(R.id.caseHistoryDartChargeFragment)
+            }
+            Constants.FROM_ANSWER_TO_CASE_VALUE -> {
+                oldGraph.setStartDestination(R.id.dartChargeAccountTypeSelectionFragment)
+
+            }
+            else -> {
+                oldGraph.setStartDestination(R.id.contactDartCharge)
+            }
         }
 
         AdobeAnalytics.setScreenTrack(

@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionBinding
+import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionchangesBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionBinding>(),
+class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchangesBinding>(),
     RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     private var model: RequestOTPModel? = null
@@ -40,8 +41,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionBindin
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentForgotChooseOptionBinding =
-        FragmentForgotChooseOptionBinding.inflate(inflater, container, false)
+    ): FragmentForgotChooseOptionchangesBinding =
+        FragmentForgotChooseOptionchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
         model = RequestOTPModel(optionType = "", optionValue = "")
@@ -60,8 +61,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionBindin
     }
 
     override fun initCtrl() {
-        binding.radioGroup.setOnCheckedChangeListener(this)
         binding.continueBtn.setOnClickListener(this)
+        binding.relativeLayout1.setOnClickListener(this)
+        binding.relativeLayout2.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -76,14 +78,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionBindin
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (group?.checkedRadioButtonId) {
 
-            R.id.email_radio_btn -> {
-                model?.optionType = Constants.EMAIL
-                model?.optionValue = binding.model?.email
-            }
-            R.id.text_message_radio_btn -> {
-                model?.optionType = Constants.SMS
-                model?.optionValue = binding.model?.phone
-            }
+
             R.id.post_mail_radio_btn -> {
                 model?.optionType = Constants.POST_MAIL
                 model?.optionValue = binding.model?.address
@@ -105,6 +100,29 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionBindin
                     showError(binding.root, getString(R.string.please_select_one_mode_for_password))
                 }
             }
+            R.id.relativeLayout1 -> {
+                model?.optionType = Constants.EMAIL
+                model?.optionValue = binding.model?.email
+                hitApi()
+            }
+            R.id.relativeLayout2 -> {
+                model?.optionType = Constants.SMS
+                model?.optionValue = binding.model?.phone
+                hitApi()
+            }
+        }
+    }
+
+    private fun hitApi(){
+        if (!TextUtils.isEmpty(model?.optionType ?: "")) {
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            viewModel.requestOTP(model)
+
+
+        } else {
+            showError(binding.root, getString(R.string.please_select_one_mode_for_password))
         }
     }
 

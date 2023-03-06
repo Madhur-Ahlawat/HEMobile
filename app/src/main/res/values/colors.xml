@@ -86,7 +86,11 @@
     <color name="red_color">#E51635</color>
     <color name="toolbar_color">#FF272727</color>
     <color name="btn_disable_txt_color">#7D7D7D</color>
+<!--
     <color name="btn_disable_color">#D3D3D4</color>
+-->
+    <color name="btn_disable_color">#006796</color>
+
     <color name="radio_btn_color">#002E5F</color>
     <color name="dark_blue_color">#002E5F</color>
     <color name="high_lighted_color">#79FCFF</color>
@@ -99,5 +103,11 @@
     <color name="color_99999">#999999</color>
     <color name="splash_background">#204489</color>
     <color name="resendcolor">#073165</color>
+    <color name="colorWarning">#FFCC00</color>
+    <color name="colorSuccess">#00B4A0</color>
+    <color name="red">#C92500</color>
+    <color name="hintcolor">#6F6E6E</color>
+    <color name="linkcolor">#0A0AB4</color>
+
 
 </resources>

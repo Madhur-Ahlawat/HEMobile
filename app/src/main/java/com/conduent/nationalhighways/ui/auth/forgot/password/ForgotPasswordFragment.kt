@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
+import com.conduent.nationalhighways.databinding.ForgotpasswordChangesBinding
 import com.conduent.nationalhighways.databinding.FragmentForgotPasswordBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), View.OnClickListener {
+class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), View.OnClickListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -36,7 +37,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentForgotPasswordBinding.inflate(inflater, container, false)
+    ) = ForgotpasswordChangesBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
@@ -58,7 +59,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Vi
     }
 
     override fun initCtrl() {
-        binding.edtPostcode.addTextChangedListener { isEnable() }
+        //binding.edtPostcode.addTextChangedListener { isEnable() }
         binding.edtEmail.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
     }

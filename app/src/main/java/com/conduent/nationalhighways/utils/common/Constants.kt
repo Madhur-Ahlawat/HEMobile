@@ -43,6 +43,8 @@ object Constants {
     const val DART_CHARGE_FLOW_CODE: Int = 1002
     const val FROM_LOGIN_TO_CASES_VALUE = 1003
     const val FROM_CASES_TO_CASES_VALUE = 1004
+    const val FROM_ANSWER_TO_CASE_VALUE = 1012
+
     const val PERSONAL_TYPE_PREPAY = 1005
     const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
     const val UK_VEHICLE_DATA_NOT_FOUND = 1007

@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.startNow
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.OnClickListener {
@@ -62,6 +65,10 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
             {
                 R.id.tv_link->{
 
+                    val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    startActivity(i)
                 }
             }
         }

@@ -101,4 +101,5 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
     }
 
 
+
 }

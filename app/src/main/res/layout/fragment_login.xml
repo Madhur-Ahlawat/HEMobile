@@ -11,13 +11,17 @@
 
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/he_bg">
 
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_email"
+
             style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +34,8 @@
             app:endIconDrawable="@drawable/fingerptint_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_email"
@@ -67,7 +72,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/str_password"
             android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/tv_forgot_username"
             app:passwordToggleEnabled="true">
 
@@ -122,6 +127,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login"
             app:srcCompat="@drawable/ic_dont_have_acnt" />
+
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tv_create_account"

@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpBinding
+import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -26,7 +27,7 @@ import kotlin.getValue
 
 
 @AndroidEntryPoint
-class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClickListener {
+class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.OnClickListener {
 
 
     private val viewModel: ForgotPasswordViewModel by viewModels()
@@ -46,7 +47,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpBinding>(), View.OnClick
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentForgotOtpBinding = FragmentForgotOtpBinding.inflate(inflater, container, false)
+    ): FragmentForgotOtpchangesBinding = FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()

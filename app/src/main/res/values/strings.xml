@@ -44,7 +44,7 @@
     <string name="txt_add_vehicle">Add Vehicle</string>
     <string name="txt_forgot_your_email"><u>Forgot your email?</u></string>
     <string name="txt_forgot_your_password"><u>Forgot your password?</u></string>
-    <string name="forgot_password">Password recovery</string>
+    <string name="forgot_password">Reset Password</string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -66,7 +66,7 @@
     <string name="str_account_number">Account number</string>
     <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
-    <string name="str_choose_method_to_get_ur_link">A code will be sent to your mobile or email address.</string>
+    <string name="str_choose_method_to_get_ur_link">A code will be sent to your email address or mobile.</string>
     <string name="str_continue">Continue</string>
     <string name="str_check_your_mail">Check your email for a security code</string>
     <string name="str_resend_security_code">resend security code</string>
@@ -108,7 +108,8 @@
     <string name="str_single_vehicle">Single Vehicle</string>
     <string name="str_multiple_vehicle">Multiple Vehicles</string>
     <string name="str_login">Log In</string>
-    <string name="str_pay_dart_ford_crossing">Pay the Dartford Crossing charge (Dart Charge)</string>
+    <string name="str_continue_login">Continue to login</string>
+    <string name="str_pay_dart_ford_crossing">Pay the Dartford Charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Create an account</string>
     <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
@@ -199,10 +200,9 @@
 
     <string name="str_email_address">Email address</string>
     <string name="str_password_recovery">Password recovery</string>
-    <string name="str_enter_one_time_code">Enter one time code</string>
+    <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
-
-    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. Your email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
+    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
     <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. Your text message might take a few minutes to arrive</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>
@@ -408,7 +408,9 @@
     <string name="error_otp_time_expire">Time Expired!, Please try sending otp again</string>
     <string name="str_work_in_progress">Work in progress</string>
     <string name="email">Email - %1$s</string>
+    <string name="emailchange">Email</string>
     <string name="text_message">Text message - %1$s</string>
+    <string name="text_message1">Text Message</string>
     <string name="post_mail">Post Mail - %1$s</string>
     <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate contacts</string>
@@ -523,6 +525,7 @@
     <string name="str_find_address">Find address</string>
     <string name="str_enter_evening_no">Evening number (optional)</string>
     <string name="str_understanding_charges_fines">Understanding charges and fines</string>
+    <string name="str_accessibility">Accessibility requests</string>
     <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
     <string name="str_normal_phone_no">0300 300 0120</string>
     <string name="str_outside_uk_no">+44 (0) 300 300 0120</string>
@@ -912,11 +915,15 @@
     <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_your_password_must">Your password must:</string>
+    <string name="dotunicode"> \u2022</string>
+    <string name="tickunicode">\u2713</string>
     <string name="str_at_least_8_character">be a least 8 characters long</string>
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
     <string name="str_contain_at_least_one_lower_case">contain at least one lower case letter (a-z)</string>
     <string name="str_contain_at_least_one_number">contain at least one number (0–9)</string>
-    <string name="str_dart_charge_account_password_recovery">Dart Charge account password recovery</string>
+    <string name="str_dart_charge_account_password_recovery">Forgot your password</string>
+    <string name="str_choose_verification_method">Choose a verification method</string>
+    <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
 
 </resources>
 

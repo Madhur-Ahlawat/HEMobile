@@ -25,6 +25,9 @@ buildscript {
 allprojects {
     repositories {
         google()
+        flatDir {
+            dirs 'libs'
+        }
         mavenCentral()// Warning: this repository is going to shut down soon
     }
 }

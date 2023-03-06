@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.GuidanceDocumentsAnswersFragmentBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.customToolbar
 import com.conduent.nationalhighways.utils.extn.makeLinks
+import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.toolbar
 
 class GuidanceAndDocumentsAnswersFragment :
@@ -23,12 +26,17 @@ class GuidanceAndDocumentsAnswersFragment :
 
     override fun init() {
         // not need to set any toolbar
-        requireActivity().customToolbar(getString(R.string.str_guidance_and_documents))
+        requireActivity().customToolbar(getString(R.string.str_accessibility))
 
         binding.tvAnswers.makeLinks(Pair("alternative languages.", View.OnClickListener {
 
         }), Pair("Dart Charge Online", View.OnClickListener {
-
+            requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+                putInt(
+                    Constants.FROM_LOGIN_TO_CASES,
+                    Constants.FROM_ANSWER_TO_CASE_VALUE
+                )
+            }
         }))
 
     }
@@ -45,6 +53,6 @@ class GuidanceAndDocumentsAnswersFragment :
 
     override fun onResume() {
         super.onResume()
-        requireActivity().toolbar(getString(R.string.str_guidance_and_documents))
+        //requireActivity().toolbar(getString(R.string.str_guidance_and_documents))
     }
 }
