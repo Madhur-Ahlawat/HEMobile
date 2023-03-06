@@ -173,20 +173,19 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         when (v?.id) {
 
             R.id.back_button -> {
-                if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-                    binding.toolBarLyt.backButton.gone()
-
-                } else {
-                    binding.toolBarLyt.backButton.visible()
-                }
+               finish()
             }
             R.id.btn_save -> {
                 saveBiometric()
 
             }
             R.id.biometric_cancel -> {
-                finish()
-            }
+                if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
+                    navigateHomeActivity()
+                    finish()
+                } else {
+                    finish()
+                }            }
         }
     }
 

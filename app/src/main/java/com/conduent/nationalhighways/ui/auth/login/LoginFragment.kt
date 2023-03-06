@@ -93,8 +93,9 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.doAfterTextChanged { checkButton() }
             btnLogin.setOnClickListener(this@LoginFragment)
         }
-        if (sessionManager.fetchUserName()?.isNotEmpty() == true) {
+        if (displayFingerPrintPopup()) {
             binding.fingerprint.visible()
+            fingerPrintLogin()
         } else {
             binding.fingerprint.gone()
 
