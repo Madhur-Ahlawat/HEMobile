@@ -120,10 +120,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     (requireActivity() as AuthActivity).previousScreen,
                     sessionManager.getLoggedInUser()
                 )
+                val bundle=Bundle()
+                bundle.putParcelable("data",data)
+                findNavController().navigate(R.id.action_otpFragment_to_resenedCodeFragment,bundle)
 
-                isCalled = true
+               /* isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.requestOTP(data)
+                viewModel.requestOTP(data)*/
             }
         }
     }

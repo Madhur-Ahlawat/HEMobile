@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_otpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
+        <action
+            android:id="@+id/action_otpFragment_to_resenedCodeFragment"
+            app:destination="@id/resenedCodeFragment" />
     </fragment>
 
     <fragment
@@ -88,5 +91,19 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/resenedCodeFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
+        android:label="ResendCodeFragment"
+        tools:layout="@layout/fragment_resend_code">
+        <action
+            android:id="@+id/action_resenedCodeFragment_to_otpFragment"
+            app:destination="@id/otpFragment"
+            app:popUpTo="@id/otpFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+
+
 
 </navigation>
