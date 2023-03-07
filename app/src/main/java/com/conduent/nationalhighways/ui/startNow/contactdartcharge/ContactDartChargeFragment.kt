@@ -25,7 +25,6 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
     lateinit var sessionManager: SessionManager
 
     override fun init() {
-        requireActivity().customToolbar(getString(R.string.str_contact_dart_charge))
 
         AdobeAnalytics.setScreenTrack(
             "contact dart charge",
@@ -60,4 +59,9 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
     }
 
     override fun observer() {}
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().customToolbar(getString(R.string.str_contact_dart_charge), isBackWithText = true)
+    }
 }

@@ -25,13 +25,10 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAboutServiceBinding {
-
         return FragmentAboutServiceBinding.inflate(inflater, container, false)
     }
 
     override fun init() {
-        // not need to set any toolbar
-
         AdobeAnalytics.setScreenTrack(
             "about service",
             "about service",
@@ -57,7 +54,8 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
 
     override fun onResume() {
         super.onResume()
-        requireActivity().toolbar(getString(R.string.str_about_this_service))
+        requireActivity().toolbar(getString(R.string.str_about_this_service), true)
+
     }
     override fun onClick(v: View?) {
         v?.let {

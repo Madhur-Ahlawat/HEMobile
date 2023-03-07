@@ -30,7 +30,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
     override fun initViewBinding() {
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbar(getString(R.string.str_charges_6am_10pm))
+        toolbar(getString(R.string.str_charges_6am_10pm), isBackWithText = true)
 
 
         AdobeAnalytics.setScreenTrack(

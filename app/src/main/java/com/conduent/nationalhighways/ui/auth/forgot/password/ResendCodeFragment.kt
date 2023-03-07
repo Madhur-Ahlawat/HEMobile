@@ -81,7 +81,6 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     response = status.data
                     val bundle = Bundle()
                     bundle.putParcelable("data", data)
-
                     response = status.data
                     bundle.putParcelable("response", response)
                     findNavController().navigate(

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.utils.extn
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
@@ -37,22 +38,46 @@ fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
     }
 }
 
-fun Activity.toolbar(title: String?) {
-    val ivBack = findViewById<ImageView?>(R.id.btn_back)
+fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
+    var imgBack : ImageView? = findViewById(R.id.btn_back)
+    var txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
+    if (isBackWithText){
+        txtBack?.visibility = View.VISIBLE
+        imgBack?.visibility = View.GONE
+        txtBack?.setOnClickListener {
+            onBackPressed()
+        }
+    } else {
+        txtBack?.visibility = View.GONE
+        imgBack?.visibility = View.VISIBLE
+        imgBack?.setOnClickListener {
+            onBackPressed()
+        }
+    }
     val tvHeader = findViewById<TextView?>(R.id.tv_header)
     tvHeader?.text = title
-    ivBack?.setOnClickListener {
-        onBackPressed()
-    }
+
 }
 
-fun Activity.customToolbar(title: String?) {
-    val ivBack = findViewById<ImageView?>(R.id.back_button)
+fun Activity.customToolbar(title: String?, isBackWithText : Boolean = false) {
+
+    var imgBack : ImageView? = findViewById(R.id.back_button)
+    var txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
+    if (isBackWithText){
+        txtBack?.visibility = View.VISIBLE
+        imgBack?.visibility = View.GONE
+        txtBack?.setOnClickListener {
+            onBackPressed()
+        }
+    } else {
+        txtBack?.visibility = View.GONE
+        imgBack?.visibility = View.VISIBLE
+        imgBack?.setOnClickListener {
+            onBackPressed()
+        }
+    }
     val tvHeader = findViewById<TextView?>(R.id.title_txt)
     tvHeader?.text = title
-    ivBack?.setOnClickListener {
-        onBackPressed()
-    }
 }
 
 fun Activity.setRightButtonText(title: String) {

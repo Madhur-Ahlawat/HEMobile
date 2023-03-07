@@ -28,9 +28,7 @@ class GuidanceAndDocumentsAnswersFragment :
         // not need to set any toolbar
         requireActivity().customToolbar(getString(R.string.str_accessibility))
 
-        binding.tvAnswers.makeLinks(Pair("alternative languages.", View.OnClickListener {
-
-        }), Pair("Dart Charge Online", View.OnClickListener {
+        binding.tvAnswers.makeLinks(Pair("Dart Charge Online", View.OnClickListener {
             requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                 putInt(
                     Constants.FROM_LOGIN_TO_CASES,
