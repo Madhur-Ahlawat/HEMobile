@@ -62,6 +62,6 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartChargeBinding>
 
     override fun onResume() {
         super.onResume()
-        requireActivity().customToolbar(getString(R.string.str_contact_dart_charge), isBackWithText = true)
+        requireActivity().customToolbar(getString(R.string.str_contact_dart_charge))
     }
 }

@@ -54,7 +54,7 @@ class AboutServiceFragment : BaseFragment<FragmentAboutServiceBinding>(), View.O
 
     override fun onResume() {
         super.onResume()
-        requireActivity().toolbar(getString(R.string.str_about_this_service), true)
+        requireActivity().toolbar(getString(R.string.str_about_this_service))
 
     }
     override fun onClick(v: View?) {

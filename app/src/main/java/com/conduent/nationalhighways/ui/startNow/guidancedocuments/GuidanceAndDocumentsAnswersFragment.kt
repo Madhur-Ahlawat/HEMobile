@@ -11,7 +11,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.customToolbar
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
-import com.conduent.nationalhighways.utils.extn.toolbar
 
 class GuidanceAndDocumentsAnswersFragment :
     BaseFragment<GuidanceDocumentsAnswersFragmentBinding>() {

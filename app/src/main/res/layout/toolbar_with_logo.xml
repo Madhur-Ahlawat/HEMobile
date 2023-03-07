@@ -9,13 +9,30 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginRight="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/toolbar_logo" />
+            app:srcCompat="@drawable/ic_dart_charge_logo" />
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfsemibold"
+            android:text="Dart Charge"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.59"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
