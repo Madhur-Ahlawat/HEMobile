@@ -310,7 +310,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         }else{
             binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
-            binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
+            binding.text3.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
 
         }
 

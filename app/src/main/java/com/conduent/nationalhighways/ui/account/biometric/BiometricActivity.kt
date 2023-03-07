@@ -65,9 +65,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
         if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
             binding.toolBarLyt.backButton.gone()
+            binding.biometricCancel.visible()
 
         } else {
             binding.toolBarLyt.backButton.visible()
+            binding.biometricCancel.gone()
+
         }
 
         initBiomatric(this)
@@ -97,6 +100,15 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     }
                     BiometricManager.BIOMETRIC_SUCCESS -> {
                         displayFingerPrintPopup()
+                    }
+                    BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
+                        TODO()
+                    }
+                    BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
+                        TODO()
+                    }
+                    BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
+                        TODO()
                     }
                 }
             }

@@ -924,7 +924,7 @@
     <string name="str_dart_charge_account_password_recovery">Forgot your password</string>
     <string name="str_choose_verification_method">Choose a verification method</string>
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
-    <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <u>https://www.gov.uk/pay-dartford -crossing-charge/charges-fines</u></string>
+    <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information <u>click here</u></string>
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder. The code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>

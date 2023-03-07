@@ -162,3 +162,34 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     this.movementMethod = LinkMovementMethod.getInstance()
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
+
+fun TextView.makeLinksWhite(vararg links: Pair<String, View.OnClickListener>) {
+    val spannableString = SpannableString(this.text)
+    var startIndexOfLink = -1
+
+    for (link in links) {
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                Selection.setSelection((widget as TextView).text as Spannable, 0)
+                widget.invalidate()
+                link.second.onClick(widget)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.parseColor("#FFFFFFFF")
+                ds.isUnderlineText = true
+            }
+        }
+        startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndexOfLink,
+            startIndexOfLink + link.first.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+    }
+    this.movementMethod = LinkMovementMethod.getInstance()
+    this.setText(spannableString, TextView.BufferType.SPANNABLE)
+}
