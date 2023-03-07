@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/str_forgot_your_password"
+            android:text="@string/str_forgot_password"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,13 +152,15 @@
             android:backgroundTint="@{model.enable==true?@color/blue_color:@color/btn_disable_color}"
             android:enabled="@{model.enable}"
             android:paddingHorizontal="@dimen/_10sdp"
-            android:text="@string/txt_login"
+            android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="@{model.enable==false?@color/btn_disable_txt_color:@color/white}"
             android:textSize="@dimen/_15ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
+            app:layout_constraintVertical_bias="0.8" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dont_have_acnt"

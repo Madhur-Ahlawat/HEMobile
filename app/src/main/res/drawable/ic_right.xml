@@ -5,5 +5,5 @@
     android:viewportHeight="12">
   <path
       android:pathData="M1,0.7106C0.61,1.1006 0.61,1.7306 1,2.1206L4.88,6.0006L1,9.8806C0.61,10.2706 0.61,10.9006 1,11.2906C1.39,11.6806 2.02,11.6806 2.41,11.2906L7,6.7006C7.39,6.3106 7.39,5.6806 7,5.2906L2.41,0.7006C2.03,0.3206 1.39,0.3206 1,0.7106Z"
-      android:fillColor="@color/radio_btn_color"/>
+      android:fillColor="@color/grayColorIcon"/>
 </vector>

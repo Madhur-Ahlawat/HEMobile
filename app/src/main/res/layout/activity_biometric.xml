@@ -42,7 +42,9 @@
                 android:switchPadding="20dp"
                 android:textColor="@color/white"
                 android:checked="true"
+                app:thumbTint="@color/white"
                 android:textSize="@dimen/_13ssp"
+                app:trackTintMode="multiply"
                 android:theme="@style/Color1SwitchStyle"
                 android:text="@string/usefingerprinttologin" />
 
