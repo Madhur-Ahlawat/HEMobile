@@ -1,9 +1,11 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentStartNowBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
@@ -12,7 +14,9 @@ import com.conduent.nationalhighways.ui.startNow.StartNowBaseActivity
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.extn.makeLinksWhite
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
+import com.conduent.nationalhighways.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +26,8 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     private var screenType: String = ""
     @Inject
     lateinit var sessionManager: SessionManager
+
+    private var backButton:ImageView?=null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -49,6 +55,9 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             rlViewCharges.setOnClickListener(this@StartNowFragment)
             btnLogin.setOnClickListener(this@StartNowFragment)
         }
+        backButton=requireActivity().findViewById(R.id.back_button)
+
+        backButton?.visibility=View.VISIBLE
     }
 
     override fun observer() {}
@@ -110,8 +119,13 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
                         "home",
                         false
                     )
+                        val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.data = Uri.parse(url)
+                        startActivity(i)
 
-                    requireActivity().startNormalActivity(ViewChargesActivity::class.java)
+
+                    //requireActivity().startNormalActivity(ViewChargesActivity::class.java)
                 }
 
                 R.id. btnLogin ->{

@@ -305,14 +305,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_12sdp"
+            style="@style/ButtonStyle"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/login"
-            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:cornerRadius="@dimen/_4sdp"

@@ -315,9 +315,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE3)){
-            binding.text4.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+            binding.text4.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_number)
         }else{
-            binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+            binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_number)
         }
     }
 

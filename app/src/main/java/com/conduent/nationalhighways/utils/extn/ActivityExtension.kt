@@ -39,8 +39,8 @@ fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
 }
 
 fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
-    var imgBack : ImageView? = findViewById(R.id.btn_back)
-    var txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
+    val imgBack : ImageView? = findViewById(R.id.btn_back)
+    val txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
     if (isBackWithText){
         txtBack?.visibility = View.VISIBLE
         imgBack?.visibility = View.GONE
@@ -61,8 +61,8 @@ fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
 
 fun Activity.customToolbar(title: String?, isBackWithText : Boolean = false) {
 
-    var imgBack : ImageView? = findViewById(R.id.back_button)
-    var txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
+    val imgBack : ImageView? = findViewById(R.id.back_button)
+    val txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
     if (isBackWithText){
         txtBack?.visibility = View.VISIBLE
         imgBack?.visibility = View.GONE

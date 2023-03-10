@@ -171,8 +171,9 @@
     </style>
 
     <style name="Color1SwitchStyle">
-        <item name="colorControlActivated">@color/login_blue_border</item>
-        <item name="trackTint">@color/white</item>
-
+        <item name="colorControlActivated">@color/white</item>
+        <item name="trackColorActive">@color/green</item>
+        <item name="trackColorInactive">@color/color_000000</item>
+        <item name="trackColor">@color/color_000000</item>
     </style>
 </resources>

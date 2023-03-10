@@ -203,7 +203,7 @@
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
     <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
-    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \nYour text message might take a few minutes to arrive</string>
+    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>
     <string name="str_create_password">Create a new password</string>
@@ -214,15 +214,10 @@
     <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
     <string name="str_about_this_service">About this service</string>
     <string name="str_crossing_service_update">Crossing service updates</string>
-    <string name="str_contact_dart_charge">Contact dart charge</string>
+    <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
     <string name="str_use_this_service_to">Use this service to</string>
-    <string name="str_use_service_guideline">
-        \u25CF Pay for crossings
-        <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u25CF Create and manage an account
-        \n\u25CF Check payment for crossings
-    </string>
+
     <string name="str_learn_about_"><u>Learn more about Dartford Crossings &amp; Dart Charge</u></string>
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
     <string name="str_locations">Locations</string>
@@ -902,7 +897,7 @@
     <string name="str_notifications_not_found">Notifications not found</string>
 
     //Biometric
-    <string name="doyouwantenablebiometric">Do you want to enable Biometrics? You can also enable Biometric Authentication later from the Biometrics option under Accounts Menu.</string>
+    <string name="doyouwantenablebiometric">You can enable now, or later from the Biometrics option under Account Management.</string>
     <string name="biometriclogin">Biometric Login</string>
     <string name="biometrics">Biometrics</string>
     <string name="usefingerprinttologin">Use fingerprint or face to login</string>
@@ -917,7 +912,7 @@
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode"> \u2022</string>
     <string name="tickunicode">\u2713</string>
-    <string name="str_at_least_8_character">be a least 8 characters long</string>
+    <string name="str_at_least_8_character">be at least 8 characters long</string>
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
     <string name="str_contain_at_least_one_lower_case">contain at least one lower case letter (a-z)</string>
     <string name="str_contain_at_least_one_number">contain at least one number (0–9)</string>
@@ -927,9 +922,26 @@
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information <u>click here</u></string>
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder. The code will expire after 15 minutes.</string>
+    <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
     <string name="requestanewsecuritycode">Send a new code</string>
+    <string name="str_message_data_rates">* Message and data rates may apply.</string>
+    <string name="enable_biometric">Enable Biometrics</string>
+    <string name="enablenow">Enable now</string>
+    <string name="enablelater">Enable later</string>
+    <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
+    <string name="goto_settings">Go to settings</string>
+
+
+    <string name="str_use_service_guideline">
+        \u25CF Pay for crossings without an account
+        <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
+        \n\u25CF Set up a Dart Charge account
+        \n\u25CF Check with crossing you\u0027ve paid for
+        \n\u25CF Dart Charge guidance and documents
+    </string>
+
 
 </resources>
 

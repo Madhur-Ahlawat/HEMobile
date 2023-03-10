@@ -35,18 +35,28 @@
                 android:textSize="@dimen/_12sdp" />
 
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch_fingerprint_login"
+           <!-- <androidx.appcompat.widget.SwitchCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:switchPadding="20dp"
-                android:textColor="@color/white"
+
                 android:checked="true"
                 app:thumbTint="@color/white"
                 android:textSize="@dimen/_13ssp"
                 app:trackTintMode="multiply"
                 android:theme="@style/Color1SwitchStyle"
-                android:text="@string/usefingerprinttologin" />
+                />-->
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_fingerprint_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb"
+                android:checked="true"
+                app:trackTint="@color/switch_track"
+                android:text="@string/usefingerprinttologin"
+                android:switchPadding="20dp"
+                android:textColor="@color/white"
+                />
 
             <Button
                 android:id="@+id/btn_save"

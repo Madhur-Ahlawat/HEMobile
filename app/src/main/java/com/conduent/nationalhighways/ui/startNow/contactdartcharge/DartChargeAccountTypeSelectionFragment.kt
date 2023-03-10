@@ -35,7 +35,7 @@ class DartChargeAccountTypeSelectionFragment :
     ) = FragmentDartChargeAccountTypeSelectionBinding.inflate(inflater, container, false)
 
     override fun init() {
-        requireActivity().customToolbar(getString(R.string.cases_and_enquiry), true)
+        requireActivity().customToolbar(getString(R.string.cases_and_enquiry))
         accountModel = AccountTypeSelectionModel()
 
         AdobeAnalytics.setScreenTrack(

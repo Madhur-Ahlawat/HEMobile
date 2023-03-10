@@ -15,13 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_header">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            >
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -32,16 +25,15 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:fontFamily="@font/sfsemibold"
+                android:fontFamily="@font/sfregular"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="@dimen/_4sdp"
                 android:text="@string/str_guidance_and_documents_answers"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

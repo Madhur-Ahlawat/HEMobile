@@ -24,15 +24,15 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
 
     override fun onBindViewHolder(holder: TollRateAdapter.VehicleViewHolder, position: Int) {
         if (list?.get(position)?.videoRate!=0.0){
-            holder.binding.title2.text=String.format("%.2f", list?.get(position)?.videoRate)
+            holder.binding.title2.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
 
         }else{
             holder.binding.title2.text=context?.getString(R.string.str_free)
 
         }
         if (list?.get(position)?.etcRate!=0.0){
-            holder.binding.title3.text=String.format("%.2f", list?.get(position)?.etcRate)
-            holder.binding.title4.text=String.format("%.2f", list?.get(position)?.etcRate)
+            holder.binding.title3.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
+            holder.binding.title4.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
 
         }else{
             holder.binding.title3.text=context?.getString(R.string.str_free)

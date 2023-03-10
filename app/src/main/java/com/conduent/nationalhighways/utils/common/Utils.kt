@@ -6,8 +6,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat.startActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -208,6 +210,11 @@ object Utils {
         return list.toTypedArray()
     }
 
+    fun gotoMobileSetting(context: Context){
+        val intent = Intent(Settings.ACTION_SETTINGS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
 
     private const val DOC = "application/msword"
     private const val DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"

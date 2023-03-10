@@ -125,8 +125,19 @@
                 android:textSize="@dimen/_12ssp"
                 android:text="@{model.phone}"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:id="@+id/phone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone"
+                android:fontFamily="@font/sfregular"
+                android:textSize="@dimen/_12ssp"
+                android:text="@string/str_message_data_rates"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:textColor="@color/black"/>
+                />
 
             <ImageView
                 android:layout_width="wrap_content"

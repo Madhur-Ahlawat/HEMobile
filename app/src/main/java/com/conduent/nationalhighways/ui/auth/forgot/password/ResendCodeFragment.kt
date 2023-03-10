@@ -47,7 +47,13 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     }
 
     override fun initCtrl() {
-        binding.subTitle.text=getString(R.string.resend_code,data?.optionValue)
+        if (data?.optionType==Constants.EMAIL){
+            binding.subTitle.text=getString(R.string.resend_code,data?.optionValue)
+
+        }else{
+            binding.subTitle.text=getString(R.string.resend_code_text,data?.optionValue)
+
+        }
         binding.apply {
             btnVerify.setOnClickListener(this@ResendCodeFragment)
         }

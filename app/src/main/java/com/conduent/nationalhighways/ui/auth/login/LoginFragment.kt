@@ -231,10 +231,10 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun displayBiometricDialog() {
-        displayMessage(getString(R.string.app_name),
+        displayMessage(getString(R.string.enable_biometric),
             getString(R.string.doyouwantenablebiometric),
-            getString(R.string.str_yes),
-            getString(R.string.str_no),
+            getString(R.string.enablenow),
+            getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     requireActivity().openActivityWithData(BiometricActivity::class.java) {

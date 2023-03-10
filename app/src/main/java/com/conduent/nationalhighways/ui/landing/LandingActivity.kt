@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -17,9 +19,9 @@ import com.conduent.nationalhighways.utils.common.Constants.SESSION_TIME_OUT
 import com.conduent.nationalhighways.utils.common.Constants.START_NOW_SCREEN
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LandingActivity : BaseActivity<ActivityLandingBinding>() {
@@ -37,7 +39,10 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy","test called $screenType")
+
         loadFragment()
+
+
 
     }
 
@@ -47,6 +52,8 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         BaseApplication.INSTANCE?.stopTimerAPi()
 //        sessionManager.clearAll()
         initCtrl()
+
+
     }
 
     override fun onPause() {
@@ -54,7 +61,11 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
-    private fun initCtrl() {}
+    private fun initCtrl() {
+        binding.backButton.setOnClickListener{
+            onBackPressed()
+        }
+    }
 
     override fun observeViewModel() {}
 

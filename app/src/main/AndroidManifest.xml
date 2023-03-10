@@ -18,10 +18,15 @@
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.account.biometric.BiometricActivity"
+            android:name=".WebViewActivity"
             android:exported="false">
-
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
+        <activity
+            android:name=".ui.account.biometric.BiometricActivity"
+            android:exported="false"></activity>
         <activity
             android:name="com.conduent.nationalhighways.ui.landing.SplashActivity"
             android:exported="true"

@@ -3,7 +3,9 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,6 +38,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     private var isChecked = true
     private var isPushNotificationChecked = true
     private var count = 1
+    private var backButton:ImageView?=null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -55,6 +58,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
+        backButton=requireActivity().findViewById(R.id.back_button)
+
+        backButton?.visibility=View.GONE
 
         AdobeAnalytics.setScreenTrack(
             "home",

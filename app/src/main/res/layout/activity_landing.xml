@@ -18,6 +18,16 @@
             <include
                 android:id="@+id/tool_bar_lyt"
                 layout="@layout/toolbar_with_logo_text" />
+             <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/_8sdp"
+            app:srcCompat="@drawable/ic_back_grey" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

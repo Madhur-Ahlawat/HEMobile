@@ -3,10 +3,12 @@ package com.conduent.nationalhighways.ui.account.biometric
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.arch.core.executor.ArchTaskExecutor
@@ -14,14 +16,15 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.SignatureHelper
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.extn.customToolbar
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -90,11 +93,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
                     }
                     BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                        Toast.makeText(
-                            this,
-                            "Please enable the biometric from your device",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                       displayAccountSettingsDialog()
 
 
                     }
@@ -115,6 +114,27 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
     }
+
+    private fun displayAccountSettingsDialog() {
+        displayMessage(getString(R.string.enable_biometric),
+            getString(R.string.biometric_has_not_been_setup),
+            getString(R.string.goto_settings),
+            getString(R.string.cancel),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+                    binding.switchFingerprintLogin.isChecked=false
+
+                    Utils.gotoMobileSetting(this@BiometricActivity)
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+                    binding.switchFingerprintLogin.isChecked=false
+                    dialog.dismiss()
+                }
+            })
+    }
+
 
     private fun displayFingerPrintPopup() {
         Handler(Looper.getMainLooper()).post {
