@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -14,18 +15,20 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentLandingBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -51,6 +54,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+
         if (isChecked) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             webServiceViewModel.checkServiceStatus()
@@ -100,20 +105,21 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 sessionManager.getLoggedInUser()
             )
 
-            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+
         }
         binding.layoutMakePayment.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "one of payment",
                 "home",
                 "home",
-                "englsh",
+                "english",
                 "home",
                 "splash",
                 sessionManager.getLoggedInUser()
             )
+            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
 
-            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
         }
         binding.layoutPenaltyCharge.setOnClickListener {
             openUrlInWebBrowser()

@@ -34,6 +34,7 @@
                 android:layout_centerVertical="true"
                 android:tint="@color/white"
                 android:text="Back"
+                app:fontFamily="@font/sfbold"
                 android:visibility="gone"
                 android:textSize="17sp"
                 android:fontFamily="@font/sfregular"

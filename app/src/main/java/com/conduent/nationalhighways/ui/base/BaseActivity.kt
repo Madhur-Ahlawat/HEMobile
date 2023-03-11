@@ -1,8 +1,12 @@
 package com.conduent.nationalhighways.ui.base
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -82,7 +86,41 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         alertDialog.show()
     }
 
+    fun displayCustomMessage(
+        fTitle: String?,
+        message: String,
+        positiveBtnTxt: String,
+        negativeBtnTxt: String,
+        pListener: DialogPositiveBtnListener?,
+        nListener: DialogNegativeBtnListener?
+    ) {
 
+        val dialog = Dialog(this)
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(R.layout.custom_dialog)
+        val title=dialog.findViewById<TextView>(R.id.title)
+        val textMessage=dialog.findViewById<TextView>(R.id.message)
+        val cancel = dialog.findViewById<TextView>(R.id.cancel_btn)
+        val ok = dialog.findViewById<TextView>(R.id.ok_btn)
+
+        title.text=fTitle
+        textMessage.text=message
+        cancel.text=negativeBtnTxt
+        ok.text=positiveBtnTxt
+        cancel.setOnClickListener {
+            nListener?.negativeBtnClick(dialog)
+            dialog.dismiss()
+        }
+        ok.setOnClickListener {
+            pListener?.positiveBtnClick(dialog)
+            dialog.dismiss()
+        }
+        dialog.show()
+
+
+    }
 
 
 }

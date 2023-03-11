@@ -61,7 +61,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun initCtrl() {
-        binding.continueBtn.setOnClickListener(this)
+       // binding.continueBtn.setOnClickListener(this)
         binding.relativeLayout1.setOnClickListener(this)
         binding.relativeLayout2.setOnClickListener(this)
     }

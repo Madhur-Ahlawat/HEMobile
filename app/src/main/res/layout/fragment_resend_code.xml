@@ -47,11 +47,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_verify"
-            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_30sdp"
             android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/requestanewsecuritycode"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintBottom_toBottomOf="parent"

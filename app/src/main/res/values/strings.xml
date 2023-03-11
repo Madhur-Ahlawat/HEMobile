@@ -100,7 +100,7 @@
     <string name="str_check_inbox">"Please check your inbox, spam, bulk or junk email folder it may have been mistakenly blocked by your email system "</string>
     <string name="str_not_received_resend">If you have not received the email please click resend</string>
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
-    <string name="str_make_one_of_payment">Make a one off payment</string>
+    <string name="str_make_one_of_payment">Pay for crossings without an account</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
     <string name="str_charges_for_crossing">The charges for crossings</string>
     <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
@@ -111,9 +111,9 @@
     <string name="str_continue_login">Continue to login</string>
     <string name="str_pay_dart_ford_crossing">Pay the Dartford Charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
-    <string name="str_create_account">Create an account</string>
+    <string name="str_create_account">Set up a Dart Charge account</string>
     <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
-    <string name="str_check_for_paid_crossing">Check for paid crossing</string>
+    <string name="str_check_for_paid_crossing">Check which crossing you\'ve paid for</string>
     <string name="str_view_charges">Understanding charges and fines</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
@@ -405,7 +405,7 @@
     <string name="email">Email - %1$s</string>
     <string name="emailchange">Email</string>
     <string name="text_message">Text message - %1$s</string>
-    <string name="text_message1">Text Message</string>
+    <string name="text_message1">Mobile</string>
     <string name="post_mail">Post Mail - %1$s</string>
     <string name="price">£%1$s</string>
     <string name="str_nominate_contact">Nominate contacts</string>
@@ -910,7 +910,7 @@
     <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_your_password_must">Your password must:</string>
-    <string name="dotunicode"> \u2022</string>
+    <string name="dotunicode">\u25CF</string>
     <string name="tickunicode">\u2713</string>
     <string name="str_at_least_8_character">be at least 8 characters long</string>
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
@@ -926,7 +926,7 @@
     <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
     <string name="requestanewsecuritycode">Send a new code</string>
-    <string name="str_message_data_rates">* Message and data rates may apply.</string>
+    <string name="str_message_data_rates">Message and data rates may apply.</string>
     <string name="enable_biometric">Enable Biometrics</string>
     <string name="enablenow">Enable now</string>
     <string name="enablelater">Enable later</string>
@@ -935,11 +935,10 @@
 
 
     <string name="str_use_service_guideline">
-        \u25CF Pay for crossings without an account
+        \u25CF   Pay for crossings without an account
         <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u25CF Set up a Dart Charge account
+        \n\u25CF Sign in or Set up a Dart Charge account
         \n\u25CF Check with crossing you\u0027ve paid for
-        \n\u25CF Dart Charge guidance and documents
     </string>
 
 

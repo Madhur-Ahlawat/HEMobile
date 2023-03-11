@@ -151,7 +151,7 @@
 
         </RelativeLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <!--<com.google.android.material.button.MaterialButton
             android:id="@+id/continue_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
@@ -165,9 +165,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radio_group" />
-
+            app:layout_constraintStart_toStartOf="parent" />
+-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

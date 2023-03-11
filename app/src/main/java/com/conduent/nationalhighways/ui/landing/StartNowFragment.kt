@@ -12,11 +12,8 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.startNow.StartNowBaseActivity
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
-import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.makeLinksWhite
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.extn.toolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

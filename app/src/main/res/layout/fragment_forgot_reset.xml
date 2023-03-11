@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/he_bg">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tick_img"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/_60sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tick_mark" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_150sdp"
+            app:srcCompat="@drawable/checkicon" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
@@ -28,9 +26,8 @@
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/sfbold"
             android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@id/tick_img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+           android:layout_below="@id/tick_img"
+            android:layout_centerHorizontal="true"
              />
 
 
@@ -47,12 +44,11 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:fontFamily="@font/sfsemibold"
+            android:layout_below="@id/title"
+           />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </layout>

@@ -81,7 +81,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         binding.text1.text=getString(R.string.dotunicode)+" "+getString(R.string.str_at_least_8_character)
         binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
         binding.text3.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
-        binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
+        binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_number)
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
