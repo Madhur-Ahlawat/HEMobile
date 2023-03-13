@@ -935,10 +935,10 @@
 
 
     <string name="str_use_service_guideline">
-        \u25CF   Pay for crossings without an account
+        \u2022   Pay for crossings without an account
         <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u25CF Sign in or Set up a Dart Charge account
-        \n\u25CF Check with crossing you\u0027ve paid for
+        \n\u2022 Sign in or Set up a Dart Charge account
+        \n\u2022 Check with crossing you\u0027ve paid for
     </string>
 
 

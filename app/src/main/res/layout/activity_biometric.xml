@@ -58,19 +58,19 @@
                 android:textColor="@color/white"
                 />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_44sdp"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginBottom="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:textAllCaps="false"
                 android:text="@string/str_save"
                 android:background="@color/btn_color" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/biometric_cancel"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_44sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:backgroundTint="@color/white"

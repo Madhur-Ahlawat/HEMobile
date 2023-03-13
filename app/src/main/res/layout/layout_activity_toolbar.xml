@@ -27,13 +27,13 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_17ssp"
+        android:textSize="@dimen/_14ssp"
         android:textColor="@color/color_D8000000"
         android:layout_marginStart="24dp"
+        android:fontFamily="@font/sfbold"
         android:text="Make a one off payment"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/ivBack"
-        android:textStyle="bold" />
+        android:layout_toEndOf="@+id/ivBack"/>
 
 
  </RelativeLayout>
