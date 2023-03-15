@@ -10,4 +10,28 @@
         <attr name="animation_duration" format="integer" />
         <attr name="scale_percent" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="NHTextInputStyle">
+        <attr name="headingText" format="string" />
+        <attr name="hintText" format="string" />
+        <attr name="title" format="string" />
+        <attr name="errorText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="NHButtonStyle">
+        <attr format="boolean" name="isPrimary"/>
+        <attr name="shape"/>
+        <attr name="gradientAngle"/>
+        <attr name="borderWidth_"/>
+        <attr name="radius"/>
+        <attr name="borderColor"/>
+        <attr name="backgroundColor"/>
+        <attr name="backgroundColorPressed"/>
+        <attr name="gradientStartColor"/>
+        <attr name="gradientEndColor"/>
+        <attr name="drawableCenter"/>
+        <attr name="isEnabled"/>
+    </declare-styleable>
+
+
 </resources>

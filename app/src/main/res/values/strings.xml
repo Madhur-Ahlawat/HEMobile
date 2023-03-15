@@ -919,7 +919,7 @@
     <string name="str_dart_charge_account_password_recovery">Forgot your password</string>
     <string name="str_choose_verification_method">Choose a verification method</string>
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
-    <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information <u>click here</u></string>
+    <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder. The code will expire after 15 minutes.</string>
     <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
@@ -940,7 +940,23 @@
         \n\u2022 Sign in or Set up a Dart Charge account
         \n\u2022 Check with crossing you\u0027ve paid for
     </string>
-
+    <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
+    <string name="create_account">Create account</string>
+    <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
+    <string name="a_phone_number">a phone number</string>
+    <string name="an_email_address_to_receive_a_code">an email address to receive a code</string>
+    <string name="you_ll_need_to_have">You’ll need to have:</string>
+    <string name="before_you_start">Before you start</string>
+    <string name="sign_in">sign in</string>
+    <string name="if_you_already_have_an_account_you_can">If you already have an account you can </string>
+    <string name="dartford_crossing_account_sign_in_or_set_up">Dartford crossing account: sign in or set up</string>
+    <string name="postCodeHint">ex. WA4 1AB</string>
+    <string name="what_is_your_address">What is your address?</string>
+    <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
+    <string name="enter_address_manually">Enter address manually</string>
+    <string name="what_is_your_name">What is your name?</string>
+    <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
+    <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
 
 </resources>
 
