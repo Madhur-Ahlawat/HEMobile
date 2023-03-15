@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_17sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        tools:background="@drawable/he_bg">
+
+        <TextView
+            android:id="@+id/txtHeading"
+            style="@style/MediumText"
+            android:layout_width="0dp"
+            android:text="@string/what_is_your_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInput
+            android:id="@+id/inputPostCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:headingText="Postcode"
+            app:hintText="@string/postCodeHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtHeading" />
+
+        <TextView
+            android:id="@+id/txtThisShouldBeVehicle"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/this_should_be_the_address_were_the_vehicle_is_registered"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputPostCode" />
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnFindAddress"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/find_address"
+            app:radius="5dp"
+            android:enabled="false"
+            app:layout_constraintBottom_toTopOf="@+id/btnEnterAddressManually"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnEnterAddressManually"
+            style="@style/SecondaryButton"
+            android:layout_width="0dp"
+            app:radius="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_50sdp"
+            android:text="@string/enter_address_manually"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

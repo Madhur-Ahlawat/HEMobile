@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/emailVerification">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
    <!-- Step 1 -->
@@ -379,5 +379,28 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
         tools:layout="@layout/fragment_create_account_successful"/>
+    <fragment
+        android:id="@+id/createAccountPrerequisite"
+        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPrerequisite"
+        android:label="CreateAccountPrerequisite"
+        tools:layout="@layout/fragment_create_account_prerequisite">
+        <action
+            android:id="@+id/action_createAccountPrerequisite_to_createAccountPersonalInfo"
+            app:destination="@id/createAccountPersonalInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountPersonalInfo"
+        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPersonalInfo"
+        android:label="CreateAccountPersonalInfo"
+        tools:layout="@layout/fragment_create_account_personal_info_new">
+        <action
+            android:id="@+id/action_createAccountPersonalInfo_to_createAccountPostCodeNew"
+            app:destination="@id/createAccountPostCodeNew" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountPostCodeNew"
+        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPostCodeNew"
+        android:label="CreateAccountPostCodeNew" />
+
 
 </navigation>

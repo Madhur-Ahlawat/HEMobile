@@ -9,9 +9,11 @@ import android.view.MenuItem
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -123,4 +125,22 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     }
 
 
+}
+
+fun AppCompatActivity.onBackPressed(callback: () -> Unit){
+    onBackPressedDispatcher.addCallback(this,
+    object : OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+            callback()
+        }
+    })
+}
+
+fun FragmentActivity.onBackPressed(callback: () -> Unit){
+    onBackPressedDispatcher.addCallback(this,
+        object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                callback()
+            }
+        })
 }
