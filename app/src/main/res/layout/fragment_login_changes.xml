@@ -117,7 +117,7 @@
                 android:paddingHorizontal="@dimen/_5ssp"
                 android:backgroundTint="@android:color/transparent"
                 android:text="@={model.password}"
-                android:drawableRight="@drawable/ic_baseline_visibility_off_24"
+                android:drawableRight="@drawable/ic_baseline_visibility_24"
                 android:longClickable="false"
                 android:textSize="@dimen/_13ssp" />
             <ImageView

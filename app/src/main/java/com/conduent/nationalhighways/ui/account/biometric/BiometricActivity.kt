@@ -51,7 +51,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     override fun initViewBinding() {
         binding = ActivityBiometricBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        customToolbar(getString(R.string.biometrics))
+        toolbar(getString(R.string.biometrics))
 
         initCtrl()
     }
@@ -59,7 +59,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun initCtrl() {
 
         binding.apply {
-            toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
+            toolBarLyt.btnBack.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
         }
@@ -72,11 +72,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
         if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-            binding.toolBarLyt.backButton.gone()
+            binding.toolBarLyt.btnBack.gone()
             binding.biometricCancel.visible()
 
         } else {
-            binding.toolBarLyt.backButton.visible()
+            binding.toolBarLyt.btnBack.visible()
             binding.biometricCancel.gone()
 
         }
@@ -209,7 +209,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when (v?.id) {
 
-            R.id.back_button -> {
+            R.id.btn_back -> {
                finish()
             }
             R.id.btn_save -> {
@@ -231,12 +231,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             touchIdApiCall()
             sessionManager.saveTouchIdEnabled(true)
 
-            Toast.makeText(this, "Biometric is Enabled", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Biometric is Enabled", Toast.LENGTH_SHORT).show()
 
         } else {
             sessionManager.saveTouchIdEnabled(false)
 
-            Toast.makeText(this, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
 
 
         }

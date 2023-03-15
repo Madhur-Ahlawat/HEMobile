@@ -3,10 +3,7 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 import android.annotation.SuppressLint
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -45,6 +42,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
 
         data = arguments?.getParcelable("data")
         binding.model = ResetPasswordModel(
@@ -92,14 +90,16 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
                     if (passwordVisibile) {
                         binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtNewPassword.transformationMethod =
                             PasswordTransformationMethod.getInstance()
                         passwordVisibile = false
                     } else {
+
+
                         binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
                         binding.edtNewPassword.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
@@ -120,14 +120,15 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
                     if (confirmPasswordVisibile) {
                         binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtConformPassword.transformationMethod =
                             PasswordTransformationMethod.getInstance()
                         confirmPasswordVisibile = false
                     } else {
+
                         binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
                         binding.edtConformPassword.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()

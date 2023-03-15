@@ -119,7 +119,7 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
         val dialog = Dialog(requireActivity())
         dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.custom_dialog)
         val title=dialog.findViewById<TextView>(R.id.title)
         val textMessage=dialog.findViewById<TextView>(R.id.message)

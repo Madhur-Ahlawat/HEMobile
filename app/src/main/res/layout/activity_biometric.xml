@@ -10,19 +10,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/he_bg"
         android:orientation="vertical">
+
 
         <include
             android:id="@+id/tool_bar_lyt"
-            layout="@layout/tool_bar_with_title_back" />
-
+            layout="@layout/tool_bar_white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="24dp"
+            android:background="@drawable/he_bg"
+
             android:paddingRight="24dp">
 
             <TextView
@@ -32,7 +33,8 @@
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/biometriclogin"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="16dp"
+                android:fontFamily="@font/sfregular"/>
 
 
            <!-- <androidx.appcompat.widget.SwitchCompat
@@ -56,23 +58,33 @@
                 android:text="@string/usefingerprinttologin"
                 android:switchPadding="20dp"
                 android:textColor="@color/white"
+                android:textSize="14dp"
+                android:fontFamily="@font/sfregular"
                 />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_44sdp"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:textAllCaps="false"
+                android:layout_marginBottom="@dimen/_10sdp"                android:backgroundTint="@color/blue_color"
+                android:paddingHorizontal="@dimen/_10sdp"
                 android:text="@string/str_save"
-                android:background="@color/btn_color" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
+                app:layout_constraintVertical_bias="0.8" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/biometric_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_44sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
                 android:backgroundTint="@color/white"
                 android:gravity="center"
                 android:text="@string/cancel"

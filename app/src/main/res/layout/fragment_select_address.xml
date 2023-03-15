@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/he_bg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp">
+
+
+                <TextView
+                    android:id="@+id/three_address_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfmedium"
+                    android:text="@string/str_three_address_found"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/select_your_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/three_address_text"
+                    android:fontFamily="@font/sfregular"
+                    android:text="@string/str_select_your_address"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recylcerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/select_your_address"
+                    android:layout_marginTop="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_if_you_dont_see"
+                    android:layout_above="@id/btn_next"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/sfregular"
+                    android:textSize="@dimen/_12ssp"
+                    android:id="@+id/see_text"
+
+                    />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_above="@id/enter_address_manually"
+
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/enter_address_manually"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_44sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfsemibold"
+                    android:text="@string/str_enter_address_manually"
+                    android:textAllCaps="false"
+                    android:textColor="@color/resendcolor"
+                    android:textSize="@dimen/_12ssp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+</layout>
+

@@ -209,13 +209,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_text_phone">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/edittext_rectangle"
+
                 android:id="@+id/relativeLayout1">
 
 
@@ -241,16 +242,18 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:src="@drawable/ic_right" />
             </RelativeLayout>
-            <View
+           <!-- <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relativeLayout1"
-                android:background="@color/veiwlinecolor"/>
+                android:background="@color/veiwlinecolor"/>-->
             <RelativeLayout
                 android:id="@+id/rl_guidanceDocuments"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/edittext_rectangle"
+
                 android:layout_below="@id/relativeLayout1">
 
                 <androidx.appcompat.widget.AppCompatTextView

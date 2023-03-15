@@ -42,10 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:fontFamily="@font/sfbold"
                 android:text="@string/str_password_recovery"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                android:fontFamily="@font/sfbold" />
+                android:textSize="@dimen/_14ssp" />
 
 
         </RelativeLayout>

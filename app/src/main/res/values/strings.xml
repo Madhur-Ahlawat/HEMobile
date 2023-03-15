@@ -60,7 +60,7 @@
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
     <string name="str_usr_passwd">Enter password</string>
-    <string name="str_forgot_password">Forgot Password?</string>
+    <string name="str_forgot_password"><u>Forgot Password?</u></string>
     <string name="str_back">Back</string>
     <string name="str_enter_ur_details">Enter your details</string>
     <string name="str_account_number">Account number</string>
@@ -203,7 +203,7 @@
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
     <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
-    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive</string>
+    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive.</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>
     <string name="str_create_password">Create a new password</string>
@@ -932,6 +932,11 @@
     <string name="enablelater">Enable later</string>
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
     <string name="goto_settings">Go to settings</string>
+    <string name="str_three_address_found">3 Addresses Found</string>
+    <string name="str_select_your_address">Select your address</string>
+    <string name="str_if_you_dont_see">If you don\u0027t see your address you can enter it manually.</string>
+    <string name="str_enter_address_manually">Enter address manually</string>
+
 
 
     <string name="str_use_service_guideline">

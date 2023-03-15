@@ -93,6 +93,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.doAfterTextChanged { checkButton() }
             btnLogin.setOnClickListener(this@LoginFragment)
         }
+
         if (displayFingerPrintPopup()) {
             binding.fingerprint.visible()
             fingerPrintLogin()
@@ -109,14 +110,16 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
 
                     if (passwordVisibile) {
                         binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtPwd.transformationMethod =
                             PasswordTransformationMethod.getInstance()
                         passwordVisibile = false
                     } else {
+
+
                         binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_24, 0
+                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
                         binding.edtPwd.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()

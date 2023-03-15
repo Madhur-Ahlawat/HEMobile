@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 
@@ -97,23 +98,22 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
         val dialog = Dialog(this)
         dialog.setCancelable(false)
+
+        val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setContentView(R.layout.custom_dialog)
-        val title=dialog.findViewById<TextView>(R.id.title)
-        val textMessage=dialog.findViewById<TextView>(R.id.message)
-        val cancel = dialog.findViewById<TextView>(R.id.cancel_btn)
-        val ok = dialog.findViewById<TextView>(R.id.ok_btn)
+        dialog.setContentView(binding.root)
 
-        title.text=fTitle
-        textMessage.text=message
-        cancel.text=negativeBtnTxt
-        ok.text=positiveBtnTxt
-        cancel.setOnClickListener {
+        binding.title.text = fTitle
+        binding.message.text = message
+        binding.cancelBtn.text = negativeBtnTxt
+        binding.okBtn.text = positiveBtnTxt
+        binding.cancelBtn.setOnClickListener {
             nListener?.negativeBtnClick(dialog)
             dialog.dismiss()
         }
-        ok.setOnClickListener {
+
+        binding.okBtn.setOnClickListener {
             pListener?.positiveBtnClick(dialog)
             dialog.dismiss()
         }
