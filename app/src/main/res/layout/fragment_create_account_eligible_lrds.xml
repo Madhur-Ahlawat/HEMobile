@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_17dp"
+        tools:background="@drawable/he_bg"
+        android:paddingEnd="@dimen/margin_20dp">
+
+        <TextView
+            android:id="@+id/txtHeading"
+            style="@style/MediumText"
+            android:layout_width="0dp"
+            android:text="@string/you_qualify_for_a_dart_charge_discount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            style="@style/RegularText"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_width="wrap_content"
+            android:text="@string/eligibleLRDSDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtHeading" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/continueWithoutApplying"
+            style="@style/PrimaryButton"
+            app:radius="5dp"
+            android:layout_marginBottom="@dimen/margin_50dp"
+            android:backgroundTint="@color/buttonColorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -411,7 +411,25 @@
         android:id="@+id/selectaddressfragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.SelectAddressFragment"
         android:label="selectAddressFraggment"
-        tools:layout="@layout/fragment_select_address"/>
+        tools:layout="@layout/fragment_select_address">
+        <action
+            android:id="@+id/action_selectaddressfragment_to_createAccountEligibleLRDS2"
+            app:destination="@id/createAccountEligibleLRDS" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/createAccountEligibleLRDS"
+        tools:layout="@layout/fragment_create_account_eligible_lrds"
+        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountEligibleLRDS"
+        android:label="CreateAccountEligibleLRDS" >
+        <action
+            android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
+            app:destination="@id/createAccountTypes" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountTypes"
+        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountTypes"
+        android:label="CreateAccountTypes"
+        tools:layout="@layout/fragment_create_account_types"/>
 
 </navigation>

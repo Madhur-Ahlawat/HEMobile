@@ -966,6 +966,10 @@
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
     <string name="agree_terms_condition">I agree to the terms and conditions and understand that standard text message and data charges may apply.</string>
 
+    <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) post code. \n\nTo apply for a LRDS plan, click on this <u>link</u> which will navigate to the account creation journey on the web.</string>
+    <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
+    <string name="continueWithoutApplying">Continue without applying</string>
+    <string name="crossing_charges_per_account"><u>Crossing charges per account</u></string>
 
 </resources>
 

@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.account.creation
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +18,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
-
+    var requiredPostCode = false
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.inputPostCode.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputPostCode.getEditText()))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
     }
@@ -49,8 +52,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             val bundle = Bundle()
             bundle.putString("zipcode",binding.inputPostCode.getText().toString())
             findNavController().navigate(R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle)
-
-
         } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }
@@ -60,5 +61,38 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     override fun onRetryClick() {
 
+    }
+
+    inner class GenericTextWatcher(private val view: View) : TextWatcher {
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            val text = charSequence.toString()
+            when (view) {
+                binding.inputPostCode.getEditText() -> {
+                    requiredPostCode = (binding.inputPostCode.getText()?.isNotEmpty() == true && binding.inputPostCode.getText()?.length == 7)
+                }
+            }
+
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+            if (requiredPostCode){
+                binding.btnFindAddress.enable()
+            }else{
+                binding.btnFindAddress.disable()
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="8dp" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--When Button is not enabled -->
+    <item android:state_enabled="false" android:color="#006796"/>
+    <!--Default Background Color -->
+    <item android:color="#0099E0" />
+</selector>

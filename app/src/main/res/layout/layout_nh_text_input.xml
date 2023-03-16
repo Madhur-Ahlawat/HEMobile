@@ -8,9 +8,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:background="@color/buttonColorPrimary"
         android:paddingBottom="5dp">
 
-        <TextView
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtPlaceHolderTop"
             style="@style/MediumText"
             android:layout_width="0dp"
@@ -22,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
              />
 
-        <EditText
+        <com.conduent.nationalhighways.utils.widgets.NHTextInput
             android:id="@+id/editText"
             style="@style/RegularTextMediumSize"
             android:layout_width="0dp"
@@ -40,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPlaceHolderTop" />
 
-        <TextView
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtError"
             style="@style/MediumText"
             android:layout_width="0dp"
