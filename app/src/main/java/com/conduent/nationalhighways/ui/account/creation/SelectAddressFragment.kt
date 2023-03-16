@@ -1,9 +1,13 @@
 package com.conduent.nationalhighways.ui.account.creation
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
@@ -17,7 +21,8 @@ import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
+class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
+    View.OnClickListener {
 
     private var selectAddressAdapter:SelectAddressAdapter?=null
     private var zipcode:String=""
@@ -52,7 +57,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun initCtrl() {
 
-
+        binding.btnNext.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -74,12 +79,23 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
             is Resource.Success -> {
                 mainList = response.data?.toMutableList() ?: ArrayList()
                 selectAddressAdapter?.updateList(mainList)
+                binding.txtAddressCount.text = "${mainList.size} Addresses Found"
 
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)
             }
             else -> {
+            }
+        }
+
+    }
+
+    override fun onClick(v: View?) {
+        when(v){
+            binding.btnNext ->{
+                val bundle = Bundle()
+                findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2,bundle)
             }
         }
 

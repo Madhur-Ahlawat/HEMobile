@@ -25,7 +25,13 @@ class SelectAddressAdapter(private val context: Context?,
         )    )
 
     override fun onBindViewHolder(holder: SelectAddressViewHolder, position: Int) {
-        holder.binding.address.text=list[position]?.country
+        var strBuilder = java.lang.StringBuilder()
+            .append(list[position]?.street)
+            .append("\n")
+            .append(list[position]?.country)
+            .append("\n")
+            .append(list[position]?.postcode)
+        holder.binding.address.text = strBuilder
 
     }
 

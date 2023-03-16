@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
@@ -281,7 +282,6 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-
                 findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
             }
             R.id.tv_forgot_password -> {
@@ -295,8 +295,9 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_FLOW )
+                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment, bundle)
             }
         }
     }

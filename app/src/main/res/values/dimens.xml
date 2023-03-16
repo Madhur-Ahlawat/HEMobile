@@ -3,6 +3,7 @@
     <dimen name="font_10sp">10sp</dimen>
     <dimen name="font_12sp">12sp</dimen>
     <dimen name="font_14sp">14sp</dimen>
+    <dimen name="font_15sp">15sp</dimen>
     <dimen name="font_16sp">16sp</dimen>
     <dimen name="font_18sp">18sp</dimen>
     <dimen name="font_22sp">22sp</dimen>
@@ -24,8 +25,10 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_11dp">11dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
+    <dimen name="margin_14dp">14dp</dimen>
     <dimen name="margin_15dp">15dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_17dp">17dp</dimen>
     <dimen name="margin_18dp">18dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
     <dimen name="margin_21dp">21dp</dimen>

@@ -206,5 +206,8 @@ object Constants {
     const val CASES_GIVEN_DATE_WRONG = 1042
 
 
+    const val NAV_FLOW_KEY = "navFlowKey"
+    const val ACCOUNT_CREATION_FLOW = "accountCreationFlow"
+    const val FORGOT_PASSWORD_FLOW = "forgotPasswordFlow"
 
 }

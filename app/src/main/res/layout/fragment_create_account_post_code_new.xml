@@ -10,9 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingTop="@dimen/_17sdp"
-        android:paddingEnd="@dimen/_20sdp"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_16dp"
+        android:paddingEnd="@dimen/margin_20dp"
         tools:background="@drawable/he_bg">
 
         <TextView
@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInput
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/inputPostCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,17 +39,17 @@
             android:id="@+id/txtThisShouldBeVehicle"
             style="@style/RegularText"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/this_should_be_the_address_were_the_vehicle_is_registered"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputPostCode" />
 
-        <com.conduent.apollo.ui.CMButton
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnFindAddress"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
-            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/margin_14dp"
             android:layout_height="wrap_content"
             android:text="@string/find_address"
             app:radius="5dp"
@@ -57,13 +57,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.conduent.apollo.ui.CMButton
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnEnterAddressManually"
             style="@style/SecondaryButton"
             android:layout_width="0dp"
             app:radius="5dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_50sdp"
+            android:layout_marginBottom="@dimen/margin_50dp"
             android:text="@string/enter_address_manually"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

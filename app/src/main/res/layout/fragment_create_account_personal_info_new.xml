@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="userInfoModel"
+            type="com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel.UserInfoModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingTop="@dimen/_17sdp"
-        android:paddingEnd="@dimen/_20sdp"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp"
         tools:background="@drawable/he_bg">
 
         <TextView
@@ -24,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInput
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/inputFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInput
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:layout_width="0dp"
             android:id="@+id/inputLastName"
             android:layout_height="wrap_content"
@@ -46,14 +49,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputFirstName" />
 
-        <Button
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_50sdp"
-            android:backgroundTint="@color/buttonColorPrimary"
+            android:layout_marginBottom="@dimen/margin_50dp"
             android:text="@string/next"
+            android:enabled="false"
+            app:radius="@dimen/margin_5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

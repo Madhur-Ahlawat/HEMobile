@@ -113,7 +113,7 @@
 
     <color name="grayColorIcon">#707070</color>
     <color name="buttonColorPrimary">#0099E0</color>
-    <color name="buttonColorPrimaryDisable">#006796</color>
+    <color name="buttonColorPrimaryDisable">#00567D</color>
     <color name="toolbarBgColor">#0099E0</color>
     <color name="buttonBorderColor">#0000005C</color>
     <color name="buttonTextColorSecondary">#073165</color>
