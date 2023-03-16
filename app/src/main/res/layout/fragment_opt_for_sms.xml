@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        tools:background="@drawable/he_bg">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/top_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/sfsemibold"
+            android:text="@string/would_you_like_to_receive"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/message_received_txt"
+            style="@style/RegularTextSmallSize"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/this_will_be_in_addition"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_title" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/edittext_rectangle"
+            app:layout_constraintTop_toBottomOf="@id/message_received_txt">
+
+            <ImageView
+                android:id="@+id/yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/checked_radio" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@id/yes"
+                android:text="@string/str_yes"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@drawable/edittext_rectangle"
+            app:layout_constraintTop_toBottomOf="@id/relativeLayout1">
+
+            <ImageView
+                android:id="@+id/no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/checked_radio" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toEndOf="@id/no"
+                android:text="@string/str_no"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+
+        <CheckBox
+            android:id="@+id/resend_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/sfregular"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/agree_terms_condition"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/btn_verify"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btn_verify"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
