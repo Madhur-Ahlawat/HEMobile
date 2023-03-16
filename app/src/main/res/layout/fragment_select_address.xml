@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,13 +13,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/he_bg"
+            tools:background="@drawable/he_bg"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="@dimen/_20sdp">
 
 
@@ -45,7 +46,9 @@
                     android:id="@+id/recylcerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    tools:listitem="@layout/adapter_select_address"
                     android:layout_below="@id/select_your_address"
+                    android:layout_above="@id/see_text"
                     android:layout_marginTop="@dimen/_10sdp" />
 
                 <TextView

@@ -400,7 +400,18 @@
     <fragment
         android:id="@+id/createAccountPostCodeNew"
         android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPostCodeNew"
-        android:label="CreateAccountPostCodeNew" />
+        android:label="CreateAccountPostCodeNew"
+        tools:layout="@layout/fragment_create_account_post_code_new">
+        <action
+            android:id="@+id/action_createAccountPostCodeNew_to_selectaddressfragment"
+            app:destination="@id/selectaddressfragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectaddressfragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.SelectAddressFragment"
+        android:label="selectAddressFraggment"
+        tools:layout="@layout/fragment_select_address"/>
 
 
 </navigation>

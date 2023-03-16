@@ -30,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="@dimen/_12ssp"
             android:text="69 New Street\n NEWPORT\n RB7 3DS"
+            android:id="@+id/address"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

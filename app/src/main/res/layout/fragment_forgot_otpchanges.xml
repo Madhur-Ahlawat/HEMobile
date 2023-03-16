@@ -23,8 +23,8 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_check_your_mail"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/sfbold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

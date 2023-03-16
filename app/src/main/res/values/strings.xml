@@ -962,6 +962,10 @@
     <string name="what_is_your_name">What is your name?</string>
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
+    <string name="would_you_like_to_receive">Would you like to receive communications about your account by text message?</string>
+    <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
+    <string name="agree_terms_condition">I agree to the terms and conditions and understand that standard text message and data charges may apply.</string>
+
 
 </resources>
 

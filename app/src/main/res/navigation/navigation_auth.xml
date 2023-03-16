@@ -103,7 +103,11 @@
             app:popUpToInclusive="true"/>
     </fragment>
 
-
+<fragment
+    android:id="@+id/selectaddressFragment"
+    android:name="com.conduent.nationalhighways.ui.account.creation.OptForSmsFragment"
+    android:label="OptforSmsFragment"
+    tools:layout="@layout/fragment_opt_for_sms"/>
 
 
 
