@@ -18,6 +18,13 @@
         <attr name="errorText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="NHTextCellStyle">
+        <attr name="text" format="string" />
+        <attr name="title" format="string" />
+    </declare-styleable>
+
+
+
     <declare-styleable name="NHButtonStyle">
         <attr format="boolean" name="isPrimary"/>
         <attr name="shape"/>
