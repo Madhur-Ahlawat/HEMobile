@@ -74,14 +74,14 @@ abstract class BaseActivity<T> : AppCompatActivity() {
             button.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    R.color.black
+                    R.color.blue
                 )
             )
             val nbutton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
             nbutton.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    R.color.black
+                    R.color.red
                 )
             )
         }

@@ -46,7 +46,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.viewPrePay -> {
-
+             findNavController().navigate(R.id.action_createAccountTypes_to_createEmailAddressFragment)
             }
         }
     }

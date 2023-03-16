@@ -90,14 +90,14 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
             button.setTextColor(
                 ContextCompat.getColor(
                     requireActivity(),
-                    R.color.black
+                    R.color.blue
                 )
             )
             val nbutton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
             nbutton.setTextColor(
                 ContextCompat.getColor(
                     requireActivity(),
-                    R.color.black
+                    R.color.red
                 )
             )
         }

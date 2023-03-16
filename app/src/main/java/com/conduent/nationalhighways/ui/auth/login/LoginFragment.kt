@@ -235,7 +235,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun displayBiometricDialog() {
-        displayCustomMessage(getString(R.string.enable_biometric),
+        displayMessage(getString(R.string.enable_biometric),
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
             getString(R.string.enablelater),

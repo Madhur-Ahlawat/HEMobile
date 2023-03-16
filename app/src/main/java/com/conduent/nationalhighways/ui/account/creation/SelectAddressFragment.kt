@@ -94,8 +94,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun onClick(v: View?) {
         when(v){
             binding.btnNext ->{
-                val bundle = Bundle()
-                findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2,bundle)
+                findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
             }
         }
 
