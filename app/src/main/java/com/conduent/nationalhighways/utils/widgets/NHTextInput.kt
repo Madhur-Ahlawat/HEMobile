@@ -18,8 +18,8 @@ open class NHTextInput @JvmOverloads constructor(context: Context, attrs: Attrib
     ConstraintLayout(context, attrs, defStyleAttr) {
     internal var hint : String? = null
     internal var title : String? = null
-    private var headingText : String? = null
-    private var errorText : String? = null
+    internal var headingText : String? = null
+    internal var errorText : String? = null
     lateinit var txtHeading : TextView
     lateinit var txtError : TextView
     lateinit var editText : EditText
@@ -93,6 +93,4 @@ open class NHTextInput @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     fun getErrorText(): String = txtError.text!!.toString()
-
-
 }

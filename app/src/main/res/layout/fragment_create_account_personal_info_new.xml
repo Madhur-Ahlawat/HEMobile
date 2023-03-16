@@ -10,9 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/margin_20dp"
-        android:paddingTop="17dp"
-        android:paddingEnd="@dimen/margin_20dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_17sdp"
+        android:paddingEnd="@dimen/_20sdp"
         tools:background="@drawable/he_bg">
 
         <TextView
@@ -51,7 +51,7 @@
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_50dp"
+            android:layout_marginBottom="@dimen/_50sdp"
             android:backgroundTint="@color/buttonColorPrimary"
             android:text="@string/next"
             app:layout_constraintBottom_toBottomOf="parent"
