@@ -435,6 +435,9 @@
         <action
             android:id="@+id/action_createAccountTypes_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_createAccountTypes_to_optForSmsFragment"
+            app:destination="@id/optForSmsFragment" />
     </fragment>
 
     <fragment
