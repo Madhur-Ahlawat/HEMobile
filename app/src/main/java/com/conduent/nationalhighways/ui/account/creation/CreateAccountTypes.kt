@@ -40,14 +40,16 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
             R.id.viewPrePay -> {
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
-//                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
-                findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
+                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+/*
+               // findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
+*/
             }
             R.id.viewPayAsYouGo -> {
                 val bundle=Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_FLOW)
-//                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
-                findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
+                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
+                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+                //findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
             }
             R.id.txtCrossingInfo -> {
                 val openURL = Intent(Intent.ACTION_VIEW)

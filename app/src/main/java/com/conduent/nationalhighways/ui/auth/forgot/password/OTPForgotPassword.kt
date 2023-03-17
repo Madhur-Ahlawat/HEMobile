@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyReque
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpBinding
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -127,15 +128,36 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             R.id.btn_Resend -> {
-                AdobeAnalytics.setActionTrack(
-                    "resend",
-                    "login:forgot password:choose options:otp",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    sessionManager.getLoggedInUser()
-                )
+                if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+                    AdobeAnalytics.setActionTrack(
+                        "resend",
+                        "login:forgot password:choose options:otp",
+                        "forgot password",
+                        "english",
+                        "login", "Create Account",
+                        sessionManager.getLoggedInUser()
+                    )
+                }else if (navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+                    AdobeAnalytics.setActionTrack(
+                        "resend",
+                        "login:forgot password:choose options:otp",
+                        "forgot password",
+                        "english",
+                        "login", "Create Account",
+                        sessionManager.getLoggedInUser()
+                    )
+                }else if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+                    AdobeAnalytics.setActionTrack(
+                        "resend",
+                        "login:forgot password:choose options:otp",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        sessionManager.getLoggedInUser()
+                    )
+                }
+
                 val bundle=Bundle()
                 bundle.putParcelable("data",data)
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlow)

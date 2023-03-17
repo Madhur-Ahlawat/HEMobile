@@ -61,7 +61,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
             binding.btnSubmit.text=getString(R.string.str_next)
-            AdobeAnalytics.setScreenTrack(
+           /* AdobeAnalytics.setScreenTrack(
                 "createAccount:email_setPassword",
                 "set password",
                 "english",
@@ -69,11 +69,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 "createAccount_email",
                 "login:forgot password:choose options:otp:new password set",
                 sessionManager.getLoggedInUser()
-            )
+            )*/
         }else if(navFlow==Constants.FORGOT_PASSWORD_FLOW){
             binding.btnSubmit.text=getString(R.string.str_submit)
 
-            AdobeAnalytics.setScreenTrack(
+           /* AdobeAnalytics.setScreenTrack(
                 "login:forgot password:choose options:otp:new password set",
                 "forgot password",
                 "english",
@@ -81,7 +81,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 (requireActivity() as AuthActivity).previousScreen,
                 "login:forgot password:choose options:otp:new password set",
                 sessionManager.getLoggedInUser()
-            )
+            )*/
         }
 
 
@@ -190,7 +190,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         when (status) {
             is Resource.Success -> {
-                AdobeAnalytics.setActionTrack1(
+               /* AdobeAnalytics.setActionTrack1(
                     "verify",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -198,13 +198,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     "login",
                     (requireActivity() as AuthActivity).previousScreen, "success",
                     sessionManager.getLoggedInUser()
-                )
+                )*/
 
             }
             is Resource.DataError -> {
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-                AdobeAnalytics.setActionTrack1(
+               /* AdobeAnalytics.setActionTrack1(
                     "verify",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -214,7 +214,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     status.errorMsg,
                     sessionManager.getLoggedInUser()
                 )
-
+*/
 
                 showError(binding.root, status.errorMsg)
             }
@@ -230,7 +230,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         when (status) {
             is Resource.Success -> {
                 if (status.data?.success == true) {
-                    AdobeAnalytics.setActionTrack1(
+                   /* AdobeAnalytics.setActionTrack1(
                         "submit",
                         "login:forgot password:choose options:otp:new password set",
                         "forgot password",
@@ -239,7 +239,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         (requireActivity() as AuthActivity).previousScreen,
                         "success",
                         sessionManager.getLoggedInUser()
-                    )
+                    )*/
                     val bundle=Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                     if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
@@ -252,7 +252,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     showError(binding.root, status.data?.message)
             }
             is Resource.DataError -> {
-                AdobeAnalytics.setActionTrack1(
+                /*AdobeAnalytics.setActionTrack1(
                     "submit",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -261,7 +261,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     (requireActivity() as AuthActivity).previousScreen,
                     status.errorMsg,
                     sessionManager.getLoggedInUser()
-                )
+                )*/
 
                 showError(binding.root, status.errorMsg)
             }
