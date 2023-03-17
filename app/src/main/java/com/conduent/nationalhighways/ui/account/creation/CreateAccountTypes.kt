@@ -37,6 +37,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     }
 
     override fun initCtrl() {
+        binding.viewPrePay.cardview.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -46,7 +47,9 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.viewPrePay -> {
-             findNavController().navigate(R.id.action_createAccountTypes_to_createEmailAddressFragment)
+                val bundle=Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_FLOW)
+             findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
             }
         }
     }

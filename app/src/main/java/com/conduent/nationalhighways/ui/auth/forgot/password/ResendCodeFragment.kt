@@ -29,6 +29,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     private var isViewCreated:Boolean=false
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var response: SecurityCodeResponseModel? = null
+    private lateinit var  navFlow:String
+
 
 
 
@@ -38,6 +40,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     ): FragmentResendCodeBinding = FragmentResendCodeBinding.inflate(inflater, container, false)
 
     override fun init() {
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -89,6 +93,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     bundle.putParcelable("data", data)
                     response = status.data
                     bundle.putParcelable("response", response)
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                     findNavController().navigate(
                         R.id.action_resenedCodeFragment_to_otpFragment,
                         bundle

@@ -40,7 +40,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     @Inject
     lateinit var sessionManager: SessionManager
     private var isViewCreated:Boolean=false
-
+    private lateinit var  navFlow:String
 
 
 
@@ -52,6 +52,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         if (arguments!=null){
             data = arguments?.getParcelable("data")
@@ -122,6 +123,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 )
                 val bundle=Bundle()
                 bundle.putParcelable("data",data)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                 findNavController().navigate(R.id.action_otpFragment_to_resenedCodeFragment,bundle)
 
                /* isCalled = true
@@ -156,6 +158,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
                 response?.code = binding.edtOtp.text.toString()
                 bundle.putParcelable("data", response)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+
                 Logg.logging("NewPassword","response $response")
                 AdobeAnalytics.setActionTrack(
                     "verify",

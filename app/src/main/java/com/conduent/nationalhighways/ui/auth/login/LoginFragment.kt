@@ -235,7 +235,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun displayBiometricDialog() {
-        displayMessage(getString(R.string.enable_biometric),
+        displayCustomMessage(getString(R.string.enable_biometric),
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
             getString(R.string.enablelater),
@@ -296,7 +296,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.getLoggedInUser()
                 )
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_FLOW )
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
                 findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment, bundle)
             }
         }

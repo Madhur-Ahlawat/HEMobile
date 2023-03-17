@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_forgotPasswordFragment_to_chooseOptionFragment"
             app:destination="@id/chooseOptionFragment" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
     </fragment>
 
     <fragment

@@ -52,6 +52,7 @@
             android:layout_marginBottom="@dimen/margin_14dp"
             android:layout_height="wrap_content"
             android:text="@string/find_address"
+            android:enabled="false"
             app:radius="5dp"
             app:layout_constraintBottom_toTopOf="@+id/btnEnterAddressManually"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,9 +1,11 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.*
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -29,6 +31,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private var loader: LoaderDialog? = null
     private var passwordVisibile: Boolean = false
     private var confirmPasswordVisibile: Boolean = false
+    private lateinit var  navFlow:String
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -39,6 +43,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -52,10 +57,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             confirmPassword = "",
             enable = false
         )
-//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val mVerifyRequestOtpReq =
-            VerifyRequestOtpReq(data?.code, data?.referenceId)
-        Logg.logging("NewPassword", "mVerifyRequestOtpReq $mVerifyRequestOtpReq")
+
         AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options:otp:new password set",
             "forgot password",
@@ -145,7 +147,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     override fun observer() {
         observe(viewModel.resetPassword, ::handleResetResponse)
-        observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
+        //observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
 
     override fun onClick(v: View?) {
@@ -221,8 +223,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         "success",
                         sessionManager.getLoggedInUser()
                     )
+                    val bundle=Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                    if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+                        findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment,bundle)
 
-                    findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment)
+                    }else{
+                       Toast.makeText(requireContext(),"Navigate to Add Vehicle Screen ",Toast.LENGTH_LONG).show()
+                    }
                 } else
                     showError(binding.root, status.data?.message)
             }

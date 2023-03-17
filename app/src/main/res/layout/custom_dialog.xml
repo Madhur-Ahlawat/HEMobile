@@ -79,7 +79,7 @@
                         android:paddingRight="10dp"
                         android:fontFamily="@font/sfsemibold"
                         android:textAlignment="center"
-                        android:textColor="@color/red_color"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
                     <View

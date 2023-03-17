@@ -45,10 +45,11 @@ class ForgotPasswordViewModel @Inject constructor(
     val resetPassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _resetPassword
 
 
-    fun confirmOptionForForgot(model: ConfirmOptionModel?) {
+    fun confirmOptionForForgot(email:String) {
+
         viewModelScope.launch {
             try {
-                val response = repository.confirmOptionForForgot(model)
+                val response = repository.confirmOptionForForgot(ConfirmOptionModel(identifier = email,true))
                 if (response?.isSuccessful == true) {
                     val serverToken =
                         response.headers()["Authorization"]?.split("Bearer ")?.get(1)

@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:headingText="@string/first_name"
+            android:padding="0dp"
             app:hintText="@string/primary_account_holder_first_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

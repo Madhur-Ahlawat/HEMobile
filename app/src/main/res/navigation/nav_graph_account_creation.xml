@@ -431,40 +431,18 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountTypes"
         android:label="CreateAccountTypes"
         tools:layout="@layout/fragment_create_account_types">
+
         <action
-            android:id="@+id/action_createAccountTypes_to_createEmailAddressFragment"
-            app:destination="@id/createEmailAddressFragment" />
+            android:id="@+id/action_createAccountTypes_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/createEmailAddressFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateEmailAddressFragment"
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
         android:label="CreateEmailAddress"
-        tools:layout="@layout/fragment_create_email_address"
-        >
-        <action
-            android:id="@+id/action_createEmailAddressFragment_to_createaccountEmailverification"
-            app:destination="@id/createAccountEmailVerification" />
-    </fragment>
+        tools:layout="@layout/forgotpassword_changes"/>
 
-    <fragment
-        android:id="@+id/createAccountEmailVerification"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountEmailVerificationFragment"
-        tools:layout="@layout/fragment_create_account_email_verificationfragment"
-        android:label="createAccountEmailVerification">
-        <action
-            android:id="@+id/action_createAccountEmailVerification_to_createAccountResendCodeFragment"
-            app:destination="@id/createAccountResendCodeFragment" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/createAccountResendCodeFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountResendCodeFragment"
-        tools:layout="@layout/fragment_create_account_resend_code"
-        android:label="CreateAccountResendCodeFragment">
-        <action
-            android:id="@+id/action_createAccountResendCodeFragment_to_createAccountEmailVerification"
-            app:destination="@id/createAccountEmailVerification" />
-    </fragment>
 
 </navigation>

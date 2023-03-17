@@ -23,7 +23,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputPostCode.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputPostCode.getEditText()))
+        binding.inputPostCode.getEditText()
+            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.getEditText()))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
     }
@@ -48,15 +49,17 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     }
 
     private fun validation() {
-        if (binding.inputPostCode.getText().toString().isNotEmpty()){
+        if (binding.inputPostCode.getText().toString().isNotEmpty()) {
             val bundle = Bundle()
-            bundle.putString("zipcode",binding.inputPostCode.getText().toString())
-            findNavController().navigate(R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle)
+            bundle.putString("zipcode", binding.inputPostCode.getText().toString())
+            findNavController().navigate(
+                R.id.action_createAccountPostCodeNew_to_selectaddressfragment,
+                bundle
+            )
         } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }
     }
-
 
 
     override fun onRetryClick() {
@@ -78,19 +81,17 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            val text = charSequence.toString()
-            when (view) {
-                binding.inputPostCode.getEditText() -> {
-                    requiredPostCode = (binding.inputPostCode.getText()?.isNotEmpty() == true && binding.inputPostCode.getText()?.length == 7)
-                }
-            }
+
+
+            requiredPostCode = (binding.inputPostCode.getText().toString().length>5)
+
 
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredPostCode){
+            if (requiredPostCode) {
                 binding.btnFindAddress.enable()
-            }else{
+            } else {
                 binding.btnFindAddress.disable()
             }
         }

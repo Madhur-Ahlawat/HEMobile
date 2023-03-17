@@ -32,6 +32,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var loader: LoaderDialog? = null
     private var response: SecurityCodeResponseModel? = null
     private var isViewCreated:Boolean=false
+    private lateinit var  navFlow:String// create account , forgot password
 
 
 
@@ -46,6 +47,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
     override fun init() {
         model = RequestOTPModel(optionType = "", optionValue = "")
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+
         binding.model = arguments?.getParcelable(Constants.OPTIONS)
 
         AdobeAnalytics.setScreenTrack(
@@ -139,6 +142,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
                     response = status.data
                     bundle.putParcelable("response", response)
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
 
                     AdobeAnalytics.setActionTrack2(
                         "continue",
