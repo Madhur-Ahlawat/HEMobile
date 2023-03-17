@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:background="@color/buttonColorPrimary"
@@ -32,6 +30,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:paddingStart="20dp"
+            android:hint="@string/txt_pwd_constraints_placeholder"
             android:paddingTop="16dp"
             android:paddingEnd="20dp"
             android:paddingBottom="16dp"

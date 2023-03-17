@@ -172,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
-                android:hint="@string/str_email_address"
+                android:hint="@string/global_email_address"
                 android:textColorHint="@color/grey_two"
                 android:visibility="gone"
                 app:errorEnabled="true">

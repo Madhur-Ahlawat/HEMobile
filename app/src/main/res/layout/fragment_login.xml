@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_32sdp"
-            android:hint="@string/str_email_address"
+            android:hint="@string/global_email_address"
             android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:errorEnabled="true"
             app:endIconMode="custom"

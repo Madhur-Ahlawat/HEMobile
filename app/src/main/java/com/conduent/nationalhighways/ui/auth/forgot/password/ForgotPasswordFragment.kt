@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.databinding.ForgotpasswordChangesBinding
-import com.conduent.nationalhighways.databinding.FragmentForgotPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.extn.toolbar
+import com.conduent.nationalhighways.utils.extn.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,7 +47,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     override fun init() {
         sessionManager.clearAll()
-        requireActivity().toolbar(getString(R.string.forgot_password))
+
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
 
@@ -58,6 +56,16 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         binding.isValid=false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+            binding.textUsername.visible()
+            binding.enterDetailsTxt.text=getString(R.string.createAccount_email_screenHeading)
+            requireActivity().toolbar(getString(R.string.str_create_an_account))
+        }else if(navFlow==Constants.FORGOT_PASSWORD_FLOW){
+            binding.enterDetailsTxt.text=getString(R.string.forgotPassword_email_screenHeading)
+            requireActivity().toolbar(getString(R.string.forgot_password))
+            binding.textUsername.gone()
+        }
 
         /*AdobeAnalytics.setScreenTrack(
             "login:forgot password",
@@ -82,7 +90,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
         }
         if (!isViewCreated){
-            observe(viewModel.otp, ::handleOTPResponse)
+            observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
 
         }
 
@@ -222,11 +230,46 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     private fun hitApi(){
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.requestOTP(RequestOTPModel(optionType = Constants.EMAIL, optionValue = binding.email))
+
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = EmailVerificationRequest(
+            Constants.EMAIL,
+            binding.email
+        )
+        createAccountViewModel.emailVerificationApi(request)
 
 
 
     }
+
+    private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+
+                val bundle = Bundle()
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,binding.email))
+
+                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
+
+
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                findNavController().navigate(
+                    R.id.action_forgotPasswordFragment_to_forgotOtpFragment,
+                    bundle
+                )
+            }
+            is Resource.DataError -> {
+
+                    showError(binding.root, resource.errorMsg)
+
+            }
+            else -> {
+            }
+        }
+    }
+
 
 }

@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:lineSpacingExtra="@dimen/_100sdp"
-                        android:text="@string/str_email_address"
+                        android:text="@string/global_email_address"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="parent"

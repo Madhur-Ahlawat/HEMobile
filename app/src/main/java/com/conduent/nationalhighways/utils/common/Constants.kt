@@ -207,8 +207,9 @@ object Constants {
 
 
     const val NAV_FLOW_KEY = "navFlowKey"
-    const val ACCOUNT_CREATION_FLOW = "accountCreationFlow"
+    const val ACCOUNT_CREATION_EMAIL_FLOW = "accountCreationEmailFlow"
     const val FORGOT_PASSWORD_FLOW = "forgotPasswordFlow"
+    const val ACCOUNT_CREATION_MOBILE_FLOW="accountCreationMobileFlow"
 
 
 }

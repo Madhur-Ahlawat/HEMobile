@@ -5,8 +5,6 @@ import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.LayoutNhTextInputBinding
@@ -19,7 +17,8 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
     ConstraintLayout(context, attrs, defStyleAttr) {
     lateinit var binding : LayoutNhTextInputBinding
     internal var hint : String? = null
-    internal var title : String? = null
+    internal var text : String? = null
+    internal var placeholder:String?=null
     internal var headingText : String? = null
     internal var errorText : String? = null
 
@@ -32,9 +31,10 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
         val ta = context.obtainStyledAttributes(attrs, R.styleable.NHTextInputStyle)
         try {
             hint = ta.getString(R.styleable.NHTextInputStyle_hintText)
-            title = ta.getString(R.styleable.NHTextInputStyle_title)
+            text = ta.getString(R.styleable.NHTextInputStyle_input_text)
             headingText = ta.getString(R.styleable.NHTextInputStyle_headingText)
             errorText = ta.getString(R.styleable.NHTextInputStyle_errorText)
+            placeholder=ta.getString(R.styleable.NHTextInputStyle_placeholderText)
             if (!headingText.isNullOrEmpty()){
                 binding.txtPlaceHolderTop.visibility = View.VISIBLE
                 binding.txtPlaceHolderTop.text = headingText
@@ -42,8 +42,8 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
             if (!hint.isNullOrEmpty()){
                 binding.editText.hint = hint
             }
-            if (!title.isNullOrEmpty()){
-                binding.editText.setText(title)
+            if (!text.isNullOrEmpty()){
+                binding.editText.setText(text)
             }
             if (!errorText.isNullOrEmpty()){
                 binding.txtError.visibility = View.VISIBLE

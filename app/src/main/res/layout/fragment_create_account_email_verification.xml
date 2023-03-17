@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp"
-            android:hint="@string/str_email_address"
+            android:hint="@string/global_email_address"
             android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

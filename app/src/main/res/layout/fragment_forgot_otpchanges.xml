@@ -52,6 +52,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="normal"
+            android:fontFamily="@font/sfsemibold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/message_received_txt" />
 

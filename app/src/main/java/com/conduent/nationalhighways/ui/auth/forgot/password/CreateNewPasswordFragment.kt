@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.*
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -58,15 +59,31 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             enable = false
         )
 
-        AdobeAnalytics.setScreenTrack(
-            "login:forgot password:choose options:otp:new password set",
-            "forgot password",
-            "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
-            "login:forgot password:choose options:otp:new password set",
-            sessionManager.getLoggedInUser()
-        )
+        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+            binding.btnSubmit.text=getString(R.string.str_next)
+            AdobeAnalytics.setScreenTrack(
+                "createAccount:email_setPassword",
+                "set password",
+                "english",
+                "create Account",
+                "createAccount_email",
+                "login:forgot password:choose options:otp:new password set",
+                sessionManager.getLoggedInUser()
+            )
+        }else if(navFlow==Constants.FORGOT_PASSWORD_FLOW){
+            binding.btnSubmit.text=getString(R.string.str_submit)
+
+            AdobeAnalytics.setScreenTrack(
+                "login:forgot password:choose options:otp:new password set",
+                "forgot password",
+                "english",
+                "login",
+                (requireActivity() as AuthActivity).previousScreen,
+                "login:forgot password:choose options:otp:new password set",
+                sessionManager.getLoggedInUser()
+            )
+        }
+
 
      //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
@@ -229,7 +246,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment,bundle)
 
                     }else{
-                       Toast.makeText(requireContext(),"Navigate to Add Vehicle Screen ",Toast.LENGTH_LONG).show()
+                       Toast.makeText(requireContext(),"Navigate to SMS OPTIN ",Toast.LENGTH_LONG).show()
                     }
                 } else
                     showError(binding.root, status.data?.message)

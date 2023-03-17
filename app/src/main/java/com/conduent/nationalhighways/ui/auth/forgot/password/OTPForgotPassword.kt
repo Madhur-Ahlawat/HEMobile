@@ -1,23 +1,29 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
+import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpBinding
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
@@ -41,6 +47,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     lateinit var sessionManager: SessionManager
     private var isViewCreated:Boolean=false
     private lateinit var  navFlow:String
+    private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
+
 
 
 
@@ -63,7 +71,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         loadUI()
 
 
-        AdobeAnalytics.setScreenTrack(
+        /*AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options:otp",
             "forgot password",
             "english",
@@ -71,7 +79,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             (requireActivity() as AuthActivity).previousScreen,
             "login:forgot password:choose options:otp",
             sessionManager.getLoggedInUser()
-        )
+        )*/
 
 
 
@@ -89,6 +97,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (!isViewCreated){
             observe(viewModel.otp, ::handleOTPResponse)
             observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
+            observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
+
         }
 
         isViewCreated=true
@@ -99,16 +109,21 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (v?.id) {
             R.id.btn_verify -> {
 
-                if (!timeFinish) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+                    if (!timeFinish) {
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
-                    val mVerifyRequestOtpReq =
-                        VerifyRequestOtpReq(binding.edtOtp.text.toString(), response?.referenceId)
-                    viewModel.verifyRequestCode(mVerifyRequestOtpReq)
+                        val mVerifyRequestOtpReq =
+                            VerifyRequestOtpReq(binding.edtOtp.text.toString(), response?.referenceId)
+                        viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
-                } else {
-                    showError(binding.root, getString(R.string.error_otp_time_expire))
+                    } else {
+                        showError(binding.root, getString(R.string.error_otp_time_expire))
+                    }
+                }else{
+                    confirmEmailCode()
                 }
+
             }
 
             R.id.btn_Resend -> {
@@ -133,6 +148,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
     }
 
+    private fun confirmEmailCode() {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = ConfirmEmailRequest(
+            response?.referenceId?.toString() ?: "",
+            data?.optionValue,
+            binding.edtOtp.text.toString().trim()
+        )
+        createAccountViewModel.confirmEmailApi(request)
+    }
     private fun loadUI() {
         when (data?.optionType) {
             Constants.SMS -> {
@@ -241,5 +265,44 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             isCalled = false
         }
     }
+
+    private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+
+            when (resource) {
+                is Resource.Success -> {
+
+
+                    val bundle = Bundle()
+                    if (navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+                        Toast.makeText(requireContext(),"Navigate to Add Vehicle Screen ",Toast.LENGTH_LONG).show()
+
+                    }else{
+                        response?.code = binding.edtOtp.text.toString()
+                        bundle.putParcelable("data", response)
+                        bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )
+                    }
+
+
+
+                }
+                is Resource.DataError -> {
+
+                        showError(binding.root, resource.errorMsg)
+
+                }
+                else -> {
+                }
+            }
+
+    }
+
 
 }

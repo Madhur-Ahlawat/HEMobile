@@ -3,15 +3,21 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentLandingBinding
@@ -19,6 +25,7 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
+import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -31,6 +38,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,7 +49,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     private var isChecked = true
     private var isPushNotificationChecked = true
     private var count = 1
-    private var backButton:ImageView?=null
+    private var backButton: ImageView? = null
+
+    private var navFlow: String = Constants.ACCOUNT_CREATION_MOBILE_FLOW
+    private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -63,9 +75,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
-        backButton=requireActivity().findViewById(R.id.back_button)
+        backButton = requireActivity().findViewById(R.id.back_button)
 
-        backButton?.visibility=View.GONE
+        backButton?.visibility = View.GONE
 
         AdobeAnalytics.setScreenTrack(
             "home",
@@ -149,7 +161,11 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "splash",
                 sessionManager.getLoggedInUser()
             )
-            findNavController().navigate(R.id.action_landingFragment_to_startNow)
+            //findNavController().navigate(R.id.action_landingFragment_to_startNow)
+
+            hitApi()
+
+
         }
         binding.btnLogin.setOnClickListener {
             AdobeAnalytics.setActionTrack(
@@ -170,6 +186,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     override fun observer() {
         observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
         observe(webServiceViewModel.pushNotification, ::handlePushNotification)
+
+        /*
+        *   Mobile Number flow
+        *   TODO
+        * */
+         observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+
     }
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
@@ -246,4 +269,62 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         webServiceViewModel.checkServiceStatus()
     }
+
+    /**
+     *
+     *    TODO
+     * */
+
+    private fun hitApi() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = EmailVerificationRequest(
+            Constants.SMS,
+            "+919936609176"
+        )
+        createAccountViewModel.emailVerificationApi(request)
+
+
+    }
+
+    private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+
+                val bundle = Bundle()
+                bundle.putParcelable("data", RequestOTPModel(Constants.SMS, "+919936609176"))
+
+                bundle.putParcelable(
+                    "response",
+                    SecurityCodeResponseModel(
+                        resource.data?.emailStatusCode,
+                        0L,
+                        resource.data?.referenceId,
+                        true
+                    )
+                )
+
+
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                findNavController().navigate(
+                    R.id.action_forgotPasswordFragment_to_forgotOtpFragment,
+                    bundle
+                )
+            }
+            is Resource.DataError -> {
+
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+
+            }
+            else -> {
+            }
+        }
+    }
+
+
 }

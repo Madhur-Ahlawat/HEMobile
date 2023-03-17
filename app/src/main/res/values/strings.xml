@@ -44,7 +44,7 @@
     <string name="txt_add_vehicle">Add Vehicle</string>
     <string name="txt_forgot_your_email"><u>Forgot your email?</u></string>
     <string name="txt_forgot_your_password"><u>Forgot your password?</u></string>
-    <string name="forgot_password">Reset Password</string>
+    <string name="forgot_password">Reset password</string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -60,7 +60,7 @@
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
     <string name="str_usr_passwd">Enter password</string>
-    <string name="str_forgot_password"><u>Forgot Password?</u></string>
+    <string name="str_forgot_password"><u>Forgot password?</u></string>
     <string name="str_back">Back</string>
     <string name="str_enter_ur_details">Enter your details</string>
     <string name="str_account_number">Account number</string>
@@ -108,7 +108,7 @@
     <string name="str_single_vehicle">Single Vehicle</string>
     <string name="str_multiple_vehicle">Multiple Vehicles</string>
     <string name="str_login">Log In</string>
-    <string name="str_continue_login">Continue to login</string>
+    <string name="str_continue_login">Continue to sign In</string>
     <string name="str_pay_dart_ford_crossing">Pay the Dartford Charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Set up a Dart Charge account</string>
@@ -198,7 +198,7 @@
     <string name="txt_recovery_mail_address">Forgot your email address</string>
     <string name="txt_recovery_emai">Email recovery</string>
 
-    <string name="str_email_address">Email address</string>
+    <string name="global_email_address">Email address</string>
     <string name="str_password_recovery">Password recovery</string>
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
@@ -908,7 +908,7 @@
     <string name="resendcode">Resend code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
     <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
-    <string name="ifyoudidnot">If you did not get a code, or it has expired, select resend security code.</string>
+    <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode">\u25CF</string>
     <string name="tickunicode">\u2713</string>
@@ -916,12 +916,12 @@
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
     <string name="str_contain_at_least_one_lower_case">contain at least one lower case letter (a-z)</string>
     <string name="str_contain_at_least_one_number">contain at least one number (0–9)</string>
-    <string name="str_dart_charge_account_password_recovery">Forgot your password</string>
+    <string name="forgotPassword_email_screenHeading">Forgot your password</string>
     <string name="str_choose_verification_method">Choose a verification method</string>
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
-    <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder. The code will expire after 15 minutes.</string>
+    <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
@@ -941,7 +941,7 @@
     <string name="str_use_service_guideline">
         \u2022   Pay for crossings without an account
         <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u2022 Sign in or Set up a Dart Charge account
+        \n\u2022 Sign in or set up a Dart Charge account
         \n\u2022 Check with crossing you\u0027ve paid for
     </string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
@@ -969,6 +969,8 @@
     <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
     <string name="continueWithoutApplying">Continue without applying</string>
     <string name="crossing_charges_per_account"><u>Crossing charges per account</u></string>
+    <string name="createAccount_email_emailHint">This will be your username when you log in to your account.</string>
+    <string name="createAccount_email_screenHeading">What is your email address?</string>
 
 </resources>
 

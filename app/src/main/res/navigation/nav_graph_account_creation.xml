@@ -441,7 +441,29 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
         android:label="CreateEmailAddress"
-        tools:layout="@layout/forgotpassword_changes"/>
+        tools:layout="@layout/forgotpassword_changes">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_forgotOtpFragment"
+            app:destination="@id/forgotOtpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotOtpFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.OTPForgotPassword"
+        android:label="OTPCreateAccountPassword"
+        tools:layout="@layout/fragment_forgot_otpchanges"
+        >
+        <action
+            android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
+            app:destination="@id/createPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.CreateNewPasswordFragment"
+        android:label="createPasswordFragment"
+        tools:layout="@layout/fragment_forgot_create_new_password"
+        />
 
 
 
