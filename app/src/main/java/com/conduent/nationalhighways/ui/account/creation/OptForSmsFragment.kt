@@ -59,9 +59,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnNext ->{
-               /* val bundle=Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_FLOW)
-                findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)*/
+                val bundle=Bundle()
+                findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)
             }
         }
     }

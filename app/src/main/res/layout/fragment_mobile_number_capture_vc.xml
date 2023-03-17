@@ -34,6 +34,7 @@
             android:layout_marginTop="10dp"
             app:headingText="Country code"
             android:padding="0dp"
+            app:hintText=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" />
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_26dp"
             app:headingText="Mobile number"
+            app:hintText=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputCountry" />

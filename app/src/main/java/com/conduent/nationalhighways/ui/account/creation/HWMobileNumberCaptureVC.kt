@@ -7,19 +7,18 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
-import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
-import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
+/**
+ * Created by Mohammed Sameer Ahmad .
+ */
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
@@ -52,12 +51,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 requestModel.userInfoModel.firstName = binding.inputCountry.getText().toString()
                 requestModel.userInfoModel.lastName = binding.inputMobileNumber.getText().toString()
 
-                val bundle = Bundle()
-                bundle.putParcelable(accountRequestModelKey, requestModel)
-                findNavController().navigate(
-                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
-                    bundle
-                )
             }
         }
     }
@@ -93,11 +86,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         override fun afterTextChanged(editable: Editable?) {
-                if (requiredFirstName && requiredLastName){
-                    binding.btnNext.enable()
-                }else{
-                    binding.btnNext.disable()
-                }
+            if (requiredFirstName && requiredLastName){
+                binding.btnNext.enable()
+            }else{
+                binding.btnNext.disable()
+            }
         }
     }
 }

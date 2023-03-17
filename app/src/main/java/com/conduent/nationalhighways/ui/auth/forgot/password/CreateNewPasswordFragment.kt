@@ -171,6 +171,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
+                if (navFlow != Constants.FORGOT_PASSWORD_FLOW){
+                    val bundle=Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                    findNavController().navigate(R.id.action_createPasswordFragment_to_optForSmsFragment,bundle)
+                return
+                }
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -246,7 +252,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment,bundle)
 
                     }else{
-                       Toast.makeText(requireContext(),"Navigate to SMS OPTIN ",Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_createPasswordFragment_to_optForSmsFragment,bundle)
                     }
                 } else
                     showError(binding.root, status.data?.message)
