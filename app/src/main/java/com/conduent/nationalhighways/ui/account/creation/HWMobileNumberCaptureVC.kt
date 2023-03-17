@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
+import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
-const val accountRequestModelKey = "accountRequestModel"
 
 @AndroidEntryPoint
-class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfoNewBinding>(),
+class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
     var requiredFirstName = false
@@ -27,11 +28,13 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
     var requestModel = AccountCreateRequestModel.RequestModel()
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
+        FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputFirstName.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputFirstName.getEditText()))
-        binding.inputLastName.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputLastName.getEditText()))
+        binding.inputCountry.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputCountry.getEditText()))
+        binding.inputMobileNumber.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputMobileNumber.getEditText()))
+        binding.inputMobileNumber.getEditText().inputType = InputType.TYPE_CLASS_NUMBER;
+
 
         binding.btnNext.setOnClickListener(this)
     }
@@ -46,8 +49,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                requestModel.userInfoModel.firstName = binding.inputFirstName.getText().toString()
-                requestModel.userInfoModel.lastName = binding.inputLastName.getText().toString()
+                requestModel.userInfoModel.firstName = binding.inputCountry.getText().toString()
+                requestModel.userInfoModel.lastName = binding.inputMobileNumber.getText().toString()
 
                 val bundle = Bundle()
                 bundle.putParcelable(accountRequestModelKey, requestModel)
@@ -79,11 +82,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             count: Int
         ) {
             when (view) {
-                binding.inputFirstName.getEditText() -> {
-                    requiredFirstName = binding.inputFirstName.getText()?.isNotEmpty() == true
+                binding.inputCountry.getEditText() -> {
+                    requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
                 }
-                binding.inputLastName.getEditText() -> {
-                    requiredLastName = binding.inputLastName.getText()?.isNotEmpty() == true
+                binding.inputMobileNumber.getEditText() -> {
+                    requiredLastName = binding.inputMobileNumber.getText()?.isNotEmpty() == true
                 }
             }
 

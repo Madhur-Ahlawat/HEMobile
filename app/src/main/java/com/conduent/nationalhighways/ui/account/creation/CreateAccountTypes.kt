@@ -1,22 +1,13 @@
 package com.conduent.nationalhighways.ui.account.creation
 
-import android.graphics.Typeface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.databinding.FragmentCreateAccountEligibleLrdsBinding
-import com.conduent.nationalhighways.databinding.FragmentCreateAccountTypeBinding
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountTypesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -33,7 +24,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         FragmentCreateAccountTypesBinding.inflate(inflater, container, false)
 
     override fun init() {
-
+        binding.txtCrossingInfo.setOnClickListener(this)
     }
 
     override fun initCtrl() {
@@ -49,7 +40,19 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
             R.id.viewPrePay -> {
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_FLOW)
-             findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+//                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+                findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
+            }
+            R.id.viewPayAsYouGo -> {
+                val bundle=Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_FLOW)
+//                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+                findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
+            }
+            R.id.txtCrossingInfo -> {
+                val openURL = Intent(Intent.ACTION_VIEW)
+                openURL.data = Uri.parse("https://www.gov.uk/pay-dartford-crossing-charge/charges-fines/")
+                startActivity(openURL)
             }
         }
     }

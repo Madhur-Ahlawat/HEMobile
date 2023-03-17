@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="userInfoModel"
+            type="com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel.UserInfoModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp"
+        tools:background="@drawable/he_bg">
+
+        <TextView
+            android:id="@+id/txtTitleTop"
+            style="@style/MediumText"
+            android:layout_width="0dp"
+            android:text="What is your mobile number?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/inputCountry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:headingText="Country code"
+            android:padding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:layout_width="0dp"
+            android:id="@+id/inputMobileNumber"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_26dp"
+            app:headingText="Mobile number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputCountry" />
+
+        <TextView
+            android:id="@+id/txtBottom"
+            style="@style/MediumText"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="We’ll use this to send you a security code by text message."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_50dp"
+            android:text="@string/next"
+            android:enabled="false"
+            app:radius="@dimen/margin_5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -224,9 +224,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             viewModel.requestOTP(RequestOTPModel(optionType = Constants.EMAIL, optionValue = binding.email))
-
-
-
     }
 
 }

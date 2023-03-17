@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -19,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
     var requiredPostCode = false
+    var accountRequestModel : AccountCreateRequestModel.RequestModel? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
@@ -81,10 +83,12 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-
-
-            requiredPostCode = (binding.inputPostCode.getText().toString().length>5)
-
+            val text = charSequence.toString()
+            when (view) {
+                binding.inputPostCode.getEditText() -> {
+                    requiredPostCode = (binding.inputPostCode.getText()?.isNotEmpty() == true)
+                }
+            }
 
         }
 

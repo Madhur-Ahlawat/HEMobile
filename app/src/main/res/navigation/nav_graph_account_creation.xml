@@ -435,6 +435,9 @@
         <action
             android:id="@+id/action_createAccountTypes_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_createAccountTypes_to_optForSmsFragment"
+            app:destination="@id/optForSmsFragment" />
     </fragment>
 
     <fragment
@@ -442,7 +445,29 @@
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
         android:label="CreateEmailAddress"
         tools:layout="@layout/forgotpassword_changes"/>
-
+    <fragment
+        android:id="@+id/optForSmsFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.OptForSmsFragment"
+        android:label="OptForSmsFragment"
+        tools:layout="@layout/fragment_opt_for_sms">
+        <action
+            android:id="@+id/action_optForSmsFragment_to_twoStepVerificationFragment"
+            app:destination="@id/twoStepVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/twoStepVerificationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.TwoStepVerificationFragment"
+        android:label="TwoStepVerificationFragment"
+        tools:layout="@layout/fragment_two_step_verification">
+        <action
+            android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
+            app:destination="@id/HWMobileNumberCaptureVC" />
+    </fragment>
+    <fragment
+        android:id="@+id/HWMobileNumberCaptureVC"
+        android:name="com.conduent.nationalhighways.ui.account.creation.HWMobileNumberCaptureVC"
+        android:label="HWMobileNumberCaptureVC"
+        tools:layout="@layout/fragment_mobile_number_capture_vc"/>
 
 
 </navigation>
