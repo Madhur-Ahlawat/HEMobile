@@ -38,7 +38,7 @@
                         android:id="@+id/maintainance_title"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
-                        android:background="@color/radio_btn_color"
+                        android:background="@color/new_btn_color"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:text="@string/str_maintainance_notify"
@@ -302,7 +302,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnLogin"
             style="@style/ButtonStyle"
             android:layout_marginBottom="24dp"

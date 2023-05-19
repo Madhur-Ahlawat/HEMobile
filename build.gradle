@@ -5,7 +5,7 @@ buildscript {
 
     ext.kotlin_version = "1.7.20"
     ext.daggerHiltVersion = '2.42'
-    ext.nav_version = "2.3.5"
+    ext.nav_version = '2.4.1'
     ext.jacocoVersion = '0.8.7'
 
     repositories {
@@ -13,7 +13,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"

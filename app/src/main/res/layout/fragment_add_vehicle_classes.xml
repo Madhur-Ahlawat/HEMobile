@@ -166,7 +166,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        app:buttonTint="@color/radio_btn_color"
+                        app:buttonTint="@color/new_btn_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -289,7 +289,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:buttonTint="@color/radio_btn_color"
+                        app:buttonTint="@color/new_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -395,7 +395,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
-                        app:buttonTint="@color/radio_btn_color"
+                        app:buttonTint="@color/new_btn_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

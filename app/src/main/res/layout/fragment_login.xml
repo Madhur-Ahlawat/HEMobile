@@ -31,7 +31,7 @@
             android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             app:errorEnabled="true"
             app:endIconMode="custom"
-            app:endIconDrawable="@drawable/fingerptint_icon"
+            app:endIconDrawable="@drawable/fingerprint_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

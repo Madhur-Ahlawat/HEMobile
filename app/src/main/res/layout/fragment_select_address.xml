@@ -90,7 +90,7 @@
                     android:fontFamily="@font/sfsemibold"
                     android:text="@string/str_enter_address_manually"
                     android:textAllCaps="false"
-                    android:textColor="@color/resendcolor"
+                    android:textColor="@color/re_send_color"
                     android:textSize="@dimen/_12ssp" />
             </RelativeLayout>
 

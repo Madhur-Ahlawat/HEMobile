@@ -64,7 +64,7 @@
                     android:paddingLeft="@dimen/_15sdp"
                     android:text="@string/str_prepay"
                     android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
             </LinearLayout>
 
             <View
@@ -106,7 +106,7 @@
                     android:paddingLeft="@dimen/_15sdp"
                     android:text="@string/str_payg_account"
                     android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
             </LinearLayout>
 
             <View

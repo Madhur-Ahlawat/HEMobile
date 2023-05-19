@@ -171,7 +171,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"

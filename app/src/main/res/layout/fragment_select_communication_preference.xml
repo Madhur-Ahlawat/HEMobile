@@ -110,7 +110,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_10sdp"
-                                    android:buttonTint="@color/radio_btn_color"
+                                    android:buttonTint="@color/new_btn_color"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:text="@string/str_email"
                                     android:textSize="@dimen/_14ssp" />
@@ -120,7 +120,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_10sdp"
-                                    android:buttonTint="@color/radio_btn_color"
+                                    android:buttonTint="@color/new_btn_color"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:text="@string/str_post"
                                     android:textSize="@dimen/_14ssp" />

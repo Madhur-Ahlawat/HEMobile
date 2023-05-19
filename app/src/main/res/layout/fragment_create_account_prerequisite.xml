@@ -19,6 +19,7 @@
             android:id="@+id/txtSignUp"
             style="@style/MediumText"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:text="@string/dartford_crossing_account_sign_in_or_set_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,7 @@
             android:id="@+id/txtAlreadyAccount"
             style="@style/RegularText"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:text="@string/if_you_already_have_an_account_you_can"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
@@ -37,6 +39,7 @@
             style="@style/SemiBoldText"
             android:layout_width="wrap_content"
             android:text="@string/sign_in"
+            android:visibility="gone"
             android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/txtAlreadyAccount"
             app:layout_constraintStart_toEndOf="@+id/txtAlreadyAccount"
@@ -44,7 +47,7 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtBefore"
-            style="@style/MediumText"
+            style="@style/MediumTextBlack"
             android:layout_width="0dp"
             android:layout_marginTop="30dp"
             android:text="@string/before_you_start"
@@ -106,6 +109,7 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             style="@style/RegularText"
+            android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_marginStart="10dp"
             android:drawableStart="@drawable/circle_5dp"
@@ -121,9 +125,8 @@
             android:layout_height="wrap_content"
             android:text="@string/create_account"
             style="@style/PrimaryButton"
-            android:layout_marginBottom="@dimen/margin_50dp"
-            android:backgroundTint="@color/buttonColorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin_30dp"
+            app:layout_constraintTop_toBottomOf="@id/textView8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

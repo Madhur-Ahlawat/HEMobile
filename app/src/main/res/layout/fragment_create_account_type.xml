@@ -64,7 +64,7 @@
                     android:paddingLeft="@dimen/_15sdp"
                     android:text="@string/str_personal_account"
                     android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
             </LinearLayout>
 
 
@@ -108,7 +108,7 @@
                     android:paddingLeft="@dimen/_15sdp"
                     android:text="@string/str_business_account"
                     android:textSize="@dimen/_13sdp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
             </LinearLayout>
 
             <View

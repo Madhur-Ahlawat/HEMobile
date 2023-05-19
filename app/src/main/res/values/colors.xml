@@ -91,7 +91,7 @@
 -->
     <color name="btn_disable_color">#006796</color>
 
-    <color name="radio_btn_color">#002E5F</color>
+    <color name="new_btn_color">#002E5F</color>
     <color name="dark_blue_color">#002E5F</color>
     <color name="high_lighted_color">#79FCFF</color>
     <color name="edittext_stroke_color">#79FCFF</color>
@@ -102,7 +102,7 @@
     <color name="color_909090">#909090</color>
     <color name="color_99999">#999999</color>
     <color name="splash_background">#204489</color>
-    <color name="resendcolor">#073165</color>
+    <color name="re_send_color">#073165</color>
     <color name="colorWarning">#FFCC00</color>
     <color name="colorSuccess">#00B4A0</color>
     <color name="red">#C92500</color>

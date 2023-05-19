@@ -3,7 +3,7 @@
     android:shape="rectangle">
     <stroke
         android:width="@dimen/_3sdp"
-        android:color="@color/radio_btn_color" />
+        android:color="@color/new_btn_color" />
     <corners android:radius="@dimen/_4sdp" />
     <solid android:color="@color/white" />
 

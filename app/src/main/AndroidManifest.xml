@@ -71,7 +71,7 @@
         <activity
             android:name="com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobile" />
+            android:theme="@style/Theme.CreateAccount" />
         <activity
             android:name="com.conduent.nationalhighways.ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"

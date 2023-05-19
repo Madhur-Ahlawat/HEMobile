@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationR
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentLandingBinding
+import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
@@ -42,7 +43,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickListener {
+class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -61,7 +62,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentLandingBinding.inflate(inflater, container, false)
+    ) = FragmentNewLandingBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
@@ -105,7 +106,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
     }
 
     override fun initCtrl() {
-        binding.layoutCreateAccount.setOnClickListener {
+        binding.payCrossingLayout.setOnClickListener {
 
             AdobeAnalytics.setActionTrack(
                 "create account",
@@ -120,7 +121,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
             requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
 
         }
-        binding.layoutMakePayment.setOnClickListener {
+        binding.btnSignup.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "one of payment",
                 "home",
@@ -133,10 +134,10 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
 
         }
-        binding.layoutPenaltyCharge.setOnClickListener {
+        binding.pcnLayout.setOnClickListener {
             openUrlInWebBrowser()
         }
-        binding.layoutPaidCrossing.setOnClickListener {
+        binding.crossingLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "check crossings",
                 "home",
@@ -151,7 +152,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 CheckPaidCrossingActivity::class.java
             )
         }
-        binding.layoutGuidance.setOnClickListener {
+        binding.guidanceLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "dart charge guidance and documents",
                 "home",
@@ -161,13 +162,13 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                 "splash",
                 sessionManager.getLoggedInUser()
             )
-            //findNavController().navigate(R.id.action_landingFragment_to_startNow)
+            findNavController().navigate(R.id.action_landingFragment_to_startNow)
 
-            hitApi()
+           // hitApi()
 
 
         }
-        binding.btnLogin.setOnClickListener {
+        binding.btnSignIn.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "login",
                 "home",
@@ -223,6 +224,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.apply {
+/*
                         if (!state.equals(Constants.LIVE, true) && title != null) {
                             binding.maintainanceLyt.visible()
                             binding.maintainanceTitle.text = title
@@ -231,6 +233,7 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>(), OnRetryClickList
                         } else {
                             binding.maintainanceLyt.gone()
                         }
+*/
                     }
                 }
                 is Resource.DataError -> {

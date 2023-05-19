@@ -61,7 +61,7 @@
                 android:layout_marginStart="26dp"
                 android:background="@color/white"
                 android:paddingVertical="@dimen/_15sdp"
-                android:buttonTint="@color/radio_btn_color"
+                android:buttonTint="@color/new_btn_color"
                 android:text="Add debit or credit card"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp" />

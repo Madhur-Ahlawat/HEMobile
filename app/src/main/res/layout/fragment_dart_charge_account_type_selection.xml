@@ -55,7 +55,7 @@
                     android:paddingEnd="0dp"
                     android:text="@string/str_yes"
                     android:textSize="@dimen/_14ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
 
                 <View
                     android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:paddingEnd="0dp"
                     android:text="@string/str_no"
                     android:textSize="@dimen/_14ssp"
-                    app:buttonTint="@color/radio_btn_color" />
+                    app:buttonTint="@color/new_btn_color" />
 
             </RadioGroup>
         </com.google.android.material.card.MaterialCardView>

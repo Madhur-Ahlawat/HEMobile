@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background_new</item>
         <item name="android:statusBarColor">@color/splash_background</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="Theme.HEMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.HEMobile" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_color</item>
         <item name="colorPrimaryVariant">@color/black</item>
@@ -22,8 +22,22 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.CreateAccount" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- Customize your theme here. -->
+    </style>
 
-    <style name="Theme.HEMobileWhite" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.HEMobileWhite" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/black</item>
@@ -40,7 +54,7 @@
     </style>
 
 
-    <style name="Theme.HEMobileDark" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.HEMobileDark" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_color</item>
         <item name="colorPrimaryVariant">@color/black</item>
@@ -50,7 +64,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
     </style>
 
-    <style name="Theme.HEMobileLight" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.HEMobileLight" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/blue_color</item>
@@ -224,8 +238,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_14sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/sfregular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/open_sans</item>
     </style>
     <style name="RegularTextSmallSize">
         <item name="android:layout_width">wrap_content</item>
@@ -242,6 +256,14 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/sfregular</item>
     </style>
+
+    <style name="RegularTextBlack">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/sfregular</item>
+    </style>
     <style name="MediumText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -249,6 +271,14 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">@font/sfmedium</item>
     </style>
+    <style name="MediumTextBlack">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_16sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+    </style>
+
 
     <style name="SemiBoldText">
         <item name="android:layout_width">wrap_content</item>
@@ -276,36 +306,51 @@
 
 
 
-    <style name="PrimaryButton">
-        <item name="backgroundColor">@color/buttonColorPrimary</item>
-        <item name="borderWidth_">1dp</item>
-        <item name="backgroundTint">@color/buttonColorPrimary</item>
-        <item name="android:textSize">@dimen/font_16sp</item>
-        <item name="android:fontFamily">@font/sfsemibold</item>
-        <item name="backgroundColorPressed">@color/buttonColorPrimary</item>
+    <style name="PrimaryButton" parent="button">
+        <item name="isPrimary">true</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="backgroundColor">@color/new_btn_color</item>
+        <item name="android:background">@color/new_btn_color</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="borderColor">@color/buttonColorPrimary</item>
-        <item name="android:filterTouchesWhenObscured">true</item>
-        <item name="android:elevation">10dp</item>
-        <item name="elevation">10dp</item>
+
     </style>
 
-    <style name="SecondaryButton">
+    <style name="secondaryButton" parent="button">
+        <item name="isPrimary">false</item>
+        <item name="android:layout_marginTop">20dp</item>
         <item name="backgroundColor">@color/white</item>
-        <item name="backgroundTint">@color/white</item>
+        <item name="borderColor">@color/new_btn_color</item>
         <item name="borderWidth_">1dp</item>
-        <item name="android:textSize">@dimen/font_16sp</item>
-        <item name="android:fontFamily">@font/sfsemibold</item>
-        <item name="backgroundColorPressed">@color/white</item>
-        <item name="android:textColor">@color/buttonTextColorSecondary</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="borderColor">@color/white</item>
-        <item name="android:filterTouchesWhenObscured">true</item>
-        <item name="android:elevation">10dp</item>
-        <item name="elevation">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/new_btn_color</item>
     </style>
 
+
+
+
+
+
+    <style name="button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="radius">2dp</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+
+
+
+
+    <style name="rectangleButtonStyle">
+        <item name="background">@drawable/button_border</item>
+        <item name="android:textColor">@color/buttonTextColorSecondary</item>
+        <item name="android:elevation">10dp</item>
+        <item name="elevation">10dp</item>
+
+    </style>
     <style name="RadioButtonStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">51dp</item>

@@ -242,7 +242,7 @@
                 android:text="Create an account with the details \nalready provided."
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/radio_btn_color" />
+                app:buttonTint="@color/new_btn_color" />
 
             <View
                 android:layout_width="match_parent"
@@ -262,7 +262,7 @@
                 android:text="@string/make_another_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
-                app:buttonTint="@color/radio_btn_color" />
+                app:buttonTint="@color/new_btn_color" />
 
             <View
                 android:layout_width="match_parent"

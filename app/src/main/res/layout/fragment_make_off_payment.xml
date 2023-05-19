@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="@+id/glStart"
             app:layout_constraintTop_toBottomOf="@+id/charges_crossing_txt" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"

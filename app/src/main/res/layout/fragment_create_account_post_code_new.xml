@@ -60,7 +60,7 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnEnterAddressManually"
-            style="@style/SecondaryButton"
+            style="@style/secondaryButton"
             android:layout_width="0dp"
             app:radius="5dp"
             android:layout_height="wrap_content"
