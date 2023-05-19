@@ -59,10 +59,10 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
             binding.btnContinue.id -> {
                 val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
-                findNavController().navigate(
+/*                findNavController().navigate(
                     R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
                     bundle
-                )
+                )*/
             }
         }
     }
