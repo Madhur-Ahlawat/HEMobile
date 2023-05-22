@@ -49,7 +49,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.conduent.nationalhighways.ui.auth.controller.AuthActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CreateAccount"/>
         <activity
             android:name="com.conduent.nationalhighways.ui.landing.LandingActivity"
             android:screenOrientation="portrait"

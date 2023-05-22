@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
@@ -25,8 +26,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputPostCode.getEditText()
-            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.getEditText()))
+        binding.inputPostCode.editText
+            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
     }
@@ -44,7 +45,9 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 validation()
             }
             R.id.btnEnterAddressManually -> {
-
+                findNavController().navigate(
+                    R.id.action_createAccountPostCodeNew_to_ManualAddress
+                )
             }
 
         }
@@ -84,11 +87,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             count: Int
         ) {
             val text = charSequence.toString()
-            when (view) {
-                binding.inputPostCode.getEditText() -> {
-                    requiredPostCode = (binding.inputPostCode.getText()?.isNotEmpty() == true)
-                }
+            if (binding.inputPostCode.getText()?.isNotEmpty()==true){
+                requiredPostCode=true
             }
+
 
         }
 

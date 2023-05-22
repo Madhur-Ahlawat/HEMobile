@@ -171,7 +171,7 @@ class CreateAccountPostCodeFragmentTest {
             }
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPasswordFragment
+                R.id.createAccountPasswordFragment
             )
         }
     }
@@ -216,7 +216,7 @@ class CreateAccountPostCodeFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPasswordFragment
+                R.id.createAccountPasswordFragment
             )
         }
     }
@@ -269,7 +269,7 @@ class CreateAccountPostCodeFragmentTest {
             }
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPasswordFragment
+                R.id.createAccountPasswordFragment
             )
         }
     }
@@ -327,7 +327,7 @@ class CreateAccountPostCodeFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPasswordFragment
+                R.id.createAccountPasswordFragment
             )
         }
     }

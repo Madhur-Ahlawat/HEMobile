@@ -79,7 +79,7 @@ class CreateAccoutPinFragmentTest {
     fun `test create account pin screen, navigate to next screen for pre pay`() {
         launchFragmentInHiltContainer<CreateAccoutPinFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPinFragment)
+            navController.setCurrentDestination(R.id.createAccountPinFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -126,7 +126,7 @@ class CreateAccoutPinFragmentTest {
         }
         launchFragmentInHiltContainer<CreateAccoutPinFragment>(bundl) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPinFragment)
+            navController.setCurrentDestination(R.id.createAccountPinFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -184,7 +184,7 @@ class CreateAccoutPinFragmentTest {
         }
         launchFragmentInHiltContainer<CreateAccoutPinFragment>(bundl) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPinFragment)
+            navController.setCurrentDestination(R.id.createAccountPinFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -245,7 +245,7 @@ class CreateAccoutPinFragmentTest {
         }
         launchFragmentInHiltContainer<CreateAccoutPinFragment>(bundl) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPinFragment)
+            navController.setCurrentDestination(R.id.createAccountPinFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))

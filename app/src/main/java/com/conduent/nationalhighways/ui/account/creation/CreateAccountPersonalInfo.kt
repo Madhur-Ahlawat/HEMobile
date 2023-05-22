@@ -30,8 +30,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputFirstName.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputFirstName.getEditText()))
-        binding.inputLastName.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputLastName.getEditText()))
+        binding.inputFirstName.editText.addTextChangedListener(GenericTextWatcher(binding.inputFirstName.editText))
+        binding.inputLastName.editText.addTextChangedListener(GenericTextWatcher(binding.inputLastName.editText))
 
         binding.btnNext.setOnClickListener(this)
     }

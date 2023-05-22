@@ -972,6 +972,17 @@
     <string name="createAccount_email_emailHint">This will be your username when you log in to your account.</string>
     <string name="createAccount_email_screenHeading">What is your email address?</string>
 
+    <string name="account_creation_choose_account">Choose an account type</string>
+    <string name="account_creation_what_type_of_account">What type of account would you like ?</string>
+    <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
+    <string name="str_personal_business_account_description"><b>Business Account</b>\nBusiness Account If you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
+    <string name="str_building_number">Building Number and Street</string>
+    <string name="str_address_line2">Address line2(optional)</string>
+    <string name="str_town_city">Town or City</string>
+    <string name="str_address_example">For example 46,Flat 2a or Rose Cottage</string>
+
+
+
 </resources>
 
 

@@ -41,7 +41,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
                 val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
                 findNavController().navigate(
-                    R.id.action_createAccountPrerequisite_to_createAccountTypes,
+                    R.id.action_createAccountPrerequisite_to_fragment_choose_account_type,
                     bundle
                 )
             }

@@ -140,24 +140,24 @@
         tools:layout="@layout/fragment_create_account_postcode" >
         <action
             android:id="@+id/action_postcodeFragment_to_createAccoutPasswordFragment"
-            app:destination="@id/createAccoutPasswordFragment" />
+            app:destination="@id/createAccountPasswordFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/createAccoutPasswordFragment"
+        android:id="@+id/createAccountPasswordFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccoutPasswordFragment"
-        android:label="CreateAccoutPasswordFragment"
+        android:label="CreateAccountPasswordFragment"
         tools:layout="@layout/fragment_create_account_possword">
         <action
             android:id="@+id/action_createAccoutPasswordFragment_to_createAccoutPinFragment"
-            app:destination="@id/createAccoutPinFragment" />
+            app:destination="@id/createAccountPinFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/createAccoutPinFragment"
+        android:id="@+id/createAccountPinFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccoutPinFragment"
-        android:label="CreateAccoutPinFragment"
+        android:label="CreateAccountPinFragment"
         tools:layout="@layout/fragment_create_account_pin">
         <action
             android:id="@+id/action_createAccoutPinFragment_to_createAccoutInfoFragment"
@@ -384,9 +384,11 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPrerequisite"
         android:label="CreateAccountPrerequisite"
         tools:layout="@layout/fragment_create_account_prerequisite">
+
         <action
-            android:id="@+id/action_createAccountPrerequisite_to_createAccountTypes"
-            app:destination="@id/createAccountTypes" />
+            android:id="@+id/action_createAccountPrerequisite_to_fragment_choose_account_type"
+            app:destination="@id/fragment_choose_account_type" />
+
     </fragment>
     <fragment
         android:id="@+id/createAccountPersonalInfo"
@@ -405,6 +407,10 @@
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_selectaddressfragment"
             app:destination="@id/selectaddressfragment" />
+        <action
+            android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
+            app:destination="@+id/fragment_manual_address"
+            />
     </fragment>
 
     <fragment
@@ -422,6 +428,9 @@
         tools:layout="@layout/fragment_create_account_eligible_lrds"
         android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountEligibleLRDS"
         android:label="CreateAccountEligibleLRDS" >
+        <action
+            android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
+            app:destination="@id/createAccountTypes" />
     </fragment>
     <fragment
         android:id="@+id/createAccountTypes"
@@ -490,5 +499,22 @@
         android:label="HWMobileNumberCaptureVC"
         tools:layout="@layout/fragment_mobile_number_capture_vc"/>
 
+    <fragment
+        android:id="@+id/fragment_choose_account_type"
+        android:name="com.conduent.nationalhighways.ui.account.creation.ChooseAccountTypeFragment"
+        android:label="ChooseAccountType"
+        tools:layout="@layout/fragment_choose_account_type">
+        <action
+            android:id="@+id/action_fragment_choose_account_type_to_createAccountPersonalInfo"
+            app:destination="@id/createAccountPersonalInfo" />
+
+    </fragment>
+     <fragment
+         android:id="@+id/fragment_manual_address"
+         android:name="com.conduent.nationalhighways.ui.account.creation.ManualAddressFragment"
+         android:label="ManualAddress"
+         tools:layout="@layout/fragment_manual_address">
+
+     </fragment>
 
 </navigation>

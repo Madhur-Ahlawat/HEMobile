@@ -99,7 +99,7 @@ class CreateAccoutPasswordFragmentTest {
     fun `test create account password screen, navigate to next screen`() {
         launchFragmentInHiltContainer<CreateAccoutPasswordFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPasswordFragment)
+            navController.setCurrentDestination(R.id.createAccountPasswordFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -118,7 +118,7 @@ class CreateAccoutPasswordFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPinFragment
+                R.id.createAccountPinFragment
             )
             val bun = Bundle().apply {
                 putParcelable(
@@ -143,7 +143,7 @@ class CreateAccoutPasswordFragmentTest {
         }
         launchFragmentInHiltContainer<CreateAccoutPasswordFragment>(bundle) {
             navController.setGraph(R.navigation.nav_graph_account_creation)
-            navController.setCurrentDestination(R.id.createAccoutPasswordFragment)
+            navController.setCurrentDestination(R.id.createAccountPasswordFragment)
             Navigation.setViewNavController(requireView(), navController)
             onView(withId(R.id.tvLabel)).check(matches(isDisplayed()))
             onView(withId(R.id.tvStep)).check(matches(isDisplayed()))
@@ -162,7 +162,7 @@ class CreateAccoutPasswordFragmentTest {
 
             Assert.assertEquals(
                 navController.currentDestination?.id,
-                R.id.createAccoutPinFragment
+                R.id.createAccountPinFragment
             )
             val bun = Bundle().apply {
                 putParcelable(

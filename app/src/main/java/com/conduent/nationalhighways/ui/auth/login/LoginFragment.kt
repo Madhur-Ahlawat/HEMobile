@@ -309,12 +309,15 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                 password = binding.edtPwd.text.toString(),
                 enable = true
             )
+            binding.btnLogin.isEnabled=true
         } else {
             binding.model = LoginModel(
                 value = binding.edtEmail.text.toString(),
                 password = binding.edtPwd.text.toString(),
                 enable = false
             )
+            binding.btnLogin.isEnabled=false
+
         }
     }
 

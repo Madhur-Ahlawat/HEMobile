@@ -16,36 +16,37 @@
         android:paddingStart="@dimen/margin_20dp"
         android:paddingTop="@dimen/margin_18dp"
         android:paddingEnd="@dimen/margin_20dp"
-        tools:background="@drawable/he_bg">
+        >
 
         <TextView
             android:id="@+id/txtSignUp"
-            style="@style/MediumText"
+            style="@style/MediumTextBlack"
             android:layout_width="0dp"
             android:text="@string/what_is_your_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+        <com.conduent.apollo.ui.CMTextInput
             android:id="@+id/inputFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:headingText="@string/first_name"
             android:padding="0dp"
-            app:hintText="@string/primary_account_holder_first_name"
+            style="@style/input_text"
+            app:labelText="@string/primary_account_holder_first_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+        <com.conduent.apollo.ui.CMTextInput
             android:layout_width="0dp"
             android:id="@+id/inputLastName"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             app:headingText="@string/last_name"
-            app:hintText="@string/primary_account_holder_last_name"
+            style="@style/input_text"
+            app:labelText="@string/primary_account_holder_last_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputFirstName" />
@@ -55,11 +56,10 @@
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_50dp"
-            android:text="@string/next"
-            android:enabled="false"
+            android:layout_marginTop="@dimen/margin_40dp"
+            android:text="@string/str_continue"
             app:radius="@dimen/margin_5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputLastName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
