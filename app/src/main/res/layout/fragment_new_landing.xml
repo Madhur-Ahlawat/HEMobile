@@ -59,7 +59,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:id="@+id/img_pcn"
-                    android:src="@drawable/fingerprint_icon"/>
+                    android:src="@drawable/pcn_icon"/>
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     style="@style/RegularTextBlack"
@@ -68,14 +68,15 @@
                     android:layout_toStartOf="@id/pcn_forward"
                     android:layout_toEndOf="@id/img_pcn"
                     android:text="@string/str_resolve_penalty_charge" />
+
                 <ImageView
+                    android:id="@+id/pcn_forward"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/fingerprint_icon"
-                    android:id="@+id/pcn_forward"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_right" />
 
 
             </RelativeLayout>
@@ -95,7 +96,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:id="@+id/img_pay_crossing"
-                    android:src="@drawable/fingerprint_icon"/>
+                    android:src="@drawable/payforcrossing"/>
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     style="@style/RegularTextBlack"
@@ -110,7 +111,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/fingerprint_icon"
+                    android:src="@drawable/ic_right"
                     android:id="@+id/pay_crossing_forward"/>
 
 
@@ -130,7 +131,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:id="@+id/img_crossing"
-                    android:src="@drawable/fingerprint_icon"/>
+                    android:src="@drawable/check_crossing"/>
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     style="@style/RegularTextBlack"
@@ -145,7 +146,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/fingerprint_icon"
+                    android:src="@drawable/ic_right"
                     android:id="@+id/crossing_forward"/>
 
 
@@ -165,7 +166,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:id="@+id/img_guidance"
-                    android:src="@drawable/fingerprint_icon"/>
+                    android:src="@drawable/guidance_documents"/>
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     style="@style/RegularTextBlack"
@@ -175,14 +176,15 @@
                     android:layout_toStartOf="@id/guidance_forward"
                     android:layout_toEndOf="@id/img_guidance"
                     android:text="@string/str_dart_charge_guidance_and_documents" />
+
                 <ImageView
+                    android:id="@+id/guidance_forward"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/fingerprint_icon"
-                    android:id="@+id/guidance_forward"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_right" />
 
 
             </RelativeLayout>
@@ -190,7 +192,6 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
-                app:radius="5dp"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_sign_in"
                 style="@style/PrimaryButton"

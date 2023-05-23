@@ -21,6 +21,7 @@
             android:layout_width="0dp"
             android:text="@string/what_is_your_address"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +29,7 @@
             android:id="@+id/inputPostCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             app:labelText="Postcode"
             style="@style/input_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +40,7 @@
             android:id="@+id/txtThisShouldBeVehicle"
             style="@style/RegularText"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:text="@string/this_should_be_the_address_were_the_vehicle_is_registered"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +50,10 @@
             android:id="@+id/btnFindAddress"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_40dp"
+            app:isEnabled="false"
+            android:layout_marginTop="@dimen/margin_30dp"
             android:layout_height="wrap_content"
             android:text="@string/find_address"
-            app:radius="5dp"
             app:layout_constraintTop_toBottomOf="@+id/txtThisShouldBeVehicle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

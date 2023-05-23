@@ -22,7 +22,7 @@
             style="@style/MediumTextBlack"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/chooseAccount"
             />
         <TextView
@@ -32,6 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             style="@style/RegularTextBlack"
             android:id="@+id/txt_accountType"
+            android:layout_marginTop="5dp"
             android:text="@string/account_creation_what_type_of_account"
             />
 
@@ -41,6 +42,7 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/txt_accountType"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_30dp"
             android:id="@+id/radioGroup">
             
             <RadioButton
@@ -60,6 +62,7 @@
                 style="@style/RegularTextBlack"
                 android:text="@string/str_personal_business_account_description"
                 android:padding="5dp"
+                android:layout_marginTop="30dp"
                 android:buttonTint="@color/new_btn_color"
                 android:id="@+id/radio_business_account"/>
 
@@ -67,10 +70,10 @@
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnAccountType"
             android:layout_width="0dp"
-            app:radius="5dp"
             android:layout_height="wrap_content"
             android:text="@string/str_continue"
             style="@style/PrimaryButton"
+            app:isEnabled="false"
             android:layout_marginTop="@dimen/margin_30dp"
             app:layout_constraintTop_toBottomOf="@id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"

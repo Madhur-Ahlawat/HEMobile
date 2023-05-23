@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -22,6 +23,11 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
 
     override fun init() {
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
+        }
+
+
 
     }
 

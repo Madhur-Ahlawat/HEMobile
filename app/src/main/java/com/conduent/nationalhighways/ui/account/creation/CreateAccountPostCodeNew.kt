@@ -86,7 +86,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            val text = charSequence.toString()
             if (binding.inputPostCode.getText()?.isNotEmpty()==true){
                 requiredPostCode=true
             }
@@ -95,11 +94,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredPostCode) {
-                binding.btnFindAddress.enable()
-            } else {
-                binding.btnFindAddress.disable()
-            }
+            binding.btnFindAddress.isEnabled = requiredPostCode
         }
     }
 }

@@ -78,23 +78,25 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             before: Int,
             count: Int
         ) {
-            when (view) {
-                binding.inputFirstName.getEditText() -> {
-                    requiredFirstName = binding.inputFirstName.getText()?.isNotEmpty() == true
-                }
-                binding.inputLastName.getEditText() -> {
-                    requiredLastName = binding.inputLastName.getText()?.isNotEmpty() == true
-                }
+            if (binding.inputFirstName.getText()
+                    ?.isNotEmpty() == true && binding.inputLastName.getText()?.isNotEmpty() == true
+            ) {
+
+                requiredFirstName = true
+                requiredLastName = true
+
+
             }
+
 
         }
 
         override fun afterTextChanged(editable: Editable?) {
-                if (requiredFirstName && requiredLastName){
-                    binding.btnNext.enable()
-                }else{
-                    binding.btnNext.disable()
-                }
+            if (requiredFirstName && requiredLastName) {
+                binding.btnNext.enable()
+            } else {
+                binding.btnNext.disable()
+            }
         }
     }
 }
