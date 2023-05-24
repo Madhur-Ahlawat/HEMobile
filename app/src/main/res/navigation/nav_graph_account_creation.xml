@@ -398,6 +398,10 @@
         <action
             android:id="@+id/action_createAccountPersonalInfo_to_createAccountPostCodeNew"
             app:destination="@id/createAccountPostCodeNew" />
+        <argument
+            android:name="isPersonalAccount"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/createAccountPostCodeNew"

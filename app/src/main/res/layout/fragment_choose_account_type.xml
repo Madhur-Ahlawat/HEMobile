@@ -51,8 +51,8 @@
                 style="@style/RegularTextBlack"
                 android:text="@string/str_personal_account_description"
                 android:padding="5dp"
+                android:gravity="top"
                 android:buttonTint="@color/new_btn_color"
-
                 android:id="@+id/radio_personal_account"/>
 
 
@@ -63,6 +63,7 @@
                 android:text="@string/str_personal_business_account_description"
                 android:padding="5dp"
                 android:layout_marginTop="30dp"
+                android:gravity="top"
                 android:buttonTint="@color/new_btn_color"
                 android:id="@+id/radio_business_account"/>
 

@@ -210,6 +210,7 @@ object Constants {
     const val ACCOUNT_CREATION_EMAIL_FLOW = "accountCreationEmailFlow"
     const val FORGOT_PASSWORD_FLOW = "forgotPasswordFlow"
     const val ACCOUNT_CREATION_MOBILE_FLOW="accountCreationMobileFlow"
+    const val IS_PERSONAL_ACCOUNT="isPersonalAccount"
 
 
 }

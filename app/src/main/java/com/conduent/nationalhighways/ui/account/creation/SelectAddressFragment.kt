@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         selectAddressAdapter=SelectAddressAdapter(requireContext(),mainList)
         binding.recylcerview.adapter=selectAddressAdapter
 
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     override fun initCtrl() {
@@ -83,9 +87,11 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
+//                ErrorUtil.showError(binding.root, response.errorMsg)
+                enterAddressManual()
             }
             else -> {
+                enterAddressManual()
             }
         }
 
@@ -98,6 +104,10 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             }
         }
 
+    }
+
+    private fun enterAddressManual(){
+        findNavController().navigate(R.id.fragment_manual_address)
     }
 
 

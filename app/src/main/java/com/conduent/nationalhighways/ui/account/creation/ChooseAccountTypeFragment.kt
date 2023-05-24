@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentChooseAccountTypeBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.Constants.IS_PERSONAL_ACCOUNT
 
 
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
@@ -44,6 +43,13 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
             R.id.btnAccountType->{
                 val bundle = Bundle()
+                val id: Int = binding.radioGroup.checkedRadioButtonId
+                var personalAccount = false
+                if (id == R.id.radio_personal_account) {
+                     personalAccount = true
+                }
+                bundle.putBoolean(IS_PERSONAL_ACCOUNT,personalAccount)
+
 
                 findNavController().navigate(
                     R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,

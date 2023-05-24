@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.account.AccountCreateRequestMode
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants.IS_PERSONAL_ACCOUNT
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
     var requiredFirstName = false
     var requiredLastName = false
-
+    var requiredCompanyName = false
+    var isPersonalAccount : Boolean? = true
     var requestModel = AccountCreateRequestModel.RequestModel()
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
@@ -32,8 +34,14 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     override fun init() {
         binding.inputFirstName.editText.addTextChangedListener(GenericTextWatcher(binding.inputFirstName.editText))
         binding.inputLastName.editText.addTextChangedListener(GenericTextWatcher(binding.inputLastName.editText))
+        binding.inputCompanyName.editText.addTextChangedListener(GenericTextWatcher(binding.inputCompanyName.editText))
 
         binding.btnNext.setOnClickListener(this)
+        isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,true)
+        if(isPersonalAccount == true){
+            binding.txtCompanyName.visibility = View.GONE
+            binding.inputCompanyName.visibility = View.GONE
+        }
     }
 
     override fun initCtrl() {
@@ -76,16 +84,17 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             charSequence: CharSequence?,
             start: Int,
             before: Int,
-            count: Int
-        ) {
-            if (binding.inputFirstName.getText()
-                    ?.isNotEmpty() == true && binding.inputLastName.getText()?.isNotEmpty() == true
-            ) {
-
+            count: Int) {
+            if (binding.inputFirstName.getText()?.isNotEmpty() == true
+                && binding.inputLastName.getText()?.isNotEmpty() == true) {
                 requiredFirstName = true
                 requiredLastName = true
-
-
+            }else{
+                requiredFirstName = false
+                requiredLastName = false
+            }
+            if(isPersonalAccount == false){
+                requiredCompanyName = binding.inputCompanyName.getText()?.isNotEmpty() == true
             }
 
 
@@ -93,7 +102,15 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         override fun afterTextChanged(editable: Editable?) {
             if (requiredFirstName && requiredLastName) {
-                binding.btnNext.enable()
+                if(isPersonalAccount == false){
+                    if(requiredCompanyName){
+                        binding.btnNext.enable()
+                    }else{
+                        binding.btnNext.disable()
+                    }
+                }else{
+                    binding.btnNext.enable()
+                }
             } else {
                 binding.btnNext.disable()
             }

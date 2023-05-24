@@ -932,7 +932,7 @@
     <string name="enablelater">Enable later</string>
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
     <string name="goto_settings">Go to settings</string>
-    <string name="str_three_address_found">3 Addresses Found</string>
+    <string name="str_three_address_found">0 Addresses Found</string>
     <string name="str_select_your_address">Select your address</string>
     <string name="str_if_you_dont_see">If you don\u0027t see your address you can enter it manually.</string>
     <string name="str_enter_address_manually">Enter address manually</string>
@@ -959,7 +959,9 @@
     <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
     <string name="enter_address_manually">Enter address manually</string>
     <string name="what_is_your_name">What is your name?</string>
+    <string name="what_is_your_company_name">What is your company name?</string>
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
+    <string name="should_be_company_name">This should be your company name</string>
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
     <string name="would_you_like_to_receive">Would you like to receive communications about your account by text message?</string>
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
@@ -975,7 +977,7 @@
     <string name="account_creation_choose_account">Choose an account type</string>
     <string name="account_creation_what_type_of_account">What type of account would you like ?</string>
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
-    <string name="str_personal_business_account_description"><b>Business Account</b>\nBusiness Account If you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
+    <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
     <string name="str_address_line2">Address line2(optional)</string>
     <string name="str_town_city">Town or City</string>

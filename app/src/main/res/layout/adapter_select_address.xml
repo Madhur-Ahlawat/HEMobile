@@ -7,9 +7,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginBottom="@dimen/_1sdp"
-        android:background="@drawable/edittext_rectangle">
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:elevation="5dp"
+        android:background="@drawable/item_rounded_corner">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -18,6 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/_10sdp"
+            android:paddingRight="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:buttonTint="@color/new_btn_color"/>
 
@@ -25,11 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfregular"
-            android:textColor="@color/black"
+            android:textColor="@color/color_1D70B8"
             app:layout_constraintStart_toEndOf="@id/radio_button"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/_12ssp"
-            android:text="69 New Street\n NEWPORT\n RB7 3DS"
+            android:ellipsize="end"
+            android:maxLines="1"
+            style="@style/MediumTextBlack"
+            android:textSize="@dimen/_14ssp"
+            android:text="69 New Street NEWPORT RB7 3DS"
             android:id="@+id/address"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

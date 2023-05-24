@@ -86,9 +86,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            if (binding.inputPostCode.getText()?.isNotEmpty()==true){
-                requiredPostCode=true
-            }
+            requiredPostCode = binding.inputPostCode.getText()?.isNotEmpty()==true
 
 
         }
