@@ -32,22 +32,24 @@ class CreateAccountPersonalSetupFragment :
             isEditAccountType =
                 arguments?.getInt(Constants.FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE)
         }
-        binding.tvStep.text = requireActivity().getString(R.string.str_step_f_of_l, 2, 6)
         binding.enable = false
     }
 
     override fun initCtrl() {
+/*
         binding.apply {
             btnAction.setOnClickListener(this@CreateAccountPersonalSetupFragment)
             mrbPrePay.setOnClickListener(this@CreateAccountPersonalSetupFragment)
             mrbPayG.setOnClickListener(this@CreateAccountPersonalSetupFragment)
         }
+*/
     }
 
     override fun observer() {}
 
     override fun onClick(view: View?) {
         when (view?.id) {
+/*
             R.id.mrbPrePay -> {
                 binding.enable = true
                 binding.mrbPayG.isChecked = false
@@ -103,6 +105,7 @@ class CreateAccountPersonalSetupFragment :
                     }
                 }
 
+*/
 /*
                 if(binding.mrbPrePay.isChecked || binding.mrbPayG.isChecked){
                      val bundle = Bundle()
@@ -112,8 +115,10 @@ class CreateAccountPersonalSetupFragment :
                     }
                      findNavController().navigate(R.id.action_personalTypeFragment_to_personalDetailsEntryFragment, bundle)
                 }
-*/
+*//*
+
             }
+*/
         }
     }
 }

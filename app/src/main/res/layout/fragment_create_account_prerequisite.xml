@@ -130,8 +130,6 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnCreateAccount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="@string/create_account"
             style="@style/PrimaryButton"
             android:layout_marginTop="@dimen/margin_30dp"

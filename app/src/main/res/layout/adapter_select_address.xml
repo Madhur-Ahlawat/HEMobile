@@ -8,9 +8,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:elevation="5dp"
+        android:layout_margin="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:elevation="2dp"
+        android:id="@+id/addressLayout"
         android:background="@drawable/item_rounded_corner">
 
         <RadioButton
@@ -34,7 +35,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             style="@style/MediumTextBlack"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="15sp"
             android:text="69 New Street NEWPORT RB7 3DS"
             android:id="@+id/address"
             app:layout_constraintBottom_toBottomOf="parent"/>

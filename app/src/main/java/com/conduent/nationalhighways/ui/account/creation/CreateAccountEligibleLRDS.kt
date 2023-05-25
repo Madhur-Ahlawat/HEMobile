@@ -48,6 +48,7 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
 
     override fun initCtrl() {
         binding.btnContinue.setOnClickListener(this)
+        binding.continueWithoutApplying.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -56,13 +57,21 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            binding.btnContinue.id -> {
+            binding.continueWithoutApplying.id -> {
                 val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
-/*                findNavController().navigate(
+                findNavController().navigate(
                     R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
                     bundle
-                )*/
+                )
+            }
+            binding.btnContinue.id->{
+                val bundle = Bundle()
+//                bundle.putParcelable("response", status.data)
+                findNavController().navigate(
+                    R.id.action_createAccountEligibleLRDS_to_discount_type_fragment,
+                    bundle
+                )
             }
         }
     }

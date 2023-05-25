@@ -410,7 +410,9 @@
         tools:layout="@layout/fragment_create_account_post_code_new">
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_selectaddressfragment"
-            app:destination="@id/selectaddressfragment" />
+            app:destination="@id/selectaddressfragment"
+            app:popUpToInclusive="true"
+            />
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
             app:destination="@+id/fragment_manual_address"
@@ -424,7 +426,7 @@
     <fragment
         android:id="@+id/selectaddressfragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.SelectAddressFragment"
-        android:label="selectAddressFraggment"
+        android:label="selectAddressFragment"
         tools:layout="@layout/fragment_select_address">
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountEligibleLRDS2"
@@ -439,6 +441,10 @@
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
             app:destination="@id/createAccountTypes" />
+        <action
+            android:id="@+id/action_createAccountEligibleLRDS_to_discount_type_fragment"
+            app:destination="@id/discount_type_fragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/createAccountTypes"
@@ -524,5 +530,11 @@
          tools:layout="@layout/fragment_manual_address">
 
      </fragment>
+    <fragment
+        android:id="@+id/discount_type_fragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.DiscountTypeFragment"
+        android:label="DiscountTypeFragment"
+        tools:layout="@layout/fragment_discount_type">
+    </fragment>
 
 </navigation>
