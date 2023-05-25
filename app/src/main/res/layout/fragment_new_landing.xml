@@ -13,13 +13,14 @@
             android:orientation="vertical"
             android:weightSum="2">
 
-            <RelativeLayout
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:background="@drawable/he_bg">
 
-            </RelativeLayout>
+            </ImageView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,158 +34,161 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_15dp"
-            android:layout_marginBottom="50dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="20dp"
-            android:layout_marginTop="@dimen/_80sdp"
-            android:background="@color/white"
+            android:orientation="vertical"
             android:layout_alignParentBottom="true"
-            >
-
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_50dp"
-                android:background="@drawable/text_rectangle"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:id="@+id/pcnLayout">
+                android:layout_height="wrap_content"
+                android:id="@+id/menu_layer"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:elevation="10dp"
+                android:padding="@dimen/margin_20dp"
+                android:background="@color/white">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:id="@+id/img_pcn"
-                    android:src="@drawable/pcn_icon"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:background="@drawable/text_rectangle"
+                    android:id="@+id/guidanceLayout">
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    style="@style/RegularTextBlack"
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_toStartOf="@id/pcn_forward"
-                    android:layout_toEndOf="@id/img_pcn"
-                    android:text="@string/str_resolve_penalty_charge" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:id="@+id/img_guidance"
+                        android:src="@drawable/dart_guidence"/>
 
-                <ImageView
-                    android:id="@+id/pcn_forward"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_right" />
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/RegularTextBlack"
 
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_toStartOf="@id/guidance_forward"
+                        android:layout_toEndOf="@id/img_guidance"
+                        android:text="@string/str_dart_charge_guidance_and_documents" />
 
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_50dp"
-                android:background="@drawable/text_rectangle"
-                android:layout_below="@id/pcnLayout"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:id="@+id/payCrossingLayout">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:id="@+id/img_pay_crossing"
-                    android:src="@drawable/payforcrossing"/>
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    style="@style/RegularTextBlack"
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_toStartOf="@id/pay_crossing_forward"
-                    android:layout_toEndOf="@id/img_pay_crossing"
-                    android:text="@string/str_make_one_of_payment" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_right"
-                    android:id="@+id/pay_crossing_forward"/>
+                    <ImageView
+                        android:id="@+id/guidance_forward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_right" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_50dp"
-                android:layout_below="@id/payCrossingLayout"
-                android:background="@drawable/text_rectangle"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:id="@+id/crossingLayout">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:background="@drawable/text_rectangle"
+                    android:layout_below="@id/guidanceLayout"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:id="@+id/payCrossingLayout">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:id="@+id/img_crossing"
-                    android:src="@drawable/check_crossing"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:id="@+id/img_pay_crossing"
+                        android:src="@drawable/pay_crossings"/>
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    style="@style/RegularTextBlack"
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_toStartOf="@id/crossing_forward"
-                    android:layout_toEndOf="@id/img_crossing"
-                    android:text="@string/str_check_for_paid_crossing" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_right"
-                    android:id="@+id/crossing_forward"/>
-
-
-            </RelativeLayout>
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/RegularTextBlack"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_toStartOf="@id/pay_crossing_forward"
+                        android:layout_toEndOf="@id/img_pay_crossing"
+                        android:text="@string/str_make_one_of_payment" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_right"
+                        android:id="@+id/pay_crossing_forward"/>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_50dp"
-                android:layout_below="@id/crossingLayout"
-                android:background="@drawable/text_rectangle"
-                android:id="@+id/guidanceLayout">
+                </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:id="@+id/img_guidance"
-                    android:src="@drawable/guidance_documents"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_below="@+id/payCrossingLayout"
+                    android:background="@drawable/text_rectangle"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:id="@+id/pcnLayout">
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    style="@style/RegularTextBlack"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:id="@+id/img_pcn"
+                        android:src="@drawable/pcn_icon"/>
 
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_toStartOf="@id/guidance_forward"
-                    android:layout_toEndOf="@id/img_guidance"
-                    android:text="@string/str_dart_charge_guidance_and_documents" />
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/RegularTextBlack"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_toStartOf="@id/pcn_forward"
+                        android:layout_toEndOf="@id/img_pcn"
+                        android:text="@string/str_resolve_penalty_charge" />
 
-                <ImageView
-                    android:id="@+id/guidance_forward"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_right" />
+                    <ImageView
+                        android:id="@+id/pcn_forward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_right" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_below="@id/pcnLayout"
+                    android:background="@drawable/text_rectangle"
+                    android:id="@+id/crossingLayout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:id="@+id/img_crossing"
+                        android:src="@drawable/check_crossing"/>
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/RegularTextBlack"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_toStartOf="@id/crossing_forward"
+                        android:layout_toEndOf="@id/img_crossing"
+                        android:text="@string/str_check_for_paid_crossing" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_right"
+                        android:id="@+id/crossing_forward"/>
+
+
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -193,22 +197,24 @@
                 android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_25sdp"
                 android:text="@string/txt_sign_in"
                 style="@style/PrimaryButton"
-                android:layout_below="@id/guidanceLayout"
                 />
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_signup"
                 style="@style/secondaryButton"
                 android:visibility="visible"
                 app:isPrimary="false"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
                 android:text="@string/str_create_account"
-                android:layout_below="@id/btnSignIn"
                 />
+        </LinearLayout>
 
 
-
-        </RelativeLayout>
 
 
     </RelativeLayout>

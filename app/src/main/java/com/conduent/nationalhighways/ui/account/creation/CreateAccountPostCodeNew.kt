@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.account.AccountCreateRequestMode
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     View.OnClickListener, OnRetryClickListener {
     var requiredPostCode = false
     var accountRequestModel : AccountCreateRequestModel.RequestModel? = null
+    var isPersonalAccount : Boolean? = true
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
@@ -30,6 +32,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
+        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,true)
+        if(isPersonalAccount == true){
+            binding.txtHeading.text = getString(R.string.personal_address)
+        }
     }
 
     override fun initCtrl() {

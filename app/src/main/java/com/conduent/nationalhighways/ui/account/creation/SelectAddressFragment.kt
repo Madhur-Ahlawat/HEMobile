@@ -53,7 +53,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
         selectAddressAdapter=SelectAddressAdapter(requireContext(),mainList)
         binding.recylcerview.adapter=selectAddressAdapter
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

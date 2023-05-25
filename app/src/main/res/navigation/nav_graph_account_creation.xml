@@ -415,6 +415,10 @@
             android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
             app:destination="@+id/fragment_manual_address"
             />
+        <argument
+            android:name="isPersonalAccount"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
 
     <fragment

@@ -36,7 +36,7 @@
             android:padding="0dp"
             style="@style/input_text"
             app:maxLength="50"
-            app:labelText="@string/primary_account_holder_first_name"
+            app:labelText="@string/primary_account_contact_first_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
@@ -49,7 +49,7 @@
             app:headingText="@string/last_name"
             style="@style/input_text"
             app:maxLength="50"
-            app:labelText="@string/primary_account_holder_last_name"
+            app:labelText="@string/primary_account_contact_last_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputFirstName" />

@@ -42,6 +42,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         if(isPersonalAccount == true){
             binding.txtCompanyName.visibility = View.GONE
             binding.inputCompanyName.visibility = View.GONE
+            binding.inputFirstName.setLabel(getString(R.string.primary_account_holder_first_name))
+            binding.inputLastName.setLabel(getString(R.string.primary_account_holder_last_name))
         }
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
@@ -75,6 +77,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
                 val bundle = Bundle()
                 bundle.putParcelable(accountRequestModelKey, requestModel)
+                isPersonalAccount?.let { bundle.putBoolean(IS_PERSONAL_ACCOUNT, it) }
                 findNavController().navigate(
                     R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
                     bundle

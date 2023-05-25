@@ -447,7 +447,7 @@
     <string name="str_send_security_code">Send security code</string>
     <string name="str_enter_security_code">Enter security code</string>
     <string name="str_email_verification">Email verification</string>
-    <string name="str_create_an_account">Create an account</string>
+    <string name="str_create_an_account">Create an Account</string>
     <string name="str_pls_select_permissions">"Please select any on user permissions "</string>
     <string name="str_last_name">LastName</string>
     <string name="str_first_name">FirstName</string>
@@ -982,7 +982,9 @@
     <string name="str_address_line2">Address line2(optional)</string>
     <string name="str_town_city">Town or City</string>
     <string name="str_address_example">For example 46,Flat 2a or Rose Cottage</string>
-
+    <string name="primary_account_contact_first_name">Primary account contact first name</string>
+    <string name="primary_account_contact_last_name">Primary account contact last name</string>
+    <string name="personal_address">What is your address?</string>
 
 
 </resources>
