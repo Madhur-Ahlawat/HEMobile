@@ -970,7 +970,7 @@
     <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this <u>link</u> which will navigate to the account creation journey on the web.</string>
     <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
     <string name="continueWithoutApplying">Continue without applying</string>
-    <string name="crossing_charges_per_account"><u>  </u></string>
+    <string name="crossing_charges_per_account">CROSSING CHARGES PER ACCOUNT</string>
     <string name="createAccount_email_emailHint">This will be your username when you log in to your account.</string>
     <string name="createAccount_email_screenHeading">What is your email address?</string>
 

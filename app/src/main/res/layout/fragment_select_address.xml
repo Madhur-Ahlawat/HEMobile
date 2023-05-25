@@ -59,9 +59,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/str_if_you_dont_see"
                     android:layout_above="@id/btn_next"
-                    android:textColor="@color/grayColorIcon"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/open_sans"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginHorizontal="20dp"
 
                     android:id="@+id/see_text"
