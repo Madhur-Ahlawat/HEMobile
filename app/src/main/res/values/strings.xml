@@ -1003,9 +1003,11 @@
     <string name="str_unlimited">Unlimited Discount</string>
     <string name="str_unlimited_text">£20 per year for unlimited crossings</string>
     <string name="str_i_do_not_want_discount">I DO NOT WANT A RESIDENT DISCOUNT</string>
-
-
-
+    <string name="enter_the_primary_account_holder_s_first_name">Enter the primary account-holder’s first name</string>
+    <string name="enter_the_primary_account_holder_s_last_name">Enter the primary account-holder’s last name</string>
+    <string name="enter_contact_first_name">Enter the primary contact first name</string>
+    <string name="enter_contact_last_name">Enter the primary contact last name</string>
+    <string name="postcode_must_be_between_4_and_10_characters">Postcode must be between 4 and 10 characters</string>
 
 
 </resources>
