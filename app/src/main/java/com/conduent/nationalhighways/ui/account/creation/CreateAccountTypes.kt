@@ -24,11 +24,12 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         FragmentCreateAccountTypesBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.txtCrossingInfo.setOnClickListener(this)
+        binding.crossingCharges.setOnClickListener(this)
     }
 
     override fun initCtrl() {
-        binding.viewPrePay.cardview.setOnClickListener(this)
+        binding.prePayCard.setOnClickListener(this)
+        binding.payCard.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -37,21 +38,17 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     override fun onClick(v: View?) {
         hideKeyboard()
         when (v?.id) {
-            R.id.viewPrePay -> {
+            R.id.prePayCard -> {
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
-/*
-               // findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
-*/
             }
-            R.id.viewPayAsYouGo -> {
+            R.id.payCard -> {
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
-                //findNavController().navigate(R.id.action_createAccountTypes_to_optForSmsFragment,bundle)
             }
-            R.id.txtCrossingInfo -> {
+            R.id.crossingCharges -> {
                 val openURL = Intent(Intent.ACTION_VIEW)
                 openURL.data = Uri.parse("https://www.gov.uk/pay-dartford-crossing-charge/charges-fines/")
                 startActivity(openURL)

@@ -16,14 +16,13 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,SelectAddressAdapter.addressCallback {
 
     private var selectAddressAdapter:SelectAddressAdapter?=null
     private var zipcode:String=""
@@ -51,7 +50,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         binding.recylcerview.layoutManager=linearLayoutManager
 
 
-        selectAddressAdapter=SelectAddressAdapter(requireContext(),mainList)
+        selectAddressAdapter=SelectAddressAdapter(requireContext(),mainList,this)
         binding.recylcerview.adapter=selectAddressAdapter
 
         loader = LoaderDialog()
@@ -108,6 +107,19 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
     private fun enterAddressManual(){
         findNavController().navigate(R.id.fragment_manual_address)
+    }
+
+
+
+    override fun addressCallback(position: Int) {
+
+        for (i in 0 until mainList.size){
+            mainList[i]?.isSelected=false
+        }
+        mainList[position]?.isSelected=true
+        selectAddressAdapter?.notifyDataSetChanged()
+
+        binding.btnNext.isEnabled = mainList[position]?.isSelected==true
     }
 
 

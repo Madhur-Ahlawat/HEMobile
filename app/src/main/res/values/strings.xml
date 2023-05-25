@@ -967,10 +967,10 @@
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
     <string name="agree_terms_condition">I agree to the terms and conditions and understand that standard text message and data charges may apply.</string>
 
-    <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) post code. \n\nTo apply for a LRDS plan, click on this <u>link</u> which will navigate to the account creation journey on the web.</string>
+    <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this <u>link</u> which will navigate to the account creation journey on the web.</string>
     <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
     <string name="continueWithoutApplying">Continue without applying</string>
-    <string name="crossing_charges_per_account"><u>Crossing charges per account</u></string>
+    <string name="crossing_charges_per_account"><u>  </u></string>
     <string name="createAccount_email_emailHint">This will be your username when you log in to your account.</string>
     <string name="createAccount_email_screenHeading">What is your email address?</string>
 
@@ -982,6 +982,26 @@
     <string name="str_address_line2">Address line2(optional)</string>
     <string name="str_town_city">Town or City</string>
     <string name="str_address_example">For example 46,Flat 2a or Rose Cottage</string>
+
+    <string name="str_pay_minimum">Pay a minimum £10 deposit</string>
+    <string name="str_suitable_frequent">Suitable for frequent users</string>
+    <string name="str_get_a_discount">Get a discount of up to 20% with each crossing</string>
+    <string name="str_your_accounts_get_top_up">Your account gets topped up automatically when your balance is low</string>
+
+    <string name="str_no_initial_payment">No initial payment required</string>
+    <string name="str_suitable_for_occasional">Suitable for occasional users</string>
+    <string name="str_your_payments_get">Your payment gets taken automatically after your crossing.</string>
+    <string name="str_no_discount">No discount</string>
+    
+    <string name="str_what_type_of_local">What type of local resident discount would you like?</string>
+    <string name="str_under_the_local_resident">Under the Local Resident Discount Scheme (LRDS), you can choose from two different discount options.</string>
+    <string name="str_limited">Limited Discount</string>
+    <string name="str_limited_discount_text">£10 per year for 50 crossings, and thereafter 20p per crossing</string>
+    <string name="str_unlimited">Unlimited Discount</string>
+    <string name="str_unlimited_text">£20 per year for unlimited crossings</string>
+    <string name="str_i_do_not_want_discount">I DO NOT WANT A RESIDENT DISCOUNT</string>
+
+
 
 
 

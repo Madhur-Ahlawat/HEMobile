@@ -1,151 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="enable"
+            type="Boolean" />
     </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="20dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_20dp"
         android:paddingTop="@dimen/margin_16dp"
-        tools:background="@drawable/he_bg"
-        android:paddingEnd="@dimen/margin_20dp">
+        android:paddingEnd="@dimen/margin_20dp"
+        android:paddingBottom="@dimen/margin_16dp"
 
-        <TextView
-            android:id="@+id/txtHeading"
-            style="@style/MediumText"
-            android:layout_width="0dp"
-            android:text="What type of account would you like?"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/viewPrePay"
-            layout="@layout/layout_account_type_view"
+        >
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtHeading" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/MediumTextBlack"
+            android:id="@+id/what_type_of_account"
+            android:text="@string/account_creation_what_type_of_account"/>
 
-        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/viewPayAsYouGo"
-            android:layout_marginTop="@dimen/margin_16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/what_type_of_account"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPrePay"
-            app:cardCornerRadius="5dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="2dp"
+            app:cardCornerRadius="5dp"
+            android:id="@+id/prePayCard">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_18dp"
-                android:paddingTop="@dimen/margin_12dp"
-                android:paddingBottom="@dimen/margin_20dp"
-                android:paddingEnd="@dimen/margin_20dp">
+                android:paddingBottom="20dp">
 
                 <TextView
-                    android:id="@+id/txtTitle"
-                    style="@style/BoldText"
-                    android:layout_width="0dp"
-                    android:textSize="@dimen/font_18sp"
-                    android:text="Pay as you go"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_prepay"
+                    style="@style/MediumTextBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="19dp"
+                    android:id="@+id/prePay"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="19dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/textView1"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
 
-                <TextView
+                    android:text="@string/an_email_address_to_receive_a_code"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/prePay" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/textView2"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+
+                    android:text="@string/an_email_address_to_receive_a_code"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/textView3"
-                    style="@style/RegularText"
+                    style="@style/RegularTextBlack"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/margin_16dp"
-                    android:drawableLeft="@drawable/circle_black_5dp"
-                    android:drawablePadding="@dimen/margin_20dp"
-                    android:textColor="@color/black"
-                    android:text="No initial payment required"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="@string/str_get_a_discount"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-
-                <TextView
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/textView4"
-                    style="@style/RegularText"
+                    style="@style/RegularTextBlack"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/margin_6dp"
-                    android:drawableLeft="@drawable/circle_black_5dp"
-                    android:drawablePadding="@dimen/margin_20dp"
-                    android:textColor="@color/black"
-                    android:text="Suitable for occasional users"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="@string/str_your_accounts_get_top_up"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/circle_black_5dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                    app:layout_constraintStart_toStartOf="@+id/textView4"
-                    app:layout_constraintTop_toTopOf="@+id/textView5"
-                    app:layout_constraintVertical_bias="0.32999998" />
 
-                <TextView
-                    android:id="@+id/textView5"
-                    style="@style/RegularText"
-                    android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/margin_20dp"
-                    android:gravity="top"
-                    android:layout_marginTop="@dimen/margin_6dp"
-                    android:textColor="@color/black"
-                    android:text="Your payment gets taken automatically after your crossing."
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-
-                <TextView
-                    android:id="@+id/textView6"
-                    style="@style/RegularText"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/margin_6dp"
-                    android:drawableLeft="@drawable/circle_black_5dp"
-                    android:gravity="top"
-                    android:text="No discount"
-                    android:drawablePadding="@dimen/margin_20dp"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
-                    app:layout_constraintEnd_toEndOf="@+id/txtTitle"
-                    app:layout_constraintTop_toTopOf="@+id/txtTitle"
-                    android:src="@drawable/ic_right_arrow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/txtCrossingInfo"
-            style="@style/MediumText"
-            android:layout_width="0dp"
-            android:text="@string/crossing_charges_per_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_20dp"
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/prePayCard"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPayAsYouGo" />
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="2dp"
+            app:cardCornerRadius="5dp"
+
+            android:id="@+id/payCard">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_payg_account"
+                    style="@style/MediumTextBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="19dp"
+                    android:id="@+id/payAsYouGo"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="19dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/payTextView1"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+
+                    android:text="@string/str_no_initial_payment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payAsYouGo" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/payTextView2"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+
+                    android:text="@string/str_suitable_for_occasional"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payTextView1" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/payTextView3"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="@string/str_your_payments_get"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payTextView2" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/payTextView4"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/circle_5dp"
+                    android:drawablePadding="20dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="@string/str_no_discount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payTextView3" />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/crossingCharges"
+            style="@style/secondaryButton"
+            android:text="@string/crossing_charges_per_account"
+            app:layout_constraintTop_toBottomOf="@id/payCard"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            />
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 </layout>

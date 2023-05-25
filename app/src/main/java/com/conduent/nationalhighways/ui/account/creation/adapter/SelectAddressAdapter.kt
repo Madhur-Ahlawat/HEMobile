@@ -8,8 +8,11 @@ import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.databinding.AdapterSelectAddressBinding
 
 class SelectAddressAdapter(private val context: Context?,
-                           private var list: MutableList<DataAddress?>):
+                           private var list: MutableList<DataAddress?>, private val address:addressCallback ):
+
     RecyclerView.Adapter<SelectAddressAdapter.SelectAddressViewHolder>() {
+
+
 
 
     inner class SelectAddressViewHolder(var binding: AdapterSelectAddressBinding) :
@@ -22,7 +25,9 @@ class SelectAddressAdapter(private val context: Context?,
             LayoutInflater.from(context),
             parent,
             false
-        )    )
+        )
+
+    )
 
     override fun onBindViewHolder(holder: SelectAddressViewHolder, position: Int) {
         val strBuilder = java.lang.StringBuilder()
@@ -32,6 +37,14 @@ class SelectAddressAdapter(private val context: Context?,
             .append(", ")
             .append(list[position]?.postcode)
         holder.binding.address.text = strBuilder
+
+        holder.binding.radioButton.isChecked = list[position]?.isSelected==true
+
+        holder.binding.addressLayout.setOnClickListener{
+            address.addressCallback(position)
+            notifyDataSetChanged()
+        }
+
 
     }
 
@@ -44,4 +57,8 @@ class SelectAddressAdapter(private val context: Context?,
         notifyDataSetChanged()
 
     }
+    interface addressCallback{
+        fun addressCallback(position: Int)
+    }
+
 }

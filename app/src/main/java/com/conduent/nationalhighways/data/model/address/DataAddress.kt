@@ -13,7 +13,8 @@ data class DataAddress(
     @SerializedName("locality") var locality: String? = "0",
     @SerializedName("town") var town: String? = "",
     @SerializedName("country") val country: String? = "",
-    @SerializedName("postcode") var postcode: String? = ""
+    @SerializedName("postcode") var postcode: String? = "",
+      var isSelected:Boolean=false
 ): Parcelable
 
 
