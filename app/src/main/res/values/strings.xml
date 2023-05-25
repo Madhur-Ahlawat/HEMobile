@@ -50,7 +50,7 @@
     <string name="txt_account_number">Account number</string>
     <string name="txt_error_account_number">Please enter account number</string>
     <string name="txt_error_zip_code">Please enter postal code</string>
-    <string name="txt_postcode">Postcode</string>
+    <string name="txt_postcode">Building Number and Street</string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
@@ -955,7 +955,7 @@
     <string name="if_you_already_have_an_account_you_can">If you already have an account you can </string>
     <string name="dartford_crossing_account_sign_in_or_set_up">Dartford crossing account: sign in or set up</string>
     <string name="postCodeHint">ex. WA4 1AB</string>
-    <string name="what_is_your_address">What is your address?</string>
+    <string name="what_is_your_address">What is your registered office address?</string>
     <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
     <string name="enter_address_manually">Enter address manually</string>
     <string name="what_is_your_name">What is your name?</string>

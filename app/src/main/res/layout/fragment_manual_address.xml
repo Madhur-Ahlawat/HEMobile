@@ -78,13 +78,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:labelText="@string/str_town_city"
+            app:labelText="@string/postcode"
             style="@style/input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/townCity" />
 
-        <com.conduent.apollo.ui.CMTextInput
+        <com.conduent.apollo.ui.CMDropDownView
             android:id="@+id/country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
