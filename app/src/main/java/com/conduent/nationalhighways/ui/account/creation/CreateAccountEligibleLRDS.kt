@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.account.creation
 
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -30,7 +32,7 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         FragmentCreateAccountEligibleLrdsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        val semiBold: Typeface = Typeface.create(
+/*        val semiBold: Typeface = Typeface.create(
             ResourcesCompat.getFont(requireContext(), com.conduent.nationalhighways.R.font.sfsemibold),
             Typeface.NORMAL
         )
@@ -43,7 +45,7 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         string.setSpan(UnderlineSpan(), 137, 142, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 //        string.setSpan(clickableLink,  0, 100, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         string.setSpan(StyleSpan(Typeface.BOLD), 137, 142, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-        binding.txtDescription.setText(string, TextView.BufferType.SPANNABLE)
+        binding.txtDescription.setText(string, TextView.BufferType.SPANNABLE)*/
     }
 
     override fun initCtrl() {
@@ -58,12 +60,18 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         hideKeyboard()
         when (v?.id) {
             binding.continueWithoutApplying.id -> {
-                val bundle = Bundle()
+
+                val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+
+/*                val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
                 findNavController().navigate(
                     R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
                     bundle
-                )
+                )*/
             }
             binding.btnContinue.id->{
                 val bundle = Bundle()
