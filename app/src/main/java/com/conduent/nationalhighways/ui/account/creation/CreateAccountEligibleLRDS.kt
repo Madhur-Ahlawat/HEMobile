@@ -60,11 +60,11 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         hideKeyboard()
         when (v?.id) {
             binding.continueWithoutApplying.id -> {
-
-                val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                startActivity(i)
+                val bundle = Bundle()
+//                bundle.putParcelable("response", status.data)
+                findNavController().navigate(
+                    R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
+                    bundle)
 
 /*                val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
@@ -74,12 +74,13 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
                 )*/
             }
             binding.btnContinue.id->{
-                val bundle = Bundle()
-//                bundle.putParcelable("response", status.data)
-                findNavController().navigate(
-                    R.id.action_createAccountEligibleLRDS_to_discount_type_fragment,
-                    bundle
-                )
+
+                val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+
+
             }
         }
     }

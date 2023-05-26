@@ -81,7 +81,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     override fun initCtrl() {
         //binding.edtPostcode.addTextChangedListener { isEnable() }
-        binding.edtEmail.addTextChangedListener { isEnable() }
+        binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
     }
 
@@ -199,9 +199,9 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
                 if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    sessionManager.saveAccountNumber(binding.email.toString().trim())
+                    sessionManager.saveAccountNumber(binding.edtEmail.getText().toString().trim())
                     isCalled = true
-                    viewModel.confirmOptionForForgot(binding.email.toString())
+                    viewModel.confirmOptionForForgot(binding.edtEmail.getText().toString().trim())
 
                 }else{
                     hitApi()
@@ -215,7 +215,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
 
     private fun isEnable() {
-        binding.isValid=Utils.isEmailValid(binding.edtEmail.text.toString())
+        binding.btnNext.isEnabled=Utils.isEmailValid(binding.edtEmail.getText().toString())
         /*if (Utils.isEmailValid(binding.edtEmail.text.toString())) binding.model =
             ConfirmOptionModel(
                 enable = true,
@@ -234,7 +234,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
             Constants.EMAIL,
-            binding.email
+            binding.edtEmail.getText().toString().trim()
         )
         createAccountViewModel.emailVerificationApi(request)
 
@@ -250,7 +250,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,binding.email))
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,binding.edtEmail.getText().toString().trim()))
 
                 bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
 

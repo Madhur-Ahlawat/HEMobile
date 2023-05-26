@@ -54,8 +54,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i]) &&
-                    Character.toString(source[i]) != "_" &&
-                    Character.toString(source[i]) != "-"
+                    source[i].toString() != "_" &&
+                    source[i].toString() != "-"
                 ) {
                     return@InputFilter ""
                 }

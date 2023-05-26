@@ -976,13 +976,13 @@
     <string name="createAccount_email_screenHeading">What is your email address?</string>
 
     <string name="account_creation_choose_account">Choose an account type</string>
-    <string name="account_creation_what_type_of_account">What type of account would you like ?</string>
+    <string name="account_creation_what_type_of_account">What type of account would you like?</string>
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
     <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
     <string name="str_address_line2">Address line2(optional)</string>
     <string name="str_town_city">Town or City</string>
-    <string name="str_address_example">For example 46,Flat 2a or Rose Cottage</string>
+    <string name="str_address_example">For example 46, Flat 2a or Rose Cottage</string>
     <string name="primary_account_contact_first_name">Primary account contact first name</string>
     <string name="primary_account_contact_last_name">Primary account contact last name</string>
     <string name="personal_address">What is your address?</string>
@@ -994,7 +994,7 @@
 
     <string name="str_no_initial_payment">No initial payment required</string>
     <string name="str_suitable_for_occasional">Suitable for occasional users</string>
-    <string name="str_your_payments_get">Your payment gets taken automatically after your crossing.</string>
+    <string name="str_your_payments_get">Your payment gets taken automatically after your crossing</string>
     <string name="str_no_discount">No discount</string>
 
     <string name="str_what_type_of_local">What type of local resident discount would you like?</string>
@@ -1009,6 +1009,7 @@
     <string name="enter_contact_first_name">Enter the primary contact first name</string>
     <string name="enter_contact_last_name">Enter the primary contact last name</string>
     <string name="postcode_must_be_between_4_and_10_characters">Postcode must be between 4 and 10 characters</string>
+    <string name="str_six_digit_security_code">6 Digit Security Code</string>
 
 
 </resources>

@@ -13,18 +13,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/he_bg">
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingEnd="@dimen/margin_20dp"
+
+        >
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            style="@style/MediumTextBlack"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_check_your_mail"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            android:fontFamily="@font/sfbold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,48 +43,20 @@
             android:fontFamily="@font/sfregular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_title" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sub_title"
-            android:layout_width="wrap_content"
+        <com.conduent.apollo.ui.CMTextInput
+            android:id="@+id/edt_otp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/str_enter_one_time_code"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="normal"
-            android:fontFamily="@font/sfsemibold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message_received_txt" />
-
-
-        <RelativeLayout
-            android:id="@+id/otp_input"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_39sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/edittext_rectangle"
+            android:layout_marginTop="20dp"
+            style="@style/input_text"
+            app:maxLength="50"
+            app:labelText="@string/str_six_digit_security_code"
+            app:inputType="text"
+            app:imeOptions="actionNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sub_title">
+            app:layout_constraintTop_toBottomOf="@id/top_title" />
 
-            <EditText
-                android:id="@+id/edt_otp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="6"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:hint="@string/str_enter_six_digit_code"
-                android:textColorHint="@color/hintcolor"
-                android:singleLine="true"
-                android:paddingStart="5dp"
-                android:backgroundTint="@android:color/transparent"
-                android:textSize="@dimen/_13ssp" />
-        </RelativeLayout>
 
 
 
@@ -92,68 +65,50 @@
             android:id="@+id/not_received_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="start"
             android:lineSpacingExtra="@dimen/_4sdp"
             android:text="@string/str_not_received_otp_txt"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="normal"
-            android:fontFamily="@font/sfregular"
+            style="@style/RegularTextBlack"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/otp_input" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_otp" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/resend_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/ifyoudidnot"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
-            android:fontFamily="@font/sfregular"
+             style="@style/RegularTextBlack"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_verify"
+            app:layout_constraintTop_toBottomOf="@+id/not_received_txt"
             />
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btn_verify"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:backgroundTint="@{isEnable==true?@color/blue_color:@color/btn_disable_color}"
-            android:enabled="@{isEnable}"
-            android:gravity="center"
-            android:text="@string/str_verify_one_time_code"
-            android:textAllCaps="false"
-            android:textColor="@{isEnable==true?@color/white:@color/btn_disable_txt_color}"
-            android:textSize="@dimen/_13ssp"
+            style="@style/PrimaryButton"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:text="@string/str_continue"
+            app:isEnabled="false"
+            android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_Resend" />
+            app:layout_constraintTop_toBottomOf="@id/resend_txt"
+            />
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btn_Resend"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            style="@style/secondaryButton"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
             android:text="@string/resendcode"
-            android:textAllCaps="false"
-            android:textColor="@color/re_send_color"
-            android:textSize="@dimen/_13ssp"
+            app:radius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_verify"
             />
 
 
