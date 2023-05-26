@@ -60,7 +60,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         )
 
         if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
-            binding.btnSubmit.text=getString(R.string.str_next)
+            binding.btnSubmit.text=getString(R.string.str_continue)
            /* AdobeAnalytics.setScreenTrack(
                 "createAccount:email_setPassword",
                 "set password",
@@ -91,36 +91,32 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
         binding.btnSubmit.setOnClickListener(this)
-        binding.edtNewPassword.addTextChangedListener {
+        binding.edtNewPassword.editText.addTextChangedListener {
             isEnable(it.toString()) }
-        binding.edtConformPassword.addTextChangedListener { isEnable1() }
+        binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
 
-        binding.text1.text=getString(R.string.dotunicode)+" "+getString(R.string.str_at_least_8_character)
-        binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
-        binding.text3.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
-        binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_number)
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
 
             val right = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.compoundDrawables[right].bounds.width()) {
+                if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.editText.compoundDrawables[right].bounds.width()) {
 
                     if (passwordVisibile) {
-                        binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
-                        binding.edtNewPassword.transformationMethod =
+                        binding.edtNewPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
                         passwordVisibile = false
                     } else {
 
 
-                        binding.edtNewPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
-                        binding.edtNewPassword.transformationMethod =
+                        binding.edtNewPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
                         passwordVisibile = true
                     }
@@ -135,21 +131,21 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
             val right = 2
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= binding.edtConformPassword.right - binding.edtConformPassword.compoundDrawables[right].bounds.width()) {
+                if (event.rawX >= binding.edtConformPassword.right - binding.edtConformPassword.editText.compoundDrawables[right].bounds.width()) {
 
                     if (confirmPasswordVisibile) {
-                        binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
-                        binding.edtConformPassword.transformationMethod =
+                        binding.edtConformPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
                         confirmPasswordVisibile = false
                     } else {
 
-                        binding.edtConformPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
-                        binding.edtConformPassword.transformationMethod =
+                        binding.edtConformPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
                         confirmPasswordVisibile = true
                     }
@@ -285,19 +281,21 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.text.toString(),
-                confirmPassword = binding.edtConformPassword.text.toString(),
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = true
             )
+            binding.btnSubmit.isEnabled=true
 
         } else {
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.text.toString(),
-                confirmPassword = binding.edtConformPassword.text.toString(),
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = false
             )
+            binding.btnSubmit.isEnabled=false
 
         }
 
@@ -313,43 +311,44 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.text.toString(),
-                confirmPassword = binding.edtConformPassword.text.toString(),
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = true
             )
+            binding.btnSubmit.isEnabled=true
 
         } else {
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.text.toString(),
-                confirmPassword = binding.edtConformPassword.text.toString(),
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = false
             )
+            binding.btnSubmit.isEnabled=false
+
 
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE1)){
-            binding.text1.text=getString(R.string.tickunicode)+" "+getString(R.string.str_at_least_8_character)
+            binding.imgDot1.setImageResource(R.drawable.grin_tick)
         }else{
-            binding.text1.text=getString(R.string.dotunicode)+" "+getString(R.string.str_at_least_8_character)
+            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE2)){
-            binding.text2.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
-            binding.text3.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
-
-
+            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+            binding.imgDot3.setImageResource(R.drawable.grin_tick)
         }else{
-            binding.text2.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_upper_case)
-            binding.text3.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_lower_case)
+            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
 
         }
 
         if (Utils.validateString(text,Utils.PASSWORD_RULE3)){
-            binding.text4.text=getString(R.string.tickunicode)+" "+getString(R.string.str_contain_at_least_one_number)
+            binding.imgDot4.setImageResource(R.drawable.grin_tick)
         }else{
-            binding.text4.text=getString(R.string.dotunicode)+" "+getString(R.string.str_contain_at_least_one_number)
+            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
     }
 

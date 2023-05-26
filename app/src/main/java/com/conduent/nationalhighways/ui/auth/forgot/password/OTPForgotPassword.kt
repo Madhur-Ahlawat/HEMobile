@@ -90,7 +90,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         binding.apply {
             btnVerify.setOnClickListener(this@OTPForgotPassword)
             btnResend.setOnClickListener(this@OTPForgotPassword)
-            edtOtp.addTextChangedListener { binding.isEnable = (it?.length ?: 0) > 5 }
+            edtOtp.editText.addTextChangedListener { binding.btnVerify.isEnabled = (it?.length ?: 0) > 5 }
         }
     }
 
@@ -115,7 +115,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                         val mVerifyRequestOtpReq =
-                            VerifyRequestOtpReq(binding.edtOtp.text.toString(), response?.referenceId)
+                            VerifyRequestOtpReq(binding.edtOtp.getText().toString(), response?.referenceId)
                         viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
                     } else {
@@ -175,7 +175,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         val request = ConfirmEmailRequest(
             response?.referenceId?.toString() ?: "",
             data?.optionValue,
-            binding.edtOtp.text.toString().trim()
+            binding.edtOtp.getText().toString().trim()
         )
         createAccountViewModel.confirmEmailApi(request)
     }
@@ -202,7 +202,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (status) {
             is Resource.Success -> {
                 val bundle = Bundle()
-                response?.code = binding.edtOtp.text.toString()
+                response?.code = binding.edtOtp.getText().toString()
                 bundle.putParcelable("data", response)
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
 
@@ -302,7 +302,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         Toast.makeText(requireContext(),"Navigate to Add Vehicle Screen ",Toast.LENGTH_LONG).show()
 
                     }else{
-                        response?.code = binding.edtOtp.text.toString()
+                        response?.code = binding.edtOtp.getText().toString()
                         bundle.putParcelable("data", response)
                         bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
 

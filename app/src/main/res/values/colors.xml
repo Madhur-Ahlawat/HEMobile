@@ -111,6 +111,7 @@
     <color name="hintcolor">#6F6E6E</color>
     <color name="linkcolor">#0A0AB4</color>
     <color name="veiwlinecolor">#BABABA</color>
+    <color name="label_color">#555B5A</color>
     <color name="toolbarColor" tools:ignore="MissingDefaultResource">#298AC7</color>
 
     <color name="grayColorIcon">#707070</color>
