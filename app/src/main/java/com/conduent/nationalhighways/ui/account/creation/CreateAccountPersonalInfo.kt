@@ -29,6 +29,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     var requiredCompanyName = false
     var isPersonalAccount : Boolean? = true
     var requestModel = AccountCreateRequestModel.RequestModel()
+    var firstNameErrorMsg = ""
+    var lastNameErrorMsg = ""
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
 
@@ -39,11 +41,15 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         binding.btnNext.setOnClickListener(this)
         isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,true)
+        firstNameErrorMsg = getString(R.string.enter_contact_first_name)
+        lastNameErrorMsg = getString(R.string.enter_contact_last_name)
         if(isPersonalAccount == true){
             binding.txtCompanyName.visibility = View.GONE
             binding.inputCompanyName.visibility = View.GONE
             binding.inputFirstName.setLabel(getString(R.string.primary_account_holder_first_name))
             binding.inputLastName.setLabel(getString(R.string.primary_account_holder_last_name))
+            firstNameErrorMsg = getString(R.string.enter_the_primary_account_holder_s_first_name)
+            lastNameErrorMsg = getString(R.string.enter_the_primary_account_holder_s_last_name)
         }
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
@@ -110,7 +116,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }else{
                 requiredFirstName = false
                 if(index == 0)
-                    binding.inputFirstName.error = "Enter the primary account-holder’s first name"
+                    binding.inputFirstName.error = firstNameErrorMsg
             }
             if (binding.inputLastName.getText()?.isNotEmpty() == true) {
                 requiredLastName = true
@@ -118,7 +124,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }else{
                 requiredLastName = false
                 if(index == 1)
-                    binding.inputLastName.error = "Enter the primary account-holder’s last name"
+                    binding.inputLastName.error = lastNameErrorMsg
             }
             if(isPersonalAccount == false){
                 if (binding.inputCompanyName.getText()?.isNotEmpty() == true) {

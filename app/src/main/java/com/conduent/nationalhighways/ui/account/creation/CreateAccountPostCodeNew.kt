@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,18 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         if(isPersonalAccount == true){
             binding.txtHeading.text = getString(R.string.personal_address)
         }
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])
+                ) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+
+        binding.inputPostCode.editText.filters = arrayOf(filter)
     }
 
     override fun initCtrl() {
@@ -92,7 +105,21 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            requiredPostCode = binding.inputPostCode.getText()?.isNotEmpty()==true
+            val length = binding.inputPostCode.getText()?.length
+
+            if (length != null) {
+                if (binding.inputPostCode.getText()?.isNotEmpty() == true && length > 4) {
+                    requiredPostCode = true
+                    binding.inputPostCode.error = ""
+                }else{
+                    requiredPostCode = false
+                    if(length==0){
+                        binding.inputPostCode.error = getString(R.string.please_enter_postcode)
+                    }else {
+                        binding.inputPostCode.error = getString(R.string.postcode_must_be_between_4_and_10_characters)
+                    }
+                }
+            }
 
 
         }
