@@ -15,37 +15,41 @@
         android:layout_height="match_parent"
         android:paddingStart="@dimen/margin_20dp"
         android:paddingTop="@dimen/margin_18dp"
-        android:paddingEnd="@dimen/margin_20dp"
-        tools:background="@drawable/he_bg">
+        android:paddingEnd="@dimen/margin_20dp">
 
         <TextView
             android:id="@+id/txtTitleTop"
             style="@style/MediumText"
             android:layout_width="0dp"
             android:text="What is your mobile number?"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+        <com.conduent.apollo.ui.CMTextInput
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:headingText="Country code"
+            app:labelText="Country code"
             android:padding="0dp"
-            app:hintText=""
+            app:inputType="number"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+        <com.conduent.apollo.ui.CMTextInput
             android:layout_width="0dp"
             android:id="@+id/inputMobileNumber"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_26dp"
-            app:headingText="Mobile number"
-            app:hintText=""
+            app:labelText="Mobile number"
+            app:inputType="phone"
+            app:imeOptions="actionNext"
+            app:maxLength="10"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputCountry" />
@@ -57,6 +61,7 @@
             android:layout_marginTop="@dimen/margin_16dp"
             android:text="We’ll use this to send you a security code by text message."
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
 
@@ -65,13 +70,12 @@
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_50dp"
-            android:text="@string/next"
             android:enabled="false"
-            app:radius="@dimen/margin_5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtBottom"
+            app:radius="@dimen/margin_5dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

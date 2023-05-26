@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.account.AccountCreateRequestMode
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 
 
@@ -30,10 +31,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputCountry.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputCountry.getEditText()))
-        binding.inputMobileNumber.getEditText().addTextChangedListener(GenericTextWatcher(binding.inputMobileNumber.getEditText()))
-        binding.inputMobileNumber.getEditText().inputType = InputType.TYPE_CLASS_NUMBER;
-
+        binding.inputCountry.getEditText()?.addTextChangedListener(GenericTextWatcher(binding.inputCountry.editText))
+        binding.inputMobileNumber.getEditText()?.addTextChangedListener(GenericTextWatcher(binding.inputMobileNumber.editText))
+        binding.inputMobileNumber.getEditText()?.inputType = InputType.TYPE_CLASS_NUMBER;
 
         binding.btnNext.setOnClickListener(this)
     }
@@ -50,6 +50,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             binding.btnNext.id -> {
                 requestModel.userInfoModel.firstName = binding.inputCountry.getText().toString()
                 requestModel.userInfoModel.lastName = binding.inputMobileNumber.getText().toString()
+
+                val bundle = Bundle()
+                bundle.putParcelable(accountRequestModelKey, requestModel)
+                /*isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
+                findNavController().navigate(
+                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
+                    bundle
+                )*/
 
             }
         }

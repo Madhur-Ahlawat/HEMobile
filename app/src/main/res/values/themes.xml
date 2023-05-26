@@ -368,9 +368,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_16sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:fontFamily">@font/sfregular</item>
-        <item name="android:buttonTint">@color/white</item>
+        <item name="android:buttonTint">@color/btn_color</item>
         <item name="android:paddingStart">@dimen/margin_10dp</item>
 
     </style>

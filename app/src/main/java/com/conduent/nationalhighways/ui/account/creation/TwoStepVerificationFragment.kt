@@ -22,10 +22,20 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         when (binding.radioGroupYesNo.checkedRadioButtonId) {
             R.id.radioButtonYes -> {
-
+                binding.btnNext.enable()
             }
             R.id.radioButtonNo -> {
-
+                binding.btnNext.enable()
+            }
+        }
+        binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
+            when(checkedId){
+                R.id.radioButtonYes -> {
+                    binding.btnNext.enable()
+                }
+                R.id.radioButtonNo -> {
+                    binding.btnNext.enable()
+                }
             }
         }
         binding.btnNext.setOnClickListener(this)

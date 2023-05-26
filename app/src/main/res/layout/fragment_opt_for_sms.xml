@@ -13,8 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="20dp"
-        tools:background="@drawable/he_bg">
+        android:paddingHorizontal="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
@@ -22,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             style="@style/SemiBoldText"
+            android:textColor="@color/black"
             android:text="@string/would_you_like_to_receive"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,13 +42,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/btnNext"
             app:layout_constraintStart_toStartOf="@+id/btnNext"
-
             app:layout_constraintTop_toBottomOf="@+id/message_received_txt" >
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:layout_width="match_parent"
                 style="@style/RadioButtonStyle"
                 android:text="Yes"
-                android:checked="true"
+                android:checked="false"
                 android:id="@+id/radioButtonYes"
                 android:layout_height="@dimen/margin_50dp"/>
 
@@ -65,27 +64,25 @@
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkBoxTerms"
             style="@style/CheckBoxStyle"
-            android:layout_marginBottom="@dimen/margin_20dp"
+            android:checked="true"
             android:text="@string/agree_terms_condition"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:checked="true"
-            app:layout_constraintBottom_toTopOf="@id/btnNext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupYesNo"
+            tools:visibility="visible" />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_50dp"
-            android:text="@string/next"
             android:enabled="false"
-            app:radius="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxTerms"
+            app:radius="5dp" />
 
 
 
