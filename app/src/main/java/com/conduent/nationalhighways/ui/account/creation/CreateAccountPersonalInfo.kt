@@ -29,8 +29,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     var requiredCompanyName = false
     var isPersonalAccount : Boolean? = true
     var requestModel = AccountCreateRequestModel.RequestModel()
-    var firstNameErrorMsg = getString(R.string.enter_contact_first_name)
-    var lastNameErrorMsg = getString(R.string.enter_contact_last_name)
+    var firstNameErrorMsg = ""
+    var lastNameErrorMsg = ""
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
 
@@ -41,6 +41,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         binding.btnNext.setOnClickListener(this)
         isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,true)
+        firstNameErrorMsg = getString(R.string.enter_contact_first_name)
+        lastNameErrorMsg = getString(R.string.enter_contact_last_name)
         if(isPersonalAccount == true){
             binding.txtCompanyName.visibility = View.GONE
             binding.inputCompanyName.visibility = View.GONE
