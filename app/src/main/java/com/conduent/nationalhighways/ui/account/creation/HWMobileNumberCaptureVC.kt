@@ -31,9 +31,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputCountry.getEditText()?.addTextChangedListener(GenericTextWatcher(binding.inputCountry.editText))
-        binding.inputMobileNumber.getEditText()?.addTextChangedListener(GenericTextWatcher(binding.inputMobileNumber.editText))
-        binding.inputMobileNumber.getEditText()?.inputType = InputType.TYPE_CLASS_NUMBER;
+        binding.inputCountry.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER;
 
         binding.btnNext.setOnClickListener(this)
     }
@@ -67,7 +67,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     }
 
-    inner class GenericTextWatcher(private val view: View) : TextWatcher {
+    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -82,13 +82,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             before: Int,
             count: Int
         ) {
-            when (view) {
+            /*when (view) {
                 binding.inputCountry.getEditText() -> {
                     requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
                 }
                 binding.inputMobileNumber.getEditText() -> {
                     requiredLastName = binding.inputMobileNumber.getText()?.isNotEmpty() == true
                 }
+            }*/
+            requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
+            val value = binding.inputMobileNumber.getText()?.length
+            if (value != null) {
+                requiredLastName = value>9
             }
 
         }
