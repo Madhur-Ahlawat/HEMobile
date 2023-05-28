@@ -112,7 +112,7 @@
     <string name="str_pay_dart_ford_crossing">Pay the Dartford Charge (Dart Charge)</string>
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Set up a Dart Charge account</string>
-    <string name="str_resolve_penalty_charge">Resolve a penalty charge notice (PCN)</string>
+    <string name="str_resolve_penalty_charge">Setup a Dart charge account</string>
     <string name="str_check_for_paid_crossing">Check which crossing you\'ve paid for</string>
     <string name="str_view_charges">Understanding charges and fines</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
@@ -980,7 +980,7 @@
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
     <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
-    <string name="str_address_line2">Address line2(optional)</string>
+    <string name="str_address_line2">Address line 2 (optional)</string>
     <string name="str_town_city">Town or City</string>
     <string name="str_address_example">For example 46, Flat 2a or Rose Cottage</string>
     <string name="primary_account_contact_first_name">Primary account contact first name</string>

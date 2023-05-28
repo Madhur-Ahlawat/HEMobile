@@ -22,9 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
-    var requiredPostCode = false
-    var accountRequestModel : AccountCreateRequestModel.RequestModel? = null
-    var isPersonalAccount : Boolean? = true
+    private var requiredPostCode = false
+    private var accountRequestModel : AccountCreateRequestModel.RequestModel? = null
+    private var isPersonalAccount : Boolean? = true
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
@@ -49,6 +49,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         }
 
         binding.inputPostCode.editText.filters = arrayOf(filter)
+        binding.inputPostCode.setMaxLength(10)
     }
 
     override fun initCtrl() {
@@ -64,6 +65,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 validation()
             }
             R.id.btnEnterAddressManually -> {
+                val bundle = Bundle()
+                isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
                 findNavController().navigate(
                     R.id.action_createAccountPostCodeNew_to_ManualAddress
                 )
@@ -76,6 +79,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
             val bundle = Bundle()
             bundle.putString("zipcode", binding.inputPostCode.getText().toString())
+            isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
             findNavController().navigate(
                 R.id.action_createAccountPostCodeNew_to_selectaddressfragment,
                 bundle

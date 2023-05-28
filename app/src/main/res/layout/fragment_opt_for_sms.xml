@@ -30,6 +30,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/message_received_txt"
             style="@style/RegularText"
+            android:textColor="@color/txt_grey"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="@string/this_will_be_in_addition"
             app:layout_constraintStart_toStartOf="parent"

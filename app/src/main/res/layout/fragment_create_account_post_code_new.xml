@@ -33,6 +33,7 @@
             app:inputType="text"
             app:imeOptions="actionDone"
             app:maxLength="10"
+            android:maxLength="10"
             style="@style/input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
