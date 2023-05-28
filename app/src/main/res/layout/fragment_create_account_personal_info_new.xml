@@ -23,7 +23,6 @@
             style="@style/MediumTextBlack"
             android:layout_width="0dp"
             android:text="@string/what_is_your_name"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/margin_20dp"
-        android:paddingTop="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_18dp"
         android:paddingEnd="@dimen/margin_20dp">
 
         <TextView
@@ -22,7 +22,6 @@
             style="@style/MediumTextBlack"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"
             android:id="@+id/chooseAccount"
             />
         <TextView

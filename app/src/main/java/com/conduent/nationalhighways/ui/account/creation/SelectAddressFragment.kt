@@ -60,6 +60,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun initCtrl() {
 
         binding.btnNext.setOnClickListener(this)
+        binding.enterAddressManually.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -99,6 +100,10 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         when(v){
             binding.btnNext ->{
                 findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
+            }
+            binding.enterAddressManually->{
+                findNavController().navigate(R.id.action_selectaddressfragment_to_fragment_manual_address)
+
             }
         }
 

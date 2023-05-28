@@ -76,7 +76,6 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:text="@string/str_continue"
-                    app:isEnabled="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
                     android:layout_marginHorizontal="20dp"

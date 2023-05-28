@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
-import com.conduent.nationalhighways.databinding.FragmentForgotOtpBinding
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.getValue
@@ -68,6 +69,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             response=arguments?.getParcelable("response")
         }
 
+        Log.d("signupdata",Gson().toJson(data))
         binding.isEnable = false
         loadUI()
 
@@ -180,7 +182,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         createAccountViewModel.confirmEmailApi(request)
     }
     private fun loadUI() {
-        when (data?.optionType) {
+/*        when (data?.optionType) {
             Constants.SMS -> {
                 binding.topTitle.text = getString(R.string.str_check_sms)
                 binding.messageReceivedTxt.text=getString(R.string.wehavesentatextmessageto)+" "+ data!!.optionValue
@@ -188,12 +190,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_sms)
             }
             Constants.EMAIL -> {
-                binding.topTitle.text = getString(R.string.str_check_your_mail)
+        */        binding.topTitle.text = getString(R.string.str_check_your_mail)
                 binding.messageReceivedTxt.text=getString(R.string.wehavesentanemail)+" "+ data!!.optionValue
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_txt)
-            }
+            //}
         }
-    }
+
 
     private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
         if (loader?.isVisible == true) {
