@@ -419,8 +419,7 @@
             />
         <argument
             android:name="isPersonalAccount"
-            app:argType="boolean"
-            android:defaultValue="false"/>
+            app:argType="boolean"/>
     </fragment>
 
     <fragment
@@ -431,6 +430,10 @@
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountEligibleLRDS2"
             app:destination="@id/createAccountEligibleLRDS" />
+        <argument
+            android:name="isPersonalAccount"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
 
     <fragment
@@ -528,6 +531,9 @@
          android:name="com.conduent.nationalhighways.ui.account.creation.ManualAddressFragment"
          android:label="ManualAddress"
          tools:layout="@layout/fragment_manual_address">
+         <argument
+             android:name="isPersonalAccount"
+             app:argType="boolean"/>
 
      </fragment>
     <fragment

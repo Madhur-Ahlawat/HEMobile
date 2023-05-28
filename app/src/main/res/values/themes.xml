@@ -356,7 +356,7 @@
         <item name="android:layout_height">51dp</item>
         <item name="android:textSize">@dimen/font_16sp</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:fontFamily">@font/sfsemibold</item>
+        <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:buttonTint">@color/radioButtonIconColor</item>
         <item name="android:background">@drawable/nh_text_input_background</item>
         <item name="android:paddingStart">@dimen/margin_10dp</item>
@@ -369,7 +369,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_16sp</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:fontFamily">@font/sfregular</item>
+        <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:buttonTint">@color/btn_color</item>
         <item name="android:paddingStart">@dimen/margin_10dp</item>
 

@@ -30,6 +30,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     private var loader: LoaderDialog? = null
     private var mainList: MutableList<DataAddress?> = ArrayList()
     private var isViewCreated:Boolean=false
+    private var isPersonalAccount : Boolean? = true
 
 
 
@@ -42,6 +43,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun init() {
         if (arguments?.getString("zipcode")!=null){
             zipcode= arguments?.getString("zipcode").toString()
+            isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,true)
         }
 
 
@@ -105,6 +107,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     }
 
     private fun enterAddressManual(){
+        val bundle = Bundle()
+        isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
         findNavController().navigate(R.id.fragment_manual_address)
     }
 
