@@ -80,6 +80,7 @@
     <color name="color_383f43">#383f43</color>
     <color name="color_144e81">#144e81</color>
     <color name="color_DDE8E3">#DDE8E3</color>
+    <color name="newviewlinecolr">#1E78BE</color>
 
 
     <!--  rebranding colors  -->
@@ -114,7 +115,7 @@
     <color name="label_color">#555B5A</color>
     <color name="toolbarColor" tools:ignore="MissingDefaultResource">#298AC7</color>
 
-    <color name="grayColorIcon">#707070</color>
+    <color name="grayColorIcon">#FF707070</color>
     <color name="buttonColorPrimary">#0099E0</color>
     <color name="buttonColorPrimaryDisable">#00567D</color>
     <color name="toolbarBgColor">#0099E0</color>

@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.viewcharges
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -23,6 +24,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
         )
 
     override fun onBindViewHolder(holder: TollRateAdapter.VehicleViewHolder, position: Int) {
+/*
         if (list?.get(position)?.videoRate!=0.0){
             holder.binding.title2.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
 
@@ -30,6 +32,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
             holder.binding.title2.text=context?.getString(R.string.str_free)
 
         }
+*/
         if (list?.get(position)?.etcRate!=0.0){
             holder.binding.title3.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
             holder.binding.title4.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
@@ -37,6 +40,12 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
         }else{
             holder.binding.title3.text=context?.getString(R.string.str_free)
             holder.binding.title4.text=context?.getString(R.string.str_free)
+
+        }
+        if (position==3){
+            holder.binding.view.visibility= View.GONE
+        }else{
+            holder.binding.view.visibility= View.VISIBLE
 
         }
 

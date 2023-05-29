@@ -52,12 +52,14 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
         loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.tollRates()
 
+/*
         binding.text.makeLinksWhite(Pair("click here", View.OnClickListener {
             val url = "https://www.gov.uk/pay-dartford"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }))
+*/
     }
 
 

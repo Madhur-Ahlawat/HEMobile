@@ -64,7 +64,8 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
 //                bundle.putParcelable("response", status.data)
                 findNavController().navigate(
                     R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
-                    bundle)
+                    bundle
+                )
 
 /*                val bundle = Bundle()
 //                bundle.putParcelable("response", status.data)
@@ -73,9 +74,10 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
                     bundle
                 )*/
             }
-            binding.btnContinue.id->{
+            binding.btnContinue.id -> {
 
-                val url = "https://www.gov.uk/pay-dartford-crossing-charge/charges-fines"
+                val url =
+                    "https://pay-dartford-crossing-charge.service.gov.uk/account-setup/account-start"
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 startActivity(i)
