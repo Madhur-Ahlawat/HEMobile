@@ -112,7 +112,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 "create account",
                 "home",
                 "home",
-                "englsh",
+                "english",
                 "home",
                 "splash",
                 sessionManager.getLoggedInUser()
@@ -121,7 +121,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
 
         }
-        binding.btnSignup.setOnClickListener {
+        binding.pcnLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "one of payment",
                 "home",
@@ -134,15 +134,15 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
 
         }
-        binding.pcnLayout.setOnClickListener {
+        /*binding.pcnLayout.setOnClickListener {
             openUrlInWebBrowser()
-        }
+        }*/
         binding.crossingLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "check crossings",
                 "home",
                 "home",
-                "englsh",
+                "english",
                 "home",
                 "splash",
                 sessionManager.getLoggedInUser()
@@ -157,7 +157,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 "dart charge guidance and documents",
                 "home",
                 "home",
-                "englsh",
+                "english",
                 "home",
                 "splash",
                 sessionManager.getLoggedInUser()

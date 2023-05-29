@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNe
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.POSTCODE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 
 import com.conduent.nationalhighways.utils.extn.hideKeyboard

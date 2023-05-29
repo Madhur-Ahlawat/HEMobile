@@ -205,7 +205,7 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_signup"
                 style="@style/secondaryButton"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:isPrimary="false"
                 android:layout_marginLeft="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_25sdp"
