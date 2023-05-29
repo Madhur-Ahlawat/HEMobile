@@ -89,7 +89,7 @@
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
                             android:layout_marginStart="@dimen/margin_10dp"
-                            android:text="@string/an_email_address_to_receive_a_code" />
+                            android:text="@string/str_pay_minimum" />
 
 
                     </LinearLayout>

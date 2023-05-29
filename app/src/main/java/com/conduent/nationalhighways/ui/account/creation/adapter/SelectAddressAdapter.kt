@@ -34,7 +34,7 @@ class SelectAddressAdapter(private val context: Context?,
         val strBuilder = java.lang.StringBuilder()
             .append(list[position]?.street)
             .append(", ")
-            .append(list[position]?.country)
+            .append(list[position]?.town)
             .append(", ")
             .append(list[position]?.postcode)
         holder.binding.address.text = strBuilder
