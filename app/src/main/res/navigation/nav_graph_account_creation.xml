@@ -420,6 +420,9 @@
         <argument
             android:name="isPersonalAccount"
             app:argType="boolean"/>
+        <argument
+            android:name="postcode"
+            app:argType="string"/>
     </fragment>
 
     <fragment
@@ -534,6 +537,9 @@
          <argument
              android:name="isPersonalAccount"
              app:argType="boolean"/>
+         <argument
+             android:name="postcode"
+             app:argType="string"/>
 
      </fragment>
     <fragment

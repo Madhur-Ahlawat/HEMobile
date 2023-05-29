@@ -43,10 +43,10 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun init() {
         if (arguments?.getString("zipcode") != null) {
             zipcode = arguments?.getString("zipcode").toString()
+        }
+        if (arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT) != null) {
             isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT, true)
         }
-
-
         val linearLayoutManager = LinearLayoutManager(requireActivity())
         binding.recylcerview.layoutManager = linearLayoutManager
 
@@ -106,8 +106,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             binding.enterAddressManually -> {
                 val bundle = Bundle()
                 isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
-                findNavController().navigate(R.id.fragment_manual_address)
-
+                bundle.putString(Constants.POSTCODE, zipcode)
+                findNavController().navigate(R.id.fragment_manual_address,bundle)
             }
         }
 
@@ -116,7 +116,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     private fun enterAddressManual() {
         val bundle = Bundle()
         isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
-        findNavController().navigate(R.id.fragment_manual_address)
+        bundle.putString(Constants.POSTCODE, zipcode)
+        findNavController().navigate(R.id.fragment_manual_address,bundle)
     }
 
 
