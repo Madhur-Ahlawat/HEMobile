@@ -49,6 +49,7 @@
                 android:layout_below="@id/select_your_address"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:overScrollMode="never"
 
                 tools:listitem="@layout/adapter_select_address" />
 
@@ -63,7 +64,7 @@
                 android:fontFamily="@font/open_sans"
 
                 android:text="@string/str_if_you_dont_see"
-                android:textColor="@color/black"
+                android:textColor="@color/grayColorIcon"
                 android:textSize="14sp" />
 
 
