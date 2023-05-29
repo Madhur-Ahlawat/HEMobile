@@ -34,6 +34,11 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
     override fun initViewBinding() {
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
+        binding.toolBarLyt.backButton.setOnClickListener{
+            finish()
+        }
+
         toolbar(getString(R.string.str_charges_6am_10pm))
 
 

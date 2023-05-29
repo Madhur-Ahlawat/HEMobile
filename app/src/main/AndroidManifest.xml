@@ -65,7 +65,8 @@
             android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name="com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CreateAccount"/>
         <activity
             android:name="com.conduent.nationalhighways.ui.futureModule.InProgressActivity"
             android:screenOrientation="portrait" />

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
@@ -66,6 +67,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
 
 
     override fun initCtrl() {
+        binding.btnFindAddress.setOnClickListener(this)
         viewModel.getCountries()
     }
 
@@ -74,6 +76,12 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     }
 
     override fun onClick(v: View?) {
+        when(v?.id){
+
+            R.id.btnFindAddress->{
+                findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+            }
+        }
     }
 
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
@@ -135,7 +143,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredAddress && requiredAddress2 && requiredCityTown && requiredPostcode && requiredCountry) {
+            if (requiredAddress  && requiredCityTown && requiredPostcode && requiredCountry) {
                 binding.btnFindAddress.enable()
             } else {
                 binding.btnFindAddress.disable()

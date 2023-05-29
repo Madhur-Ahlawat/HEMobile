@@ -483,6 +483,10 @@
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
+        <action
+            android:id="@+id/action_otpFragment_to_resenedCodeFragment"
+            app:destination="@id/resend_code_fragment" />
+
     </fragment>
 
     <fragment
@@ -540,6 +544,10 @@
          <argument
              android:name="postcode"
              app:argType="string"/>
+         <action
+             android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
+             app:destination="@id/createAccountEligibleLRDS" />
+
 
      </fragment>
     <fragment
@@ -547,6 +555,15 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.DiscountTypeFragment"
         android:label="DiscountTypeFragment"
         tools:layout="@layout/fragment_discount_type">
+    </fragment>
+    <fragment
+        android:id="@+id/resend_code_fragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
+        android:label="ResendCodeFragment"
+        tools:layout="@layout/fragment_resend_code">
+        <action
+            android:id="@+id/action_resenedCodeFragment_to_otpFragment"
+            app:destination="@id/forgotOtpFragment" />
     </fragment>
 
 </navigation>

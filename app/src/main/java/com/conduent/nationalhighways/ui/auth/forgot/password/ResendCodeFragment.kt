@@ -12,8 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
+import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
+import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
@@ -22,16 +25,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnClickListener {
 
-
-
     private var loader: LoaderDialog? = null
     private var data: RequestOTPModel? = null
     private var isViewCreated:Boolean=false
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var response: SecurityCodeResponseModel? = null
     private lateinit var  navFlow:String
-
-
+    private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
 
 
     override fun getFragmentBinding(
@@ -66,7 +66,11 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     override fun observer() {
         if (!isViewCreated){
             observe(viewModel.otp, ::handleOTPResponse)
+            observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+
         }
+
+
 
         isViewCreated=true
     }
@@ -74,8 +78,13 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_verify->{
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.requestOTP(data)
+                if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    viewModel.requestOTP(data)
+
+                }else if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+                    hitApi()
+                }
 
 
             }
@@ -109,6 +118,52 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             }
 
     }
+
+
+    private fun hitApi(){
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = EmailVerificationRequest(
+            Constants.EMAIL,
+            data?.optionValue
+        )
+        createAccountViewModel.emailVerificationApi(request)
+
+
+
+    }
+
+    private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+
+                val bundle = Bundle()
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,data?.optionValue))
+
+                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
+
+
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                findNavController().navigate(
+                    R.id.action_resenedCodeFragment_to_otpFragment,
+                    bundle
+                )
+            }
+            is Resource.DataError -> {
+
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+
+            }
+            else -> {
+            }
+        }
+    }
+
 
 
 }

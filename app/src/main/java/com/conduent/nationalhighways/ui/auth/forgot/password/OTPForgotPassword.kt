@@ -182,19 +182,22 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         createAccountViewModel.confirmEmailApi(request)
     }
     private fun loadUI() {
-/*        when (data?.optionType) {
+        when (data?.optionType) {
             Constants.SMS -> {
                 binding.topTitle.text = getString(R.string.str_check_sms)
-                binding.messageReceivedTxt.text=getString(R.string.wehavesentatextmessageto)+" "+ data!!.optionValue
+                binding.messageReceivedTxt.text =
+                    getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue
 
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_sms)
             }
             Constants.EMAIL -> {
-        */        binding.topTitle.text = getString(R.string.str_check_your_mail)
-                binding.messageReceivedTxt.text=getString(R.string.wehavesentanemail)+" "+ data!!.optionValue
+                binding.topTitle.text = getString(R.string.str_check_your_mail)
+                binding.messageReceivedTxt.text =
+                    getString(R.string.wehavesentanemail) + " " + data!!.optionValue
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_txt)
-            //}
+            }
         }
+    }
 
 
     private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
