@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
@@ -27,7 +28,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     var requiredFirstName = false
     var requiredLastName = false
     var requiredCompanyName = false
-    var isPersonalAccount : Boolean? = true
+    var isPersonalAccount : Boolean? = false
     var requestModel = AccountCreateRequestModel.RequestModel()
     var firstNameErrorMsg = ""
     var lastNameErrorMsg = ""
@@ -40,7 +41,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         binding.inputCompanyName.editText.addTextChangedListener(GenericTextWatcher(2))
 
         binding.btnNext.setOnClickListener(this)
-        isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,true)
+        isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,false)
         firstNameErrorMsg = getString(R.string.enter_contact_first_name)
         lastNameErrorMsg = getString(R.string.enter_contact_last_name)
         if(isPersonalAccount == true){
@@ -51,6 +52,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             firstNameErrorMsg = getString(R.string.enter_the_primary_account_holder_s_first_name)
             lastNameErrorMsg = getString(R.string.enter_the_primary_account_holder_s_last_name)
         }
+
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i]) &&

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,16 +23,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
-    View.OnClickListener,SelectAddressAdapter.addressCallback {
+    View.OnClickListener, SelectAddressAdapter.addressCallback {
 
-    private var selectAddressAdapter:SelectAddressAdapter?=null
-    private var zipcode:String=""
+    private var selectAddressAdapter: SelectAddressAdapter? = null
+    private var zipcode: String = ""
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var mainList: MutableList<DataAddress?> = ArrayList()
-    private var isViewCreated:Boolean=false
-    private var isPersonalAccount : Boolean? = true
-
+    private var isViewCreated: Boolean = false
+    private var isPersonalAccount: Boolean? = true
 
 
     override fun getFragmentBinding(
@@ -41,19 +41,19 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         FragmentSelectAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (arguments?.getString("zipcode")!=null){
-            zipcode= arguments?.getString("zipcode").toString()
-            isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,true)
+        if (arguments?.getString("zipcode") != null) {
+            zipcode = arguments?.getString("zipcode").toString()
+            isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT, true)
         }
 
 
+        val linearLayoutManager = LinearLayoutManager(requireActivity())
+        binding.recylcerview.layoutManager = linearLayoutManager
 
-        val linearLayoutManager=LinearLayoutManager(requireActivity())
-        binding.recylcerview.layoutManager=linearLayoutManager
 
-
-        selectAddressAdapter=SelectAddressAdapter(requireContext(),mainList,this)
-        binding.recylcerview.adapter=selectAddressAdapter
+        selectAddressAdapter = SelectAddressAdapter(requireContext(), mainList, this)
+        binding.recylcerview.adapter = selectAddressAdapter
+        binding.txtAddressCount.text = "${mainList.size} Addresses Found"
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -66,13 +66,13 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     }
 
     override fun observer() {
-        if (!isViewCreated){
+        if (!isViewCreated) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             viewModel.fetchAddress(zipcode)
             observe(viewModel.addresses, ::handleAddressApiResponse)
 
         }
-        isViewCreated=true
+        isViewCreated = true
 
     }
 
@@ -99,35 +99,37 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     }
 
     override fun onClick(v: View?) {
-        when(v){
-            binding.btnNext ->{
+        when (v) {
+            binding.btnNext -> {
                 findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
             }
-            binding.enterAddressManually->{
-                findNavController().navigate(R.id.action_selectaddressfragment_to_fragment_manual_address)
+            binding.enterAddressManually -> {
+                val bundle = Bundle()
+                isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
+                findNavController().navigate(R.id.fragment_manual_address)
 
             }
         }
 
     }
 
-    private fun enterAddressManual(){
+    private fun enterAddressManual() {
         val bundle = Bundle()
         isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
         findNavController().navigate(R.id.fragment_manual_address)
     }
 
 
-
     override fun addressCallback(position: Int) {
 
-        for (i in 0 until mainList.size){
-            mainList[i]?.isSelected=false
+        for (i in 0 until mainList.size) {
+            mainList[i]?.isSelected = false
         }
-        mainList[position]?.isSelected=true
+        mainList[position]?.isSelected = true
         selectAddressAdapter?.notifyDataSetChanged()
 
-        binding.btnNext.isEnabled = mainList[position]?.isSelected==true
+
+        binding.btnNext.isEnabled = mainList[position]?.isSelected == true
     }
 
 

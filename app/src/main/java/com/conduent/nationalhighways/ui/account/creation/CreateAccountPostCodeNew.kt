@@ -7,6 +7,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.graphics.blue
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
@@ -24,7 +26,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     View.OnClickListener, OnRetryClickListener {
     private var requiredPostCode = false
     private var accountRequestModel : AccountCreateRequestModel.RequestModel? = null
-    private var isPersonalAccount : Boolean? = true
+    private var isPersonalAccount : Boolean? = false
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
@@ -33,7 +35,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
-        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,true)
+        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,false)
         if(isPersonalAccount == true){
             binding.txtHeading.text = getString(R.string.personal_address)
         }
@@ -68,7 +70,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 val bundle = Bundle()
                 isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
                 findNavController().navigate(
-                    R.id.action_createAccountPostCodeNew_to_ManualAddress
+                    R.id.action_createAccountPostCodeNew_to_ManualAddress,bundle
                 )
             }
 

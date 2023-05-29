@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
@@ -28,7 +29,7 @@ View.OnClickListener {
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
-    private var isPersonalAccount : Boolean? = true
+    private var isPersonalAccount : Boolean? =false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentManualAddressBinding.inflate(inflater, container, false)
@@ -36,10 +37,11 @@ View.OnClickListener {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,true)
+        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,false)
         if(isPersonalAccount == true){
             binding.txtHeading.text = getString(R.string.personal_address)
         }
+
     }
 
     override fun initCtrl() {
