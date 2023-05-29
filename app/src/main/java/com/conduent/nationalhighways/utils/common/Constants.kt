@@ -212,6 +212,10 @@ object Constants {
     const val ACCOUNT_CREATION_MOBILE_FLOW="accountCreationMobileFlow"
     const val IS_PERSONAL_ACCOUNT="isPersonalAccount"
     const val POSTCODE="postcode"
+    const val UK_COUNTRY="United Kingdom"
+    const val USA="USA"
+    const val USA_CODE="USA +1"
+    const val UK_CODE="UK +44"
     const val LIST="list"
 
 

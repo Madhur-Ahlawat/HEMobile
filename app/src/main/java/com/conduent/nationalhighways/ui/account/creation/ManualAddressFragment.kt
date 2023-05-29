@@ -18,6 +18,8 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
+import com.conduent.nationalhighways.utils.common.Constants.USA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -89,18 +91,17 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
                 )
 
 
-                if(countriesList.contains("United Kingdom")){
-                    countriesList.remove("United Kingdom")
-                    countriesList.add(0,"United Kingdom")
+                if(countriesList.contains(UK_COUNTRY)){
+                    countriesList.remove(UK_COUNTRY)
+                    countriesList.add(0,UK_COUNTRY)
                 }
-                if(countriesList.contains("USA")){
-                    countriesList.remove("USA")
-                    countriesList.add(0,"USA")
+                if(countriesList.contains(USA)){
+                    countriesList.remove(USA)
+                    countriesList.add(0,USA)
                 }
                 binding.apply {
                     country.dataSet.addAll(countriesList)
                 }
-                binding.country.isSelected
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)

@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.apollo.ui.CMTextInput
+        <com.conduent.apollo.ui.CMDropDownView
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
