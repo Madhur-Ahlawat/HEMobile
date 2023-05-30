@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NewCreateAccountRequestModel(
      var referenceId: Long?,
+     var isTwoStepVerificationRequired: Boolean
 
 
     ): Parcelable

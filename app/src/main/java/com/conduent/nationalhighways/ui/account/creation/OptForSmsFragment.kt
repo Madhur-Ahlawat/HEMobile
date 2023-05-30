@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 
 
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private lateinit var  navFlow:String // create account , forgot password
+    private var isTwoStepVerificationRequired = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -30,10 +32,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     binding.checkBoxTerms.visibility = View.VISIBLE
                     binding.btnNext.disable()
                     binding.checkBoxTerms.isChecked = false
+                    isTwoStepVerificationRequired = true
                 }
                 R.id.radioButtonNo -> {
                     binding.checkBoxTerms.visibility = View.GONE
                     binding.btnNext.enable()
+                    isTwoStepVerificationRequired = false
                 }
             }
         }
@@ -59,6 +63,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when(v?.id){
             R.id.btnNext ->{
                 val bundle=Bundle()
+                val requestModel = NewCreateAccountRequestModel(0,isTwoStepVerificationRequired)
+                bundle.putParcelable(accountRequestModelKey, requestModel)
                 findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)
             }
         }

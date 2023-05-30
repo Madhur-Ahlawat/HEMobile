@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.data.model.account.AccountCreateRequestMode
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -42,6 +43,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var requestModel = AccountCreateRequestModel.RequestModel()
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
+    private var dataModel : NewCreateAccountRequestModel? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
@@ -53,6 +55,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER;
 
         binding.btnNext.setOnClickListener(this)
+        if(arguments != null) {
+            dataModel = arguments?.getParcelable(accountRequestModelKey)
+        }
+        if(dataModel?.isTwoStepVerificationRequired?.not() == true){
+            binding.inputMobileNumber.setLabel(resources.getString(R.string.phone_number))
+            binding.txtBottom.visibility = View.GONE
+        }
     }
 
     override fun initCtrl() {
