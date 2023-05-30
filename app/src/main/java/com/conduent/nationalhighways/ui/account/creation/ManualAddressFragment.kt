@@ -103,10 +103,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
                     countriesList.remove(UK_COUNTRY)
                     countriesList.add(0,UK_COUNTRY)
                 }
-                if(countriesList.contains(USA)){
-                    countriesList.remove(USA)
-                    countriesList.add(0,USA)
-                }
+
                 binding.apply {
                     country.dataSet.addAll(countriesList)
                 }
