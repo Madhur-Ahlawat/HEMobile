@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/HWMobileNumberCaptureVC">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
    <!-- Step 1 -->
@@ -521,7 +521,12 @@
         android:id="@+id/HWMobileNumberCaptureVC"
         android:name="com.conduent.nationalhighways.ui.account.creation.HWMobileNumberCaptureVC"
         android:label="HWMobileNumberCaptureVC"
-        tools:layout="@layout/fragment_mobile_number_capture_vc"/>
+        tools:layout="@layout/fragment_mobile_number_capture_vc">
+
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
+            app:destination="@+id/forgotOtpFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_choose_account_type"

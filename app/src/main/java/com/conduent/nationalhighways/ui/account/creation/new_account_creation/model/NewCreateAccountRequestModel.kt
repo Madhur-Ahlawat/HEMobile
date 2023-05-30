@@ -5,8 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class NewCreateAccountRequestModel(
-     var referenceId: Long?,
-     var communicationTextMessage:String
+     var referenceId: String?,
+     var communicationTextMessage:Boolean,
+     var termsCondition:Boolean,
+     var twoStepVerification:Boolean,
 
 
     ): Parcelable
