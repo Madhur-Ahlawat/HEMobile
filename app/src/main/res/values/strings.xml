@@ -202,8 +202,8 @@
     <string name="str_password_recovery">Password recovery</string>
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
-    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\nIf you did not get a code, or it has expired, select Resend code.</string>
-    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive.</string>
+    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\nIf you did not get a code, or it has expired, select resend security code.</string>
+    <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive. \n\nIf you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>
     <string name="str_create_password">Create a new password</string>
@@ -968,7 +968,7 @@
     <string name="agree_terms_condition">I agree to the <u>terms and conditions</u> and understand that standard text message and data charges may apply</string>
 
 
-    <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this link which will navigate to the account creation journey on the web.</string>
+    <string name="eligibleLRDSDescription">Your postcode has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this link which will navigate to the account creation journey on the web.</string>
     <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
     <string name="continueWithoutApplying">Continue without applying</string>
     <string name="crossing_charges_per_account">CROSSING CHARGES PER ACCOUNT</string>
@@ -1010,6 +1010,7 @@
     <string name="enter_contact_last_name">Enter the primary contact last name</string>
     <string name="postcode_must_be_between_4_and_10_characters">Postcode must be between 4 and 10 characters</string>
     <string name="str_six_digit_security_code">6 Digit Security Code</string>
+    <string name="phone_number">Phone number</string>
     <string name="str_what_is_your_number">What is your phone number?</string>
     <string name="str_phone_number">Phone number</string>
     <string name="str_what_mobile_number">What is your mobile number?</string>

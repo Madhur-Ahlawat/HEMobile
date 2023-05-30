@@ -8,7 +8,6 @@
         android:background="@drawable/he_bg_toolbar">
 
 
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
             android:layout_width="25dp"

@@ -111,10 +111,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     countriesCodeList.remove(Constants.UK_CODE)
                     countriesCodeList.add(0, Constants.UK_CODE)
                 }
-                if (countriesCodeList.contains(USA_CODE)) {
-                    countriesCodeList.remove(USA_CODE)
-                    countriesCodeList.add(0, USA_CODE)
-                }
+
                 binding.apply {
                     inputCountry.dataSet.addAll(countriesCodeList)
                     inputCountry.setSelectedValue(Constants.UK_CODE)

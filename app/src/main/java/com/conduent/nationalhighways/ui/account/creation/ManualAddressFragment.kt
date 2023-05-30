@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation
 
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,19 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
         binding.postCode.editText.addTextChangedListener(GenericTextWatcher(3))
 
         binding.country.dropDownItemSelectListener = this
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])
+                ) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+
+        binding.postCode.editText.filters = arrayOf(filter)
+        binding.postCode.setMaxLength(10)
     }
 
 
@@ -103,10 +117,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
                     countriesList.remove(UK_COUNTRY)
                     countriesList.add(0,UK_COUNTRY)
                 }
-                if(countriesList.contains(USA)){
-                    countriesList.remove(USA)
-                    countriesList.add(0,USA)
-                }
+
                 binding.apply {
                     country.dataSet.addAll(countriesList)
                 }
