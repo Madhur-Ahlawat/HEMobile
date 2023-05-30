@@ -1,8 +1,5 @@
 package com.conduent.nationalhighways.ui.viewcharges
 
-import android.content.Intent
-import android.net.Uri
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +10,6 @@ import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.makeLinksWhite
 import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +35,6 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
             finish()
         }
 
-        toolbar(getString(R.string.str_charges_6am_10pm))
 
 
         AdobeAnalytics.setScreenTrack(

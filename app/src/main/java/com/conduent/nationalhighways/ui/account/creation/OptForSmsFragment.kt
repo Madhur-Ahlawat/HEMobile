@@ -12,7 +12,10 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.extn.makeLinks
+import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 
 
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
@@ -51,9 +54,22 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
         }
         binding.btnNext.setOnClickListener(this)
+
+
+        binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
+            /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+                putInt(
+                    Constants.FROM_LOGIN_TO_CASES,
+                    Constants.FROM_ANSWER_TO_CASE_VALUE
+                )
+            }*/
+        }))
+
     }
 
     override fun initCtrl() {
+
+
     }
 
     override fun observer() {

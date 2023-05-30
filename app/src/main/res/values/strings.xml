@@ -965,7 +965,7 @@
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
     <string name="would_you_like_to_receive">Would you like to receive communications about your account by text message?</string>
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
-    <string name="agree_terms_condition">I agree to the terms and conditions and understand that standard text message and data charges may apply</string>
+    <string name="agree_terms_condition">I agree to the <u>terms and conditions</u> and understand that standard text message and data charges may apply</string>
 
 
     <string name="eligibleLRDSDescription">Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this link which will navigate to the account creation journey on the web.</string>
