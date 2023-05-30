@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NewCreateAccountRequestModel(
      var referenceId: Long?,
-     var communicationTextMessage:String
+     var communicationTextMessage:String,
      var isTwoStepVerificationRequired: Boolean
 
 
