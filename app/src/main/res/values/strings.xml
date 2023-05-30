@@ -88,7 +88,7 @@
     <string name="txt_confirm_pwd">Confirm password</string>
     <string name="txt_pwd_reset_msg">Password reset successful</string>
     <string name="txt_please_login_to_continue">Please log in to continue</string>
-    <string name="txt_enter_pwd">Enter Password</string>
+    <string name="txt_enter_pwd">Enter password</string>
     <string name="str_enter_confirm_pwd">Enter confirm password</string>
     <string name="str_submit">Submit</string>
     <string name="err_pwd_empty">Please enter password</string>

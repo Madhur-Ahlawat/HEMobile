@@ -216,10 +216,12 @@ object Utils {
     }
 
     fun maskEmail(email: String): String {
-        val s=email.split("@")
+        var arrEmail = email.split("@")
+        var mailbox = arrEmail[0].subSequence(0,1).toString() + "*".repeat(arrEmail[0].length - 1)
+        var domain = arrEmail[1].split(".")[0]
+        val maskedDomain = domain.subSequence(0,1).toString() + "*".repeat(domain.length - 1)
 
-
-        return email.replace("(^[^@]{1}|(?!^)\\G)[^@]".toRegex(), "$1*")
+        return mailbox + "@" + maskedDomain + arrEmail[1].replace(domain, "")
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {

@@ -24,7 +24,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.USA_CODE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -40,7 +39,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     View.OnClickListener, OnRetryClickListener {
 
     private var requiredFirstName = false
-    private var requiredLastName = false
+    private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
     private var requestModel:NewCreateAccountRequestModel?=null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
@@ -75,6 +74,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+
     }
 
     override fun initCtrl() {
@@ -176,15 +176,23 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
             }*/
             requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
-            val value = binding.inputMobileNumber.getText()?.length
+            /*val value = binding.inputMobileNumber.getText()?.length
             if (value != null) {
                 requiredLastName = value > 9
+            }*/
+
+            val number = binding.inputMobileNumber.getText()
+//            val validNumber = "^[+]?[0-9]{8,15}$"
+            val validNumber = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
+
+            if (number != null) {
+                requiredMobileNumber = validNumber.matches(number)
             }
 
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredFirstName && requiredLastName) {
+            if (requiredFirstName && requiredMobileNumber) {
                 binding.btnNext.enable()
             } else {
                 binding.btnNext.disable()
