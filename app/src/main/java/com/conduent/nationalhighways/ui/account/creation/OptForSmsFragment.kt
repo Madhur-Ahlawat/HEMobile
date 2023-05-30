@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +61,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
         binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
+            val url =
+                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+
             /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                 putInt(
                     Constants.FROM_LOGIN_TO_CASES,

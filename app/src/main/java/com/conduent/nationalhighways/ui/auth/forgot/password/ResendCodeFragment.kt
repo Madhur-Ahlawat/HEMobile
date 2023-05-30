@@ -51,11 +51,24 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     }
 
     override fun initCtrl() {
-        if (data?.optionType==Constants.EMAIL){
-            binding.subTitle.text=getString(R.string.resend_code,data?.optionValue)
+
+        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW||navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+            if (data?.optionType==Constants.EMAIL){
+                binding.subTitle.text=getString(R.string.resend_code,Utils.maskEmail(data?.optionValue.toString()))
+
+            }else{
+                binding.subTitle.text=getString(R.string.resend_code_text,Utils.maskPhoneNumber(data?.optionValue.toString()))
+
+            }
 
         }else{
-            binding.subTitle.text=getString(R.string.resend_code_text,data?.optionValue)
+            if (data?.optionType==Constants.EMAIL){
+                binding.subTitle.text=getString(R.string.resend_code,data?.optionValue)
+
+            }else{
+                binding.subTitle.text=getString(R.string.resend_code_text,data?.optionValue)
+
+            }
 
         }
         binding.apply {

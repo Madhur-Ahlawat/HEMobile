@@ -9,17 +9,16 @@ import android.os.Build.VERSION_CODES
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat.startActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
+import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import java.lang.reflect.Field
 
 object Utils {
 
@@ -214,6 +213,20 @@ object Utils {
         val intent = Intent(Settings.ACTION_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
+    }
+
+    fun maskEmail(email: String): String {
+        val s=email.split("@")
+
+
+        return email.replace("(^[^@]{1}|(?!^)\\G)[^@]".toRegex(), "$1*")
+    }
+
+    fun maskPhoneNumber(phoneNumber: String): String {
+
+
+
+        return phoneNumber.replace(phoneNumber.substring(2, 7), "****")
     }
 
     private const val DOC = "application/msword"

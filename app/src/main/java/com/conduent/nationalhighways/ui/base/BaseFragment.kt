@@ -20,13 +20,17 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 
 
-abstract class BaseFragment<B: ViewBinding> : Fragment() {
+abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding=getFragmentBinding(inflater, container)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = getFragmentBinding(inflater, container)
         return binding.root
     }
 
@@ -121,15 +125,15 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.custom_dialog)
-        val title=dialog.findViewById<TextView>(R.id.title)
-        val textMessage=dialog.findViewById<TextView>(R.id.message)
+        val title = dialog.findViewById<TextView>(R.id.title)
+        val textMessage = dialog.findViewById<TextView>(R.id.message)
         val cancel = dialog.findViewById<TextView>(R.id.cancel_btn)
         val ok = dialog.findViewById<TextView>(R.id.ok_btn)
 
-        title.text=fTitle
-        textMessage.text=message
-        cancel.text=negativeBtnTxt
-        ok.text=positiveBtnTxt
+        title.text = fTitle
+        textMessage.text = message
+        cancel.text = negativeBtnTxt
+        ok.text = positiveBtnTxt
         cancel.setOnClickListener {
             nListener?.negativeBtnClick(dialog)
             dialog.dismiss()
@@ -142,9 +146,6 @@ abstract class BaseFragment<B: ViewBinding> : Fragment() {
 
 
     }
-
-
-
 
 
 }
