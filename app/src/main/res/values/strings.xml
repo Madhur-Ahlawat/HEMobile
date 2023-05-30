@@ -1011,6 +1011,9 @@
     <string name="postcode_must_be_between_4_and_10_characters">Postcode must be between 4 and 10 characters</string>
     <string name="str_six_digit_security_code">6 Digit Security Code</string>
     <string name="phone_number">Phone number</string>
+    <string name="str_what_is_your_number">What is your phone number?</string>
+    <string name="str_phone_number">Phone number</string>
+    <string name="str_what_mobile_number">What is your mobile number?</string>
 
 
 </resources>

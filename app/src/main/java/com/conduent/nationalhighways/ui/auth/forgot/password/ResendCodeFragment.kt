@@ -84,6 +84,15 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
                 }else if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
                     hitApi()
+                }else if (navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+                    val bundle = Bundle()
+                    bundle.putParcelable("data", data)
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+
+                    findNavController().navigate(
+                        R.id.action_resenedCodeFragment_to_otpFragment,
+                        bundle
+                    )
                 }
 
 

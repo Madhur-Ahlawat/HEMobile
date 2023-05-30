@@ -4,24 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.makeLinks
-import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 
 
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private lateinit var  navFlow:String // create account , forgot password
-    private var isTwoStepVerificationRequired = false
-
+    private lateinit var requestModel:NewCreateAccountRequestModel
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -29,18 +23,21 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
     override fun init() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+        requestModel= NewCreateAccountRequestModel("",false,false,false)
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
             when(checkedId){
                 R.id.radioButtonYes -> {
                     binding.checkBoxTerms.visibility = View.VISIBLE
                     binding.btnNext.disable()
                     binding.checkBoxTerms.isChecked = false
-                    isTwoStepVerificationRequired = true
+                    requestModel.communicationTextMessage=true
+
                 }
                 R.id.radioButtonNo -> {
+                    requestModel.communicationTextMessage=false
+
                     binding.checkBoxTerms.visibility = View.GONE
                     binding.btnNext.enable()
-                    isTwoStepVerificationRequired = false
                 }
             }
         }
@@ -49,7 +46,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
                 binding.btnNext.enable()
+                requestModel.termsCondition=true
+
+
             }else{
+                requestModel.termsCondition=false
+
                 binding.btnNext.disable()
             }
         }
@@ -79,8 +81,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when(v?.id){
             R.id.btnNext ->{
                 val bundle=Bundle()
-                val requestModel = NewCreateAccountRequestModel(0,isTwoStepVerificationRequired)
-                bundle.putParcelable(accountRequestModelKey, requestModel)
+                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,requestModel)
                 findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)
             }
         }

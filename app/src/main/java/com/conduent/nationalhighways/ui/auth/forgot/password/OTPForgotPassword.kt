@@ -123,7 +123,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     } else {
                         showError(binding.root, getString(R.string.error_otp_time_expire))
                     }
-                }else{
+                }else if (navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+
+                    Toast.makeText(requireContext(),"Navigate on Add Vehicle Screen",Toast.LENGTH_SHORT).show()
+                }
+
+                else{
                     confirmEmailCode()
                 }
 
