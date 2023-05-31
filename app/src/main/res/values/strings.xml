@@ -559,7 +559,7 @@
     <string name="str_submit_enquiry">Submit enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
-    <string name="vehicle_reg_number">Vehicle registration number</string>
+    <string name="vehicle_reg_number">Vehicle registration(number plate)</string>
     <string name="make">Make</string>
     <string name="colour">Colour</string>
     <string name="country_registration">Country of registration</string>
@@ -1016,6 +1016,7 @@
     <string name="str_what_mobile_number">What is your mobile number?</string>
     <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
+    <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
 
 
 </resources>
