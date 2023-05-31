@@ -1014,6 +1014,8 @@
     <string name="str_what_is_your_number">What is your phone number?</string>
     <string name="str_phone_number">Phone number</string>
     <string name="str_what_mobile_number">What is your mobile number?</string>
+    <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
+    <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
 
 
 </resources>

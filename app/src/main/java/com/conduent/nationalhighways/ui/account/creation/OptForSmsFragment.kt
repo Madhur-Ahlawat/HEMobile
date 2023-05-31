@@ -17,7 +17,6 @@ import com.conduent.nationalhighways.utils.extn.makeLinks
 
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private lateinit var  navFlow:String // create account , forgot password
-    private lateinit var requestModel:NewCreateAccountRequestModel
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -25,18 +24,17 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
     override fun init() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-        requestModel= NewCreateAccountRequestModel("",false,false,false)
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
             when(checkedId){
                 R.id.radioButtonYes -> {
                     binding.checkBoxTerms.visibility = View.VISIBLE
                     binding.btnNext.disable()
                     binding.checkBoxTerms.isChecked = false
-                    requestModel.communicationTextMessage=true
+                    NewCreateAccountRequestModel.communicationTextMessage=true
 
                 }
                 R.id.radioButtonNo -> {
-                    requestModel.communicationTextMessage=false
+                    NewCreateAccountRequestModel.communicationTextMessage=false
 
                     binding.checkBoxTerms.visibility = View.GONE
                     binding.btnNext.enable()
@@ -48,11 +46,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
                 binding.btnNext.enable()
-                requestModel.termsCondition=true
+                NewCreateAccountRequestModel.termsCondition=true
 
 
             }else{
-                requestModel.termsCondition=false
+                NewCreateAccountRequestModel.termsCondition=false
 
                 binding.btnNext.disable()
             }
@@ -61,18 +59,19 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
         binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
-            val url =
+            var url:String=""
+            url = if (NewCreateAccountRequestModel.prePay){
                 "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+
+            }else{
+                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
+
+            }
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
 
-            /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
-                putInt(
-                    Constants.FROM_LOGIN_TO_CASES,
-                    Constants.FROM_ANSWER_TO_CASE_VALUE
-                )
-            }*/
+
         }))
 
     }
@@ -89,7 +88,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when(v?.id){
             R.id.btnNext ->{
                 val bundle=Bundle()
-                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA,requestModel)
                 findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)
             }
         }

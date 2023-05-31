@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountTypesBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
@@ -40,18 +41,19 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
+                NewCreateAccountRequestModel.prePay=true
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
             }
             R.id.payCard -> {
+                NewCreateAccountRequestModel.payAsYouGo=true
                 val bundle=Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
             }
             R.id.crossingCharges -> {
                 val openURL = Intent(requireContext(),ViewChargesActivity::class.java)
-                //openURL.data = Uri.parse("https://www.gov.uk/pay-dartford-crossing-charge/charges-fines/")
                 startActivity(openURL)
             }
         }

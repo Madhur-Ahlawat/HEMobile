@@ -138,6 +138,7 @@
                     android:gravity="center"
                     android:padding="@dimen/_2sdp"
                     android:text="@string/str_pre_pay_service"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:fontFamily="@font/open_sans_semibold"

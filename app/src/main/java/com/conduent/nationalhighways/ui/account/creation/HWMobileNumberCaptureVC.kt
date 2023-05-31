@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.USA_CODE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -54,7 +55,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        requestModel=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         navFlow=arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         binding.inputCountry.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
@@ -74,7 +74,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
-
     }
 
     override fun initCtrl() {

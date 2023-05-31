@@ -68,12 +68,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-/*
-         val s="shivam.gupta@conduent.com"
-        val a=s.split("@")
-        var s1=
-        Toast.makeText(requireActivity(),""+a,Toast.LENGTH_SHORT).show()
-*/
 
         if (isChecked) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

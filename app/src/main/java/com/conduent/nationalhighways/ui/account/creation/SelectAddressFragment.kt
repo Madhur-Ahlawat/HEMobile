@@ -31,7 +31,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     private var loader: LoaderDialog? = null
     private var mainList: MutableList<DataAddress?> = ArrayList()
     private var isViewCreated: Boolean = false
-    private var isPersonalAccount: Boolean? = true
 
 
     override fun getFragmentBinding(
@@ -43,9 +42,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun init() {
         if (arguments?.getString("zipcode") != null) {
             zipcode = arguments?.getString("zipcode").toString()
-        }
-        if (arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT) != null) {
-            isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT, true)
         }
         val linearLayoutManager = LinearLayoutManager(requireActivity())
         binding.recylcerview.layoutManager = linearLayoutManager
@@ -104,10 +100,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
             }
             binding.enterAddressManually -> {
-                val bundle = Bundle()
-                isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
-                bundle.putString(Constants.POSTCODE, zipcode)
-                findNavController().navigate(R.id.fragment_manual_address,bundle)
+                findNavController().navigate(R.id.fragment_manual_address)
             }
         }
 
@@ -115,9 +108,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
     private fun enterAddressManual() {
         val bundle = Bundle()
-        isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
         bundle.putString(Constants.POSTCODE, zipcode)
-        findNavController().navigate(R.id.fragment_manual_address,bundle)
+        findNavController().navigate(R.id.fragment_manual_address, bundle)
     }
 
 
