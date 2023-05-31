@@ -229,6 +229,7 @@
             app:destination="@+id/businessVehicleTitleFragment" />
 -->
 
+
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleUKListFragment"
             app:destination="@+id/businessVehicleUKListFragment"/>
@@ -478,14 +479,16 @@
         android:id="@+id/forgotOtpFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.OTPForgotPassword"
         android:label="OTPCreateAccountPassword"
-        tools:layout="@layout/fragment_forgot_otpchanges"
-        >
+        tools:layout="@layout/fragment_forgot_otpchanges">
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
         <action
             android:id="@+id/action_otpFragment_to_resenedCodeFragment"
             app:destination="@id/resend_code_fragment" />
+        <action
+            android:id="@+id/action_otpForgotFragment_to_createVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"/>
 
     </fragment>
 

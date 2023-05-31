@@ -132,11 +132,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
                 } else if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
 
-                    Toast.makeText(
+                    findNavController().navigate(
+                        R.id.action_otpForgotFragment_to_createVehicleFragment
+                    )
+                    /*Toast.makeText(
                         requireContext(),
                         "Navigate on Add Vehicle Screen",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
                 } else {
                     confirmEmailCode()
                 }
