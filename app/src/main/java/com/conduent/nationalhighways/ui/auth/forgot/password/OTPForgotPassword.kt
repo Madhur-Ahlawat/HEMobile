@@ -205,7 +205,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_sms)
 
-                if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
+                if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
                             data?.optionValue.toString()
@@ -221,7 +221,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 binding.topTitle.text = getString(R.string.str_check_your_mail)
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_txt)
 
-                if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
+                if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
 

@@ -26,6 +26,16 @@ object Utils {
     var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
     var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
+    var UK_MOBILE_REGEX="[0]{0,1}7[0-9]{9}"
+    var phoneNumber = "[0]{0,3}[1-9]{1}[0-9]{7,14}"
+
+
+
+
+
+
+
+
     fun hasInternetConnection(application: BaseApplication): Boolean {
         val connectivityManager = application.getSystemService(
             Context.CONNECTIVITY_SERVICE
@@ -216,10 +226,17 @@ object Utils {
     }
 
     fun maskEmail(email: String): String {
-        val s=email.split("@")
+
+        var arrEmail = email.split("@")
+        var mailbox = arrEmail[0].subSequence(0,1).toString() + "*".repeat(arrEmail[0].length - 1)
+
+        var domain = arrEmail[1].split(".")[0]
+
+         val maskedDomain = domain.subSequence(0,1).toString() + "*".repeat(domain.length - 1)
 
 
-        return email.replace("(^[^@]{1}|(?!^)\\G)[^@]".toRegex(), "$1*")
+         return mailbox + "@" + maskedDomain + arrEmail[1].replace(domain, "")
+
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {

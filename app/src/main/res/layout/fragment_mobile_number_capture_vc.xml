@@ -48,7 +48,6 @@
             app:labelText="Mobile number"
             app:inputType="phone"
             app:imeOptions="actionNext"
-            app:maxLength="10"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

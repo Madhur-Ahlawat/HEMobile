@@ -23,11 +23,8 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
-import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.Constants.USA_CODE
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +39,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var requiredFirstName = false
     private var requiredLastName = false
     private var loader: LoaderDialog? = null
-    private var requestModel:NewCreateAccountRequestModel?=null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var isViewCreated: Boolean = false
@@ -55,13 +51,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        requestModel=arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         navFlow=arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         binding.inputCountry.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
-        if (requestModel?.communicationTextMessage==false&&requestModel?.twoStepVerification==false){
+        if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification){
            binding.txtTitleTop.text=getString(R.string.str_what_is_your_number)
            binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
            binding.txtBottom.visibility=View.GONE
@@ -167,19 +162,29 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             before: Int,
             count: Int
         ) {
-            /*when (view) {
-                binding.inputCountry.getEditText() -> {
-                    requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
-                }
-                binding.inputMobileNumber.getEditText() -> {
-                    requiredLastName = binding.inputMobileNumber.getText()?.isNotEmpty() == true
-                }
-            }*/
+
             requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
             val value = binding.inputMobileNumber.getText()?.length
             if (value != null) {
                 requiredLastName = value > 9
             }
+
+/*            if (binding.inputCountry.getSelectedDescription()=="UK"){
+                if (binding.inputMobileNumber.getText().toString()!=Utils.UK_MOBILE_REGEX){
+                    binding.inputMobileNumber.error=getString(R.string.str_phone_number_error_message)
+                }else{
+                    binding.inputMobileNumber.removeError()
+                }
+            }else{
+                if (binding.inputMobileNumber.getText().toString()!=Utils.phoneNumber){
+                    binding.inputMobileNumber.error=getString(R.string.str_phone_number_error_message)
+                }else{
+                    binding.inputMobileNumber.removeError()
+
+                }
+
+            }*/
+
 
         }
 

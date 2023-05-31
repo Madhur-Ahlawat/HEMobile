@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants.IS_PERSONAL_ACCOUNT
@@ -28,7 +29,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     var requiredFirstName = false
     var requiredLastName = false
     var requiredCompanyName = false
-    var isPersonalAccount : Boolean? = false
     var requestModel = AccountCreateRequestModel.RequestModel()
     var firstNameErrorMsg = ""
     var lastNameErrorMsg = ""
@@ -41,10 +41,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         binding.inputCompanyName.editText.addTextChangedListener(GenericTextWatcher(2))
 
         binding.btnNext.setOnClickListener(this)
-        isPersonalAccount = arguments?.getBoolean(IS_PERSONAL_ACCOUNT,false)
         firstNameErrorMsg = getString(R.string.enter_contact_first_name)
         lastNameErrorMsg = getString(R.string.enter_contact_last_name)
-        if(isPersonalAccount == true){
+        if(NewCreateAccountRequestModel.personalAccount){
             binding.txtCompanyName.visibility = View.GONE
             binding.inputCompanyName.visibility = View.GONE
             binding.inputFirstName.setLabel(getString(R.string.primary_account_holder_first_name))
@@ -80,16 +79,17 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                requestModel.userInfoModel.firstName = binding.inputFirstName.getText().toString()
-                requestModel.userInfoModel.lastName = binding.inputLastName.getText().toString()
+                if (NewCreateAccountRequestModel.personalAccount){
+                    NewCreateAccountRequestModel.firstName = binding.inputFirstName.getText().toString()
+                    NewCreateAccountRequestModel.lastName = binding.inputLastName.getText().toString()
 
-                val bundle = Bundle()
-                bundle.putParcelable(accountRequestModelKey, requestModel)
-                isPersonalAccount?.let { bundle.putBoolean(IS_PERSONAL_ACCOUNT, it) }
+                }else{
+                    NewCreateAccountRequestModel.companyName=binding.inputCompanyName.getText().toString()
+                }
+
+
                 findNavController().navigate(
-                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
-                    bundle
-                )
+                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew)
             }
         }
     }
@@ -128,7 +128,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 if(index == 1)
                     binding.inputLastName.error = lastNameErrorMsg
             }
-            if(isPersonalAccount == false){
+            if(!NewCreateAccountRequestModel.personalAccount){
                 if (binding.inputCompanyName.getText()?.isNotEmpty() == true) {
                     requiredCompanyName = true
                     binding.inputCompanyName.error = ""
@@ -144,7 +144,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         override fun afterTextChanged(editable: Editable?) {
             if (requiredFirstName && requiredLastName) {
-                if(isPersonalAccount == false){
+                if(!NewCreateAccountRequestModel.personalAccount){
                     if(requiredCompanyName){
                         binding.btnNext.enable()
                     }else{

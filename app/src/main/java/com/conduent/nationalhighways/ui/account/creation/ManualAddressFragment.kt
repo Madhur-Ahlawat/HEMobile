@@ -6,9 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,16 +13,15 @@ import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.databinding.FragmentManualAddressBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
-import com.conduent.nationalhighways.utils.common.Constants.USA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.setSpinnerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,7 +32,6 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
-    private var isPersonalAccount : Boolean? = false
     private var requiredAddress : Boolean = false
     private var requiredAddress2 : Boolean = false
     private var requiredCityTown : Boolean = false
@@ -49,22 +44,24 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        isPersonalAccount = arguments?.getBoolean(Constants.IS_PERSONAL_ACCOUNT,false)
 
-        if(isPersonalAccount == true){
+        if(NewCreateAccountRequestModel.personalAccount){
             binding.txtHeading.text = getString(R.string.personal_address)
         }
-        arguments?.getString(Constants.POSTCODE)?.let {
-            binding.postCode.setText(it) }
 
-        binding.address.editText.addTextChangedListener(GenericTextWatcher(0))
-        binding.address2.editText.addTextChangedListener(GenericTextWatcher(1))
-        binding.townCity.editText.addTextChangedListener(GenericTextWatcher(2))
-        binding.postCode.editText.addTextChangedListener(GenericTextWatcher(3))
+        if (NewCreateAccountRequestModel.zipCode.isNotEmpty()){
+            binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
+
+        }
+
+        binding.address.editText.addTextChangedListener(GenericTextWatcher())
+        binding.address2.editText.addTextChangedListener(GenericTextWatcher())
+        binding.townCity.editText.addTextChangedListener(GenericTextWatcher())
+        binding.postCode.editText.addTextChangedListener(GenericTextWatcher())
 
         binding.country.dropDownItemSelectListener = this
 
-        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+        val filter = InputFilter { source, start, end, _, _, _ ->
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i])
                 ) {
@@ -109,7 +106,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
                     it?.countryName?.let { it1 -> countriesList.add(it1) }
                 }
                 countriesList.sortWith(
-                    compareBy(String.CASE_INSENSITIVE_ORDER, { it })
+                    compareBy(String.CASE_INSENSITIVE_ORDER) { it }
                 )
 
 
@@ -131,7 +128,7 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
         }
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
