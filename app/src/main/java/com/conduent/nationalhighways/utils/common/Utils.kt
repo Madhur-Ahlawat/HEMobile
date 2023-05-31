@@ -236,7 +236,6 @@ object Utils {
 
 
          return mailbox + "@" + maskedDomain + arrEmail[1].replace(domain, "")
-
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
