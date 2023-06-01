@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.account.creation
+package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.text.Editable
 import android.text.InputFilter
@@ -17,7 +17,6 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource

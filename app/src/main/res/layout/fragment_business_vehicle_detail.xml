@@ -318,7 +318,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.button.MaterialButton
+            <com.conduent.apollo.ui.CMButton
                 android:id="@+id/confirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -333,7 +333,7 @@
                 android:textSize="@dimen/_13ssp"
                 app:cornerRadius="@dimen/_4sdp" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.conduent.apollo.ui.CMButton
                 android:id="@+id/notVehicle"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"

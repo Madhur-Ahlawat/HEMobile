@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp">
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/isYourVehicle"
+            style="@style/MediumTextBlack"
+            android:text="@string/str_is_this_your_vehicle_looking_for"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:elevation="3dp"
+            android:id="@+id/cardView"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toBottomOf="@id/isYourVehicle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_20dp">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicleRegNum"
+                    style="@style/MediumTextBlack"
+                    android:text="@string/vehicle_reg_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/reg_num"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vehicleRegNum" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    style="@style/MediumTextBlack"
+                    android:text="@string/str_type_of_vehicle"
+                    app:layout_constraintTop_toBottomOf="@id/reg_num"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:id="@+id/typeOfVeh" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/typeOfVehicle"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/typeOfVeh" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    style="@style/MediumTextBlack"
+                    android:text="@string/str_make"
+                    app:layout_constraintTop_toBottomOf="@id/typeOfVehicle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_22dp"
+                    android:id="@+id/str_make" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicleMake"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/str_make" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    style="@style/MediumTextBlack"
+                    android:text="@string/str_make"
+                    app:layout_constraintTop_toBottomOf="@id/vehicleMake"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_22dp"
+                    android:id="@+id/str_model" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicleModel"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/str_model" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    style="@style/MediumTextBlack"
+                    android:text="@string/str_color"
+                    app:layout_constraintTop_toBottomOf="@id/vehicleModel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_22dp"
+                    android:id="@+id/str_color" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicleColor"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/str_color" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.conduent.apollo.ui.CMButton
+            style="@style/PrimaryButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            android:id="@+id/confirmBtn"
+            android:text="@string/str_yes" />
+
+        <com.conduent.apollo.ui.CMButton
+            style="@style/secondaryButton"
+            app:layout_constraintTop_toBottomOf="@id/confirmBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/str_no"
+            android:id="@+id/notVehicle" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_incorrect_vehicle_registration"
+            app:layout_constraintTop_toBottomOf="@id/notVehicle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:textColor="@color/new_btn_color"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="14sp"
+            android:layout_marginTop="@dimen/margin_20dp"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
