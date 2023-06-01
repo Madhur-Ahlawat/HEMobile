@@ -116,9 +116,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     loader?.dismiss()
                 }
 
-                findNavController().navigate(
+                /*findNavController().navigate(
                     R.id.action_otpForgotFragment_to_createVehicleFragment
-                )
+                )*/
 
                 /*if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
                     if (!timeFinish) {

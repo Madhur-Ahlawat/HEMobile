@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
 import com.conduent.nationalhighways.data.model.account.RetrievePlateInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
@@ -35,7 +36,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     View.OnClickListener {
 
     private var isAccountVehicle = false
-//    private var requestModel: CreateAccountRequestModel? = null
+    //    private var requestModel: CreateAccountRequestModel? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
     private var loader: LoaderDialog? = null
@@ -69,14 +70,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
         }*/
 
-       /* Logg.logging(
-            "NotVehicle",
-            "bundle CreateAccountFindVehicleFragment nonUKVehicleModel data $nonUKVehicleModel"
-        )
-        Logg.logging(
-            "NotVehicle",
-            "bundle CreateAccountFindVehicleFragment mFromKey data $mFromKey"
-        )*/
+        /* Logg.logging(
+             "NotVehicle",
+             "bundle CreateAccountFindVehicleFragment nonUKVehicleModel data $nonUKVehicleModel"
+         )
+         Logg.logging(
+             "NotVehicle",
+             "bundle CreateAccountFindVehicleFragment mFromKey data $mFromKey"
+         )*/
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -100,17 +101,17 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         binding.editNumberPlate.editText.filters = arrayOf(filter)
         binding.editNumberPlate.setMaxLength(10)
         binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
-        binding.continueBtn.setOnClickListener(this)
+        binding.findVehicle.setOnClickListener(this)
     }
 
     private fun isEnable() {
         val length = binding.editNumberPlate.getText()?.length
         if (length != null) {
             if(length>2) {
-                binding.continueBtn.isEnabled = true
+                binding.findVehicle.isEnabled = true
                 binding.editNumberPlate.error = ""
             }else{
-                binding.continueBtn.isEnabled = false
+                binding.findVehicle.isEnabled = false
                 binding.editNumberPlate.error = getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle)
             }
         }
@@ -118,24 +119,24 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun observer() {
-        observe(viewModel.findVehicleLiveData, ::apiResponseDVRM)
+        observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
         observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.continue_btn -> {
+            R.id.findVehicle -> {
 
-                binding.continueBtn.isEnabled = false
+                binding.findVehicle.isEnabled = false
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    binding.continueBtn.isEnabled = true
+                    binding.findVehicle.isEnabled = true
                 }, time)
 
 //                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isObserverBack = true
-                viewModel.getVehicleData(binding.editNumberPlate.getText().toString().trim(), Constants.AGENCY_ID.toInt())
+                viewModel.getNewVehicleData(binding.editNumberPlate.getText().toString().trim(), Constants.AGENCY_ID.toInt())
 
                 /*if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
 
@@ -179,13 +180,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }*/
     }
 
- /*   private fun getVehicleDataFromDVRM() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        isObserverBack = true
-        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
-    }*/
+    /*   private fun getVehicleDataFromDVRM() {
+           loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+           isObserverBack = true
+           viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
+       }*/
 
-    private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
+    private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
 
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -195,10 +196,20 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        resource.data.retrievePlateInfoDetails?.let { it1 ->
-                            checkForDuplicateVehicle(
-                                it1
+                        resource.data.let { it1 ->
+
+                            val bundle = Bundle()
+//                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
+//                            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+                            // prasad commneted
+
+                            findNavController().navigate(
+                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                                bundle
                             )
+                            /*checkForDuplicateVehicle(
+                                it1
+                            )*/
                         }
                     }
                 }
@@ -207,12 +218,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     isObserverBack = false
-                    val bundle = Bundle()
-//                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                    /*val bundle = Bundle()
+                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                     findNavController().navigate(
                         R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment,
                         bundle
-                    )
+                    )*/
                 }
                 else -> {
                 }

@@ -236,7 +236,7 @@
     <string name="str_type_of_vehicle">Type of vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
-    <string name="str_pre_pay_service">"Pre-Pay"</string>
+    <string name="str_pre_pay_service">Pre-Pay</string>
     <string name="str_motor_cycles">Motorcycle, \nmopeds, \nquad bikes</string>
     <string name="str_cars_motor_homes">Cars, \nmotorhomes,\nminibuses</string>
     <string name="str_vehicles_with_axles">Vehicles with \n2 axles</string>
