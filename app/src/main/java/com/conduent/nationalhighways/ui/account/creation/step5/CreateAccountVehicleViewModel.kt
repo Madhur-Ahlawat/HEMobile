@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.data.repository.auth.CreateAccountRespository
@@ -23,6 +24,9 @@ class CreateAccountVehicleViewModel @Inject constructor(
     private val findVehicleMutData = MutableLiveData<Resource<VehicleInfoDetails?>?>()
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
+    private val findNewVehicleMutData = MutableLiveData<Resource<List<NewVehicleInfoDetails?>?>> ()
+    val findNewVehicleLiveData: LiveData<Resource<List<NewVehicleInfoDetails?>?>> get() = findNewVehicleMutData
+
     private val validVehicleMutData = MutableLiveData<Resource<String?>?>()
     val validVehicleLiveData: LiveData<Resource<String?>?> get() = validVehicleMutData
 
@@ -39,6 +43,23 @@ class CreateAccountVehicleViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 findVehicleMutData.setValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun getNewVehicleData(vehicleNumber: String?, agencyId: Int?) {
+        viewModelScope.launch {
+            try {
+                findNewVehicleMutData.setValue(
+                    ResponseHandler.success(
+                        repo.getNewVehicleDetail(
+                            vehicleNumber,
+                            agencyId
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                findNewVehicleMutData.setValue(ResponseHandler.failure(e))
             }
         }
     }

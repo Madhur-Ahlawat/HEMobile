@@ -9,10 +9,9 @@
             type="Boolean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/he_bg"
         android:padding="@dimen/_10sdp">
 
         <TextView
@@ -22,7 +21,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/add_a_vehicle"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_step"
@@ -93,7 +92,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                &lt;!&ndash;<com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switch_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,7 +106,7 @@
                     android:theme="@style/ToggleSwitch"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_vehicle_reg_no"
-                    app:useMaterialThemeColors="false" />
+                    app:useMaterialThemeColors="false" />&ndash;&gt;
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -130,6 +129,58 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp"
+        >
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/enter_details_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/what_is_the_vehicle_registration_number_plate_of_the_vehicle"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/sfsemibold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.apollo.ui.CMTextInput
+            android:id="@+id/edit_number_plate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="0dp"
+            style="@style/input_text"
+            app:maxLength="10"
+            app:labelText="@string/vehicle_registration_number_plate"
+            app:inputType="text"
+            app:imeOptions="actionDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_details_txt" />
+
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/findVehicle"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:isEnabled="false"
+            style="@style/PrimaryButton"
+            android:text="@string/str_continue"
+            app:layout_goneMarginTop="@dimen/margin_30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_number_plate"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

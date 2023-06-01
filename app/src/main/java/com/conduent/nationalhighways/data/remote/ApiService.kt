@@ -219,6 +219,11 @@ interface ApiService {
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
     ): Response<VehicleInfoDetails?>?
+    @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getNewAccountFindVehicle(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<List<NewVehicleInfoDetails?>>?
 
     @POST(GET_GENERAL_ACCOUNT_SR_LIST)
     suspend fun getCaseHistoryData(
