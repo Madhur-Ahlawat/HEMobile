@@ -1016,6 +1016,9 @@
     <string name="str_what_mobile_number">What is your mobile number?</string>
     <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
+    <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle">What is the Vehicle Registration (number plate) of the vehicle?</string>
+    <string name="vehicle_registration_number_plate">Vehicle Registration(number plate)</string>
+    <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
 
 
 </resources>

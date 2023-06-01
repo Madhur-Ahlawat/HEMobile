@@ -125,6 +125,7 @@
                     android:padding="@dimen/_2sdp"
                     android:text="@string/str_pay_g_service"
                     android:textColor="@color/black"
+                    android:layout_marginStart="@dimen/_12sdp"
                     android:textSize="14sp"
                     android:fontFamily="@font/open_sans_semibold"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"

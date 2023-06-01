@@ -112,8 +112,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_verify -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
 
-                if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                findNavController().navigate(
+                    R.id.action_otpForgotFragment_to_createVehicleFragment
+                )
+
+                /*if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
                     if (!timeFinish) {
                         loader?.show(
                             requireActivity().supportFragmentManager,
@@ -135,14 +142,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
                     )
-                    /*Toast.makeText(
+                    *//*Toast.makeText(
                         requireContext(),
                         "Navigate on Add Vehicle Screen",
                         Toast.LENGTH_SHORT
-                    ).show()*/
+                    ).show()*//*
                 } else {
                     confirmEmailCode()
-                }
+                }*/
 
             }
 
@@ -335,6 +342,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+
 
         when (resource) {
             is Resource.Success -> {
