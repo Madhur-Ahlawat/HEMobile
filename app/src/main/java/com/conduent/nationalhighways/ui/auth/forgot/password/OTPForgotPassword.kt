@@ -212,11 +212,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
                             data?.optionValue.toString()
-                        )
+                        )+"."
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue
+                        getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue+"."
 
                 }
             }
