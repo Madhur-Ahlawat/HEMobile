@@ -199,7 +199,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         resource.data.let { it1 ->
 
                             val bundle = Bundle()
-//                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
+                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, ArrayList(it1))
 //                            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
                             // prasad commneted
 
