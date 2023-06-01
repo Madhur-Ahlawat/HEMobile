@@ -11,16 +11,17 @@ import com.conduent.nationalhighways.data.model.account.CreateAccountVehicleList
 import com.conduent.nationalhighways.data.model.account.CreateAccountVehicleModel
 import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailBinding
+import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.extn.visible
 
-class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetailBinding>(),
+class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetailChangesBinding>(),
     View.OnClickListener {
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentBusinessVehicleDetailBinding.inflate(inflater, container, false)
+        FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
 
     private var requestModel: CreateAccountRequestModel? = null
     private var nonUKVehicleModel: NonUKVehicleModel? = null
@@ -31,27 +32,31 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
         binding.apply {
             regNum.text = requestModel?.vehicleNo
-            vehicleClass.text = nonUKVehicleModel?.vehicleClassDesc
+            //vehicleClass.text = nonUKVehicleModel?.vehicleClassDesc
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
-            countryRegistration.text = requestModel?.plateCountryType
-            groupName.text = nonUKVehicleModel?.vehicleGroup
+           // countryRegistration.text = requestModel?.plateCountryType
+          //  groupName.text = nonUKVehicleModel?.vehicleGroup
         }
 
+/*
         binding.groupNameLayout.visible()
         binding.groupNameDesc.visible()
+*/
 
         if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
+/*
             binding.groupTxtOptional.text = getString(R.string.group_name_optional)
             binding.groupName.text = nonUKVehicleModel?.vehicleGroup
             binding.groupNameDesc.text = getString(R.string.group_name_field)
+*/
         } else {
-            binding.groupTxtOptional.text = getString(R.string.free_txt_name_optional)
+           /* binding.groupTxtOptional.text = getString(R.string.free_txt_name_optional)
             binding.groupName.text = nonUKVehicleModel?.vehicleComments
             binding.groupNameDesc.text =
                 getString(R.string.str_free_text_field_can_be_used_to_distingush)
-        }
+*/        }
     }
 
     override fun initCtrl() {

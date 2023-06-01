@@ -382,7 +382,7 @@
         tools:layout="@layout/fragment_create_account_successful"/>
     <fragment
         android:id="@+id/createAccountPrerequisite"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPrerequisite"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPrerequisite"
         android:label="CreateAccountPrerequisite"
         tools:layout="@layout/fragment_create_account_prerequisite">
 
@@ -393,7 +393,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountPersonalInfo"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPersonalInfo"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPersonalInfo"
         android:label="CreateAccountPersonalInfo"
         tools:layout="@layout/fragment_create_account_personal_info_new">
         <action
@@ -406,7 +406,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountPostCodeNew"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountPostCodeNew"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPostCodeNew"
         android:label="CreateAccountPostCodeNew"
         tools:layout="@layout/fragment_create_account_post_code_new">
         <action
@@ -428,7 +428,7 @@
 
     <fragment
         android:id="@+id/selectaddressfragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.SelectAddressFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.SelectAddressFragment"
         android:label="selectAddressFragment"
         tools:layout="@layout/fragment_select_address">
         <action
@@ -443,7 +443,7 @@
     <fragment
         android:id="@+id/createAccountEligibleLRDS"
         tools:layout="@layout/fragment_create_account_eligible_lrds"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountEligibleLRDS"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountEligibleLRDS"
         android:label="CreateAccountEligibleLRDS" >
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
@@ -455,7 +455,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountTypes"
-        android:name="com.conduent.nationalhighways.ui.account.creation.CreateAccountTypes"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountTypes"
         android:label="CreateAccountTypes"
         tools:layout="@layout/fragment_create_account_types">
 
@@ -504,7 +504,7 @@
     </fragment>
     <fragment
         android:id="@+id/optForSmsFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.OptForSmsFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.OptForSmsFragment"
         android:label="OptForSmsFragment"
         tools:layout="@layout/fragment_opt_for_sms">
         <action
@@ -513,7 +513,7 @@
     </fragment>
     <fragment
         android:id="@+id/twoStepVerificationFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.TwoStepVerificationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoStepVerificationFragment"
         android:label="TwoStepVerificationFragment"
         tools:layout="@layout/fragment_two_step_verification">
         <action
@@ -522,7 +522,7 @@
     </fragment>
     <fragment
         android:id="@+id/HWMobileNumberCaptureVC"
-        android:name="com.conduent.nationalhighways.ui.account.creation.HWMobileNumberCaptureVC"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.HWMobileNumberCaptureVC"
         android:label="HWMobileNumberCaptureVC"
         tools:layout="@layout/fragment_mobile_number_capture_vc">
 
@@ -533,7 +533,7 @@
 
     <fragment
         android:id="@+id/fragment_choose_account_type"
-        android:name="com.conduent.nationalhighways.ui.account.creation.ChooseAccountTypeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ChooseAccountTypeFragment"
         android:label="ChooseAccountType"
         tools:layout="@layout/fragment_choose_account_type">
         <action
@@ -543,7 +543,7 @@
     </fragment>
      <fragment
          android:id="@+id/fragment_manual_address"
-         android:name="com.conduent.nationalhighways.ui.account.creation.ManualAddressFragment"
+         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
          android:label="ManualAddress"
          tools:layout="@layout/fragment_manual_address">
          <argument
@@ -560,7 +560,7 @@
      </fragment>
     <fragment
         android:id="@+id/discount_type_fragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.DiscountTypeFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.DiscountTypeFragment"
         android:label="DiscountTypeFragment"
         tools:layout="@layout/fragment_discount_type">
     </fragment>

@@ -227,10 +227,10 @@ object Utils {
 
     fun maskEmail(email: String): String {
 
-        var arrEmail = email.split("@")
-        var mailbox = arrEmail[0].subSequence(0,1).toString() + "*".repeat(arrEmail[0].length - 1)
+        val arrEmail = email.split("@")
+        val mailbox = arrEmail[0].subSequence(0,1).toString() + "*".repeat(arrEmail[0].length - 1)
 
-        var domain = arrEmail[1].split(".")[0]
+        val domain = arrEmail[1].split(".")[0]
 
          val maskedDomain = domain.subSequence(0,1).toString() + "*".repeat(domain.length - 1)
 
@@ -239,10 +239,16 @@ object Utils {
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
+        val star=phoneNumber.length-6
+        return if (star==4){
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "****")
+
+        }else{
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "*****")
+
+        }
 
 
-
-        return phoneNumber.replace(phoneNumber.substring(2, 7), "****")
     }
 
     private const val DOC = "application/msword"

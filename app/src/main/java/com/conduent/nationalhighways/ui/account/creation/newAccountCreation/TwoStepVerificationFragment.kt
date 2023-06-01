@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.account.creation
+package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.view.LayoutInflater

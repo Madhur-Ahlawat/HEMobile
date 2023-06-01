@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.account.creation
+package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.Intent
 import android.net.Uri

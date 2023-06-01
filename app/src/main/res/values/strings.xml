@@ -233,7 +233,7 @@
     <string name="str_contact_dart_charge_online"><u>Contact Dart Charge online</u></string>
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
-    <string name="str_type_of_vehicle">Type of \nvehicle</string>
+    <string name="str_type_of_vehicle">Type of vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">"Pre-Pay"</string>
@@ -1017,6 +1017,9 @@
     <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
+    <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
+    <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
+
 
 
 </resources>

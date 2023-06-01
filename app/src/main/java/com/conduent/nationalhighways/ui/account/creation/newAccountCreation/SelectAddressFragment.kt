@@ -1,10 +1,9 @@
-package com.conduent.nationalhighways.ui.account.creation
+package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -26,7 +26,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     View.OnClickListener, SelectAddressAdapter.addressCallback {
 
     private var selectAddressAdapter: SelectAddressAdapter? = null
-    private var zipcode: String = ""
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var mainList: MutableList<DataAddress?> = ArrayList()
@@ -40,9 +39,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         FragmentSelectAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (arguments?.getString("zipcode") != null) {
-            zipcode = arguments?.getString("zipcode").toString()
-        }
         val linearLayoutManager = LinearLayoutManager(requireActivity())
         binding.recylcerview.layoutManager = linearLayoutManager
 
@@ -64,7 +60,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     override fun observer() {
         if (!isViewCreated) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.fetchAddress(zipcode)
+            viewModel.fetchAddress(NewCreateAccountRequestModel.zipCode)
             observe(viewModel.addresses, ::handleAddressApiResponse)
 
         }
@@ -107,9 +103,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     }
 
     private fun enterAddressManual() {
-        val bundle = Bundle()
-        bundle.putString(Constants.POSTCODE, zipcode)
-        findNavController().navigate(R.id.fragment_manual_address, bundle)
+        findNavController().navigate(R.id.fragment_manual_address)
     }
 
 
