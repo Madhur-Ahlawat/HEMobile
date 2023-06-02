@@ -314,6 +314,9 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
         android:label="BusinessVehicleDetail"
         tools:layout="@layout/fragment_business_vehicle_detail">
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"/>
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_paymentSummaryScreen"
@@ -572,6 +575,14 @@
         <action
             android:id="@+id/action_resenedCodeFragment_to_otpFragment"
             app:destination="@id/forgotOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleListFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list2"
+        >
+
     </fragment>
 
 </navigation>

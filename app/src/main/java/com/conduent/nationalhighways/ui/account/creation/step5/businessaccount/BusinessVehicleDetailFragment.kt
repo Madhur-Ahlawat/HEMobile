@@ -1,19 +1,18 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.*
-import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailBinding
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
-import com.conduent.nationalhighways.utils.extn.visible
+import com.google.gson.Gson
 
 class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetailChangesBinding>(),
     View.OnClickListener {
@@ -21,14 +20,16 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NewVehicleInfoDetailsItem? = null
+    private var nonUKVehicleModel: NewVehicleInfoDetails? = null
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
 
+        Log.d("vehicleData",Gson().toJson(nonUKVehicleModel))
+
         binding.apply {
-            regNum.text = requestModel?.vehicleNo
+            regNum.text =nonUKVehicleModel?.plateNumber
             //vehicleClass.text = nonUKVehicleModel?.vehicleClassDesc
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
@@ -67,6 +68,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.confirmBtn -> {
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
 
                /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
                 nonUKVehicleModel?.apply {
@@ -83,12 +85,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
                 }
 */
-                val bundle = Bundle()
+/*                val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 findNavController().navigate(
                     R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen,
                     bundle
-                )
+                )*/
             }
 
             R.id.notVehicle -> {

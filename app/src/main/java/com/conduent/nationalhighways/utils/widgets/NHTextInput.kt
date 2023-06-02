@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.utils.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import com.google.android.material.textfield.TextInputEditText
 
 
 /**
@@ -9,5 +10,5 @@ import android.util.AttributeSet
  */
 open class NHTextInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : androidx.appcompat.widget.AppCompatEditText(context, attrs) {
+) : TextInputEditText(context, attrs) {
 }
