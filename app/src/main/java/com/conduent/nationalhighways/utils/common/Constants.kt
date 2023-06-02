@@ -189,6 +189,7 @@ object Constants {
     const val DOWNLOAD_FORMAT_SELECTION_DIALOG = "download_format_selection_dialog"
     const val LIVE = "LIVE"
     const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
+    const val VEHICLE_DETAIL="vehicle detail"
 
 
     const val EMAIL_ADDRESS = "Email address"
@@ -217,6 +218,7 @@ object Constants {
     const val USA_CODE="USA +1"
     const val UK_CODE="UK +44"
     const val LIST="list"
+
 
 
 }

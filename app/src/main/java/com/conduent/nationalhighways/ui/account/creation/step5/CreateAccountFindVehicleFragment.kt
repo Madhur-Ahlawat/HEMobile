@@ -36,6 +36,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     View.OnClickListener {
 
     private var isAccountVehicle = false
+
     //    private var requestModel: CreateAccountRequestModel? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
@@ -107,12 +108,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun isEnable() {
         val length = binding.editNumberPlate.getText()?.length
         if (length != null) {
-            if(length>2) {
+            if (length > 2) {
                 binding.findVehicle.isEnabled = true
                 binding.editNumberPlate.error = ""
-            }else{
+            } else {
                 binding.findVehicle.isEnabled = false
-                binding.editNumberPlate.error = getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle)
+                binding.editNumberPlate.error =
+                    getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle)
             }
         }
 
@@ -136,7 +138,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 //                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isObserverBack = true
-                viewModel.getNewVehicleData(binding.editNumberPlate.getText().toString().trim(), Constants.AGENCY_ID.toInt())
+                viewModel.getNewVehicleData(
+                    binding.editNumberPlate.getText().toString().trim(),
+                    Constants.AGENCY_ID.toInt()
+                )
 
                 /*if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
 
@@ -196,17 +201,19 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        resource.data.let { it1 ->
+                        resource.data.let {
 
-                            val bundle = Bundle()
+                            if (resource.data.isNotEmpty()) {
+                                val bundle = Bundle()
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
-//                            bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                            // prasad commneted
+                                bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
 
-                            findNavController().navigate(
-                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-                                bundle
-                            )
+                                findNavController().navigate(
+                                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                                    bundle
+                                )
+                            }
+
                             /*checkForDuplicateVehicle(
                                 it1
                             )*/

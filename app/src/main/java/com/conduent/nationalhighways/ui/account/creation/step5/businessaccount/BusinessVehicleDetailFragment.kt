@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
-import com.conduent.nationalhighways.data.model.account.CreateAccountVehicleListModel
-import com.conduent.nationalhighways.data.model.account.CreateAccountVehicleModel
-import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
+import com.conduent.nationalhighways.data.model.account.*
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailBinding
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -24,11 +21,11 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
 
     private var requestModel: CreateAccountRequestModel? = null
-    private var nonUKVehicleModel: NonUKVehicleModel? = null
+    private var nonUKVehicleModel: NewVehicleInfoDetailsItem? = null
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
+        nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
 
         binding.apply {
             regNum.text = requestModel?.vehicleNo
@@ -71,7 +68,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         when (view?.id) {
             R.id.confirmBtn -> {
 
-                val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
+               /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
                 nonUKVehicleModel?.apply {
                     val accountVehicleModel = CreateAccountVehicleModel(
                         requestModel?.plateCountryType,
@@ -85,7 +82,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     vehicleList.add(accountVehicleModel)
                     requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
                 }
-
+*/
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 findNavController().navigate(
