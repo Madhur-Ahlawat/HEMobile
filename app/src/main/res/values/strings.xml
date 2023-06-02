@@ -923,6 +923,9 @@
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
+    <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
+
+
     <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
     <string name="requestanewsecuritycode">Send a new code</string>
@@ -1022,7 +1025,11 @@
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
     <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
-
+    <string name="str_where_is_your_vehicle_is_registered">Where is your vehicle registered?</string>
+    <string name="str_in_the_uk">In the UK</string>
+    <string name="str_outside_the_uk">Outside the UK</string>
+    <string name="str_you_have_added_vehicle">You\'ve added %s vehicle</string>
+    <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
 
 
 </resources>

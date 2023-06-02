@@ -241,10 +241,10 @@ object Utils {
     fun maskPhoneNumber(phoneNumber: String): String {
         val star=phoneNumber.length-6
         return if (star==4){
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "****")
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "*****")
 
         }else{
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "*****")
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "******")
 
         }
 

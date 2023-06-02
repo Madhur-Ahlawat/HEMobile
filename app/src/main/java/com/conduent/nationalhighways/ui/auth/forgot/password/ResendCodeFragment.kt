@@ -57,7 +57,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 binding.subTitle.text=getString(R.string.resend_code,Utils.maskEmail(data?.optionValue.toString()))
 
             }else{
-                binding.subTitle.text=getString(R.string.resend_code_text,Utils.maskPhoneNumber(data?.optionValue.toString()))
+                binding.subTitle.text=getString(R.string.resend_code_expire,Utils.maskPhoneNumber(data?.optionValue.toString()))
 
             }
 
