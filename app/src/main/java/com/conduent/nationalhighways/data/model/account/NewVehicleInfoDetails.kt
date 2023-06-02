@@ -7,12 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NewVehicleInfoDetails(
 
-	val newVehicleInfoDetails: ArrayList<NewVehicleInfoDetailsItem?>? = null
-) : Parcelable
-
-@Parcelize
-data class NewVehicleInfoDetailsItem(
-
 	val vehicleColor: String? = null,
 	val plateCountry: String? = null,
 	val isExempted: String? = null,
@@ -21,5 +15,12 @@ data class NewVehicleInfoDetailsItem(
 	val plateNumber: String? = null,
 	val vehicleMake: String? = null,
 	val isRUCEligible: String? = null
+) : Parcelable
+
+/*
+@Parcelize
+data class NewVehicleInfoDetailsItem(
+
 
 ) : Parcelable
+*/

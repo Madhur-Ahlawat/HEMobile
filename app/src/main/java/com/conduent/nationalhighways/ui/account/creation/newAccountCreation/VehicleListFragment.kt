@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
+import com.conduent.nationalhighways.ui.base.BaseFragment
 
 
-class VehicleListFragment : Fragment() {
+class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>() {
 
 
     override fun onCreateView(
@@ -17,6 +19,20 @@ class VehicleListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vehicle_list2, container, false)
+    }
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentVehicleList2Binding= FragmentVehicleList2Binding.inflate(inflater,container,false)
+
+    override fun init() {
+    }
+
+    override fun initCtrl() {
+    }
+
+    override fun observer() {
     }
 
 }

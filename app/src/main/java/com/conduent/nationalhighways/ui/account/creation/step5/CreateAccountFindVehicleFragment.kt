@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.showToast
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -201,24 +203,31 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
-                        resource.data.let {
+                        val bundle = Bundle()
+                        Log.d("responseData",Gson().toJson(it))
 
-                            if (resource.data.isNotEmpty()) {
-                                val bundle = Bundle()
+                        if (it.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
-                                bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
-
-                                findNavController().navigate(
-                                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-                                    bundle
-                                )
-                            }
-
-                            /*checkForDuplicateVehicle(
-                                it1
-                            )*/
+                            bundle.putParcelable(
+                                Constants.VEHICLE_DETAIL,
+                                it[0]
+                            )
                         }
+
+                        findNavController().navigate(
+                            R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                            bundle
+                        )
+
+
+                        /*checkForDuplicateVehicle(
+                            it1
+                        )*/
+
                     }
+
+
+
                 }
 
                 is Resource.DataError -> {
