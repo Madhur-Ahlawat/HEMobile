@@ -114,7 +114,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             } else {
                 binding.findVehicle.isEnabled = false
                 binding.editNumberPlate.error =
-                    getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle)
+                    getString(R.string.vehicle_registration_number_plate_error)
             }
         }
 

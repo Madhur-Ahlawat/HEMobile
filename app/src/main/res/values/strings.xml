@@ -1021,7 +1021,7 @@
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle">What is the Vehicle Registration (number plate) of the vehicle?</string>
     <string name="vehicle_registration_number_plate">Vehicle Registration(number plate)</string>
-    <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
+    <string name="vehicle_registration_number_plate_error">Vehicle Registration (number plate) must be 10 characters or fewer</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
     <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
