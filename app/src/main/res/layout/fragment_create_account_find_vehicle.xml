@@ -161,7 +161,7 @@
             android:padding="0dp"
             style="@style/input_text"
             app:maxLength="10"
-            app:labelText="@string/vehicle_registration_number_plate"
+            app:hint="@string/vehicle_registration_number_plate"
             app:inputType="text"
             app:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
