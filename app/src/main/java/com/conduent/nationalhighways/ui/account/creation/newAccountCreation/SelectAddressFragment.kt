@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
-    View.OnClickListener, SelectAddressAdapter.addressCallback {
+    View.OnClickListener, SelectAddressAdapter.AddressCallBack {
 
     private var selectAddressAdapter: SelectAddressAdapter? = null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()

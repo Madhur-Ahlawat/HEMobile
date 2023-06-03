@@ -101,9 +101,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             null
         }
 
-        binding.editNumberPlate.editText.filters = arrayOf(filter)
+        binding.editNumberPlate.getInputFirstName().filters = arrayOf(filter)
         binding.editNumberPlate.setMaxLength(10)
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
 

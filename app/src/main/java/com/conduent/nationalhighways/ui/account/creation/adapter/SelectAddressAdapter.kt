@@ -3,13 +3,12 @@ package com.conduent.nationalhighways.ui.account.creation.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.databinding.AdapterSelectAddressBinding
 
 class SelectAddressAdapter(private val context: Context?,
-                           private var list: MutableList<DataAddress?>, private val address:addressCallback ):
+                           private var list: MutableList<DataAddress?>, private val address:AddressCallBack ):
 
     RecyclerView.Adapter<SelectAddressAdapter.SelectAddressViewHolder>() {
 
@@ -64,7 +63,7 @@ class SelectAddressAdapter(private val context: Context?,
         notifyDataSetChanged()
 
     }
-    interface addressCallback{
+    interface AddressCallBack{
         fun addressCallback(position: Int)
     }
 
