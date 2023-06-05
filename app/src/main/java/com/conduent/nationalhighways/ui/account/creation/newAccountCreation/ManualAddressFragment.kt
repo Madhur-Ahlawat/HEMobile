@@ -32,7 +32,6 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     private var countriesList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
     private var requiredAddress : Boolean = false
-    private var requiredAddress2 : Boolean = false
     private var requiredCityTown : Boolean = false
     private var requiredPostcode : Boolean = false
     private var requiredCountry : Boolean = false
@@ -143,7 +142,6 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
             count: Int) {
 
             requiredAddress = binding.address.getText()?.isNotEmpty() == true
-            requiredAddress2 = binding.address2.getText()?.isNotEmpty() == true
             requiredCityTown = binding.townCity.getText()?.isNotEmpty() == true
             requiredPostcode = binding.postCode.getText()?.isNotEmpty() == true
 

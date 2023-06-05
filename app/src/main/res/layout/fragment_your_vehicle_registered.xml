@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             style="@style/SemiBoldText"
             android:textColor="@color/black"
-            android:text="Would you like to opt in to two-step verification?"
+            android:text="@string/where_is_your_vehicle_registered"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
 
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnNext"
+            android:id="@+id/btnVehicleContinue"
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

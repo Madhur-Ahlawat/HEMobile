@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -50,78 +51,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subTitle" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.conduent.apollo.ui.CMTextInput
+            style="@style/input_text"
             android:id="@+id/makeInputLayout"
-            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:hint="@string/str_make"
-            app:errorEnabled="false"
+            app:labelText="@string/str_make"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/typeVehicle">
+            app:layout_constraintTop_toBottomOf="@+id/typeVehicle"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/makeInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:inputType="text"
-                style="@style/AppEditTextTransparent"
-                android:textSize="@dimen/_13ssp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <com.conduent.apollo.ui.CMTextInput
+            style="@style/input_text"
             android:id="@+id/modelInputLayout"
-            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:hint="@string/str_model"
-            app:errorEnabled="false"
+            app:labelText="@string/str_model"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/makeInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/makeInputLayout"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/modelInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:inputType="text"
-                style="@style/AppEditTextTransparent"
-                android:textSize="@dimen/_13ssp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <com.conduent.apollo.ui.CMTextInput
+            style="@style/input_text"
             android:id="@+id/colorInputLayout"
-            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
-            android:theme="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:hint="@string/str_color"
-            app:errorEnabled="false"
+            app:labelText="@string/str_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/modelInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/colorInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                style="@style/AppEditTextTransparent"
-                android:textSize="@dimen/_13ssp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/modelInputLayout"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkBoxTerms"
@@ -135,7 +99,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/colorInputLayout" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/next_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
@@ -149,6 +113,7 @@
             android:text="@string/str_next"
             android:textAllCaps="false"
             android:textSize="@dimen/_14ssp"
+            android:enabled="false"
             style="@style/PrimaryButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

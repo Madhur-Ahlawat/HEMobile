@@ -95,13 +95,13 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
             R.id.notVehicle -> {
                 val bundle = Bundle()
-                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                bundle.putInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE,Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE)
-                Logg.logging("NotVehicle", "bundle requestModel data $requestModel")
-                Logg.logging("NotVehicle", "bundle nonUKVehicleModel data $nonUKVehicleModel")
+//                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+//                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+//                bundle.putInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE,Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE)
+//                Logg.logging("NotVehicle", "bundle requestModel data $requestModel")
+//                Logg.logging("NotVehicle", "bundle nonUKVehicleModel data $nonUKVehicleModel")
                 findNavController().navigate(
-                    R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment,
+                    R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
                     bundle
                 )
             }
