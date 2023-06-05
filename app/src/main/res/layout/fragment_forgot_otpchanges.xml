@@ -45,7 +45,6 @@
             android:id="@+id/edt_otp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             style="@style/input_text"
             app:maxLength="6"
             app:labelText="@string/str_six_digit_security_code"
@@ -53,7 +52,7 @@
             app:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_title" />
+            app:layout_constraintTop_toBottomOf="@id/message_received_txt" />
 
 
 

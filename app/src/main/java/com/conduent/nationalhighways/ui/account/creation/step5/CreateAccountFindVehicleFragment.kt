@@ -13,23 +13,18 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
 import com.conduent.nationalhighways.data.model.account.RetrievePlateInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
-import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -101,9 +96,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             null
         }
 
-        binding.editNumberPlate.getInputFirstName().getText()?.filters = arrayOf(filter)
+        binding.editNumberPlate.editText.filters = arrayOf(filter)
         binding.editNumberPlate.setMaxLength(10)
-        binding.editNumberPlate.getInputFirstName().getEditText()?.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
 

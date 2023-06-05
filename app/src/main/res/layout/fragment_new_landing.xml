@@ -243,7 +243,6 @@
                 app:isPrimary="false"
                 android:layout_marginLeft="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_25sdp"
-                android:layout_marginBottom="@dimen/_25sdp"
                 android:text="@string/str_create_account"
                 />
         </LinearLayout>

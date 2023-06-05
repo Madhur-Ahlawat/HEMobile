@@ -69,9 +69,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             response = arguments?.getParcelable("response")
         }
 
-        Log.d("signupdata", Gson().toJson(data))
         binding.isEnable = false
         loadUI()
+
 
 
         /*AdobeAnalytics.setScreenTrack(
@@ -120,7 +120,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     R.id.action_otpForgotFragment_to_createVehicleFragment
                 )*/
 
-                /*if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
                     if (!timeFinish) {
                         loader?.show(
                             requireActivity().supportFragmentManager,
@@ -142,14 +142,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
                     )
-                    *//*Toast.makeText(
+                    Toast.makeText(
                         requireContext(),
                         "Navigate on Add Vehicle Screen",
                         Toast.LENGTH_SHORT
-                    ).show()*//*
+                    ).show()
                 } else {
                     confirmEmailCode()
-                }*/
+                }
 
             }
 
@@ -219,11 +219,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
                             data?.optionValue.toString()
-                        )+"."
+                        ) + "."
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue+"."
+                        getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
 
                 }
             }
@@ -235,7 +235,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
 
-                }else{
+                } else {
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentanemail) + " " + data!!.optionValue
 

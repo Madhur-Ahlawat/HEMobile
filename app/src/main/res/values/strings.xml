@@ -1030,8 +1030,8 @@
     <string name="str_outside_the_uk">Outside the UK</string>
     <string name="str_you_have_added_vehicle">You\'ve added %s vehicle</string>
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
-    <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
-    <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
+    <string name="str_maximum_vehicle_registered">Maximum number of vehicles\n have been registered against the\n account</string>
+    <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles\n that you can add to your account. You’ll need to\n remove a vehicle before adding another.</string>
 
 
 </resources>

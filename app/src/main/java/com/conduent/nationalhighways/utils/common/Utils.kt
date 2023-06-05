@@ -7,8 +7,12 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
+import android.view.View
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -20,6 +24,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+
 object Utils {
 
     var PASSWORD_RULE1 = ".{8,64}"
@@ -28,12 +33,6 @@ object Utils {
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
     var UK_MOBILE_REGEX="[0]{0,1}7[0-9]{9}"
     var phoneNumber = "[0]{0,3}[1-9]{1}[0-9]{7,14}"
-
-
-
-
-
-
 
 
     fun hasInternetConnection(application: BaseApplication): Boolean {
@@ -250,6 +249,13 @@ object Utils {
 
 
     }
+     fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+        val lp = view.layoutParams as ConstraintLayout.LayoutParams
+        lp.setMargins(left, top, right, bottom)
+        view.layoutParams = lp
+
+    }
+
 
     private const val DOC = "application/msword"
     private const val DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"

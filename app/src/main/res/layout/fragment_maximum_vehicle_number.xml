@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,22 +9,41 @@
     android:paddingTop="18dp"
     android:paddingEnd="20dp"
     android:paddingBottom="18dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
-    
+
     <ImageView
+        android:id="@+id/warningIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="115dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/warningicon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/maximumVehicleAdded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/str_maximum_vehicle_registered"
+        android:textColor="@color/new_btn_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
+        android:text="@string/str_you_have_reached_the_maximum_vehicle"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:layout_marginTop="40dp"
         />
-
-
-    
-    
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

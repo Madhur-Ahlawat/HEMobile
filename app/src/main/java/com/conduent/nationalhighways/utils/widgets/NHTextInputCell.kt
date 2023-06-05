@@ -15,7 +15,7 @@ import com.conduent.nationalhighways.databinding.LayoutNhTextInputBinding
  * Created by Shivam Gupta .
  */
 open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    ConstraintLayout(context, attrs, defStyleAttr) {
+    CMTextInput(context, attrs!!) {
     lateinit var binding : LayoutNhTextInputBinding
     internal var hint : String? = null
     internal var text : String? = null
@@ -56,6 +56,7 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
         }
     }
 
+/*
     fun getText(): Editable? = binding.inputFirstName.getText()
 
     fun setText(text: CharSequence){
@@ -64,6 +65,7 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
     fun setMaxLength(length:Int){
         binding.inputFirstName.setMaxLength(length)
     }
+*/
 
     fun setHintText(hint: String){
         binding.inputFirstName.hint = hint
@@ -86,7 +88,7 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
             binding.txtError.text = errorText
         }
     }
-    fun removeError(){
+    override fun removeError(){
         binding.txtError.visibility = View.GONE
         binding.txtError.text=""
 
@@ -94,7 +96,7 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
 
     fun getErrorText(): String = binding.txtError.text!!.toString()
 
-    fun getInputFirstName(): CMTextInput {
+    fun getInputFirstName():CMTextInput {
         return binding.inputFirstName
     }
 }
