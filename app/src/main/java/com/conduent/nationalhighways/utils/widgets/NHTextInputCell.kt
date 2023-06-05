@@ -6,12 +6,13 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.conduent.apollo.ui.CMTextInput
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.LayoutNhTextInputBinding
 
 
 /**
- * Created by Mohammed Sameer Ahmad .
+ * Created by Shivam Gupta .
  */
 open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr) {
@@ -40,10 +41,10 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
                 binding.txtPlaceHolderTop.text = headingText
             }
             if (!hint.isNullOrEmpty()){
-                binding.editText.hint = hint
+                binding.inputFirstName.hint = hint
             }
             if (!text.isNullOrEmpty()){
-                binding.editText.setText(text)
+                binding.inputFirstName.setText(text.toString())
             }
             if (!errorText.isNullOrEmpty()){
                 binding.txtError.visibility = View.VISIBLE
@@ -55,17 +56,20 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
         }
     }
 
-    fun getText(): Editable? = binding.editText.text
+    fun getText(): Editable? = binding.inputFirstName.getText()
 
     fun setText(text: CharSequence){
-        binding.editText.setText(text)
+        binding.inputFirstName.setText(text)
+    }
+    fun setMaxLength(length:Int){
+        binding.inputFirstName.setMaxLength(length)
     }
 
     fun setHintText(hint: String){
-        binding.editText.hint = hint
+        binding.inputFirstName.hint = hint
     }
 
-    fun getHintText(): CharSequence? = binding.editText.hint
+    fun getHintText(): CharSequence? = binding.inputFirstName.hint
 
     fun setHeadingText(text: CharSequence?){
         if (text?.isNotEmpty() == true){
@@ -82,10 +86,15 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
             binding.txtError.text = errorText
         }
     }
+    fun removeError(){
+        binding.txtError.visibility = View.GONE
+        binding.txtError.text=""
+
+    }
 
     fun getErrorText(): String = binding.txtError.text!!.toString()
 
-    fun getEditText(): NHTextInput {
-        return binding.editText
+    fun getInputFirstName(): CMTextInput {
+        return binding.inputFirstName
     }
 }

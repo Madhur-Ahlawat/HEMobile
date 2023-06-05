@@ -101,9 +101,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             null
         }
 
-        binding.editNumberPlate.editText.filters = arrayOf(filter)
+        binding.editNumberPlate.getInputFirstName().getText()?.filters = arrayOf(filter)
         binding.editNumberPlate.setMaxLength(10)
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.getInputFirstName().getEditText()?.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
 
@@ -112,7 +112,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (length != null) {
             if (length > 2) {
                 binding.findVehicle.isEnabled = true
-                binding.editNumberPlate.error = ""
+                binding.editNumberPlate.removeError()
             } else {
                 binding.findVehicle.isEnabled = false
                 binding.editNumberPlate.error =

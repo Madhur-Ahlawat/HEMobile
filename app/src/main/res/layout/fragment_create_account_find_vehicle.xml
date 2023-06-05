@@ -149,19 +149,19 @@
             android:text="@string/what_is_the_vehicle_registration_number_plate_of_the_vehicle"
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
-            android:fontFamily="@font/sfsemibold"
+            android:fontFamily="@font/open_sans_semibold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.apollo.ui.CMTextInput
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/edit_number_plate"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:padding="0dp"
             style="@style/input_text"
             app:maxLength="10"
-            app:labelText="@string/vehicle_registration_number_plate"
+            app:hint="@string/vehicle_registration_number_plate"
             app:inputType="text"
             app:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
