@@ -1030,6 +1030,9 @@
     <string name="str_outside_the_uk">Outside the UK</string>
     <string name="str_you_have_added_vehicle">You\'ve added %s vehicle</string>
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
+    <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
+    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
+    <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
 
 
 </resources>

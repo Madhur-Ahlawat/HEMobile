@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentAddVehicleDetailsBinding
+import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>() {
+class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>() {
 
     private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
@@ -29,7 +30,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentAddVehicleDetailsBinding.inflate(inflater, container, false)
+    ) = FragmentNewAddVehicleDetailsBinding.inflate(inflater, container, false)
 
     override fun observer() {}
 
@@ -40,14 +41,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
-        binding.title.text = getString(
+        /*binding.title.text = getString(
             R.string.vehicle_reg_num,
             mVehicleDetails?.plateInfo?.number
         )//"Vehicle registration number: ${mVehicleDetails?.plateInfo?.number}"
         binding.subTitle.text = getString(
             R.string.country_reg,
             mVehicleDetails?.plateInfo?.country
-        )//"Country of registration ${mVehicleDetails?.plateInfo?.country}"
+        )*///"Country of registration ${mVehicleDetails?.plateInfo?.country}"
 
         AdobeAnalytics.setScreenTrack(
             "one of  payment:vehicle details manual entry",
@@ -61,13 +62,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     override fun initCtrl() {
-        binding.makeInputEditText.onTextChanged {
+        binding.makeInputLayout.editText.onTextChanged {
             checkButton()
         }
-        binding.modelInputEditText.onTextChanged {
+        binding.modelInputLayout.editText.onTextChanged {
             checkButton()
         }
-        binding.colorInputEditText.onTextChanged {
+        binding.colorInputLayout.editText.onTextChanged {
             checkButton()
         }
 
@@ -83,17 +84,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
                 sessionManager.getLoggedInUser()
             )
 
-            if (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-                && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-                && binding.colorInputEditText.text.toString().trim().isNotEmpty()
+            if (binding.makeInputLayout.editText.toString().trim().isNotEmpty()
+                && binding.modelInputLayout.editText.text.toString().trim().isNotEmpty()
+                && binding.colorInputLayout.editText.text.toString().trim().isNotEmpty()
             ) {
 
                 mVehicleDetails?.vehicleInfo?.color =
-                    binding.colorInputEditText.text.toString().trim()
+                    binding.colorInputLayout.editText.text.toString().trim()
                 mVehicleDetails?.vehicleInfo?.make =
-                    binding.makeInputEditText.text.toString().trim()
+                    binding.makeInputLayout.editText.toString().trim()
                 mVehicleDetails?.vehicleInfo?.model =
-                    binding.modelInputEditText.text.toString().trim()
+                    binding.modelInputLayout.editText.text.toString().trim()
 
                 val bundle = Bundle().apply {
 
@@ -107,9 +108,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleDetailsBinding>
     }
 
     private fun checkButton() {
-        if (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-            && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-            && binding.colorInputEditText.text.toString().trim().isNotEmpty()
+        if (binding.makeInputLayout.editText.toString().trim().isNotEmpty()
+            && binding.modelInputLayout.editText.text.toString().trim().isNotEmpty()
+            && binding.colorInputLayout.editText.text.toString().trim().isNotEmpty()
         ) {
             setBtnActivated()
         } else {

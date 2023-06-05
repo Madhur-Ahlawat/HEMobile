@@ -326,6 +326,32 @@
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"/>
 
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_yourVehicleFragment"
+            app:destination="@+id/yourVehicleFragment"/>
+
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/yourVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.YourVehicleRegisteredFragment"
+        android:label="Your Vehicle Screen"
+        tools:layout="@layout/fragment_your_vehicle_registered">
+
+        <action
+            android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
+            app:destination="@id/addNewVehicleDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNewVehicleDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
+        tools:layout="@layout/fragment_new_add_vehicle_details">
+        <!--<action
+            android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
+            app:destination="@id/addVehicleClassesFragment" />-->
     </fragment>
 
     <!-- Step 6 -->
