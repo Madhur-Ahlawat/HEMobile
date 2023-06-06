@@ -1036,6 +1036,17 @@
     <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
+    <string name="email_address">Email address</string>
+    <string name="address">Address</string>
+    <string name="mobile_phone_number">Mobile phone number</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
+    <string name="account_details">Account Details</string>
+    <string name="type_of_account">Type of account</string>
+    <string name="text_message_communications">Text message communications</string>
+    <string name="two_step_verification">Two-step verification</string>
+    <string name="vehicle_details">Vehicle Details</string>
+    <string name="i_accept_the_terms_conditions"><![CDATA[I accept the terms & conditions]]></string>
 
 
 </resources>
