@@ -242,6 +242,9 @@
             android:id="@+id/action_findYourVehicleFragment_to_businessVehicleDetailFragment"
             app:destination="@id/businessVehicleDetailFragment"
             />
+        <action
+            android:id="@+id/action_findVehicleFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@id/addNewVehicleDetailsFragment"/>
 
     </fragment>
 
@@ -606,9 +609,18 @@
         android:id="@+id/vehicleListFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.VehicleListFragment"
         android:label="VehicleListFragment"
-        tools:layout="@layout/fragment_vehicle_list2"
-        >
+        tools:layout="@layout/fragment_vehicle_list2">
 
+
+        <action
+            android:id="@+id/action_vehicleListFragment_to_maximumVehicleFragment"
+            app:destination="@id/maximumVehicleFragment" />
+        <action
+            android:id="@+id/action_vehicleListFragment_to_removeVehicleFragment"
+            app:destination="@id/removeVehicleFragment" />
+        <action
+            android:id="@+id/action_vehicleListFragment_to_createAccountFindVehicleFragment"
+            app:destination="@id/findYourVehicleFragment"/>
     </fragment>
 
     <fragment
@@ -617,6 +629,14 @@
         android:label="MaximumVehicleFragment"
         tools:layout="@layout/fragment_maximum_vehicle_number"
         >
+
+    </fragment>
+    <fragment
+        android:id="@+id/removeVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.RemoveVehicleFragment"
+        android:label="RemoveVehicleFragment"
+        tools:layout="@layout/fragment_remove_vehicle">
+
 
     </fragment>
 

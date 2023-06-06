@@ -65,7 +65,6 @@
                     <TextView
                         android:id="@+id/vehiclePlateNumber"
                         style="@style/RegularTextBlack"
-                        android:text="AJ66 MHA"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistrationPlate" />
@@ -76,7 +75,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_2dp"
                         android:id="@+id/editVehicle"/>
 
 
@@ -145,6 +145,57 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/modelInputLayout" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/vehicleRegisteredLayout"
+                app:layout_constraintTop_toBottomOf="@id/colorInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+ >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtTitleTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    style="@style/SemiBoldText"
+                    android:textColor="@color/black"
+                    android:text="@string/str_where_is_your_vehicle_is_registered"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroupYesNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/btnNext"
+                    app:layout_constraintStart_toStartOf="@+id/btnNext"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" >
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="match_parent"
+                        style="@style/RadioButtonStyle"
+                        android:text="@string/str_in_the_uk"
+                        android:checked="false"
+                        android:id="@+id/radioButtonYes"
+                        android:layout_height="@dimen/margin_40dp"/>
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="match_parent"
+                        android:text="@string/str_outside_the_uk"
+                        style="@style/RadioButtonStyle"
+                        android:id="@+id/radioButtonNo"
+                        android:layout_height="@dimen/margin_40dp"/>
+
+                </RadioGroup>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTerms"
@@ -155,7 +206,7 @@
                 android:text="@string/i_confirm_that_the_vehicle_information_provided_is_correct"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/colorInputLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/vehicleRegisteredLayout" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/next_btn"

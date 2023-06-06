@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
 import com.conduent.nationalhighways.data.model.account.RetrievePlateInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
@@ -126,18 +127,19 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             R.id.findVehicle -> {
 
                 binding.findVehicle.isEnabled = false
+                NewCreateAccountRequestModel.plateNumber =
+                    binding.editNumberPlate.getText().toString()
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.findVehicle.isEnabled = true
                 }, time)
 
-//                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isObserverBack = true
-                viewModel.getNewVehicleData(
-                    binding.editNumberPlate.getText().toString().trim(),
-                    Constants.AGENCY_ID.toInt()
-                )
+
+                checkForDuplicateVehicle(binding.editNumberPlate.getText().toString())
+
+//                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
 
                 /*if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
 
@@ -198,7 +200,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 is Resource.Success -> {
                     resource.data?.let {
                         val bundle = Bundle()
-                        Log.d("responseData",Gson().toJson(it))
+                        Log.d("responseData", Gson().toJson(it))
 
                         if (it.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
@@ -221,13 +223,16 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
 
 
-
                 }
 
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                 //   ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     isObserverBack = false
+                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA=true
+                    findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment)
+
+
                     /*val bundle = Bundle()
                     bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                     findNavController().navigate(
@@ -235,21 +240,24 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle
                     )*/
                 }
+
                 else -> {
                 }
             }
         }
     }
 
-    private fun checkForDuplicateVehicle(plateInfo: RetrievePlateInfoDetails) {
-        retrieveVehicle = plateInfo
-        plateInfo.apply {
-            val vehicleValidReqModel = ValidVehicleCheckRequest(
-                plateNumber, /*requestModel?.plateCountryType*/"UK", "STANDARD",
-                "2022", vehicleModel, vehicleMake, vehicleColor, "2", "HE"
-            )
-            viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
-        }
+    private fun checkForDuplicateVehicle(plateNumber: String) {
+        // retrieveVehicle = plateInfo
+        /*
+                plateInfo.apply {
+        */
+        val vehicleValidReqModel = ValidVehicleCheckRequest(
+            plateNumber, /*requestModel?.plateCountryType*/"UK", "STANDARD",
+            "2022", "model", "make", "colour", "2", "HE"
+        )
+        viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
+        // }
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {
@@ -259,31 +267,38 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         when (resource) {
             is Resource.Success -> {
 
-                // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-                nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
-                nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
-                nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
-                nonUKVehicleModel?.vehicleClassDesc = retrieveVehicle?.vehicleClass?.let {
-                    VehicleClassTypeConverter.toClassName(
-                        it
-                    )
-                }
-
-                val bundle = Bundle()
-//                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                // prasad commneted
-
-                findNavController().navigate(
-                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-                    bundle
+                viewModel.getNewVehicleData(
+                    binding.editNumberPlate.getText().toString().trim(),
+                    Constants.AGENCY_ID.toInt()
                 )
+
+                /*
+                                // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
+                                nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
+                                nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
+                                nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
+                                nonUKVehicleModel?.vehicleClassDesc = retrieveVehicle?.vehicleClass?.let {
+                                    VehicleClassTypeConverter.toClassName(
+                                        it
+                                    )
+                                }
+
+                                val bundle = Bundle()
+                //                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+                                // prasad commneted
+                */
+
+                /*                findNavController().navigate(
+                                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                                    bundle
+                                )*/
             }
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-                findNavController().popBackStack()
             }
+
             else -> {
             }
         }

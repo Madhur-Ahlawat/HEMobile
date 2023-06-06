@@ -1036,6 +1036,7 @@
     <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
+    <string name="str_are_you_sure_you_want_to_remove">Are you sure you want to remove vehicle %s ?</string>
     <string name="email_address">Email address</string>
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>

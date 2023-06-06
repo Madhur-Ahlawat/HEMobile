@@ -14,6 +14,8 @@ object NewCreateAccountRequestModel{
     var prePay:Boolean=false
     var payAsYouGo:Boolean=false
     var plateCountry:String = ""
+    var plateNumber:String=""
+    var plateNumberIsNotInDVLA:Boolean=false
 
 
 }
