@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             style="@style/SemiBoldText"
             android:textColor="@color/black"
-            android:text="@string/where_is_your_vehicle_registered"
+            android:text="@string/str_where_is_your_vehicle_is_registered"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

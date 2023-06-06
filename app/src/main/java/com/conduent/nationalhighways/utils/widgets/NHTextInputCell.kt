@@ -1,11 +1,9 @@
 package com.conduent.nationalhighways.utils.widgets
 
 import android.content.Context
-import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.conduent.apollo.ui.CMTextInput
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.LayoutNhTextInputBinding

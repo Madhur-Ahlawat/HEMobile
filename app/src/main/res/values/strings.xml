@@ -320,7 +320,7 @@
     <string name="str_add_another_vehicle">Add another vehicle</string>
     <string name="str_make">Make</string>
     <string name="str_model">Model</string>
-    <string name="str_color">Color</string>
+    <string name="str_color">Colour</string>
     <string name="str_do_you_want_the_below">Do you want to add below vehicle to the vehicle list?</string>
     <string name="str_class_a">Class A</string>
     <string name="str_motorcycles_quadcycles">Motorcycles and quadcycles</string>
@@ -1020,7 +1020,7 @@
     <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle">What is the Vehicle Registration (number plate) of the vehicle?</string>
-    <string name="vehicle_registration_number_plate">Vehicle Registration(number plate)</string>
+    <string name="vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
     <string name="vehicle_registration_number_plate_error">Vehicle Registration (number plate) must be 10 characters or fewer</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
@@ -1032,6 +1032,10 @@
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
+    <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
+    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
+    <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
+    <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
 
 
 </resources>

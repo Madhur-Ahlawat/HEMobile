@@ -3,120 +3,172 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
             type="Boolean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/_10sdp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:text="@string/we_need_more_information_about_your_vehicle"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/subTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/we_need_more_information_about_your_vehicle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.apollo.ui.CMDropDownView
-            android:id="@+id/typeVehicle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:labelText="Type of Vehicle"
-            style="@style/input_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subTitle" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintTop_toBottomOf="@id/title">
 
-        <com.conduent.apollo.ui.CMTextInput
-            style="@style/input_text"
-            android:id="@+id/makeInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:labelText="@string/str_make"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/typeVehicle"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
 
-        <com.conduent.apollo.ui.CMTextInput
-            style="@style/input_text"
-            android:id="@+id/modelInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:labelText="@string/str_model"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/makeInputLayout"/>
+                    <TextView
+                        android:id="@+id/txtVehicleRegistrationPlate"
+                        style="@style/MediumTextBlack"
+                        android:textSize="15sp"
+                        android:text="@string/vehicle_registration_number_plate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.apollo.ui.CMTextInput
-            style="@style/input_text"
-            android:id="@+id/colorInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:labelText="@string/str_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/modelInputLayout"/>
+                    <TextView
+                        android:id="@+id/vehiclePlateNumber"
+                        style="@style/RegularTextBlack"
+                        android:text="AJ66 MHA"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistrationPlate" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/edit"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:id="@+id/editVehicle"/>
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkBoxTerms"
-            style="@style/CheckBoxStyle"
-            android:checked="true"
-            android:text="@string/i_confirm_that_the_vehicle_information_provided_is_correct"
-            android:gravity="top"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/colorInputLayout" />
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/next_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:backgroundTint="@{model==true?@color/blue_color:@color/btn_disable_color}"
-            android:textColor="@{model==true?@color/white:@color/btn_disable_txt_color}"
-            android:clickable="@{model}"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/str_next"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_14ssp"
-            android:enabled="false"
-            style="@style/PrimaryButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxTerms" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/subTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <com.conduent.apollo.ui.CMDropDownView
+                android:id="@+id/typeVehicle"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25dp"
+                app:labelText="Type of Vehicle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/makeInputLayout"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25dp"
+                app:labelText="@string/str_make"
+                app:inputType="text"
+                app:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/typeVehicle" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/modelInputLayout"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25dp"
+                app:labelText="@string/str_model"
+                app:inputType="text"
+                app:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/makeInputLayout" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/colorInputLayout"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25dp"
+                app:labelText="@string/str_color"
+                app:inputType="text"
+                app:imeOptions="actionDone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/modelInputLayout" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/checkBoxTerms"
+                style="@style/CheckBoxStyle"
+                android:layout_marginTop="@dimen/margin_25dp"
+                android:checked="true"
+                android:gravity="top"
+                android:text="@string/i_confirm_that_the_vehicle_information_provided_is_correct"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/colorInputLayout" />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/next_btn"
+                style="@style/PrimaryButton"
+                android:layout_marginTop="@dimen/margin_25dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/str_continue"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxTerms" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </layout>

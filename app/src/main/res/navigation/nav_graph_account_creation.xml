@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite">
+    app:startDestination="@id/findYourVehicleFragment">
 
 
    <!-- Step 1 -->
@@ -349,9 +349,9 @@
         android:id="@+id/addNewVehicleDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
         tools:layout="@layout/fragment_new_add_vehicle_details">
-        <!--<action
-            android:id="@+id/action_addVehicleDetailsFragment_to_addVehicleClassesFragment"
-            app:destination="@id/addVehicleClassesFragment" />-->
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
     </fragment>
 
     <!-- Step 6 -->
@@ -607,6 +607,15 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.VehicleListFragment"
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list2"
+        >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/maximumVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment"
+        android:label="MaximumVehicleFragment"
+        tools:layout="@layout/fragment_maximum_vehicle_number"
         >
 
     </fragment>

@@ -1,49 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="20dp"
-    android:paddingTop="18dp"
-    android:paddingEnd="20dp"
-    android:paddingBottom="18dp"
-    tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/warningIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
-        android:src="@drawable/warningicon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/maximumVehicleAdded"
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:gravity="center"
-        android:text="@string/str_maximum_vehicle_registered"
-        android:textColor="@color/new_btn_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="18dp"
+        tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
-        android:text="@string/str_you_have_reached_the_maximum_vehicle"
-        android:gravity="center"
-        android:lineSpacingExtra="2dp"
-        android:layout_marginTop="40dp"
-        />
+        <ImageView
+            android:id="@+id/warningIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="115dp"
+            android:src="@drawable/warningicon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/maximumVehicleAdded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/str_maximum_vehicle_registered"
+            android:textColor="@color/new_btn_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
+            android:text="@string/str_you_have_reached_the_maximum_vehicle"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="44dp"
+            android:id="@+id/textMaximumVehicle" />
+
+        <com.conduent.apollo.ui.CMButton
+            style="@style/PrimaryButton"
+            app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/str_continue"
+            android:layout_marginTop="@dimen/margin_60dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentYourVehicleRegisteredBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.Constants
 
 
 class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegisteredBinding>(),
@@ -20,7 +21,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
 
     override fun init() {
         binding.btnVehicleContinue.setOnClickListener(this)
-        binding.radioGroupYesNo.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
             binding.btnVehicleContinue.isEnabled = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
         }
     }
@@ -36,9 +37,9 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
 
             R.id.btnVehicleContinue->{
                 val id: Int = binding.radioGroupYesNo.checkedRadioButtonId
-                NewCreateAccountRequestModel.plateCountry="UK"
+                NewCreateAccountRequestModel.plateCountry=Constants.COUNTRY_TYPE_UK
                 if (id == R.id.radioButtonNo) {
-                    NewCreateAccountRequestModel.plateCountry = "NON-UK"
+                    NewCreateAccountRequestModel.plateCountry =Constants.COUNTRY_TYPE_NON_UK
                 }
                 findNavController().navigate(
                     R.id.action_yourVehicleFragment_to_addVehicleFragment

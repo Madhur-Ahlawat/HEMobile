@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:text="@string/what_is_the_vehicle_registration_number_plate_of_the_vehicle"
             android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="16sp"
             android:fontFamily="@font/open_sans_semibold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

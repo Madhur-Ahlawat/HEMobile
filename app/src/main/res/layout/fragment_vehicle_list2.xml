@@ -41,7 +41,7 @@
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             style="@style/MediumTextBlack"
             android:layout_marginTop="20dp"
-            android:text="@string/str_you_have_added_vehicle"
+            android:text="@string/str_do_you_want_to_add"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/doYouWantAddAnotherVehicle"
             app:layout_constraintTop_toBottomOf="@id/recyclerView" />
@@ -72,17 +72,16 @@
         </RadioGroup>
 
 
-        <com.conduent.nationalhighways.utils.widgets.NHButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/str_continue"
-            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupYesNo"
-            app:radius="5dp" />
+            />
 
 
 

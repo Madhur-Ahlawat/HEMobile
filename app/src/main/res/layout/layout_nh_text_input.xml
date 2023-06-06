@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/red_color"
             android:paddingTop="5dp"
+            android:visibility="gone"
             android:fontFamily="@font/open_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
