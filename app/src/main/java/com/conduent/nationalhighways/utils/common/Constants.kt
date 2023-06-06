@@ -218,6 +218,8 @@ object Constants {
     const val USA_CODE="USA +1"
     const val UK_CODE="UK +44"
     const val LIST="list"
+    const val REMOVE_VEHICLE="remove_vehicle"
+    const val EDIT_VEHICLE="edit_vehicle"
 
 
 

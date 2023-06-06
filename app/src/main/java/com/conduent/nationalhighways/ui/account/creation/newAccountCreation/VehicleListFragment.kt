@@ -9,6 +9,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.Constants
 
 
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleListAdapter.VehicleListCallBack,View.OnClickListener {
@@ -46,13 +47,27 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
 
     override fun vehicleListCallBack(position: Int, value: String) {
+        if (value== Constants.REMOVE_VEHICLE){
+            vehicleList.removeAt(position)
+            vehicleAdapter.notifyDataSetChanged()
+
+        }else{
+
+        }
     }
+
 
     override fun onClick(v: View?) {
         when(v?.id){
 
             R.id.btnNext->{
-               // findNavController().navigate(R.id.)
+                if (vehicleList.size>=5){
+                    findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+
+                }else{
+                    findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+
+                }
             }
         }
     }

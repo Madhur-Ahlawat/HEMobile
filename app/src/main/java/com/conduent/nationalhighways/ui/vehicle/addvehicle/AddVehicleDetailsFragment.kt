@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
-import com.conduent.nationalhighways.databinding.FragmentAddVehicleDetailsBinding
 import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -17,11 +16,11 @@ import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import javax.annotation.meta.When
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>(),View.OnClickListener {
+class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>(),
+    View.OnClickListener {
 
     private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
@@ -53,10 +52,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             mVehicleDetails?.plateInfo?.country
         )*///"Country of registration ${mVehicleDetails?.plateInfo?.country}"
 
-        if (NewCreateAccountRequestModel.plateCountry==Constants.COUNTRY_TYPE_UK){
-             binding.typeVehicle.visibility=View.GONE
-        }else{
-            binding.typeVehicle.visibility=View.VISIBLE
+        if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
+            binding.typeVehicle.visibility = View.GONE
+        } else {
+            binding.typeVehicle.visibility = View.VISIBLE
 
 
         }
@@ -72,6 +71,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         )
 
         binding.editVehicle.setOnClickListener(this)
+
+        if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
+            binding.vehiclePlateNumber.text = NewCreateAccountRequestModel.plateNumber
+            binding.vehicleRegisteredLayout.visibility = View.VISIBLE
+        } else {
+            binding.vehicleRegisteredLayout.visibility = View.GONE
+
+        }
     }
 
     override fun initCtrl() {
@@ -140,8 +147,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.editVehicle->{
+        when (v?.id) {
+            R.id.editVehicle -> {
                 findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment)
             }
 
