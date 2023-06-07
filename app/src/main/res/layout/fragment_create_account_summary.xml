@@ -431,12 +431,8 @@
                 style="@style/CheckBoxStyle"
                 android:checked="true"
                 android:text="@string/i_accept_the_terms_conditions"
-                android:visibility="gone"
                 android:gravity="top"
-                android:layout_marginStart="@dimen/margin_10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroupYesNo" />
+                android:layout_marginTop="@dimen/margin_30dp"/>
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -446,9 +442,7 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:text="@string/str_continue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxTerms"
+                android:layout_marginBottom="@dimen/_50sdp"
                 app:radius="5dp" />
 
         </LinearLayout>

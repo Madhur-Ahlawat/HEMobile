@@ -1047,7 +1047,7 @@
     <string name="text_message_communications">Text message communications</string>
     <string name="two_step_verification">Two-step verification</string>
     <string name="vehicle_details">Vehicle Details</string>
-    <string name="i_accept_the_terms_conditions"><![CDATA[I accept the terms & conditions]]></string>
+    <string name="i_accept_the_terms_conditions">I accept the <u> terms &amp; conditions </u></string>
 
 
 </resources>
