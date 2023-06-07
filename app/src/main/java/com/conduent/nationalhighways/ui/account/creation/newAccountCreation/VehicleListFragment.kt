@@ -25,7 +25,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
     override fun init() {
         vehicleList= ArrayList()
-        vehicleList.add("s")
+
+
 
 
 

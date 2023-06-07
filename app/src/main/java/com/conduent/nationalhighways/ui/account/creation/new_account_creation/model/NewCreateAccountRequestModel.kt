@@ -18,6 +18,7 @@ object NewCreateAccountRequestModel{
     var plateNumberIsNotInDVLA:Boolean=false
 
 
+
 }
 
 
