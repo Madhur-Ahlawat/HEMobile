@@ -164,6 +164,22 @@ object Utils {
         return matcher.matches()
     }
 
+    fun getManuallyAddedVehicleClass(vehicleclass: String):String{
+        if (vehicleclass=="Motorcycle"){
+            return "A"
+        }else if (vehicleclass=="moped or quad bike"){
+            return "B"
+        }else if (vehicleclass=="Car, van or minibus < 8 seats"){
+            return "C"
+        }else if (vehicleclass=="Bus, coach or other goods vehicle with 2 axles"){
+            return "D"
+        }else if(vehicleclass=="Vehicle with more than 2 axles"){
+            return "E"
+        }else{
+            return ""
+        }
+    }
+
     fun validateString(target: String, pattern: String): Boolean {
         val mPattern =
             Pattern.compile(pattern)

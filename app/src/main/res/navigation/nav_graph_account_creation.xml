@@ -361,6 +361,10 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"/>
     </fragment>
 
     <!-- Step 6 -->

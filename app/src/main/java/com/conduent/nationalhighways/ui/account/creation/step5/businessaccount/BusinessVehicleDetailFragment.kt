@@ -30,7 +30,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
         binding.apply {
             regNum.text =nonUKVehicleModel?.plateNumber
-            //vehicleClass.text = nonUKVehicleModel?.vehicleClassDesc
+            typeOfVehicle.text = nonUKVehicleModel?.vehicleClass
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
@@ -60,6 +60,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     override fun initCtrl() {
         binding.confirmBtn.setOnClickListener(this@BusinessVehicleDetailFragment)
         binding.notVehicle.setOnClickListener(this@BusinessVehicleDetailFragment)
+        binding.inCorrectVehicleNumber.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -104,6 +105,9 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
                     bundle
                 )
+            }
+            R.id.inCorrectVehicleNumber->{
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment)
             }
         }
     }

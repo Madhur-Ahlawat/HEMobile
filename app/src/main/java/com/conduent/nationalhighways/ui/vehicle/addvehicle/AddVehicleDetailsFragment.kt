@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
@@ -20,10 +21,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, DropDownItemSelectListener {
 
     private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
+    private var typeOfVehicle: MutableList<String> = ArrayList()
+
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -37,6 +41,18 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     override fun observer() {}
 
     override fun init() {
+        typeOfVehicle.add("Motorcycle")
+        typeOfVehicle.add("moped or quad bike")
+        typeOfVehicle.add("Car, van or minibus < 8 seats")
+        typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
+        typeOfVehicle.add("Vehicle with more than 2 axles")
+
+        binding.apply {
+            typeVehicle.dataSet.addAll(typeOfVehicle)
+        }
+
+
+
         binding.model = false
         mVehicleDetails = arguments?.getParcelable(DATA) as? VehicleResponse?
 
@@ -52,13 +68,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             mVehicleDetails?.plateInfo?.country
         )*///"Country of registration ${mVehicleDetails?.plateInfo?.country}"
 
-        if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
-            binding.typeVehicle.visibility = View.GONE
-        } else {
-            binding.typeVehicle.visibility = View.VISIBLE
 
-
-        }
 
         AdobeAnalytics.setScreenTrack(
             "one of  payment:vehicle details manual entry",
@@ -78,7 +88,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         } else {
             binding.vehicleRegisteredLayout.visibility = View.GONE
 
+            if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
+                binding.typeVehicle.visibility = View.GONE
+            } else {
+                binding.typeVehicle.visibility = View.VISIBLE
+
+
+            }
+
         }
+
+        binding.nextBtn.setOnClickListener(this)
     }
 
     override fun initCtrl() {
@@ -151,8 +171,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             R.id.editVehicle -> {
                 findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment)
             }
+            R.id.nextBtn->{
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+            }
 
         }
+    }
+
+    override fun onHashMapItemSelected(key: String?, value: Any?) {
+    }
+
+    override fun onItemSlected(position: Int, selectedItem: String) {
     }
 
 }

@@ -56,7 +56,15 @@
             app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/str_continue"
-            android:layout_marginTop="@dimen/margin_60dp" />
+            android:layout_marginTop="@dimen/margin_60dp"
+            android:id="@+id/btnContinue"/>
+
+        <com.conduent.apollo.ui.CMButton
+            style="@style/secondaryButton"
+            app:layout_constraintTop_toBottomOf="@id/btnContinue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/str_cancel"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
