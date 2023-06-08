@@ -21,7 +21,6 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicl
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -202,18 +201,25 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         val bundle = Bundle()
                         Log.d("responseData", Gson().toJson(it))
 
-                        if (it.isNotEmpty()) {
+                        if (it[0]?.isRUCEligible=="y"||it[0]?.isRUCEligible=="Y"){
+                            if (it.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
-                            bundle.putParcelable(
-                                Constants.VEHICLE_DETAIL,
-                                it[0]
+                                bundle.putParcelable(
+                                    Constants.VEHICLE_DETAIL,
+                                    it[0]
+                                )
+                            }
+
+                            findNavController().navigate(
+                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+                                bundle
                             )
+                        }else{
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+
                         }
 
-                        findNavController().navigate(
-                            R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-                            bundle
-                        )
+
 
 
                         /*checkForDuplicateVehicle(

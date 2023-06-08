@@ -165,16 +165,28 @@ object Utils {
     }
 
     fun getManuallyAddedVehicleClass(vehicleclass: String):String{
-        if (vehicleclass=="Motorcycle"){
+        if (vehicleclass=="Motorcycle, moped or quad bike"){
             return "A"
-        }else if (vehicleclass=="moped or quad bike"){
-            return "B"
         }else if (vehicleclass=="Car, van or minibus < 8 seats"){
-            return "C"
+            return "B"
         }else if (vehicleclass=="Bus, coach or other goods vehicle with 2 axles"){
-            return "D"
+            return "C"
         }else if(vehicleclass=="Vehicle with more than 2 axles"){
-            return "E"
+            return "D"
+        }else{
+            return ""
+        }
+    }
+
+    fun getVehicleType(vehicleClass:String):String{
+        if (vehicleClass=="A"){
+            return "Motorcycle, moped or quad bike"
+        }else if (vehicleClass=="B"){
+            return "Car, van or minibus < 8 seats"
+        }else if (vehicleClass=="C"){
+            return "Bus, coach or other goods vehicle with 2 axles"
+        }else if(vehicleClass=="D"){
+            return "Vehicle with more than 2 axles"
         }else{
             return ""
         }

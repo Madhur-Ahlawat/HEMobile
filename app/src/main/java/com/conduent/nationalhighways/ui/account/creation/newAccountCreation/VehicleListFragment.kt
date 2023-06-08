@@ -33,7 +33,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         if(size>1){
             text ="vehicles"
         }
-        binding.youHaveAddedVehicle.text = "You've added $size "+text
+        binding.youHaveAddedVehicle.text = "You've added $size $text"
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
         vehicleAdapter= VehicleListAdapter(requireContext(), vehicleList,this)
         binding.recyclerView.adapter=vehicleAdapter
@@ -60,7 +60,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             if(size>1){
                 text ="vehicles"
             }
-            binding.youHaveAddedVehicle.text = "You've added $size "+text
+            binding.youHaveAddedVehicle.text = "You've added $size $text"
             if(vehicleAdapter.itemCount == 0){
                 binding.btnNext.disable()
             }
