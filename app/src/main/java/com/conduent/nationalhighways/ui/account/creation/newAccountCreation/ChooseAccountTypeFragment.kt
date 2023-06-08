@@ -23,7 +23,7 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
 
     override fun init() {
-        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
         }
 

@@ -245,6 +245,9 @@
         <action
             android:id="@+id/action_findVehicleFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment"/>
+        <action
+            android:id="@+id/action_findVehicleFragment_to_maximumVehicleFragment"
+            app:destination="@+id/maximumVehicleFragment"/>
 
     </fragment>
 

@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Logg
+import com.conduent.nationalhighways.utils.common.Utils
 import com.google.gson.Gson
 
 class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetailChangesBinding>(),
@@ -31,7 +32,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
         binding.apply {
             regNum.text =nonUKVehicleModel?.plateNumber
-            typeOfVehicle.text = nonUKVehicleModel?.vehicleClass
+            typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString())
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
@@ -79,6 +80,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         ErrorUtil.showError(binding.root, getString(R.string.the_vehicle_has_already_been_added))
                     }else{
                         vehicleList.add(it)
+
                         findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
                     }
 

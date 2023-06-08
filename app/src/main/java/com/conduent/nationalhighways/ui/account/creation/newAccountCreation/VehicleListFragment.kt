@@ -71,7 +71,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             if(size>1){
                 text ="vehicles"
             }
-            binding.youHaveAddedVehicle.text = "You've added $size "+text
+            binding.youHaveAddedVehicle.text = "You've added $size $text"
             if(size == 0){
                 binding.btnNext.disable()
             }
