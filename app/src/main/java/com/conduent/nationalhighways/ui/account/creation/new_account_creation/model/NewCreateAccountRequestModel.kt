@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.new_account_creation.model
 
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+
 
 object NewCreateAccountRequestModel{
     var referenceId: String? =""
@@ -16,6 +18,7 @@ object NewCreateAccountRequestModel{
     var plateCountry:String = ""
     var plateNumber:String=""
     var plateNumberIsNotInDVLA:Boolean=false
+    var vehicleList = mutableListOf<NewVehicleInfoDetails>()
 
 
 

@@ -11,6 +11,7 @@ import com.conduent.nationalhighways.data.model.account.*
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Logg
 import com.google.gson.Gson
 
@@ -69,7 +70,20 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.confirmBtn -> {
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
+
+                val accountData = com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+                val vehicleList = accountData.vehicleList
+
+                nonUKVehicleModel?.let {
+                    if(vehicleList.contains(nonUKVehicleModel)){
+                        ErrorUtil.showError(binding.root, getString(R.string.the_vehicle_has_already_been_added))
+                    }else{
+                        vehicleList.add(it)
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
+                    }
+
+                }
+
 
                /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
                 nonUKVehicleModel?.apply {
@@ -97,7 +111,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             R.id.notVehicle -> {
                 val bundle = Bundle()
 //                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-//                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
+                bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
 //                bundle.putInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE,Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE)
 //                Logg.logging("NotVehicle", "bundle requestModel data $requestModel")
 //                Logg.logging("NotVehicle", "bundle nonUKVehicleModel data $nonUKVehicleModel")

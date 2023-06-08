@@ -349,6 +349,10 @@
         android:label="Your Vehicle Screen"
         tools:layout="@layout/fragment_your_vehicle_registered">
 
+        <argument
+            android:name="vehicle detail"
+            app:argType="com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails" />
+
         <action
             android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
@@ -365,6 +369,11 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"/>
+
+        <argument
+            android:name="vehicle detail"
+            app:argType="com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails" />
+
     </fragment>
 
     <!-- Step 6 -->

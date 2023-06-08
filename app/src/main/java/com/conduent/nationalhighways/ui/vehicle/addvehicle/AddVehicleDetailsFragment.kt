@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -26,7 +27,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var mScreeType = 0
     private var mVehicleDetails: VehicleResponse? = null
     private var typeOfVehicle: MutableList<String> = ArrayList()
-
+    private var nonUKVehicleModel: NewVehicleInfoDetails? = null
 
 
     @Inject
@@ -46,7 +47,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         typeOfVehicle.add("Car, van or minibus < 8 seats")
         typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
         typeOfVehicle.add("Vehicle with more than 2 axles")
-
+        nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)
         }
@@ -87,7 +88,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             binding.vehicleRegisteredLayout.visibility = View.VISIBLE
         } else {
             binding.vehicleRegisteredLayout.visibility = View.GONE
-
+            binding.vehiclePlateNumber.text = nonUKVehicleModel?.plateNumber
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 binding.typeVehicle.visibility = View.GONE
             } else {
@@ -116,7 +117,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             AdobeAnalytics.setActionTrack(
                 "next",
-                "one of  payment:vehicle details manual entry",
+                "one of payment:vehicle details manual entry",
                 "vehicle",
                 "english",
                 "one of payment",

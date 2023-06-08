@@ -4,10 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
 import com.conduent.nationalhighways.utils.common.Constants
 
-class VehicleListAdapter(private val context: Context,private val list: ArrayList<String>,private val vehicleCallback:VehicleListCallBack):
+class VehicleListAdapter(private val context: Context, private val list: ArrayList<NewVehicleInfoDetails>, private val vehicleCallback:VehicleListCallBack):
     RecyclerView.Adapter<VehicleListAdapter.VehicleListViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -23,6 +24,7 @@ class VehicleListAdapter(private val context: Context,private val list: ArrayLis
             notifyDataSetChanged()
 
         }
+        holder.binding.vehiclePlateNumber.text = list.get(position).plateNumber
 
         holder.binding.updateVehicle.setOnClickListener{
             vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE)

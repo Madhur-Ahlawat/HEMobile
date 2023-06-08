@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -15,9 +16,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleListAdapter.VehicleListCallBack,View.OnClickListener {
 
-    private lateinit var vehicleList:ArrayList<String>
+    private lateinit var vehicleList:ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter:VehicleListAdapter
-    private var needMoreVehicle = false
 
 
     override fun getFragmentBinding(
@@ -26,29 +26,23 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     ): FragmentVehicleList2Binding= FragmentVehicleList2Binding.inflate(inflater,container,false)
 
     override fun init() {
-        vehicleList= ArrayList()
-
-
-
+        val accountData = NewCreateAccountRequestModel
+        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+        val size = accountData.vehicleList.size
+        var text ="vehicle"
+        if(size>1){
+            text ="vehicles"
+        }
+        binding.youHaveAddedVehicle.text = "You've added $size "+text
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
         vehicleAdapter= VehicleListAdapter(requireContext(), vehicleList,this)
         binding.recyclerView.adapter=vehicleAdapter
-
-        binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
-            when(checkedId){
-                R.id.radioButtonYes -> {
-                    needMoreVehicle = true
-                }
-                R.id.radioButtonNo -> {
-                    needMoreVehicle = false
-                }
-            }
-        }
 
     }
 
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
+        binding.btnAddNewVehicle.setOnClickListener(this)
 
     }
 
@@ -61,7 +55,15 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         if (value== Constants.REMOVE_VEHICLE){
             vehicleList.removeAt(position)
             vehicleAdapter.notifyDataSetChanged()
-
+            val size = vehicleAdapter.itemCount
+            var text ="vehicle"
+            if(size>1){
+                text ="vehicles"
+            }
+            binding.youHaveAddedVehicle.text = "You've added $size "+text
+            if(vehicleAdapter.itemCount == 0){
+                binding.btnNext.disable()
+            }
         }else{
 
         }
@@ -69,20 +71,20 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
 
-            R.id.btnNext->{
-                if(needMoreVehicle) {
-                    if (vehicleList.size >= 5) {
-                        findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
-                    } else {
-                        findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
-                    }
-                }else{
-                    findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountSummaryFragment)
+            R.id.btnAddNewVehicle -> {
+
+                if (vehicleList.size >= 5) {
+                    findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+                } else {
+                    findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                 }
             }
+
+            R.id.btnNext -> {
+                findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountSummaryFragment)
+            }
+        }
         }
     }
-
-}

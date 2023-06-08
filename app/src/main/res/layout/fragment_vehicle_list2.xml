@@ -38,38 +38,7 @@
             android:nestedScrollingEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/youHaveAddedVehicle" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            style="@style/MediumTextBlack"
-            android:layout_marginTop="20dp"
-            android:text="@string/str_do_you_want_to_add"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/doYouWantAddAnotherVehicle"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
-        <RadioGroup
-            android:id="@+id/radioGroupYesNo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/btnNext"
-            app:layout_constraintStart_toStartOf="@+id/btnNext"
-            android:layout_marginTop="@dimen/margin_15dp"
-            app:layout_constraintTop_toBottomOf="@+id/doYouWantAddAnotherVehicle" >
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:layout_width="match_parent"
-                style="@style/RadioButtonStyle"
-                android:text="@string/str_yes"
-                android:id="@+id/radioButtonYes"
-                android:layout_height="@dimen/margin_40dp"/>
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:layout_width="match_parent"
-                android:text="@string/str_no"
-                android:checked="true"
-                style="@style/RadioButtonStyle"
-                android:id="@+id/radioButtonNo"
-                android:layout_height="@dimen/margin_40dp"/>
-
-        </RadioGroup>
 
 
         <com.conduent.apollo.ui.CMButton
@@ -80,8 +49,21 @@
             android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupYesNo"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
             />
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnAddNewVehicle"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_another_vehicle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNext"
+            />
+
+
 
 
 
