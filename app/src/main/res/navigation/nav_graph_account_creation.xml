@@ -336,7 +336,9 @@
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"/>
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@+id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_yourVehicleFragment"
@@ -661,7 +663,9 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.RemoveVehicleFragment"
         android:label="RemoveVehicleFragment"
         tools:layout="@layout/fragment_remove_vehicle">
-
+        <argument
+            android:name="vehicle_position"
+            app:argType="integer"/>
 
     </fragment>
 
