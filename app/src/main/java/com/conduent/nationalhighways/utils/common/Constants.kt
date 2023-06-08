@@ -103,6 +103,7 @@ object Constants {
     const val POST_CODE = "post_code"
     const val DATA = "data"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
+    const val VEHICLE_INDEX = "vehicle_position"
     const val DATA2 = "list2"
     const val POST_MAIL = "MAIL"
     const val SMS = "SMS"

@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,17 +27,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     ): FragmentVehicleList2Binding= FragmentVehicleList2Binding.inflate(inflater,container,false)
 
     override fun init() {
-        val accountData = NewCreateAccountRequestModel
-        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
-        val size = accountData.vehicleList.size
-        var text ="vehicle"
-        if(size>1){
-            text ="vehicles"
-        }
-        binding.youHaveAddedVehicle.text = "You've added $size "+text
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
-        vehicleAdapter= VehicleListAdapter(requireContext(), vehicleList,this)
-        binding.recyclerView.adapter=vehicleAdapter
 
     }
 
@@ -49,24 +40,38 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     override fun observer() {
     }
 
+    override fun onResume() {
+        super.onResume()
+        invalidateList()
+    }
 
 
     override fun vehicleListCallBack(position: Int, value: String) {
         if (value== Constants.REMOVE_VEHICLE){
-            vehicleList.removeAt(position)
-            vehicleAdapter.notifyDataSetChanged()
+            val bundle = Bundle()
+            bundle.putInt(Constants.VEHICLE_INDEX, position)
+            findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment)
+
+        }else{
+
+        }
+
+    }
+
+    private fun invalidateList() {
+        val accountData = NewCreateAccountRequestModel
+        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+        vehicleAdapter= VehicleListAdapter(requireContext(), vehicleList,this)
             val size = vehicleAdapter.itemCount
             var text ="vehicle"
             if(size>1){
                 text ="vehicles"
             }
             binding.youHaveAddedVehicle.text = "You've added $size "+text
-            if(vehicleAdapter.itemCount == 0){
+            if(size == 0){
                 binding.btnNext.disable()
             }
-        }else{
-
-        }
+        binding.recyclerView.adapter=vehicleAdapter
     }
 
 

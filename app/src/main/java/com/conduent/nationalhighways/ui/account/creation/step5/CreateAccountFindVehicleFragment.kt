@@ -34,6 +34,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     View.OnClickListener {
 
     private var isAccountVehicle = false
+    private var isViewCreated = false
 
     //    private var requestModel: CreateAccountRequestModel? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
@@ -118,8 +119,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun observer() {
-        observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
-        observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+        if(!isViewCreated){
+            observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
+            observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+        }
+        isViewCreated = true
     }
 
     override fun onClick(v: View?) {
@@ -127,8 +131,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             R.id.findVehicle -> {
 
                 binding.findVehicle.isEnabled = false
-                NewCreateAccountRequestModel.plateNumber =
-                    binding.editNumberPlate.getText().toString()
+                val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                NewCreateAccountRequestModel.plateNumber =  numberPlate
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.findVehicle.isEnabled = true
@@ -137,7 +141,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isObserverBack = true
 
-                checkForDuplicateVehicle(binding.editNumberPlate.getText().toString())
+                checkForDuplicateVehicle(numberPlate)
 
 //                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
 
