@@ -30,11 +30,14 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
         nonUKVehicleModel = index?.let { vehicleList[it] }
-        binding.vehicleRegNum.text = nonUKVehicleModel?.plateNumber ?: ""
+        val numberPlate = nonUKVehicleModel?.plateNumber ?: ""
+        binding.vehicleRegNum.text = numberPlate
         binding.typeOfVehicle.text = nonUKVehicleModel?.vehicleClass ?: ""
         binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
         binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
         binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
+
+        binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle)+" $numberPlate ?"
     }
 
     override fun initCtrl() {

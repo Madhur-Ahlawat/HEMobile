@@ -54,7 +54,7 @@
 
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnAddNewVehicle"
-            style="@style/PrimaryButton"
+            style="@style/secondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_another_vehicle"

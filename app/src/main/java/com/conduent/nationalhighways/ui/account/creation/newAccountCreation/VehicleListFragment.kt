@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 
 
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleListAdapter.VehicleListCallBack,View.OnClickListener {
@@ -48,10 +49,13 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
     override fun vehicleListCallBack(position: Int, value: String) {
         if (value== Constants.REMOVE_VEHICLE){
-            val bundle = Bundle()
-            bundle.putInt(Constants.VEHICLE_INDEX, position)
-            findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment)
-
+            if(vehicleList.size==1){
+                ErrorUtil.showError(binding.root, getString(R.string.it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them))
+            }else {
+                val bundle = Bundle()
+                bundle.putInt(Constants.VEHICLE_INDEX, position)
+                findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment)
+            }
         }else{
 
         }
@@ -80,10 +84,18 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
             R.id.btnAddNewVehicle -> {
 
-                if (vehicleList.size >= 5) {
-                    findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
-                } else {
-                    findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                if(NewCreateAccountRequestModel.prePay){
+                    if (vehicleList.size >= 10) {
+                        findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                    }
+                }else {
+                    if (vehicleList.size >= 50000) {
+                        findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                    }
                 }
             }
 
