@@ -205,6 +205,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         val bundle = Bundle()
                         Log.d("responseData", Gson().toJson(it))
 
+                        if (it[0]?.isExempted?.equals("Y", true) == true) {
+                            NewCreateAccountRequestModel.isExempted = true
+
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+
+                        }
+
                         if (it[0]?.isRUCEligible == "y" || it[0]?.isRUCEligible == "Y") {
                             if (it.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
@@ -218,12 +225,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
                             )
-                        } else if (it[0]?.isExempted == "y" || it[0]?.isExempted == "Y") {
-                            NewCreateAccountRequestModel.isExempted = true
-
-                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
-
-                        } else if (it[0]?.isRUCEligible == "N" || it[0]?.isRUCEligible == "n") {
+                        } else if (it[0]?.isRUCEligible?.equals("N", true) == true) {
                             NewCreateAccountRequestModel.isRucEligible = true
                             findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
 
