@@ -335,6 +335,10 @@
             app:destination="@+id/vehicleListFragment"/>
 
         <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_max_vehicleFragment"
+            app:destination="@+id/maximumVehicleFragment"/>
+
+        <action
             android:id="@+id/action_businessVehicleDetailFragment_to_paymentSummaryScreen"
             app:destination="@id/paymentSummaryFragment" />
 

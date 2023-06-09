@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.*
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -72,12 +73,13 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         when (view?.id) {
             R.id.confirmBtn -> {
 
-                val accountData = com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+                val accountData = NewCreateAccountRequestModel
                 val vehicleList = accountData.vehicleList
 
                 nonUKVehicleModel?.let {
                     if(vehicleList.contains(nonUKVehicleModel)){
-                        ErrorUtil.showError(binding.root, getString(R.string.the_vehicle_has_already_been_added))
+                        accountData.isVehicleAlreadyAdded = true
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_max_vehicleFragment)
                     }else{
                         vehicleList.add(it)
 
