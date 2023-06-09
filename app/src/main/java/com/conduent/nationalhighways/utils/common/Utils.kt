@@ -33,6 +33,8 @@ object Utils {
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
     var UK_MOBILE_REGEX="[0]{0,1}7[0-9]{9}"
     var phoneNumber = "[0]{0,3}[1-9]{1}[0-9]{7,14}"
+    var specialCharacter: Regex =Regex( "[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+
 
 
     fun hasInternetConnection(application: BaseApplication): Boolean {
