@@ -48,15 +48,31 @@
             android:text="@string/str_you_have_reached_the_maximum_vehicle"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
-            android:layout_marginTop="44dp"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/black"
+            android:layout_marginTop="17dp"
+            android:textSize="14sp"
             android:id="@+id/textMaximumVehicle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_vehicle_already_note_desc"
+            app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
+            android:textColor="@color/black"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="@dimen/font_14sp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:id="@+id/maximumVehicleAddedNote"
+
+            />
 
         <com.conduent.apollo.ui.CMButton
             style="@style/PrimaryButton"
-            app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
+            app:layout_constraintTop_toBottomOf="@id/maximumVehicleAddedNote"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/str_continue"
-            android:layout_marginTop="@dimen/margin_60dp"
+            android:layout_marginTop="@dimen/margin_25dp"
             android:id="@+id/btnContinue"/>
 
         <com.conduent.apollo.ui.CMButton
@@ -64,6 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/btnContinue"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/str_cancel"
+            android:id="@+id/cancel_btn"
             />
 
 
