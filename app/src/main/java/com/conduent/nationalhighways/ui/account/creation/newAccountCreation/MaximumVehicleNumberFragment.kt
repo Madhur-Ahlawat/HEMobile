@@ -1,8 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.opengl.Visibility
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +39,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.btnContinue.text = getString(R.string.str_add_to_account)
         }
 
-        }
+
 
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded){
             binding.maximumVehicleAdded.text=getString(R.string.vehicle_s_mha_has_already_been_assigned_to_this_account,plateNumber)
