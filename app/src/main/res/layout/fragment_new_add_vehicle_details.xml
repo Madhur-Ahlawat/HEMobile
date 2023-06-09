@@ -246,7 +246,6 @@
                 android:layout_marginTop="@dimen/margin_25dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/str_continue"
-                android:textAllCaps="false"
                 android:textSize="@dimen/font_16sp"
                 android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
