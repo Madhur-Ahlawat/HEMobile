@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,11 +29,18 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         if (NewCreateAccountRequestModel.isExempted){
             binding.textMaximumVehicle.text=getString(R.string.str_vehicle_exempt_detail_message,NewCreateAccountRequestModel.plateNumber)
             binding.maximumVehicleAdded.text=getString(R.string.str_vehicle_exempt_message,NewCreateAccountRequestModel.plateNumber)
+            binding.maximumVehicleAddedNote.visibility=View.GONE
             binding.cancelBtn.visibility=View.GONE
-
+            binding.btnContinue.text = getString(R.string.str_continue)
         }
 
         if (NewCreateAccountRequestModel.isRucEligible){
+            binding.textMaximumVehicle.text=getString(R.string.str_no_ruc_desc)
+            binding.maximumVehicleAdded.text=getString(R.string.str_vehicle_exempt_message,NewCreateAccountRequestModel.plateNumber)
+            binding.maximumVehicleAddedNote.visibility=View.GONE
+            binding.cancelBtn.visibility=View.VISIBLE
+            binding.btnContinue.text = getString(R.string.str_add_to_account)
+        }
 
         }
 

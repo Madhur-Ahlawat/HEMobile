@@ -1057,12 +1057,19 @@
     <string name="no">No</string>
     <string name="str_make_error_message">Vehicle make must only include letters a to z, and special characters such as hyphens</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is exempt Dart Charge payment</string>
-    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\n Contact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day:8am to 8pm</string>
+    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\n Contact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
-    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account. Contact the Dart Charge contact centre for help. Telephone: 0300 300 0120 Every day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\n Contact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
     <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s MHA has already been assigned to this account</string>
+    <string name="str_add_to_account">ADD TO ACCOUNT</string>
+    <string name="str_add_another">ADD ANOTHER VEHICLE</string>
+    <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
+
+
+
+
 
 
 </resources>

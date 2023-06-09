@@ -54,6 +54,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun init() {
+        NewCreateAccountRequestModel.isExempted=false
+        NewCreateAccountRequestModel.isRucEligible=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
         /*requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         mFromKey = arguments?.getInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE, 0)!!
         if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
@@ -119,6 +122,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun observer() {
         if (!isViewCreated) {
+            NewCreateAccountRequestModel.isExempted=false
+            NewCreateAccountRequestModel.isRucEligible=false
+            NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
         }
