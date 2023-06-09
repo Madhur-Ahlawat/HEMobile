@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View.OnClickListener {
@@ -31,13 +31,13 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
         nonUKVehicleModel = index?.let { vehicleList[it] }
         val numberPlate = nonUKVehicleModel?.plateNumber ?: ""
-        binding.vehicleRegNum.text = numberPlate
-        binding.typeOfVehicle.text = nonUKVehicleModel?.vehicleClass ?: ""
+        binding.regNum.text = numberPlate
+        binding.typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass ?: "")
         binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
         binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
         binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
 
-        binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle)+" $numberPlate ?"
+        binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle)+" $numberPlate?"
     }
 
     override fun initCtrl() {
@@ -52,7 +52,12 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
         when (view?.id) {
             R.id.confirmBtn -> {
                 index?.let { vehicleList.removeAt(it) }
-                findNavController().popBackStack()
+                if(vehicleList.isEmpty()){
+                    findNavController().navigate(R.id.action_removeVehicleFragment_to_findVehicleFragment)
+                }else {
+                    findNavController().popBackStack()
+                }
+
             }
 
             R.id.notVehicle -> {

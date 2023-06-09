@@ -49,13 +49,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
     override fun vehicleListCallBack(position: Int, value: String) {
         if (value== Constants.REMOVE_VEHICLE){
-            if(vehicleList.size==1){
-                ErrorUtil.showError(binding.root, getString(R.string.it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them))
-            }else {
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment)
-            }
         }else{
 
         }

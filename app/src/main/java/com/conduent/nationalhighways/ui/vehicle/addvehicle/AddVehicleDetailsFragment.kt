@@ -179,7 +179,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
             if (binding.makeInputLayout.editText.toString().trim().isNotEmpty()
                 && binding.modelInputLayout.editText.text.toString().trim().isNotEmpty()
-                && binding.colorInputLayout.editText.text.toString().trim().isNotEmpty()&&radioButtonChecked&&typeOfVehicleChecked
+                && binding.colorInputLayout.editText.text.toString().trim().isNotEmpty()/*&&radioButtonChecked&&typeOfVehicleChecked*/
             ) {
                 setBtnActivated()
             } else {
@@ -236,6 +236,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                             }
                         }
+                        newVehicleInfoDetails.vehicleMake=binding.makeInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleModel=binding.modelInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleColor=binding.colorInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleClass=binding.typeVehicle.getSelectedValue()
+                        newVehicleInfoDetails.plateNumber=binding.vehiclePlateNumber.text.toString()
+                        vehicleList.add(newVehicleInfoDetails)
+
+                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
 
                     }else{
                         newVehicleInfoDetails.vehicleMake=binding.makeInputLayout.getText().toString()
