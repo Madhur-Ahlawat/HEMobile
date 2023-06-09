@@ -125,6 +125,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             NewCreateAccountRequestModel.isExempted=false
             NewCreateAccountRequestModel.isRucEligible=false
             NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
         }
