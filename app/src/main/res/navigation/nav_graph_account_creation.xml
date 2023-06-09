@@ -255,7 +255,11 @@
         android:id="@+id/createAccountSummaryFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
         android:label="AccountSummaryFragment"
-        tools:layout="@layout/fragment_create_account_summary"/>
+        tools:layout="@layout/fragment_create_account_summary">
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_removeVehicleFragment"
+            app:destination="@id/removeVehicleFragment" />
+    </fragment>
 
     <!-- BUSINESS ACCOUNT -->
 
@@ -666,6 +670,9 @@
         <argument
             android:name="vehicle_position"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
 
     </fragment>
 

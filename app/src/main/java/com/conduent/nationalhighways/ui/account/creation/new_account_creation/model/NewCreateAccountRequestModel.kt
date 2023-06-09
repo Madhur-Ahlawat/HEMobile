@@ -4,7 +4,10 @@ import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 
 
 object NewCreateAccountRequestModel{
-    var referenceId: String? =""
+    var referenceId: String? = ""
+    var address: String? = ""
+    var emailAddress: String? = ""
+    var mobileNumber: String? = ""
     var communicationTextMessage:Boolean=false
     var termsCondition:Boolean=false
     var twoStepVerification:Boolean=false

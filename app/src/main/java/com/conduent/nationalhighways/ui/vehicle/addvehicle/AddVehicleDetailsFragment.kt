@@ -33,6 +33,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var radioButtonChecked: Boolean = false
     private var typeOfVehicleChecked: Boolean = false
     private var checkBoxChecked: Boolean = false
+    private var vehicleClassSelected = ""
 
 
     @Inject
@@ -266,6 +267,20 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             }
                         }
 
+                        newVehicleInfoDetails.vehicleMake =
+                            binding.makeInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleModel =
+                            binding.modelInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleColor =
+                            binding.colorInputLayout.getText().toString()
+                        newVehicleInfoDetails.vehicleClass = Utils.getManuallyAddedVehicleClass(binding.typeVehicle.getSelectedDescription().toString())
+                        newVehicleInfoDetails.plateNumber =
+                            binding.vehiclePlateNumber.text.toString()
+                        vehicleList.add(newVehicleInfoDetails)
+
+                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+
+
                     } else {
                         newVehicleInfoDetails.vehicleMake =
                             binding.makeInputLayout.getText().toString()
@@ -273,7 +288,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.modelInputLayout.getText().toString()
                         newVehicleInfoDetails.vehicleColor =
                             binding.colorInputLayout.getText().toString()
-                        newVehicleInfoDetails.vehicleClass = binding.typeVehicle.getSelectedValue()
+                        newVehicleInfoDetails.vehicleClass = Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
                         newVehicleInfoDetails.plateNumber =
                             binding.vehiclePlateNumber.text.toString()
                         vehicleList.add(newVehicleInfoDetails)
@@ -298,6 +313,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     override fun onItemSlected(position: Int, selectedItem: String) {
         typeOfVehicleChecked = true
+        vehicleClassSelected = selectedItem
         checkButton()
     }
 
