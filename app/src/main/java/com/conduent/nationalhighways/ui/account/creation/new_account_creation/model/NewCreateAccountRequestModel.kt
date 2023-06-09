@@ -25,6 +25,7 @@ object NewCreateAccountRequestModel{
     var isRucEligible:Boolean=false
     var isExempted:Boolean=false
     var isVehicleAlreadyAdded:Boolean=false
+    var isVehicleAlreadyAddedLocal:Boolean=false
 
 
 

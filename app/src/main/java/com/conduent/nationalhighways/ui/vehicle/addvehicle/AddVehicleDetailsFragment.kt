@@ -244,7 +244,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                 nonUKVehicleModel?.let {
                     if (vehicleList.contains(nonUKVehicleModel)) {
-                        accountData.isVehicleAlreadyAdded = true
+                        accountData.isVehicleAlreadyAddedLocal = true
                         val bundle = Bundle()
                         nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
                         findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_max_vehicleFragment,bundle)
