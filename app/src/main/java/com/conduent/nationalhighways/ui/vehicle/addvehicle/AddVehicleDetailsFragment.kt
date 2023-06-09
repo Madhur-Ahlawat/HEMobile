@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.vehicle.addvehicle
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -243,10 +244,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                 nonUKVehicleModel?.let {
                     if (vehicleList.contains(nonUKVehicleModel)) {
-                        ErrorUtil.showError(
-                            binding.root,
-                            getString(R.string.the_vehicle_has_already_been_added)
-                        )
+                        accountData.isVehicleAlreadyAdded = true
+                        val bundle = Bundle()
+                        nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_max_vehicleFragment,bundle)
                     } else {
                         vehicleList.add(it)
 

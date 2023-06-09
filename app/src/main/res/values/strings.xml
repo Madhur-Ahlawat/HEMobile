@@ -1061,10 +1061,8 @@
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account. Contact the Dart Charge contact centre for help. Telephone: 0300 300 0120 Every day: 8am to 8pm</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
-
-
-
-
+    <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
+    <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s MHA has already been assigned to this account</string>
 
 
 </resources>

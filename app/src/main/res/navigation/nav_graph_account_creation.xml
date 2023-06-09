@@ -662,8 +662,17 @@
         android:id="@+id/maximumVehicleFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment"
         android:label="MaximumVehicleFragment"
-        tools:layout="@layout/fragment_maximum_vehicle_number"
-        >
+        tools:layout="@layout/fragment_maximum_vehicle_number">
+
+        <action
+            android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@+id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
+
+        <argument
+            android:name="plateNumber"
+            app:argType="string"/>
 
     </fragment>
     <fragment
