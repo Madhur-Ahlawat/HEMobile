@@ -118,7 +118,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun observer() {
-        if(!isViewCreated){
+        if (!isViewCreated) {
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
         }
@@ -131,7 +131,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 binding.findVehicle.isEnabled = false
                 val numberPlate = binding.editNumberPlate.getText().toString().trim()
-                NewCreateAccountRequestModel.plateNumber =  numberPlate
+                NewCreateAccountRequestModel.plateNumber = numberPlate
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.findVehicle.isEnabled = true
@@ -205,7 +205,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         val bundle = Bundle()
                         Log.d("responseData", Gson().toJson(it))
 
-                        if (it[0]?.isRUCEligible=="y"||it[0]?.isRUCEligible=="Y"){
+                        if (it[0]?.isRUCEligible == "y" || it[0]?.isRUCEligible == "Y") {
                             if (it.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
                                 bundle.putParcelable(
@@ -218,17 +218,17 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
                             )
-                        }else{
+                        } else if (it[0]?.isExempted == "y" || it[0]?.isExempted == "Y") {
+                            NewCreateAccountRequestModel.isExempted = true
+
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+
+                        } else if (it[0]?.isRUCEligible == "N" || it[0]?.isRUCEligible == "n") {
+                            NewCreateAccountRequestModel.isRucEligible = true
                             findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
 
                         }
 
-
-
-
-                        /*checkForDuplicateVehicle(
-                            it1
-                        )*/
 
                     }
 
@@ -236,19 +236,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 is Resource.DataError -> {
-                 //   ErrorUtil.showError(binding.root, resource.errorMsg)
+                    //   ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     isObserverBack = false
-                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA=true
+                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                     findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment)
 
 
-                    /*val bundle = Bundle()
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment,
-                        bundle
-                    )*/
                 }
 
                 else -> {
@@ -282,31 +276,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     Constants.AGENCY_ID.toInt()
                 )
 
-                /*
-                                // UK vehicle Valid from DVLA and Valid from duplicate vehicle check,move to next screen
-                                nonUKVehicleModel?.vehicleMake = retrieveVehicle?.vehicleMake
-                                nonUKVehicleModel?.vehicleModel = retrieveVehicle?.vehicleModel
-                                nonUKVehicleModel?.vehicleColor = retrieveVehicle?.vehicleColor
-                                nonUKVehicleModel?.vehicleClassDesc = retrieveVehicle?.vehicleClass?.let {
-                                    VehicleClassTypeConverter.toClassName(
-                                        it
-                                    )
-                                }
 
-                                val bundle = Bundle()
-                //                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                                bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
-                                // prasad commneted
-                */
-
-                /*                findNavController().navigate(
-                                    R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-                                    bundle
-                                )*/
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
+                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+
             }
 
             else -> {
