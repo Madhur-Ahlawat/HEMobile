@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,21 +85,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
-
-        val filter = InputFilter { source, start, end, dest, dstart, dend ->
-            for (i in start until end) {
-                if (!Character.isLetterOrDigit(source[i]) &&
-                    source[i].toString() != " " &&
-                    source[i].toString() != "-"
-                ) {
-                    return@InputFilter ""
-                }
-            }
-            null
-        }
-
-        binding.editNumberPlate.editText.filters = arrayOf(filter)
-        binding.editNumberPlate.setMaxLength(10)
         binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
@@ -106,15 +92,28 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun isEnable() {
         val length = binding.editNumberPlate.getText()?.length
         if (length != null) {
-            if (length > 2) {
-                binding.findVehicle.isEnabled = true
-                binding.editNumberPlate.removeError()
-            } else {
+            if (length > 10 ) {
                 binding.findVehicle.isEnabled = false
                 binding.editNumberPlate.setErrorText(getString(R.string.vehicle_registration_number_plate_error))
+            }else{
+                if (length <1 ) {
+                    binding.findVehicle.isEnabled = false
+                    binding.editNumberPlate.setErrorText(getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle))
+                } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.specialCharacter)) {
+                    binding.editNumberPlate.setErrorText(getString(R.string.str_first_name_error_message))
+                    binding.findVehicle.isEnabled = false
+                }else{
+                    removeError()
+                }
             }
         }
 
+
+    }
+
+    private fun removeError() {
+        binding.editNumberPlate.removeError()
+        binding.findVehicle.isEnabled = true
     }
 
     override fun observer() {

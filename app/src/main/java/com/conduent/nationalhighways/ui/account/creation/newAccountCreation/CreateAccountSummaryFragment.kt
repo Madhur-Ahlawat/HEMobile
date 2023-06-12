@@ -44,10 +44,10 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.address.text = dataModel.addressline1
         binding.emailAddress.text = dataModel.emailAddress
         binding.mobileNumber.text = dataModel.mobileNumber
-        if(dataModel.prePay){
-            binding.accountType.text = getString(R.string.str_prepay)
-        } else if(dataModel.payAsYouGo){
-            binding.accountType.text = getString(R.string.str_payg_account)
+        if(dataModel.personalAccount){
+            binding.accountType.text = getString(R.string.personal)+"\n"+getString(R.string.str_prepay)
+        } else {
+            binding.accountType.text = getString(R.string.business)
         }
 
         binding.recyclerView.layoutManager= LinearLayoutManager(requireContext())

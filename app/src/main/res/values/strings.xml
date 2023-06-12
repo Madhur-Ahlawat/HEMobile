@@ -1116,6 +1116,7 @@
     <string name="str_non_uk_phoneNumber_error_message">The non-UK phone number entered must be between 8 and 15 digits</string>
     <string name="maximum_number_of_vehicles_have_been_registered_against_the_account">Maximum number of vehicles have been registered against the account</string>
     <string name="you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
+    <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
 
 
 </resources>
