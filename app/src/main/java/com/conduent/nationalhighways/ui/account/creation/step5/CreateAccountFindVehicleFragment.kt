@@ -30,12 +30,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     View.OnClickListener {
 
     private var isViewCreated = false
-
+    private var plateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
-
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -46,6 +45,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun init() {
+        plateNumber = arguments?.getString(Constants.PLATE_NUMBER,"").toString()
+        binding.editNumberPlate.setText(plateNumber)
+        if(plateNumber.isNotEmpty()){
+            binding.findVehicle.isEnabled = true
+        }
         NewCreateAccountRequestModel.isExempted=false
         NewCreateAccountRequestModel.isRucEligible=false
         NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
@@ -128,6 +132,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+
+                if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim()){
+                    findNavController().navigate(R.id.action_findVehicleFragment_to_vehicleListFragment)
+                    return
+                }
 
                 binding.findVehicle.isEnabled = false
                 val numberPlate = binding.editNumberPlate.getText().toString().trim()
