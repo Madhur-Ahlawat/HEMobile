@@ -23,7 +23,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         FragmentMaximumVehicleNumberBinding.inflate(inflater, container, false)
 
     override fun init() {
-        plateNumber = arguments?.getString(Constants.PLATE_NUMBER).toString()
+        plateNumber = arguments?.getString(Constants.PLATE_NUMBER,"").toString()
         if (NewCreateAccountRequestModel.isExempted){
             binding.textMaximumVehicle.text=getString(R.string.str_vehicle_exempt_detail_message,NewCreateAccountRequestModel.plateNumber)
             binding.maximumVehicleAdded.text=getString(R.string.str_vehicle_exempt_message,NewCreateAccountRequestModel.plateNumber)

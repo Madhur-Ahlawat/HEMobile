@@ -18,17 +18,15 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
         VehiclelistlayoutBinding.inflate(LayoutInflater.from(context),parent,false)
         )
 
-    override fun onBindViewHolder(holder: VehicleListAdapter.VehicleListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
+        val plateNumber = list.get(position).plateNumber
+        holder.binding.vehiclePlateNumber.text = plateNumber
         holder.binding.deleteVehicle.setOnClickListener{
-            vehicleCallback.vehicleListCallBack(position,Constants.REMOVE_VEHICLE)
-            notifyDataSetChanged()
+            vehicleCallback.vehicleListCallBack(position,Constants.REMOVE_VEHICLE,plateNumber)
 
         }
-        holder.binding.vehiclePlateNumber.text = list.get(position).plateNumber
-
         holder.binding.updateVehicle.setOnClickListener{
-            vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE)
-            notifyDataSetChanged()
+            vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE,plateNumber)
         }
     }
 
@@ -42,7 +40,7 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
     }
 
     interface VehicleListCallBack{
-        fun vehicleListCallBack(position: Int,value:String)
+        fun vehicleListCallBack(position: Int, value: String, plateNumber: String?)
     }
 
 

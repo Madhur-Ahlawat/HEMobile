@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 
 
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleListAdapter.VehicleListCallBack,View.OnClickListener {
@@ -47,13 +46,15 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     }
 
 
-    override fun vehicleListCallBack(position: Int, value: String) {
+    override fun vehicleListCallBack(position: Int, value: String, plateNumber: String?) {
         if (value== Constants.REMOVE_VEHICLE){
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment,bundle)
         }else{
-
+            val bundle = Bundle()
+            bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+            findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
         }
 
     }
