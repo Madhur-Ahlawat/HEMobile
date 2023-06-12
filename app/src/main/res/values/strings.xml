@@ -1066,6 +1066,7 @@
     <string name="str_add_to_account">ADD TO ACCOUNT</string>
     <string name="str_add_another">ADD ANOTHER VEHICLE</string>
     <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
+    <string name="str_effective_start_date">Effective start date</string>
 
     <!--First,Last Name Error Message-->
     <string name="str_first_name_error_message">First name must only include letters a to z, and special characters such as hyphens</string>
@@ -1084,6 +1085,7 @@
     <string name="str_town_city_error_message">Enter a town or city </string>
     <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
     <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>
+    <string name="str_post_code_error_message">Enter a postcode</string>
     <string name="str_post_code_character_allowed">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
 
     <!--Email Error Message-->

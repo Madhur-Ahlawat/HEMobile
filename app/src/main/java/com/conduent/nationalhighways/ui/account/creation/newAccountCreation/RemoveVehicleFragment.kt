@@ -36,6 +36,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
         binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
         binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
         binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
+        binding.strEffectiveDateText.text= Utils.getYesterdayDate()
 
         binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle)+" $numberPlate?"
     }

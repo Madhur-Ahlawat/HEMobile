@@ -119,6 +119,22 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/str_color" />
 
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/MediumTextBlack"
+                        android:text="@string/str_effective_start_date"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleColor"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/margin_22dp"
+                        android:id="@+id/str_effective_date" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/str_effective_date_text"
+                        style="@style/RegularTextBlack"
+                        android:layout_marginTop="@dimen/margin_4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/str_effective_date" />
+
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

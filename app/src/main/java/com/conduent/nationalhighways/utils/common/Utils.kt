@@ -8,8 +8,6 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
 import android.view.View
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +17,7 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
 import java.lang.reflect.Field
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
@@ -286,6 +285,13 @@ object Utils {
         lp.setMargins(left, top, right, bottom)
         view.layoutParams = lp
 
+    }
+
+    fun getYesterdayDate(): String {
+        val dateFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DATE, -1)
+        return dateFormat.format(cal.time)
     }
 
 

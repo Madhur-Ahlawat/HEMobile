@@ -30,9 +30,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
-        if(NewCreateAccountRequestModel.personalAccount){
+        if (NewCreateAccountRequestModel.personalAccount) {
             binding.txtHeading.text = getString(R.string.personal_address)
-            binding.txtThisShouldBeVehicle.text=getString(R.string.this_should_be_the_address_were_the_vehicle_is_registered)
+            binding.txtThisShouldBeVehicle.text =
+                getString(R.string.this_should_be_the_address_were_the_vehicle_is_registered)
         }
 
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
@@ -63,10 +64,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             R.id.btnFindAddress -> {
                 validation()
             }
+
             R.id.btnEnterAddressManually -> {
                 val bundle = Bundle()
                 findNavController().navigate(
-                    R.id.action_createAccountPostCodeNew_to_ManualAddress,bundle
+                    R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle
                 )
             }
 
@@ -75,9 +77,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     private fun validation() {
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
-            NewCreateAccountRequestModel.zipCode=binding.inputPostCode.getText().toString()
+            NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
             findNavController().navigate(
-                R.id.action_createAccountPostCodeNew_to_selectaddressfragment)
+                R.id.action_createAccountPostCodeNew_to_selectaddressfragment
+            )
         } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }
@@ -103,19 +106,20 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            val length = binding.inputPostCode.getText().toString().trim().length
-            val string=binding.inputPostCode.getText().toString().trim()
-            val finalString=string.replace(" ","")
 
-            if (finalString.isNotEmpty() && finalString.length > 4) {
-                requiredPostCode = true
-                binding.inputPostCode.removeError()
-            }else{
-                requiredPostCode = false
-                if(length==0){
-                    binding.inputPostCode.setErrorText(getString(R.string.please_enter_postcode))
-                }else {
+            requiredPostCode = if (binding.inputPostCode.getText().toString().trim().isEmpty()) {
+                binding.inputPostCode.setErrorText(getString(R.string.str_post_code_error_message))
+                false
+            } else {
+                val string = binding.inputPostCode.getText().toString().trim()
+                val finalString = string.replace(" ", "")
+                if (finalString.length < 4 || finalString.length > 11) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+                    false
+
+                } else {
+                    binding.inputPostCode.removeError()
+                    true
                 }
             }
 
