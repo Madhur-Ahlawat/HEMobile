@@ -50,33 +50,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if(plateNumber.isNotEmpty()){
             binding.findVehicle.isEnabled = true
         }
-        NewCreateAccountRequestModel.isExempted=false
-        NewCreateAccountRequestModel.isRucEligible=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
-        /*requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        mFromKey = arguments?.getInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE, 0)!!
-        if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
-            nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
-            *//*binding.editNumberPlate.setText(
-                nonUKVehicleModel?.vehiclePlate ?: "",
-                TextView.BufferType.EDITABLE
-            )*//*
-            Logg.logging(
-                "NotVehicle",
-                "bundle CreateAccountFindVehicleFragment nonUKVehicleModel   if cond mFromKey"
-            )
 
-        }*/
 
-        /* Logg.logging(
-             "NotVehicle",
-             "bundle CreateAccountFindVehicleFragment nonUKVehicleModel data $nonUKVehicleModel"
-         )
-         Logg.logging(
-             "NotVehicle",
-             "bundle CreateAccountFindVehicleFragment mFromKey data $mFromKey"
-         )*/
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -84,7 +59,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
-
+        NewCreateAccountRequestModel.isExempted=false
+        NewCreateAccountRequestModel.isRucEligible=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i]) &&
@@ -119,12 +97,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun observer() {
         if (!isViewCreated) {
-            NewCreateAccountRequestModel.isExempted=false
-            NewCreateAccountRequestModel.isRucEligible=false
-            NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+
         }
         isViewCreated = true
     }
@@ -157,35 +133,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
     }
 
-    private fun businessAccountVehicle(country: String) {
-//        requestModel?.plateCountryType = country
-//        requestModel?.vehicleNo = binding.editNumberPlate.getText().toString()
-
-//        val bundle = Bundle()
-//        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-//        Logg.logging("NotVehicle", "bundle CreateAccountFindVehicleFragment country $country")
-//        findNavController().navigate(
-//            R.id.action_findVehicleFragment_to_businessVehicleUKListFragment,
-//            bundle
-//        )
-
-        /*if (country == "UK")
-            getVehicleDataFromDVRM()
-        else {
-            val bundle = Bundle()
-            bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-            findNavController().navigate(
-                R.id.action_findVehicleFragment_to_businessVehicleNonUKMakeFragment,
-                arguments
-            )
-        }*/
-    }
-
-    /*   private fun getVehicleDataFromDVRM() {
-           loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-           isObserverBack = true
-           viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
-       }*/
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
 
@@ -231,7 +178,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             )
                         } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
                             NewCreateAccountRequestModel.isRucEligible = true
-                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+                            if (apiData.isNotEmpty()) {
+                                bundle.putParcelable(
+                                    Constants.VEHICLE_DETAIL,
+                                    apiData[0]
+                                )
+                            }
+
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
 
                         }
 
@@ -272,7 +226,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
         when (resource) {
             is Resource.Success -> {
-
                 viewModel.getNewVehicleData(
                     binding.editNumberPlate.getText().toString().trim(),
                     Constants.AGENCY_ID.toInt()

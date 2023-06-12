@@ -143,7 +143,7 @@
     <string name="str_make_another_payment">Make another payment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="str_add_vehicle">Add vehicle</string>
+    <string name="str_add_vehicle">Add Vehicle</string>
     <string name="str_add_vehicles">Add vehicles</string>
     <string name="str_add_upto_five_vehicles">You can add up to five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
@@ -1118,6 +1118,10 @@
     <string name="str_non_uk_phoneNumber_error_message">The non-UK phone number entered must be between 8 and 15 digits</string>
     <string name="maximum_number_of_vehicles_have_been_registered_against_the_account">Maximum number of vehicles have been registered against the account</string>
     <string name="you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
+
+    <!--Add Vehicle Dialog Message-->
+    <string name="str_no_vehicle">No Vehicles</string>
+    <string name="str_you_must_at_least_one_vehicle">You must register at least one vehicle to create an account.</string>
 
 
 </resources>
