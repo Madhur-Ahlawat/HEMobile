@@ -1,99 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <data>
+
         <variable
             name="userInfoModel"
             type="com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel.UserInfoModel" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/margin_20dp"
-        android:paddingTop="@dimen/margin_18dp"
-        android:paddingEnd="@dimen/margin_20dp"
-        >
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <TextView
-            android:id="@+id/txtSignUp"
-            style="@style/MediumTextBlack"
-            android:layout_width="0dp"
-            android:text="@string/what_is_your_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.conduent.apollo.ui.CMTextInput
-            android:id="@+id/inputFirstName"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="0dp"
-            style="@style/input_text"
-            app:maxLength="50"
-            app:labelText="@string/primary_account_contact_first_name"
-            app:inputType="text"
-            app:imeOptions="actionNext"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_18dp">
 
-        <com.conduent.apollo.ui.CMTextInput
-            android:layout_width="0dp"
-            android:id="@+id/inputLastName"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:headingText="@string/last_name"
-            app:maxLength="50"
-            app:labelText="@string/primary_account_contact_last_name"
-            style="@style/input_text"
-            app:inputType="text"
-            app:imeOptions="actionNext"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputFirstName" />
+            <TextView
+                android:id="@+id/txtSignUp"
+                style="@style/MediumTextBlack"
+                android:layout_width="0dp"
+                android:text="@string/what_is_your_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtCompanyName"
-            style="@style/MediumTextBlack"
-            android:layout_width="0dp"
-            android:text="@string/what_is_your_company_name"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputLastName" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/inputFirstName"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="0dp"
+                app:imeOptions="actionNext"
+                app:inputType="text"
+                app:labelText="@string/primary_account_contact_first_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
 
-        <com.conduent.apollo.ui.CMTextInput
-            android:id="@+id/inputCompanyName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="0dp"
-            app:maxLength="50"
-            style="@style/input_text"
-            app:inputType="text"
-            app:imeOptions="actionDone"
-            app:labelText="@string/should_be_company_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/inputLastName"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:imeOptions="actionNext"
+                app:inputType="text"
+                app:labelText="@string/primary_account_contact_last_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputFirstName"
+                app:maxLength="50" />
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btnNext"
-            style="@style/PrimaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:text="@string/str_continue"
-            app:isEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/inputCompanyName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/txtCompanyName"
+                style="@style/MediumTextBlack"
+                android:layout_width="0dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/what_is_your_company_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLastName" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/inputCompanyName"
+                style="@style/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="0dp"
+                app:imeOptions="actionDone"
+                app:inputType="text"
+                app:labelText="@string/should_be_company_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCompanyName"
+                app:maxLength="50" />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnNext"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:text="@string/str_continue"
+                app:isEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputCompanyName" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </layout>

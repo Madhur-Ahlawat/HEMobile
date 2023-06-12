@@ -14,15 +14,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.account.NonUKVehicleModel
-import com.conduent.nationalhighways.data.model.account.RetrievePlateInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
@@ -32,17 +29,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(),
     View.OnClickListener {
 
-    private var isAccountVehicle = false
     private var isViewCreated = false
 
-    //    private var requestModel: CreateAccountRequestModel? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var isObserverBack = false
     private var loader: LoaderDialog? = null
-    private var retrieveVehicle: RetrievePlateInfoDetails? = null
-    private var nonUKVehicleModel: NonUKVehicleModel? = null
     private var time = (1 * 1000).toLong()
-//    private var mFromKey = 0
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -57,29 +49,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         NewCreateAccountRequestModel.isExempted=false
         NewCreateAccountRequestModel.isRucEligible=false
         NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-        /*requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
-        mFromKey = arguments?.getInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE, 0)!!
-        if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
-            nonUKVehicleModel = arguments?.getParcelable(Constants.NON_UK_VEHICLE_DATA)
-            *//*binding.editNumberPlate.setText(
-                nonUKVehicleModel?.vehiclePlate ?: "",
-                TextView.BufferType.EDITABLE
-            )*//*
-            Logg.logging(
-                "NotVehicle",
-                "bundle CreateAccountFindVehicleFragment nonUKVehicleModel   if cond mFromKey"
-            )
-
-        }*/
-
-        /* Logg.logging(
-             "NotVehicle",
-             "bundle CreateAccountFindVehicleFragment nonUKVehicleModel data $nonUKVehicleModel"
-         )
-         Logg.logging(
-             "NotVehicle",
-             "bundle CreateAccountFindVehicleFragment mFromKey data $mFromKey"
-         )*/
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -149,21 +118,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 checkForDuplicateVehicle(numberPlate)
 
-//                businessAccountVehicle(binding.editNumberPlate.getText().toString().trim())
 
-                /*if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
-
-                } else {
-                    val country = ""
-                    if (binding.editNumberPlate.getText().toString().isNotEmpty()) {
-                        requestModel?.plateCountryType = country
-
-                        businessAccountVehicle(country)
-
-                    } else {
-                        requireContext().showToast("Please enter your vehicle number")
-                    }
-                }*/
 
             }
         }
@@ -221,7 +176,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                         if (it[0]?.isRUCEligible == "y" || it[0]?.isRUCEligible == "Y") {
                             if (it.isNotEmpty()) {
-//                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
                                     it[0]
@@ -245,7 +199,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 is Resource.DataError -> {
-                    //   ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     isObserverBack = false
                     NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
@@ -261,16 +214,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun checkForDuplicateVehicle(plateNumber: String) {
-        // retrieveVehicle = plateInfo
-        /*
-                plateInfo.apply {
-        */
+
         val vehicleValidReqModel = ValidVehicleCheckRequest(
-            plateNumber, /*requestModel?.plateCountryType*/"UK", "STANDARD",
+            plateNumber, "UK", "STANDARD",
             "2022", "model", "make", "colour", "2", "HE"
         )
         viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
-        // }
+
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {

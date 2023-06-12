@@ -41,7 +41,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.twoStepVerification.text = getString(R.string.no)
         }
 
-        binding.address.text = dataModel.address
+        binding.address.text = dataModel.addressline1
         binding.emailAddress.text = dataModel.emailAddress
         binding.mobileNumber.text = dataModel.mobileNumber
         if(dataModel.prePay){

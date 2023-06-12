@@ -1012,7 +1012,7 @@
     <string name="enter_contact_first_name">Enter the primary contact first name</string>
     <string name="enter_contact_last_name">Enter the primary contact last name</string>
     <string name="postcode_must_be_between_4_and_10_characters">Postcode must be between 4 and 10 characters</string>
-    <string name="str_six_digit_security_code">6 Digit Security Code</string>
+    <string name="str_six_digit_security_code">6 digit security code</string>
     <string name="phone_number">Phone number</string>
     <string name="str_what_is_your_number">What is your phone number?</string>
     <string name="str_phone_number">Phone number</string>
@@ -1067,9 +1067,53 @@
     <string name="str_add_another">ADD ANOTHER VEHICLE</string>
     <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
 
+    <!--First,Last Name Error Message-->
+    <string name="str_first_name_error_message">First name must only include letters a to z, and special characters such as hyphens</string>
+    <string name="str_last_name_error_message">Last name must only include letters a to z, and special characters such as hyphens</string>
+    <string name="str_first_name_length_error_message">First name must be 50 characters or fewer</string>
+    <string name="str_last_name_length_error_message">Last name must be 50 characters or fewer</string>
+    <string name="str_enter_the_company_name">Enter the company name</string>
+    <string name="str_company_name_error_message">Company name must be 50 characters or fewer</string>
 
+    <!-- Manual Address Error Message-->
+    <string name="str_building_error_message">Enter a building number and street </string>
+    <string name="str_building_number_error_message">Building number and street must be 200 characters or fewer</string>
+    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_address_line2_length_error_message">Address line 2 must be 100 characters or fewer</string>
+    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_town_city_error_message">Enter a town or city </string>
+    <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
+    <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>
+    <string name="str_post_code_character_allowed">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
 
+    <!--Email Error Message-->
+    <string name="str_email_error_message">Enter your email address</string>
+    <string name="str_email_format_error_message">Enter an email address in the correct format, like name@example.com</string>
+    <string name="str_email_already_associated_with_other_account">An account with this email address already exists</string>
+    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more </string>
+    <string name="str_email_length_more_than_100">Email address must be 64 100 characters or fewer</string>
+    <string name="str_email_disallowed_character">Email address must not include [disallowed character]</string>
 
+    <!--Verify Email Error Message-->
+    <string name="str_code_empty">Enter the 6-digit security code</string>
+    <string name="str_security_code_expired_message">Security code has expired</string>
+    <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
+
+    <!--Create Password Error Message-->
+    <string name="str_enter_your_password">Enter your password</string>
+    <string name="password_must_be_8_characters">Password must be 8 characters or more</string>
+    <string name="str_password_must_be_64_character_less">Password must be 64 characters or less</string>
+    <string name="str_password_must_contain_at_least_one_character">Password must contain at least 1 number</string>
+    <string name="str_password_must_least_contain_one_upper_case">Password must contain at least 1 upper case letter </string>
+    <string name="str_password_must_least_contain_one_lower_case">Password must contain at least 1 lower case letter</string>
+    <string name="str_password_must_not_include_disallowed_character">Password must not include [disallowed character]</string>
+    <string name="str_confirm_password_error_message">Confirm your password</string>
+    <string name="str_your_password_must_match">Your passwords must match</string>
+
+    <!--Mobile Number Error Message-->
+    <string name="str_phoneNumber_error_message">Enter your mobile phone number</string>
+    <string name="str_uk_phoneNumber_error_message">The UK mobile phone number entered is invalid, please try again</string>
+    <string name="str_non_uk_phoneNumber_error_message">The non-UK phone number entered must be between 8 and 15 digits</string>
 
 
 </resources>

@@ -38,6 +38,8 @@ import com.conduent.nationalhighways.data.model.profile.*
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
 import com.conduent.nationalhighways.utils.common.Constants.AGENCY_ID
 import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
@@ -349,6 +351,9 @@ interface ApiService {
         @Body request: ValidVehicleCheckRequest?,
         @Query("agencyId") agencyId: Int?
     ): Response<String?>?
+
+    @POST(LRDS_ELIGIBILITY_CHECK)
+    suspend fun LrdsEligibityCheck(@Body request: LrdsEligibiltyRequest):Response<LrdsEligibilityResponse?>
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateAccountSettingPrefs(

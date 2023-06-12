@@ -48,7 +48,7 @@
             style="@style/input_text"
             app:maxLength="6"
             app:labelText="@string/str_six_digit_security_code"
-            app:inputType="text"
+            app:inputType="number"
             app:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

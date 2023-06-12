@@ -31,9 +31,6 @@ import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 
-/**
- * Created by Mohammed Sameer Ahmad .
- */
 @AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
     View.OnClickListener, OnRetryClickListener {
@@ -41,7 +38,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var requiredFirstName = false
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
-    private var requestModel:NewCreateAccountRequestModel?=null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var isViewCreated: Boolean = false
@@ -54,20 +50,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        navFlow=arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         binding.inputCountry.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
-        if (requestModel?.communicationTextMessage==false&&requestModel?.twoStepVerification==false){
-           binding.txtTitleTop.text=getString(R.string.str_what_is_your_number)
-           binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
-           binding.txtBottom.visibility=View.GONE
-        }else{
+        if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+            binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
+            binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
+            binding.txtBottom.visibility = View.GONE
+        } else {
             binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
-            binding.txtTitleTop.text=getString(R.string.str_what_mobile_number)
-            binding.txtBottom.visibility=View.VISIBLE
-
+            binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
+            binding.txtBottom.visibility = View.VISIBLE
 
 
         }
@@ -100,9 +95,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 response.data?.forEach {
                     it?.value?.let { it1 -> countriesCodeList.add(it1) }
                 }
-                countriesCodeList.sortWith(
-                    compareBy(String.CASE_INSENSITIVE_ORDER) { it }
-                )
+                countriesCodeList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
 
                 if (countriesCodeList.contains(Constants.UK_CODE)) {
@@ -116,9 +109,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)
             }
+
             else -> {
             }
 
@@ -129,18 +124,15 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                /*requestModel.userInfoModel.firstName = binding.inputCountry.getText().toString()
-                requestModel.userInfoModel.lastName = binding.inputMobileNumber.getText().toString()
+                if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+                    findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
 
-                val bundle = Bundle()
-                bundle.putParcelable(accountRequestModelKey, requestModel)
-                */
-                hitApi()
-                /*isPersonalAccount?.let { bundle.putBoolean(Constants.IS_PERSONAL_ACCOUNT, it) }
-                findNavController().navigate(
-                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
-                    bundle
-                )*/
+
+                } else {
+                    hitApi()
+
+                }
+
 
             }
         }
@@ -152,35 +144,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
         override fun beforeTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
+            charSequence: CharSequence?, start: Int, count: Int, after: Int
         ) {
         }
 
         override fun onTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
+            charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-            /*when (view) {
-                binding.inputCountry.getEditText() -> {
-                    requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
-                }
-                binding.inputMobileNumber.getEditText() -> {
-                    requiredLastName = binding.inputMobileNumber.getText()?.isNotEmpty() == true
-                }
-            }*/
+
             requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
-            /*val value = binding.inputMobileNumber.getText()?.length
-            if (value != null) {
-                requiredLastName = value > 9
-            }*/
+
 
             val number = binding.inputMobileNumber.getText()
-//            val validNumber = "^[+]?[0-9]{8,15}$"
             val validNumber = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
 
             if (number != null) {
@@ -204,8 +179,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
-            Constants.SMS,
-            binding.inputMobileNumber.getText().toString().trim()
+            Constants.SMS, binding.inputMobileNumber.getText().toString().trim()
         )
         createAccountViewModel.emailVerificationApi(request)
 
@@ -221,35 +195,29 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 val bundle = Bundle()
                 bundle.putParcelable(
-                    "data",
-                    RequestOTPModel(
-                        Constants.SMS,
-                        binding.inputMobileNumber.getText().toString().trim()
+                    "data", RequestOTPModel(
+                        Constants.SMS, binding.inputMobileNumber.getText().toString().trim()
                     )
                 )
 
                 bundle.putParcelable(
-                    "response",
-                    SecurityCodeResponseModel(
-                        resource.data?.emailStatusCode,
-                        0L,
-                        resource.data?.referenceId,
-                        true
+                    "response", SecurityCodeResponseModel(
+                        resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true
                     )
                 )
 
-// Here need to pass nav flow key
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 findNavController().navigate(
-                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
-                    bundle
+                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle
                 )
             }
+
             is Resource.DataError -> {
 
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 
             }
+
             else -> {
             }
         }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/findYourVehicleFragment">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
    <!-- Step 1 -->
@@ -498,6 +498,13 @@
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountEligibleLRDS2"
             app:destination="@id/createAccountEligibleLRDS" />
+        <action
+            android:id="@+id/action_selectaddressfragment_to_createAccountTypesFragment"
+            app:destination="@+id/createAccountTypes"
+            />
+        <action
+            android:id="@+id/action_selectaddressfragment_to_forgotPasswordFragment"
+            app:destination="@+id/forgotPasswordFragment"/>
         <argument
             android:name="isPersonalAccount"
             app:argType="boolean"
@@ -593,6 +600,10 @@
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
             app:destination="@+id/forgotOtpFragment"/>
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_createVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"/>
+
     </fragment>
 
     <fragment
@@ -619,6 +630,14 @@
          <action
              android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
              app:destination="@id/createAccountEligibleLRDS" />
+
+         <action
+             android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
+             app:destination="@+id/createAccountTypes"
+             />
+         <action
+             android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
+             app:destination="@+id/forgotPasswordFragment"/>
 
 
      </fragment>

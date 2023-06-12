@@ -27,6 +27,7 @@ object Constants {
     const val NOMINATED_ACCOUNT = "NOMINATED"
     const val PENDING_STATUS = "PENDING"
     const val CATEGORY_RECEIPTS = "Receipts"
+    const val LRDS_ELIGIBILITY_CHECK="lrdsEligibilityCheck"
 
     const val COUNTRY_TYPE_UK = "UK"
     const val COUNTRY_TYPE_NON_UK = "NON UK"

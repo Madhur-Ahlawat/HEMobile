@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -14,27 +15,38 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.databinding.FragmentManualAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.viewModel.LrdsEligibilityViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
+class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     View.OnClickListener, DropDownItemSelectListener {
 
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
-    private var requiredAddress : Boolean = false
-    private var requiredCityTown : Boolean = false
-    private var requiredPostcode : Boolean = false
-    private var requiredCountry : Boolean = false
+    private var requiredAddress: Boolean = false
+    private var requiredAddress2:Boolean =false
+    private var requiredCityTown: Boolean = false
+    private var requiredPostcode: Boolean = false
+    private var requiredCountry: Boolean = false
+    private var country: String = ""
+    private var isViewCreated: Boolean = false
+
+    private val lrdsViewModel: LrdsEligibilityViewModel by viewModels()
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentManualAddressBinding.inflate(inflater, container, false)
@@ -43,19 +55,19 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if(NewCreateAccountRequestModel.personalAccount){
+        if (NewCreateAccountRequestModel.personalAccount) {
             binding.txtHeading.text = getString(R.string.personal_address)
         }
 
-        if (NewCreateAccountRequestModel.zipCode.isNotEmpty()){
+        if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
 
         }
 
-        binding.address.editText.addTextChangedListener(GenericTextWatcher())
-        binding.address2.editText.addTextChangedListener(GenericTextWatcher())
-        binding.townCity.editText.addTextChangedListener(GenericTextWatcher())
-        binding.postCode.editText.addTextChangedListener(GenericTextWatcher())
+        binding.address.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.address2.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.townCity.editText.addTextChangedListener(GenericTextWatcher(2))
+        binding.postCode.editText.addTextChangedListener(GenericTextWatcher(3))
 
         binding.country.dropDownItemSelectListener = this
 
@@ -74,21 +86,39 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     }
 
 
-
     override fun initCtrl() {
         binding.btnFindAddress.setOnClickListener(this)
         viewModel.getCountries()
     }
 
     override fun observer() {
-        observe(viewModel.countriesList, ::getCountriesList)
+        if (!isViewCreated) {
+            observe(viewModel.countriesList, ::getCountriesList)
+            observe(lrdsViewModel.lrdsEligibilityCheck, ::handleLrdsApiResponse)
+        }
+
+
+        isViewCreated = true
+
+
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.btnFindAddress->{
-                findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+            R.id.btnFindAddress -> {
+
+                NewCreateAccountRequestModel.addressline1 = binding.address.getText().toString()
+                NewCreateAccountRequestModel.addressline2 = binding.address2.getText().toString()
+                NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
+                NewCreateAccountRequestModel.country =
+                    binding.country.selectedItemDescription.toString()
+                NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
+                hitlrdsCheckApi()
+
+
             }
         }
     }
@@ -108,25 +138,45 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
                 )
 
 
-                if(countriesList.contains(UK_COUNTRY)){
+                if (countriesList.contains(UK_COUNTRY)) {
                     countriesList.remove(UK_COUNTRY)
-                    countriesList.add(0,UK_COUNTRY)
+                    countriesList.add(0, UK_COUNTRY)
                 }
 
                 binding.apply {
                     country.dataSet.addAll(countriesList)
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)
             }
+
             else -> {
             }
 
         }
     }
 
-    inner class GenericTextWatcher : TextWatcher {
+    private fun hitlrdsCheckApi() {
+        val lrdsEligibilityCheck = LrdsEligibiltyRequest()
+        lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
+        lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
+        lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
+        lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
+        lrdsEligibilityCheck.zipcode1 = NewCreateAccountRequestModel.zipCode
+        lrdsEligibilityCheck.action = Constants.LRDS_ELIGIBILITY_CHECK
+
+
+
+
+        lrdsViewModel.getLrdsEligibilityResponse(lrdsEligibilityCheck)
+    }
+
+
+
+
+    inner class GenericTextWatcher(val index: Int) : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -139,23 +189,101 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
             charSequence: CharSequence?,
             start: Int,
             before: Int,
-            count: Int) {
+            count: Int
+        ) {
+            when (index) {
+                0 -> {
+                    addressErrorMessage()
+                }
+                1->{
+                    address2ErrorMessage()
+                }
+                2 -> {
+                    townCityErrorMessage()
+                }
+                3 -> {
+                    postCodeErrorMessage()
+                }
+            }
 
-            requiredAddress = binding.address.getText()?.isNotEmpty() == true
-            requiredCityTown = binding.townCity.getText()?.isNotEmpty() == true
-            requiredPostcode = binding.postCode.getText()?.isNotEmpty() == true
+
 
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredAddress  && requiredCityTown && requiredPostcode && requiredCountry) {
-                binding.btnFindAddress.enable()
-            } else {
-                binding.btnFindAddress.disable()
-            }
+
         }
 
 
+    }
+
+
+
+    private fun addressErrorMessage() {
+        if (binding.address.getText().toString().trim().isEmpty()){
+            binding.address.setErrorText(getString(R.string.str_building_error_message))
+            requiredAddress=false
+        }else{
+            if (binding.address.getText().toString().trim().length<200){
+                requiredAddress = if (binding.address.getText().toString().contains(Utils.addressSpecialCharacter)){
+                    binding.address.setErrorText(getString(R.string.str_building_number_character_allowed))
+                    false
+                }else{
+                    binding.address.removeError()
+                    true
+                }
+
+            }else{
+                requiredAddress = if (binding.address.getText().toString().trim().length>200){
+                    binding.address.setErrorText(getString(R.string.str_building_number_error_message))
+                    false
+                }else{
+                    binding.address.removeError()
+                    true
+                }
+            }
+        }
+        checkButton()
+
+    }
+
+    private fun address2ErrorMessage() {
+        if (binding.address2.getText().toString().isEmpty()){
+            binding.address2.removeError()
+            requiredAddress2=true
+        }
+        if (binding.address2.getText().toString().trim().length<100){
+            if(binding.address2.getText().toString().trim().contains(Utils.addressSpecialCharacter)){
+                binding.address2.setErrorText(getString(R.string.str_address_line2_character_allowed))
+                requiredAddress2=false
+
+            }else{
+                binding.address2.removeError()
+                requiredAddress2=true
+            }
+        }else{
+            binding.address2.setErrorText(getString(R.string.str_address_line2_length_error_message))
+            requiredAddress2=false
+        }
+
+        checkButton()
+
+    }
+    private fun postCodeErrorMessage() {
+
+
+    }
+
+    private fun townCityErrorMessage() {
+
+    }
+
+    private fun checkButton(){
+        if (requiredAddress &&requiredAddress2&& requiredCityTown && requiredPostcode && requiredCountry) {
+            binding.btnFindAddress.enable()
+        } else {
+            binding.btnFindAddress.disable()
+        }
     }
 
     override fun onHashMapItemSelected(key: String?, value: Any?) {
@@ -163,6 +291,52 @@ class ManualAddressFragment :  BaseFragment<FragmentManualAddressBinding>(),
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-       requiredCountry = true
+        requiredCountry = true
+        country = selectedItem
+        checkButton()
+
     }
+
+    private fun handleLrdsApiResponse(response: Resource<LrdsEligibilityResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+
+        when (response) {
+            is Resource.Success -> {
+
+                if (response.data?.lrdsEligible.equals("true", true)) {
+                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+
+                } else {
+                    if (NewCreateAccountRequestModel.personalAccount) {
+                        findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment)
+
+                    } else {
+                        val bundle = Bundle()
+                        bundle.putString(
+                            Constants.NAV_FLOW_KEY,
+                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                        )
+                        findNavController().navigate(
+                            R.id.action_manualaddressfragment_to_forgotPasswordFragment,
+                            bundle
+                        )
+
+                    }
+                }
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+
+            else -> {
+
+            }
+        }
+
+    }
+
 }

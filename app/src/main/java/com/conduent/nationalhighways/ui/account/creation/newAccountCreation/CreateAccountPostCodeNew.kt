@@ -103,19 +103,19 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             before: Int,
             count: Int
         ) {
-            val length = binding.inputPostCode.getText()?.length
+            val length = binding.inputPostCode.getText().toString().trim().length
+            val string=binding.inputPostCode.getText().toString().trim()
+            val finalString=string.replace(" ","")
 
-            if (length != null) {
-                if (binding.inputPostCode.getText()?.isNotEmpty() == true && length > 4) {
-                    requiredPostCode = true
-                    binding.inputPostCode.error = ""
-                }else{
-                    requiredPostCode = false
-                    if(length==0){
-                        binding.inputPostCode.error = getString(R.string.please_enter_postcode)
-                    }else {
-                        binding.inputPostCode.error = getString(R.string.postcode_must_be_between_4_and_10_characters)
-                    }
+            if (finalString.isNotEmpty() && finalString.length > 4) {
+                requiredPostCode = true
+                binding.inputPostCode.removeError()
+            }else{
+                requiredPostCode = false
+                if(length==0){
+                    binding.inputPostCode.setErrorText(getString(R.string.please_enter_postcode))
+                }else {
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                 }
             }
 
