@@ -208,9 +208,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                         }
 
-                        if (apiData[0]?.isRUCEligible == "y" || apiData[0]?.isRUCEligible == "Y") {
+                        if (apiData[0]?.isRUCEligible?.equals("y",true)==true) {
                             if (apiData.isNotEmpty()) {
-//                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
                                     apiData[0]
