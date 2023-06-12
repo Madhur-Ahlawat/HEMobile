@@ -1123,6 +1123,7 @@
     <!--Add Vehicle Dialog Message-->
     <string name="str_no_vehicle">No Vehicles</string>
     <string name="str_you_must_at_least_one_vehicle">You must register at least one vehicle to create an account.</string>
+    <string name="vehicle_registration_number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens_and_spaces">Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces</string>
 
 
 </resources>

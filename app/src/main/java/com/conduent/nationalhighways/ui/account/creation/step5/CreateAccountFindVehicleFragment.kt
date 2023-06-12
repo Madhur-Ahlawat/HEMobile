@@ -98,7 +98,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }else{
                 if (length <1 ) {
                     binding.findVehicle.isEnabled = false
-                    binding.editNumberPlate.setErrorText(getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle))
+                    binding.editNumberPlate.setErrorText(getString(R.string.vehicle_registration_number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens_and_spaces))
                 } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.specialCharacter)) {
                     binding.editNumberPlate.setErrorText(getString(R.string.str_first_name_error_message))
                     binding.findVehicle.isEnabled = false
