@@ -57,6 +57,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         NewCreateAccountRequestModel.isExempted=false
         NewCreateAccountRequestModel.isRucEligible=false
         NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
         /*requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         mFromKey = arguments?.getInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE, 0)!!
         if (mFromKey == Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE) {
@@ -208,23 +209,33 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (isObserverBack) {
             when (resource) {
                 is Resource.Success -> {
-                    resource.data?.let {
+                    resource.data?.let { apiData ->
                         val bundle = Bundle()
-                        Log.d("responseData", Gson().toJson(it))
+                        Log.d("responseData", Gson().toJson(apiData))
 
-                        if (it[0]?.isExempted?.equals("Y", true) == true) {
+                        val accountData = NewCreateAccountRequestModel
+                        val vehicleList = accountData.vehicleList
+                        if(vehicleList.contains(apiData[0])){
+                            accountData.isVehicleAlreadyAddedLocal = true
+                            val bundleData = Bundle()
+                            apiData[0].let {  bundleData.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
+                            return
+                        }
+
+                        if (apiData[0]?.isExempted?.equals("Y", true) == true) {
                             NewCreateAccountRequestModel.isExempted = true
 
                             findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
 
                         }
 
-                        if (it[0]?.isRUCEligible == "y" || it[0]?.isRUCEligible == "Y") {
-                            if (it.isNotEmpty()) {
+                        if (apiData[0]?.isRUCEligible == "y" || apiData[0]?.isRUCEligible == "Y") {
+                            if (apiData.isNotEmpty()) {
 //                            bundle.putParcelableArrayList(Constants.CREATE_ACCOUNT_DATA, it1)
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
-                                    it[0]
+                                    apiData[0]
                                 )
                             }
 
@@ -232,7 +243,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
                             )
-                        } else if (it[0]?.isRUCEligible?.equals("N", true) == true) {
+                        } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
                             NewCreateAccountRequestModel.isRucEligible = true
                             findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
 
