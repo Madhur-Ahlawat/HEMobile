@@ -20,7 +20,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -247,10 +246,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         accountData.isVehicleAlreadyAddedLocal = true
                         val bundle = Bundle()
                         nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_max_vehicleFragment,bundle)
+                        findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
                     } else {
                         vehicleList.add(it)
-
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
                     }
 
@@ -259,12 +257,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     val newVehicleInfoDetails = NewVehicleInfoDetails()
                     if (vehicleList.size > 0) {
                         for (i in 0 until vehicleList.size) {
-                            if (vehicleList[i].plateNumber == binding.vehiclePlateNumber.text.toString()) {
-                                ErrorUtil.showError(
-                                    binding.root,
-                                    getString(R.string.the_vehicle_has_already_been_added)
-                                )
-
+                            val numberPlate = binding.vehiclePlateNumber.text.toString()
+                            if (vehicleList[i].plateNumber == numberPlate) {
+                                accountData.isVehicleAlreadyAddedLocal = true
+                                val bundle = Bundle()
+                                bundle.putString(Constants.PLATE_NUMBER, numberPlate)
+                                findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
                             }
                         }
 

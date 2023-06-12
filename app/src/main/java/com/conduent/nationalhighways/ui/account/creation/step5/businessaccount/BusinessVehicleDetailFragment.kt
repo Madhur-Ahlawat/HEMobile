@@ -37,27 +37,27 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
-           // countryRegistration.text = requestModel?.plateCountryType
-          //  groupName.text = nonUKVehicleModel?.vehicleGroup
+            // countryRegistration.text = requestModel?.plateCountryType
+            //  groupName.text = nonUKVehicleModel?.vehicleGroup
         }
 
-/*
-        binding.groupNameLayout.visible()
-        binding.groupNameDesc.visible()
-*/
+        /*
+                binding.groupNameLayout.visible()
+                binding.groupNameDesc.visible()
+        */
 
         if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
-/*
-            binding.groupTxtOptional.text = getString(R.string.group_name_optional)
-            binding.groupName.text = nonUKVehicleModel?.vehicleGroup
-            binding.groupNameDesc.text = getString(R.string.group_name_field)
-*/
+            /*
+                        binding.groupTxtOptional.text = getString(R.string.group_name_optional)
+                        binding.groupName.text = nonUKVehicleModel?.vehicleGroup
+                        binding.groupNameDesc.text = getString(R.string.group_name_field)
+            */
         } else {
-           /* binding.groupTxtOptional.text = getString(R.string.free_txt_name_optional)
-            binding.groupName.text = nonUKVehicleModel?.vehicleComments
-            binding.groupNameDesc.text =
-                getString(R.string.str_free_text_field_can_be_used_to_distingush)
-*/        }
+            /* binding.groupTxtOptional.text = getString(R.string.free_txt_name_optional)
+             binding.groupName.text = nonUKVehicleModel?.vehicleComments
+             binding.groupNameDesc.text =
+                 getString(R.string.str_free_text_field_can_be_used_to_distingush)
+ */        }
     }
 
     override fun initCtrl() {
@@ -77,41 +77,35 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                 val vehicleList = accountData.vehicleList
 
                 nonUKVehicleModel?.let {
-                    if(vehicleList.contains(nonUKVehicleModel)){
-                        accountData.isVehicleAlreadyAddedLocal = true
-                        val bundle = Bundle()
-                        nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_max_vehicleFragment,bundle)
-                    }else{
-                        vehicleList.add(it)
 
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
-                    }
+                    vehicleList.add(it)
+                    findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
+
 
                 }
 
 
-               /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
-                nonUKVehicleModel?.apply {
-                    val accountVehicleModel = CreateAccountVehicleModel(
-                        requestModel?.plateCountryType,
-                        "STANDARD", vehicleColor, "",
-                        vehicleMake, vehicleModel,
-                        requestModel?.vehicleNo, "2022", "HE",
-                        VehicleClassTypeConverter.toClassCode(vehicleClassDesc),
-                        vehicleGroup
-                    )
+                /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
+                 nonUKVehicleModel?.apply {
+                     val accountVehicleModel = CreateAccountVehicleModel(
+                         requestModel?.plateCountryType,
+                         "STANDARD", vehicleColor, "",
+                         vehicleMake, vehicleModel,
+                         requestModel?.vehicleNo, "2022", "HE",
+                         VehicleClassTypeConverter.toClassCode(vehicleClassDesc),
+                         vehicleGroup
+                     )
 
-                    vehicleList.add(accountVehicleModel)
-                    requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
-                }
-*/
-/*                val bundle = Bundle()
-                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                findNavController().navigate(
-                    R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen,
-                    bundle
-                )*/
+                     vehicleList.add(accountVehicleModel)
+                     requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
+                 }
+ */
+                /*                val bundle = Bundle()
+                                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen,
+                                    bundle
+                                )*/
             }
 
             R.id.notVehicle -> {

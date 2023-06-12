@@ -51,7 +51,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         if (value== Constants.REMOVE_VEHICLE){
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
-                findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment)
+                findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment,bundle)
         }else{
 
         }
@@ -82,12 +82,14 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
 
                 if(NewCreateAccountRequestModel.prePay){
                     if (vehicleList.size >= 10) {
+                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
                     } else {
                         findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                     }
                 }else {
                     if (vehicleList.size >= 50000) {
+                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
                     } else {
                         findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
