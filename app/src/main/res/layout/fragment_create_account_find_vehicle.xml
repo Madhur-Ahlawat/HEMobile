@@ -159,7 +159,6 @@
             android:layout_marginTop="20dp"
             android:padding="0dp"
             style="@style/input_text"
-            app:maxLength="10"
             app:inputType="text"
             app:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
