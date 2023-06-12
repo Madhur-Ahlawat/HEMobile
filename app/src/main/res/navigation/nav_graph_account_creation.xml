@@ -249,7 +249,7 @@
             app:destination="@id/addNewVehicleDetailsFragment"/>
         <action
             android:id="@+id/action_findVehicleFragment_to_maximumVehicleFragment"
-            app:destination="@+id/maximumVehicleFragment"/>
+            app:destination="@+id/maximumVehicleFragment" />
 
     </fragment>
 
@@ -693,6 +693,9 @@
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"/>
 
         <argument
             android:name="plateNumber"

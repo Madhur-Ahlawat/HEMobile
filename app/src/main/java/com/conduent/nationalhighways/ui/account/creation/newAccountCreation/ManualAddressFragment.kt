@@ -38,7 +38,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     private var countriesList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
     private var requiredAddress: Boolean = false
-    private var requiredAddress2:Boolean =false
+    private var requiredAddress2: Boolean = true
     private var requiredCityTown: Boolean = false
     private var requiredPostcode: Boolean = false
     private var requiredCountry: Boolean = false
@@ -174,8 +174,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     }
 
 
-
-
     inner class GenericTextWatcher(val index: Int) : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
@@ -195,17 +193,19 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 0 -> {
                     addressErrorMessage()
                 }
-                1->{
+
+                1 -> {
                     address2ErrorMessage()
                 }
+
                 2 -> {
                     townCityErrorMessage()
                 }
+
                 3 -> {
                     postCodeErrorMessage()
                 }
             }
-
 
 
         }
@@ -218,26 +218,27 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     }
 
 
-
     private fun addressErrorMessage() {
-        if (binding.address.getText().toString().trim().isEmpty()){
+        if (binding.address.getText().toString().trim().isEmpty()) {
             binding.address.setErrorText(getString(R.string.str_building_error_message))
-            requiredAddress=false
-        }else{
-            if (binding.address.getText().toString().trim().length<200){
-                requiredAddress = if (binding.address.getText().toString().contains(Utils.addressSpecialCharacter)){
+            requiredAddress = false
+        } else {
+            if (binding.address.getText().toString().trim().length < 200) {
+                requiredAddress = if (binding.address.getText().toString()
+                        .contains(Utils.addressSpecialCharacter)
+                ) {
                     binding.address.setErrorText(getString(R.string.str_building_number_character_allowed))
                     false
-                }else{
+                } else {
                     binding.address.removeError()
                     true
                 }
 
-            }else{
-                requiredAddress = if (binding.address.getText().toString().trim().length>200){
+            } else {
+                requiredAddress = if (binding.address.getText().toString().trim().length > 200) {
                     binding.address.setErrorText(getString(R.string.str_building_number_error_message))
                     false
-                }else{
+                } else {
                     binding.address.removeError()
                     true
                 }
@@ -248,38 +249,78 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     private fun address2ErrorMessage() {
-        if (binding.address2.getText().toString().isEmpty()){
+        if (binding.address2.getText().toString().isEmpty()) {
             binding.address2.removeError()
-            requiredAddress2=true
+            requiredAddress2 = true
         }
-        if (binding.address2.getText().toString().trim().length<100){
-            if(binding.address2.getText().toString().trim().contains(Utils.addressSpecialCharacter)){
+        requiredAddress2 = if (binding.address2.getText().toString().trim().length < 100) {
+            if (binding.address2.getText().toString().trim()
+                    .contains(Utils.addressSpecialCharacter)
+            ) {
                 binding.address2.setErrorText(getString(R.string.str_address_line2_character_allowed))
-                requiredAddress2=false
+                false
 
-            }else{
+            } else {
                 binding.address2.removeError()
-                requiredAddress2=true
+                true
             }
-        }else{
+        } else {
             binding.address2.setErrorText(getString(R.string.str_address_line2_length_error_message))
-            requiredAddress2=false
+            false
         }
 
         checkButton()
 
     }
-    private fun postCodeErrorMessage() {
 
+    private fun postCodeErrorMessage() {
+        requiredPostcode = if (binding.postCode.getText().toString().trim().isEmpty()) {
+            binding.postCode.setErrorText(getString(R.string.str_post_code_error_message))
+            false
+        } else {
+            val string = binding.postCode.getText().toString().trim()
+            val finalString = string.replace(" ", "")
+            if (finalString.length < 4 || finalString.length > 11) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+                false
+
+            } else {
+                binding.postCode.removeError()
+                true
+            }
+        }
+
+        checkButton()
 
     }
 
     private fun townCityErrorMessage() {
+        if (binding.townCity.getText().toString().trim().isEmpty()) {
+            binding.townCity.setErrorText(getString(R.string.str_town_city_error_message))
+            requiredCityTown = false
+        } else {
+            requiredCityTown = if (binding.townCity.getText().toString().trim().length < 50) {
 
+                if (binding.townCity.getText().toString().trim()
+                        .contains(Utils.addressSpecialCharacter)
+                ) {
+                    binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
+                    false
+                } else {
+                    binding.townCity.removeError()
+                    true
+                }
+            } else {
+                binding.townCity.setErrorText(getString(R.string.str_town_city_length_error_message))
+                false
+            }
+        }
+
+        checkButton()
     }
 
-    private fun checkButton(){
-        if (requiredAddress &&requiredAddress2&& requiredCityTown && requiredPostcode && requiredCountry) {
+    private fun checkButton() {
+        if (requiredAddress && requiredAddress2 && requiredCityTown && requiredPostcode && requiredCountry) {
             binding.btnFindAddress.enable()
         } else {
             binding.btnFindAddress.disable()

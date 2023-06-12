@@ -29,35 +29,17 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
 
-        Log.d("vehicleData",Gson().toJson(nonUKVehicleModel))
+        Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
 
         binding.apply {
-            regNum.text =nonUKVehicleModel?.plateNumber
+            regNum.text = nonUKVehicleModel?.plateNumber
             typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString())
             vehicleModel.text = nonUKVehicleModel?.vehicleModel
             vehicleMake.text = nonUKVehicleModel?.vehicleMake
             vehicleColor.text = nonUKVehicleModel?.vehicleColor
-            // countryRegistration.text = requestModel?.plateCountryType
-            //  groupName.text = nonUKVehicleModel?.vehicleGroup
         }
 
-        /*
-                binding.groupNameLayout.visible()
-                binding.groupNameDesc.visible()
-        */
 
-        if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT) {
-            /*
-                        binding.groupTxtOptional.text = getString(R.string.group_name_optional)
-                        binding.groupName.text = nonUKVehicleModel?.vehicleGroup
-                        binding.groupNameDesc.text = getString(R.string.group_name_field)
-            */
-        } else {
-            /* binding.groupTxtOptional.text = getString(R.string.free_txt_name_optional)
-             binding.groupName.text = nonUKVehicleModel?.vehicleComments
-             binding.groupNameDesc.text =
-                 getString(R.string.str_free_text_field_can_be_used_to_distingush)
- */        }
     }
 
     override fun initCtrl() {
@@ -85,42 +67,18 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                 }
 
 
-                /* val vehicleList: MutableList<CreateAccountVehicleModel?> = ArrayList()
-                 nonUKVehicleModel?.apply {
-                     val accountVehicleModel = CreateAccountVehicleModel(
-                         requestModel?.plateCountryType,
-                         "STANDARD", vehicleColor, "",
-                         vehicleMake, vehicleModel,
-                         requestModel?.vehicleNo, "2022", "HE",
-                         VehicleClassTypeConverter.toClassCode(vehicleClassDesc),
-                         vehicleGroup
-                     )
-
-                     vehicleList.add(accountVehicleModel)
-                     requestModel?.ftvehicleList = CreateAccountVehicleListModel(vehicleList)
-                 }
- */
-                /*                val bundle = Bundle()
-                                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                                findNavController().navigate(
-                                    R.id.action_businessVehicleDetailFragment_to_paymentSummaryScreen,
-                                    bundle
-                                )*/
             }
 
             R.id.notVehicle -> {
                 val bundle = Bundle()
-//                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
-//                bundle.putInt(Constants.FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE,Constants.FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE)
-//                Logg.logging("NotVehicle", "bundle requestModel data $requestModel")
-//                Logg.logging("NotVehicle", "bundle nonUKVehicleModel data $nonUKVehicleModel")
                 findNavController().navigate(
                     R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
                     bundle
                 )
             }
-            R.id.inCorrectVehicleNumber->{
+
+            R.id.inCorrectVehicleNumber -> {
                 findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment)
             }
         }

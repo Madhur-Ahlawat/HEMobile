@@ -143,7 +143,7 @@
     <string name="str_make_another_payment">Make another payment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="str_add_vehicle">Add vehicle</string>
+    <string name="str_add_vehicle">Add Vehicle</string>
     <string name="str_add_vehicles">Add vehicles</string>
     <string name="str_add_upto_five_vehicles">You can add up to five vehicles</string>
     <string name="str_vehicle_details">Vehicle details</string>
@@ -1066,6 +1066,7 @@
     <string name="str_add_to_account">ADD TO ACCOUNT</string>
     <string name="str_add_another">ADD ANOTHER VEHICLE</string>
     <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
+    <string name="str_effective_start_date">Effective start date</string>
 
     <!--First,Last Name Error Message-->
     <string name="str_first_name_error_message">First name must only include letters a to z, and special characters such as hyphens</string>
@@ -1084,6 +1085,7 @@
     <string name="str_town_city_error_message">Enter a town or city </string>
     <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
     <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>
+    <string name="str_post_code_error_message">Enter a postcode</string>
     <string name="str_post_code_character_allowed">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
 
     <!--Email Error Message-->
@@ -1117,6 +1119,10 @@
     <string name="maximum_number_of_vehicles_have_been_registered_against_the_account">Maximum number of vehicles have been registered against the account</string>
     <string name="you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
     <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
+
+    <!--Add Vehicle Dialog Message-->
+    <string name="str_no_vehicle">No Vehicles</string>
+    <string name="str_you_must_at_least_one_vehicle">You must register at least one vehicle to create an account.</string>
 
 
 </resources>
