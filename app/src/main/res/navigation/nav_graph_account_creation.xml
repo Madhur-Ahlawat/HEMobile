@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite">
+    app:startDestination="@id/topUpFragment">
 
 
    <!-- Step 1 -->
@@ -713,6 +713,24 @@
         <action
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/topUpFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TopUpFragment"
+        android:label="TopUpFragment"
+        tools:layout="@layout/fragment_top_up">
+
+        <action
+            android:id="@+id/action_topUpFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/fragment_top_up">
 
     </fragment>
 

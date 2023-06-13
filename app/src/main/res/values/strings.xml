@@ -156,7 +156,6 @@
     <string name="str_sub_title">Sub Title</string>
     <string name="str_confirm">Confirm</string>
     <string name="str_ur_vehicles">Your vehicles</string>
-    <string name="str_payment_amount">Payment amount</string>
     <string name="str_amount">£ 5.00</string>
     <string name="str_payable_crossings">Payable crossings</string>
     <string name="str_count">1</string>
@@ -488,7 +487,6 @@
     <string name="card_number">Card number</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="name_on_card">Name on card</string>
-    <string name="card_security_code">Card security code</string>
     <string name="hint_cvv">The last 3 digits on the back of the card</string>
     <string name="name_validation">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
     <string name="confirm_payment_amount">Confirm payment amount</string>
@@ -828,7 +826,6 @@
     <string name="txt_time">Time</string>
     <string name="str_number_plate">Number Plate</string>
     <string name="str_trip">Trip</string>
-    <string name="str_expiry_date">Expiry date</string>
     <string name="str_change_vehicle">Change Vehicle</string>
     <string name="str_enter_the_number_plate_you_wish">Enter the number plate you wish to associate to this payment</string>
     <string name="str_confirm_if_u_wish_to_associate_vehicle_no"><![CDATA[Confirm if wish to associate vehicle number plate <b>%s</b> to your payment reference : <b>%s</b>]]></string>
@@ -1123,6 +1120,32 @@
     <!--Add Vehicle Dialog Message-->
     <string name="str_no_vehicle">No Vehicles</string>
     <string name="str_you_must_at_least_one_vehicle">You must register at least one vehicle to create an account.</string>
+
+    <string name="str_what_your_top_up_low_balance">What are your top-up and low balance amounts?</string>
+    <string name="str_low_balance_threshold">Your low balance threshold</string>
+    <string name="str_if_your_balance_falls_below">If your balance falls below this amount, we’ll top it up</string>
+    <string name="str_low_balance">Low balance threshold</string>
+    <string name="str_minimum_amount">Minimum amount £5</string>
+    <string name="str_top_up_amount">Your top-up amount</string>
+    <string name="str_you_will_automatically_top_up">We\'ll automatically top-up your account with this amount</string>
+    <string name="top_up_amount">Top-up amount</string>
+    <string name="top_up_minimum_amount">Minimum amount £10</string>
+
+    <string name="str_how_do_you_want_to_pay">How do you want to pay?</string>
+    <string name="str_payment_amount">Payment amount</string>
+    <string name="str_name_on_card">Name on card</string>
+    <string name="str_card_number">Card Number</string>
+    <string name="str_accept_card_types">Accepted credit and debit card types</string>
+    <string name="str_expiry_date">Expiry Date</string>
+    <string name="card_security_code">Card Security Code</string>
+    <string name="last_three_digit">Last 3 or 4 digits on back of card</string>
+    <string name="proceed_with_payment">PROCEED WITH PAYMENT</string>
+    <string name="pay_sample">PAYG SAMPLE PAGE</string>
+    <string name="str_you_choose_to_pay">You chose to pay as you go. We’ll collect payment from your card each time you cross.</string>
+    
+    <!--TOP UP Error Message-->
+    <string name="str_low_balance_threshold_error_message">Low balance threshold must only include numbers 0 to 9, full stops and commas</string>
+    <string name="str_low_balance_must_be_more">Low balance threshold must be £5 of more</string>
 
 
 </resources>
