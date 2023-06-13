@@ -70,6 +70,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             }else{
                 bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
+                if (isDblaAvailable != null) {
+                    bundle.putBoolean(Constants.IS_DBLA_AVAILABLE, isDblaAvailable)
+                }
                 findNavController().navigate(R.id.action_vehicleListFragment_to_addNewVehicleDetailsFragment,bundle)
             }
         }

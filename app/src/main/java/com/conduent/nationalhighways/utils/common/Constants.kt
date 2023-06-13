@@ -107,6 +107,7 @@ object Constants {
     const val PLATE_NUMBER = "plateNumber"
     const val OLD_PLATE_NUMBER = "oldPlateNumber"
     const val VEHICLE_INDEX = "vehicle_position"
+    const val IS_DBLA_AVAILABLE = "isDblaAvailable"
     const val DATA2 = "list2"
     const val POST_MAIL = "MAIL"
     const val SMS = "SMS"

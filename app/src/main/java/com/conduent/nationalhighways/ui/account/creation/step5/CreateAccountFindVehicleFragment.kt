@@ -85,29 +85,21 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
+        binding.editNumberPlate.setMaxLength(10)
         binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
 
     private fun isEnable() {
-        val length = binding.editNumberPlate.getText()?.length
-        if (length != null) {
-            if (length > 10 ) {
-                binding.findVehicle.isEnabled = false
-                binding.editNumberPlate.setErrorText(getString(R.string.vehicle_registration_number_plate_error))
-            }else{
-                if (length <1 ) {
-                    binding.findVehicle.isEnabled = false
-                    binding.editNumberPlate.setErrorText(getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle))
-                } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.specialCharacter)) {
-                    binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
-                    binding.findVehicle.isEnabled = false
-                }else{
-                    removeError()
-                }
-            }
+        if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
+            binding.findVehicle.isEnabled = false
+        } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.specialCharacter)) {
+            binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+            binding.findVehicle.isEnabled = false
+        } else {
+            removeError()
+            binding.findVehicle.isEnabled = true
         }
-
 
     }
 
