@@ -75,7 +75,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         when(v?.id){
 
             R.id.btnNext->{
-
+             findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
             }
         }
     }
