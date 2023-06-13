@@ -264,6 +264,9 @@
         <action
             android:id="@+id/action_accountSummaryFragment_to_removeVehicleFragment"
             app:destination="@id/removeVehicleFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_TopUpFragment"
+            app:destination="@id/topUpFragment"/>
     </fragment>
 
     <!-- BUSINESS ACCOUNT -->
