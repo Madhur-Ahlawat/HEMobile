@@ -81,7 +81,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             )
             binding.textMaximumVehicle.text =
                 getString(R.string.you_have_already_added_this_vehicle_to_this_account)
-            binding.maximumVehicleAddedNote.visibility = View.GONE
+            binding.maximumVehicleAddedNote.visibility = View.INVISIBLE
             binding.btnContinue.text = getString(R.string.add_another_vehicle)
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
