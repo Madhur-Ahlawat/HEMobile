@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="18dp"
+    android:paddingBottom="18dp"
+    android:paddingStart="20dp"
+    android:orientation="vertical"
+    android:paddingEnd="20dp"
+    tools:context=".ui.account.creation.newAccountCreation.TryPaymentAgainFragment">
+
+    <TextView
+        style="@style/MediumTextBlack"
+        android:text="@string/str_your_payment_has_been_declined"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_contact_your_bank_for_more_details"
+        android:layout_marginTop="@dimen/margin_3dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/open_sans"
+        android:textSize="14sp"
+        />
+
+    <com.conduent.apollo.ui.CMButton
+        style="@style/PrimaryButton"
+        android:text="@string/str_try_payment_again"
+        android:id="@+id/tryPaymentAgain"
+        />
+
+
+
+
+</LinearLayout>

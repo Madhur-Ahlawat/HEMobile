@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -45,6 +47,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
     private var isCalled = true
+    private var btnEnabled:Boolean=false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -92,9 +95,41 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             btnVerify.setOnClickListener(this@OTPForgotPassword)
             btnResend.setOnClickListener(this@OTPForgotPassword)
             edtOtp.editText.addTextChangedListener {
-                binding.btnVerify.isEnabled = (it?.length ?: 0) > 5
+
+                emailAddressErrorMessage()
+
+
             }
         }
+    }
+
+    private fun emailAddressErrorMessage() {
+        if (binding.edtOtp.getText().toString().trim().isEmpty()){
+            btnEnabled=false
+        }else{
+            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtOtp.getText().toString()).matches()){
+                binding.edtOtp.setErrorText(getString(R.string.str_email_format_error_message))
+                false
+            }else{
+                if (binding.edtOtp.getText().toString().trim().length<8){
+                    binding.edtOtp.setErrorText(getString(R.string.str_email_length_less_than_eight))
+                    false
+                }else{
+                    binding.edtOtp.removeError()
+                    true
+                }
+
+            }
+
+        }
+
+
+        checkButtonEnable()
+    }
+
+    private fun checkButtonEnable(){
+        binding.btnVerify.isEnabled = btnEnabled
+
     }
 
     override fun observer() {
