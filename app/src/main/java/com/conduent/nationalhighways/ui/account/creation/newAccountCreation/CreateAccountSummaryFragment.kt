@@ -81,7 +81,12 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
 
 
-    override fun vehicleListCallBack(position: Int, value: String, plateNumber: String?) {
+    override fun vehicleListCallBack(
+        position: Int,
+        value: String,
+        plateNumber: String?,
+        isDblaAvailable: Boolean?
+    ) {
         if (value== Constants.REMOVE_VEHICLE){
             val bundle = Bundle()
             bundle.putInt(Constants.VEHICLE_INDEX, position)

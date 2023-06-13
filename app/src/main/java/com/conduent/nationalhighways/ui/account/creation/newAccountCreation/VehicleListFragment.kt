@@ -46,15 +46,32 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     }
 
 
-    override fun vehicleListCallBack(position: Int, value: String, plateNumber: String?) {
+    override fun vehicleListCallBack(
+        position: Int,
+        value: String,
+        plateNumber: String?,
+        isDblaAvailable: Boolean?
+    ) {
         if (value== Constants.REMOVE_VEHICLE){
                 val bundle = Bundle()
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment,bundle)
         }else{
+
             val bundle = Bundle()
-            bundle.putString(Constants.PLATE_NUMBER, plateNumber)
-            findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
+
+            if(isDblaAvailable == true) {
+                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putInt(Constants.VEHICLE_INDEX, position)
+                findNavController().navigate(
+                    R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,
+                    bundle
+                )
+            }else{
+                bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                bundle.putInt(Constants.VEHICLE_INDEX, position)
+                findNavController().navigate(R.id.action_vehicleListFragment_to_addNewVehicleDetailsFragment,bundle)
+            }
         }
 
     }

@@ -1120,6 +1120,7 @@
     <!--Add Vehicle Dialog Message-->
     <string name="str_no_vehicle">No Vehicles</string>
     <string name="str_you_must_at_least_one_vehicle">You must register at least one vehicle to create an account.</string>
+    <string name="telephone_number">Telephone number</string>
 
     <string name="str_what_your_top_up_low_balance">What are your top-up and low balance amounts?</string>
     <string name="str_low_balance_threshold">Your low balance threshold</string>
