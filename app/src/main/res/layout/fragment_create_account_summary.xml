@@ -194,7 +194,7 @@
                         android:id="@+id/txtMobileNumber"
                         style="@style/MediumTextBlack"
                         android:textSize="15sp"
-                        android:text="@string/mobile_phone_number"
+                        android:text="@string/telephone_number"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

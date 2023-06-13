@@ -98,9 +98,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }else{
                 if (length <1 ) {
                     binding.findVehicle.isEnabled = false
-                    binding.editNumberPlate.setErrorText(getString(R.string.vehicle_registration_number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens_and_spaces))
+                    binding.editNumberPlate.setErrorText(getString(R.string.enter_the_vehicle_registration_number_plate_of_your_vehicle))
                 } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.specialCharacter)) {
-                    binding.editNumberPlate.setErrorText(getString(R.string.str_first_name_error_message))
+                    binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
                     binding.findVehicle.isEnabled = false
                 }else{
                     removeError()
@@ -244,7 +244,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                     isObserverBack = false
                     NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                    findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment)
+                    val bundle = Bundle()
+                    bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                    arguments?.getInt(Constants.VEHICLE_INDEX)
+                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                    findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,bundle)
 
 
                 }

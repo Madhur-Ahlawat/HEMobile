@@ -105,6 +105,7 @@ object Constants {
     const val DATA = "data"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"
+    const val OLD_PLATE_NUMBER = "oldPlateNumber"
     const val VEHICLE_INDEX = "vehicle_position"
     const val DATA2 = "list2"
     const val POST_MAIL = "MAIL"

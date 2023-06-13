@@ -34,6 +34,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var typeOfVehicleChecked: Boolean = false
     private var checkBoxChecked: Boolean = false
     private var vehicleClassSelected = ""
+    private var oldPlateNumber = ""
+    private var vehicleList: MutableList<NewVehicleInfoDetails>? = null
+    private var accountData: NewCreateAccountRequestModel? = null
 
 
     @Inject
@@ -54,11 +57,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
         typeOfVehicle.add("Vehicle with more than 2 axles")
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
+
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)
         }
-
-
+        oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER,"").toString()
+        accountData = NewCreateAccountRequestModel
+        vehicleList = accountData?.vehicleList
+        if(oldPlateNumber.isNotEmpty()) {
+            val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+            nonUKVehicleModel = index?.let { vehicleList?.get(it) }
+        }
         binding.typeVehicle.dropDownItemSelectListener = this
 
         binding.model = false
@@ -238,28 +247,32 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             R.id.next_btn -> {
 
-                val accountData = NewCreateAccountRequestModel
-                val vehicleList = accountData.vehicleList
+                if(oldPlateNumber.isNotEmpty()){
+                    val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+                    if (index != null) {
+                        vehicleList?.removeAt(index)
+                    }
+                }
 
                 nonUKVehicleModel?.let {
-                    if (vehicleList.contains(nonUKVehicleModel)) {
-                        accountData.isVehicleAlreadyAddedLocal = true
+                    if (vehicleList?.contains(nonUKVehicleModel) == true) {
+                        accountData?.isVehicleAlreadyAddedLocal = true
                         val bundle = Bundle()
                         nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
                         findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
                     } else {
-                        vehicleList.add(it)
+                        vehicleList?.add(it)
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
                     }
 
                 }
                 if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
                     val newVehicleInfoDetails = NewVehicleInfoDetails()
-                    if (vehicleList.size > 0) {
-                        for (i in 0 until vehicleList.size) {
+                    if ((vehicleList?.size ?: 0) > 0) {
+                        for (i in 0 until (vehicleList?.size ?: 0)) {
                             val numberPlate = binding.vehiclePlateNumber.text.toString()
-                            if (vehicleList[i].plateNumber == numberPlate) {
-                                accountData.isVehicleAlreadyAddedLocal = true
+                            if (vehicleList?.get(i)?.plateNumber == numberPlate) {
+                                accountData?.isVehicleAlreadyAddedLocal = true
                                 val bundle = Bundle()
                                 bundle.putString(Constants.PLATE_NUMBER, numberPlate)
                                 findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
@@ -275,7 +288,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.vehicleClass = Utils.getManuallyAddedVehicleClass(binding.typeVehicle.getSelectedDescription().toString())
                         newVehicleInfoDetails.plateNumber =
                             binding.vehiclePlateNumber.text.toString()
-                        vehicleList.add(newVehicleInfoDetails)
+                        newVehicleInfoDetails.isDblaAvailable = false
+                        vehicleList?.add(newVehicleInfoDetails)
 
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
 
@@ -290,7 +304,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.vehicleClass = Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
                         newVehicleInfoDetails.plateNumber =
                             binding.vehiclePlateNumber.text.toString()
-                        vehicleList.add(newVehicleInfoDetails)
+                        newVehicleInfoDetails.isDblaAvailable = false
+                        vehicleList?.add(newVehicleInfoDetails)
 
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
 

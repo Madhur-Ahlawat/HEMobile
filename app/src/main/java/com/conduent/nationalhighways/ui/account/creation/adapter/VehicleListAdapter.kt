@@ -20,13 +20,14 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
 
     override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
         val plateNumber = list.get(position).plateNumber
+        val isDblaAvailable = list.get(position).isDblaAvailable
         holder.binding.vehiclePlateNumber.text = plateNumber
         holder.binding.deleteVehicle.setOnClickListener{
-            vehicleCallback.vehicleListCallBack(position,Constants.REMOVE_VEHICLE,plateNumber)
+            vehicleCallback.vehicleListCallBack(position,Constants.REMOVE_VEHICLE,plateNumber,isDblaAvailable)
 
         }
         holder.binding.updateVehicle.setOnClickListener{
-            vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE,plateNumber)
+            vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE,plateNumber,isDblaAvailable)
         }
     }
 
@@ -40,7 +41,12 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
     }
 
     interface VehicleListCallBack{
-        fun vehicleListCallBack(position: Int, value: String, plateNumber: String?)
+        fun vehicleListCallBack(
+            position: Int,
+            value: String,
+            plateNumber: String?,
+            isDblaAvailable: Boolean?
+        )
     }
 
 
