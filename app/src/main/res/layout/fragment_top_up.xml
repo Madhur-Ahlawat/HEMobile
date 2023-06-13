@@ -7,10 +7,16 @@
     <data>
 
     </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.account.creation.newAccountCreation.TopUpFragment"
         android:paddingTop="18dp"
         android:paddingStart="20dp"
@@ -114,4 +120,6 @@
 
 
     </LinearLayout>
+    </ScrollView>
+
 </layout>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/findYourVehicleFragment">
+    app:startDestination="@id/topUpFragment">
 
 
    <!-- Step 1 -->
@@ -386,16 +386,6 @@
         <action
             android:id="@+id/action_addVehicleDetailFragment_to_max_vehicleFragment"
             app:destination="@+id/maximumVehicleFragment"/>
-        <argument
-            android:name="oldPlateNumber"
-            app:argType="string"/>
-        <argument
-            android:name="vehicle_position"
-            app:argType="integer"/>
-
-        <argument
-            android:name="vehicle detail"
-            app:argType="com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails" />
 
     </fragment>
 
@@ -741,8 +731,20 @@
         android:id="@+id/paymentFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/fragment_top_up">
+        tools:layout="@layout/fragment_payment">
+
+        <action
+            android:id="@+id/action_paymentFragment_to_tryPaymentAgainFragment"
+            app:destination="@id/tryPaymentAgainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tryPaymentAgainFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
+        android:label="TryPaymentAgainFragment"
+        tools:layout="@layout/fragment_try_payment_again">
 
     </fragment>
+
 
 </navigation>
