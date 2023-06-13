@@ -66,7 +66,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         vehicleList = accountData?.vehicleList
         if(oldPlateNumber.isNotEmpty()) {
             val index = arguments?.getInt(Constants.VEHICLE_INDEX)
-            nonUKVehicleModel = index?.let { vehicleList?.get(it) }
+            val isDblaAvailable = arguments?.getBoolean(Constants.IS_DBLA_AVAILABLE,true)
+            if (isDblaAvailable != null) {
+                if(isDblaAvailable.not()) {
+                    val  editUKVehicleModel = index?.let { vehicleList?.get(it) }
+                    updateView(editUKVehicleModel)
+                }
+            }
         }
         binding.typeVehicle.dropDownItemSelectListener = this
 
@@ -108,11 +114,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             binding.vehicleRegisteredLayout.visibility = View.VISIBLE
         } else {
             binding.vehicleRegisteredLayout.visibility = View.GONE
-            binding.vehiclePlateNumber.text = nonUKVehicleModel?.plateNumber
-            binding.makeInputLayout.setText(nonUKVehicleModel?.vehicleMake.toString())
-            binding.modelInputLayout.setText(nonUKVehicleModel?.vehicleModel.toString())
-            binding.colorInputLayout.setText(nonUKVehicleModel?.vehicleColor.toString())
-            binding.typeVehicle.setSelectedValue(Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString()))
+            updateView(nonUKVehicleModel)
 
 
 
@@ -134,6 +136,23 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         binding.nextBtn.setOnClickListener(this)
+
+    }
+
+    private fun updateView(nonUKVehicleModel: NewVehicleInfoDetails?) {
+        binding.vehiclePlateNumber.text = nonUKVehicleModel?.plateNumber
+        binding.makeInputLayout.setText(nonUKVehicleModel?.vehicleMake.toString())
+        binding.modelInputLayout.setText(nonUKVehicleModel?.vehicleModel.toString())
+        binding.colorInputLayout.setText(nonUKVehicleModel?.vehicleColor.toString())
+        binding.typeVehicle.setSelectedValue(Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString()))
+        if(nonUKVehicleModel?.isUK == true){
+            binding.radioButtonYes.isChecked = true
+        }else{
+            binding.radioButtonNo.isChecked = true
+        }
+        typeOfVehicleChecked = true
+        radioButtonChecked = true
+        checkValidation()
     }
 
     override fun initCtrl() {
@@ -192,15 +211,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun checkButton() {
         if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
-            if (binding.makeInputLayout.editText.toString().trim().isNotEmpty()
-                && binding.modelInputLayout.editText.text.toString().trim().isNotEmpty()
-                && binding.colorInputLayout.editText.text.toString().trim()
-                    .isNotEmpty() && radioButtonChecked && typeOfVehicleChecked && checkBoxChecked
-            ) {
-                setBtnActivated()
-            } else {
-                setBtnDisabled()
-            }
+            checkValidation()
         } else {
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (binding.makeInputLayout.getText().toString().trim().isNotEmpty()
@@ -229,6 +240,18 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
 
+    }
+
+    private fun checkValidation() {
+        if (binding.makeInputLayout.editText.toString().trim().isNotEmpty()
+            && binding.modelInputLayout.editText.text.toString().trim().isNotEmpty()
+            && binding.colorInputLayout.editText.text.toString().trim()
+                .isNotEmpty() && radioButtonChecked && typeOfVehicleChecked && checkBoxChecked
+        ) {
+            setBtnActivated()
+        } else {
+            setBtnDisabled()
+        }
     }
 
     private fun setBtnActivated() {
@@ -261,10 +284,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         nonUKVehicleModel.let {  bundle.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
                         findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
                     } else {
+                        it.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(it)
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
                     }
-
+                    return
                 }
                 if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
                     val newVehicleInfoDetails = NewVehicleInfoDetails()
@@ -276,6 +300,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 val bundle = Bundle()
                                 bundle.putString(Constants.PLATE_NUMBER, numberPlate)
                                 findNavController().navigate(R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,bundle)
+                                return
                             }
                         }
 
@@ -289,10 +314,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.plateNumber =
                             binding.vehiclePlateNumber.text.toString()
                         newVehicleInfoDetails.isDblaAvailable = false
+                        newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(newVehicleInfoDetails)
 
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
-
+                        return
 
                     } else {
                         newVehicleInfoDetails.vehicleMake =
@@ -305,6 +331,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.plateNumber =
                             binding.vehiclePlateNumber.text.toString()
                         newVehicleInfoDetails.isDblaAvailable = false
+                        newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(newVehicleInfoDetails)
 
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
