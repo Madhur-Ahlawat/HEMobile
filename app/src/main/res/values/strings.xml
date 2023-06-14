@@ -1012,7 +1012,7 @@
     <string name="str_six_digit_security_code">6 digit security code</string>
     <string name="phone_number">Phone number</string>
     <string name="str_what_is_your_number">What is your phone number?</string>
-    <string name="str_phone_number">Phone number</string>
+    <string name="str_phone_number">Phone number (optional)</string>
     <string name="str_what_mobile_number">What is your mobile number?</string>
     <string name="str_phone_number_error_message">The mobile number entered is invalid, please try again</string>
     <string name="str_your_company_registered_address">Your company’s registered address where all official paperwork gets sent.</string>
@@ -1097,6 +1097,7 @@
 
     <!--Verify Email Error Message-->
     <string name="str_code_empty">Enter the 6-digit security code</string>
+    <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
     <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
 

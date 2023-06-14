@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,6 +60,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
             binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
             binding.txtBottom.visibility = View.GONE
+            requiredMobileNumber=true
         } else {
             binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
             binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
@@ -124,7 +126,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                NewCreateAccountRequestModel.mobileNumber = binding.inputMobileNumber.getText().toString().trim()
+                NewCreateAccountRequestModel.mobileNumber =
+                    binding.inputMobileNumber.getText().toString().trim()
                 if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
                     findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
                 } else {
@@ -154,21 +157,37 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
 
 
-            val number = binding.inputMobileNumber.getText()
-            val validNumber = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
-
-            if (number != null) {
-                requiredMobileNumber = validNumber.matches(number)
+            if (index==1){
+                requiredMobileNumber = if (binding.inputMobileNumber.getText().toString().isNotEmpty()){
+                    if (Utils.phoneNumber.matches(
+                            binding.inputMobileNumber.getText().toString().trim()
+                        )
+                    ) {
+                        binding.inputMobileNumber.removeError()
+                        true
+                    } else {
+                        binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                        false
+                    }
+                }else{
+                    false
+                }
             }
+
+            checkButton()
 
         }
 
         override fun afterTextChanged(editable: Editable?) {
-            if (requiredFirstName && requiredMobileNumber) {
-                binding.btnNext.enable()
-            } else {
-                binding.btnNext.disable()
-            }
+
+        }
+    }
+
+    private fun checkButton() {
+        if (requiredFirstName && requiredMobileNumber) {
+            binding.btnNext.enable()
+        } else {
+            binding.btnNext.disable()
         }
     }
 
