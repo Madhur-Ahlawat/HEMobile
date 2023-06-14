@@ -1,8 +1,10 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,17 +61,17 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         ) {
 
             if (index == 0) {
-
-               /* if (binding.lowBalance.getText().toString().trim().isNotEmpty()) {
-                    lowBalance = if (binding.lowBalance.getText().toString().trim().length < 8) {
-                        if (binding.lowBalance.getText().toString().trim() > "£5") {
-                            binding.lowBalance.removeError()
-                            true
-
-                        } else {
+                val text = binding.lowBalance.getText().toString().trim()
+                val updatedText = text.replace("£","")
+                if (updatedText.isNotEmpty()) {
+                    lowBalance = if (updatedText.length < 8) {
+                        if (updatedText.toInt() < 5) {
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
 
+                        } else {
+                            binding.lowBalance.removeError()
+                            true
                         }
                     } else {
                         binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_8_characters))
@@ -78,13 +80,17 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
                 }else{
                     binding.lowBalance.removeError()
-                }*/
+                }
+                binding.lowBalance.editText.removeTextChangedListener(this);
+                binding.lowBalance.setText("£" + updatedText)
+                Selection.setSelection( binding.lowBalance.getText(),binding.lowBalance.getText().toString().length)
+                binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
-                /* if (binding.top.getText().toString().trim().isNotEmpty()) {
-
-
-                    topUpBalance = if (binding.top.getText().toString().trim().length < 8) {
-                        if (binding.top.getText().toString().trim().toInt() < 10) {
+                val text = binding.top.getText().toString().trim()
+                val updatedText = text.replace("£","")
+                if (updatedText.isNotEmpty()) {
+                    topUpBalance = if (updatedText.length < 8) {
+                        if (updatedText.toInt() < 10) {
                             binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
@@ -99,44 +105,23 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }else{
                     binding.top.removeError()
                 }
+                binding.top.editText.removeTextChangedListener(this);
+                binding.top.setText("£" + updatedText)
+                Selection.setSelection( binding.top.getText(),binding.top.getText().toString().length)
+                binding.top.editText.addTextChangedListener(this)
             }
-*/
-                checkButton()
-            }
+
+            checkButton()
         }
 
-            override fun afterTextChanged(s: Editable?) {
-                if (index == 0) {
-                    if (s.toString().isNotEmpty()){
-                        if (!s.toString().startsWith("£")) {
-                            binding.lowBalance.setText("£");
-                            Selection.setSelection(
-                                binding.lowBalance.getText(),
-                                binding.lowBalance.getText().toString().length
-                            )
+        override fun afterTextChanged(editable: Editable?) {
 
-                        }
-                    }
-
-                }else{
-                    if (s.toString().isNotEmpty()){
-                        if (!s.toString().startsWith("£")) {
-                            binding.top.setText("£");
-                            Selection.setSelection(
-                                binding.top.getText(),
-                                binding.top.getText().toString().length
-                            )
-
-                        }
-                    }
-                }
-
-            }
         }
-
-        private fun checkButton() {
-            binding.topUpBtn.isEnabled = lowBalance && topUpBalance
-        }
-
-
     }
+
+    private fun checkButton() {
+        binding.topUpBtn.isEnabled = lowBalance && topUpBalance
+    }
+
+
+}

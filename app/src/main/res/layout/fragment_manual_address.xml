@@ -45,7 +45,6 @@
             android:id="@+id/txtThisShouldBeVehicle"
             style="@style/RegularTextBlack"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/str_address_example"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

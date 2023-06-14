@@ -115,6 +115,7 @@
             style="@style/PrimaryButton"
             android:layout_marginTop="30dp"
             android:text="@string/str_continue"
+            android:enabled="false"
             android:id="@+id/topUpBtn"/>
 
 

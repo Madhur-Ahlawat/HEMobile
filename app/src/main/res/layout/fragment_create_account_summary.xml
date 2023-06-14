@@ -390,7 +390,7 @@
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTerms"
                 style="@style/CheckBoxStyle"
-                android:checked="true"
+                android:checked="false"
                 android:text="@string/i_accept_the_terms_conditions"
                 android:gravity="top"
                 android:layout_marginTop="@dimen/margin_30dp"/>
