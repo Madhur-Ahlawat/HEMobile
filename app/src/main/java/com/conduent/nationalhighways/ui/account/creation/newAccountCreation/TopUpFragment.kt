@@ -42,7 +42,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val amount = binding.top.getText().toString().trim().replace("£","")
                 val bundle = Bundle()
                 bundle.putInt(Constants.DATA,amount.toInt() )
-                findNavController().navigate(R.id.action_topUpFragment_to_paymentFragment)
+                findNavController().navigate(R.id.action_topUpFragment_to_paymentFragment,bundle)
             }
         }
 
