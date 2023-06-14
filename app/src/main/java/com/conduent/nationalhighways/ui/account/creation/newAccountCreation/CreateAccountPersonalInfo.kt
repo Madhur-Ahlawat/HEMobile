@@ -155,7 +155,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         if (index == 0) {
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
-                binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+               // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
                 requiredFirstName = false
             } else {
 
@@ -193,7 +193,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
-                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+               // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
                 requiredLastName = false
             } else {
 
@@ -228,7 +228,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         } else if (index == 2) {
             requiredCompanyName =
                 if (binding.inputCompanyName.getText().toString().trim().isEmpty()) {
-                    binding.inputCompanyName.setErrorText(getString(R.string.str_enter_the_company_name))
+                  //  binding.inputCompanyName.setErrorText(getString(R.string.str_enter_the_company_name))
                     false
                 } else {
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
@@ -253,7 +253,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         if (index == 0) {
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
-                binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+               // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
                 requiredFirstName = false
             } else {
 
@@ -291,7 +291,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
-                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+               // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
                 requiredLastName = false
             } else {
 

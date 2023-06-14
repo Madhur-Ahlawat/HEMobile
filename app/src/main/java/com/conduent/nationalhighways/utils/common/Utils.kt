@@ -31,12 +31,13 @@ object Utils {
     var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
     var UK_MOBILE_REGEX="[0]{0,1}7[0-9]{9}"
-    var phoneNumber = "[0]{0,3}[1-9]{1}[0-9]{7,14}"
+    var phoneNumber:Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER :Regex= Regex("^([0-9])")
     var UPPERCASE:Regex= Regex("[A-Z]")
     var LOWECASE:Regex= Regex("[a-z]")
 
     var specialCharacter: Regex = Regex( "[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+    var colourSpecialCharacter:Regex= Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
     var addressSpecialCharacter:Regex= Regex("[$&+:;=\\\\?@|/<>^*()%!]")
 
 

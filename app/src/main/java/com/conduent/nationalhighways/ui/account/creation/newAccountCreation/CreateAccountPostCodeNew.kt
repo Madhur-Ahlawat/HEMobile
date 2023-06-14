@@ -108,7 +108,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         ) {
 
             requiredPostCode = if (binding.inputPostCode.getText().toString().trim().isEmpty()) {
-                binding.inputPostCode.setErrorText(getString(R.string.str_post_code_error_message))
+                //binding.inputPostCode.setErrorText(getString(R.string.str_post_code_error_message))
                 false
             } else {
                 val string = binding.inputPostCode.getText().toString().trim()

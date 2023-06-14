@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             style="@style/input_text"
             app:maxLength="6"
+            android:maxLength="6"
             app:labelText="@string/str_six_digit_security_code"
             app:inputType="number"
             app:imeOptions="actionDone"

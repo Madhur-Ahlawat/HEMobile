@@ -1,15 +1,11 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isEmpty
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -22,15 +18,12 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyReque
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
-import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.getValue
@@ -96,15 +89,22 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             btnResend.setOnClickListener(this@OTPForgotPassword)
             edtOtp.editText.addTextChangedListener {
 
-                emailAddressErrorMessage()
+                verifyCodeErrorMessage()
 
 
             }
         }
     }
 
-    private fun emailAddressErrorMessage() {
-        btnEnabled = binding.edtOtp.getText().toString().trim().isNotEmpty()
+    private fun verifyCodeErrorMessage() {
+        if (binding.edtOtp.getText().toString().trim().length<6){
+            binding.edtOtp.setErrorText(getString(R.string.str_security_code_must_be_6_characters))
+            btnEnabled=false
+        }else{
+            binding.edtOtp.removeError()
+            btnEnabled=true
+        }
+
 
 
         checkButtonEnable()
@@ -312,7 +312,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 )
 
 
-                showError(binding.root, status.errorMsg)
+
+
             }
             else -> {
             }
@@ -385,8 +386,19 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
             is Resource.DataError -> {
 
-                showError(binding.root, resource.errorMsg)
+                when (resource.errorModel?.errorCode) {
+                    1 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
 
+                    }
+                    2 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+
+                    }
+                    else -> {
+                        binding.edtOtp.setErrorText(resource.errorModel?.message.toString())
+                    }
+                }
             }
             else -> {
             }
