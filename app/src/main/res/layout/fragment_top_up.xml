@@ -58,7 +58,7 @@
             android:layout_marginTop="20dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/str_low_balance"
 
             />
@@ -98,7 +98,7 @@
             android:layout_marginTop="20dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/top_up_amount"
 
             />

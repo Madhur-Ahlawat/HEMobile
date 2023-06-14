@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.Selection
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -82,8 +83,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.lowBalance.editText.removeTextChangedListener(this);
                 binding.lowBalance.setText("£" + updatedText)
-                binding.lowBalance.editText.setSelection( binding.top.editText.length())
-                binding.lowBalance.editText.addTextChangedListener(this);
+                Selection.setSelection( binding.lowBalance.getText(),binding.lowBalance.getText().toString().length)
+                binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
                 val text = binding.top.getText().toString().trim()
                 val updatedText = text.replace("£","")
@@ -106,8 +107,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.top.editText.removeTextChangedListener(this);
                 binding.top.setText("£" + updatedText)
-                binding.top.editText.setSelection( binding.top.editText.length())
-                binding.top.editText.addTextChangedListener(this);
+                Selection.setSelection( binding.top.getText(),binding.top.getText().toString().length)
+                binding.top.editText.addTextChangedListener(this)
             }
 
             checkButton()
