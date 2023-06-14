@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
      private lateinit var  navFlow:String// create account , forgot password
     private var isViewCreated:Boolean=false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
+    private var btnEnabled:Boolean=false
 
 
     override fun getFragmentBinding(
@@ -215,16 +217,28 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
 
     private fun isEnable() {
-        binding.btnNext.isEnabled=Utils.isEmailValid(binding.edtEmail.getText().toString())
-        /*if (Utils.isEmailValid(binding.edtEmail.text.toString())) binding.model =
-            ConfirmOptionModel(
-                enable = true,
-                identifier = binding.edtEmail.text.toString()
-            )
-        else binding.model = ConfirmOptionModel(
-            enable = false,
-            identifier = binding.edtEmail.text.toString()
-        )*/
+        if (binding.edtEmail.getText().toString().trim().isEmpty()){
+            btnEnabled=false
+        }else{
+            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()){
+                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                false
+            }else{
+                if (binding.edtEmail.getText().toString().trim().length<8){
+                    binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
+                    false
+                }else{
+                    binding.edtEmail.removeError()
+                    true
+                }
+
+            }
+
+        }
+        checkButton()
+    }
+    private fun checkButton(){
+        binding.btnNext.isEnabled=btnEnabled
     }
 
     private fun hitApi(){

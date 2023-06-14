@@ -104,24 +104,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun emailAddressErrorMessage() {
-        if (binding.edtOtp.getText().toString().trim().isEmpty()){
-            btnEnabled=false
-        }else{
-            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtOtp.getText().toString()).matches()){
-                binding.edtOtp.setErrorText(getString(R.string.str_email_format_error_message))
-                false
-            }else{
-                if (binding.edtOtp.getText().toString().trim().length<8){
-                    binding.edtOtp.setErrorText(getString(R.string.str_email_length_less_than_eight))
-                    false
-                }else{
-                    binding.edtOtp.removeError()
-                    true
-                }
-
-            }
-
-        }
+        btnEnabled = binding.edtOtp.getText().toString().trim().isNotEmpty()
 
 
         checkButtonEnable()
@@ -177,11 +160,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
                     )
-                    Toast.makeText(
-                        requireContext(),
-                        "Navigate on Add Vehicle Screen",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 } else {
                     confirmEmailCode()
                 }
