@@ -1,10 +1,8 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +31,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     override fun initCtrl() {
         binding.proceddWithPayment.setOnClickListener(this)
         binding.paymentAmount.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.expiryDate.editText.addTextChangedListener(GenericTextWatcher(1))
     }
 
     override fun observer() {
@@ -50,6 +49,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+
+        var current = ""
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -89,6 +90,23 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                 binding.paymentAmount.setText("£" + updatedText)
                 Selection.setSelection( binding.paymentAmount.getText(),binding.paymentAmount.getText().toString().length)
                 binding.paymentAmount.editText.addTextChangedListener(this)
+            }else if(index == 1){
+                if (charSequence.toString() != current) {
+                    var clean: String = charSequence.toString().replace("[^\\d.]".toRegex(), "")
+                    var formatted = ""
+                    var length = clean.length
+                    if (length > 2) {
+                        formatted += clean.substring(0, 2) + "/"
+                        clean = clean.substring(2)
+                        length = clean.length
+                    }
+                    if (length > 0) {
+                        formatted += clean.substring(0, Math.min(2, length))
+                    }
+                    current = formatted
+                    binding.expiryDate.setText(formatted)
+                    Selection.setSelection( binding.expiryDate.getText(),binding.expiryDate.getText().toString().length)
+                }
             }
 
             checkButton()
