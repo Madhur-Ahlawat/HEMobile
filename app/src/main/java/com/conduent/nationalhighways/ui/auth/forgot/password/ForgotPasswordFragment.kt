@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.databinding.ForgotpasswordChangesBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -199,13 +200,15 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
                     hideKeyboard()
 
+                val emailText = binding.edtEmail.getText().toString().trim()
                 if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    sessionManager.saveAccountNumber(binding.edtEmail.getText().toString().trim())
+                    sessionManager.saveAccountNumber(emailText)
                     isCalled = true
-                    viewModel.confirmOptionForForgot(binding.edtEmail.getText().toString().trim())
+                    viewModel.confirmOptionForForgot(emailText)
 
                 }else{
+                    NewCreateAccountRequestModel.emailAddress = emailText
                     hitApi()
 
                 }

@@ -55,7 +55,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="text"
+            app:inputType="number"
             app:labelText="@string/str_name_on_card"
 
             />
@@ -67,7 +67,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="text"
+            app:inputType="textCapSentences"
             app:labelText="@string/str_card_number"
 
             />
@@ -94,7 +94,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="text|number"
+            app:inputType="number"
             app:labelText="@string/str_expiry_date"
 
             />
