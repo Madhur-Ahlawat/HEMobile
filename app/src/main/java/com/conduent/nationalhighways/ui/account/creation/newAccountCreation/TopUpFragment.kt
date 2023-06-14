@@ -60,10 +60,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         ) {
 
             if (index == 0) {
-
-                if (binding.lowBalance.getText().toString().trim().isNotEmpty()) {
-                    lowBalance = if (binding.lowBalance.getText().toString().trim().length < 8) {
-                        if (binding.lowBalance.getText().toString().trim().toInt() < 5) {
+                val text = binding.lowBalance.getText().toString().trim()
+                val updatedText = text.replace("£","")
+                if (updatedText.isNotEmpty()) {
+                    lowBalance = if (updatedText.length < 8) {
+                        if (updatedText.toInt() < 5) {
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
 
@@ -79,12 +80,16 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }else{
                     binding.lowBalance.removeError()
                 }
+                binding.lowBalance.editText.removeTextChangedListener(this);
+                binding.lowBalance.setText("£" + updatedText)
+                binding.lowBalance.editText.setSelection( binding.top.editText.length())
+                binding.lowBalance.editText.addTextChangedListener(this);
             } else if (index == 1) {
-                if (binding.top.getText().toString().trim().isNotEmpty()) {
-
-
-                    topUpBalance = if (binding.top.getText().toString().trim().length < 8) {
-                        if (binding.top.getText().toString().trim().toInt() < 10) {
+                val text = binding.top.getText().toString().trim()
+                val updatedText = text.replace("£","")
+                if (updatedText.isNotEmpty()) {
+                    topUpBalance = if (updatedText.length < 8) {
+                        if (updatedText.toInt() < 10) {
                             binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
@@ -99,12 +104,17 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }else{
                     binding.top.removeError()
                 }
+                binding.top.editText.removeTextChangedListener(this);
+                binding.top.setText("£" + updatedText)
+                binding.top.editText.setSelection( binding.top.editText.length())
+                binding.top.editText.addTextChangedListener(this);
             }
 
             checkButton()
         }
 
         override fun afterTextChanged(editable: Editable?) {
+
         }
     }
 

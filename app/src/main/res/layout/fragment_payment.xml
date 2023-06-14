@@ -123,6 +123,7 @@
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/proceddWithPayment"
             style="@style/PrimaryButton"
+            android:enabled="false"
             android:layout_marginTop="16dp"
             android:text="@string/proceed_with_payment"/>
         <com.conduent.apollo.ui.CMButton

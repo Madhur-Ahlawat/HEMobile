@@ -61,6 +61,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
+            requiredPostcode  = true
 
         }
 
