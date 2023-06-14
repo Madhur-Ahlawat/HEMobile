@@ -42,7 +42,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/str_payment_amount"
 
             />
@@ -55,7 +55,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/str_name_on_card"
 
             />
@@ -67,7 +67,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="textCapSentences"
             app:labelText="@string/str_card_number"
 
             />
@@ -94,7 +94,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/str_expiry_date"
 
             />
@@ -107,7 +107,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
+            app:inputType="number"
             app:labelText="@string/card_security_code"
 
             />

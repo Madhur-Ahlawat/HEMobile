@@ -124,10 +124,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
+                NewCreateAccountRequestModel.mobileNumber = binding.inputMobileNumber.getText().toString().trim()
                 if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
                     findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
-
-
                 } else {
                     hitApi()
 

@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.extn.makeLinks
 
 
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),VehicleListAdapter.VehicleListCallBack,
@@ -62,6 +65,27 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 binding.btnNext.disable()
             }
         }
+        if (NewCreateAccountRequestModel.communicationTextMessage && NewCreateAccountRequestModel.twoStepVerification) {
+            binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
+        }else{
+            binding.txtMobileNumber.text = getString(R.string.telephone_number)
+        }
+
+        binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
+            var url:String=""
+            url = if (NewCreateAccountRequestModel.prePay){
+                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+
+            }else{
+                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
+
+            }
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+
+
+        }))
     }
 
     override fun initCtrl() {
