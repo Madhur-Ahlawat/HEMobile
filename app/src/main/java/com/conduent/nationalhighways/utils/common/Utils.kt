@@ -37,6 +37,7 @@ object Utils {
     var LOWECASE:Regex= Regex("[a-z]")
 
     var specialCharacter: Regex = Regex( "[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+    var colourSpecialCharacter:Regex= Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
     var addressSpecialCharacter:Regex= Regex("[$&+:;=\\\\?@|/<>^*()%!]")
 
 

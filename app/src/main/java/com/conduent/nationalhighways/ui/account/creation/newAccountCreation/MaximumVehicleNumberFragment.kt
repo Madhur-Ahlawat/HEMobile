@@ -119,9 +119,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
-                            if (NewCreateAccountRequestModel.isExempted){
+                            if (NewCreateAccountRequestModel.isExempted) {
                                 findNavController().popBackStack()
-                            }else{
+                            } else {
                                 noVehicleAddedDialog()
 
                             }
