@@ -222,7 +222,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             )
                         } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
                             NewCreateAccountRequestModel.isRucEligible = true
-                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+                            if (apiData.isNotEmpty()) {
+                                bundle.putParcelable(
+                                    Constants.VEHICLE_DETAIL,
+                                    apiData[0]
+                                )
+                            }
+                            findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
 
                         }
 
