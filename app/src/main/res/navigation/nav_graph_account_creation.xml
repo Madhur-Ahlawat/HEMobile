@@ -747,6 +747,17 @@
         android:label="TryPaymentAgainFragment"
         tools:layout="@layout/fragment_try_payment_again">
 
+        <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_successfullyFragment"
+            app:destination="@id/successfullyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successfullyFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment"
+        android:label="AccountSuccessfullyCreationFragment"
+        tools:layout="@layout/fragment_account_successfully_creation">
+
     </fragment>
 
 

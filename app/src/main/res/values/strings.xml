@@ -1160,6 +1160,20 @@
     <string name="str_card_security">Card security code must be 4 digits or more</string>
     <string name="str_card_number_must_16_digit_more">Card number must be 16 digits or more</string>
 
+    <string name="str_application_complete">Application Complete</string>
+    <string name="we_sent_confirmation_email">We’ve sent a confirmation email with your account details to %s</string>
+    <string name="your_account_number">Your account number</string>
+    <string name="payment_reference_number">Payment reference number</string>
+    <string name="what_happens_text">What happens next</string>
+    <string name="you_can_now_make_crossing">You can now make a crossing. If you’ve already crossed since 6 am yesterday, this crossing will be settled against your account.</string>
+    <string name="sign_in_into_your_account">Sign in to your account to:</string>
+    <string name="str_upload_more_vehicles">upload more vehicles </string>
+    <string name="change_how_pay_for_crossing">change how you pay for crossings </string>
+    <string name="change_how_to_receive_communication">change how you receive communications</string>
+    <string name="feed_back_to_improve_service"><u>FEEDBACK TO IMPROVE THE SERVICE</u></string>
+
+
+
 
 </resources>
 

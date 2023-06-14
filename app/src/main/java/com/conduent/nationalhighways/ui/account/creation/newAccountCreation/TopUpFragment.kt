@@ -1,9 +1,8 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Bundle
 import android.text.Editable
+import android.text.Selection
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,15 +60,16 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
             if (index == 0) {
 
-                if (binding.lowBalance.getText().toString().trim().isNotEmpty()) {
+               /* if (binding.lowBalance.getText().toString().trim().isNotEmpty()) {
                     lowBalance = if (binding.lowBalance.getText().toString().trim().length < 8) {
-                        if (binding.lowBalance.getText().toString().trim().toInt() < 5) {
+                        if (binding.lowBalance.getText().toString().trim() > "£5") {
+                            binding.lowBalance.removeError()
+                            true
+
+                        } else {
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
 
-                        } else {
-                            binding.lowBalance.removeError()
-                            true
                         }
                     } else {
                         binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_8_characters))
@@ -78,9 +78,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
                 }else{
                     binding.lowBalance.removeError()
-                }
+                }*/
             } else if (index == 1) {
-                if (binding.top.getText().toString().trim().isNotEmpty()) {
+                /* if (binding.top.getText().toString().trim().isNotEmpty()) {
 
 
                     topUpBalance = if (binding.top.getText().toString().trim().length < 8) {
@@ -100,17 +100,43 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     binding.top.removeError()
                 }
             }
-
-            checkButton()
+*/
+                checkButton()
+            }
         }
 
-        override fun afterTextChanged(editable: Editable?) {
+            override fun afterTextChanged(s: Editable?) {
+                if (index == 0) {
+                    if (s.toString().isNotEmpty()){
+                        if (!s.toString().startsWith("£")) {
+                            binding.lowBalance.setText("£");
+                            Selection.setSelection(
+                                binding.lowBalance.getText(),
+                                binding.lowBalance.getText().toString().length
+                            )
+
+                        }
+                    }
+
+                }else{
+                    if (s.toString().isNotEmpty()){
+                        if (!s.toString().startsWith("£")) {
+                            binding.top.setText("£");
+                            Selection.setSelection(
+                                binding.top.getText(),
+                                binding.top.getText().toString().length
+                            )
+
+                        }
+                    }
+                }
+
+            }
         }
+
+        private fun checkButton() {
+            binding.topUpBtn.isEnabled = lowBalance && topUpBalance
+        }
+
+
     }
-
-    private fun checkButton() {
-        binding.topUpBtn.isEnabled = lowBalance && topUpBalance
-    }
-
-
-}

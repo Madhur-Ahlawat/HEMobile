@@ -15,13 +15,7 @@ import javax.annotation.meta.When
 class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),View.OnClickListener {
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_try_payment_again, container, false)
-    }
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -44,7 +38,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),V
         when(v?.id){
 
             R.id.tryPaymentAgain->{
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.action_tryPaymentAgainFragment_to_successfullyFragment)
             }
         }
     }

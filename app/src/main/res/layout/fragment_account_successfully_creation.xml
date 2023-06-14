@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp"
+            tools:context=".ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment">
+
+
+            <TextView
+                style="@style/MediumTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/str_application_complete" />
+
+            <TextView
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@string/we_sent_confirmation_email" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/your_account_number"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/accountNumber"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="7574048003"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_reference_number"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/paymentReferenceNumber"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="48750208"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                style="@style/MediumTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/what_happens_text" />
+
+            <TextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/you_can_now_make_crossing" />
+
+            <TextView
+                style="@style/MediumTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/what_happens_text" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/textView8"
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:drawableStart="@drawable/circle_5dp"
+                android:drawablePadding="20dp"
+                android:text="@string/str_upload_more_vehicles"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_5dp"
+                android:drawableStart="@drawable/circle_5dp"
+                android:drawablePadding="20dp"
+                android:text="@string/change_how_pay_for_crossing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_5dp"
+                android:drawableStart="@drawable/circle_5dp"
+                android:drawablePadding="20dp"
+                android:text="@string/change_how_to_receive_communication"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <com.conduent.apollo.ui.CMButton
+                style="@style/PrimaryButton"
+                android:layout_marginTop="40dp"
+                android:text="@string/sign_in"
+                android:id="@+id/signIn"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:textColor="@color/new_btn_color"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textSize="14sp"
+                android:text="@string/feed_back_to_improve_service"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
