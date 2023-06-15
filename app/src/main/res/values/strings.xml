@@ -1165,7 +1165,7 @@
     <string name="str_card_number_must_16_digit_more">Card number must be 16 digits or more</string>
 
     <string name="str_application_complete">Application Complete</string>
-    <string name="we_sent_confirmation_email">We’ve sent a confirmation email with your account details to %s</string>
+    <string name="we_sent_confirmation_email">We’ve sent a confirmation email with your account details to %s.</string>
     <string name="your_account_number">Your account number</string>
     <string name="payment_reference_number">Payment reference number</string>
     <string name="what_happens_text">What happens next</string>
@@ -1180,6 +1180,7 @@
     <string name="invalid_date_format">Invalid date format</string>
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
+    <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
 
 
 </resources>

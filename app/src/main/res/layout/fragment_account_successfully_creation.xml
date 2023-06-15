@@ -80,6 +80,14 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <TextView
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/pay_as_go_text"
+                android:visibility="gone"
+                android:text="@string/we_sent_confirmation_email" />
 
 
             <androidx.cardview.widget.CardView
@@ -90,7 +98,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="@dimen/margin_5dp">
+                app:cardCornerRadius="@dimen/margin_5dp"
+                android:id="@+id/prePayCard">
 
                 <LinearLayout
                     android:layout_width="match_parent"

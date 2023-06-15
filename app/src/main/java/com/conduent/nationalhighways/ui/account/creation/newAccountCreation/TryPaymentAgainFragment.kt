@@ -38,7 +38,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),V
         when(v?.id){
 
             R.id.tryPaymentAgain->{
-                findNavController().navigate(R.id.action_tryPaymentAgainFragment_to_successfullyFragment)
+               // findNavController().navigate(R.id.action_tryPaymentAgainFragment_to_successfullyFragment)
             }
         }
     }
