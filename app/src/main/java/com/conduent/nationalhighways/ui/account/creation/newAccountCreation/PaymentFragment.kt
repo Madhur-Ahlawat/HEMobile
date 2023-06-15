@@ -18,7 +18,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListener {
 
 
-    private var topUpAmount : Int? = 10
+    private var topUpAmount = ""
     private var topUpBalance : Boolean = false
     private var requiredName = false
     private var requiredCard = false
@@ -31,9 +31,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     ): FragmentPaymentBinding = FragmentPaymentBinding.inflate(inflater, container, false)
 
     override fun init() {
-        topUpAmount = arguments?.getInt(Constants.DATA,10)
+        topUpAmount = arguments?.getString(Constants.DATA).toString()
         topUpBalance = true
-        binding.paymentAmount.setText("£"+topUpAmount)
+        binding.paymentAmount.setText(topUpAmount)
         if(NewCreateAccountRequestModel.prePay){
             binding.youChooseToPay.visibility = View.GONE
         }else{
@@ -83,11 +83,12 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
         ) {
             when(index){
                 0->{
+
                     val text = binding.paymentAmount.getText().toString().trim()
                     val updatedText = text.replace("£","")
                     if (updatedText.isNotEmpty()) {
-                        topUpBalance = if (updatedText.length < 8) {
-                            if (updatedText.toInt() < 10) {
+                        topUpBalance = if (updatedText.length < 11) {
+                            if (updatedText.toDouble() < 10) {
                                 binding.paymentAmount.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                                 false
 
@@ -102,8 +103,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                     }else{
                         binding.paymentAmount.removeError()
                     }
-                    binding.paymentAmount.editText.removeTextChangedListener(this);
-                    binding.paymentAmount.setText("£" + updatedText)
+                    binding.paymentAmount.editText.removeTextChangedListener(this)
+                    if(updatedText.isNotEmpty())
+                        binding.paymentAmount.setText("£" + String.format("%.2f", updatedText.toDouble()))
                     Selection.setSelection( binding.paymentAmount.getText(),binding.paymentAmount.getText().toString().length)
                     binding.paymentAmount.editText.addTextChangedListener(this)
 
