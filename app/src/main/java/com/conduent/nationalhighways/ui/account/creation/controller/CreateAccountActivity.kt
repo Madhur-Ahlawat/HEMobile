@@ -24,7 +24,8 @@ class CreateAccountActivity : BaseActivity<Any>() {
 
     private fun init() {
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
-        binding.toolBarLyt.backButton.setOnClickListener { onBackPressed() }
+        binding.toolBarLyt.backButton.setOnClickListener { finish() }
+
 
         AdobeAnalytics.setScreenTrack(
             "create account",
