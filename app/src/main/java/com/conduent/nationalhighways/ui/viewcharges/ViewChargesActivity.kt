@@ -85,7 +85,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Motorcycle, \nmopeds,\nquad bikes",
+                                    "Motorcycle, mopeds,quad bikes",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
@@ -95,7 +95,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Cars, \nmotorhomes,\nminibuses",
+                                    "Cars, motorhomes,minibuses",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
@@ -105,7 +105,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Vehicles with \n2 axles",
+                                    "Vehicles with 2 axles",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
@@ -115,7 +115,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Vehicles with\n more than 2\n axles",
+                                    "Vehicles with more than 2 axles",
                                     it?.videoRate,
                                     it?.etcRate
                                 )

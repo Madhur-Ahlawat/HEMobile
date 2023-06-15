@@ -50,8 +50,6 @@
             app:maxLength="15"
             android:maxLength="15"
             app:imeOptions="actionNext"
-            app:maxLength="15"
-            android:maxLength="15"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
