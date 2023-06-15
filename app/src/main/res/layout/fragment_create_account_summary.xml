@@ -416,7 +416,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/vehicle_details"
                 android:textColor="@color/black"
@@ -426,7 +426,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:nestedScrollingEnabled="true"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -434,7 +434,7 @@
                 style="@style/CheckBoxStyle"
                 android:checked="false"
                 android:text="@string/i_accept_the_terms_conditions"
-                android:gravity="top"
+                android:gravity="center|left"
                 android:layout_marginTop="@dimen/margin_30dp"/>
 
 

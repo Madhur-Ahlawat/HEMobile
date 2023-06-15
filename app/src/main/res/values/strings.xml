@@ -1148,7 +1148,7 @@
     <string name="pay_sample">PAYG SAMPLE PAGE</string>
     <string name="str_you_choose_to_pay">You chose to pay as you go. We’ll collect payment from your card each time you cross.</string>
     <string name="str_your_payment_has_been_declined">Your payment has been declined</string>
-    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details.No money has been taken from your account.Go back to try the payment again</string>
+    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details. No money has been taken from your account. Go back to try the payment again</string>
     <string name="str_try_payment_again">Try payment again</string>
 
     <!--TOP UP Error Message-->

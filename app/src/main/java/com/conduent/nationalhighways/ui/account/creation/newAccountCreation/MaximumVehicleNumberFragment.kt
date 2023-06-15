@@ -153,7 +153,11 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
             R.id.cancel_btn -> {
 
-                findNavController().popBackStack()
+                if(NewCreateAccountRequestModel.vehicleList.isEmpty()) {
+                    findNavController().popBackStack()
+                }else{
+                    findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
+                }
 
 
             }

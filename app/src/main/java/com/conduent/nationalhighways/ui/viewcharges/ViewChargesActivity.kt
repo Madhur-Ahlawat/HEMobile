@@ -85,7 +85,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Motorcycle, mopeds,quad bikes",
+                                    "Motorcycle, mopeds, quad bikes",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
@@ -95,7 +95,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Cars, motorhomes,minibuses",
+                                    "Cars, motorhomes, minibuses",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
