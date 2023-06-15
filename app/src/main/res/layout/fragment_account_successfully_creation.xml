@@ -37,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:id="@+id/email_conformation_txt"
                 android:text="@string/we_sent_confirmation_email" />
 
             <androidx.cardview.widget.CardView
@@ -141,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="@string/what_happens_text" />
+                android:text="@string/sign_in_into_your_account" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/textView8"
@@ -188,7 +189,8 @@
                 android:textColor="@color/new_btn_color"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textSize="14sp"
-                android:text="@string/feed_back_to_improve_service"/>
+                android:text="@string/feed_back_to_improve_service"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

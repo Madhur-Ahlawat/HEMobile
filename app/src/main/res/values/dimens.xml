@@ -52,4 +52,5 @@
     <dimen name="margin_160dp">160dp</dimen>
     <dimen name="margin_180dp">180dp</dimen>
     <dimen name="margin_250dp">250dp</dimen>
+    <dimen name="margin_65dp">65dp</dimen>
 </resources>

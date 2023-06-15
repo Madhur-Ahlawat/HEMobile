@@ -85,7 +85,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_height="@dimen/margin_65dp"
                     android:layout_marginBottom="@dimen/margin_20dp"
                     android:background="@drawable/text_rectangle"
                     android:id="@+id/guidanceLayout">
@@ -121,7 +121,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_height="@dimen/margin_65dp"
                     android:background="@drawable/text_rectangle"
                     android:layout_below="@id/guidanceLayout"
                     android:layout_marginBottom="@dimen/margin_20dp"
@@ -156,7 +156,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_height="@dimen/margin_65dp"
                     android:layout_below="@+id/payCrossingLayout"
                     android:background="@drawable/text_rectangle"
                     android:layout_marginBottom="@dimen/margin_20dp"
@@ -168,7 +168,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:id="@+id/img_pcn"
-                        android:src="@drawable/pcn_icon"/>
+                        android:src="@drawable/setupdartcharge"/>
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         style="@style/RegularTextBlack"
@@ -192,7 +192,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_height="@dimen/margin_65dp"
                     android:layout_below="@id/pcnLayout"
                     android:background="@drawable/text_rectangle"
                     android:id="@+id/crossingLayout">
