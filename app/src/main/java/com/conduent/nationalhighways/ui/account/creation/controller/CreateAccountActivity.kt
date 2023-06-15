@@ -1,7 +1,10 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
+import android.view.View
+import android.widget.Toast
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -24,7 +27,9 @@ class CreateAccountActivity : BaseActivity<Any>() {
 
     private fun init() {
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
-        binding.toolBarLyt.backButton.setOnClickListener { onBackPressed() }
+        binding.toolBarLyt.backButton.setOnClickListener { onBackPressed()
+
+        }
 
 
         AdobeAnalytics.setScreenTrack(
@@ -42,4 +47,21 @@ class CreateAccountActivity : BaseActivity<Any>() {
 
     override fun observeViewModel() {}
 
-}
+
+
+    override fun onBackPressed() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
+                if (fragment is AccountSuccessfullyCreationFragment){
+
+                }else{
+                    super.onBackPressed()
+                }
+
+            }
+        }
+
+    }
+    }
+

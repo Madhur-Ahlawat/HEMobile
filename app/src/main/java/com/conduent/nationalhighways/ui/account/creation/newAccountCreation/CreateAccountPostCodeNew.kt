@@ -26,7 +26,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         binding.inputPostCode.editText
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
