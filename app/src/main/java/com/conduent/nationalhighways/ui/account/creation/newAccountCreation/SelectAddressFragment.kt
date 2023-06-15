@@ -139,12 +139,13 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         mainList[position]?.isSelected = true
         selectAddressAdapter?.notifyDataSetChanged()
 
-        NewCreateAccountRequestModel.addressline1 =
-            mainList[position]?.street + " " + mainList[position]?.town
+
+
+        NewCreateAccountRequestModel.addressline1 = mainList[position]?.street.toString()
+        NewCreateAccountRequestModel.townCity = mainList[position]?.town.toString()
+        NewCreateAccountRequestModel.country =
+            mainList[position]?.country.toString()
         NewCreateAccountRequestModel.zipCode = mainList[position]?.postcode.toString()
-        NewCreateAccountRequestModel.country = mainList[position]?.country.toString()
-
-
 
         binding.btnNext.isEnabled = mainList[position]?.isSelected == true
     }
@@ -154,34 +155,40 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             loader?.dismiss()
         }
 
-            when (response) {
-                is Resource.Success -> {
+        when (response) {
+            is Resource.Success -> {
 
-                    if (response.data?.lrdsEligible.equals("true",true)){
-                        findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
+                if (response.data?.lrdsEligible.equals("true", true)) {
+                    findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
 
-                    }else{
-                        if (NewCreateAccountRequestModel.personalAccount){
-                            findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment)
+                } else {
+                    if (NewCreateAccountRequestModel.personalAccount) {
+                        findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment)
 
-                        }else{
-                            val bundle= Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
-                            findNavController().navigate(R.id.action_selectaddressfragment_to_forgotPasswordFragment,bundle)
+                    } else {
+                        val bundle = Bundle()
+                        bundle.putString(
+                            Constants.NAV_FLOW_KEY,
+                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                        )
+                        findNavController().navigate(
+                            R.id.action_selectaddressfragment_to_forgotPasswordFragment,
+                            bundle
+                        )
 
-                        }
                     }
-
                 }
 
-                is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, response.errorMsg)
-                }
-
-                else -> {
-
-                }
             }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+
+            else -> {
+
+            }
+        }
 
     }
 

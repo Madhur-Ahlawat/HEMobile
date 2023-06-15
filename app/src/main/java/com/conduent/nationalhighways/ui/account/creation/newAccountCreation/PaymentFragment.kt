@@ -57,7 +57,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
         when(v?.id){
 
             R.id.proceddWithPayment->{
-                findNavController().navigate(R.id.action_paymentFragment_to_tryPaymentAgainFragment)
+                findNavController().navigate(R.id.action_paymentFragment_to_successfullyFragment)
 
             }
         }
@@ -223,6 +223,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
 
         binding.proceddWithPayment.isEnabled = topUpBalance && requiredDate &&
                 binding.nameOnCard.getText()?.isNotEmpty() == true && requiredName && requiredCard && requiredCode
+
     }
 
 }

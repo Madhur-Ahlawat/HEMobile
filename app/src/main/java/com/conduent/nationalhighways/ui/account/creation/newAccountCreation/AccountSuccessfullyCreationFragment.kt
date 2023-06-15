@@ -27,7 +27,18 @@ class AccountSuccessfullyCreationFragment :
         backIcon = requireActivity().findViewById(R.id.back_button)
         backIcon?.visibility = View.GONE
 
-        binding.emailConformationTxt.text=getString(R.string.we_sent_confirmation_email,NewCreateAccountRequestModel.emailAddress)
+        binding.emailConformationTxt.text = getString(
+            R.string.we_sent_confirmation_email,
+            NewCreateAccountRequestModel.emailAddress
+        )
+
+        if (NewCreateAccountRequestModel.payAsYouGo) {
+            binding.payAsGoText.visibility = View.VISIBLE
+            binding.prePayCard.visibility = View.GONE
+        } else {
+            binding.payAsGoText.visibility = View.GONE
+            binding.prePayCard.visibility = View.VISIBLE
+        }
 
     }
 

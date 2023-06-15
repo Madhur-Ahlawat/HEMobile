@@ -273,11 +273,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     private fun isEnable1() {
-        if (binding.model?.newPassword?.isEmpty() == false
-            && binding.model?.confirmPassword?.isEmpty() == false
-            && ((binding.model?.newPassword?.length ?: 0) > 7)
-            && ((binding.model?.confirmPassword?.length ?: 0) > 7&&Utils.isValidPassword(binding.model?.newPassword)&&Utils.isValidPassword(binding.model?.confirmPassword))
-        ) {
+        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
+            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
+            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
+            && ((binding.edtConformPassword.getText().toString().trim().length)>7)&&(binding.edtNewPassword.getText().toString().trim()==binding.edtConformPassword.getText().toString().trim()))
+         {
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
@@ -303,10 +303,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     private fun isEnable(text: String) {
-        if (binding.model?.newPassword?.isEmpty() == false
-            && binding.model?.confirmPassword?.isEmpty() == false
-            && ((binding.model?.newPassword?.length ?: 0) > 7)
-            && ((binding.model?.confirmPassword?.length ?: 0) > 7&&Utils.isValidPassword(binding.model?.newPassword)&&Utils.isValidPassword(binding.model?.confirmPassword))
+        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
+            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
+            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
+            && ((binding.edtConformPassword.getText().toString().trim().length) > 7&&(binding.edtNewPassword.getText().toString().trim()==binding.edtConformPassword.getText().toString().trim()))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,

@@ -739,6 +739,9 @@
         <action
             android:id="@+id/action_paymentFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_successfullyFragment"
+            app:destination="@id/successfullyFragment" />
     </fragment>
 
     <fragment
@@ -747,9 +750,7 @@
         android:label="TryPaymentAgainFragment"
         tools:layout="@layout/fragment_try_payment_again">
 
-        <action
-            android:id="@+id/action_tryPaymentAgainFragment_to_successfullyFragment"
-            app:destination="@id/successfullyFragment" />
+
     </fragment>
 
     <fragment

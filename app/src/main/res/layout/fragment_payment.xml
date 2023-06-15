@@ -128,6 +128,7 @@
             style="@style/PrimaryButton"
             android:background="#E0E0E0"
             android:backgroundTint="#E0E0E0"
+            android:visibility="gone"
             android:text="@string/pay_sample"
             android:textColor="#AC352F"/>
     </LinearLayout>

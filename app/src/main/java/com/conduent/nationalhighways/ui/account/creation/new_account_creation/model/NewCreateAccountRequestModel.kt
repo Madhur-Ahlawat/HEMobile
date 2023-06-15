@@ -20,7 +20,7 @@ object NewCreateAccountRequestModel{
     var state:String=""
     var country:String=""
     var zipCode:String=""
-    var prePay:Boolean=true
+    var prePay:Boolean=false
     var payAsYouGo:Boolean=false
     var plateCountry:String = ""
     var plateNumber:String=""
