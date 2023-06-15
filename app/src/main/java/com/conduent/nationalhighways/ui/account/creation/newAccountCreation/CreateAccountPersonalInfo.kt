@@ -78,6 +78,10 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         binding.inputLastName.getText().toString()
 
                 } else {
+                    NewCreateAccountRequestModel.firstName =
+                        binding.inputFirstName.getText().toString()
+                    NewCreateAccountRequestModel.lastName =
+                        binding.inputLastName.getText().toString()
                     NewCreateAccountRequestModel.companyName =
                         binding.inputCompanyName.getText().toString()
                 }

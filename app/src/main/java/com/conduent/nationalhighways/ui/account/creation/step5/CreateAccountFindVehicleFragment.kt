@@ -51,8 +51,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if(plateNumber.isNotEmpty()){
             binding.findVehicle.isEnabled = true
         }
-
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -121,8 +119,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
     }
-
-
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
 
         if (loader?.isVisible == true) {

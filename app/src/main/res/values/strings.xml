@@ -1044,7 +1044,7 @@
     <string name="text_message_communications">Text message communications</string>
     <string name="two_step_verification">Two-step verification</string>
     <string name="vehicle_details">Vehicle Details</string>
-    <string name="i_accept_the_terms_conditions">I accept the <u> terms &amp; conditions </u></string>
+    <string name="i_accept_the_terms_conditions">I accept the <u>terms &amp; conditions</u></string>
     <string name="add_another_vehicle">Add Another Vehicle</string>
     <string name="for_example_cu57abc">For example, CU57ABC</string>
     <string name="the_vehicle_has_already_been_added">The vehicle has already been added.</string>
@@ -1071,6 +1071,7 @@
     <string name="str_first_name_error_message">First name must only include letters a to z, and special characters such as hyphens</string>
     <string name="str_last_name_error_message">Last name must only include letters a to z, and special characters such as hyphens</string>
     <string name="str_first_name_length_error_message">First name must be 50 characters or fewer</string>
+    <string name="str_card_name_length_error_message">Card name must be 50 characters or fewer</string>
     <string name="str_last_name_length_error_message">Last name must be 50 characters or fewer</string>
     <string name="str_enter_the_company_name">Enter the company name</string>
     <string name="str_company_name_error_message">Company name must be 50 characters or fewer</string>
@@ -1174,8 +1175,11 @@
     <string name="change_how_pay_for_crossing">change how you pay for crossings </string>
     <string name="change_how_to_receive_communication">change how you receive communications</string>
     <string name="feed_back_to_improve_service"><u>FEEDBACK TO IMPROVE THE SERVICE</u></string>
-
-
+    <string name="the_name_on_card_must_only_include_letters_a_to_z_and_special_characters_such_as_hyphens">The name on card must only include letters a to z, and special characters such as hyphens</string>
+    <string name="card_security_code_must_be_3_digits_or_more">Card security code must be 3 digits or more</string>
+    <string name="invalid_date_format">Invalid date format</string>
+    <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
+    <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
 
 
 </resources>

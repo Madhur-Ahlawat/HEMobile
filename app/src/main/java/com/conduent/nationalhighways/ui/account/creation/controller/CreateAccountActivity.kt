@@ -27,9 +27,6 @@ class CreateAccountActivity : BaseActivity<Any>() {
         binding.toolBarLyt.backButton.setOnClickListener { onBackPressed() }
 
 
-
-
-
         AdobeAnalytics.setScreenTrack(
             "create account",
             "create account",
