@@ -47,6 +47,8 @@
             android:layout_marginTop="@dimen/margin_26dp"
             app:labelText="Mobile number"
             app:inputType="phone"
+            app:maxLength="15"
+            android:maxLength="15"
             app:imeOptions="actionNext"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"

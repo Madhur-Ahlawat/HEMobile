@@ -134,13 +134,18 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                             .toTypedArray()
                         if (split.isNotEmpty()) {
                             val expiryMonth = split[0]
-                            if(expiryMonth.toInt()>12){
+                            val expiryYear = split[1]
+                            if(expiryMonth.toInt()>12 || expiryMonth == "00"){
                                 binding.expiryDate.setErrorText(getString(R.string.invalid_date_format))
+                                requiredDate = false
+                            }else if(expiryYear.toInt()<23){
+                                binding.expiryDate.setErrorText(getString(R.string.expiry_date_cannot_be_in_the_past))
                                 requiredDate = false
                             }else{
                                 binding.expiryDate.removeError()
                                 requiredDate = true
                             }
+
                         }
                     }
                 }
