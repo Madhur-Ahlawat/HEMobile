@@ -2,9 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.Selection
-import android.text.Spanned
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentTopUpBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import java.util.regex.Pattern
 
 
 class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener {
@@ -27,15 +24,18 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     ): FragmentTopUpBinding = FragmentTopUpBinding.inflate(inflater, container, false)
 
     override fun init() {
-//        binding.lowBalance.editText.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter()))
-//        binding.top.editText.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter()))
+
     }
 
     override fun initCtrl() {
         binding.topUpBtn.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.lowBalance.editText.setOnFocusChangeListener { view, b -> lowBalanceDecimal(b) }
+        binding.top.editText.setOnFocusChangeListener { view, b -> topBalanceDecimal(b) }
     }
+
+
 
     override fun observer() {
     }
@@ -50,6 +50,26 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             }
         }
 
+    }
+
+    private fun lowBalanceDecimal(b: Boolean) {
+        if(b.not()){
+            val text = binding.lowBalance.getText().toString().trim()
+            val updatedText = text.replace("£","")
+            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+                binding.lowBalance.setText(""+updatedText.toDouble())
+            }
+        }
+    }
+
+    private fun topBalanceDecimal(b: Boolean) {
+        if(b.not()){
+            val text = binding.top.getText().toString().trim()
+            val updatedText = text.replace("£","")
+            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+                binding.top.setText(""+updatedText.toDouble())
+            }
+        }
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -75,7 +95,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val updatedText = text.replace("£","")
 
                 if (updatedText.isNotEmpty()) {
-                    lowBalance = if (updatedText.length < 11) {
+                    val str: String = updatedText.substringBeforeLast(".")
+                    lowBalance = if (str.length < 8) {
                         if (updatedText.toDouble() < 5) {
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
@@ -94,14 +115,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.lowBalance.editText.removeTextChangedListener(this)
                 if(updatedText.isNotEmpty())
-                    binding.lowBalance.setText("£" + String.format("%.2f", updatedText.toDouble()))
+                    binding.lowBalance.setText("£" + updatedText)
                 Selection.setSelection( binding.lowBalance.getText(),binding.lowBalance.getText().toString().length)
                 binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
                 val text = binding.top.getText().toString().trim()
                 val updatedText = text.replace("£","")
                 if (updatedText.isNotEmpty()) {
-                    topUpBalance = if (updatedText.length < 11) {
+                    val str: String = updatedText.substringBeforeLast(".")
+                    topUpBalance = if (str.length < 8) {
                         if (updatedText.toDouble() < 10) {
                             binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
@@ -119,7 +141,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.top.editText.removeTextChangedListener(this)
                 if(updatedText.isNotEmpty())
-                    binding.top.setText("£" + String.format("%.2f", updatedText.toDouble()))
+                    binding.top.setText("£" + updatedText)
                 Selection.setSelection( binding.top.getText(),binding.top.getText().toString().length)
                 binding.top.editText.addTextChangedListener(this)
             }
@@ -136,24 +158,5 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         binding.topUpBtn.isEnabled = lowBalance && topUpBalance
     }
 
-    class DecimalDigitsInputFilter : InputFilter {
-        var mPattern: Pattern
-
-        init {
-            mPattern = Pattern.compile("[0-9]*+((\\.[0-9]?)?)||(\\.)?")
-        }
-
-        override fun filter(
-            source: CharSequence,
-            start: Int,
-            end: Int,
-            dest: Spanned,
-            dstart: Int,
-            dend: Int
-        ): CharSequence {
-            val matcher = mPattern.matcher(dest)
-            return if (!matcher.matches()) "" else ""
-        }
-    }
 
 }

@@ -37,7 +37,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
         if(NewCreateAccountRequestModel.prePay){
             binding.youChooseToPay.visibility = View.GONE
         }else{
-            binding.paymentAmount.visibility = View.GONE
+//            binding.paymentAmount.visibility = View.GONE
         }
     }
 
@@ -48,6 +48,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
         binding.nameOnCard.editText.addTextChangedListener(GenericTextWatcher(2))
         binding.cardSecurityCode.editText.addTextChangedListener(GenericTextWatcher(3))
         binding.cardNumber.editText.addTextChangedListener(GenericTextWatcher(4))
+        binding.paymentAmount.editText.setOnFocusChangeListener { view, b -> topBalanceDecimal(b) }
     }
 
     override fun observer() {
@@ -62,6 +63,16 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
             }
         }
 
+    }
+
+    private fun topBalanceDecimal(b: Boolean) {
+        if(b.not()){
+            val text = binding.paymentAmount.getText().toString().trim()
+            val updatedText = text.replace("£","")
+            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+                binding.paymentAmount.setText(""+updatedText.toDouble())
+            }
+        }
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -87,7 +98,8 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                     val text = binding.paymentAmount.getText().toString().trim()
                     val updatedText = text.replace("£","")
                     if (updatedText.isNotEmpty()) {
-                        topUpBalance = if (updatedText.length < 11) {
+                        val str: String = updatedText.substringBeforeLast(".")
+                        topUpBalance = if (updatedText.length < 8) {
                             if (updatedText.toDouble() < 10) {
                                 binding.paymentAmount.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                                 false
@@ -105,7 +117,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                     }
                     binding.paymentAmount.editText.removeTextChangedListener(this)
                     if(updatedText.isNotEmpty())
-                        binding.paymentAmount.setText("£" + String.format("%.2f", updatedText.toDouble()))
+                        binding.paymentAmount.setText("£" + updatedText)
                     Selection.setSelection( binding.paymentAmount.getText(),binding.paymentAmount.getText().toString().length)
                     binding.paymentAmount.editText.addTextChangedListener(this)
 

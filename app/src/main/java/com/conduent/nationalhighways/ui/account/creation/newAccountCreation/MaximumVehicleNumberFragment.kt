@@ -113,9 +113,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                 when (binding.btnContinue.text) {
                     getString(R.string.add_another_vehicle) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment)
-
-                }
-                when (binding.btnContinue.text) {
                     getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
@@ -131,9 +128,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                             findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
 
                         }
-
-                }
-                when (binding.btnContinue.text) {
                     getString(R.string.str_add_to_account) -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
