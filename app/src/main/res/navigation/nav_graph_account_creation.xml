@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite">
+    app:startDestination="@id/createPasswordFragment">
 
 
-   <!-- Step 1 -->
+    <!-- Step 1 -->
     <fragment
         android:id="@+id/emailVerification"
         android:name="com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailVerificationFragment"
@@ -30,8 +29,8 @@
         <action
             android:id="@+id/action_confirmEmailFragment_to_paymentSummaryFragment"
             app:destination="@id/paymentSummaryFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/paymentSummaryFragment"/>
+            app:popUpTo="@id/paymentSummaryFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 
@@ -49,7 +48,7 @@
 
         <action
             android:id="@+id/action_businessPrepayInfoFragment_to_businssInfoFragment"
-            app:destination="@+id/businessPrepayInfoFragment"/>
+            app:destination="@+id/businessPrepayInfoFragment" />
     </fragment>
 
     <fragment
@@ -60,7 +59,7 @@
 
         <action
             android:id="@+id/action_personalTypeFragment_to_businssInfoFragment"
-            app:destination="@+id/businessPrepayInfoFragment"/>
+            app:destination="@+id/businessPrepayInfoFragment" />
 
         <action
             android:id="@+id/action_personalTypeFragment_to_personalDetailsEntryFragment"
@@ -84,18 +83,18 @@
         android:id="@+id/businessPrepayInfoFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessPrePayInfoFragment"
         android:label="@string/business_prepay"
-        tools:layout="@layout/fragment_business_prepay_info" >
+        tools:layout="@layout/fragment_business_prepay_info">
 
         <action
             android:id="@+id/action_business_prepayInfoFragment_to_business_prepay_autotopupfragment"
-            app:destination="@+id/businessPrePayAutoTopUpFragment"/>
+            app:destination="@+id/businessPrePayAutoTopUpFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/businessPrePayAutoTopUpFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessPrePayAutoTopUpFragment"
         android:label="@string/business_prepay_auto_topup"
-        tools:layout="@layout/fragment_business_prepay_auto_topup" >
+        tools:layout="@layout/fragment_business_prepay_auto_topup">
 
         <action
             android:id="@+id/action_businessPrePayAutoTopUpFragment_to_businessTopUpRecommendationFragment"
@@ -107,7 +106,7 @@
         android:id="@+id/businessTopUpRecommendataionFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step2.businessaccount.BusinessTopUpRecommendationFragment"
         android:label="@string/business_topup_recommendation"
-        tools:layout="@layout/fragment_business_top_up_recommendation" >
+        tools:layout="@layout/fragment_business_top_up_recommendation">
 
         <action
             android:id="@+id/action_businessPrePayAutoTopUpFragment_to_personalDetailsEntryFragment"
@@ -125,7 +124,7 @@
         android:id="@+id/personalDetailsEntryFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPersonalInfoFragment"
         android:label="Personal Info"
-        tools:layout="@layout/fragment_create_account_personal_info" >
+        tools:layout="@layout/fragment_create_account_personal_info">
         <action
             android:id="@+id/action_personalDetailsEntryFragment_to_postcodeFragment"
             app:destination="@id/postcodeFragment" />
@@ -137,7 +136,7 @@
         android:id="@+id/postcodeFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeFragment"
         android:label="Personal Info"
-        tools:layout="@layout/fragment_create_account_postcode" >
+        tools:layout="@layout/fragment_create_account_postcode">
         <action
             android:id="@+id/action_postcodeFragment_to_createAccoutPasswordFragment"
             app:destination="@id/createAccountPasswordFragment" />
@@ -205,11 +204,11 @@
             app:destination="@id/findYourVehicleFragment" />
 
 
-<!--
-        <action
-            android:id="@+id/action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment"
-            app:destination="@+id/businessVehicleTitleFragment" />
--->
+        <!--
+                <action
+                    android:id="@+id/action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment"
+                    app:destination="@+id/businessVehicleTitleFragment" />
+        -->
 
 
     </fragment>
@@ -225,31 +224,30 @@
 
         <argument
             android:name="plateNumber"
-            app:argType="string"/>
+            app:argType="string" />
         <argument
             android:name="vehicle_position"
-            app:argType="integer"/>
+            app:argType="integer" />
 
         <action
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"/>
+            app:destination="@+id/vehicleListFragment" />
 
 
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleUKListFragment"
-            app:destination="@+id/businessVehicleUKListFragment"/>
+            app:destination="@+id/businessVehicleUKListFragment" />
 
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleNonUKMakeFragment"
-            app:destination="@+id/businessNonUKMakeFragment"/>
+            app:destination="@+id/businessNonUKMakeFragment" />
 
         <action
             android:id="@+id/action_findYourVehicleFragment_to_businessVehicleDetailFragment"
-            app:destination="@id/businessVehicleDetailFragment"
-            />
+            app:destination="@id/businessVehicleDetailFragment" />
         <action
             android:id="@+id/action_findVehicleFragment_to_addNewVehicleDetailsFragment"
-            app:destination="@id/addNewVehicleDetailsFragment"/>
+            app:destination="@id/addNewVehicleDetailsFragment" />
         <action
             android:id="@+id/action_findVehicleFragment_to_maximumVehicleFragment"
             app:destination="@+id/maximumVehicleFragment" />
@@ -266,24 +264,24 @@
             app:destination="@id/removeVehicleFragment" />
         <action
             android:id="@+id/action_accountSummaryFragment_to_TopUpFragment"
-            app:destination="@id/topUpFragment"/>
+            app:destination="@id/topUpFragment" />
     </fragment>
 
     <!-- BUSINESS ACCOUNT -->
 
-<!--
-    <fragment
-        android:id="@+id/businessVehicleTitleFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
-        android:label="BusinessVehicleTitle"
-        tools:layout="@layout/fragment_business_vehicle_title_fragment">
+    <!--
+        <fragment
+            android:id="@+id/businessVehicleTitleFragment"
+            android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
+            android:label="BusinessVehicleTitle"
+            tools:layout="@layout/fragment_business_vehicle_title_fragment">
 
-        <action
-            android:id="@+id/action_businessVehicleTitleFragment_to_businessVehicleUKFragment"
-            app:destination="@id/findYourVehicleFragment" />
+            <action
+                android:id="@+id/action_businessVehicleTitleFragment_to_businessVehicleUKFragment"
+                app:destination="@id/findYourVehicleFragment" />
 
-    </fragment>
--->
+        </fragment>
+    -->
 
     <fragment
         android:id="@+id/businessVehicleUKListFragment"
@@ -293,12 +291,10 @@
 
         <action
             android:id="@+id/action_businessUKListFragment_to_businessNonUKMakeFragment"
-            app:destination="@id/businessNonUKMakeFragment"
-            />
+            app:destination="@id/businessNonUKMakeFragment" />
         <action
             android:id="@+id/action_businessUKListFragment_to_businessVehicleDetailFragment"
-            app:destination="@id/businessVehicleDetailFragment"
-            />
+            app:destination="@id/businessVehicleDetailFragment" />
     </fragment>
 
 
@@ -322,13 +318,13 @@
 
         <action
             android:id="@+id/action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment"
-            app:destination="@id/businessVehicleDetailFragment"/>
+            app:destination="@id/businessVehicleDetailFragment" />
 
         <action
             android:id="@+id/action_businessNonUkMakeFragment_to_findYourVehicleFragment"
-            app:popUpToInclusive="true"
+            app:destination="@id/findYourVehicleFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:destination="@id/findYourVehicleFragment" />
+            app:popUpToInclusive="true" />
 
 
     </fragment>
@@ -340,7 +336,7 @@
         tools:layout="@layout/fragment_business_vehicle_detail">
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"/>
+            app:destination="@+id/vehicleListFragment" />
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_paymentSummaryScreen"
@@ -350,12 +346,11 @@
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"
             app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_yourVehicleFragment"
-            app:destination="@+id/yourVehicleFragment"/>
-
+            app:destination="@+id/yourVehicleFragment" />
 
 
     </fragment>
@@ -385,10 +380,10 @@
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"/>
+            app:destination="@+id/vehicleListFragment" />
         <action
             android:id="@+id/action_addVehicleDetailFragment_to_max_vehicleFragment"
-            app:destination="@+id/maximumVehicleFragment"/>
+            app:destination="@+id/maximumVehicleFragment" />
 
     </fragment>
 
@@ -406,16 +401,16 @@
 
         <action
             android:id="@+id/action_paymentSummaryScreen_to_choosePaymentScreen"
-            app:destination="@+id/choosePaymentFragment"/>
+            app:destination="@+id/choosePaymentFragment" />
 
 
         <action
             android:id="@+id/action_paymentSummaryScreen_to_business_prepay_autotopupfragment"
-            app:destination="@+id/businessPrePayAutoTopUpFragment"/>
+            app:destination="@+id/businessPrePayAutoTopUpFragment" />
 
         <action
             android:id="@+id/action_paymentSummaryScreen_to_createAccountFindVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"/>
+            app:destination="@+id/findYourVehicleFragment" />
         <action
             android:id="@+id/action_paymentSummaryFragment_to_accountTypeSelectionFragment"
             app:destination="@id/accountTypeSelectionFragment" />
@@ -446,7 +441,7 @@
         android:id="@+id/successfulFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step6.CreateAccountSuccessfulFragment"
         android:label="Successfull Fragment"
-        tools:layout="@layout/fragment_create_account_successful"/>
+        tools:layout="@layout/fragment_create_account_successful" />
     <fragment
         android:id="@+id/createAccountPrerequisite"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPrerequisite"
@@ -468,8 +463,8 @@
             app:destination="@id/createAccountPostCodeNew" />
         <argument
             android:name="isPersonalAccount"
-            app:argType="boolean"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/createAccountPostCodeNew"
@@ -479,18 +474,16 @@
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_selectaddressfragment"
             app:destination="@id/selectaddressfragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
-            app:destination="@+id/fragment_manual_address"
-            />
+            app:destination="@+id/fragment_manual_address" />
         <argument
             android:name="isPersonalAccount"
-            app:argType="boolean"/>
+            app:argType="boolean" />
         <argument
             android:name="postcode"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -503,29 +496,27 @@
             app:destination="@id/createAccountEligibleLRDS" />
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountTypesFragment"
-            app:destination="@+id/createAccountTypes"
-            />
+            app:destination="@+id/createAccountTypes" />
         <action
             android:id="@+id/action_selectaddressfragment_to_forgotPasswordFragment"
-            app:destination="@+id/forgotPasswordFragment"/>
+            app:destination="@+id/forgotPasswordFragment" />
         <argument
             android:name="isPersonalAccount"
-            app:argType="boolean"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 
     <fragment
         android:id="@+id/createAccountEligibleLRDS"
-        tools:layout="@layout/fragment_create_account_eligible_lrds"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountEligibleLRDS"
-        android:label="CreateAccountEligibleLRDS" >
+        android:label="CreateAccountEligibleLRDS"
+        tools:layout="@layout/fragment_create_account_eligible_lrds">
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
             app:destination="@id/createAccountTypes" />
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_discount_type_fragment"
-            app:destination="@id/discount_type_fragment"
-            />
+            app:destination="@id/discount_type_fragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountTypes"
@@ -562,7 +553,7 @@
             app:destination="@id/resend_code_fragment" />
         <action
             android:id="@+id/action_otpForgotFragment_to_createVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"/>
+            app:destination="@+id/findYourVehicleFragment" />
 
     </fragment>
 
@@ -570,8 +561,7 @@
         android:id="@+id/createPasswordFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.CreateNewPasswordFragment"
         android:label="createPasswordFragment"
-        tools:layout="@layout/fragment_forgot_create_new_password"
-        >
+        tools:layout="@layout/fragment_forgot_create_new_password">
         <action
             android:id="@+id/action_createPasswordFragment_to_optForSmsFragment"
             app:destination="@id/optForSmsFragment" />
@@ -602,10 +592,10 @@
 
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
-            app:destination="@+id/forgotOtpFragment"/>
+            app:destination="@+id/forgotOtpFragment" />
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_createVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"/>
+            app:destination="@+id/findYourVehicleFragment" />
 
     </fragment>
 
@@ -619,37 +609,35 @@
             app:destination="@id/createAccountPersonalInfo" />
 
     </fragment>
-     <fragment
-         android:id="@+id/fragment_manual_address"
-         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
-         android:label="ManualAddress"
-         tools:layout="@layout/fragment_manual_address">
-         <argument
-             android:name="isPersonalAccount"
-             app:argType="boolean"/>
-         <argument
-             android:name="postcode"
-             app:argType="string"/>
-         <action
-             android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
-             app:destination="@id/createAccountEligibleLRDS" />
+    <fragment
+        android:id="@+id/fragment_manual_address"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
+        android:label="ManualAddress"
+        tools:layout="@layout/fragment_manual_address">
+        <argument
+            android:name="isPersonalAccount"
+            app:argType="boolean" />
+        <argument
+            android:name="postcode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
+            app:destination="@id/createAccountEligibleLRDS" />
 
-         <action
-             android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
-             app:destination="@+id/createAccountTypes"
-             />
-         <action
-             android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
-             app:destination="@+id/forgotPasswordFragment"/>
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
+            app:destination="@+id/createAccountTypes" />
+        <action
+            android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
+            app:destination="@+id/forgotPasswordFragment" />
 
 
-     </fragment>
+    </fragment>
     <fragment
         android:id="@+id/discount_type_fragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.DiscountTypeFragment"
         android:label="DiscountTypeFragment"
-        tools:layout="@layout/fragment_discount_type">
-    </fragment>
+        tools:layout="@layout/fragment_discount_type"></fragment>
     <fragment
         android:id="@+id/resend_code_fragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
@@ -674,13 +662,13 @@
             app:destination="@id/removeVehicleFragment" />
         <action
             android:id="@+id/action_vehicleListFragment_to_createAccountFindVehicleFragment"
-            app:destination="@id/findYourVehicleFragment"/>
+            app:destination="@id/findYourVehicleFragment" />
         <action
             android:id="@+id/action_vehicleListFragment_to_addNewVehicleDetailsFragment"
-            app:destination="@id/addNewVehicleDetailsFragment"/>
+            app:destination="@id/addNewVehicleDetailsFragment" />
         <action
             android:id="@+id/action_vehicleListFragment_to_createAccountSummaryFragment"
-            app:destination="@id/createAccountSummaryFragment"/>
+            app:destination="@id/createAccountSummaryFragment" />
     </fragment>
 
     <fragment
@@ -691,19 +679,17 @@
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"
-            app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@+id/findYourVehicleFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
-            app:destination="@id/createAccountSummaryFragment"/>
+            app:destination="@id/createAccountSummaryFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"/>
+            app:destination="@+id/vehicleListFragment" />
 
         <argument
             android:name="plateNumber"
-            app:argType="string"/>
+            app:argType="string" />
 
     </fragment>
     <fragment
@@ -713,7 +699,7 @@
         tools:layout="@layout/fragment_remove_vehicle">
         <argument
             android:name="vehicle_position"
-            app:argType="integer"/>
+            app:argType="integer" />
         <action
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />

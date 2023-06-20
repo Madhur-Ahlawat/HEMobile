@@ -65,7 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     override fun init() {
-        binding.model = LoginModel(value = "", password = "", enable = false)
+       // binding.model = LoginModel(value = "", password = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -89,50 +89,22 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
         binding.apply {
             tvForgotUsername.setOnClickListener(this@LoginFragment)
             tvForgotPassword.setOnClickListener(this@LoginFragment)
-            fingerprint.setOnClickListener(this@LoginFragment)
-            edtEmail.doAfterTextChanged { checkButton() }
-            edtPwd.doAfterTextChanged { checkButton() }
+           // fingerprint.setOnClickListener(this@LoginFragment)
+           // edtEmail.doAfterTextChanged { checkButton() }
+           // edtPwd.doAfterTextChanged { checkButton() }
             btnLogin.setOnClickListener(this@LoginFragment)
         }
 
-        if (displayFingerPrintPopup()) {
+       /* if (displayFingerPrintPopup()) {
             binding.fingerprint.visible()
             fingerPrintLogin()
         } else {
             binding.fingerprint.gone()
 
         }
+*/
 
-        binding.edtPwd.setOnTouchListener { _, event ->
-
-            val right = 2
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= binding.edtPwd.right - binding.edtPwd.compoundDrawables[right].bounds.width()) {
-
-                    if (passwordVisibile) {
-                        binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_24, 0
-                        )
-                        binding.edtPwd.transformationMethod =
-                            PasswordTransformationMethod.getInstance()
-                        passwordVisibile = false
-                    } else {
-
-
-                        binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
-                        )
-                        binding.edtPwd.transformationMethod =
-                            HideReturnsTransformationMethod.getInstance()
-                        passwordVisibile = true
-                    }
-                }
-            }
-
-            false
-        }
-
-        binding.fingerprint.setOnClickListener {
+        /*binding.fingerprint.setOnClickListener {
             if (!displayFingerPrintPopup()) {
 
                 displayMessage(
@@ -145,7 +117,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                 fingerPrintLogin()
             }
 
-        }
+        }*/
 
 
     }
@@ -266,7 +238,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
 
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.login(binding.model)
+                //viewModel.login(binding.model)
 
 
             }
@@ -303,15 +275,15 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun checkButton() {
-        if (Utils.isEmailValid(binding.edtEmail.text.toString()) && binding.edtPwd.length() > 5) {
-            binding.model = LoginModel(
+        if (Utils.isEmailValid(binding.edtEmail.text.toString()) && binding.edtPwd.getText().toString().trim().length > 5) {
+            val loginModel= LoginModel(
                 value = binding.edtEmail.text.toString(),
                 password = binding.edtPwd.text.toString(),
                 enable = true
             )
             binding.btnLogin.isEnabled=true
         } else {
-            binding.model = LoginModel(
+            val loginModel = LoginModel(
                 value = binding.edtEmail.text.toString(),
                 password = binding.edtPwd.text.toString(),
                 enable = false

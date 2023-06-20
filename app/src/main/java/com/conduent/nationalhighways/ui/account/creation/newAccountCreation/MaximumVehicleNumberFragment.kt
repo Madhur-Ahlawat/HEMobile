@@ -113,7 +113,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                 when (binding.btnContinue.text) {
                     getString(R.string.add_another_vehicle) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment)
-                    getString(R.string.str_continue) ->
+                      getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
                             if (NewCreateAccountRequestModel.isExempted) {

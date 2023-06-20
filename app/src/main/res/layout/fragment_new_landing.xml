@@ -18,7 +18,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:background="@drawable/he_bg">
+                android:background="@drawable/he_bg"
+                >
 
             </ImageView>
 

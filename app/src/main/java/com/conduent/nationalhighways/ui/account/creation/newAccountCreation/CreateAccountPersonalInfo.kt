@@ -44,21 +44,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         }
 
-        /* val filter = InputFilter { source, start, end, dest, dstart, dend ->
-             for (i in start until end) {
-                 if (!Character.isLetterOrDigit(source[i]) &&
-                     source[i].toString() != " " &&
-                     source[i].toString() != "-"
-                 ) {
-                     return@InputFilter ""
-                 }
-             }
-             null
-         }*/
 
-        /* binding.inputFirstName.editText.filters = arrayOf(filter)
-         binding.inputLastName.editText.filters = arrayOf(filter)
-         binding.inputCompanyName.editText.filters = arrayOf(filter)*/
     }
 
     override fun initCtrl() {

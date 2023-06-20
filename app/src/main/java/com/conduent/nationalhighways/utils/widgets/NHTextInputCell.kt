@@ -54,16 +54,14 @@ open class NHTextInputCell @JvmOverloads constructor(context: Context, attrs: At
         }
     }
 
-/*
-    fun getText(): Editable? = binding.inputFirstName.getText()
+   /* fun getText(): Editable? = binding.inputFirstName.getText()
 
     fun setText(text: CharSequence){
         binding.inputFirstName.setText(text)
     }
     fun setMaxLength(length:Int){
         binding.inputFirstName.setMaxLength(length)
-    }
-*/
+    }*/
 
     fun setHintText(hint: String){
         binding.inputFirstName.hint = hint
