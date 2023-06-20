@@ -261,12 +261,44 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
         android:label="AccountSummaryFragment"
         tools:layout="@layout/fragment_create_account_summary">
+
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@id/addNewVehicleDetailsFragment"/>
+
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_createAccountFindVehicleFragment"
+            app:destination="@id/findYourVehicleFragment"/>
         <action
             android:id="@+id/action_accountSummaryFragment_to_removeVehicleFragment"
             app:destination="@id/removeVehicleFragment" />
         <action
             android:id="@+id/action_accountSummaryFragment_to_TopUpFragment"
             app:destination="@id/topUpFragment"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_personalInfoFragment"
+            app:destination="@id/createAccountPersonalInfo"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_addressFragment"
+            app:destination="@id/fragment_manual_address"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_emailAddressFragment"
+            app:destination="@id/forgotPasswordFragment"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_mobileNumberFragment"
+            app:destination="@id/HWMobileNumberCaptureVC"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_typeAccountFragment"
+            app:destination="@id/fragment_choose_account_type" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_createAccountTypesFragment"
+            app:destination="@id/createAccountTypes"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_communicationFragment"
+            app:destination="@id/optForSmsFragment"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_twoStepCommunicationFragment"
+            app:destination="@id/twoStepVerificationFragment"/>
     </fragment>
 
     <!-- BUSINESS ACCOUNT -->
@@ -555,6 +587,9 @@
         android:label="OTPCreateAccountPassword"
         tools:layout="@layout/fragment_forgot_otpchanges">
         <action
+            android:id="@+id/action_forgotOtpFragment_to_createAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment" />
+        <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
         <action
@@ -584,6 +619,9 @@
         <action
             android:id="@+id/action_optForSmsFragment_to_twoStepVerificationFragment"
             app:destination="@id/twoStepVerificationFragment" />
+        <action
+            android:id="@+id/action_optForSmsFragment_to_mobileVerificationFragment"
+            app:destination="@id/HWMobileNumberCaptureVC" />
     </fragment>
     <fragment
         android:id="@+id/twoStepVerificationFragment"

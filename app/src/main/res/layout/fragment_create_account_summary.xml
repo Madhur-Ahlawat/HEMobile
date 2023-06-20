@@ -346,7 +346,7 @@
                     <TextView
                         android:id="@+id/communications"
                         style="@style/RegularTextBlack"
-                        android:text="Pre-pay"
+                        android:text="Yes"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCommunications" />

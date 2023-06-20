@@ -84,6 +84,15 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         binding.postCode.editText.filters = arrayOf(filter)
         binding.postCode.setMaxLength(10)
+        if(NewCreateAccountRequestModel.isEditCall) {
+            binding.address.setText(NewCreateAccountRequestModel.addressline1)
+            binding.address2.setText(NewCreateAccountRequestModel.addressline2)
+            binding.townCity.setText(NewCreateAccountRequestModel.townCity)
+            binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
+            binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
+            requiredCountry = true
+            checkButton()
+        }
     }
 
 
@@ -98,7 +107,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             observe(lrdsViewModel.lrdsEligibilityCheck, ::handleLrdsApiResponse)
         }
 
-
         isViewCreated = true
 
 
@@ -112,8 +120,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.addressline1 = binding.address.getText().toString()
                 NewCreateAccountRequestModel.addressline2 = binding.address2.getText().toString()
                 NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
-                NewCreateAccountRequestModel.country =
-                    binding.country.selectedItemDescription.toString()
+                NewCreateAccountRequestModel.country = binding.country.selectedItemDescription.toString()
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
@@ -167,8 +174,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
         lrdsEligibilityCheck.zipcode1 = NewCreateAccountRequestModel.zipCode
         lrdsEligibilityCheck.action = Constants.LRDS_ELIGIBILITY_CHECK
-
-
 
 
         lrdsViewModel.getLrdsEligibilityResponse(lrdsEligibilityCheck)
@@ -346,25 +351,28 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         when (response) {
             is Resource.Success -> {
-
-                if (response.data?.lrdsEligible.equals("true", true)) {
-                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
-
-                } else {
-                    if (NewCreateAccountRequestModel.personalAccount) {
-                        findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment)
+                if(NewCreateAccountRequestModel.isEditCall) {
+                    findNavController().popBackStack()
+                }else{
+                    if (response.data?.lrdsEligible.equals("true", true)) {
+                        findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
 
                     } else {
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.NAV_FLOW_KEY,
-                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
-                        )
-                        findNavController().navigate(
-                            R.id.action_manualaddressfragment_to_forgotPasswordFragment,
-                            bundle
-                        )
+                        if (NewCreateAccountRequestModel.personalAccount) {
+                            findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment)
 
+                        } else {
+                            val bundle = Bundle()
+                            bundle.putString(
+                                Constants.NAV_FLOW_KEY,
+                                Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                            )
+                            findNavController().navigate(
+                                R.id.action_manualaddressfragment_to_forgotPasswordFragment,
+                                bundle
+                            )
+
+                        }
                     }
                 }
 

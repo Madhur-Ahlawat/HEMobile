@@ -31,7 +31,7 @@ object NewCreateAccountRequestModel{
     var isVehicleAlreadyAdded:Boolean=false
     var isVehicleAlreadyAddedLocal:Boolean=false
     var isMaxVehicleAdded:Boolean=false
-
+    var isEditCall = false
 
 
 

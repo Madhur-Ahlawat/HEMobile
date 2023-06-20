@@ -24,7 +24,14 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
         }
+        if(NewCreateAccountRequestModel.isEditCall) {
 
+            if(NewCreateAccountRequestModel.personalAccount){
+                binding.radioPersonalAccount.isChecked = true
+            }else{
+                binding.radioBusinessAccount.isChecked = true
+            }
+        }
 
 
     }

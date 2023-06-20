@@ -70,6 +70,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+        if(NewCreateAccountRequestModel.isEditCall) {
+            NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
+        }
     }
 
     override fun initCtrl() {
@@ -126,14 +129,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                NewCreateAccountRequestModel.mobileNumber =
-                    binding.inputMobileNumber.getText().toString().trim()
-                if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-                    findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
-                } else {
-                    hitApi()
+                val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
+                if(NewCreateAccountRequestModel.isEditCall && mobileNumber == NewCreateAccountRequestModel.mobileNumber){
+                    findNavController().popBackStack()
+                }else{
+                    NewCreateAccountRequestModel.mobileNumber = mobileNumber
+                    if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
+                    } else {
+                        hitApi()
 
+                    }
                 }
+
 
 
             }

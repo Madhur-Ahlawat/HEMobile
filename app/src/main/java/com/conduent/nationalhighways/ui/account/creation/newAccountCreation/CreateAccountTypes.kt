@@ -40,21 +40,30 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
-                NewCreateAccountRequestModel.prePay=true
-                val bundle=Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
-                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+                NewCreateAccountRequestModel.prePay = true
+                handleNavigation()
             }
             R.id.payCard -> {
                 NewCreateAccountRequestModel.payAsYouGo=true
-                val bundle=Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
-                findNavController().navigate(R.id.action_createAccountTypes_to_forgotPasswordFragment,bundle)
+                handleNavigation()
             }
             R.id.crossingCharges -> {
                 val openURL = Intent(requireContext(),ViewChargesActivity::class.java)
                 startActivity(openURL)
             }
+        }
+    }
+
+    private fun handleNavigation() {
+        if(NewCreateAccountRequestModel.isEditCall){
+            findNavController().popBackStack()
+        }else {
+            val bundle=Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
+            findNavController().navigate(
+                R.id.action_createAccountTypes_to_forgotPasswordFragment,
+                bundle
+            )
         }
     }
 

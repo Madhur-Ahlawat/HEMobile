@@ -50,7 +50,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     override fun init() {
         sessionManager.clearAll()
-
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
 
@@ -60,6 +59,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+        binding.edtEmail.editText.addTextChangedListener { isEnable() }
+        binding.btnNext.setOnClickListener(this)
+        if(NewCreateAccountRequestModel.isEditCall){
+            navFlow=Constants.ACCOUNT_CREATION_EMAIL_FLOW
+            NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
+        }
         if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
             binding.textUsername.visible()
             binding.enterDetailsTxt.text=getString(R.string.createAccount_email_screenHeading)
@@ -84,8 +89,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     override fun initCtrl() {
         //binding.edtPostcode.addTextChangedListener { isEnable() }
-        binding.edtEmail.editText.addTextChangedListener { isEnable() }
-        binding.btnNext.setOnClickListener(this)
+
     }
 
     override fun observer() {
@@ -208,8 +212,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     viewModel.confirmOptionForForgot(emailText)
 
                 }else{
-                    NewCreateAccountRequestModel.emailAddress = emailText
-                    hitApi()
+                    if(NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress){
+                        findNavController().popBackStack()
+                    }else {
+                        NewCreateAccountRequestModel.emailAddress = emailText
+                        hitApi()
+                    }
 
                 }
 

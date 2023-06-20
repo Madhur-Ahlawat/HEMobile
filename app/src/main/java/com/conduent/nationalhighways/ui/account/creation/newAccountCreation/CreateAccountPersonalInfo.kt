@@ -30,6 +30,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
 
     override fun init() {
+
         binding.inputFirstName.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.inputLastName.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.inputCompanyName.editText.addTextChangedListener(GenericTextWatcher(2))
@@ -44,21 +45,12 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         }
 
-        /* val filter = InputFilter { source, start, end, dest, dstart, dend ->
-             for (i in start until end) {
-                 if (!Character.isLetterOrDigit(source[i]) &&
-                     source[i].toString() != " " &&
-                     source[i].toString() != "-"
-                 ) {
-                     return@InputFilter ""
-                 }
-             }
-             null
-         }*/
-
-        /* binding.inputFirstName.editText.filters = arrayOf(filter)
-         binding.inputLastName.editText.filters = arrayOf(filter)
-         binding.inputCompanyName.editText.filters = arrayOf(filter)*/
+        if(NewCreateAccountRequestModel.isEditCall){
+            binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
+            binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
+            binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
+            checkButtonEnable()
+        }
     }
 
     override fun initCtrl() {
@@ -86,10 +78,14 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         binding.inputCompanyName.getText().toString()
                 }
 
-
-                findNavController().navigate(
-                    R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew
-                )
+                if(NewCreateAccountRequestModel.isEditCall){
+                    NewCreateAccountRequestModel.isEditCall = false
+                    findNavController().popBackStack()
+                }else {
+                    findNavController().navigate(
+                        R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew
+                    )
+                }
             }
         }
     }

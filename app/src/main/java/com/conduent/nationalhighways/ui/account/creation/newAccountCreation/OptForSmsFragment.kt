@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.utils.extn.makeLinks
 
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private lateinit var  navFlow:String // create account , forgot password
+    private var oldCommunicationTextMessage = false
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -24,6 +25,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
     override fun init() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
             when(checkedId){
                 R.id.radioButtonYes -> {
@@ -74,6 +76,15 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         }))
 
+        if(NewCreateAccountRequestModel.isEditCall) {
+            oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
+            if(oldCommunicationTextMessage){
+                binding.radioButtonYes.isChecked = true
+            }else{
+                binding.radioButtonNo.isChecked = true
+            }
+
+        }
     }
 
     override fun initCtrl() {
@@ -87,8 +98,21 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnNext ->{
-                val bundle=Bundle()
-                findNavController().navigate(R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle)
+                if(NewCreateAccountRequestModel.isEditCall ) {
+                    if(oldCommunicationTextMessage == NewCreateAccountRequestModel.communicationTextMessage) {
+                        findNavController().popBackStack()
+                    }else{
+                        val bundle= Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                        findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
+                    }
+                }else {
+                    val bundle = Bundle()
+                    findNavController().navigate(
+                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment,
+                        bundle
+                    )
+                }
             }
         }
     }

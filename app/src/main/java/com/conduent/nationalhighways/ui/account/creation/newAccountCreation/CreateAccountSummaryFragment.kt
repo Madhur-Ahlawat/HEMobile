@@ -32,6 +32,14 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
     override fun init() {
         binding.btnNext.setOnClickListener(this)
+        binding.editFullName.setOnClickListener(this)
+        binding.editAddress.setOnClickListener(this)
+        binding.editEmailAddress.setOnClickListener(this)
+        binding.editMobileNumber.setOnClickListener(this)
+        binding.editAccountType.setOnClickListener(this)
+        binding.editSubAccountType.setOnClickListener(this)
+        binding.editCommunications.setOnClickListener(this)
+        binding.editTwoStepVerification.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
         if (dataModel.communicationTextMessage) {
@@ -92,6 +100,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
 
         }))
+        disableEditMode()
     }
 
     override fun initCtrl() {
@@ -102,12 +111,52 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
 
     override fun onClick(v: View?) {
+
         when (v?.id) {
 
             R.id.btnNext -> {
                 findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
             }
+            R.id.editFullName -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_personalInfoFragment)
+            }
+            R.id.editAddress -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_addressFragment)
+            }
+            R.id.editEmailAddress -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_emailAddressFragment)
+            }
+            R.id.editMobileNumber -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_mobileNumberFragment)
+            }
+            R.id.editAccountType -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_typeAccountFragment)
+            }
+            R.id.editSubAccountType -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_createAccountTypesFragment)
+            }
+            R.id.editCommunications -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_communicationFragment)
+            }
+            R.id.editTwoStepVerification -> {
+                enableEditMode()
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment)
+            }
         }
+    }
+
+    private fun enableEditMode() {
+        NewCreateAccountRequestModel.isEditCall = true
+    }
+    private fun disableEditMode() {
+        NewCreateAccountRequestModel.isEditCall = false
     }
 
 
@@ -122,7 +171,23 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             bundle.putInt(Constants.VEHICLE_INDEX, position)
             findNavController().navigate(R.id.action_accountSummaryFragment_to_removeVehicleFragment)
         } else {
+            val bundle = Bundle()
 
+            if(isDblaAvailable == true) {
+                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putInt(Constants.VEHICLE_INDEX, position)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,
+                    bundle
+                )
+            }else{
+                bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                bundle.putInt(Constants.VEHICLE_INDEX, position)
+                if (isDblaAvailable != null) {
+                    bundle.putBoolean(Constants.IS_DBLA_AVAILABLE, isDblaAvailable)
+                }
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_addNewVehicleDetailsFragment,bundle)
+            }
         }
 
     }

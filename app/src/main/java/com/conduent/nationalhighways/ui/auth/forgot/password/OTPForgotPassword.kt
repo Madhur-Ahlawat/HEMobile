@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyReque
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -156,10 +157,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         showError(binding.root, getString(R.string.error_otp_time_expire))
                     }
                 } else if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
+                    if(NewCreateAccountRequestModel.isEditCall){
 
-                    findNavController().navigate(
-                        R.id.action_otpForgotFragment_to_createVehicleFragment
-                    )
+                    }else{
+                        findNavController().navigate(
+                            R.id.action_otpForgotFragment_to_createVehicleFragment
+                        )
+                    }
+
 
                 } else {
                     confirmEmailCode()
@@ -281,10 +286,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     sessionManager.getLoggedInUser()
                 )
 
-                findNavController().navigate(
-                    R.id.action_otpFragment_to_createPasswordFragment,
-                    bundle
-                )
+
+                    findNavController().navigate(
+                        R.id.action_otpFragment_to_createPasswordFragment,
+                        bundle
+                    )
+
 
                 AdobeAnalytics.setActionTrack1(
                     "verify",
@@ -375,11 +382,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-
-                    findNavController().navigate(
-                        R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                        bundle
-                    )
+                    if(NewCreateAccountRequestModel.isEditCall){
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createAccountSummaryFragment,bundle)
+                    }else {
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )
+                    }
                 }
 
 

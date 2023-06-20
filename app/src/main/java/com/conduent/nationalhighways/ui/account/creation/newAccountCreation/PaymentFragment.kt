@@ -70,7 +70,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
             val text = binding.paymentAmount.getText().toString().trim()
             val updatedText = text.replace("£","")
             if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
-                binding.paymentAmount.setText(""+updatedText.toDouble())
+                binding.paymentAmount.setText(String.format("%.2f", updatedText.toDouble()))
             }
         }
     }

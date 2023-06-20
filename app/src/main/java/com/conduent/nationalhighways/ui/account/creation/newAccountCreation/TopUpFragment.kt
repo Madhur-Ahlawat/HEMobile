@@ -57,7 +57,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             val text = binding.lowBalance.getText().toString().trim()
             val updatedText = text.replace("£","")
             if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
-                binding.lowBalance.setText(""+updatedText.toDouble())
+                binding.lowBalance.setText(String.format("%.2f", updatedText.toDouble()))
             }
         }
     }
@@ -67,7 +67,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             val text = binding.top.getText().toString().trim()
             val updatedText = text.replace("£","")
             if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
-                binding.top.setText(""+updatedText.toDouble())
+                binding.top.setText(String.format("%.2f", updatedText.toDouble()))
             }
         }
     }
