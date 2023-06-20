@@ -40,7 +40,7 @@
             android:layout_marginTop="45dp"
             app:maxLength="50"
             app:imeOptions="actionNext"
-            app:inputType="number"
+            app:inputType="numberDecimal"
             app:labelText="@string/str_payment_amount"
 
             />

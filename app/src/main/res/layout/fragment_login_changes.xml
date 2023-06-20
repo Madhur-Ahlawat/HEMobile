@@ -3,183 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <data>
-
-        <variable
-            name="model"
-            type="com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel" />
-
-    </data>
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:background="@drawable/he_bg"
 
+        android:paddingBottom="18dp">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/global_email_address"
-            android:id="@+id/str_email_address"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_32sdp"
-            android:fontFamily="@font/sfsemibold"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <RelativeLayout
-            android:id="@+id/tf_email"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_39sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:hint="@string/global_email_address"
-            android:background="@drawable/edittext_rectangle"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/edt_email"
+            style="@style/input_text"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            app:labelText="@string/email_address"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/str_email_address"
-            >
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:paddingHorizontal="@dimen/_5ssp"
-                android:backgroundTint="@android:color/transparent"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sfregular"
-                android:text="@={model.value}"
-                android:textSize="@dimen/_13ssp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/fingerprint_icon"
-                android:layout_alignParentEnd="true"
-                android:visibility="gone"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:id="@+id/fingerprint"/>
-
-        </RelativeLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_forgot_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/forgot_email"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            android:textSize="@dimen/_13ssp"
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/edt_pwd"
+            style="@style/input_text"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            app:labelText="@string/password"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_email"
-            />
+            app:layout_constraintTop_toBottomOf="@id/edt_email" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_password"
-            android:id="@+id/str_password"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/sfsemibold"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_email"/>
-        <RelativeLayout
-            android:id="@+id/tf_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_39sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintTop_toBottomOf="@+id/str_password"
-            android:background="@drawable/edittext_rectangle"
-            >
-
-            <EditText
-                android:id="@+id/edt_pwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:fontFamily="@font/sfregular"
-                android:paddingHorizontal="@dimen/_5ssp"
-                android:backgroundTint="@android:color/transparent"
-                android:text="@={model.password}"
-                android:drawableRight="@drawable/ic_baseline_visibility_24"
-                android:longClickable="false"
-                android:textSize="@dimen/_13ssp" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_visibility_off_24"
-                android:layout_alignParentEnd="true"
-                android:visibility="gone"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:id="@+id/passwordvisibility"/>
-        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_forgot_password"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tf_pwd" />
+            android:textColor="@color/forgotPasswordColor"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/open_sans_semibold"
+            app:layout_constraintTop_toBottomOf="@+id/edt_pwd" />
 
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/btn_login"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:paddingHorizontal="@dimen/_10sdp"
-            android:text="@string/next"
             style="@style/PrimaryButton"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/next"
             app:isEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
-            app:layout_constraintVertical_bias="0.8" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dont_have_acnt"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"
-            app:srcCompat="@drawable/ic_dont_have_acnt" />
-
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/tv_create_account"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"
-            app:srcCompat="@drawable/ic_create_acnt" />
+            app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

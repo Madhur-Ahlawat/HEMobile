@@ -48,6 +48,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun init() {
         plateNumber = arguments?.getString(Constants.PLATE_NUMBER,"").toString()
         binding.editNumberPlate.setText(plateNumber)
+
+        NewCreateAccountRequestModel.isExempted=false
+        NewCreateAccountRequestModel.isRucEligible=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
         if(plateNumber.isNotEmpty()){
             binding.findVehicle.isEnabled = true
         }
@@ -82,10 +87,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun observer() {
         if (!isViewCreated) {
-            NewCreateAccountRequestModel.isExempted=false
-            NewCreateAccountRequestModel.isRucEligible=false
-            NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
         }
