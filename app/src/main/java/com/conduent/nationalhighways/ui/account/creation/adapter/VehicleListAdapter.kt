@@ -2,13 +2,15 @@ package com.conduent.nationalhighways.ui.account.creation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
 import com.conduent.nationalhighways.utils.common.Constants
 
-class VehicleListAdapter(private val context: Context, private val list: ArrayList<NewVehicleInfoDetails>, private val vehicleCallback:VehicleListCallBack):
+class VehicleListAdapter(private val context: Context, private val list: ArrayList<NewVehicleInfoDetails>,
+                         private val vehicleCallback:VehicleListCallBack, private val showRemoveButton: Boolean = true):
     RecyclerView.Adapter<VehicleListAdapter.VehicleListViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -28,6 +30,9 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
         }
         holder.binding.updateVehicle.setOnClickListener{
             vehicleCallback.vehicleListCallBack(position,Constants.EDIT_VEHICLE,plateNumber,isDblaAvailable)
+        }
+        if(showRemoveButton.not()){
+            holder.binding.deleteVehicle.visibility = View.INVISIBLE
         }
     }
 

@@ -69,7 +69,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val vehicleList = dataModel.vehicleList as ArrayList<NewVehicleInfoDetails>
-        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
+        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
