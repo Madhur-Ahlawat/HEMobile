@@ -1,5 +1,9 @@
 package com.conduent.nationalhighways.ui.auth.controller
 
+import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityAuthBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -13,12 +17,21 @@ class AuthActivity : BaseActivity<Any?>() {
 
     private lateinit var binding: ActivityAuthBinding
     public var previousScreen = "home"
+    private lateinit var navController: NavController
+
 
     @Inject
-     lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager
     override fun initViewBinding() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
+
+
+        binding.toolBarLyt.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+
+        }
 
         previousScreen = if (intent.getIntExtra(
                 Constants.FROM_DART_CHARGE_FLOW,
@@ -41,7 +54,17 @@ class AuthActivity : BaseActivity<Any?>() {
             "login",
             sessionManager.getLoggedInUser()
         )
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.navigation_auth)
 
+        val bundle = Bundle()
+        graph.setStartDestination(R.id.forgotPasswordFragment)
+        bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+
+        navController = navHostFragment.navController
+        navController.setGraph(graph, bundle)
 
     }
 

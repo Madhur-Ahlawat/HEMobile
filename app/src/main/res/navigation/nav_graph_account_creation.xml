@@ -7,7 +7,7 @@
     app:startDestination="@id/createAccountPrerequisite">
 
 
-   <!-- Step 1 -->
+    <!-- Step 1 -->
     <fragment
         android:id="@+id/emailVerification"
         android:name="com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailVerificationFragment"
@@ -205,11 +205,11 @@
             app:destination="@id/findYourVehicleFragment" />
 
 
-<!--
-        <action
-            android:id="@+id/action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment"
-            app:destination="@+id/businessVehicleTitleFragment" />
--->
+        <!--
+                <action
+                    android:id="@+id/action_createCommunicationPrefsFragment_to_businessVehicleTitleFragment"
+                    app:destination="@+id/businessVehicleTitleFragment" />
+        -->
 
 
     </fragment>
@@ -310,19 +310,19 @@
 
     <!-- BUSINESS ACCOUNT -->
 
-<!--
-    <fragment
-        android:id="@+id/businessVehicleTitleFragment"
-        android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
-        android:label="BusinessVehicleTitle"
-        tools:layout="@layout/fragment_business_vehicle_title_fragment">
+    <!--
+        <fragment
+            android:id="@+id/businessVehicleTitleFragment"
+            android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
+            android:label="BusinessVehicleTitle"
+            tools:layout="@layout/fragment_business_vehicle_title_fragment">
 
-        <action
-            android:id="@+id/action_businessVehicleTitleFragment_to_businessVehicleUKFragment"
-            app:destination="@id/findYourVehicleFragment" />
+            <action
+                android:id="@+id/action_businessVehicleTitleFragment_to_businessVehicleUKFragment"
+                app:destination="@id/findYourVehicleFragment" />
 
-    </fragment>
--->
+        </fragment>
+    -->
 
     <fragment
         android:id="@+id/businessVehicleUKListFragment"
@@ -687,31 +687,31 @@
             app:destination="@id/createAccountPersonalInfo" />
 
     </fragment>
-     <fragment
-         android:id="@+id/fragment_manual_address"
-         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
-         android:label="ManualAddress"
-         tools:layout="@layout/fragment_manual_address">
-         <argument
-             android:name="isPersonalAccount"
-             app:argType="boolean"/>
-         <argument
-             android:name="postcode"
-             app:argType="string"/>
-         <action
-             android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
-             app:destination="@id/createAccountEligibleLRDS" />
+    <fragment
+        android:id="@+id/fragment_manual_address"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
+        android:label="ManualAddress"
+        tools:layout="@layout/fragment_manual_address">
+        <argument
+            android:name="isPersonalAccount"
+            app:argType="boolean"/>
+        <argument
+            android:name="postcode"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
+            app:destination="@id/createAccountEligibleLRDS" />
 
-         <action
-             android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
-             app:destination="@+id/createAccountTypes"
-             />
-         <action
-             android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
-             app:destination="@+id/forgotPasswordFragment"/>
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
+            app:destination="@+id/createAccountTypes"
+            />
+        <action
+            android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
+            app:destination="@+id/forgotPasswordFragment"/>
 
 
-     </fragment>
+    </fragment>
     <fragment
         android:id="@+id/discount_type_fragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.DiscountTypeFragment"

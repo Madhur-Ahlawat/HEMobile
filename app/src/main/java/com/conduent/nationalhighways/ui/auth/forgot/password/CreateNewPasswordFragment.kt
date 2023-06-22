@@ -32,7 +32,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private var loader: LoaderDialog? = null
     private var passwordVisibile: Boolean = false
     private var confirmPasswordVisibile: Boolean = false
-    private lateinit var  navFlow:String
+    private lateinit var navFlow: String
 
 
     @Inject
@@ -59,40 +59,41 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             enable = false
         )
 
-        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
-            binding.btnSubmit.text=getString(R.string.str_continue)
-           /* AdobeAnalytics.setScreenTrack(
-                "createAccount:email_setPassword",
-                "set password",
-                "english",
-                "create Account",
-                "createAccount_email",
-                "login:forgot password:choose options:otp:new password set",
-                sessionManager.getLoggedInUser()
-            )*/
-        }else if(navFlow==Constants.FORGOT_PASSWORD_FLOW){
-            binding.btnSubmit.text=getString(R.string.str_submit)
+        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
+            binding.btnSubmit.text = getString(R.string.str_continue)
+            /* AdobeAnalytics.setScreenTrack(
+                 "createAccount:email_setPassword",
+                 "set password",
+                 "english",
+                 "create Account",
+                 "createAccount_email",
+                 "login:forgot password:choose options:otp:new password set",
+                 sessionManager.getLoggedInUser()
+             )*/
+        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+            binding.btnSubmit.text = getString(R.string.str_submit)
 
-           /* AdobeAnalytics.setScreenTrack(
-                "login:forgot password:choose options:otp:new password set",
-                "forgot password",
-                "english",
-                "login",
-                (requireActivity() as AuthActivity).previousScreen,
-                "login:forgot password:choose options:otp:new password set",
-                sessionManager.getLoggedInUser()
-            )*/
+            /* AdobeAnalytics.setScreenTrack(
+                 "login:forgot password:choose options:otp:new password set",
+                 "forgot password",
+                 "english",
+                 "login",
+                 (requireActivity() as AuthActivity).previousScreen,
+                 "login:forgot password:choose options:otp:new password set",
+                 sessionManager.getLoggedInUser()
+             )*/
         }
 
 
-     //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
+        //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
         binding.btnSubmit.setOnClickListener(this)
         binding.edtNewPassword.editText.addTextChangedListener {
-            isEnable(it.toString()) }
+            isEnable(it.toString())
+        }
         binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
 
 
@@ -167,11 +168,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
-                if (navFlow != Constants.FORGOT_PASSWORD_FLOW){
-                    val bundle=Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
-                    findNavController().navigate(R.id.action_createPasswordFragment_to_optForSmsFragment,bundle)
-                return
+                if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    findNavController().navigate(
+                        R.id.action_createPasswordFragment_to_optForSmsFragment,
+                        bundle
+                    )
+                    return
                 }
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
@@ -192,34 +196,36 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         when (status) {
             is Resource.Success -> {
-               /* AdobeAnalytics.setActionTrack1(
-                    "verify",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, "success",
-                    sessionManager.getLoggedInUser()
-                )*/
+                /* AdobeAnalytics.setActionTrack1(
+                     "verify",
+                     "login:forgot password:choose options:otp:new password set",
+                     "forgot password",
+                     "english",
+                     "login",
+                     (requireActivity() as AuthActivity).previousScreen, "success",
+                     sessionManager.getLoggedInUser()
+                 )*/
 
             }
+
             is Resource.DataError -> {
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-               /* AdobeAnalytics.setActionTrack1(
-                    "verify",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
-*/
+                /* AdobeAnalytics.setActionTrack1(
+                     "verify",
+                     "login:forgot password:choose options:otp:new password set",
+                     "forgot password",
+                     "english",
+                     "login",
+                     (requireActivity() as AuthActivity).previousScreen,
+                     status.errorMsg,
+                     sessionManager.getLoggedInUser()
+                 )
+ */
 
                 showError(binding.root, status.errorMsg)
             }
+
             else -> {
             }
         }
@@ -232,27 +238,34 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         when (status) {
             is Resource.Success -> {
                 if (status.data?.success == true) {
-                   /* AdobeAnalytics.setActionTrack1(
-                        "submit",
-                        "login:forgot password:choose options:otp:new password set",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen,
-                        "success",
-                        sessionManager.getLoggedInUser()
-                    )*/
-                    val bundle=Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
-                    if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
-                        findNavController().navigate(R.id.action_createPasswordFragment_to_resetFragment,bundle)
+                    /* AdobeAnalytics.setActionTrack1(
+                         "submit",
+                         "login:forgot password:choose options:otp:new password set",
+                         "forgot password",
+                         "english",
+                         "login",
+                         (requireActivity() as AuthActivity).previousScreen,
+                         "success",
+                         sessionManager.getLoggedInUser()
+                     )*/
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                        findNavController().navigate(
+                            R.id.action_createPasswordFragment_to_resetFragment,
+                            bundle
+                        )
 
-                    }else{
-                        findNavController().navigate(R.id.action_createPasswordFragment_to_optForSmsFragment,bundle)
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_createPasswordFragment_to_optForSmsFragment,
+                            bundle
+                        )
                     }
                 } else
                     showError(binding.root, status.data?.message)
             }
+
             is Resource.DataError -> {
                 /*AdobeAnalytics.setActionTrack1(
                     "submit",
@@ -267,6 +280,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
                 showError(binding.root, status.errorMsg)
             }
+
             else -> {
             }
         }
@@ -276,8 +290,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
             && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
             && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString().trim().length)>7)&&(binding.edtNewPassword.getText().toString().trim()==binding.edtConformPassword.getText().toString().trim()))
-         {
+            && ((binding.edtConformPassword.getText().toString()
+                .trim().length) > 7) && (binding.edtNewPassword.getText().toString()
+                .trim() == binding.edtConformPassword.getText().toString().trim())
+        ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
@@ -285,7 +301,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = true
             )
-            binding.btnSubmit.isEnabled=true
+            binding.btnSubmit.isEnabled = true
 
         } else {
             binding.model = ResetPasswordModel(
@@ -295,7 +311,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = false
             )
-            binding.btnSubmit.isEnabled=false
+            binding.btnSubmit.isEnabled = false
 
         }
 
@@ -306,7 +322,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
             && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
             && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString().trim().length) > 7&&(binding.edtNewPassword.getText().toString().trim()==binding.edtConformPassword.getText().toString().trim()))
+            && ((binding.edtConformPassword.getText().toString()
+                .trim().length) > 7 && (binding.edtNewPassword.getText().toString()
+                .trim() == binding.edtConformPassword.getText().toString().trim()))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
@@ -315,7 +333,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = true
             )
-            binding.btnSubmit.isEnabled=true
+            binding.btnSubmit.isEnabled = true
 
         } else {
             binding.model = ResetPasswordModel(
@@ -325,29 +343,55 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = false
             )
-            binding.btnSubmit.isEnabled=false
+            binding.btnSubmit.isEnabled = false
 
 
         }
 
-        if (Utils.validateString(text,Utils.PASSWORD_RULE1)){
+
+        if (binding.edtNewPassword.getText().toString().trim().length < 2) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+
+        } else {
+            binding.edtNewPassword.removeError()
+        }
+
+
+
+
+
+
+        if (Utils.validateString(text, Utils.PASSWORD_RULE1)) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
-        }else{
+        } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (Utils.validateString(text,Utils.PASSWORD_RULE2)){
+        if (Utils.validateString(text, Utils.PASSWORD_RULE2)) {
             binding.imgDot2.setImageResource(R.drawable.grin_tick)
             binding.imgDot3.setImageResource(R.drawable.grin_tick)
-        }else{
+        } else {
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
             binding.imgDot3.setImageResource(R.drawable.circle_5dp)
 
         }
 
-        if (Utils.validateString(text,Utils.PASSWORD_RULE3)){
+        if (Utils.validateString(text, Utils.PASSWORD_RULE3)) {
             binding.imgDot4.setImageResource(R.drawable.grin_tick)
-        }else{
+        } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
     }

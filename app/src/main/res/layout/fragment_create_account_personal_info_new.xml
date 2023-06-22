@@ -44,6 +44,7 @@
                 app:maxLength="50"
                 app:imeOptions="actionNext"
                 app:inputType="text"
+
                 app:labelText="@string/primary_account_contact_first_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

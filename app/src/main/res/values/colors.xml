@@ -124,5 +124,6 @@
     <color name="buttonBorderColor">#0000005C</color>
     <color name="buttonTextColorSecondary">#073165</color>
     <color name="radioButtonIconColor">#0047BA</color>
+    <color name="forgotPasswordColor">#257EBE</color>
 
 </resources>

@@ -75,7 +75,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
         val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
-        Logg.logging("landingActivy","test called  loadFragment $screenType")
 
         if (intent.extras != null)
             oldGraph.addArgument(

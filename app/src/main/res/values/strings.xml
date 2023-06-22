@@ -5,7 +5,7 @@
     <string name="app_name">Dart Charge</string>
     <string name="txt_dart_charge">DART CHARGE</string>
     <string name="txt_gov_uk">GOV.UK</string>
-    <string name="txt_sign_in">Sign in</string>
+    <string name="txt_sign_in">Sign In</string>
     <string name="txt_user_name">Username : </string>
     <string name="txt_enter_password">Enter password</string>
     <string name="txt_forgot_password"><b><u>Forgot password</u></b></string>
@@ -60,7 +60,7 @@
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
     <string name="str_usr_passwd">Enter password</string>
-    <string name="str_forgot_password"><u>Forgot password?</u></string>
+    <string name="str_forgot_password"><u>Forgot Password?</u></string>
     <string name="str_back">Back</string>
     <string name="str_enter_ur_details">Enter your details</string>
     <string name="str_account_number">Account number</string>
@@ -951,7 +951,7 @@
     <string name="an_email_address_to_receive_a_code">an email address to receive a code</string>
     <string name="you_ll_need_to_have">You’ll need to have:</string>
     <string name="before_you_start">Before you start</string>
-    <string name="sign_in">sign in</string>
+    <string name="sign_in">SIGN IN</string>
     <string name="if_you_already_have_an_account_you_can">If you already have an account you can </string>
     <string name="dartford_crossing_account_sign_in_or_set_up">Dartford crossing account: sign in or set up</string>
     <string name="postCodeHint">ex. WA4 1AB</string>

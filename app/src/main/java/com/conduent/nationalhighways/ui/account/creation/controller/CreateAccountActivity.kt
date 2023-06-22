@@ -28,7 +28,8 @@ class CreateAccountActivity : BaseActivity<Any>() {
 
     private fun init() {
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
-        binding.toolBarLyt.backButton.setOnClickListener { onBackPressed()
+        binding.toolBarLyt.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
 
         }
 
@@ -49,6 +50,7 @@ class CreateAccountActivity : BaseActivity<Any>() {
     override fun observeViewModel() {}
 
 
+
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
@@ -56,8 +58,7 @@ class CreateAccountActivity : BaseActivity<Any>() {
                 if (fragment is AccountSuccessfullyCreationFragment || NewCreateAccountRequestModel.isBackButtonVisible.not()){
 
                 }else{
-                        super.onBackPressed()
-
+                    onBackPressedDispatcher.onBackPressed()
                 }
 
             }

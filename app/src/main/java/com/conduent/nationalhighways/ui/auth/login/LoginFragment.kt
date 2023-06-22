@@ -7,20 +7,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
-import android.view.LayoutInflater
-import android.view.MotionEvent
+import android.util.Patterns
+
 import android.view.View
-import android.view.View.OnTouchListener
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
@@ -30,42 +25,56 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.KeystoreHelper
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.*
+import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickListener {
+class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
 
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
-    private var passwordVisibile: Boolean = false
+    private var materialToolbar: MaterialToolbar? = null
+    private lateinit var binding: FragmentLoginChangesBinding
+    private lateinit var loginModel: LoginModel
+    private var emailCheck:Boolean=false
+    private var passwordCheck:Boolean=false
+
 
     @Inject
     lateinit var sessionManager: SessionManager
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater, container: ViewGroup?
-    ): FragmentLoginChangesBinding = FragmentLoginChangesBinding.inflate(inflater, container, false)
 
-    override fun onResume() {
-        super.onResume()
-        requireActivity().toolbar(getString(R.string.str_log_in_dart_system))
+    override fun observeViewModel() {
+        observe(viewModel.login, ::handleLoginResponse)
+
     }
 
-    override fun init() {
-        binding.model = LoginModel(value = "", password = "", enable = false)
+    override fun initViewBinding() {
+        binding = FragmentLoginChangesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        init()
+        initCtrl()
+    }
+
+
+    private fun init() {
+        materialToolbar = findViewById(R.id.tool_bar_lyt)
+        materialToolbar?.visibility = View.GONE
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -75,8 +84,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             "login",
             "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
+            "login", "",
             "login",
             sessionManager.getLoggedInUser()
         )
@@ -84,55 +92,28 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun initCtrl() {
+    fun initCtrl() {
+
         binding.apply {
-            tvForgotUsername.setOnClickListener(this@LoginFragment)
+            //tvForgotUsername.setOnClickListener(this@LoginFragment)
             tvForgotPassword.setOnClickListener(this@LoginFragment)
-            fingerprint.setOnClickListener(this@LoginFragment)
-            edtEmail.doAfterTextChanged { checkButton() }
-            edtPwd.doAfterTextChanged { checkButton() }
+            // fingerprint.setOnClickListener(this@LoginFragment)
+            edtEmail.editText.doAfterTextChanged { emailCheck() }
+            edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginFragment)
+            backButton.setOnClickListener(this@LoginFragment)
         }
 
-        if (displayFingerPrintPopup()) {
-            binding.fingerprint.visible()
-            fingerPrintLogin()
-        } else {
-            binding.fingerprint.gone()
+        /* if (displayFingerPrintPopup()) {
+             binding.fingerprint.visible()
+             fingerPrintLogin()
+         } else {
+             binding.fingerprint.gone()
 
-        }
+         }
+ */
 
-        binding.edtPwd.setOnTouchListener { _, event ->
-
-            val right = 2
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= binding.edtPwd.right - binding.edtPwd.compoundDrawables[right].bounds.width()) {
-
-                    if (passwordVisibile) {
-                        binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_24, 0
-                        )
-                        binding.edtPwd.transformationMethod =
-                            PasswordTransformationMethod.getInstance()
-                        passwordVisibile = false
-                    } else {
-
-
-                        binding.edtPwd.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_baseline_visibility_off_24, 0
-                        )
-                        binding.edtPwd.transformationMethod =
-                            HideReturnsTransformationMethod.getInstance()
-                        passwordVisibile = true
-                    }
-                }
-            }
-
-            false
-        }
-
-        binding.fingerprint.setOnClickListener {
+        /*binding.fingerprint.setOnClickListener {
             if (!displayFingerPrintPopup()) {
 
                 displayMessage(
@@ -145,14 +126,11 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                 fingerPrintLogin()
             }
 
-        }
+        }*/
 
 
     }
 
-    override fun observer() {
-        observe(viewModel.login, ::handleLoginResponse)
-    }
 
     private fun displayFingerPrintPopup(): Boolean {
         if (sessionManager.fetchTouchIdEnabled()) {
@@ -177,6 +155,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             is Resource.Success -> {
                 launchIntent(status)
             }
+
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
 
@@ -187,12 +166,13 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     "login",
                     "english",
                     "login",
-                    (requireActivity() as AuthActivity).previousScreen,
+                    "",
                     "true",
                     "manual",
                     sessionManager.getLoggedInUser()
                 )
             }
+
             else -> {
 
             }
@@ -215,7 +195,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
         if (sessionManager.fetchUserName() != binding.edtEmail.text.toString()) {
             displayBiometricDialog()
         } else {
-            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+            startNewActivityByClearingStack(HomeActivityMain::class.java)
 
         }
         sessionManager.saveUserName(binding.edtEmail.text.toString())
@@ -226,7 +206,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             "english",
             "login",
-            (requireActivity() as AuthActivity).previousScreen,
+            "",
             "false",
             "manual",
             sessionManager.getLoggedInUser()
@@ -241,7 +221,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    requireActivity().openActivityWithData(BiometricActivity::class.java) {
+                    openActivityWithData(BiometricActivity::class.java) {
                         putInt(
                             Constants.FROM_LOGIN_TO_BIOMETRIC,
                             Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
@@ -253,7 +233,7 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                     // dialog.dismiss()
                 }
@@ -265,25 +245,23 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             R.id.btn_login -> {
 
                 hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.login(binding.model)
-
-
-            }
-
-            R.id.tv_forgot_username -> {
-                AdobeAnalytics.setActionTrackError(
-                    "forgot username",
-                    "login",
-                    "login",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    "success",
-                    sessionManager.getLoggedInUser()
+                loginModel = LoginModel(
+                    value = binding.edtEmail.getText().toString().trim(),
+                    password = binding.edtPwd.getText().toString().trim(),
+                    enable = true
                 )
-                findNavController().navigate(R.id.action_loginFragment_to_forgotEmailFragment)
+                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+
+                viewModel.login(loginModel)
+
+
             }
+
+            R.id.back_button -> {
+                startNormalActivityWithFinish(LandingActivity::class.java)
+            }
+
+
             R.id.tv_forgot_password -> {
                 AdobeAnalytics.setActionTrackError(
                     "forgot password",
@@ -291,35 +269,50 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     "login",
                     "english",
                     "login",
-                    (requireActivity() as AuthActivity).previousScreen,
+                    "",
                     "success",
                     sessionManager.getLoggedInUser()
                 )
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment, bundle)
+                val intent = Intent(this, AuthActivity::class.java)
+                startActivity(intent)
+                //findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment, bundle)
             }
         }
     }
 
-    private fun checkButton() {
-        if (Utils.isEmailValid(binding.edtEmail.text.toString()) && binding.edtPwd.length() > 5) {
-            binding.model = LoginModel(
-                value = binding.edtEmail.text.toString(),
-                password = binding.edtPwd.text.toString(),
-                enable = true
-            )
-            binding.btnLogin.isEnabled=true
+    private fun emailCheck() {
+        emailCheck = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()) {
+            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+            false
+
+
         } else {
-            binding.model = LoginModel(
-                value = binding.edtEmail.text.toString(),
-                password = binding.edtPwd.text.toString(),
-                enable = false
-            )
-            binding.btnLogin.isEnabled=false
+            binding.edtEmail.removeError()
+            true
+
 
         }
+
+        checkButton()
+
+
     }
+
+
+    private fun passwordCheck() {
+        passwordCheck= binding.edtPwd.getText().toString().trim().length>8
+
+        checkButton()
+
+
+    }
+
+    private fun checkButton() {
+        binding.btnLogin.isEnabled = emailCheck&&passwordCheck
+    }
+
 
     @SuppressLint("RestrictedApi")
     private fun initBiometric() {
@@ -334,12 +327,12 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                     // Too many attempts. try again later ( customised the toast message to below one)
                     if (errorCode == 7) {
                         Toast.makeText(
-                            requireActivity(), "Biometric is Disabled", Toast.LENGTH_SHORT
+                            this@LoginFragment, "Biometric is Disabled", Toast.LENGTH_SHORT
                         ).show()
 
                     } else {
                         Toast.makeText(
-                            requireActivity(),
+                            this@LoginFragment,
                             "Biometric authentication $errString",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -359,24 +352,17 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(
-                        requireActivity(), "Biometric authentication failed", Toast.LENGTH_SHORT
+                        this@LoginFragment, "Biometric authentication failed", Toast.LENGTH_SHORT
                     ).show()
                 }
             })
 
-        val language = Locale.getDefault().displayLanguage
-        if (language == "español") {
-            promptInfo =
-                BiometricPrompt.PromptInfo.Builder().setTitle("Inicio de sesión biométrico")
-                    .setSubtitle("")
-                    .setDescription("Inicie sesión con sus credenciales de biometría o seleccione Cancelar e introduzca la información de su cuenta y la contraseña.")
-                    .setNegativeButtonText("CANCELAR").setConfirmationRequired(false).build()
-        } else {
-            promptInfo =
-                BiometricPrompt.PromptInfo.Builder().setTitle("Biometric Login").setSubtitle("")
-                    .setDescription("Place your fingerprint on the sensor to login or select Cancel and enter your account information and password.")
-                    .setNegativeButtonText("CANCEL").setConfirmationRequired(false).build()
-        }
+
+        promptInfo =
+            BiometricPrompt.PromptInfo.Builder().setTitle("Biometric Login").setSubtitle("")
+                .setDescription("Place your fingerprint on the sensor to login or select Cancel and enter your account information and password.")
+                .setNegativeButtonText("CANCEL").setConfirmationRequired(false).build()
+
     }
 
 
@@ -387,15 +373,15 @@ class LoginFragment : BaseFragment<FragmentLoginChangesBinding>(), View.OnClickL
             "vendeor Id" + "|" + BuildConfig.VERSION_NAME + "|" + Build.MODEL + "|" + Build.VERSION.SDK_INT.toString() + "|" + sessionManager.fetchBiometricToken()
         )
 
-        val keyHelper = KeystoreHelper.getInstance(requireActivity())
+        val keyHelper = KeystoreHelper.getInstance(this)
         val decryptedUserId = keyHelper?.decrypt(
-            requireActivity(), "username"
+            this, "username"
         )
 
         val dataToBeSigned = "$decryptedUserId|firebase token|$verificationToken|$dateTime"
 
 
-        val intent = Intent(requireActivity(), HomeActivityMain::class.java)
+        val intent = Intent(this, HomeActivityMain::class.java)
         startActivity(intent)
 
         // call login api

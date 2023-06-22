@@ -37,6 +37,12 @@ fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
         startActivity(this)
     }
 }
+fun <A : Activity> Activity.startNormalActivityWithFinish(activity: Class<A>) {
+    Intent(this, activity).run {
+        startActivity(this)
+        finish()
+    }
+}
 
 fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
     val imgBack : ImageView? = findViewById(R.id.btn_back)

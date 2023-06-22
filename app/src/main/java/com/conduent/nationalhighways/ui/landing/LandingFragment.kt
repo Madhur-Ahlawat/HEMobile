@@ -29,6 +29,7 @@ import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginFragment
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
@@ -63,7 +64,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentNewLandingBinding.inflate(inflater, container, false)
+    ): FragmentNewLandingBinding {
+        binding=FragmentNewLandingBinding.inflate(inflater, container, false)
+
+        return binding
+    }
 
     override fun init() {
         loader = LoaderDialog()
@@ -134,9 +139,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
 
         }
-        /*binding.pcnLayout.setOnClickListener {
-            openUrlInWebBrowser()
-        }*/
+
         binding.crossingLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "check crossings",
@@ -164,7 +167,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             )
             findNavController().navigate(R.id.action_landingFragment_to_startNow)
 
-           // hitApi()
 
 
         }
@@ -179,7 +181,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 sessionManager.getLoggedInUser()
             )
             requireActivity().startNormalActivity(
-                AuthActivity::class.java
+                LoginFragment::class.java
             )
         }
     }
@@ -188,11 +190,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
         observe(webServiceViewModel.pushNotification, ::handlePushNotification)
 
-        /*
-        *   Mobile Number flow
-        *   TODO
-        * */
-         observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
 
     }
 
@@ -273,61 +270,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         webServiceViewModel.checkServiceStatus()
     }
 
-    /**
-     *
-     *    TODO
-     * */
 
-    private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = EmailVerificationRequest(
-            Constants.SMS,
-            "+919936609176"
-        )
-        createAccountViewModel.emailVerificationApi(request)
-
-
-    }
-
-    private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (resource) {
-            is Resource.Success -> {
-
-                val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.SMS, "+919936609176"))
-
-                bundle.putParcelable(
-                    "response",
-                    SecurityCodeResponseModel(
-                        resource.data?.emailStatusCode,
-                        0L,
-                        resource.data?.referenceId,
-                        true
-                    )
-                )
-
-
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                findNavController().navigate(
-                    R.id.action_forgotPasswordFragment_to_forgotOtpFragment,
-                    bundle
-                )
-            }
-            is Resource.DataError -> {
-
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-
-            }
-            else -> {
-            }
-        }
-    }
 
 
 }
