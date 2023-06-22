@@ -97,7 +97,6 @@
             style="@style/input_text"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
-            app:drawableRight="@drawable/fingerprint_icon"
 
             android:singleLine="true"
             app:labelText="@string/email_address"
@@ -113,9 +112,6 @@
             app:imeOptions="actionDone"
             app:inputType="textPassword"
             android:singleLine="true"
-            app:drawableRight="@drawable/ic_eye_show"
-            android:drawableEnd="@drawable/ic_eye_show"
-
             app:labelText="@string/password"
             app:type="password"
             app:layout_constraintStart_toStartOf="parent"

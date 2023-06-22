@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.BuildConfig
@@ -78,7 +79,11 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+
         initBiometric()
+
+        displayBiometricDialog()
+
 
         AdobeAnalytics.setScreenTrack(
             "login",
@@ -104,14 +109,9 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             backButton.setOnClickListener(this@LoginFragment)
         }
 
-        /* if (displayFingerPrintPopup()) {
-             binding.fingerprint.visible()
+         if (displayFingerPrintPopup()) {
              fingerPrintLogin()
-         } else {
-             binding.fingerprint.gone()
-
          }
- */
 
         /*binding.fingerprint.setOnClickListener {
             if (!displayFingerPrintPopup()) {
@@ -157,7 +157,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -192,7 +192,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
         }
 
-        if (sessionManager.fetchUserName() != binding.edtEmail.text.toString()) {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
             displayBiometricDialog()
         } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java)
@@ -215,7 +215,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun displayBiometricDialog() {
-        displayCustomMessage(getString(R.string.enable_biometric),
+        displayCustomMessage(getString(R.string.str_enable_face_ID),
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
             getString(R.string.enablelater),
@@ -233,9 +233,9 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    dialog.dismiss()
+                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
-                    // dialog.dismiss()
                 }
             })
     }
@@ -302,7 +302,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun passwordCheck() {
-        passwordCheck= binding.edtPwd.getText().toString().trim().length>8
+        passwordCheck= binding.edtPwd.getText().toString().trim().length>=8
 
         checkButton()
 

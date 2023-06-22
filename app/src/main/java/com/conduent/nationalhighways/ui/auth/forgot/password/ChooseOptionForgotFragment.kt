@@ -51,6 +51,12 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         binding.model = arguments?.getParcelable(Constants.OPTIONS)
 
+        binding.radioSms.text=getString(R.string.str_radio_sms,model?.optionValue)
+        binding.radioEmail.text=getString(R.string.str_radio_email,model?.optionValue)
+
+        binding.btn.setOnClickListener(this)
+
+
         AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options",
             "forgot password",
@@ -64,9 +70,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun initCtrl() {
-       // binding.continueBtn.setOnClickListener(this)
-        binding.relativeLayout1.setOnClickListener(this)
-        binding.relativeLayout2.setOnClickListener(this)
+
     }
 
     override fun observer() {
@@ -82,16 +86,28 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         when (group?.checkedRadioButtonId) {
 
 
-            R.id.post_mail_radio_btn -> {
-                model?.optionType = Constants.POST_MAIL
-                model?.optionValue = binding.model?.address
+            R.id.radio_sms-> {
+                binding.btn.isEnabled=true
+                model?.optionType = Constants.SMS
+                model?.optionValue = binding.model?.phone
             }
+            R.id.radio_email-> {
+                model?.optionType = Constants.EMAIL
+                model?.optionValue = binding.model?.email
+
+                binding.btn.isEnabled=true
+            }
+
+
+
+            }
+
         }
-    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.continue_btn -> {
+            R.id.btn -> {
                 if (!TextUtils.isEmpty(model?.optionType ?: "")) {
                     loader = LoaderDialog()
                     loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -99,20 +115,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                     viewModel.requestOTP(model)
 
 
-                } else {
-                    showError(binding.root, getString(R.string.please_select_one_mode_for_password))
                 }
             }
-            R.id.relativeLayout1 -> {
-                model?.optionType = Constants.EMAIL
-                model?.optionValue = binding.model?.email
-                hitApi()
-            }
-            R.id.relativeLayout2 -> {
-                model?.optionType = Constants.SMS
-                model?.optionValue = binding.model?.phone
-                hitApi()
-            }
+
         }
     }
 

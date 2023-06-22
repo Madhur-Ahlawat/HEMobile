@@ -894,7 +894,7 @@
     <string name="str_notifications_not_found">Notifications not found</string>
 
     //Biometric
-    <string name="doyouwantenablebiometric">You can enable now, or later from the Biometrics option under Account Management.</string>
+    <string name="doyouwantenablebiometric">You can enable now, or later from Settings on your device</string>
     <string name="biometriclogin">Biometric Login</string>
     <string name="biometrics">Biometrics</string>
     <string name="usefingerprinttologin">Use fingerprint or face to login</string>
@@ -1181,6 +1181,11 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
+    <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
+    <string name="str_radio_email">Email %s</string>
+    <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
+    <string name="str_enable_face_ID">Enable FaceID</string>
+
 
 
 </resources>
