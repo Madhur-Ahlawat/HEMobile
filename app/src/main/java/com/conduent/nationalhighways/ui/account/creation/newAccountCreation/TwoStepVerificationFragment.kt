@@ -68,11 +68,19 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             R.id.btnNext ->{
                 val bundle= Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+
                 if(NewCreateAccountRequestModel.isEditCall ) {
-                    if(oldtwoStepVerification == NewCreateAccountRequestModel.twoStepVerification) {
+                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                        if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
+                            bundle.putString(Constants.PLATE_NUMBER, "")
+                            bundle.putInt(Constants.VEHICLE_INDEX, 0)
+                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_createVehicleFragment,bundle)
+                        }else{
+                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
+                        }
+
+                    }else {
                         findNavController().popBackStack()
-                    }else{
-                        findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
                     }
                 }else {
                     findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)

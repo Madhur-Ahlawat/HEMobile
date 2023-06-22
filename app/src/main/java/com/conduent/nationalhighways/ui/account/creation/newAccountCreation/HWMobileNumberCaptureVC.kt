@@ -36,7 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
-    private var requiredFirstName = false
+    private var requiredCountryCode = false
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
@@ -71,7 +71,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         binding.btnNext.setOnClickListener(this)
         if(NewCreateAccountRequestModel.isEditCall) {
+            navFlow = Constants.ACCOUNT_CREATION_MOBILE_FLOW
             NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
+            NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
         }
     }
 
@@ -130,18 +132,30 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (v?.id) {
             binding.btnNext.id -> {
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
-                if(NewCreateAccountRequestModel.isEditCall && mobileNumber == NewCreateAccountRequestModel.mobileNumber){
-                    findNavController().popBackStack()
-                }else{
-                    NewCreateAccountRequestModel.mobileNumber = mobileNumber
-                    if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+                val countryCode = binding.inputCountry.selectedItemDescription.toString()
+
+                if(NewCreateAccountRequestModel.isEditCall && countryCode == NewCreateAccountRequestModel.countryCode  && mobileNumber == NewCreateAccountRequestModel.mobileNumber) {
+                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
                         findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
+                    }else {
+                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
+                    }
+                }else {
+                    NewCreateAccountRequestModel.mobileNumber = mobileNumber
+                    NewCreateAccountRequestModel.countryCode = countryCode
+                    if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+                        if(NewCreateAccountRequestModel.isEditCall){
+                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
+                        }else{
+                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
+                        }
+
                     } else {
                         hitApi()
 
                     }
-                }
 
+                }
 
 
             }
@@ -162,7 +176,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
 
-            requiredFirstName = binding.inputCountry.getText()?.isNotEmpty() == true
+            requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
 
             if (index==1){
@@ -192,7 +206,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun checkButton() {
-        if (requiredFirstName && requiredMobileNumber) {
+        if (requiredCountryCode && requiredMobileNumber) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()

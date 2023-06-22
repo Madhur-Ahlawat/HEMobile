@@ -212,8 +212,17 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     viewModel.confirmOptionForForgot(emailText)
 
                 }else{
-                    if(NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress){
-                        findNavController().popBackStack()
+                    if(NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress ){
+                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                            val bundle = Bundle()
+                            bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                            findNavController().navigate(
+                                R.id.action_forgotPasswordFragment_to_createPasswordFragment,
+                                bundle
+                            )
+                        }else {
+                            findNavController().popBackStack()
+                        }
                     }else {
                         NewCreateAccountRequestModel.emailAddress = emailText
                         hitApi()

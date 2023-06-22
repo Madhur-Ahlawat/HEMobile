@@ -7,6 +7,7 @@ object NewCreateAccountRequestModel{
     var referenceId: String? = ""
     var emailAddress: String? = ""
     var mobileNumber: String? = ""
+    var countryCode: String? = ""
     var communicationTextMessage:Boolean=false
     var termsCondition:Boolean=false
     var twoStepVerification:Boolean=false
@@ -32,6 +33,8 @@ object NewCreateAccountRequestModel{
     var isVehicleAlreadyAddedLocal:Boolean=false
     var isMaxVehicleAdded:Boolean=false
     var isEditCall = false
+    var isAccountTypeEditCall = false
+    var isManualAddress = false
 
 
 

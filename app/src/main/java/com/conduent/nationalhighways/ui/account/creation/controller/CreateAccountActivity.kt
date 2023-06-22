@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -48,15 +49,15 @@ class CreateAccountActivity : BaseActivity<Any>() {
     override fun observeViewModel() {}
 
 
-
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment){
+                if (fragment is AccountSuccessfullyCreationFragment || NewCreateAccountRequestModel.isAccountTypeEditCall){
 
                 }else{
-                    super.onBackPressed()
+                        super.onBackPressed()
+
                 }
 
             }
