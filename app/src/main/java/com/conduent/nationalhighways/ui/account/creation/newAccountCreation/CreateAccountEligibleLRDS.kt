@@ -54,7 +54,9 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
             binding.continueWithoutApplying.id -> {
                 if(NewCreateAccountRequestModel.isEditCall ) {
                     if(NewCreateAccountRequestModel.isAccountTypeEditCall){
-
+                        findNavController().navigate(
+                            R.id.action_createAccountEligibleLRDS_to_createAccountTypes
+                        )
                     }else {
                         findNavController().navigate(
                             R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment

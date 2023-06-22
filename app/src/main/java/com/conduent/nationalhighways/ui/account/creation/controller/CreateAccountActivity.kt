@@ -53,7 +53,7 @@ class CreateAccountActivity : BaseActivity<Any>() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment || NewCreateAccountRequestModel.isAccountTypeEditCall){
+                if (fragment is AccountSuccessfullyCreationFragment || NewCreateAccountRequestModel.isBackButtonVisible.not()){
 
                 }else{
                         super.onBackPressed()

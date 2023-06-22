@@ -52,7 +52,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
          val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
-        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+        if(NewCreateAccountRequestModel.isBackButtonVisible.not()){
             backIcon?.visibility = View.GONE
         }else{
             backIcon?.visibility = View.VISIBLE

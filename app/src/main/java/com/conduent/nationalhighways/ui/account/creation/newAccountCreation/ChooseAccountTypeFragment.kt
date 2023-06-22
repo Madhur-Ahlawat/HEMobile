@@ -60,6 +60,7 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
                     if(NewCreateAccountRequestModel.isEditCall) {
                         NewCreateAccountRequestModel.isAccountTypeEditCall = true
                     }
+                    NewCreateAccountRequestModel.isBackButtonVisible = true
                     findNavController().navigate(
                         R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo
                     )
