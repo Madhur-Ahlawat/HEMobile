@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -38,46 +37,40 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     private var loader: LoaderDialog? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var isCalled = false
-    private lateinit var navFlow: String// create account , forgot password
-    private var isViewCreated: Boolean = false
+     private lateinit var  navFlow:String// create account , forgot password
+    private var isViewCreated:Boolean=false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
-    private var btnEnabled: Boolean = false
+    private var btnEnabled:Boolean=false
 
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): ForgotpasswordChangesBinding {
-        binding = ForgotpasswordChangesBinding.inflate(inflater, container, false)
-        return binding
-    }
+    ) = ForgotpasswordChangesBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
-
-
-
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
 
-
-        binding.email = ""
-        binding.isValid = false
+       // binding.model = ConfirmOptionModel(identifier = "", enable = false)
+        binding.email=""
+        binding.isValid=false
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
-        if (NewCreateAccountRequestModel.isEditCall) {
-            navFlow = Constants.ACCOUNT_CREATION_EMAIL_FLOW
+        if(NewCreateAccountRequestModel.isEditCall){
+            navFlow=Constants.ACCOUNT_CREATION_EMAIL_FLOW
             NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
         }
-        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
+        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
             binding.textUsername.visible()
-            binding.enterDetailsTxt.text = getString(R.string.createAccount_email_screenHeading)
+            binding.enterDetailsTxt.text=getString(R.string.createAccount_email_screenHeading)
             requireActivity().toolbar(getString(R.string.str_create_an_account))
-        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.enterDetailsTxt.text = getString(R.string.forgotPassword_email_screenHeading)
+        }else if(navFlow==Constants.FORGOT_PASSWORD_FLOW){
+            binding.enterDetailsTxt.text=getString(R.string.forgotPassword_email_screenHeading)
             requireActivity().toolbar(getString(R.string.forgot_password))
             binding.textUsername.gone()
         }
@@ -103,12 +96,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         lifecycleScope.launch {
             observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
         }
-        if (!isViewCreated) {
+        if (!isViewCreated){
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
 
         }
 
-        isViewCreated = true
+        isViewCreated=true
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
@@ -123,7 +116,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     } else {
                         binding.root.post {
                             val bundle = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                            bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                             bundle.putParcelable(Constants.OPTIONS, status.data)
                             findNavController().navigate(
                                 R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
@@ -142,7 +135,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     )
 
                 }
-
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
 
@@ -157,7 +149,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     )
 
                 }
-
                 else -> {
                 }
             }
@@ -174,12 +165,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         when (status) {
             is Resource.Success -> {
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.email))
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,binding.email))
 
                 bundle.putParcelable("response", status.data)
 
 
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                 findNavController().navigate(
                     R.id.action_forgotPasswordFragment_to_otpFragment,
                     bundle
@@ -196,12 +187,11 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 )
 
 
-            }
 
+            }
             is Resource.DataError -> {
                 showError(binding.root, status.errorMsg)
             }
-
             else -> {
             }
 
@@ -212,19 +202,28 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         when (v?.id) {
             R.id.btn_next -> {
 
-                hideKeyboard()
+                    hideKeyboard()
 
                 val emailText = binding.edtEmail.getText().toString().trim()
-                if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     sessionManager.saveAccountNumber(emailText)
                     isCalled = true
                     viewModel.confirmOptionForForgot(emailText)
 
-                } else {
-                    if (NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress) {
-                        findNavController().popBackStack()
-                    } else {
+                }else{
+                    if(NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress ){
+                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                            val bundle = Bundle()
+                            bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                            findNavController().navigate(
+                                R.id.action_forgotPasswordFragment_to_createPasswordFragment,
+                                bundle
+                            )
+                        }else {
+                            findNavController().popBackStack()
+                        }
+                    }else {
                         NewCreateAccountRequestModel.emailAddress = emailText
                         hitApi()
                     }
@@ -238,19 +237,17 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
 
     private fun isEnable() {
-        if (binding.edtEmail.getText().toString().trim().isEmpty()) {
-            btnEnabled = false
-        } else {
-            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString())
-                    .matches()
-            ) {
+        if (binding.edtEmail.getText().toString().trim().isEmpty()){
+            btnEnabled=false
+        }else{
+            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()){
                 binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                 false
-            } else {
-                if (binding.edtEmail.getText().toString().trim().length < 8) {
+            }else{
+                if (binding.edtEmail.getText().toString().trim().length<8){
                     binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
                     false
-                } else {
+                }else{
                     binding.edtEmail.removeError()
                     true
                 }
@@ -260,14 +257,13 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         }
         checkButton()
     }
-
-    private fun checkButton() {
-        binding.btnNext.isEnabled = btnEnabled
+    private fun checkButton(){
+        binding.btnNext.isEnabled=btnEnabled
     }
 
-    private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    private fun hitApi(){
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
@@ -275,6 +271,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             binding.edtEmail.getText().toString().trim()
         )
         createAccountViewModel.emailVerificationApi(request)
+
 
 
     }
@@ -287,35 +284,22 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable(
-                    "data",
-                    RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim())
-                )
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,binding.edtEmail.getText().toString().trim()))
 
-                bundle.putParcelable(
-                    "response",
-                    SecurityCodeResponseModel(
-                        resource.data?.emailStatusCode,
-                        0L,
-                        resource.data?.referenceId,
-                        true
-                    )
-                )
+                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
 
 
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                 findNavController().navigate(
                     R.id.action_forgotPasswordFragment_to_forgotOtpFragment,
                     bundle
                 )
             }
-
             is Resource.DataError -> {
 
-                showError(binding.root, resource.errorMsg)
+                    showError(binding.root, resource.errorMsg)
 
             }
-
             else -> {
             }
         }

@@ -157,25 +157,29 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
         when (response) {
             is Resource.Success -> {
-
+                NewCreateAccountRequestModel.isManualAddress = false
                 if (response.data?.lrdsEligible.equals("true", true)) {
                     findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
 
                 } else {
-                    if (NewCreateAccountRequestModel.personalAccount) {
-                        findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment)
+                    if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()) {
+                        findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountSummary)
+                    }else {
+                        if (NewCreateAccountRequestModel.personalAccount) {
+                            findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment)
 
-                    } else {
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.NAV_FLOW_KEY,
-                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
-                        )
-                        findNavController().navigate(
-                            R.id.action_selectaddressfragment_to_forgotPasswordFragment,
-                            bundle
-                        )
+                        } else {
+                            val bundle = Bundle()
+                            bundle.putString(
+                                Constants.NAV_FLOW_KEY,
+                                Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                            )
+                            findNavController().navigate(
+                                R.id.action_selectaddressfragment_to_forgotPasswordFragment,
+                                bundle
+                            )
 
+                        }
                     }
                 }
 

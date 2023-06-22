@@ -99,19 +99,23 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when(v?.id){
             R.id.btnNext ->{
                 if(NewCreateAccountRequestModel.isEditCall ) {
-                    if(oldCommunicationTextMessage == NewCreateAccountRequestModel.communicationTextMessage) {
-                        findNavController().popBackStack()
-                    }else{
-                        val bundle= Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
-                        findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
-                    }
+                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                            findNavController().navigate(
+                                R.id.action_optForSmsFragment_to_twoStepVerificationFragment)
+                        }else{
+                            if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
+                                findNavController().popBackStack()
+                            }else{
+                                val bundle= Bundle()
+                                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                                findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
+                            }
+                        }
+
                 }else {
-                    val bundle = Bundle()
+
                     findNavController().navigate(
-                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment,
-                        bundle
-                    )
+                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment)
                 }
             }
         }

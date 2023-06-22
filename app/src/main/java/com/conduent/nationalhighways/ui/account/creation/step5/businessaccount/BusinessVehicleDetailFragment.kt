@@ -57,12 +57,21 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                 val accountData = NewCreateAccountRequestModel
                 val vehicleList = accountData.vehicleList
-
+                val oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER,"").toString()
+                if (oldPlateNumber.isNotEmpty()) {
+                    val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+                    if (index != null) {
+                        vehicleList.removeAt(index)
+                    }
+                }
                 nonUKVehicleModel?.let {
 
                     vehicleList.add(it)
-                    findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
-
+                    if(NewCreateAccountRequestModel.isEditCall){
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment)
+                    }else {
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
+                    }
 
                 }
 

@@ -157,7 +157,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         showError(binding.root, getString(R.string.error_otp_time_expire))
                     }
                 } else if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
-                    if(NewCreateAccountRequestModel.isEditCall){
+                    if(NewCreateAccountRequestModel.isEditCall ){
+                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                            findNavController().navigate(
+                                R.id.action_otpForgotFragment_to_createVehicleFragment
+                            )
+                        }else{
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
+                            )
+                        }
 
                     }else{
                         findNavController().navigate(
@@ -382,9 +391,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    if(NewCreateAccountRequestModel.isEditCall){
-                        findNavController().navigate(
-                            R.id.action_forgotOtpFragment_to_createAccountSummaryFragment,bundle)
+                    if(NewCreateAccountRequestModel.isEditCall ){
+                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                                bundle
+                            )
+                        }else {
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createAccountSummaryFragment,
+                                bundle
+                            )
+                        }
                     }else {
                         findNavController().navigate(
                             R.id.action_forgotOtpFragment_to_createPasswordFragment,

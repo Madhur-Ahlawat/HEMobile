@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountEligibleLrdsBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -51,19 +52,20 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         hideKeyboard()
         when (v?.id) {
             binding.continueWithoutApplying.id -> {
-                val bundle = Bundle()
-//                bundle.putParcelable("response", status.data)
-                findNavController().navigate(
-                    R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
-                    bundle
-                )
+                if(NewCreateAccountRequestModel.isEditCall ) {
+                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
 
-/*                val bundle = Bundle()
-//                bundle.putParcelable("response", status.data)
-                findNavController().navigate(
-                    R.id.action_createAccountEligibleLRDS_to_createAccountTypes,
-                    bundle
-                )*/
+                    }else {
+                        findNavController().navigate(
+                            R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment
+                        )
+                    }
+                }else {
+                    findNavController().navigate(
+                        R.id.action_createAccountEligibleLRDS_to_createAccountTypes
+                    )
+                }
+
             }
             binding.btnContinue.id -> {
 

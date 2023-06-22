@@ -32,7 +32,7 @@ class AccountSuccessfullyCreationFragment :
             NewCreateAccountRequestModel.emailAddress
         )
 
-        if (NewCreateAccountRequestModel.payAsYouGo) {
+        if (NewCreateAccountRequestModel.prePay.not()) {
             binding.payAsGoText.visibility = View.VISIBLE
             binding.prePayCard.visibility = View.GONE
         } else {

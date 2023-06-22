@@ -13,7 +13,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
     View.OnClickListener {
 
-
+    private var oldPersonalAccountValue = false
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -25,8 +25,8 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
             binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
         }
         if(NewCreateAccountRequestModel.isEditCall) {
-
-            if(NewCreateAccountRequestModel.personalAccount){
+            oldPersonalAccountValue = NewCreateAccountRequestModel.personalAccount
+            if(oldPersonalAccountValue){
                 binding.radioPersonalAccount.isChecked = true
             }else{
                 binding.radioBusinessAccount.isChecked = true
@@ -54,11 +54,16 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
                      NewCreateAccountRequestModel.personalAccount = true
                 }
 
-
-
-                findNavController().navigate(
-                    R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo
-                )
+                if(NewCreateAccountRequestModel.isEditCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
+                    findNavController().popBackStack()
+                }else{
+                    if(NewCreateAccountRequestModel.isEditCall) {
+                        NewCreateAccountRequestModel.isAccountTypeEditCall = true
+                    }
+                    findNavController().navigate(
+                        R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo
+                    )
+                }
             }
         }
     }

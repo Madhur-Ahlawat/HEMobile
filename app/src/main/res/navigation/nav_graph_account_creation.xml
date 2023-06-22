@@ -234,6 +234,10 @@
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"/>
 
+        <action
+            android:id="@+id/action_findVehicleFragment_to_accountSummaryFragment"
+            app:destination="@+id/createAccountSummaryFragment"/>
+
 
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleUKListFragment"
@@ -279,7 +283,10 @@
             android:id="@+id/action_accountSummaryFragment_to_personalInfoFragment"
             app:destination="@id/createAccountPersonalInfo"/>
         <action
-            android:id="@+id/action_accountSummaryFragment_to_addressFragment"
+            android:id="@+id/action_accountSummaryFragment_to_postCodeFragment"
+            app:destination="@id/createAccountPostCodeNew"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_manualAddressFragment"
             app:destination="@id/fragment_manual_address"/>
         <action
             android:id="@+id/action_accountSummaryFragment_to_emailAddressFragment"
@@ -375,6 +382,10 @@
             app:destination="@+id/vehicleListFragment"/>
 
         <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_accountSummaryFragment"
+            app:destination="@+id/createAccountSummaryFragment"/>
+
+        <action
             android:id="@+id/action_businessVehicleDetailFragment_to_paymentSummaryScreen"
             app:destination="@id/paymentSummaryFragment" />
 
@@ -414,6 +425,10 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment" />
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
@@ -534,6 +549,9 @@
             android:id="@+id/action_selectaddressfragment_to_createAccountEligibleLRDS2"
             app:destination="@id/createAccountEligibleLRDS" />
         <action
+            android:id="@+id/action_selectaddressfragment_to_createAccountSummary"
+            app:destination="@id/createAccountSummaryFragment" />
+        <action
             android:id="@+id/action_selectaddressfragment_to_createAccountTypesFragment"
             app:destination="@+id/createAccountTypes"
             />
@@ -554,6 +572,9 @@
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_createAccountTypes"
             app:destination="@id/createAccountTypes" />
+        <action
+            android:id="@+id/action_createAccountEligibleLRDS_to_accountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment" />
         <action
             android:id="@+id/action_createAccountEligibleLRDS_to_discount_type_fragment"
             app:destination="@id/discount_type_fragment"
@@ -579,6 +600,9 @@
         <action
             android:id="@+id/action_forgotPasswordFragment_to_forgotOtpFragment"
             app:destination="@id/forgotOtpFragment" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_createPasswordFragment"
+            app:destination="@id/createPasswordFragment" />
     </fragment>
 
     <fragment
@@ -631,6 +655,9 @@
         <action
             android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
             app:destination="@id/HWMobileNumberCaptureVC" />
+        <action
+            android:id="@+id/action_twoStepVerificationFragment_to_createVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"/>
     </fragment>
     <fragment
         android:id="@+id/HWMobileNumberCaptureVC"
@@ -644,6 +671,9 @@
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_createVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"/>
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_accountSummaryFragment"
+            app:destination="@+id/createAccountSummaryFragment"/>
 
     </fragment>
 

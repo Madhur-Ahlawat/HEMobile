@@ -38,6 +38,9 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
 
         binding.inputPostCode.setMaxLength(10)
+        if(NewCreateAccountRequestModel.isEditCall){
+            binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)
+        }
     }
 
     override fun initCtrl() {

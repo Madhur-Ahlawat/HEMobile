@@ -44,7 +44,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
                 handleNavigation()
             }
             R.id.payCard -> {
-                NewCreateAccountRequestModel.payAsYouGo=true
+                NewCreateAccountRequestModel.prePay=false
                 handleNavigation()
             }
             R.id.crossingCharges -> {
@@ -55,7 +55,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     }
 
     private fun handleNavigation() {
-        if(NewCreateAccountRequestModel.isEditCall){
+        if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()){
             findNavController().popBackStack()
         }else {
             val bundle=Bundle()

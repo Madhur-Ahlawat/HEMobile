@@ -168,7 +168,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun hitlrdsCheckApi() {
         val lrdsEligibilityCheck = LrdsEligibiltyRequest()
-        lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
+        if(NewCreateAccountRequestModel.country==UK_COUNTRY){
+            lrdsEligibilityCheck.country = "UK"
+        }else {
+            lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
+        }
         lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
         lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
@@ -351,13 +355,15 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         when (response) {
             is Resource.Success -> {
-                if(NewCreateAccountRequestModel.isEditCall) {
-                    findNavController().popBackStack()
-                }else{
-                    if (response.data?.lrdsEligible.equals("true", true)) {
-                        findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+                NewCreateAccountRequestModel.isManualAddress = true
+                if (response.data?.lrdsEligible.equals("true", true)) {
 
-                    } else {
+                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+
+                } else {
+                    if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()) {
+                        findNavController().popBackStack()
+                    }else{
                         if (NewCreateAccountRequestModel.personalAccount) {
                             findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment)
 
@@ -374,7 +380,9 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
                         }
                     }
+
                 }
+
 
             }
 

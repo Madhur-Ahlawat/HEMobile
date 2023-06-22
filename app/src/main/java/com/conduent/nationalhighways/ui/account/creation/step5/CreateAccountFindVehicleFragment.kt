@@ -99,7 +99,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             R.id.findVehicle -> {
 
                 if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim()){
-                    findNavController().navigate(R.id.action_findVehicleFragment_to_vehicleListFragment)
+                    if(NewCreateAccountRequestModel.isEditCall){
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_accountSummaryFragment)
+                    }else {
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_vehicleListFragment)
+                    }
                     return
                 }
 
@@ -158,7 +162,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                     apiData[0]
                                 )
                             }
-
+                            bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                            arguments?.getInt(Constants.VEHICLE_INDEX)
+                                ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                             findNavController().navigate(
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle

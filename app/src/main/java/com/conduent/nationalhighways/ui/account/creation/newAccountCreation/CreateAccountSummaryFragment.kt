@@ -57,10 +57,14 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.address.text =
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
-        binding.mobileNumber.text = dataModel.mobileNumber
+        binding.mobileNumber.text = dataModel.countryCode+" "+dataModel.mobileNumber
         if(dataModel.personalAccount){
             binding.accountType.text = getString(R.string.personal)
-            binding.txtSubAccountType.text = getString(R.string.str_prepay)
+            if(NewCreateAccountRequestModel.prePay) {
+                binding.txtSubAccountType.text = getString(R.string.str_prepay)
+            }else{
+                binding.txtSubAccountType.text = getString(R.string.pay_as_you_go)
+            }
 
         } else {
             binding.accountType.text = getString(R.string.business)
@@ -69,7 +73,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val vehicleList = dataModel.vehicleList as ArrayList<NewVehicleInfoDetails>
-        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
+        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
@@ -123,7 +127,11 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
             R.id.editAddress -> {
                 enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_addressFragment)
+                if(NewCreateAccountRequestModel.isManualAddress) {
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_manualAddressFragment)
+                }else{
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_postCodeFragment)
+                }
             }
             R.id.editEmailAddress -> {
                 enableEditMode()
@@ -157,6 +165,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
     private fun disableEditMode() {
         NewCreateAccountRequestModel.isEditCall = false
+        NewCreateAccountRequestModel.isAccountTypeEditCall = false
     }
 
 
@@ -166,6 +175,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         plateNumber: String?,
         isDblaAvailable: Boolean?
     ) {
+        enableEditMode()
         if (value == Constants.REMOVE_VEHICLE) {
             val bundle = Bundle()
             bundle.putInt(Constants.VEHICLE_INDEX, position)

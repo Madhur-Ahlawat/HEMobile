@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +18,7 @@ import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 
 
@@ -49,6 +51,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
+         val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
+        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+            backIcon?.visibility = View.GONE
+        }else{
+            backIcon?.visibility = View.VISIBLE
+        }
 
     }
 

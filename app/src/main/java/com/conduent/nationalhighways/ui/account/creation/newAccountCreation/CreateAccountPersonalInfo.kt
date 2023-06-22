@@ -77,8 +77,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         binding.inputCompanyName.getText().toString()
                 }
 
-                if(NewCreateAccountRequestModel.isEditCall){
-                    NewCreateAccountRequestModel.isEditCall = false
+                if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()){
                     findNavController().popBackStack()
                 }else {
                     findNavController().navigate(

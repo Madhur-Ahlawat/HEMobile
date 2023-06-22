@@ -296,7 +296,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     } else {
                         it.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(it)
-                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        if(NewCreateAccountRequestModel.isEditCall){
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
+                        }else {
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        }
                     }
                     return
                 }
@@ -331,8 +335,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(newVehicleInfoDetails)
-
-                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        if(NewCreateAccountRequestModel.isEditCall){
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
+                        }else {
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        }
                         return
 
                     } else {
@@ -349,8 +356,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(newVehicleInfoDetails)
-
-                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        if(NewCreateAccountRequestModel.isEditCall){
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
+                        }else {
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                        }
 
                     }
 
