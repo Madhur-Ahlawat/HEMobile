@@ -113,7 +113,11 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
     private fun hitlrdsCheckApi() {
         val lrdsEligibilityCheck = LrdsEligibiltyRequest()
-        lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
+        if(NewCreateAccountRequestModel.country.equals(Constants.UK_COUNTRY,true)){
+            lrdsEligibilityCheck.country = "UK"
+        }else {
+            lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
+        }
         lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
         lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName

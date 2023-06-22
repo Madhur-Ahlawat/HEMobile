@@ -656,8 +656,8 @@
             android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
             app:destination="@id/HWMobileNumberCaptureVC" />
         <action
-            android:id="@+id/action_twoStepVerificationFragment_to_createVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment"/>
+            android:id="@+id/action_twoStepVerificationFragment_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"/>
     </fragment>
     <fragment
         android:id="@+id/HWMobileNumberCaptureVC"

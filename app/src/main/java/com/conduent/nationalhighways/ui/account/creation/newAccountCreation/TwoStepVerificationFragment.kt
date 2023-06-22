@@ -74,7 +74,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                         if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
                             bundle.putString(Constants.PLATE_NUMBER, "")
                             bundle.putInt(Constants.VEHICLE_INDEX, 0)
-                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_createVehicleFragment,bundle)
+                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_vehicleListFragment,bundle)
                         }else{
                             findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
                         }

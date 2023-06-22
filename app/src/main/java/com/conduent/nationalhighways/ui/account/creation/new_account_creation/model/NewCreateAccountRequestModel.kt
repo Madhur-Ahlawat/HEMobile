@@ -35,6 +35,7 @@ object NewCreateAccountRequestModel{
     var isEditCall = false
     var isAccountTypeEditCall = false
     var isManualAddress = false
+    var isBackButtonVisible = true
 
 
 

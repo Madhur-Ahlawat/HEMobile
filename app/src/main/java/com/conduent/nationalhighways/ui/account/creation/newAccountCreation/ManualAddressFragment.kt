@@ -168,7 +168,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun hitlrdsCheckApi() {
         val lrdsEligibilityCheck = LrdsEligibiltyRequest()
-        if(NewCreateAccountRequestModel.country==UK_COUNTRY){
+        if(NewCreateAccountRequestModel.country.equals(UK_COUNTRY,true)){
             lrdsEligibilityCheck.country = "UK"
         }else {
             lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country

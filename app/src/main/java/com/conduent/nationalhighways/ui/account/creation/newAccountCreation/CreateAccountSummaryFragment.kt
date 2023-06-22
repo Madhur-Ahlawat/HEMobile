@@ -57,7 +57,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.address.text =
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
-        binding.mobileNumber.text = dataModel.countryCode+" "+dataModel.mobileNumber
+
+        binding.mobileNumber.text = dataModel.countryCode?.let { getRequiredText(it) } +" "+dataModel.mobileNumber
         if(dataModel.personalAccount){
             binding.accountType.text = getString(R.string.personal)
             if(NewCreateAccountRequestModel.prePay) {
@@ -106,7 +107,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }))
         disableEditMode()
     }
-
+    fun getRequiredText(text: String) = text.substringAfter(' ')
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
     }
@@ -143,6 +144,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
             R.id.editAccountType -> {
                 enableEditMode()
+                NewCreateAccountRequestModel.isBackButtonVisible = false
                 findNavController().navigate(R.id.action_accountSummaryFragment_to_typeAccountFragment)
             }
             R.id.editSubAccountType -> {
@@ -166,6 +168,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     private fun disableEditMode() {
         NewCreateAccountRequestModel.isEditCall = false
         NewCreateAccountRequestModel.isAccountTypeEditCall = false
+        NewCreateAccountRequestModel.isBackButtonVisible = true
     }
 
 
