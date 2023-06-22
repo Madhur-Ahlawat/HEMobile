@@ -13,6 +13,7 @@
         android:background="@color/white"
         android:elevation="3dp"
         android:translationZ="2dp"
+        android:id="@+id/materialToolbar"
         android:theme="@style/Theme.ToolBar">
 
         <RelativeLayout

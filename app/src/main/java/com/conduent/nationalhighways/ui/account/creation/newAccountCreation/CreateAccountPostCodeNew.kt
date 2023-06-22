@@ -36,19 +36,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 getString(R.string.this_should_be_the_address_were_the_vehicle_is_registered)
         }
 
-        val filter = InputFilter { source, start, end, dest, dstart, dend ->
-            for (i in start until end) {
-                if (!Character.isLetterOrDigit(source[i]) &&
-                    source[i].toString() != " " &&
-                    source[i].toString() != "-"
-                ) {
-                    return@InputFilter ""
-                }
-            }
-            null
-        }
 
-        binding.inputPostCode.editText.filters = arrayOf(filter)
         binding.inputPostCode.setMaxLength(10)
     }
 
