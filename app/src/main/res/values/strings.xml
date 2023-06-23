@@ -60,7 +60,7 @@
     <string name="str_enter_email_id">Enter email ID</string>
     <string name="str_usr_name">Username</string>
     <string name="str_usr_passwd">Enter password</string>
-    <string name="str_forgot_password"><u>Forgot Password?</u></string>
+    <string name="str_forgot_password">Forgot password?</string>
     <string name="str_back">Back</string>
     <string name="str_enter_ur_details">Enter your details</string>
     <string name="str_account_number">Account number</string>
