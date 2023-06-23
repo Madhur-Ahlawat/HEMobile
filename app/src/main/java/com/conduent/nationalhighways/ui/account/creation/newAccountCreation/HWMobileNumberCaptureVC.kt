@@ -136,7 +136,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 if(NewCreateAccountRequestModel.isEditCall && countryCode == NewCreateAccountRequestModel.countryCode  && mobileNumber == NewCreateAccountRequestModel.mobileNumber) {
                     if(NewCreateAccountRequestModel.isAccountTypeEditCall){
-                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
+                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment)
                     }else {
                         findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
                     }
