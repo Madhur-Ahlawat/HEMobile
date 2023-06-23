@@ -33,6 +33,7 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
         }
         if(showRemoveButton.not()){
             holder.binding.deleteVehicle.visibility = View.INVISIBLE
+            holder.binding.txtPlateNumber.visibility = View.VISIBLE
         }
     }
 

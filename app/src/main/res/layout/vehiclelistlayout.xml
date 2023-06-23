@@ -8,9 +8,9 @@
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
+        android:layout_marginTop="@dimen/margin_15dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         app:cardCornerRadius="5dp"
@@ -19,14 +19,24 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/margin_15dp"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtPlateNumber"
+            style="@style/MediumTextBlack"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:text="@string/vehicle_registration_number_plate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             style="@style/RegularTextBlack"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/vehiclePlateNumber"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
             android:text="AJ66MHA"
 
             />

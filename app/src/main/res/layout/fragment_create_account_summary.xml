@@ -347,7 +347,6 @@
                         android:id="@+id/communications"
                         style="@style/RegularTextBlack"
                         android:text="Yes"
-                        android:textAllCaps="true"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCommunications" />
@@ -395,7 +394,6 @@
                         android:id="@+id/twoStepVerification"
                         style="@style/RegularTextBlack"
                         android:text="Yes"
-                        android:textAllCaps="true"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
