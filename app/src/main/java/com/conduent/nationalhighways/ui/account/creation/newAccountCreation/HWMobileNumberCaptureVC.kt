@@ -180,11 +180,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
 
             if (index==1){
-                requiredMobileNumber = if (binding.inputMobileNumber.getText().toString().isNotEmpty()){
-                    if (Utils.phoneNumber.matches(
-                            binding.inputMobileNumber.getText().toString().trim()
-                        )
-                    ) {
+                val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
+                requiredMobileNumber = if (phoneNumber.isNotEmpty()){
+                    if (Utils.UK_MOBILE_REGEX == phoneNumber) {
                         binding.inputMobileNumber.removeError()
                         true
                     } else {
