@@ -28,12 +28,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
     private var model: RequestOTPModel? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
-    private var responseModel: ConfirmOptionResponseModel?=null
+    private var responseModel: ConfirmOptionResponseModel? = null
     private var loader: LoaderDialog? = null
     private var response: SecurityCodeResponseModel? = null
-    private var isViewCreated:Boolean=false
-    private lateinit var  navFlow:String// create account , forgot password
-
+    private var isViewCreated: Boolean = false
+    private lateinit var navFlow: String// create account , forgot password
 
 
     @Inject
@@ -52,8 +51,17 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         responseModel = arguments?.getParcelable(Constants.OPTIONS)
 
-        binding.radioSms.text=getString(R.string.str_radio_sms,responseModel?.phone)
-        binding.radioEmail.text=getString(R.string.str_radio_email,responseModel?.email)
+        if (responseModel?.phone != null) {
+            binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
+            binding.radioSms.visibility = View.VISIBLE
+        } else {
+            binding.radioSms.visibility = View.GONE
+        }
+
+
+        binding.radioEmail.text = getString(R.string.str_radio_email, responseModel?.email)
+
+        binding.radioGroup.setOnCheckedChangeListener(this)
 
         binding.btn.setOnClickListener(this)
 
@@ -75,35 +83,35 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun observer() {
-        if (!isViewCreated){
+        if (!isViewCreated) {
             observe(viewModel.otp, ::handleOTPResponse)
 
         }
 
-        isViewCreated=true
+        isViewCreated = true
     }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (group?.checkedRadioButtonId) {
 
 
-            R.id.radio_sms-> {
-                binding.btn.isEnabled=true
+            R.id.radio_sms -> {
+                binding.btn.isEnabled = true
                 model?.optionType = Constants.SMS
                 model?.optionValue = responseModel?.phone
             }
-            R.id.radio_email-> {
+
+            R.id.radio_email -> {
                 model?.optionType = Constants.EMAIL
                 model?.optionValue = responseModel?.email
 
-                binding.btn.isEnabled=true
+                binding.btn.isEnabled = true
             }
 
-
-
-            }
 
         }
+
+    }
 
 
     override fun onClick(v: View?) {
@@ -122,7 +130,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         }
     }
 
-    private fun hitApi(){
+    private fun hitApi() {
         if (!TextUtils.isEmpty(model?.optionType ?: "")) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -141,46 +149,49 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             loader?.dismiss()
         }
 
-            when (status) {
-                is Resource.Success -> {
-                    val bundle = Bundle()
-                    bundle.putParcelable("data", model)
+        when (status) {
+            is Resource.Success -> {
+                val bundle = Bundle()
+                bundle.putParcelable("data", model)
 
-                    response = status.data
-                    bundle.putParcelable("response", response)
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                response = status.data
+                bundle.putParcelable("response", response)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
 
-                    AdobeAnalytics.setActionTrack2(
-                        "continue",
-                        "login:forgot password:choose options",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen, model?.optionType!!,
-                        sessionManager.getLoggedInUser()
-                    )
+                AdobeAnalytics.setActionTrack2(
+                    "continue",
+                    "login:forgot password:choose options",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen, model?.optionType!!,
+                    sessionManager.getLoggedInUser()
+                )
 
-                    when (model?.optionType) {
-                        Constants.POST_MAIL -> {
-                            findNavController().navigate(
-                                R.id.action_chooseOptionFragment_to_postalEmailFragment,
-                                bundle
-                            )
-                        }
-                        else -> {
-                            findNavController().navigate(
-                                R.id.action_chooseOptionFragment_to_otpFragment,
-                                bundle
-                            )
-                        }
+                when (model?.optionType) {
+                    Constants.POST_MAIL -> {
+                        findNavController().navigate(
+                            R.id.action_chooseOptionFragment_to_postalEmailFragment,
+                            bundle
+                        )
                     }
 
+                    else -> {
+                        findNavController().navigate(
+                            R.id.action_chooseOptionFragment_to_otpFragment,
+                            bundle
+                        )
+                    }
                 }
-                is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
-                }
-                else -> {
-                }
+
+            }
+
+            is Resource.DataError -> {
+                showError(binding.root, status.errorMsg)
+            }
+
+            else -> {
+            }
 
         }
     }

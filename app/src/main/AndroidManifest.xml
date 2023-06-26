@@ -50,7 +50,11 @@
         <activity
             android:name="com.conduent.nationalhighways.ui.auth.controller.AuthActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CreateAccount"/>
+            android:theme="@style/Theme.CreateAccount"
+            />
+        <activity android:name=".ui.auth.login.LoginFragment"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark"/>
         <activity
             android:name="com.conduent.nationalhighways.ui.landing.LandingActivity"
             android:screenOrientation="portrait"

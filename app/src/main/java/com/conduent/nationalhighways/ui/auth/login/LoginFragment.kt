@@ -8,13 +8,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Patterns
-
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.BuildConfig
@@ -33,7 +31,6 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.KeystoreHelper
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -153,7 +150,9 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                launchIntent(status)
+                Toast.makeText(this,"Login Successfully",Toast.LENGTH_SHORT).show()
+
+               // launchIntent(status)
             }
 
             is Resource.DataError -> {
@@ -221,12 +220,14 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    openActivityWithData(BiometricActivity::class.java) {
+                    /*openActivityWithData(BiometricActivity::class.java) {
                         putInt(
                             Constants.FROM_LOGIN_TO_BIOMETRIC,
                             Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                         )
-                    }
+                    }*/
+
+                    dialog.dismiss()
 
 
                 }
