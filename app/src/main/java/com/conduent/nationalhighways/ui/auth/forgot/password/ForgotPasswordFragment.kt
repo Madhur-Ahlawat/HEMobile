@@ -112,7 +112,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.statusCode?.equals("1054") == true) {
-                        showError(binding.root, status.data.message)
+                        status.data.message?.let { binding.edtEmail.setErrorText(it) }
                     } else {
                         binding.root.post {
                             val bundle = Bundle()
@@ -136,7 +136,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
                 }
                 is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
+                    binding.edtEmail.setErrorText(status.errorMsg)
 
                     AdobeAnalytics.setActionTrackError(
                         "next",
@@ -190,7 +190,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
             }
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                binding.edtEmail.setErrorText(status.errorMsg)
             }
             else -> {
             }
@@ -238,6 +238,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     private fun isEnable() {
         if (binding.edtEmail.getText().toString().trim().isEmpty()){
+            binding.edtEmail.removeError()
             btnEnabled=false
         }else{
             btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()){
@@ -296,8 +297,9 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 )
             }
             is Resource.DataError -> {
+                binding.edtEmail.setErrorText(resource.errorMsg)
 
-                    showError(binding.root, resource.errorMsg)
+
 
             }
             else -> {

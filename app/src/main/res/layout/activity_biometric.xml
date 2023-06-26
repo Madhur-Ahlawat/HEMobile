@@ -15,14 +15,18 @@
 
         <include
             android:id="@+id/tool_bar_lyt"
-            layout="@layout/tool_bar_white"/>
+            layout="@layout/tool_bar_with_title_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="24dp"
-            android:background="@drawable/he_bg"
 
             android:paddingRight="24dp">
 
@@ -31,70 +35,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/sfregular"
                 android:text="@string/biometriclogin"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                android:fontFamily="@font/sfregular"/>
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
 
-           <!-- <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <!-- <androidx.appcompat.widget.SwitchCompat
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
 
-                android:checked="true"
-                app:thumbTint="@color/white"
-                android:textSize="@dimen/_13ssp"
-                app:trackTintMode="multiply"
-                android:theme="@style/Color1SwitchStyle"
-                />-->
+                 android:checked="true"
+                 app:thumbTint="@color/white"
+                 android:textSize="@dimen/_13ssp"
+                 app:trackTintMode="multiply"
+                 android:theme="@style/Color1SwitchStyle"
+                 />-->
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_fingerprint_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:thumbTint="@color/switch_thumb"
                 android:checked="true"
-                app:trackTint="@color/switch_track"
-                android:text="@string/usefingerprinttologin"
-                android:switchPadding="20dp"
-                android:textColor="@color/white"
-                android:textSize="14dp"
                 android:fontFamily="@font/sfregular"
-                />
+                android:switchPadding="20dp"
+                android:text="@string/usefingerprinttologin"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                app:thumbTint="@color/switch_thumb"
+                app:trackTint="@color/switch_track" />
 
 
-            <com.google.android.material.button.MaterialButton
+            <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_44sdp"
+                style="@style/PrimaryButton"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginBottom="@dimen/_10sdp"                android:backgroundTint="@color/blue_color"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text="@string/str_save"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
-                app:layout_constraintVertical_bias="0.8" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.conduent.apollo.ui.CMButton
                 android:id="@+id/biometric_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_44sdp"
+                style="@style/secondaryButton"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
                 android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/re_send_color"
-                android:textSize="@dimen/_13ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/new_btn_color"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
     </LinearLayout>
 </layout>

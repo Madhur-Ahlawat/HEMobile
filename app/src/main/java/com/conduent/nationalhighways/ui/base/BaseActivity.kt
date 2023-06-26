@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.Window
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+
 
 abstract class BaseActivity<T> : AppCompatActivity() {
 
@@ -101,10 +103,18 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.setCancelable(false)
 
+
+
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+
         dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT) //Controlling width and height.
+
 
         binding.title.text = fTitle
         binding.message.text = message

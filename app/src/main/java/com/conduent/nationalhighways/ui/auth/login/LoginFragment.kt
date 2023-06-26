@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Patterns
-
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,7 +31,6 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.KeystoreHelper
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +76,11 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+
         initBiometric()
+
+        displayBiometricDialog()
+
 
         AdobeAnalytics.setScreenTrack(
             "login",
@@ -104,14 +106,9 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             backButton.setOnClickListener(this@LoginFragment)
         }
 
-        /* if (displayFingerPrintPopup()) {
-             binding.fingerprint.visible()
+         if (displayFingerPrintPopup()) {
              fingerPrintLogin()
-         } else {
-             binding.fingerprint.gone()
-
          }
- */
 
         /*binding.fingerprint.setOnClickListener {
             if (!displayFingerPrintPopup()) {
@@ -153,11 +150,13 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                launchIntent(status)
+                Toast.makeText(this,"Login Successfully",Toast.LENGTH_SHORT).show()
+
+               // launchIntent(status)
             }
 
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -192,7 +191,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
         }
 
-        if (sessionManager.fetchUserName() != binding.edtEmail.text.toString()) {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
             displayBiometricDialog()
         } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java)
@@ -215,27 +214,29 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun displayBiometricDialog() {
-        displayCustomMessage(getString(R.string.enable_biometric),
+        displayCustomMessage(getString(R.string.str_enable_face_ID),
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    openActivityWithData(BiometricActivity::class.java) {
+                    /*openActivityWithData(BiometricActivity::class.java) {
                         putInt(
                             Constants.FROM_LOGIN_TO_BIOMETRIC,
                             Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                         )
-                    }
+                    }*/
+
+                    dialog.dismiss()
 
 
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    dialog.dismiss()
+                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
-                    // dialog.dismiss()
                 }
             })
     }
@@ -302,7 +303,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun passwordCheck() {
-        passwordCheck= binding.edtPwd.getText().toString().trim().length>8
+        passwordCheck= binding.edtPwd.getText().toString().trim().length>=8
 
         checkButton()
 

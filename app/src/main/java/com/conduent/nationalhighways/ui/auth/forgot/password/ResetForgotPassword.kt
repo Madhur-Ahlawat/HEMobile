@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -63,7 +64,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     sessionManager.getLoggedInUser()
                 )
 
-                requireActivity().startNormalActivity(AuthActivity::class.java)
+                requireActivity().startNormalActivity(LoginFragment::class.java)
                 requireActivity().finish()
             }
         }

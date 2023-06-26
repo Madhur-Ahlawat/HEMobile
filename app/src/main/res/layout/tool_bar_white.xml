@@ -5,7 +5,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
-        android:background="@drawable/he_bg_toolbar"
+        android:background="@color/white"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 app:srcCompat="@drawable/ic_back_grey" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -42,10 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="@font/sfbold"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_password_recovery"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
 
         </RelativeLayout>

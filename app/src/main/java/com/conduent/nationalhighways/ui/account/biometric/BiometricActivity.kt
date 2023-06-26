@@ -59,10 +59,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun initCtrl() {
 
         binding.apply {
-            toolBarLyt.btnBack.setOnClickListener(this@BiometricActivity)
+            toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
         }
+        binding.toolBarLyt.titleTxt.text="Biometric"
 
         intent?.apply {
             mValue = getIntExtra(
@@ -72,11 +73,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
         if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-            binding.toolBarLyt.btnBack.gone()
+            binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()
 
         } else {
-            binding.toolBarLyt.btnBack.visible()
+            binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
 
         }
@@ -209,7 +210,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when (v?.id) {
 
-            R.id.btn_back -> {
+            R.id.back_button -> {
                finish()
             }
             R.id.btn_save -> {

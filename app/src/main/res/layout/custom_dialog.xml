@@ -84,7 +84,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textAlignment="center"
-                        android:textColor="@color/hyperlink_blue2"
+                        android:textColor="@color/red_color"
                         android:textSize="17sp" />
 
                     <View

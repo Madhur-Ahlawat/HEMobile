@@ -315,6 +315,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         }
 
+        if (binding.edtNewPassword.getText().toString()
+                .trim() == binding.edtConformPassword.getText().toString().trim()
+        ) {
+            binding.edtConformPassword.removeError()
+        } else {
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        }
+
 
     }
 
@@ -349,7 +357,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
 
-        if (binding.edtNewPassword.getText().toString().trim().length < 2) {
+        if (binding.edtNewPassword.getText().toString().trim().length < 3) {
 
             binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
 

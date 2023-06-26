@@ -2,171 +2,83 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="model"
-            type="com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel" />
-
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/he_bg">
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/choose_verification_method"
+            style="@style/MediumTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/str_choose_verification_method"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
-            android:fontFamily="@font/sfregular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/enter_details_txt"
+            style="@style/RegularTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/str_choose_method_to_get_ur_link"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
             android:fontFamily="@font/sfregular"
+            android:text="@string/str_choose_method_to_get_ur_link"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/choose_verification_method"
-            />
+            app:layout_constraintTop_toBottomOf="@id/choose_verification_method" />
 
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
+
+
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/edittext_rectangle"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_details_txt"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_details_txt">
+            android:layout_marginTop="@dimen/margin_30dp"
+            android:id="@+id/radioGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/emailchange"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sfbold"
-                android:textSize="@dimen/_12ssp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:id="@+id/email" />
-            <TextView
-                android:layout_width="wrap_content"
+                style="@style/RegularTextBlack"
+                android:paddingStart="5dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="top"
+                android:buttonTint="@color/new_btn_color"
+                android:id="@+id/radio_sms"/>
+
+
+            <RadioButton
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/email"
-                android:fontFamily="@font/sfregular"
-                android:textSize="@dimen/_12ssp"
-                android:text="@{model.email}"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/_5sdp"/>
+                style="@style/RegularTextBlack"
+                android:paddingStart="5dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="30dp"
+                android:gravity="top"
+                android:buttonTint="@color/new_btn_color"
+                android:id="@+id/radio_email"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right_24"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_10sdp"/>
+        </RadioGroup>
 
-
-
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:background="@color/blue_color"
-            android:id="@+id/view"
-            app:layout_constraintTop_toBottomOf="@id/relativeLayout1"/>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:background="@drawable/edittext_rectangle"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
+        <com.conduent.apollo.ui.CMButton
+           style="@style/PrimaryButton"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_message1"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sfbold"
-                android:textSize="@dimen/_12ssp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:id="@+id/textmessages"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textmessages"
-                android:fontFamily="@font/sfregular"
-                android:textSize="@dimen/_12ssp"
-                android:text="@{model.phone}"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:id="@+id/phone"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/phone"
-                android:fontFamily="@font/sfregular"
-                android:textSize="@dimen/_12ssp"
-                android:text="@string/str_message_data_rates"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/_5sdp"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right_24"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_10sdp"/>
-
-
-
-        </RelativeLayout>
-
-        <!--<com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:backgroundTint="@color/blue_color"
+            android:enabled="false"
             android:text="@string/str_continue"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
--->
+            android:id="@+id/btn"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
