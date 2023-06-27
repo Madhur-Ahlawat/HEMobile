@@ -52,7 +52,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount"
             />
-        <activity android:name=".ui.auth.login.LoginFragment"
+        <activity android:name=".ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileDark"/>
         <activity
