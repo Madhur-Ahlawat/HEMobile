@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.data.remote
 import com.conduent.nationalhighways.BuildConfig.*
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.*
+import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.data.model.accountpayment.*
 import com.conduent.nationalhighways.data.model.address.DataAddress
@@ -208,6 +209,12 @@ interface ApiService {
     suspend fun createAccount(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel?
+    ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
+
+    @POST(CREATE_ACCOUNT)
+    suspend fun createAccountNew(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Body model: AccountCreationRequest?
     ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)

@@ -241,8 +241,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(

@@ -140,69 +140,67 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         "timeoutDuration" : 10000,
         "timeoutCallback" : function () {
-            window.observer.postMessage("timedOUt");
+            window.appInterface.postMessage("timedOUt");
             document.getElementById("errorPayment").style.display="";
             document.getElementById("errorPayment").innerText="Timed out";
         },
         "fieldsAvailableCallback" : function () {
-            window.observer.postMessage("NMILoaded");
+            window.appInterface.postMessage("NMILoaded");
         },
         'callback': function(e) {
-            window.observer.postMessage("3DSLoaded");
+            window.appInterface.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
-            window.observer.postMessage("NMi Callback"+ apiResponse);
+            window.appInterface.postMessage("NMi Callback"+ apiResponse);
             var card = e.card;
             if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
             {
-                window.observer.postMessage("3DStarted");
+                window.appInterface.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
                 paymentToken: e.token,
-                currency:  document.getElementById("currency").innerText,
-                amount:  document.getElementById("amount").value,
-                email:  document.getElementById("email").innerText,
-                phone:  document.getElementById("phone").innerText,
-                city: document.getElementById("city").innerText,
+                currency:  "GBP",
+                amount:  "15.00"/*document.getElementById("amount").value*/,
+                email:  "omvir.singh@conduent.com"/*document.getElementById("email").innerText*/,
+                phone:  "7589485763"/*document.getElementById("phone").innerText*/,
+                city: "HE"/*document.getElementById("city").innerText*/,
                     //state: '10 address street',
-                address1:  document.getElementById("address1").innerText,
-                country:  document.getElementById("country").innerText,
-                firstName:  document.getElementById("name").value,
-                lastName:  document.getElementById("name").value,
-                postalCode:  document.getElementById("postalCode").innerText
+                address1:  "HE"/*document.getElementById("address1").innerText*/,
+                country:  "GB",
+                firstName:  "Ankit"/*document.getElementById("name").value*/,
+                lastName:  "Kumar"/*document.getElementById("name").value*/,
+                postalCode:  "b100js"/*document.getElementById("postalCode").innerText*/
                 };
-                window.observer.postMessage(options);
+                window.appInterface.postMessage(options);
                 const threeDSecureInterface = threeDS.createUI(options);
                 threeDSecureInterface.start('#threeDSMountPoint');
                 
                 threeDSecureInterface.on('challenge', function(e) {
-                    window.observer.postMessage("3DSLoaded");
+                    window.appInterface.postMessage("3DSLoaded");
                 });
                 
                 threeDSecureInterface.on('complete', function(e) {
                     var apiResponse = JSON.stringify(e, null, "");
-                    window.observer.postMessage(apiResponse);
+                    window.appInterface.postMessage(apiResponse);
                 });
                 
                 threeDSecureInterface.on('failure', function(e) {
-                    window.observer.postMessage("cancelClicked");
+                    window.appInterface.postMessage("cancelClicked");
                 });
             } else {
                 //errorPayment
                 document.getElementById("errorPayment").style.display="";
                 document.getElementById("errorPayment").innerText="Payment method is incorrect";
-                window.observer.postMessage('cardtypeerror');
+                window.appInterface.postMessage('cardtypeerror');
             }
         }
     });
     gateway.on('error', function (e) {
-        window.observer.postMessage('3DSNotIntiated');
+        window.appInterface.postMessage('3DSNotIntiated');
     })
 });
 
 function buttonClicked() {
-
-    window.observer.postMessage("3DStarted");
-//    window.opener.postMessage("3DStarted");
+    window.appInterface.postMessage("3DStarted");
 }
 
 

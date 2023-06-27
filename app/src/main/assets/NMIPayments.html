@@ -8,7 +8,7 @@
                 <script src="file:///android_asset/script.js"></script>
             </head>
     <body>
-   <label id="errorPayment" style="display: none;">Payment method is incorrect</label>
+        <label id="errorPayment" style="display: none;">Payment method is incorrect</label>
         <form method="post">
             <div id="threeDSMountPoint"></div>
         </form>
@@ -24,17 +24,17 @@
                 
                 <table width="95%" class="center">
                     <tr><td><h3>How do you want to pay?</h3></td></tr>
-                    <tr class="separator"><td><label id="label">Payment amount</label></td></tr>
+                    <tr class="separator"><td><label for="fname" id="label">Payment amount</label></td></tr>
                 </table>
                 <table width="95%" class="center">
-                   
-                   <tr><td width="0.07%"><label id="currency">&#163;</label></td><td width="98%">
-                       <input type="number" name="amount" id="amount"  pattern="[0-9]*" value="" data-type="currency" placeholder=""/>
-                   </td></tr>
+                    
+                    <tr><td width="0.07%"><label id="currency">&#163;</label></td><td width="98%">
+                        <input type="number" name="amount" id="amount"  pattern="[0-9]*" value="" data-type="currency" placeholder=""/>
+                    </td></tr>
                     <tr><td><br></td></tr>
                 </table>
                 <table width="95%" class="center">
-                    <tr class="separator"><td><label id="label">Name on card</label></td></tr>
+                    <tr class="separator"><td><label for="lname" id="label">Name on card</label></td></tr>
                     <tr><td><div id="name"></div></td></tr>
                     <tr><td><label id="nameerrormesages" style="display: none;"></label></td></tr>
                     <tr><td><br></td></tr>
@@ -46,20 +46,19 @@
                     <tr><td><img src="cards.png"/></td></tr>
                     <tr><td><br></td></tr>
                     
-                    <tr class="separator"><td><label id="label">Card Security Code</label></td></tr>
-                    <tr><td><div id="cvv"></div></td></tr>
-                    <tr><td><label id="cvverrormesages" style="display: none;"></label></td></tr>
-                    <tr><td><label id="hint">Last 3 or 4 digits on back of card</label></td></tr>
-                    <tr><td><br></td></tr>
-                    
-                    <tr class="separator"><td><label id="label">Expiry Date</label></td></tr>
-                </table>
-                <table width="95%" class="center">
-                    <tr><td width="95%"><div id="ccExp"></div></td><td><img src="cvv.png" height="35" wiwidth="35"/></td></tr>
-                </table>
-                <table width="95%" class="center">
+                    <tr class="separator"><td><label for="Credit card number" id="label">Expiry Date</label></td></tr>
+                    <tr><td width="95%"><div id="ccExp"></div></td></tr>
                     <tr><td><label id="cscerrormesages" style="display: none;"></td></label> </tr>
                     <tr><td><br></td></tr>
+                    
+                    <tr class="separator"><td><label id="label">Card Security Code</label></td></tr>
+                </table>
+                <table width="95%" class="center">
+                    <tr><td><div id="cvv"></div></td><td><img src="cvv.png" height="35" wiwidth="35"/></td></tr>
+                </table>
+                <table width="95%" class="center">
+                    <tr><td><label id="cvverrormesages" style="display: none;"></label></td></tr>
+                    <tr><td><label id="hint">Last 3 or 4 digits on back of card</label></td></tr>
                     <tr class="separator"><td> <button id="demoPayButton" type="button" onclick="buttonClicked()">PROCEED WITH PAYMENT</button></td></tr>
                 </table>
             </div>

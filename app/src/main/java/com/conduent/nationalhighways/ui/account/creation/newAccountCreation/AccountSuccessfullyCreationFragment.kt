@@ -24,8 +24,9 @@ class AccountSuccessfullyCreationFragment :
         FragmentAccountSuccessfullyCreationBinding.inflate(inflater, container, false)
 
     override fun init() {
-        backIcon = requireActivity().findViewById(R.id.back_button)
-        backIcon?.visibility = View.GONE
+//        backIcon = requireActivity().findViewById(R.id.back_button)
+//        backIcon?.visibility = View.GONE
+
 
         binding.emailConformationTxt.text = getString(
             R.string.we_sent_confirmation_email,
