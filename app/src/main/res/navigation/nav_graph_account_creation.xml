@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/nmiPaymentFragment">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
     <!-- Step 1 -->
@@ -797,8 +797,8 @@
         tools:layout="@layout/fragment_top_up">
 
         <action
-            android:id="@+id/action_topUpFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
+            android:id="@+id/action_topUpFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
@@ -819,6 +819,10 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.NMIPaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/nmi_payment_fragment">
+
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment"
+            app:destination="@id/successfullyFragment"/>
 
     </fragment>
 

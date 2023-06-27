@@ -46,7 +46,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val amount = binding.top.getText().toString().trim()
                 val bundle = Bundle()
                 bundle.putString(Constants.DATA,amount)
-                findNavController().navigate(R.id.action_topUpFragment_to_paymentFragment,bundle)
+                findNavController().navigate(R.id.action_topUpFragment_to_nmiPaymentFragment,bundle)
             }
         }
 

@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.data.repository.account
 
+import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
+import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.remote.ApiService
 import javax.inject.Inject
 
@@ -10,4 +12,7 @@ class AccountCreationRepository @Inject constructor(private val apiService: ApiS
     suspend fun getCountriesList() = apiService.getCountriesList()
 
     suspend fun getCountryCodesList() = apiService.getCountryCodes()
+
+    suspend fun createAccountNew(model: AccountCreationRequest?) =
+        apiService.createAccountNew(model = model)
 }
