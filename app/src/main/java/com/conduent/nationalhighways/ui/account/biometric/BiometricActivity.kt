@@ -2,19 +2,13 @@ package com.conduent.nationalhighways.ui.account.biometric
 
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.provider.Settings
 import android.view.View
-import android.view.Window
-import android.widget.TextView
 import android.widget.Toast
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricManager
@@ -107,13 +101,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         displayFingerPrintPopup()
                     }
                     BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-                        TODO()
                     }
                     BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                        TODO()
                     }
                     BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-                        TODO()
                     }
                 }
             }

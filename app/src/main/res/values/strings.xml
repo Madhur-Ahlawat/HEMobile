@@ -44,7 +44,7 @@
     <string name="txt_add_vehicle">Add Vehicle</string>
     <string name="txt_forgot_your_email"><u>Forgot your email?</u></string>
     <string name="txt_forgot_your_password"><u>Forgot your password?</u></string>
-    <string name="forgot_password">Reset password</string>
+    <string name="forgot_password">Reset Password</string>
     <string name="txt_forgot_username_heading">Forgot username</string>
     <string name="txt_enter_your_details">Enter your details</string>
     <string name="txt_account_number">Account number</string>
@@ -929,8 +929,8 @@
     <string name="requestanewsecuritycode">Send a new code</string>
     <string name="str_message_data_rates">Message and data rates may apply.</string>
     <string name="enable_biometric">Enable Biometrics</string>
-    <string name="enablenow">Enable now</string>
-    <string name="enablelater">Enable later</string>
+    <string name="enablenow">ENABLE NOW</string>
+    <string name="enablelater">ENABLE LATER</string>
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
     <string name="goto_settings">Go to settings</string>
     <string name="str_three_address_found">0 Addresses Found</string>

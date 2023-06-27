@@ -82,7 +82,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.textMaximumVehicle.text =
                 getString(R.string.you_have_already_added_this_vehicle_to_this_account)
             binding.maximumVehicleAddedNote.visibility = View.INVISIBLE
-            binding.btnContinue.text = getString(R.string.add_another_vehicle)
+            binding.btnContinue.text = getString(R.string.str_add_another)
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
 
@@ -112,7 +112,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             R.id.btnContinue -> {
 
                 when (binding.btnContinue.text) {
-                    getString(R.string.add_another_vehicle) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment)
+                    getString(R.string.str_add_another) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment)
+
                       getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {

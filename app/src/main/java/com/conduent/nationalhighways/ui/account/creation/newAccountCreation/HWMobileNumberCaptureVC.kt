@@ -64,6 +64,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
             binding.txtBottom.visibility = View.GONE
             requiredMobileNumber = true
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+
         } else {
             binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
             binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
@@ -184,6 +186,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         ) {
 
             requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+
+            if (index==0){
+                requiredMobileNumber=true
+            }
 
 
             if (index == 1) {
