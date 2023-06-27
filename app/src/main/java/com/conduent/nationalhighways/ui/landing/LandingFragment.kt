@@ -1,37 +1,23 @@
 package com.conduent.nationalhighways.ui.landing
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
-import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
-import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
-import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
-import com.conduent.nationalhighways.databinding.FragmentLandingBinding
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
-import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
-import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.ui.auth.login.LoginFragment
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -41,7 +27,6 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -181,7 +166,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 sessionManager.getLoggedInUser()
             )
             requireActivity().startNormalActivity(
-                LoginFragment::class.java
+                LoginActivity::class.java
             )
         }
     }

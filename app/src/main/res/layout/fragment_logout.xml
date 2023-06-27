@@ -11,50 +11,36 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_20sdp"
+            android:lineSpacingExtra="@dimen/_4sdp"
             android:text="@string/str_logout_msg"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
-            android:lineSpacingExtra="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnStart"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            style="@style/PrimaryButton"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:backgroundTint="@color/blue_color"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:text="@string/start_again"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp"
-            app:cornerRadius="@dimen/_6sdp"
             app:layout_constraintBottom_toTopOf="@+id/btnSignin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnSignin"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            style="@style/secondaryButton"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:text="@string/txt_sign_in"
-            android:textAllCaps="false"
-            android:textColor="@color/blue_color"
-            android:textSize="@dimen/_14sdp"
-            app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/blue_color"
-            app:strokeWidth="1dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

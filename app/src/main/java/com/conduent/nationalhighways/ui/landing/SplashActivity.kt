@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.BiometricUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -118,7 +118,7 @@ class SplashActivity : AppCompatActivity() {
     }
     private fun navigateAuthActivity() {
         startActivity(
-            Intent(this, AuthActivity::class.java)
+            Intent(this, LoginActivity::class.java)
         )
         finish()
     }

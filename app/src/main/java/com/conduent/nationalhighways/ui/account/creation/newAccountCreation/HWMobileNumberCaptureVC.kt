@@ -7,9 +7,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
@@ -34,7 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
-    View.OnClickListener, OnRetryClickListener {
+    View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
 
     private var requiredCountryCode = false
     private var requiredMobileNumber = false
@@ -52,25 +54,30 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-        binding.inputCountry.editText.addTextChangedListener(GenericTextWatcher(0))
-        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
+
+        binding.inputCountry.dropDownItemSelectListener = this
+
 
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
             binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
             binding.txtBottom.visibility = View.GONE
-            requiredMobileNumber=true
+            requiredMobileNumber = true
         } else {
             binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
             binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
             binding.txtBottom.visibility = View.VISIBLE
 
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+
+
+
 
         }
 
         binding.btnNext.setOnClickListener(this)
-        if(NewCreateAccountRequestModel.isEditCall) {
+        if (NewCreateAccountRequestModel.isEditCall) {
             navFlow = Constants.ACCOUNT_CREATION_MOBILE_FLOW
             NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
             NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
@@ -134,19 +141,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
                 val countryCode = binding.inputCountry.selectedItemDescription.toString()
 
-                if(NewCreateAccountRequestModel.isEditCall && countryCode == NewCreateAccountRequestModel.countryCode  && mobileNumber == NewCreateAccountRequestModel.mobileNumber) {
-                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                if (NewCreateAccountRequestModel.isEditCall && countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber) {
+                    if (NewCreateAccountRequestModel.isAccountTypeEditCall) {
                         findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment)
-                    }else {
+                    } else {
                         findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
                     }
-                }else {
+                } else {
                     NewCreateAccountRequestModel.mobileNumber = mobileNumber
                     NewCreateAccountRequestModel.countryCode = countryCode
                     if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-                        if(NewCreateAccountRequestModel.isEditCall){
+                        if (NewCreateAccountRequestModel.isEditCall) {
                             findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
-                        }else{
+                        } else {
                             findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
                         }
 
@@ -179,19 +186,35 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
 
-            if (index==1){
+            if (index == 1) {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                requiredMobileNumber = if (phoneNumber.isNotEmpty()){
-                    if (Utils.UK_MOBILE_REGEX == phoneNumber) {
-                        binding.inputMobileNumber.removeError()
-                        true
+                if (binding.inputCountry.getSelectedDescription().equals("UK +44", true)) {
+                    requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
+                        if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
+                            binding.inputMobileNumber.removeError()
+                            true
+                        } else {
+                            binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                            false
+                        }
                     } else {
-                        binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
                         false
                     }
-                }else{
-                    false
+                } else {
+
+                    requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
+                        if (phoneNumber.matches(Utils.PHONENUMBER)) {
+                            binding.inputMobileNumber.removeError()
+                            true
+                        } else {
+                            binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                            false
+                        }
+                    } else {
+                        false
+                    }
                 }
+
             }
 
             checkButton()
@@ -257,6 +280,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             else -> {
             }
         }
+    }
+
+    override fun onHashMapItemSelected(key: String?, value: Any?) {
+    }
+
+    override fun onItemSlected(position: Int, selectedItem: String) {
+
     }
 
 }

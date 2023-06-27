@@ -95,8 +95,8 @@
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/edt_email"
             style="@style/input_text"
-            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
 
             android:singleLine="true"
             app:labelText="@string/email_address"
