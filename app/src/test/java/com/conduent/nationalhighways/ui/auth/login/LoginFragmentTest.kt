@@ -64,7 +64,7 @@ class LoginFragmentTest {
     @Test
     fun `test login screen visibility`() {
         every { viewModel.login } returns loginLiveData
-        launchFragmentInHiltContainer<LoginFragment> {
+        launchFragmentInHiltContainer<LoginActivity> {
             onView(withId(R.id.edt_email)).check(matches(isDisplayed()))
             onView(withId(R.id.tf_pwd)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_forgot_username)).check(matches(isDisplayed()))
@@ -76,7 +76,7 @@ class LoginFragmentTest {
     @Test
     fun `test login screen, navigate to forgot email screen`() {
         every { viewModel.login } returns loginLiveData
-        launchFragmentInHiltContainer<LoginFragment> {
+        launchFragmentInHiltContainer<LoginActivity> {
             navController.setGraph(R.navigation.navigation_auth)
             navController.setCurrentDestination(R.id.loginFragment)
             Navigation.setViewNavController(requireView(), navController)
@@ -97,7 +97,7 @@ class LoginFragmentTest {
     @Test
     fun `test login screen, navigate to forgot password screen`() {
         every { viewModel.login } returns loginLiveData
-        launchFragmentInHiltContainer<LoginFragment> {
+        launchFragmentInHiltContainer<LoginActivity> {
             navController.setGraph(R.navigation.navigation_auth)
             navController.setCurrentDestination(R.id.loginFragment)
             Navigation.setViewNavController(requireView(), navController)
@@ -118,7 +118,7 @@ class LoginFragmentTest {
     @Test
     fun `test login screen, login api for success`() {
         every { viewModel.login } returns loginLiveData
-        launchFragmentInHiltContainer<LoginFragment> {
+        launchFragmentInHiltContainer<LoginActivity> {
             onView(withId(R.id.edt_email)).check(matches(isDisplayed()))
             onView(withId(R.id.tf_pwd)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_forgot_username)).check(matches(isDisplayed()))
@@ -143,7 +143,7 @@ class LoginFragmentTest {
     @Test
     fun `test login screen, login api for unknown error`() {
         every { viewModel.login } returns loginLiveData
-        launchFragmentInHiltContainer<LoginFragment> {
+        launchFragmentInHiltContainer<LoginActivity> {
             onView(withId(R.id.edt_email)).check(matches(isDisplayed()))
             onView(withId(R.id.tf_pwd)).check(matches(isDisplayed()))
             onView(withId(R.id.tv_forgot_username)).check(matches(isDisplayed()))

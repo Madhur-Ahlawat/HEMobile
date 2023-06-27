@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function buttonClicked() {
+
     window.observer.postMessage("3DStarted");
 //    window.opener.postMessage("3DStarted");
 }

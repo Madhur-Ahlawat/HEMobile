@@ -96,7 +96,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_balance_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <com.conduent.apollo.ui.CMButton
                         android:id="@+id/tv_manual_top_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,9 +163,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_number_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -239,9 +239,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_status_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -316,9 +316,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_type_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -395,9 +395,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_topup_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -473,9 +473,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_vehicle_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -574,9 +574,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/fragment_dashboard_account_crossing_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -675,7 +675,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"

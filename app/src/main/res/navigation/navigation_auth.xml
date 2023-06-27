@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.login.LoginFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.login.LoginActivity"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login_changes">
         <action

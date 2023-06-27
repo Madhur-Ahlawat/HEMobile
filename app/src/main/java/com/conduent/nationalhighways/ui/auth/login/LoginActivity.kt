@@ -39,7 +39,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
+class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
 
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -48,8 +48,8 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var materialToolbar: MaterialToolbar? = null
     private lateinit var binding: FragmentLoginChangesBinding
     private lateinit var loginModel: LoginModel
-    private var emailCheck:Boolean=false
-    private var passwordCheck:Boolean=false
+    private var emailCheck: Boolean = false
+    private var passwordCheck: Boolean = false
 
 
     @Inject
@@ -79,7 +79,6 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
         initBiometric()
 
-        displayBiometricDialog()
 
 
         AdobeAnalytics.setScreenTrack(
@@ -97,33 +96,16 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     fun initCtrl() {
 
         binding.apply {
-            //tvForgotUsername.setOnClickListener(this@LoginFragment)
-            tvForgotPassword.setOnClickListener(this@LoginFragment)
-            // fingerprint.setOnClickListener(this@LoginFragment)
+            tvForgotPassword.setOnClickListener(this@LoginActivity)
             edtEmail.editText.doAfterTextChanged { emailCheck() }
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
-            btnLogin.setOnClickListener(this@LoginFragment)
-            backButton.setOnClickListener(this@LoginFragment)
+            btnLogin.setOnClickListener(this@LoginActivity)
+            backButton.setOnClickListener(this@LoginActivity)
         }
 
-         if (displayFingerPrintPopup()) {
-             fingerPrintLogin()
-         }
-
-        /*binding.fingerprint.setOnClickListener {
-            if (!displayFingerPrintPopup()) {
-
-                displayMessage(
-                    getString(R.string.app_name),
-                    getString(R.string.pleaseenablebiometric),
-                    getString(R.string.str_ok),
-                    "", null, null
-                )
-            } else {
-                fingerPrintLogin()
-            }
-
-        }*/
+        if (displayFingerPrintPopup()) {
+            fingerPrintLogin()
+        }
 
 
     }
@@ -150,13 +132,17 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                Toast.makeText(this,"Login Successfully",Toast.LENGTH_SHORT).show()
 
-               // launchIntent(status)
+                launchIntent(status)
             }
 
             is Resource.DataError -> {
-                binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+                if (status.errorModel?.errorCode == 5260) {
+                    binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                } else {
+                    binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+
+                }
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -220,22 +206,22 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    /*openActivityWithData(BiometricActivity::class.java) {
+                    openActivityWithData(BiometricActivity::class.java) {
                         putInt(
                             Constants.FROM_LOGIN_TO_BIOMETRIC,
                             Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                         )
-                    }*/
+                    }
 
-                    dialog.dismiss()
+                    //dialog.dismiss()
 
 
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    dialog.dismiss()
-                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
@@ -284,17 +270,18 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun emailCheck() {
-        emailCheck = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()) {
-            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-            false
+        emailCheck =
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()) {
+                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                false
 
 
-        } else {
-            binding.edtEmail.removeError()
-            true
+            } else {
+                binding.edtEmail.removeError()
+                true
 
 
-        }
+            }
 
         checkButton()
 
@@ -303,7 +290,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun passwordCheck() {
-        passwordCheck= binding.edtPwd.getText().toString().trim().length>=8
+        passwordCheck = binding.edtPwd.getText().toString().trim().length >= 8
 
         checkButton()
 
@@ -311,7 +298,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun checkButton() {
-        binding.btnLogin.isEnabled = emailCheck&&passwordCheck
+        binding.btnLogin.isEnabled = emailCheck && passwordCheck
     }
 
 
@@ -328,12 +315,12 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     // Too many attempts. try again later ( customised the toast message to below one)
                     if (errorCode == 7) {
                         Toast.makeText(
-                            this@LoginFragment, "Biometric is Disabled", Toast.LENGTH_SHORT
+                            this@LoginActivity, "Biometric is Disabled", Toast.LENGTH_SHORT
                         ).show()
 
                     } else {
                         Toast.makeText(
-                            this@LoginFragment,
+                            this@LoginActivity,
                             "Biometric authentication $errString",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -353,7 +340,7 @@ class LoginFragment : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(
-                        this@LoginFragment, "Biometric authentication failed", Toast.LENGTH_SHORT
+                        this@LoginActivity, "Biometric authentication failed", Toast.LENGTH_SHORT
                     ).show()
                 }
             })
