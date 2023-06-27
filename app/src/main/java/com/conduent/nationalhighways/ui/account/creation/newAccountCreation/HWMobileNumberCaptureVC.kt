@@ -292,7 +292,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-
+        val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
+        binding.inputMobileNumber.setText(phoneNumber)
     }
 
 }

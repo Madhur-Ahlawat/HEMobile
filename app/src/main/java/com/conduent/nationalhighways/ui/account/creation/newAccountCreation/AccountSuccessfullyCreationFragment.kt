@@ -9,7 +9,9 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentAccountSuccessfullyCreationBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 
 
 class AccountSuccessfullyCreationFragment :
@@ -54,6 +56,7 @@ class AccountSuccessfullyCreationFragment :
         when (v?.id) {
 
             R.id.signIn -> {
+                requireActivity().startNormalActivityWithFinish(LoginActivity::class.java)
             }
         }
     }
