@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="@dimen/_26_68dp"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivWarning"
+            android:textSize="@dimen/font_14sp"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:src="@drawable/warningicon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tv_account_suspended"
+            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_16sp"
+
+            android:layout_marginTop="35dp"
+            android:text="@string/str_your_account_has_been_suspended"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:layout_constraintTop_toBottomOf="@+id/ivWarning" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tvYouWillNeedToPay"
+            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/str_you_will_need_to_pay"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tvYouWillAlsoNeed"
+            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/font_15sp"
+            android:text="@string/str_you_will_also_need_to_pay_for"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
+
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnTopUpNow"
+            style="@style/PrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_106dp"
+            android:text="@string/str_top_up_now"
+            app:isEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnNoIwillDoItLater"
+            style="@style/secondaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_30dp"
+            android:textSize="@dimen/font_14sp"
+            android:text="@string/str_top_up_now"
+            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:layout_constraintTop_toBottomOf="@id/btnTopUpNow" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="@dimen/_26_69dp">
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/tv_enter_amount"
+        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/font_16sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12dp"
+        android:text="@string/str_enter_amount_you_want_to_pop_up"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+        android:id="@+id/inputPaymentAmount"
+        style="@style/input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_42_68dp"
+        android:maxLength="10"
+        android:textSize="@dimen/font_16sp"
+        app:imeOptions="actionDone"
+        app:inputType="text"
+        app:labelText="@string/str_payment_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_enter_amount"
+        app:maxLength="10" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/tv_select_payment_method"
+        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24_32dp"
+        android:textSize="@dimen/font_16sp"
+        android:text="@string/str_select_payment_method"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputPaymentAmount" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/tv_select_payment_method"
+        android:id="@+id/rv_payment_methods"
+        android:layout_marginTop="@dimen/_55dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_payment_method"
+        android:layout_height="wrap_content" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHButton
+        android:id="@+id/btnContinue"
+        style="@style/PrimaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_99dp"
+        android:text="@string/str_top_up_now"
+        app:isEnabled="false"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_payment_methods" />
+    <com.conduent.nationalhighways.utils.widgets.NHButton
+        android:id="@+id/btnAddNewPaymentMethod"
+        style="@style/secondaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_top_up_now"
+        app:isEnabled="false"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnContinue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

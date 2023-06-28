@@ -53,4 +53,22 @@
     <dimen name="margin_180dp">180dp</dimen>
     <dimen name="margin_250dp">250dp</dimen>
     <dimen name="margin_65dp">65dp</dimen>
+    <dimen name="dimen_106dp">106dp</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_26_68dp">26.68dp</dimen>
+    <dimen name="_26_69dp">26.69dp</dimen>
+    <dimen name="_42_68dp">42.68dp</dimen>
+    <dimen name="_24_32dp">24.32dp</dimen>
+    <dimen name="_55dp">55dp</dimen>
+    <dimen name="_74dp">74dp</dimen>
+    <dimen name="_350dp">350dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_1dp">1dp</dimen>
+    <dimen name="_99dp">99dp</dimen>
+    <dimen name="_24dp">24dp</dimen>
+    <dimen name="_9dp">9dp</dimen>
+    <dimen name="_18_68dp">18.68dp</dimen>
+    <dimen name="_32_32dp">32.32dp</dimen>
 </resources>

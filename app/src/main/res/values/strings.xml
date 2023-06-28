@@ -1187,7 +1187,20 @@
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID">Enable FaceID</string>
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
-
+    <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
+    <string name="str_you_will_need_to_pay">You will need to pay {$} to bring your account\nto the low balance threshold of $5</string>
+    <string name="str_you_will_also_need_to_pay_for">You will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid\nany Penalty Charge notices.</string>
+    <string name="str_top_up_now">Top Up Now</string>
+    <string name="str_enter_amount_you_want_to_pop_up">Enter the amount you want to Top-Up</string>
+    <string name="str_select_payment_method">Select payment method</string>
+    <string name="str_Mastercard">Mastercard ****4563</string>
+    <string name="str_account_reopened">Account reopened</string>
+    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\njohndoe@email.com</string>
+    <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
+    <string name="str_feedback_to_improve_the_service"><u>FEEDBACK_TO_IMPROVE_THE_SERVICE</u></string>
+    <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
+    <string name="str_personal_details">Personal Details</string>
+    <string name="str_play">Play</string>
 
 
 </resources>
