@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var card = e.card;
             if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
             {
-                window.appInterface.postMessage("3DStarted");
+                window.appInterface.postMessage("3");
                 document.getElementById("form1").style.display="none";
                 const options = {
                 paymentToken: e.token,

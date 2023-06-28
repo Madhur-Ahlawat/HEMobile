@@ -172,7 +172,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-//                binding.progress.visibility = View.GONE
+                val amount = arguments?.getInt(Constants.DATA)
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '"+amount+"';})()");
                 super.onPageFinished(view, url)
             }
         }
