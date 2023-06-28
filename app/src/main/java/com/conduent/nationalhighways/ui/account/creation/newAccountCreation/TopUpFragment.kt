@@ -43,9 +43,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.topUpBtn -> {
-                val amount = binding.top.getText().toString().trim()
+                val amount = binding.top.getText().toString().trim().replace("£","")
                 val bundle = Bundle()
-                bundle.putString(Constants.DATA,amount)
+                bundle.putInt(Constants.DATA,amount.toInt())
                 findNavController().navigate(R.id.action_topUpFragment_to_nmiPaymentFragment,bundle)
             }
         }

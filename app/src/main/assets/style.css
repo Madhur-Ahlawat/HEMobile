@@ -1,6 +1,15 @@
 input[type=text] {
     width: 100%;
     height: 44px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: thin;
+    font-size:25px;
+    font-family: 'Open Sans';
+}
+input[type=number] {
+    width: 100%;
+    height: 44px;
     border-radius : 0px;
     padding: 1px;
     border: none;
@@ -8,71 +17,65 @@ input[type=text] {
     font-size: 16px;
     margin: 15px 0;
     text-align: bottom;
-    }
-    input[type=number] {
-      width: 100%;
-      height: 44px;
-      border-radius : 0px;
-      padding: 1px;
-      border: none;
-      border-bottom: 1px solid black;
-      font-size: 16px;
-      margin: 15px 0;
-      text-align: bottom;
-    }
-    button[type=button] {
-      width: 100%;
-      height: 44px;
-      border-radius : 0px;
-      color: white;
-      background-color: #002E5F;
-    }
-    @font-face {
-      font-family: 'opensans_regular';
-      src: url('OpenSans-Regular.ttf');
-    }
-    @font-face {
-      font-family: 'OpenSans-Semibold';
-      src: url("OpenSans-Semibold.ttf");
-    }
-    @font-face {
-        font-family: 'OpenSans-Bold';
-        src: url("OpenSans-Bold.ttf");
-    }
-    h3 {
-      font-family: 'OpenSans-Semibold';
-      font-size: 22;
-    }
-    #label {
-        font-family: 'opensans_regular';
-        font-size: 18;
-        color: #555B5A;
-    }
-    #hint {
-        font-family: 'opensans_regular';
-        font-size: 16;
-        color: #000000;
-    }
-    #ccerrormesages, #cvverrormesages, #cscerrormesages, #nameerrormesages {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-        color: red;
-    }
-    .center {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    table,.separator {
-      border-spacing: 0px;
-    }
-    #errorPayment {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-        color: red;
-        text-align: center; 
-    }
-    #currency {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-    }
-   
+    font-family: 'Open Sans';
+}
+button[type=button] {
+    width: 100%;
+    height: 44px;
+    border-radius : 0px;
+    color: white;
+    background-color: #002E5F;
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: url('OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: Semibold;
+    font-weight: Semibold;
+    src: url("OpenSans-Semibold.ttf");
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: bold;
+    font-weight: bold;
+    src: url("OpenSans-Bold.ttf");
+}
+h3 {
+    font-family: 'OpenSans-Semibold';
+    font-size: 22;
+}
+.label-title {
+    font-family: 'Open Sans';
+    font-size: 18;
+    color: #0000FF;
+}
+#hint {
+    font-family: 'Open Sans';
+    font-size: 16;
+    color: #000000;
+}
+#ccerrormesages, #cvverrormesages, #cscerrormesages, #nameerrormesages {
+    font-family: 'OpenSans-Bold';
+    font-size: 16;
+    color: red;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+table,.separator {
+    border-spacing: 0px;
+}
+iframe {
+    height: 1000px;
+}
+#Cardinal-CCA-IFrame {
+    height: 1000px;
+}
+#content {
+    height: 1000px;
+}

@@ -1,71 +1,63 @@
 <html>
-    <head>
-        <script src="https://secure.nmi.com/token/Collect.js"
+<head>
+    <script src="https://secure.nmi.com/token/Collect.js"
             data-tokenization-key="3prUhx-Kh6ET2-cXJe4H-uZ845r"></script>
-        <meta name="viewport" content="user-scalable=no; width=device-width;  initial-scale=1.0">
-            <script src="https://secure.nmi.com/js/v1/Gateway.js"></script>
-            <link rel="stylesheet" href="file:///android_asset/style.css">
-                <script src="file:///android_asset/script.js"></script>
-            </head>
-    <body>
-        <label id="errorPayment" style="display: none;">Payment method is incorrect</label>
-        <form method="post">
-            <div id="threeDSMountPoint"></div>
-        </form>
-        <form method="post" id="form1">
-            <div>
-                <label id="currency" style="display: none;">Name on card</label>
-                <label id="email" style="display: none;">Name on card</label>
-                <label id="phone" style="display: none;">Name on card</label>
-                <label id="city" style="display: none;">Name on card</label>
-                <label id="address1" style="display: none;">Name on card</label>
-                <label id="country" style="display: none;">Name on card</label>
-                <label id="postalCode" style="display: none;">Name on card</label>
-                
-                <table width="95%" class="center">
-                    <tr><td><h3>How do you want to pay?</h3></td></tr>
-                    <tr class="separator"><td><label for="fname" id="label">Payment amount</label></td></tr>
-                </table>
-                <table width="95%" class="center">
-                    
-                    <tr><td width="0.07%"><label id="currency">&#163;</label></td><td width="98%">
-                        <input type="number" name="amount" id="amount"  pattern="[0-9]*" value="" data-type="currency" placeholder=""/>
-                    </td></tr>
-                    <tr><td><br></td></tr>
-                </table>
-                <table width="95%" class="center">
-                    <tr class="separator"><td><label for="lname" id="label">Name on card</label></td></tr>
-                    <tr><td><div id="name"></div></td></tr>
-                    <tr><td><label id="nameerrormesages" style="display: none;"></label></td></tr>
-                    <tr><td><br></td></tr>
-                    
-                    <tr class="separator"><td><label id="label">Card Number</label></td></tr>
-                    <tr><td><div id="ccNumber"></div></td></tr>
-                    <tr><td><label id="ccerrormesages" style="display: none;"></label></td></tr>
-                    <tr><td><label id="hint">Accepted credit and debit card types</label></td></tr>
-                    <tr><td><img src="cards.png"/></td></tr>
-                    <tr><td><br></td></tr>
-                    
-                    <tr class="separator"><td><label for="Credit card number" id="label">Expiry Date</label></td></tr>
-                    <tr><td width="95%"><div id="ccExp"></div></td></tr>
-                    <tr><td><label id="cscerrormesages" style="display: none;"></td></label> </tr>
-                    <tr><td><br></td></tr>
-                    
-                    <tr class="separator"><td><label id="label">Card Security Code</label></td></tr>
-                </table>
-                <table width="95%" class="center">
-                    <tr><td><div id="cvv"></div></td><td><img src="cvv.png" height="35" wiwidth="35"/></td></tr>
-                </table>
-                <table width="95%" class="center">
-                    <tr><td><label id="cvverrormesages" style="display: none;"></label></td></tr>
-                    <tr><td><label id="hint">Last 3 or 4 digits on back of card</label></td></tr>
-                    <tr class="separator"><td> <button id="demoPayButton" type="button" onclick="buttonClicked()">PROCEED WITH PAYMENT</button></td></tr>
-                </table>
-            </div>
-        </form>
-        <div class="loader">
-            <div class="loading">
-            </div>
-        </div>
-    </body>
+    <meta name="viewport" content="user-scalable=no; width=device-width;  initial-scale=1.0">
+    <script src="https://secure.nmi.com/js/v1/Gateway.js"></script>
+    <link rel="stylesheet" href="file:///android_asset/style.css">
+    <script src="file:///android_asset/script.js"></script>
+</head>
+<body>
+<form method="post">
+    <div id="threeDSMountPoint"></div>
+</form>
+<form method="post" id="form1">
+    <div>
+        <label id="currency" style="display: none;">Name on card</label>
+        <label id="email" style="display: none;">Name on card</label>
+        <label id="phone" style="display: none;">Name on card</label>
+        <label id="city" style="display: none;">Name on card</label>
+        <label id="address1" style="display: none;">Name on card</label>
+        <label id="country" style="display: none;">Name on card</label>
+        <label id="postalCode" style="display: none;">Name on card</label>
+
+        <table width="95%" class="center">
+            <tr><td><h3>How do you want to pay?</h3></td></tr>
+
+            <tr class="separator"><td><label for="fname" class="label-title">Payment amount</label></td></tr>
+            <tr><td><input type="number" min="0" max="1000" steps="1" id="amount" name="amount"></td></tr>
+            <tr><td><br></td></tr>
+
+            <tr class="separator"><td><label for="lname" class="label">Name on card</label></td></tr>
+            <tr><td><div id="name"></div></td></tr>
+            <tr><td><label id="nameerrormesages" style="display: none;"></label></td></tr>
+            <tr><td><br></td></tr>
+
+            <tr class="separator"><td><label class="label">Card Number</label></td></tr>
+            <tr><td><div id="ccNumber"></div></td></tr>
+            <tr><td><label id="ccerrormesages" style="display: none;"></label></td></tr>
+            <tr><td><label id="hint">Accepted credit and debit card types</label></td></tr>
+            <tr><td><img src="cards.png"/></td></tr>
+            <tr><td><br></td></tr>
+
+            <tr class="separator"><td><label class="label">Card Security Code</label></td></tr>
+            <tr><td><div id="cvv"></div></td></tr>
+            <tr><td><label id="cvverrormesages" style="display: none;"></label></td></tr>
+            <tr><td><label id="hint">Last 3 or 4 digits on back of card</label></td></tr>
+            <tr><td><br></td></tr>
+
+            <tr class="separator"><td><label for="Credit card number" class="label">Expiry Date</label></td></tr>
+            <tr><td><div id="ccExp"></div></td></tr>
+            <tr><td><label id="cscerrormesages" style="display: none;"></td></label> </tr>
+            <tr><td><label id="hint">For example, 09/25</label></td></tr>
+            <tr><td><br></td></tr>
+            <tr class="separator"><td> <button id="demoPayButton" type="button">PROCEED WITH PAYMENT</button></td></tr>
+        </table>
+    </div>
+</form>
+<div class="loader">
+    <div class="loading">
+    </div>
+</div>
+</body>
 </html>
