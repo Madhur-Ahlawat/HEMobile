@@ -39,6 +39,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
 
     private val viewModel: CreateAccountViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    val vehicle : ArrayList<VehicleItem> = ArrayList()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -180,9 +182,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         model.eci = "05"
         model.replenishmentAmount = "10"
         model.directoryServerID = "5ed13323-591f-4f76-ae4c-76c44afcecc3"
-        val vehicle : MutableList<VehicleItem?> = ArrayList()
+        val listvehicle : ArrayList<VehicleItem> = ArrayList()
+
         for(obj in data.vehicleList){
             val item = VehicleItem()
+
             item.vehicleModel = obj.vehicleModel
             item.vehicleMake = obj.vehicleMake
             item.vehicleColor = obj.vehicleColor
@@ -191,9 +195,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
             item.plateTypeDesc = obj.vehicleClass
             item.plateCountry = obj.plateCountry
             item.vehicleYear = ""
-            vehicle.add(item)
+            listvehicle.add(item)
+
         }
-        model.ftvehicleList?.vehicle = vehicle
+        model.ftvehicleList.vehicle=listvehicle
+
         viewModel.createAccountNew(model)
 
 
@@ -221,5 +227,5 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         binding.webView.webViewClient = webViewClient
     }
 
-    fun getRequiredText(text: String) = text.substringAfter(' ')
+    private fun getRequiredText(text: String) = text.substringAfter(' ')
 }

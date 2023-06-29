@@ -3,19 +3,24 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
+import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.makeLinks
+import com.google.gson.Gson
 
 
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),

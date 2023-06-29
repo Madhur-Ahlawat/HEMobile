@@ -19,10 +19,4 @@ data class NewVehicleInfoDetails(
 	var isUK: Boolean? = true
 ) : Parcelable
 
-/*
-@Parcelize
-data class NewVehicleInfoDetailsItem(
 
-
-) : Parcelable
-*/
