@@ -63,19 +63,19 @@
             app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
 
 
-        <com.conduent.nationalhighways.utils.widgets.NHButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnTopUpNow"
             style="@style/PrimaryButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_106dp"
             android:text="@string/str_go_to_dashboard"
-            app:isEnabled="false"
-            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:isEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnNoIwillDoItLater"
             style="@style/secondaryButton"
             android:layout_width="wrap_content"
@@ -83,8 +83,9 @@
             android:layout_marginTop="@dimen/margin_30dp"
             android:text="@string/str_feedback_to_improve_the_service"
             android:textSize="@dimen/font_14sp"
-            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-            app:layout_constraintStart_toStartOf="@id/ivWarning"
+            app:isEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnTopUpNow" />
 
 
