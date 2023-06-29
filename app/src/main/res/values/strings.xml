@@ -1185,7 +1185,9 @@
     <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
     <string name="str_radio_email">Email %s</string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
-    <string name="str_enable_face_ID">Enable FaceID</string>
+    <string name="str_enable_face_ID_fingerprint">Enable FaceID/Fingerprint</string>
+    <string name="str_enable_face_ID">Enable Biometric</string>
+
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
 
 

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -178,7 +179,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-            displayBiometricDialog()
+            if (checkFaceSupport()){
+                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+            }else{
+                displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+            }
         } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java)
 
@@ -199,8 +206,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    private fun displayBiometricDialog() {
-        displayCustomMessage(getString(R.string.str_enable_face_ID),
+    private fun displayBiometricDialog(title:String) {
+        displayCustomMessage(title,
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
             getString(R.string.enablelater),
@@ -378,6 +385,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
               SignatureHelper.getSignature(this, dataToBeSigned),
               dateTime
           )*/
+    }
+
+
+    fun checkFaceSupport():Boolean{
+        val hasFaceBiometric = packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
+
+        return hasFaceBiometric
+
     }
 
 }

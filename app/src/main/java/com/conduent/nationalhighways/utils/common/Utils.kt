@@ -35,6 +35,7 @@ object Utils {
     var NUMBER :Regex= Regex(".*[0-9]+.*")
     var UPPERCASE:Regex= Regex(".*[A-Z]+.*")
     var LOWECASE:Regex= Regex(".*[a-z]+.*")
+
     var passwordRegEX :Regex= Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
 
