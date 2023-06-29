@@ -17,12 +17,14 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
+import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
@@ -66,36 +68,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         observe(viewModel.account, ::handleAccountResponse)
     }
     private fun handleAccountResponse(response: Resource<CreateAccountResponseModel?>?) {
-        showLoader()
-//        when (response) {
-//            is Resource.Success -> {
-//                countriesCodeList.clear()
-//                response.data?.forEach {
-//                    it?.value?.let { it1 -> countriesCodeList.add(it1) }
-//                }
-//                countriesCodeList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
-//
-//
-//                if (countriesCodeList.contains(Constants.UK_CODE)) {
-//                    countriesCodeList.remove(Constants.UK_CODE)
-//                    countriesCodeList.add(0, Constants.UK_CODE)
-//                }
-//
-//                binding.apply {
-//                    inputCountry.dataSet.addAll(countriesCodeList)
-//                    inputCountry.setSelectedValue(Constants.UK_CODE)
-//                }
-//
-//            }
-//
-//            is Resource.DataError -> {
-//                ErrorUtil.showError(binding.root, response.errorMsg)
-//            }
-//
-//            else -> {
-//            }
-//
-//        }
+        hideLoader()
+        when (response) {
+            is Resource.Success -> {
+                NewCreateAccountRequestModel.isBackButtonVisible = false
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment)
+
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+
+            else -> {
+            }
+
+        }
     }
 
     override fun onClick(v: View?) {
@@ -123,12 +112,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
                         val gson = Gson()
                         val paymentSuccessResponse = gson.fromJson(data, PaymentSuccessResponse::class.java)
                         if(paymentSuccessResponse.cardHolderAuth.equals("verified",true)){
-                            hideLoader()
-
-//                    callAccountCreationApi()
-                            NewCreateAccountRequestModel.isBackButtonVisible = false
-                            findNavController().navigate(R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment)
-
+                            callAccountCreationApi()
                         }
                     }
                 }
@@ -153,8 +137,65 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         val data = NewCreateAccountRequestModel
         val model = AccountCreationRequest()
         model.stateType = "HE"
+        model.cardStateType = "HE"
+        model.tcAccepted = "Y"
+        model.mailPreference = "Y"
+        model.emailPreference = "Y"
+        model.mfaFlag = "N"
+        model.smsSecurityCd = ""
+        model.cardMiddleName = ""
+        model.transactionAmount = ""
+        model.cardZipCode = data.zipCode
+        model.zipCode1 = data.zipCode
+        model.referenceId = data.referenceId
+        model.eveningPhone = data.mobileNumber
+        model.address1 = data.addressline1
+        model.billingAddressLine1 = data.addressline1
+        model.emailAddress = data.emailAddress
+        model.creditCExpMonth = "12"
+        model.eveningPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
         model.creditCExpYear = "2025"
+        model.cardholderAuth = "verified"
+        model.transactionAmount = "10.00"
+        model.thresholdAmount = "10.00"
+        model.securityCode = ""
+        model.smsReferenceId = ""
+        model.securityCd = "451860"
+        model.cardFirstName = "Anil"
+        model.cardCity = "BIRMINGHAM"
+        model.city = "BIRMINGHAM"
+        model.threeDsVer = "2.1.0"
+        model.maskedNumber = "************1111"
+        model.creditCardNumber = "EWavM8NR-ZcYHBJ-43XZwG-zxqR44uAF73a"
+        model.cavv = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTA="
+        model.correspDeliveryMode = "EMAIL="
+        model.password = "Welcome1"
+        model.firstName = "Ankit"
+        model.creditCardType = "VISA"
+        model.accountType = "PRIVATE"
+        model.cardLastName = "Kumar"
+        model.lastName = "Kumar"
+        model.digitPin = "2465"
+        model.correspDeliveryFrequency = "MONTHLY"
+        model.eci = "05"
+        model.replenishmentAmount = "10"
+        model.directoryServerID = "5ed13323-591f-4f76-ae4c-76c44afcecc3"
+        val vehicle : MutableList<VehicleItem?> = ArrayList()
+        for(obj in data.vehicleList){
+            val item = VehicleItem()
+            item.vehicleModel = obj.vehicleModel
+            item.vehicleMake = obj.vehicleMake
+            item.vehicleColor = obj.vehicleColor
+            item.vehiclePlate = obj.plateNumber
+            item.vehicleClassDesc = obj.vehicleClass
+            item.plateTypeDesc = obj.vehicleClass
+            item.plateCountry = obj.plateCountry
+            item.vehicleYear = ""
+            vehicle.add(item)
+        }
+        model.ftvehicleList?.vehicle = vehicle
         viewModel.createAccountNew(model)
+
 
     }
     private fun setupWebView() {
@@ -179,4 +220,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         }
         binding.webView.webViewClient = webViewClient
     }
+
+    fun getRequiredText(text: String) = text.substringAfter(' ')
 }

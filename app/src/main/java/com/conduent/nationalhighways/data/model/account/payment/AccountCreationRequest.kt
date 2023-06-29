@@ -173,5 +173,5 @@ data class VehicleItem(
 data class FtvehicleList(
 
     @field:SerializedName("vehicle")
-    var vehicle: List<VehicleItem?>? = null
+    var vehicle: MutableList<VehicleItem?>? = ArrayList()
 )
