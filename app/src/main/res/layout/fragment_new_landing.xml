@@ -87,9 +87,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_65dp"
-                    android:layout_marginBottom="@dimen/margin_20dp"
                     android:background="@drawable/text_rectangle"
-                    android:id="@+id/guidanceLayout">
+                    android:id="@+id/guidanceLayout"
+                    android:layout_below="@+id/crossingLayout">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -124,7 +124,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_65dp"
                     android:background="@drawable/text_rectangle"
-                    android:layout_below="@id/guidanceLayout"
                     android:layout_marginBottom="@dimen/margin_20dp"
                     android:id="@+id/payCrossingLayout">
 
@@ -196,6 +195,7 @@
                     android:layout_height="@dimen/margin_65dp"
                     android:layout_below="@id/pcnLayout"
                     android:background="@drawable/text_rectangle"
+                    android:layout_marginBottom="@dimen/margin_20dp"
                     android:id="@+id/crossingLayout">
 
                     <ImageView
@@ -242,6 +242,7 @@
                 style="@style/secondaryButton"
                 android:visibility="invisible"
                 app:isPrimary="false"
+                android:layout_marginTop="0dp"
                 android:layout_marginLeft="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_25sdp"
                 android:text="@string/str_create_account"

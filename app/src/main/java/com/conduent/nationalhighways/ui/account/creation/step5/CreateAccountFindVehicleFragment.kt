@@ -57,7 +57,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             binding.findVehicle.isEnabled = true
         }
         loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.setStyle(DialogFragment.
+        STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
     }
 
