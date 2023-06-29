@@ -172,11 +172,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         model.cavv = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTA="
         model.correspDeliveryMode = "EMAIL="
         model.password = "Welcome1"
-        model.firstName = "Ankit"
+        model.firstName = data.firstName
         model.creditCardType = "VISA"
         model.accountType = "PRIVATE"
         model.cardLastName = "Kumar"
-        model.lastName = "Kumar"
+        model.lastName = data.lastName
         model.digitPin = "2465"
         model.correspDeliveryFrequency = "MONTHLY"
         model.eci = "05"
