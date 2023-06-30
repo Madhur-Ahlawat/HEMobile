@@ -170,7 +170,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 bundle.putParcelable("response", status.data)
                 NewCreateAccountRequestModel.referenceId=status.data?.referenceId
 
-
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                 findNavController().navigate(
                     R.id.action_forgotPasswordFragment_to_otpFragment,
