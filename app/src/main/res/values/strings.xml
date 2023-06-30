@@ -1187,7 +1187,6 @@
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
-
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
 
 
