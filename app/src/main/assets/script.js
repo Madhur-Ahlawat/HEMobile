@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'callback': function(e) {
             window.appInterface.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
-            window.appInterface.postMessage("NMi Callback"+ apiResponse);
+            window.appInterface.postMessage(apiResponse);
             var card = e.card;
             if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
             {
@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const options = {
                 paymentToken: e.token,
                 currency:  "GBP",
-                amount:  "15.00"/*document.getElementById("amount").value*/,
-                email:  "omvir.singh@conduent.com"/*document.getElementById("email").innerText*/,
+                amount: document.getElementById("amount").value,
+                email:  /*"omvir.singh@conduent.com"*/document.getElementById("email").innerText,
                 phone:  "7589485763"/*document.getElementById("phone").innerText*/,
                 city: "HE"/*document.getElementById("city").innerText*/,
                     //state: '10 address street',
