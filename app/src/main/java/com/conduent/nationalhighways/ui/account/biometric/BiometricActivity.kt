@@ -57,7 +57,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
         }
-        binding.toolBarLyt.titleTxt.text="Biometric"
+        binding.toolBarLyt.titleTxt.text = "Biometric"
 
         intent?.apply {
             mValue = getIntExtra(
@@ -88,22 +88,28 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                         Toast.makeText(this, "No Hardware found", Toast.LENGTH_SHORT).show()
                     }
+
                     BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                         Toast.makeText(this, "No Hardware unavailable", Toast.LENGTH_SHORT).show()
 
                     }
+
                     BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                       displayAccountSettingsDialog()
+                        displayAccountSettingsDialog()
 
 
                     }
+
                     BiometricManager.BIOMETRIC_SUCCESS -> {
                         displayFingerPrintPopup()
                     }
+
                     BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
                     }
+
                     BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
                     }
+
                     BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
                     }
                 }
@@ -119,14 +125,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             getString(R.string.cancel),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    binding.switchFingerprintLogin.isChecked=false
+                    binding.switchFingerprintLogin.isChecked = false
 
                     Utils.gotoMobileSetting(this@BiometricActivity)
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    binding.switchFingerprintLogin.isChecked=false
+                    binding.switchFingerprintLogin.isChecked = false
                     dialog.dismiss()
                 }
             })
@@ -202,19 +208,22 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         when (v?.id) {
 
             R.id.back_button -> {
-               finish()
+                finish()
             }
+
             R.id.btn_save -> {
                 saveBiometric()
 
             }
+
             R.id.biometric_cancel -> {
                 if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
                     navigateHomeActivity()
                     finish()
                 } else {
                     finish()
-                }            }
+                }
+            }
         }
     }
 
@@ -228,7 +237,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         } else {
             sessionManager.saveTouchIdEnabled(false)
 
-           // Toast.makeText(this, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Biometric is Disabled", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -264,7 +273,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         )
         finish()
     }
-
 
 
 }
