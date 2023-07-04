@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew"
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard">
 

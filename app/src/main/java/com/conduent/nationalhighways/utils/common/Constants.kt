@@ -3,6 +3,9 @@ package com.conduent.nationalhighways.utils.common
 object Constants {
 
     const val EXPIRED = "EXPIRED"
+    const val MASTERCARD = "MASTERCARD"
+    const val MAESTRO = "MAESTRO"
+    const val VISA = "VISA"
     const val RETRY_COUNT = 3
     const val ITEM_COUNT : Long = 20
     const val SPLASH_TIME_OUT = 500L

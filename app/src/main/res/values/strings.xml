@@ -1188,7 +1188,13 @@
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
-
+    <string name="plus_top_up">+ TOP UP</string>
+    <string name="txt_low_threshold_balance">Low Balance Threshold</string>
+    <string name="txt_topup_method">Top-Up\nMethod</string>
+    <string name="txt_dumy_card_number">••••••7890</string>
+    <string name="txt_recent_transacions">Recent Transactions</string>
+    <string name="top_up">Top- Up</string>
+    <string name="txt_topup_amount">Top-Up\nAmount</string>
 
 
 </resources>
