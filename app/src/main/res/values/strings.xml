@@ -1185,9 +1185,8 @@
     <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
     <string name="str_radio_email">Email %s</string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
-    <string name="str_enable_face_ID_fingerprint">Enable FaceID/Fingerprint</string>
+    <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
-
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
     <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
     <string name="str_you_will_need_to_pay">You will need to pay {$} to bring your account\nto the low balance threshold of $5 \n\nYou will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
@@ -1210,6 +1209,13 @@
     <string name="str_pay">PAY</string>
     <string name="str_check_your_answer_before_payment">Check your answers before making a payment.</string>
 
+    <string name="plus_top_up">+ TOP UP</string>
+    <string name="txt_low_threshold_balance">Low Balance Threshold</string>
+    <string name="txt_topup_method">Top-Up\nMethod</string>
+    <string name="txt_dumy_card_number">••••••7890</string>
+    <string name="txt_recent_transacions">Recent Transactions</string>
+    <string name="top_up">Top- Up</string>
+    <string name="txt_topup_amount">Top-Up\nAmount</string>
 
 
 </resources>

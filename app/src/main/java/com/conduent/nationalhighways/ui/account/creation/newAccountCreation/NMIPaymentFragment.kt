@@ -12,12 +12,12 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
+import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,13 +35,20 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClickListener{
+class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnClickListener {
 
 
     private val viewModel: CreateAccountViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    val vehicle : ArrayList<VehicleItem> = ArrayList()
-
+    val vehicle: ArrayList<VehicleItem> = ArrayList()
+    private var expMonth: String = ""
+    private var expYear: String = ""
+    private var thresholdAmount: String = ""
+    private var topUpAmount = ""
+    private var maskedCardNumber: String = ""
+    private var cardToken: String = ""
+    private var isTrusted: Boolean = false
+    private var creditCardType: String = ""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -52,6 +60,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
+
+        topUpAmount = arguments?.getDouble(Constants.DATA).toString()
+        thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
 
         binding.webView.settings.apply {
@@ -69,6 +80,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
     override fun observer() {
         observe(viewModel.account, ::handleAccountResponse)
     }
+
     private fun handleAccountResponse(response: Resource<CreateAccountResponseModel?>?) {
         hideLoader()
         when (response) {
@@ -93,28 +105,54 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
 
 
     }
+
     inner class JsObject {
         @JavascriptInterface
         fun postMessage(data: String) {
             Log.i("WebView", "postMessage data=$data")
-            if(data.isNotEmpty() ){
+            if (data.isNotEmpty()) {
                 MainScope().launch {
-                    when(data){
-                        "NMILoaded" ->{
+                    when (data) {
+                        "NMILoaded" -> {
                             hideLoader()
                         }
-                        "3DStarted" ->{
+
+                        "3DStarted" -> {
                             showLoader()
                         }
-                        "3DSLoaded" ->{
+
+                        "3DSLoaded" -> {
                             hideLoader()
                         }
                     }
-                    if(data.contains("cardHolderAuth")){
+
+                    val check: Boolean = "tokenType" in data
+                    if (check) {
+                        val responseModel =
+                            Gson().fromJson(data, CardResponseModel::class.java)
+                        expMonth = responseModel.card?.exp?.subSequence(0, 2).toString()
+                        expYear = "20" + responseModel.card?.exp?.subSequence(2, 4).toString()
+                        isTrusted = responseModel.initiatedBy?.isTrusted == true
+                        maskedCardNumber =
+                            Utils.maskCardNumber(responseModel.card?.number.toString())
+                        cardToken = responseModel.token.toString()
+                        creditCardType = responseModel.card?.type.toString()
+
+
+                    }
+
+
+                    if (data.contains("cardHolderAuth")) {
                         val gson = Gson()
-                        val paymentSuccessResponse = gson.fromJson(data, PaymentSuccessResponse::class.java)
-                        if(paymentSuccessResponse.cardHolderAuth.equals("verified",true)){
-                            callAccountCreationApi()
+                        val paymentSuccessResponse =
+                            gson.fromJson(data, PaymentSuccessResponse::class.java)
+                        if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
+                            callAccountCreationApi(
+                                paymentSuccessResponse.threeDsVersion,
+                                paymentSuccessResponse.cavv,
+                                paymentSuccessResponse.directoryServerId,
+                                paymentSuccessResponse.eci
+                            )
                         }
                     }
                 }
@@ -135,7 +173,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         }
     }
 
-    private fun callAccountCreationApi() {
+    private fun callAccountCreationApi(
+        threeDsVersion: String?,
+        cavv: String?,
+        directoryServerId: String?,
+        eci: String?
+    ) {
         val data = NewCreateAccountRequestModel
         val model = AccountCreationRequest()
         model.stateType = "HE"
@@ -144,71 +187,87 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
         model.mailPreference = "Y"
         model.emailPreference = "Y"
         model.mfaFlag = "N"
-        model.smsSecurityCd = ""
+        model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
-        model.transactionAmount = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
+        model.countryType = "UK"
         model.referenceId = data.referenceId
         model.eveningPhone = data.mobileNumber
         model.address1 = data.addressline1
         model.billingAddressLine1 = data.addressline1
         model.emailAddress = data.emailAddress
-        model.creditCExpMonth = "12"
+        model.creditCExpMonth = expMonth
         model.eveningPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
-        model.creditCExpYear = "2025"
-        model.cardholderAuth = "verified"
-        model.transactionAmount = "10.00"
-        model.thresholdAmount = "10.00"
+        model.creditCExpYear = expYear
+        if (isTrusted) {
+            model.cardholderAuth =
+                "verified"// if istrusted is true then we need to send verified else empty
+        } else {
+            model.cardholderAuth = ""
+        }
+
+        model.transactionAmount = "10.00" // html Amount
+        model.thresholdAmount = "10.00" // threshold Amount
         model.securityCode = ""
         model.smsReferenceId = ""
-        model.securityCd = "451860"
-        model.cardFirstName = "Anil"
-        model.cardCity = "BIRMINGHAM"
-        model.city = "BIRMINGHAM"
-        model.threeDsVer = "2.1.0"
-        model.maskedNumber = "************1111"
-        model.creditCardNumber = "EWavM8NR-ZcYHBJ-43XZwG-zxqR44uAF73a"
-        model.cavv = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTA="
-        model.correspDeliveryMode = "EMAIL="
-        model.password = "Welcome1"
+        model.securityCd = data.emailSecurityCode   // email security code
+        model.cardFirstName = data.firstName   // model name
+        model.cardCity = data.townCity   // address city
+        model.city = data.townCity   // address city
+        model.threeDsVer = threeDsVersion  // 3ds verison
+        model.maskedNumber =
+            maskedCardNumber// card masked number only we need to send last four digit
+        model.creditCardNumber = cardToken// card number should be token number
+        model.cavv = cavv // 3ds cavv
+        model.correspDeliveryMode = ""/*"EMAIL"*/
+        model.password = data.password  //model password
         model.firstName = data.firstName
-        model.creditCardType = "VISA"
-        model.accountType = "PRIVATE"
-        model.cardLastName = "Kumar"
+        model.creditCardType = creditCardType.uppercase() // need to send upper case
+        if (NewCreateAccountRequestModel.personalAccount) {
+            model.accountType = "PRIVATE"    // private or business
+        } else {
+            model.accountType = "BUSINESS"
+        }
+
+        model.cardLastName = data.lastName  // model name
         model.lastName = data.lastName
         model.digitPin = "2465"
-        model.correspDeliveryFrequency = "MONTHLY"
-        model.eci = "05"
-        model.replenishmentAmount = "10"
-        model.directoryServerID = "5ed13323-591f-4f76-ae4c-76c44afcecc3"
-        val listvehicle : ArrayList<VehicleItem> = ArrayList()
+        model.correspDeliveryFrequency = "" /*"MONTHLY"*/
+        model.eci = eci // 3ds eci
+        model.replenishmentAmount = "10" // payment amount
+        model.directoryServerID = directoryServerId // 3ds serverId
+        val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
-        for(obj in data.vehicleList){
+        for (obj in data.vehicleList) {
             val item = VehicleItem()
 
             item.vehicleModel = obj.vehicleModel
             item.vehicleMake = obj.vehicleMake
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
-            item.vehicleClassDesc = obj.vehicleClass
+            item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
             item.plateTypeDesc = obj.vehicleClass
             item.plateCountry = obj.plateCountry
             item.vehicleYear = ""
-            listvehicle.add(item)
+            listVehicle.add(item)
 
         }
-        model.ftvehicleList.vehicle=listvehicle
+        model.ftvehicleList.vehicle = listVehicle
 
         viewModel.createAccountNew(model)
 
 
     }
+
     private fun setupWebView() {
 
-        val webViewClient: WebViewClient = object: WebViewClient() {
+        val webViewClient: WebViewClient = object : WebViewClient() {
 
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
                 view?.loadUrl(request?.url.toString())
                 return super.shouldOverrideUrlLoading(view, request)
             }
@@ -219,8 +278,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(),View.OnClic
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                val amount = arguments?.getInt(Constants.DATA)
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '"+amount+"';})()");
+                val amount = arguments?.getDouble(Constants.DATA)
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '" + amount + "';})()");
                 super.onPageFinished(view, url)
             }
         }

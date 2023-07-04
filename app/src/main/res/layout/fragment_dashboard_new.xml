@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNoHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_payment_history"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/box_accountInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_29dp"
+                android:background="@drawable/bg_rounded_corner_5dp"
+                android:backgroundTint="@color/white"
+                android:elevation="@dimen/margin_5dp"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingBottom="@dimen/margin_15dp"
+                app:layout_constraintBottom_toBottomOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/guideline2">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_available_balance_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_your_balance"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_available_balance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_available_balance" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_available_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_15dp"
+                    android:fontFamily="@font/open_sans"
+                    android:maxLines="1"
+                    android:textColor="@color/dark_blue_color"
+                    android:textSize="@dimen/_42sp"
+                    app:autoSizePresetSizes="@array/button_text_auto_size"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="£13.50" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_account_number_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_account_number"
+
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_available_balance" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_account_number_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:text="118324408"
+
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_account_number_heading"
+                    app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
+                    app:layout_constraintTop_toTopOf="@id/tv_account_number_heading" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_account_status_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_22dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+
+                    android:text="@string/txt_account_status"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_indicator_account_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_status"
+                    app:cardCornerRadius="@dimen/margin_5dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_account_status_heading"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_account_status_heading">
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/indicator_account_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/open_sans"
+                        android:paddingHorizontal="@dimen/margin_12dp"
+                        android:paddingVertical="@dimen/margin_5dp"
+                        android:text="@string/open"
+                        android:textSize="@dimen/_14sp"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/button_topup"
+                    style="@style/PrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plus_top_up"
+                    android:textSize="@dimen/_14sp"
+                    app:isEnabled="true"
+                    app:layout_constraintTop_toBottomOf="@id/card_indicator_account_status" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/box_account_numner"
+                android:layout_width="@dimen/margin_110dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_rounded_corner_5dp"
+                android:elevation="5dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/box_low_balance_threshold"
+                app:layout_constraintEnd_toStartOf="@id/box_low_balance_threshold"
+                app:layout_constraintStart_toStartOf="@id/box_accountInformation"
+                app:layout_constraintTop_toTopOf="@id/box_low_balance_threshold">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/value_topup_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/v_account_numner"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_24sp"
+                    app:layout_constraintBottom_toTopOf="@+id/v_account_numner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="£10.00" />
+
+                <View
+                    android:id="@+id/v_account_numner"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_20dp"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_account_numner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/v_account_numner"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+
+                    android:text="@string/txt_topup_amount"
+                    android:textColor="@color/label_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v_account_numner" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/box_low_balance_threshold"
+                android:layout_width="@dimen/margin_110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/bg_rounded_corner_5dp"
+                android:elevation="5dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toStartOf="@id/box_topup_method"
+                app:layout_constraintStart_toEndOf="@id/box_account_numner"
+                app:layout_constraintTop_toBottomOf="@+id/box_accountInformation">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/value_low_balance_threshold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/v_low_balance_threshold"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_24sp"
+                    app:layout_constraintBottom_toTopOf="@+id/v_low_balance_threshold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="£5.00" />
+
+                <View
+                    android:id="@+id/v_low_balance_threshold"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_20dp"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_low_balance_threshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/v_low_balance_threshold"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+
+                    android:text="@string/txt_low_threshold_balance"
+                    android:textColor="@color/label_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v_low_balance_threshold" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/box_topup_method"
+                android:layout_width="@dimen/margin_110dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_rounded_corner_5dp"
+                android:elevation="5dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/box_low_balance_threshold"
+                app:layout_constraintEnd_toEndOf="@id/box_accountInformation"
+                app:layout_constraintStart_toEndOf="@id/box_low_balance_threshold"
+                app:layout_constraintTop_toTopOf="@+id/box_low_balance_threshold">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/value_autopay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/v_autopay"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/v_autopay"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="£10.00" />
+
+                <View
+                    android:id="@+id/v_autopay"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/margin_20dp"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_autopay"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="@string/txt_topup_method"
+                    android:textColor="@color/label_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v_autopay" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/box_cardType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18dp"
+                android:background="@drawable/bg_rounded_corner_5dp"
+                android:elevation="@dimen/margin_5dp"
+                android:paddingVertical="@dimen/margin_5dp"
+                app:layout_constraintEnd_toEndOf="@id/box_accountInformation"
+                app:layout_constraintStart_toStartOf="@id/box_accountInformation"
+                app:layout_constraintTop_toBottomOf="@+id/box_low_balance_threshold">
+
+                <ImageView
+                    android:id="@+id/cardLogo"
+                    android:layout_width="@dimen/_43_414dp"
+                    android:layout_height="@dimen/_27dp"
+                    android:layout_marginStart="@dimen/margin_11dp"
+                    android:layout_marginTop="@dimen/margin_7dp"
+                    android:layout_marginBottom="@dimen/_9dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/visablue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/cardNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_29_59dp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/txt_dumy_card_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/cardLogo"
+                    app:layout_constraintStart_toEndOf="@id/cardLogo"
+                    app:layout_constraintTop_toTopOf="@id/cardLogo" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_14dp"
+                app:layout_constraintEnd_toEndOf="@id/box_accountInformation"
+                app:layout_constraintStart_toStartOf="@id/box_accountInformation"
+                app:layout_constraintTop_toBottomOf="@+id/box_cardType">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/box_recentTransactions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/txt_recent_transacions"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/label_viewAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:paddingVertical="@dimen/margin_5dp"
+                    android:text="@string/view_all"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Theme.HEMobileDark"
+                    app:layout_constraintBottom_toBottomOf="@id/rv_recenrTransactions"
+                    app:layout_constraintEnd_toEndOf="@id/rv_recenrTransactions"
+                    app:layout_constraintStart_toStartOf="@id/rv_recenrTransactions"
+                    app:layout_constraintTop_toTopOf="@id/rv_recenrTransactions" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recenrTransactions"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_21dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_viewAll"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_recent_tansactions" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

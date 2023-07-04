@@ -3,6 +3,9 @@ package com.conduent.nationalhighways.utils.common
 object Constants {
 
     const val EXPIRED = "EXPIRED"
+    const val MASTERCARD = "MASTERCARD"
+    const val MAESTRO = "MAESTRO"
+    const val VISA = "VISA"
     const val RETRY_COUNT = 3
     const val ITEM_COUNT : Long = 20
     const val SPLASH_TIME_OUT = 500L
@@ -103,6 +106,7 @@ object Constants {
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
     const val DATA = "data"
+    const val THRESHOLD_AMOUNT="threshold_amount"
     const val SUSPENDED="suspended"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"

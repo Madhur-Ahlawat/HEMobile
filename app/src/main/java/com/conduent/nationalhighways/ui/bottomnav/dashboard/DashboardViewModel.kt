@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
+import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
+import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
@@ -49,12 +51,32 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
     val thresholdAmountVal: MutableLiveData<Resource<ThresholdAmountApiResponse?>?> get() = _thresholdAmountVal
+    val paymentHistoryLiveData: LiveData<Resource<AccountPaymentHistoryResponse?>?> get() = accountPaymentMutLiveData
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val accountPaymentMutLiveData =
+        MutableLiveData<Resource<AccountPaymentHistoryResponse?>?>()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val getAlertsVal: LiveData<Resource<AlertMessageApiResponse?>?> get() = _alertsVal
 
-
+    fun paymentHistoryDetails(request: AccountPaymentHistoryRequest) {
+        viewModelScope.launch {
+            try {
+                accountPaymentMutLiveData.postValue(
+                    ResponseHandler.success(
+                        repository.getAccountPayment(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                accountPaymentMutLiveData.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
     fun getVehicleInformationApi() {
         viewModelScope.launch {
             try {
@@ -144,7 +166,8 @@ class DashboardViewModel @Inject constructor(
                     delay(100)
 //                    val callThreshold = async { repository.getThresholdAmountApiCAll() }
 //                    delay(100)
-                    val callOverview = async { repository.getAccountDetailsApiCall() }
+                    val callOverview = async {
+                        repository.getAccountDetailsApiCall() }
                     delay(100)
                     val callAlerts = async { repository.getAlertMessages() }
 
@@ -154,6 +177,45 @@ class DashboardViewModel @Inject constructor(
                     overviewResponse = callOverview.await()
                     alertsResponse = callAlerts.await()
 
+                    if(alertsResponse?.isSuccessful == true){
+                        _alertsVal.postValue(
+                            ResponseHandler.success(
+                                alertsResponse,
+                                errorManager
+                            )
+                        )
+                    }
+                    else {
+                        _alertsVal.value =
+                            Resource.DataError("Something went wrong. Try again later")
+                    }
+
+                    if (vehicleCountResponse?.isSuccessful == true) {
+                        _vehicleListVal.postValue(
+                            ResponseHandler.success(
+                                vehicleCountResponse,
+                                errorManager
+                            )
+                        )
+                    }
+                    else {
+                        _vehicleListVal.value =
+                            Resource.DataError("Something went wrong. Try again later")
+                    }
+
+                    if (crossingCountResponse?.isSuccessful == true) {
+                        _crossingHistoryVal.postValue(
+                            ResponseHandler.success(
+                                crossingCountResponse,
+                                errorManager
+                            )
+                        )
+                    }
+                    else {
+                        _crossingHistoryVal.value =
+                            Resource.DataError("Something went wrong. Try again later")
+                    }
+
                     if (overviewResponse?.isSuccessful == true) {
                         _accountDetailsVal.postValue(
                             ResponseHandler.success(
@@ -161,26 +223,9 @@ class DashboardViewModel @Inject constructor(
                                 errorManager
                             )
                         )
-                        _crossingHistoryVal.postValue(
-                            ResponseHandler.success(
-                                crossingCountResponse,
-                                errorManager
-                            )
-                        )
-                        _vehicleListVal.postValue(
-                            ResponseHandler.success(
-                                vehicleCountResponse,
-                                errorManager
-                            )
-                        )
-                        _alertsVal.postValue(
-                            ResponseHandler.success(
-                                alertsResponse,
-                                errorManager
-                            )
-                        )
-                    } else {
-                        _vehicleListVal.value =
+                    }
+                    else {
+                        _accountDetailsVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
                 }

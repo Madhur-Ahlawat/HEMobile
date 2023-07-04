@@ -19,12 +19,14 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -35,6 +37,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.reflect.KParameter
 
 
 @AndroidEntryPoint
@@ -56,7 +59,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    @Inject
+    lateinit var api: ApiService
 
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
@@ -191,7 +195,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-
+                BaseApplication.getNewToken(api = api, sessionManager=sessionManager, showBiometricPrompt())
                 launchIntent(status)
             }
 
@@ -235,6 +239,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
         }
+
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
 
             displayBiometricDialog(getString(R.string.str_enable_face_ID))

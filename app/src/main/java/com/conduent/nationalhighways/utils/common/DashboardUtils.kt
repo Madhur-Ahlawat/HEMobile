@@ -1,8 +1,13 @@
 package com.conduent.nationalhighways.utils.common
 
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.util.TypedValue
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.extn.changeTextColor
+import com.google.android.material.card.MaterialCardView
 
 object DashboardUtils {
 
@@ -25,6 +30,27 @@ object DashboardUtils {
         } else {
             tvTitle.text = status
             tvTitle.changeTextColor(R.color.FFF7BF)
+        }
+    }
+    fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView) {
+        if (status.equals("OPEN", true) || status.equals("ACTIVE", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.open)
+            viewGroup.setCardBackgroundColor(Color.GREEN)
+        } else if (status.equals("SUSPENDED", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.suspended)
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_C93E28));
+        } else if (status.equals("DORMANT", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.dormant)
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514));
+        } else if (status.equals("CLOSED", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.closed)
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_383f43));
+        } else if (status.equals("CLOSE PEND", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.close_Pending)
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_144e81));
+        } else {
+            tvTitle.text = status
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF));
         }
     }
 
