@@ -30,20 +30,19 @@ object Utils {
     var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
     var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
-    var UK_MOBILE_REGEX:Regex=Regex("[0]{0,1}7[0-9]{9}")
-    var PHONENUMBER:Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
-    var NUMBER :Regex= Regex(".*[0-9]+.*")
-    var UPPERCASE:Regex= Regex(".*[A-Z]+.*")
-    var LOWECASE:Regex= Regex(".*[a-z]+.*")
+    var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
+    var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
+    var NUMBER: Regex = Regex(".*[0-9]+.*")
+    var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
+    var LOWECASE: Regex = Regex(".*[a-z]+.*")
 
-    var passwordRegEX :Regex= Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
+    var passwordRegEX: Regex =
+        Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
 
-
-    var specialCharacter: Regex = Regex( "[$&+,:;=\\\\?@#|/'<>.^*()%!]")
-    var colourSpecialCharacter:Regex= Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
-    var addressSpecialCharacter:Regex= Regex("[$&+:;=\\\\?@|/<>^*()%!]")
-
+    var specialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+    var colourSpecialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
+    var addressSpecialCharacter: Regex = Regex("[$&+:;=\\\\?@|/<>^*()%!]")
 
 
     fun hasInternetConnection(application: BaseApplication): Boolean {
@@ -121,6 +120,7 @@ object Utils {
 
 
             }
+
             "N" -> {
                 tvTitle.text = tvTitle.context.getString(R.string.unpaid)
                 tvTitle.changeTextColor(R.color.color_10403C)
@@ -153,11 +153,13 @@ object Utils {
                 tvTitle.changeTextColor(R.color.color_3D2375)
                 tvTitle.changeBackgroundColor(R.color.color_DBD5E9)
             }
+
             "Open" -> {
                 tvTitle.text = tvTitle.context.getString(R.string.submitted)
                 tvTitle.changeTextColor(R.color.color_10403C)
                 tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
             }
+
             else -> {
                 tvTitle.text = tvTitle.context.getString(R.string.in_progress_open)
                 tvTitle.changeTextColor(R.color.color_594D00)
@@ -175,31 +177,75 @@ object Utils {
         return matcher.matches()
     }
 
-    fun getManuallyAddedVehicleClass(vehicleclass: String):String{
-        if (vehicleclass=="Motorcycle, moped or quad bike"){
-            return "A"
-        }else if (vehicleclass=="Car, van or minibus < 8 seats"){
-            return "B"
-        }else if (vehicleclass=="Bus, coach or other goods vehicle with 2 axles"){
-            return "C"
-        }else if(vehicleclass=="Vehicle with more than 2 axles"){
-            return "D"
-        }else{
-            return ""
+    fun getManuallyAddedVehicleClass(vehicleClass: String): String {
+        return when (vehicleClass) {
+            "Motorcycle, moped or quad bike" -> {
+                "A"
+            }
+
+            "Car, van or minibus < 8 seats" -> {
+                "B"
+            }
+
+            "Bus, coach or other goods vehicle with 2 axles" -> {
+                "C"
+            }
+
+            "Vehicle with more than 2 axles" -> {
+                "D"
+            }
+
+            else -> {
+                ""
+            }
         }
     }
 
-    fun getVehicleType(vehicleClass:String):String{
-        if (vehicleClass=="A"){
-            return "Motorcycle, moped or quad bike"
-        }else if (vehicleClass=="B"){
-            return "Car, van or minibus < 8 seats"
-        }else if (vehicleClass=="C"){
-            return "Bus, coach or other goods vehicle with 2 axles"
-        }else if(vehicleClass=="D"){
-            return "Vehicle with more than 2 axles"
-        }else{
-            return ""
+    fun getVehicleType(vehicleClass: String): String {
+        return when (vehicleClass) {
+            "A" -> {
+                "Motorcycle, moped or quad bike"
+            }
+
+            "B" -> {
+                "Car, van or minibus < 8 seats"
+            }
+
+            "C" -> {
+                "Bus, coach or other goods vehicle with 2 axles"
+            }
+
+            "D" -> {
+                "Vehicle with more than 2 axles"
+            }
+
+            else -> {
+                ""
+            }
+        }
+    }
+
+    fun getVehicleTypeNumber(vehicleClass: String): String {
+        return when (vehicleClass) {
+            "A" -> {
+                "1"
+            }
+
+            "B" -> {
+                "2"
+            }
+
+            "C" -> {
+                "3"
+            }
+
+            "D" -> {
+                "4"
+            }
+
+            else -> {
+                ""
+            }
         }
     }
 
@@ -258,7 +304,7 @@ object Utils {
         return list.toTypedArray()
     }
 
-    fun gotoMobileSetting(context: Context){
+    fun gotoMobileSetting(context: Context) {
         val intent = Intent(Settings.ACTION_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
@@ -267,29 +313,37 @@ object Utils {
     fun maskEmail(email: String): String {
 
         val arrEmail = email.split("@")
-        val mailbox = arrEmail[0].subSequence(0,1).toString() + "*".repeat(arrEmail[0].length - 1)
+        val mailbox = arrEmail[0].subSequence(0, 1).toString() + "*".repeat(arrEmail[0].length - 1)
 
         val domain = arrEmail[1].split(".")[0]
 
-         val maskedDomain = domain.subSequence(0,1).toString() + "*".repeat(domain.length - 1)
+        val maskedDomain = domain.subSequence(0, 1).toString() + "*".repeat(domain.length - 1)
 
 
-         return mailbox + "@" + maskedDomain + arrEmail[1].replace(domain, "")
+        return mailbox + "@" + maskedDomain + arrEmail[1].replace(domain, "")
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
-        val star=phoneNumber.length-6
-        return if (star==4){
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "*****")
+        val star = phoneNumber.length - 6
+        return if (star == 4) {
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "*****")
 
-        }else{
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length-3), "******")
+        } else {
+            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "******")
 
         }
 
 
     }
-     fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+    fun maskCardNumber(cardNumber: String): String {
+        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "************")
+
+
+
+
+    }
+
+    fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
         val lp = view.layoutParams as ConstraintLayout.LayoutParams
         lp.setMargins(left, top, right, bottom)
         view.layoutParams = lp
@@ -305,7 +359,8 @@ object Utils {
 
 
     private const val DOC = "application/msword"
-    private const val DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    private const val DOCX =
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     private const val XLS = "application/vnd.ms-excel"
     private const val XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     private const val PDF = "application/pdf"

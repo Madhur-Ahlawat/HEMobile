@@ -3,8 +3,6 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,27 +14,30 @@ import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import com.conduent.nationalhighways.BuildConfig
+import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.KeystoreHelper
-import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.reflect.KParameter
 
 
 @AndroidEntryPoint
@@ -52,13 +53,74 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var emailCheck: Boolean = false
     private var passwordCheck: Boolean = false
 
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+
+
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    @Inject
+    lateinit var api: ApiService
 
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
+        observe(dashboardViewModel.accountOverviewVal,::handleAccountDetails)
+
+    }
+
+    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.accountInformation?.accountStatus.equals(Constants.SUSPENDED,true)){
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, "")
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
+
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+                }
+
+            }
+
+            is Resource.DataError -> {
+                if (status.errorModel?.errorCode == 5260) {
+                    binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                } else {
+                    binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+
+                }
+
+
+                AdobeAnalytics.setLoginActionTrackError(
+                    "login",
+                    "login",
+                    "login",
+                    "english",
+                    "login",
+                    "",
+                    "true",
+                    "manual",
+                    sessionManager.getLoggedInUser()
+                )
+            }
+
+            else -> {
+
+            }
+        }
 
     }
 
@@ -137,7 +199,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-
+                BaseApplication.getNewToken(api = api, sessionManager=sessionManager, showBiometricPrompt())
                 launchIntent(status)
             }
 
@@ -183,18 +245,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-            if (checkFaceSupport()){
-                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
 
-            }else{
-                displayBiometricDialog(getString(R.string.str_enable_face_ID))
+            displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
-            }
+
         } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java)
 
+
         }
         sessionManager.saveUserName(binding.edtEmail.text.toString())
+
+        //dashboardViewModel.getAccountDetailsData()
+
 
         AdobeAnalytics.setLoginActionTrackError(
             "login",
@@ -210,7 +273,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    private fun displayBiometricDialog(title:String) {
+    private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
             getString(R.string.doyouwantenablebiometric),
             getString(R.string.enablenow),
@@ -231,8 +294,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, "")
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    startActivity(intent)
 
-                    startNewActivityByClearingStack(HomeActivityMain::class.java)
+                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
@@ -275,7 +342,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
                 val intent = Intent(this, AuthActivity::class.java)
                 startActivity(intent)
-                //findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment, bundle)
             }
         }
     }
@@ -366,38 +432,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-        val dateTime = System.currentTimeMillis().toString()
-
-        val verificationToken = Utility.getSHA256HashedValue(
-            "vendeor Id" + "|" + BuildConfig.VERSION_NAME + "|" + Build.MODEL + "|" + Build.VERSION.SDK_INT.toString() + "|" + sessionManager.fetchBiometricToken()
-        )
-
-        val keyHelper = KeystoreHelper.getInstance(this)
-        val decryptedUserId = keyHelper?.decrypt(
-            this, "username"
-        )
-
-        val dataToBeSigned = "$decryptedUserId|firebase token|$verificationToken|$dateTime"
-
 
         val intent = Intent(this, HomeActivityMain::class.java)
         startActivity(intent)
 
-        // call login api
-        /*  doLoginWithTouchID(
-              decryptedUserId,
-              SignatureHelper.getSignature(this, dataToBeSigned),
-              dateTime
-          )*/
-    }
-
-
-    fun checkFaceSupport():Boolean{
-        val hasFaceBiometric = packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
-
-        return hasFaceBiometric
 
     }
+
+
 
 }
 

@@ -36,6 +36,10 @@ object NewCreateAccountRequestModel{
     var isAccountTypeEditCall = false
     var isManualAddress = false
     var isBackButtonVisible = true
+    var emailSecurityCode:String=""
+    var smsSecurityCode:String=""
+    var password:String=""
+
 
 
 

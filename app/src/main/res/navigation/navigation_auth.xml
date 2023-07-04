@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_auth"
-    app:startDestination="@id/forgotEmailFragment"
-    >
+    app:startDestination="@id/forgotEmailFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -112,6 +111,42 @@
     android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.OptForSmsFragment"
     android:label="OptforSmsFragment"
     tools:layout="@layout/fragment_opt_for_sms"/>
+
+<fragment
+    android:id="@+id/accountSuspendedFragment"
+    android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendedFragment"
+    android:label="accountSuspendedFragment"
+    tools:layout="@layout/fragment_account_suspend_halt_top_up">
+    <action
+        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
+        app:destination="@id/accountSuspendedPaymentFragment" />
+</fragment>
+
+
+    <fragment
+        android:id="@+id/accountSuspendedPaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendSelectPaymentFragment"
+        android:label="accountSuspendedPaymentFragment"
+        tools:layout="@layout/fragment_account_suspend_halt">
+        <action
+            android:id="@+id/action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment"
+            app:destination="@id/accountSuspendedFinalPayFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedPaymentFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountSuspendedFinalPayFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendPayFragment"
+        android:label="accountSuspendPayFragment"
+        tools:layout="@layout/fragment_account_suspend_pay"/>
+
+    <fragment
+        android:id="@+id/nmiPaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.NMIPaymentFragment"
+        android:label="NMIFragment"
+        tools:layout="@layout/nmi_payment_fragment"/>
 
 
 

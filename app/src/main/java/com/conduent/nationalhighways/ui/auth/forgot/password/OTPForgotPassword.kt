@@ -169,6 +169,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         }
 
                     }else{
+                        NewCreateAccountRequestModel.smsSecurityCode=binding.edtOtp.getText().toString().trim()
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_createVehicleFragment
                         )
@@ -176,7 +177,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
                 } else {
-                    confirmEmailCode()
+                    NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.getText().toString().trim()
+                    val bundle=Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    findNavController().navigate(
+                        R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                        bundle
+                    )
+                  //  confirmEmailCode()
                 }
 
             }

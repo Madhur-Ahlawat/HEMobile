@@ -38,6 +38,7 @@
         android:name="com.conduent.nationalhighways.ui.landing.SessionExpireFragment"
         android:label="@string/str_session_time_out"
         tools:layout="@layout/fragment_session_expire" />
+
     <fragment
         android:id="@+id/failedRetryFragment"
         android:name="com.conduent.nationalhighways.ui.landing.FailedRetryFragment"

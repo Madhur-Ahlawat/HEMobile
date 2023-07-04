@@ -38,9 +38,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        init()
-        initCtrl()
         observer()
+        initCtrl()
+        init()
     }
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B

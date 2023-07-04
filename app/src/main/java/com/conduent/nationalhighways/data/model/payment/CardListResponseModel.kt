@@ -1,5 +1,9 @@
 package com.conduent.nationalhighways.data.model.payment
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class CardListResponseModel(
     val addressLine1: String?,
     val bankAccount: Boolean?,
@@ -19,5 +23,7 @@ data class CardListResponseModel(
     val primaryCard: Boolean?,
     val rowId: String?,
     val state: String?,
-    val zipCode: String?
-)
+    val zipCode: String?,
+    var isSelected:Boolean=false
+
+) : Parcelable
