@@ -1,12 +1,11 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Application
-import android.os.CountDownTimer
 import android.util.Log
-import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
-import com.conduent.nationalhighways.data.remote.ApiService
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
+import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.google.android.gms.tasks.OnCompleteListener
@@ -56,7 +55,7 @@ class BaseApplication : Application() {
         }
         fun saveToken(sessionManager:SessionManager,response: Response<LoginResponse?>?) {
             Log.i("teja12345", "refresh : success")
-            sessionManager?.run {
+            sessionManager.run {
                 saveAuthToken(response?.body()?.accessToken ?: "")
                 saveRefreshToken(response?.body()?.refreshToken ?: "")
                 saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
@@ -69,8 +68,6 @@ class BaseApplication : Application() {
         super.onCreate()
         getFireBaseToken()
         setAdobeAnalytics()
-        api=this.api
-        sessionManager=this.sessionManager
     }
 
     private fun setAdobeAnalytics() {

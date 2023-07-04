@@ -227,7 +227,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
     }
+    fun showBiometricPrompt(): () -> Unit? {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
 
+            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+        } else {
+            startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+
+        }
+        return {}
+    }
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
 
         sessionManager.run {
@@ -240,16 +252,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
         }
 
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-
-            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-
-        }
         sessionManager.saveUserName(binding.edtEmail.text.toString())
 
         //dashboardViewModel.getAccountDetailsData()
@@ -295,7 +297,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                     startActivity(intent)
 
-                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
