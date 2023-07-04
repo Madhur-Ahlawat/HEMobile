@@ -149,7 +149,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         NewCreateAccountRequestModel.townCity = mainList[position]?.town.toString()
         NewCreateAccountRequestModel.country =
             mainList[position]?.country.toString()
-        NewCreateAccountRequestModel.zipCode = mainList[position]?.postcode.toString()
+        NewCreateAccountRequestModel.zipCode = mainList[position]?.postcode.toString().trim().replace(" ","")
 
         binding.btnNext.isEnabled = mainList[position]?.isSelected == true
     }

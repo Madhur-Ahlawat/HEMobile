@@ -44,8 +44,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         when (v?.id) {
             R.id.topUpBtn -> {
                 val amount = binding.top.getText().toString().trim().replace("£","")
+                val thresholdAmount=binding.lowBalance.getText().toString().trim().replace("£","")
                 val bundle = Bundle()
-                bundle.putInt(Constants.DATA,amount.toInt())
+                bundle.putDouble(Constants.DATA,amount.toDouble())
+                bundle.putDouble(Constants.THRESHOLD_AMOUNT,thresholdAmount.toDouble())
                 findNavController().navigate(R.id.action_topUpFragment_to_nmiPaymentFragment,bundle)
             }
         }

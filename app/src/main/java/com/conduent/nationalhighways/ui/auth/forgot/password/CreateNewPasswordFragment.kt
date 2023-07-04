@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.*
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -171,6 +172,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    NewCreateAccountRequestModel.password=binding.edtNewPassword.getText().toString().trim()
                     findNavController().navigate(
                         R.id.action_createPasswordFragment_to_optForSmsFragment,
                         bundle
