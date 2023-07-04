@@ -18,6 +18,7 @@ class AuthActivity : BaseActivity<Any?>() {
     private lateinit var binding: ActivityAuthBinding
     public var previousScreen = "home"
     private lateinit var navController: NavController
+    private var navFlow:String=""
 
 
     @Inject
@@ -25,7 +26,12 @@ class AuthActivity : BaseActivity<Any?>() {
     override fun initViewBinding() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
+        if (intent.getStringExtra(Constants.NAV_FLOW_KEY)!=null){
+            navFlow= intent.getStringExtra(Constants.NAV_FLOW_KEY)?:""
+
+        }
+
+
 
 
         binding.toolBarLyt.backButton.setOnClickListener {
@@ -60,8 +66,18 @@ class AuthActivity : BaseActivity<Any?>() {
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
         val bundle = Bundle()
-        graph.setStartDestination(R.id.forgotPasswordFragment)
-        bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+        if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+            binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
+
+            graph.setStartDestination(R.id.forgotPasswordFragment)
+            bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+
+        }else{
+            binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
+
+            graph.setStartDestination(R.id.accountSuspendedFragment)
+
+        }
 
         navController = navHostFragment.navController
         navController.setGraph(graph, bundle)

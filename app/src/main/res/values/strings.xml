@@ -1190,8 +1190,7 @@
 
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
     <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
-    <string name="str_you_will_need_to_pay">You will need to pay {$} to bring your account\nto the low balance threshold of $5</string>
-    <string name="str_you_will_also_need_to_pay_for">You will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid\nany Penalty Charge notices.</string>
+    <string name="str_you_will_need_to_pay">You will need to pay {$} to bring your account\nto the low balance threshold of $5 \n\nYou will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
     <string name="str_top_up_now">Top Up Now</string>
     <string name="str_enter_amount_you_want_to_pop_up">Enter the amount you want to Top-Up</string>
     <string name="str_select_payment_method">Select payment method</string>
@@ -1203,6 +1202,14 @@
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
     <string name="str_personal_details">Personal Details</string>
     <string name="str_play">Play</string>
+    <string name="str_account_suspended">Account Suspended</string>
+    <string name="str_no_I_will_do_it_later">NO I\'LL DO IT LATER</string>
+    <string name="str_new_payment_method">+ NEW PAYMENT METHOD</string>
+    <string name="str_you_have_no_payment_method">You have no payment methods on file</string>
+    <string name="str_you_must_pay_the_dart_charge_by_midnight">You must pay the Dart Charge by midnight the\n day after you cross, otherwise you may get a fine\n (Penalty Charge Notice).</string>
+    <string name="str_pay">PAY</string>
+    <string name="str_check_your_answer_before_payment">Check your answers before making a payment.</string>
+
 
 
 </resources>

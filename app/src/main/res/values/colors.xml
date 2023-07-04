@@ -80,7 +80,7 @@
     <color name="color_383f43">#383f43</color>
     <color name="color_144e81">#144e81</color>
     <color name="color_DDE8E3">#DDE8E3</color>
-    <color name="newviewlinecolr">#1E78BE</color>
+    <color name="newViewLineColour">#7D7D7D</color>
 
 
     <!--  rebranding colors  -->
@@ -125,5 +125,6 @@
     <color name="buttonTextColorSecondary">#073165</color>
     <color name="radioButtonIconColor">#0047BA</color>
     <color name="forgotPasswordColor">#257EBE</color>
+    <color name="doItLaterColour">#AC352F</color>
 
 </resources>

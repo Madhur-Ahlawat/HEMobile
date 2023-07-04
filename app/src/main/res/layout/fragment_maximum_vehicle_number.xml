@@ -39,7 +39,7 @@
             android:layout_marginTop="23dp"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/str_maximum_vehicle_registered"
+            android:text="@string/str_your_account_has_been_suspended"
             android:textColor="@color/new_btn_color"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="16sp"

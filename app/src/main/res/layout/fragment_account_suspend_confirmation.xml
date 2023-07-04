@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="@dimen/_26_69dp">
+    android:paddingTop="@dimen/_20dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="@dimen/margin_18dp"
+    android:paddingBottom="@dimen/margin_20dp"
+    >
 
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_check_your_answers"
@@ -16,6 +19,7 @@
         android:text="@string/str_check_your_answers_before_making_payment"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="parent" />
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_personal_details"
@@ -30,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_check_your_answers" />
 
     <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-        android:id="@+id/inputPaymentAmount"
+        android:id="@+id/lowBalance"
         style="@style/input_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +51,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/selected_method_payment_card"
-        app:layout_constraintTop_toBottomOf="@+id/inputPaymentAmount"
+        app:layout_constraintTop_toBottomOf="@+id/lowBalance"
         android:layout_width="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,17 +85,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tv_select_payment_method"-->
-<!--        android:id="@+id/rv_payment_methods"-->
-<!--        android:layout_marginTop="@dimen/_55dp"-->
-
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        tools:itemCount="2"-->
-<!--        tools:listitem="@layout/item_payment_method"-->
-<!--        android:layout_height="wrap_content" />-->
 
     <com.conduent.apollo.ui.CMButton
         android:id="@+id/btnPlay"

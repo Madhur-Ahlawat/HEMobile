@@ -31,8 +31,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         binding.topUpBtn.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
-        binding.lowBalance.editText.setOnFocusChangeListener { view, b -> lowBalanceDecimal(b) }
-        binding.top.editText.setOnFocusChangeListener { view, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
+        binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
     }
 
 
@@ -115,7 +115,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.lowBalance.editText.removeTextChangedListener(this)
                 if(updatedText.isNotEmpty())
-                    binding.lowBalance.setText("£" + updatedText)
+                    binding.lowBalance.setText("£$updatedText")
                 Selection.setSelection( binding.lowBalance.getText(),binding.lowBalance.getText().toString().length)
                 binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
@@ -141,7 +141,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
                 binding.top.editText.removeTextChangedListener(this)
                 if(updatedText.isNotEmpty())
-                    binding.top.setText("£" + updatedText)
+                    binding.top.setText("£$updatedText")
                 Selection.setSelection( binding.top.getText(),binding.top.getText().toString().length)
                 binding.top.editText.addTextChangedListener(this)
             }
