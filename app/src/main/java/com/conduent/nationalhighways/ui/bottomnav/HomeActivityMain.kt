@@ -46,6 +46,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
+        dataBinding.idToolBarLyt.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+
+        }
 
         dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {
@@ -62,10 +66,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             }
                         }
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleFragment) {
+                            if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.vehicle_management)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.vehicleFragment)
+                                    .navigate(R.id.vehicleHomeListFragment)
                             }
                         }
                         2 -> {

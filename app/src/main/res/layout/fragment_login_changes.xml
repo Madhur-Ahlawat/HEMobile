@@ -97,7 +97,6 @@
             style="@style/input_text"
             android:inputType="textEmailAddress"
             android:imeOptions="actionNext"
-
             android:singleLine="true"
             app:labelText="@string/email_address"
             app:layout_constraintStart_toStartOf="parent"

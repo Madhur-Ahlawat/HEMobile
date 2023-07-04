@@ -1049,7 +1049,7 @@
     <string name="add_another_vehicle">Add Another Vehicle</string>
     <string name="for_example_cu57abc">For example, CU57ABC</string>
     <string name="the_vehicle_has_already_been_added">The vehicle has already been added.</string>
-    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle</string>
+    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle %s?</string>
     <string name="it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them">It is required that you have two vehicles before you are able to delete one of them.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -1189,7 +1189,8 @@
     <string name="str_enable_face_ID">Enable Biometric</string>
 
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
-
+    <string name="vehicle_management">Vehicle Management</string>
+    <string name="vehicle_list">Vehicle List</string>
 
 
 </resources>

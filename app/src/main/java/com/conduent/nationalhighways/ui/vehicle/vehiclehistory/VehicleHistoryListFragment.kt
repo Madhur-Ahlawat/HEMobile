@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -20,14 +21,16 @@ import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickList
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
-    ItemClickListener {
+    ItemClickListener,View.OnClickListener {
 
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
@@ -40,7 +43,10 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private var isLoading = false
     private var isFirstTime = true
     private var isVehicleHistory = false
+    private var isBusinessAccount = false
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -48,7 +54,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAdapter = VrmHistoryAdapter(this)
+        mAdapter = VrmHistoryAdapter(activity,this)
         isVehicleHistory = true
         vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
     }
@@ -56,8 +62,17 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        binding.btnNext.setOnClickListener(this)
+        binding.btnNext.setText(getString(R.string.add_a_vehicle))
+        binding.btnAddNewVehicle.visibility = View.GONE
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.recyclerView.adapter = mAdapter
+        sessionManager.fetchAccountType()?.let {
+            if (it == Constants.BUSINESS_ACCOUNT||it==Constants.EXEMPT_ACCOUNT) {
+                isBusinessAccount = true
+            }
+        }
+        binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
     }
 
     override fun initCtrl() {}
@@ -136,11 +151,19 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
     }
 
-    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {}
+    override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
+        val bundle = Bundle()
+        bundle.putInt(Constants.VEHICLE_INDEX, -2)
+        bundle.putParcelable(Constants.DATA, details)
+        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_removeVehicleFragment,bundle)
+    }
 
     override fun onItemClick(details: VehicleResponse?, pos: Int) {
         selectedViewModel.setSelectedVehicleResponse(details)
-        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment)
+        val bundle = Bundle()
+        bundle.putInt(Constants.VEHICLE_INDEX, -1)
+        bundle.putParcelable(Constants.DATA, details)
+        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_removeVehicleFragment,bundle)
     }
 
     private fun showLoader() {
@@ -153,4 +176,25 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
     }
 
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+
+            R.id.btnNext -> {
+                if(isBusinessAccount.not()){
+                    if (mList.size >= 10) {
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
+                    }
+                }else {
+                    if (mList.size >= 50000) {
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
+                    }
+                }            }
+        }
+    }
 }
+

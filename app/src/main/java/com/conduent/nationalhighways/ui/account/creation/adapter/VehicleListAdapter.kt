@@ -42,8 +42,6 @@ class VehicleListAdapter(private val context: Context, private val list: ArrayLi
     }
 
     class VehicleListViewHolder(var binding:VehiclelistlayoutBinding):RecyclerView.ViewHolder(binding.root) {
-
-
     }
 
     interface VehicleListCallBack{
