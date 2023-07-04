@@ -20,7 +20,9 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryR
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
+import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.adapters.RecentTransactionsAdapter
@@ -54,6 +56,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     private var noOfPages = 1
     @Inject
     lateinit var sessionManager: SessionManager
+    @Inject
+    lateinit var api: ApiService
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -79,11 +83,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
         layoutManager!!.orientation=LinearLayoutManager.VERTICAL
         binding?.rvRecenrTransactions?.layoutManager=layoutManager
         binding.rvRecenrTransactions.adapter = paymentHistoryAdapter    }
-
-    override fun onResume() {
-        super.onResume()
+    fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
         getPaymentHistoryList(startIndex)
+        return {}
+    }
+    override fun onResume() {
+        super.onResume()
+        BaseApplication.getNewToken(api = api,sessionManager,hitAPIs())
     }
 
     private fun getDashBoardAllData() {

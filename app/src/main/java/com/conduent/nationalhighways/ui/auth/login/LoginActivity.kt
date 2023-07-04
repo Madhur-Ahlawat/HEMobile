@@ -75,23 +75,25 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.accountInformation?.accountStatus.equals(Constants.SUSPENDED,true)){
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, "")
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    startActivity(intent)
-                }else{
-                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                    }
-                    sessionManager.saveUserName(binding.edtEmail.text.toString())
-                }
+                BaseApplication.getNewToken(api,sessionManager,showBiometricPrompt())
+//                if (status.data?.accountInformation?.accountStatus.equals(Constants.SUSPENDED,true)){
+//                    val bundle = Bundle()
+//                    bundle.putString(Constants.NAV_FLOW_KEY, "")
+//                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+//                    startActivity(intent)
+//                }
+//                else{
+//                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
+//
+//                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+//
+//
+//                    } else {
+//                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+//
+//                    }
+//                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+//                }
 
             }
 
@@ -292,12 +294,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, "")
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    startActivity(intent)
+//                    val bundle = Bundle()
+//                    bundle.putString(Constants.NAV_FLOW_KEY, "")
+//                    val intent = Intent(this@LoginActivity, HomeActivityMain::class.java)
+//                    startActivity(intent)
 
-                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
+                     startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
