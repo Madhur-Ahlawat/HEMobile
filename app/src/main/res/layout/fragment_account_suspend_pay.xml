@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="18dp"
+        android:paddingTop="@dimen/_20dp"
+        android:paddingEnd="@dimen/margin_18dp"
+        android:paddingBottom="@dimen/margin_20dp">
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tv_enter_amount"
+            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/str_enter_amount_you_want_to_pop_up"
+            android:textSize="@dimen/font_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/lowBalance"
+            style="@style/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_42_68dp"
+            android:maxLength="10"
+            android:textSize="@dimen/font_16sp"
+            app:drawableRight="@drawable/edit"
+            app:imeOptions="actionDone"
+            app:inputType="text"
+            app:labelText="@string/str_payment_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_enter_amount"
+            app:maxLength="10" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_74dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginHorizontal="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lowBalance">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivCardType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    android:src="@drawable/visablue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_select_payment_method"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/str_Mastercard"
+                    android:textColor="@color/grayColorIcon"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnPay"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_99dp"
+            android:text="@string/str_pay"
+            android:textSize="@dimen/font_14sp"
+            app:isEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnCancel"
+            style="@style/secondaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_cancel"
+            android:textSize="@dimen/font_14sp"
+            app:isEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnPay" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
