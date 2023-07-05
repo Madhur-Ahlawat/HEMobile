@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
+import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
@@ -38,7 +39,6 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
-
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _vehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
@@ -239,6 +239,19 @@ class DashboardViewModel @Inject constructor(
             }
         }
 
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _logout = MutableLiveData<Resource<AuthResponseModel?>?>()
+    val logout: LiveData<Resource<AuthResponseModel?>?> get() = _logout
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                _logout.postValue(ResponseHandler.success(repository.logout(), errorManager))
+            } catch (e: java.lang.Exception) {
+                _logout.postValue(ResponseHandler.failure(e))
+            }
+        }
     }
 
 }

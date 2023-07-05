@@ -12,12 +12,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
+import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
@@ -29,8 +29,8 @@ import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.adapters.RecentTransactionsAdapter
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
@@ -52,7 +52,6 @@ import javax.inject.Inject
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
 
     private var mLayoutManager: LinearLayoutManager? = null
-    private var paymentHistoryAdapter: RecentTransactionsAdapter? = null
     private var dateRangeModel: PaymentDateRangeModel? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
@@ -73,10 +72,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
         areItemContentsEqual = ::areRecentTransactionsSame,
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemRecentTansactionsBinding) {
-                viewDataBinding?.apply {
+                viewDataBinding.apply {
                     valueTopUpAmount.text = recentTransactionItem.amount
                     valueCurrentBalance.text = recentTransactionItem.balance
-                    if (valueTopUpAmount?.text?.contains("-") == false) {
+                    if (valueTopUpAmount.text?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(Color.GREEN)
                         indicatorIconTransactionType.setBackgroundColor(Color.GREEN)
 
@@ -109,6 +108,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     override fun init() {
         initTransactionsRecyclerView()
         initLoaderDialog()
+
     }
 
     private fun initLoaderDialog() {
@@ -118,18 +118,17 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
 
     private fun initTransactionsRecyclerView() {
         mLayoutManager = LinearLayoutManager(requireContext())
-        binding?.rvRecenrTransactions?.run {
+        binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(10, 1))
+                addItemDecoration(RecyclerViewItemDecorator(15, 1))
             }
-            binding?.rvRecenrTransactions?.layoutManager = mLayoutManager
+            binding.rvRecenrTransactions.layoutManager = mLayoutManager
             adapter = recentTransactionAdapter
         }
     }
 
     fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
-        getPaymentHistoryList(startIndex)
         return {}
     }
 
@@ -139,6 +138,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     }
 
     private fun getDashBoardAllData() {
+        binding.loaderPlaceholder.visibility == View.VISIBLE
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = CrossingHistoryRequest(
             startIndex = 1,
@@ -180,15 +180,17 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                 bundle
             )
         }
-
-        binding.buttonTopup.setOnClickListener {
-            requireActivity().startNormalActivity(ManualTopUpActivity::class.java)
+        binding.logout.setOnClickListener {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            dashboardViewModel.logout()
         }
+
     }
 
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
+        observe(dashboardViewModel.logout, ::handleLogout)
     }
 
 
@@ -207,6 +209,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                         binding.tvNoHistory.gone()
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
+                        paymentHistoryListData.addAll(it)
                         paymentHistoryListData.addAll(it)
                         recentTransactionAdapter.submitList(paymentHistoryListData)
                     } else {
@@ -334,9 +337,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
         }
         when (status) {
             is Resource.Success -> {
-                status.data?.let {
-                    setAccountDetailsView(it)
-                    setTopUpVisibility(it)
+                binding.loaderPlaceholder.visibility == View.GONE
+                status.data?.apply {
+                    if (accountInformation?.accountType.equals("BUSINESS", true)
+                        || (accountInformation?.accSubType.equals("STANDARD", true) &&
+                                accountInformation?.accountType.equals(
+                                    "PRIVATE",
+                                    true
+                                ))
+                    ) {
+                        showNonPayGUI(this)
+                    } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                        showPayGUI(this)
+                    }
                 }
             }
 
@@ -350,24 +363,29 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
         }
     }
 
-    private fun setTopUpVisibility(data: AccountResponse) {
-        if (data.accountInformation?.accountType.equals("BUSINESS", true)
-            || (data.accountInformation?.accSubType.equals("STANDARD", true) &&
-                    data.accountInformation?.accountType.equals("PRIVATE", true))
-        ) {
-            binding.boxAccountInformation.visible()
-        } else {
-            binding.boxAccountInformation.gone()
-        }
-    }
-
-    private fun setAccountDetailsView(data: AccountResponse) {
+    private fun showPayGUI(data: AccountResponse) {
         binding.apply {
-            tvAvailableBalance.text = data.replenishmentInformation?.currentBalance?.run {
-                get(0) + " " + drop(1)
-            }
-            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
+            tvAvailableBalanceHeading.gone()
+//            tvAvailableBalance.apply {
+//                visible()
+//                text = data.replenishmentInformation?.currentBalance?.run {
+//                    get(0) + " " + drop(1)
+//                }
+//            }
+
+            tvAccountStatusHeading.visible()
+            cardIndicatorAccountStatus.visible()
+
+            boxTopupAmount.gone()
+//            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
+
+            boxLowBalanceThreshold.gone()
+//            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
+
+            boxTopupMethod.gone()
+            buttonTopup.gone()
+
+            tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
 //            tvAccountStatus.text = data.accountInformation?.accountStatus
 //            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
@@ -375,6 +393,78 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
+                        boxCardType.visible()
+                        cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatus,
+                            binding.cardIndicatorAccountStatus
+                        )
+                    }
+//                    it.accountFinancialstatus?.let {
+//                        DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
+//                    }
+                    it.type?.let {
+                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
+                        sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
+                        sessionManager.saveAccountType(data.accountInformation?.accountType)
+                    }
+                }
+                it.personalInformation?.emailAddress?.let { email ->
+                    sessionManager.saveAccountEmailId(email)
+                }
+            }
+            when (data.replenishmentInformation?.reBillPayType) {
+                Constants.MASTERCARD -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
+                }
+
+                Constants.VISA -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+
+                }
+
+                Constants.MAESTRO -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+                }
+            }
+        }
+    }
+    private fun showNonPayGUI(data: AccountResponse) {
+        binding.apply {
+            tvAvailableBalanceHeading.visible()
+            tvAvailableBalance.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + " " + drop(1)
+                }
+            }
+
+            tvAccountStatusHeading.visible()
+            cardIndicatorAccountStatus.visible()
+
+            boxTopupAmount.visible()
+            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
+
+            boxLowBalanceThreshold.visible()
+            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
+
+            boxTopupMethod.visible()
+
+            buttonTopup.visible()
+            buttonTopup.setOnClickListener {
+                requireActivity().startNormalActivity(ManualTopUpActivity::class.java)
+            }
+
+            tvAccountNumberHeading.visible()
+            tvAccountNumberValue.text = data.personalInformation?.accountNumber
+//            tvAccountStatus.text = data.accountInformation?.accountStatus
+//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
+//            tvAccountType.text = data.accountInformation?.type
+            data.let {
+                it.accountInformation?.let {
+                    it.accountStatus?.let {
+                        boxCardType.visible()
                         cardNumber.text = data.accountInformation?.paymentTypeInfo
                         DashboardUtils.setAccountStatusNew(
                             it,
@@ -409,6 +499,37 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
                 }
             }
+            boxViewAll.visible()
+            rvRecenrTransactions.visible()
+            getPaymentHistoryList(startIndex)
+        }
+    }
+
+    private fun handleLogout(status: Resource<AuthResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                logOutOfAccount()
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+            else -> {
+            }
+        }
+    }
+    private fun logOutOfAccount() {
+        sessionManager.clearAll()
+        Intent(requireActivity(), LandingActivity::class.java).apply {
+            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(this)
         }
     }
 }
+
+
+

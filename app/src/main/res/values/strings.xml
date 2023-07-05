@@ -1218,6 +1218,7 @@
     <string name="txt_recent_transacions">Recent Transactions</string>
     <string name="top_up">Top- Up</string>
     <string name="txt_topup_amount">Top-Up\nAmount</string>
+    <string name="txt_account_balance">Account Balance</string>
 
 
 </resources>

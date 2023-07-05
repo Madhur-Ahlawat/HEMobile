@@ -65,7 +65,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
         observe(dashboardViewModel.accountOverviewVal,::handleAccountDetails)
-
     }
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
