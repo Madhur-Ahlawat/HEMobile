@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.dashboard//package com.conduent.nationalhighways.ui.bottomnav.dashboard
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -22,6 +25,7 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
+import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -38,6 +42,8 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,7 +51,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
 
-    private var layoutManager: LinearLayoutManager?=null
+    private var mLayoutManager: LinearLayoutManager? = null
     private var paymentHistoryAdapter: RecentTransactionsAdapter? = null
     private var dateRangeModel: PaymentDateRangeModel? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -54,10 +60,43 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     private val countPerPage = 10
     private var startIndex = 1
     private var noOfPages = 1
+    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
+
     @Inject
     lateinit var sessionManager: SessionManager
+
     @Inject
     lateinit var api: ApiService
+    fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
+        getViewLayout = { R.layout.item_recent_tansactions },
+        areItemsSame = ::areRecentTransactionsSame,
+        areItemContentsEqual = ::areRecentTransactionsSame,
+        onBind = { recentTransactionItem, viewDataBinding, _ ->
+            with(viewDataBinding as ItemRecentTansactionsBinding) {
+                viewDataBinding?.apply {
+                    valueTopUpAmount.text = recentTransactionItem.amount
+                    valueCurrentBalance.text = recentTransactionItem.balance
+                    if (valueTopUpAmount?.text?.contains("-") == false) {
+                        verticalStripTransactionType.setBackgroundColor(Color.GREEN)
+                        indicatorIconTransactionType.setBackgroundColor(Color.GREEN)
+
+                    } else {
+                        verticalStripTransactionType.setBackgroundColor(Color.RED)
+                        indicatorIconTransactionType.setBackgroundColor(Color.RED)
+
+                    }
+                    root.setOnClickListener {
+                        valueTopUpAmount
+                    }
+                }
+            }
+        }
+    )
+
+    fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
+        return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
+    }
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -78,19 +117,25 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     }
 
     private fun initTransactionsRecyclerView() {
-        paymentHistoryAdapter = RecentTransactionsAdapter(this, paymentHistoryListData)
-        layoutManager=LinearLayoutManager(requireContext())
-        layoutManager!!.orientation=LinearLayoutManager.VERTICAL
-        binding?.rvRecenrTransactions?.layoutManager=layoutManager
-        binding.rvRecenrTransactions.adapter = paymentHistoryAdapter    }
+        mLayoutManager = LinearLayoutManager(requireContext())
+        binding?.rvRecenrTransactions?.run {
+            if (itemDecorationCount == 0) {
+                addItemDecoration(RecyclerViewItemDecorator(10, 1))
+            }
+            binding?.rvRecenrTransactions?.layoutManager = mLayoutManager
+            adapter = recentTransactionAdapter
+        }
+    }
+
     fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
         getPaymentHistoryList(startIndex)
         return {}
     }
+
     override fun onResume() {
         super.onResume()
-        BaseApplication.getNewToken(api = api,sessionManager,hitAPIs())
+        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
     }
 
     private fun getDashBoardAllData() {
@@ -103,14 +148,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
             startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
             endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
         )
-        Log.e("XJ220",Gson().toJson(request))
+        Log.e("XJ220", Gson().toJson(request))
         dashboardViewModel.getDashboardAllData(request)
     }
 
     private fun getPaymentHistoryList(
         index: Int
     ) {
-        binding.progressBar.visibility
         dateRangeModel =
             PaymentDateRangeModel(
                 filterType = Constants.PAYMENT_FILTER_SPECIFIC,
@@ -145,13 +189,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
-//        observe(dashboardViewModel.thresholdAmountVal, ::handleThresholdAmountData)
     }
 
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-        binding.progressBar.gone()
-        //binding.paginationLayout.visible()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -160,24 +201,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                     } else {
                         (it.toInt() / countPerPage) + 1
                     }
-
                 }
                 resource.data?.transactionList?.transaction?.let {
-//                    binding.nextBtnModel = selectedPosition != noOfPages
-//                    binding.prevBtnModel = selectedPosition != 1
                     if (it.isNotEmpty()) {
                         binding.tvNoHistory.gone()
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
-                        paymentHistoryAdapter?.notifyDataSetChanged()
-//                        binding.paginationLayout.visible()
-
-//                        paginationNumberAdapter?.apply {
-//                            setCount(noOfPages)
-//                            setSelectedPosit(selectedPosition)
-//                        }
-//                        binding.paginationNumberRecyclerView.adapter = paginationNumberAdapter
+                        recentTransactionAdapter.submitList(paymentHistoryListData)
                     } else {
                         binding.rvRecenrTransactions.gone()
                         binding.tvNoHistory.visible()
@@ -258,10 +289,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
             is Resource.Success -> {
                 status.data?.messageList?.let { alerts ->
                     if (alerts.isNotEmpty()) {
-//                        binding.notificationView.visible()
-//                        binding.viewAllNotifi.text =
-//                            getString(R.string.str_view_all, alerts.size.toString())
-//                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
                             (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
                                 val badgeCountBtn =
@@ -300,15 +327,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
             }
         }
     }
-
-
-//    private fun setNotificationAdapter(notificationList: List<AlertMessage?>?) {
-//        binding.rvNotification.apply {
-//            adapter = DashboardNotificationAdapter(requireActivity(), notificationList)
-//            layoutManager = LinearLayoutManager(requireActivity())
-//            setHasFixedSize(true)
-//        }
-//    }
 
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
         if (loader?.isVisible == true) {
@@ -350,11 +368,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
             }
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-
+            tvAccountNumberValue.text = data.personalInformation?.accountNumber
 //            tvAccountStatus.text = data.accountInformation?.accountStatus
 //            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
 //            tvAccountType.text = data.accountInformation?.type
-            data.let{
+            data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         cardNumber.text = data.accountInformation?.paymentTypeInfo
@@ -368,7 +386,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                         DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
                     }
                     it.type?.let {
-        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
+                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
@@ -381,46 +399,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>() {
                 Constants.MASTERCARD -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
                 }
+
                 Constants.VISA -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
 
                 }
+
                 Constants.MAESTRO -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
                 }
             }
         }
     }
-
-//    private fun handleThresholdAmountData(status: Resource<ThresholdAmountApiResponse?>?) {
-//        if (loader?.isVisible == true) {
-//            loader?.dismiss()
-//        }
-//        when (status) {
-//            is Resource.Success -> {
-//                status.data?.let {
-//                    it.thresholdAmountVo?.let { amount ->
-//                        //stViewBalance(amount)
-//                    }
-//                }
-//            }
-//            is Resource.DataError -> {
-//                ErrorUtil.showError(binding.root, status.errorMsg)
-//            }
-//            else -> {
-//
-//            }
-//        }
-//
-//    }
-
-//    private fun stViewBalance(thresholdAmountData: ThresholdAmountData) {
-//        binding.apply {
-//            tvTitle.text = requireActivity().getString(
-//                R.string.str_threshold_val_msg,
-//                thresholdAmountData.customerAmount,
-//                thresholdAmountData.thresholdAmount
-//            )
-//        }
-//    }
 }
