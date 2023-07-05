@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.databinding.AdapterAccountPaymentHistoryBin
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragment
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 
@@ -36,7 +37,7 @@ class RecentTransactionsAdapter(
         holder.binding.clMain.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.DATA, transactionDataList?.get(position))
-            if (fragment is DashboardFragment)
+            if (fragment is DashboardFragmentNew)
                 it.findNavController().navigate(
                     R.id.action_accountPaymentHistoryFragment_to_accountPaymentHistoryItemDetailFragment,
                     bundle

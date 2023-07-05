@@ -28,6 +28,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAmount"
+            style="@style/Widget.HeMobile.TextInputLayout.Transparent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
@@ -42,6 +43,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieAmount"
+                style="@style/AppEditTextTransparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="0123456789."
@@ -53,8 +55,9 @@
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
