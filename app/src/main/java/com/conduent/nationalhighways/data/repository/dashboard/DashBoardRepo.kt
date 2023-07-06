@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
     suspend fun getAccountPayment(requestParam: AccountPaymentHistoryRequest?) =
         apiService.getPaymentHistoryData(requestParam)
-
+    suspend fun logout() = apiService.logout()
     suspend fun getThresholdAmount() = apiService.getThresholdValuePayment()
     suspend fun getVehicleData() = apiService.getVehicleData(startIndex = "1", count = "100")
 

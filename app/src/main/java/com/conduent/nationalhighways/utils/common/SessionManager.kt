@@ -23,6 +23,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val USER_TOKEN_TIME_OUT = "user_token_time_out"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
+        const val ACCOUNT_STATUS = "account_status"
         const val ACCOUNT_TYPE = "account_type"
         const val SUB_ACCOUNT_TYPE = "sub_account_type"
         const val USER_EMAIL_ID = "user_email_id"
@@ -35,6 +36,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val NC_ID = "nc_id"
         const val PUSH_TOKEN = "firebase_notification_token"
         const val USER_NAME="username"
+        const val NAME="name"
 
         val BIOMETRICTOKEN: String="ACSInrixTrafficApp"
         val TOUCH_ID_ENABLED: String="touch_ID"
@@ -96,6 +98,24 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         prefs.edit().apply {
             putString(ACCOUNT_NUMBER, accountNumber)
         }.apply()
+    }
+
+    fun saveAccountStatus(accountStatus: String) {
+        prefs.edit().apply {
+            putString(ACCOUNT_STATUS, accountStatus)
+        }.apply()
+    }
+    fun saveName(name: String) {
+        prefs.edit().apply {
+            putString(NAME, name)
+        }.apply()
+    }
+    fun fetchName(): String? {
+        return prefs.getString(NAME, null)
+    }
+
+    fun fetchAccountStatus(): String? {
+        return prefs.getString(ACCOUNT_STATUS, null)
     }
 
     fun fetchAccountNumber(): String? {

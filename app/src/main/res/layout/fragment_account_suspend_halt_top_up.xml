@@ -54,7 +54,7 @@
                 android:lineSpacingExtra="2dp"
                 android:gravity="center"
                 android:fontFamily="@font/open_sans"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_blue_color"
                 android:layout_marginTop="17dp"
                 android:textSize="14sp"
                 android:id="@+id/textMaximumVehicle" />
@@ -62,12 +62,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_vehicle_already_note_desc"
+                android:text="@string/str_you_crossing"
                 app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:visibility="gone"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/open_sans"
                 android:textSize="@dimen/font_14sp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:id="@+id/maximumVehicleAddedNote"

@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 paymentToken: e.token,
                 currency:  "GBP",
                 amount: document.getElementById("amount").value,
-                email:  /*"omvir.singh@conduent.com"*/document.getElementById("email").innerText,
+                email:  "omvir.singh@conduent.com"/*document.getElementById("email").innerText*/,
                 phone:  "7589485763"/*document.getElementById("phone").innerText*/,
                 city: "HE"/*document.getElementById("city").innerText*/,
                     //state: '10 address street',

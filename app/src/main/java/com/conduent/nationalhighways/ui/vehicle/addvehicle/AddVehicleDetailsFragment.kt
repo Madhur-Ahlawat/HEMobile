@@ -181,7 +181,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
         binding.modelInputLayout.editText.onTextChanged {
             modelInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.specialCharacter)) {
+                if (it.contains(Utils.excludeNumber)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {

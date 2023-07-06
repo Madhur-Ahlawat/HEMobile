@@ -120,6 +120,9 @@
     <action
         android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
         app:destination="@id/accountSuspendedPaymentFragment" />
+    <action
+        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendReOpenFragment"
+        app:destination="@id/accountSuspendReOpenFragment" />
 </fragment>
 
 
@@ -140,13 +143,22 @@
         android:id="@+id/accountSuspendedFinalPayFragment"
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendPayFragment"
         android:label="accountSuspendPayFragment"
-        tools:layout="@layout/fragment_account_suspend_pay"/>
+        tools:layout="@layout/fragment_account_suspend_pay">
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
+            app:destination="@id/accountSuspendReOpenFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nmiPaymentFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.NMIPaymentFragment"
         android:label="NMIFragment"
         tools:layout="@layout/nmi_payment_fragment"/>
+    <fragment
+        android:id="@+id/accountSuspendReOpenFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment"
+        android:label="AccountSuspendReOpen"
+        tools:layout="@layout/fragment_account_suspend_halt_reopened"/>
 
 
 

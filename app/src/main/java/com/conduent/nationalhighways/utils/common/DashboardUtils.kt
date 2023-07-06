@@ -35,7 +35,7 @@ object DashboardUtils {
     fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView) {
         if (status.equals("OPEN", true) || status.equals("ACTIVE", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.open)
-            viewGroup.setCardBackgroundColor(Color.GREEN)
+            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status));
         } else if (status.equals("SUSPENDED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.suspended)
             viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_C93E28));

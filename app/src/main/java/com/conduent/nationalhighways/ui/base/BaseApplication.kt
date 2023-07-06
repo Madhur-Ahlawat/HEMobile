@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
+import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.utils.common.Logg
@@ -25,7 +26,13 @@ class BaseApplication : Application() {
 
     @Inject
     lateinit var api: ApiService //ms
-
+    private var accountResponse:AccountResponse?=null
+    fun getAccountSavedData():AccountResponse{
+        return accountResponse!!
+    }
+    fun setAccountSavedData(accountResponse: AccountResponse){
+        this.accountResponse=accountResponse
+    }
     companion object {
         var INSTANCE: BaseApplication? = null
         fun getNewToken(api: ApiService,sessionManager:SessionManager,delegate:()->Unit?) {
