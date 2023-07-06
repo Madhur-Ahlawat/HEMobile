@@ -1,9 +1,11 @@
 package com.conduent.nationalhighways.ui.auth.controller
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.ActivityAuthBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -19,6 +21,7 @@ class AuthActivity : BaseActivity<Any?>() {
     public var previousScreen = "home"
     private lateinit var navController: NavController
     private var navFlow:String=""
+    private var currentBalance:String=""
 
 
     @Inject
@@ -30,7 +33,7 @@ class AuthActivity : BaseActivity<Any?>() {
             navFlow= intent.getStringExtra(Constants.NAV_FLOW_KEY)?:""
 
         }
-
+        currentBalance= intent.getStringExtra(Constants.CURRENTBALANCE)?:""
 
 
 
@@ -73,9 +76,11 @@ class AuthActivity : BaseActivity<Any?>() {
             bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
         }else{
+
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
 
             graph.setStartDestination(R.id.accountSuspendedFragment)
+            bundle.putString(Constants.CURRENTBALANCE,currentBalance)
 
         }
 

@@ -1,98 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/_20dp"
-    android:paddingStart="18dp"
-    android:paddingEnd="@dimen/margin_18dp"
-    android:paddingBottom="@dimen/margin_20dp"    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingTop="@dimen/_20dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="@dimen/margin_18dp"
+        android:paddingBottom="@dimen/margin_20dp">
 
-        <ImageView
-            android:id="@+id/ivWarning"
-            android:layout_width="73dp"
-            android:layout_height="73dp"
-            android:src="@drawable/ic_check_blue"
-            android:textSize="@dimen/font_14sp"
-            app:layout_constraintTop_toTopOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_account_suspended"
-            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@string/str_account_reopened"
-            android:textSize="@dimen/font_16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-            app:layout_constraintStart_toStartOf="@id/ivWarning"
-            app:layout_constraintTop_toBottomOf="@+id/ivWarning" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tvYouWillNeedToPay"
-            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center_horizontal"
-            android:text="@string/str_we_have_sent_confirmation"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-            app:layout_constraintStart_toStartOf="@id/ivWarning"
-            app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tvYouWillAlsoNeed"
-            style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center_horizontal"
-            android:text="@string/make_another_payment"
-            android:textAlignment="center"
-            android:textSize="@dimen/font_15sp"
-            app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-            app:layout_constraintStart_toStartOf="@id/ivWarning"
-            app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
-
-
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btnTopUpNow"
-            style="@style/PrimaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_106dp"
-            android:text="@string/str_go_to_dashboard"
-            app:isEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="115dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btnNoIwillDoItLater"
-            style="@style/secondaryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:text="@string/str_feedback_to_improve_the_service"
-            android:textSize="@dimen/font_14sp"
-            app:isEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnTopUpNow" />
+            <ImageView
+                android:id="@+id/ivWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_blue"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_account_suspended"
+                style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="@string/str_account_reopened"
+                android:textSize="@dimen/font_16sp"
+                android:fontFamily="@font/open_sans_bold"
+                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+                app:layout_constraintStart_toStartOf="@id/ivWarning"
+                app:layout_constraintTop_toBottomOf="@+id/ivWarning" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tvYouWillNeedToPay"
+                style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="@string/str_we_have_sent_confirmation"
+                android:textAlignment="center"
+                android:fontFamily="@font/open_sans"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+                app:layout_constraintStart_toStartOf="@id/ivWarning"
+                app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tvYouWillAlsoNeed"
+                style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/str_you_have_less_than"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
+                app:layout_constraintStart_toStartOf="@id/ivWarning"
+                app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
+
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnTopUpNow"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_106dp"
+                android:text="@string/str_go_to_dashboard"
+                app:isEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="60dp"
+                />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnNoIwillDoItLater"
+                style="@style/secondaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:text="@string/str_feedback_to_improve_the_service"
+                android:textSize="@dimen/font_14sp"
+                app:isEnabled="true"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnTopUpNow" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

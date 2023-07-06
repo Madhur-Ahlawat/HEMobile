@@ -40,7 +40,9 @@ object Utils {
         Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
 
-    var specialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+    var specialCharacter: Regex = Regex("[0-9$&+,:;=\\\\?@#|/'<>.^*()%!]")
+    var excludeNumber: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
+
     var colourSpecialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
     var addressSpecialCharacter: Regex = Regex("[$&+:;=\\\\?@|/<>^*()%!]")
 

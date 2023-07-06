@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Patterns
@@ -14,19 +13,16 @@ import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
-import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -37,7 +33,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-import kotlin.reflect.KParameter
 
 
 @AndroidEntryPoint
@@ -56,15 +51,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
 
-
     @Inject
     lateinit var sessionManager: SessionManager
-    @Inject
-    lateinit var api: ApiService
+
 
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
         observe(dashboardViewModel.accountOverviewVal,::handleAccountDetails)
+        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+
     }
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
@@ -74,25 +69,34 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                BaseApplication.getNewToken(api,sessionManager,showBiometricPrompt())
-//                if (status.data?.accountInformation?.accountStatus.equals(Constants.SUSPENDED,true)){
-//                    val bundle = Bundle()
-//                    bundle.putString(Constants.NAV_FLOW_KEY, "")
-//                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                else{
-//                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-//
-//                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
-//
-//
-//                    } else {
-//                        startNewActivityByClearingStack(HomeActivityMain::class.java)
-//
-//                    }
-//                    sessionManager.saveUserName(binding.edtEmail.text.toString())
-//                }
+                if (status.data?.accountInformation?.accountStatus.equals(
+                        Constants.SUSPENDED,
+                        true
+                    )
+                ) {
+
+
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        status.data?.replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
+                } else {
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                            .trim()
+                    ) {
+
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+                }
 
             }
 
@@ -128,10 +132,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun initViewBinding() {
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.edtEmail.setText("shivam.gupta@conduent.com")
-        binding.edtPwd.setText("Shivam@141")
-        binding.btnLogin.isEnabled = true
 
         init()
         initCtrl()
@@ -200,18 +200,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                BaseApplication.getNewToken(api = api, sessionManager=sessionManager, showBiometricPrompt())
                 launchIntent(status)
             }
 
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == 5260) {
                     binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
-                } else {
+                } else if (status.errorModel?.error.equals("unauthorized", true)) {
                     binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
 
-                }
+                } else {
+                    status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
 
+                }
 
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
@@ -232,19 +233,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
     }
-    fun showBiometricPrompt(): () -> Unit? {
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
 
-            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-
-        }
-        return {}
-    }
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
 
         sessionManager.run {
@@ -257,9 +246,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
         }
 
-        sessionManager.saveUserName(binding.edtEmail.text.toString())
 
-        //dashboardViewModel.getAccountDetailsData()
+        dashboardViewModel.getAccountDetailsData()
 
 
         AdobeAnalytics.setLoginActionTrackError(
@@ -297,12 +285,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-//                    val bundle = Bundle()
-//                    bundle.putString(Constants.NAV_FLOW_KEY, "")
-//                    val intent = Intent(this@LoginActivity, HomeActivityMain::class.java)
-//                    startActivity(intent)
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(Constants.CURRENTBALANCE, "£1.00")
 
-                     startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    startActivity(intent)
+
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
@@ -341,9 +330,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
                 val intent = Intent(this, AuthActivity::class.java)
+                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+
                 startActivity(intent)
             }
         }
@@ -441,7 +430,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     }
-
 
 
 }

@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -49,6 +50,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
     private var creditCardType: String = ""
+    private var flow:String=""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -60,6 +62,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
+
+        NewCreateAccountRequestModel.emailAddress="shivam.gupta@conduent.com"
+        NewCreateAccountRequestModel.firstName="Shivam"
+        NewCreateAccountRequestModel.lastName="Gupta"
+        NewCreateAccountRequestModel.mobileNumber="9936609176"
+
+        flow= arguments?.getString(Constants.SUSPENDED).toString()
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
@@ -147,12 +156,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         val paymentSuccessResponse =
                             gson.fromJson(data, PaymentSuccessResponse::class.java)
                         if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                            callAccountCreationApi(
-                                paymentSuccessResponse.threeDsVersion,
-                                paymentSuccessResponse.cavv,
-                                paymentSuccessResponse.directoryServerId,
-                                paymentSuccessResponse.eci
-                            )
+                            if (flow==Constants.NOTSUSPENDED){
+                                callAccountCreationApi(
+                                    paymentSuccessResponse.threeDsVersion,
+                                    paymentSuccessResponse.cavv,
+                                    paymentSuccessResponse.directoryServerId,
+                                    paymentSuccessResponse.eci
+                                )
+                            }else{
+
+                            }
+
                         }
                     }
                 }
@@ -191,7 +205,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
-        model.countryType = "UK"
+        if (NewCreateAccountRequestModel.country.equals("UK",true)){
+            model.countryType = "UK"
+
+        }else{
+            model.countryType = "NON-UK"
+
+        }
         model.referenceId = data.referenceId
         model.eveningPhone = data.mobileNumber
         model.address1 = data.addressline1
@@ -279,7 +299,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 val amount = arguments?.getDouble(Constants.DATA)
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '" + amount + "';})()");
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
+
+
+
                 super.onPageFinished(view, url)
             }
         }
