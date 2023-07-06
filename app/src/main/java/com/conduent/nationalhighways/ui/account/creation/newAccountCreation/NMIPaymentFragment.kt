@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -49,6 +50,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
     private var creditCardType: String = ""
+    private var flow:String=""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -65,6 +67,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         NewCreateAccountRequestModel.firstName="Shivam"
         NewCreateAccountRequestModel.lastName="Gupta"
         NewCreateAccountRequestModel.mobileNumber="9936609176"
+
+        flow= arguments?.getString(Constants.SUSPENDED).toString()
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
@@ -152,12 +156,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         val paymentSuccessResponse =
                             gson.fromJson(data, PaymentSuccessResponse::class.java)
                         if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                            callAccountCreationApi(
-                                paymentSuccessResponse.threeDsVersion,
-                                paymentSuccessResponse.cavv,
-                                paymentSuccessResponse.directoryServerId,
-                                paymentSuccessResponse.eci
-                            )
+                            if (flow==Constants.NOTSUSPENDED){
+                                callAccountCreationApi(
+                                    paymentSuccessResponse.threeDsVersion,
+                                    paymentSuccessResponse.cavv,
+                                    paymentSuccessResponse.directoryServerId,
+                                    paymentSuccessResponse.eci
+                                )
+                            }else{
+
+                            }
+
                         }
                     }
                 }

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="@string/str_enter_amount_you_want_to_pop_up"
+            android:text="@string/str_check_your_answer_before_payment"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

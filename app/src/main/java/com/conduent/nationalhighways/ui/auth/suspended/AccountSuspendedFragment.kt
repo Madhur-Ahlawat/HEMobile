@@ -31,7 +31,7 @@ class AccountSuspendedFragment: BaseFragment<FragmentAccountSuspendHaltTopUpBind
         val balance=currentBalance.replace("£","")
         val doubleBalance=balance.toDouble()
         val intBalance=doubleBalance.toInt()
-        val finalCurrentBalance=5-intBalance
+        val finalCurrentBalance=5.00-doubleBalance
 
 
         binding.textMaximumVehicle.text=getString(R.string.str_you_will_need_to_pay, "£$finalCurrentBalance")

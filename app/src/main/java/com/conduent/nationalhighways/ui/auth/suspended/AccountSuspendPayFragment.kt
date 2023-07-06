@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.conduent.apollo.interfaces.OnDrawableClickListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
@@ -24,9 +26,11 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>(),
     View.OnClickListener {
 
@@ -37,7 +41,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
 
 
-    private var topUpAmount = ""
+    private var topUpAmount = 0.0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,11 +54,21 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
-        topUpAmount = arguments?.getString(Constants.PAYMENT_TOP_UP) ?: ""
+        topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        binding.lowBalance.setDrawableClickListener(object : OnDrawableClickListener {
+            override fun onDrawableLeftClick(view: View) {
+
+            }
+
+            override fun onDrawableRightClick(view: View) {
+                findNavController().popBackStack()
+            }
+        })
     }
 
     override fun initCtrl() {
@@ -80,12 +94,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     override fun observer() {
-        lifecycleScope.launch {
+       /* lifecycleScope.launch {
             observe(
                 manualTopUpViewModel.paymentWithExistingCard,
                 ::handlePaymentWithExistingCardResponse
             )
-        }
+        }*/
     }
 
     override fun onClick(v: View?) {
@@ -93,7 +107,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             R.id.btnPay -> {
                 payWithExistingCard()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                val bundle = Bundle()
+              //  bundle.putParcelable(Constants.DATA, status.data)
+                bundle.putString("amount", arguments?.getString("amount"))
+                findNavController().navigate(
+                    R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
+                    bundle
+                )
+               // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             }
 
             R.id.btnCancel -> {
@@ -104,7 +125,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private fun payWithExistingCard() {
         val model = PaymentWithExistingCardModel(
-            transactionAmount = topUpAmount,
+            transactionAmount = topUpAmount.toString(),
             cardType = "",
             cardNumber = "",
             cvv = "",
@@ -119,7 +140,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             maskedCardNumber = "",
             easyPay = ""
         )
-        manualTopUpViewModel.paymentWithExistingCard(model)
+        Log.d("paymentRequest",Gson().toJson(model))
+       // manualTopUpViewModel.paymentWithExistingCard(model)
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {

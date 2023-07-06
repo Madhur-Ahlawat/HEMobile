@@ -54,7 +54,7 @@
                 android:lineSpacingExtra="2dp"
                 android:gravity="center"
                 android:fontFamily="@font/open_sans"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_blue_color"
                 android:layout_marginTop="17dp"
                 android:textSize="14sp"
                 android:id="@+id/textMaximumVehicle" />

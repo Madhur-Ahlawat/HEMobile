@@ -62,7 +62,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             SuspendPaymentMethodAdapter(requireContext(), paymentList, this)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
-        binding.lowBalance.setText("£10")
+        binding.lowBalance.setText("£10.00")
 
     }
 
@@ -169,6 +169,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA,topUpAmount.toDouble())
+                bundle.putString(Constants.SUSPENDED,Constants.SUSPENDED)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
                     bundle
@@ -214,6 +215,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         this.position=position
         suspendPaymentMethodAdapter?.notifyDataSetChanged()
         cardSelection = paymentList?.get(position)?.isSelected == true
+        lowBalance=true
         checkButton()
 
     }

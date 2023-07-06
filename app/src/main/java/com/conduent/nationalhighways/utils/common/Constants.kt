@@ -105,6 +105,7 @@ object Constants {
     const val DATA = "data"
     const val CURRENTBALANCE="currentBalance"
     const val SUSPENDED="suspended"
+    const val NOTSUSPENDED="notsuspended"
     const val THRESHOLD_AMOUNT="threshold_amount"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"

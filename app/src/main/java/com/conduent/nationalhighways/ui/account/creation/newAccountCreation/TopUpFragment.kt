@@ -48,6 +48,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA,amount.toDouble())
                 bundle.putDouble(Constants.THRESHOLD_AMOUNT,thresholdAmount.toDouble())
+                bundle.putString(Constants.SUSPENDED,Constants.NOTSUSPENDED)
+
                 findNavController().navigate(R.id.action_topUpFragment_to_nmiPaymentFragment,bundle)
             }
         }
