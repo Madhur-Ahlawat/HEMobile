@@ -143,6 +143,7 @@
             <com.conduent.apollo.ui.CMButton
                 style="@style/PrimaryButton"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_50sdp"
                 app:layout_constraintTop_toBottomOf="@id/cardView"
                 android:id="@+id/confirmBtn"
                 android:text="@string/str_remove_vehicle" />

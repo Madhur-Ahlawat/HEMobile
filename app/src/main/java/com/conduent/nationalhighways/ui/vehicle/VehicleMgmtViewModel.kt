@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHisto
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.repository.vehicle.VehicleRepository
+import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
@@ -81,6 +82,21 @@ class VehicleMgmtViewModel @Inject constructor(
                 _addVehicleApiVal.postValue(
                     ResponseHandler.success(
                         repository.addVehicleApiCall(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _addVehicleApiVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun addVehicleApiNew(request: AddVehicleRequest?) {
+        viewModelScope.launch {
+            try {
+                _addVehicleApiVal.postValue(
+                    ResponseHandler.success(
+                        repository.addVehicleApiCallNew(request),
                         errorManager
                     )
                 )

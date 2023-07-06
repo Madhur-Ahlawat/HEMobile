@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseFragment
 
@@ -11,6 +12,7 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,16 +34,21 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         binding.btnSubmit.setOnClickListener(this)
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
+        if(navFlow.equals(REMOVE_VEHICLE,true)){
+            binding.title.text = getString(R.string.vehicle_deleted)
+            binding.btnSubmit.text = getString(R.string.str_continue)
+        }else{
+            AdobeAnalytics.setScreenTrack(
+                "login:forgot password:choose options:otp:new password set:password reset success",
+                "forgot password",
+                "english",
+                "login",
+                (requireActivity() as AuthActivity).previousScreen,
+                "login:forgot password:choose options:otp:new password set:password reset success",
+                sessionManager.getLoggedInUser()
+            )
+        }
 
-        AdobeAnalytics.setScreenTrack(
-            "login:forgot password:choose options:otp:new password set:password reset success",
-            "forgot password",
-            "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
-            "login:forgot password:choose options:otp:new password set:password reset success",
-            sessionManager.getLoggedInUser()
-        )
 
     }
 
@@ -54,18 +61,22 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_submit -> {
-                AdobeAnalytics.setActionTrack(
-                    "submit",
-                    "login:forgot password:choose options:otp:new password set:password reset success",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    sessionManager.getLoggedInUser()
-                )
+                if(binding.btnSubmit.text.equals(getString(R.string.str_continue))){
+                    findNavController().popBackStack()
+                }else {
+                    AdobeAnalytics.setActionTrack(
+                        "submit",
+                        "login:forgot password:choose options:otp:new password set:password reset success",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        sessionManager.getLoggedInUser()
+                    )
 
-                requireActivity().startNormalActivity(LoginActivity::class.java)
-                requireActivity().finish()
+                    requireActivity().startNormalActivity(LoginActivity::class.java)
+                    requireActivity().finish()
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.SelectedVehicleViewModel
@@ -44,6 +45,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private var isFirstTime = true
     private var isVehicleHistory = false
     private var isBusinessAccount = false
+    private var needRefresh = true
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -56,7 +58,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         super.onCreate(savedInstanceState)
         mAdapter = VrmHistoryAdapter(activity,this)
         isVehicleHistory = true
-        vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
+
     }
 
     override fun init() {
@@ -73,12 +75,22 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
         }
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
+        NewCreateAccountRequestModel.isVehicleManagementCall = false
     }
 
     override fun initCtrl() {}
 
     override fun observer() {
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleHistoryListData)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(needRefresh) {
+            showLoader()
+            vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
+            needRefresh = false
+        }
     }
 
     private fun handleVehicleHistoryListData(resource: Resource<List<VehicleResponse?>?>?) {
@@ -152,6 +164,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     }
 
     override fun onItemDeleteClick(details: VehicleResponse?, pos: Int) {
+        needRefresh = true
         val bundle = Bundle()
         bundle.putInt(Constants.VEHICLE_INDEX, -2)
         bundle.putParcelable(Constants.DATA, details)
@@ -185,12 +198,14 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                     if (mList.size >= 10) {
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
                     } else {
+                        NewCreateAccountRequestModel.isVehicleManagementCall = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
                     }
                 }else {
                     if (mList.size >= 50000) {
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
                     } else {
+                        NewCreateAccountRequestModel.isVehicleManagementCall = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
                     }
                 }            }

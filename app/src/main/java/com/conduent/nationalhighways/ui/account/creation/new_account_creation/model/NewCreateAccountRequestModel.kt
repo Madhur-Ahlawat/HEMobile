@@ -34,6 +34,7 @@ object NewCreateAccountRequestModel{
     var isMaxVehicleAdded:Boolean=false
     var isEditCall = false
     var isAccountTypeEditCall = false
+    var isVehicleManagementCall = false
     var isManualAddress = false
     var isBackButtonVisible = true
     var emailSecurityCode:String=""

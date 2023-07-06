@@ -1,21 +1,31 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.vehicle.PlateInfoResponse
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentRemoveVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.showToast
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View.OnClickListener {
 
 
@@ -23,6 +33,8 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
     private lateinit var vehicleList:ArrayList<NewVehicleInfoDetails>
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
     private var vehicleDetails : VehicleResponse? = null
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private var loader: LoaderDialog? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -60,7 +72,8 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
         }
 
         binding.strEffectiveDateText.text= Utils.getYesterdayDate()
-
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
     }
 
@@ -78,16 +91,44 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.deleteVehicleApiVal, ::handleDeleteVehicle)
+    }
+
+    private fun handleDeleteVehicle(resource: Resource<EmptyApiResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.REMOVE_VEHICLE)
+                findNavController().navigate(R.id.action_removeVehicleFragment_to_resetForgotPassword,bundle)
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+
+            }
+        }
+
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.confirmBtn -> {
-                index?.let { vehicleList.removeAt(it) }
-                if(vehicleList.isEmpty()){
-                    findNavController().navigate(R.id.action_removeVehicleFragment_to_findVehicleFragment)
-                }else {
-                    findNavController().popBackStack()
+                if(index == -2){
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    val selectedVehicleList = mutableListOf<String?>()
+                    selectedVehicleList.add(vehicleDetails?.vehicleInfo?.rowId)
+                    vehicleMgmtViewModel.deleteVehicleApi(selectedVehicleList)
+                    }else {
+                    index?.let { vehicleList.removeAt(it) }
+                    if (vehicleList.isEmpty()) {
+                        findNavController().navigate(R.id.action_removeVehicleFragment_to_findVehicleFragment)
+                    } else {
+                        findNavController().popBackStack()
+                    }
                 }
 
             }

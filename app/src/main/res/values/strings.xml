@@ -1218,6 +1218,10 @@
     <string name="txt_recent_transacions">Recent Transactions</string>
     <string name="top_up">Top- Up</string>
     <string name="txt_topup_amount">Top-Up\nAmount</string>
+    <string name="vehicle_deleted">Vehicle Deleted</string>
+    <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
+    <string name="vehicles_not_added">Vehicles not added</string>
+    <string name="vehicles_added">Vehicles added</string>
 
 
 </resources>

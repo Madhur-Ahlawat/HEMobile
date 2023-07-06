@@ -57,9 +57,35 @@
         <action
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_removeVehicleFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/removeVehicleFragment"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
+        android:label="ResetFragment"
+        tools:layout="@layout/fragment_forgot_reset">
+        <action
+            android:id="@+id/action_resetFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/vehicleResultFragment"
+        android:name="com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleResultFragment"
+        android:label="Vehicle Management"
+        tools:layout="@layout/vehicle_success_fragment">
+
+        <action
+            android:id="@+id/action_vehicleResultFragment_to_vehicleHistoryListFragment"
+            app:destination="@id/vehicleHomeListFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/maximumVehicleFragment"
@@ -100,9 +126,6 @@
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"/>
 
-
-
-
         <action
             android:id="@+id/action_findVehicleFragment_to_businessVehicleUKListFragment"
             app:destination="@+id/businessVehicleUKListFragment"/>
@@ -130,6 +153,9 @@
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list2">
 
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleResultFragment"
+            app:destination="@id/vehicleResultFragment" />
 
         <action
             android:id="@+id/action_vehicleListFragment_to_maximumVehicleFragment"
