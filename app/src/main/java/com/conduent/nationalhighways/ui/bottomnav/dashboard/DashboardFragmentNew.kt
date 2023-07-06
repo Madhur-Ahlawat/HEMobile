@@ -53,6 +53,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener {
 
+    private var topup: String?=null
     private var mLayoutManager: LinearLayoutManager? = null
     private var dateRangeModel: PaymentDateRangeModel? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -75,15 +76,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemRecentTansactionsBinding) {
                 viewDataBinding.apply {
-                    valueTopUpAmount.text = recentTransactionItem.amount
                     valueCurrentBalance.text = recentTransactionItem.balance
                     tvTransactionType.text=recentTransactionItem.activity?.substring(0,1)!!.toUpperCase().plus(recentTransactionItem.activity?.substring(1,recentTransactionItem.activity.length)!!.toLowerCase())
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
+                        topup = "+"+recentTransactionItem.amount
+                        valueTopUpAmount.text = topup
                     } else {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
+                        topup = "-"+recentTransactionItem.amount
+                        valueTopUpAmount.text = topup
                     }
                     root.setOnClickListener {
                         valueTopUpAmount
