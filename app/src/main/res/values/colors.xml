@@ -129,5 +129,6 @@
     <color name="forgotPasswordColor">#257EBE</color>
     <color name="green_status">#80BA27</color>
     <color name="doItLaterColour">#AC352F</color>
+    <color name="red_status">#CA2A1F</color>
 
 </resources>
