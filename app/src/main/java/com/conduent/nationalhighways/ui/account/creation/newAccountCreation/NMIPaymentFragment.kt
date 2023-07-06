@@ -61,6 +61,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
+        NewCreateAccountRequestModel.emailAddress="shivam.gupta@conduent.com"
+        NewCreateAccountRequestModel.firstName="Shivam"
+        NewCreateAccountRequestModel.lastName="Gupta"
+        NewCreateAccountRequestModel.mobileNumber="9936609176"
+
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
@@ -191,7 +196,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
-        model.countryType = "UK"
+        if (NewCreateAccountRequestModel.country.equals("UK",true)){
+            model.countryType = "UK"
+
+        }else{
+            model.countryType = "NON-UK"
+
+        }
         model.referenceId = data.referenceId
         model.eveningPhone = data.mobileNumber
         model.address1 = data.addressline1
@@ -279,7 +290,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 val amount = arguments?.getDouble(Constants.DATA)
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '" + amount + "';})()");
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
+
+
+
                 super.onPageFinished(view, url)
             }
         }

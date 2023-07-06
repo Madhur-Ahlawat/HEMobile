@@ -103,6 +103,7 @@ object Constants {
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
     const val DATA = "data"
+    const val CURRENTBALANCE="currentBalance"
     const val SUSPENDED="suspended"
     const val THRESHOLD_AMOUNT="threshold_amount"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
@@ -220,6 +221,7 @@ object Constants {
     const val ACCOUNT_CREATION_MOBILE_FLOW="accountCreationMobileFlow"
     const val IS_PERSONAL_ACCOUNT="isPersonalAccount"
     const val POSTCODE="postcode"
+    const val POSITION="position"
     const val UK_COUNTRY="United Kingdom"
     const val USA="USA"
     const val USA_CODE="USA +1"

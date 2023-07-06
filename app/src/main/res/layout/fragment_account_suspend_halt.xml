@@ -44,7 +44,7 @@
                 android:maxLength="10"
                 android:textSize="@dimen/font_16sp"
                 app:imeOptions="actionDone"
-                app:inputType="text"
+                app:inputType="numberDecimal"
                 app:labelText="@string/str_payment_amount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

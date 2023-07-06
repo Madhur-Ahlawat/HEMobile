@@ -50,6 +50,13 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
             checkButtonEnable()
         }
+
+        if (NewCreateAccountRequestModel.firstName.isNotEmpty()){
+            binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
+            binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
+            binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
+            checkButtonEnable()
+        }
     }
 
     override fun initCtrl() {
@@ -153,6 +160,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         if (index == 0) {
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
+                binding.inputFirstName.removeError()
                // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
                 requiredFirstName = false
             } else {
@@ -160,7 +168,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 if (binding.inputFirstName.getText().toString().trim().length < 50) {
 
                     if (binding.inputFirstName.getText().toString().trim()
-                            .contains(Utils.specialCharacter)
+                            .contains(Utils.specialCharacter)||binding.inputFirstName.getText().toString().trim().matches(Utils.NUMBER)
                     ) {
                         binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
                         requiredFirstName = false
@@ -191,6 +199,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
+                binding.inputLastName.removeError()
                // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
                 requiredLastName = false
             } else {

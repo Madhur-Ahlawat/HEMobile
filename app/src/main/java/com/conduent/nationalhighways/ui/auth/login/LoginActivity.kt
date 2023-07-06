@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Patterns
@@ -14,7 +13,6 @@ import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
@@ -53,14 +51,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
 
-
     @Inject
     lateinit var sessionManager: SessionManager
 
 
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
-        observe(dashboardViewModel.accountOverviewVal,::handleAccountDetails)
+        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
 
     }
 
@@ -71,13 +68,24 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.accountInformation?.accountStatus.equals(Constants.SUSPENDED,true)){
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, "")
+                if (status.data?.accountInformation?.accountStatus.equals(
+                        Constants.SUSPENDED,
+                        true
+                    )
+                ) {
+
+
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        status.data?.replenishmentInformation?.currentBalance
+                    )
                     startActivity(intent)
-                }else{
-                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
+                } else {
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                            .trim()
+                    ) {
 
                         displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
@@ -92,12 +100,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == 5260) {
-                    binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
-                } else {
-                    binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
-
-                }
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -198,11 +200,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == 5260) {
                     binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
-                } else {
+                } else if (status.errorModel?.error.equals("unauthorized", true)) {
                     binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
 
-                }
+                } else {
+                    status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
 
+                }
 
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
@@ -235,19 +239,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
         }
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
-
-            displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
 
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-
-        }
-        sessionManager.saveUserName(binding.edtEmail.text.toString())
-
-        //dashboardViewModel.getAccountDetailsData()
+        dashboardViewModel.getAccountDetailsData()
 
 
         AdobeAnalytics.setLoginActionTrackError(
@@ -285,12 +279,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, "")
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(Constants.CURRENTBALANCE, "£1.00")
+
                     startActivity(intent)
 
-                   // startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
@@ -329,9 +324,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
                 val intent = Intent(this, AuthActivity::class.java)
+                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+
                 startActivity(intent)
             }
         }
@@ -429,7 +424,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     }
-
 
 
 }
