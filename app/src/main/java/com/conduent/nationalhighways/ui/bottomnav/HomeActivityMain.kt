@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -12,9 +13,6 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.onTextChanged
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,14 +23,18 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    @Inject
+    lateinit var api: ApiService
     lateinit var dataBinding: ActivityHomeMainBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BaseApplication.INSTANCE?.initTimerObject()
-        BaseApplication.INSTANCE?.startTimerAPi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     override fun initViewBinding() {
@@ -46,6 +48,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
+        dataBinding.idToolBarLyt.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+
+        }
 
         dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {
@@ -62,10 +68,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             }
                         }
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleFragment) {
+                            if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.vehicle_management)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.vehicleFragment)
+                                    .navigate(R.id.vehicleHomeListFragment)
                             }
                         }
                         2 -> {
@@ -112,8 +119,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
-        BaseApplication.INSTANCE?.stopTimerAPi()
         super.onDestroy()
-
     }
 }

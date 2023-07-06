@@ -13,6 +13,7 @@
     <color name="fill_grey">#7676801F</color>
     <color name="grey_one">#333333</color>
     <color name="grey_two">#474747</color>
+    <color name="purple">#69207E</color>
     <color name="color_search_grey">#3C3C43</color>
     <color name="login_blue_border">#1D70B8</color>
     <color name="hint_color">#B1B4B6</color>
@@ -103,6 +104,7 @@
     <color name="text_input_place_holder">#A3C0DA</color>
     <color name="edit_text_inactive">#B5CEE4</color>
     <color name="color_909090">#909090</color>
+    <color name="color_00837B">#00837B</color>
     <color name="color_99999">#999999</color>
     <color name="splash_background">#204489</color>
     <color name="re_send_color">#073165</color>
@@ -125,6 +127,7 @@
     <color name="buttonTextColorSecondary">#073165</color>
     <color name="radioButtonIconColor">#0047BA</color>
     <color name="forgotPasswordColor">#257EBE</color>
+    <color name="green_status">#80BA27</color>
     <color name="doItLaterColour">#AC352F</color>
 
 </resources>

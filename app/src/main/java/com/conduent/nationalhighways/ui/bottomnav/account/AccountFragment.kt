@@ -195,12 +195,13 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+        status?.let {  }
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                ErrorUtil.showError(binding.root, status?.errorMsg)
             }
             else -> {
             }

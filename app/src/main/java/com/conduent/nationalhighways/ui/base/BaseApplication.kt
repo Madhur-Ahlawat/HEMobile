@@ -1,12 +1,11 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Application
-import android.os.CountDownTimer
 import android.util.Log
-import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
-import com.conduent.nationalhighways.data.remote.ApiService
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
+import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.google.android.gms.tasks.OnCompleteListener
@@ -25,20 +24,48 @@ class BaseApplication : Application() {
     lateinit var sessionManager: SessionManager
 
     @Inject
-    lateinit var api: ApiService
-
-    private var timer: CountDownTimer? = null
-    private val TICK_TIME: Long = 1000 //ms
-    private val TIME_PERIOD: Long = 3000 //ms
+    lateinit var api: ApiService //ms
 
     companion object {
         var INSTANCE: BaseApplication? = null
+        fun getNewToken(api: ApiService,sessionManager:SessionManager,delegate:()->Unit?) {
+            sessionManager.fetchRefreshToken()?.let { refresh ->
+                var responseOK = false
+                var tryCount = 0
+                var response: Response<LoginResponse?>? = null
+
+                while (!responseOK && tryCount < 3) {
+                    try {
+                        response = runBlocking {
+                            api.refreshToken(refresh_token = refresh)
+                        }
+                        responseOK = response?.isSuccessful == true
+                    } catch (e: Exception) {
+                        responseOK = false
+                    } finally {
+                        tryCount++
+                    }
+                }
+                if (responseOK) {
+                    saveToken(sessionManager,response)
+                    delegate.invoke()
+                } else
+                    Log.i("teja12345", "refresh : failed")
+            }
+        }
+        fun saveToken(sessionManager:SessionManager,response: Response<LoginResponse?>?) {
+            Log.i("teja12345", "refresh : success")
+            sessionManager.run {
+                saveAuthToken(response?.body()?.accessToken ?: "")
+                saveRefreshToken(response?.body()?.refreshToken ?: "")
+                saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
+            }
+        }
     }
 
     override fun onCreate() {
         INSTANCE = this@BaseApplication
         super.onCreate()
-
         getFireBaseToken()
         setAdobeAnalytics()
     }
@@ -70,70 +97,6 @@ class BaseApplication : Application() {
         sessionManager.setSessionTime(Calendar.getInstance().timeInMillis)
     }
 
-    fun initTimerObject(timePeriod: Long = TIME_PERIOD) {
-        Log.i(
-            "teja12345",
-            "refresh will call in ${timePeriod / 1000} sec or ${(timePeriod / 1000) / 60} min"
-        )
-        timer = object :
-            CountDownTimer(
-                timePeriod,
-                TICK_TIME
-            ) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                Log.i("teja12345", "refresh : called")
-                sessionManager.fetchRefreshToken()?.let { refresh ->
-                    var responseOK = false
-                    var tryCount = 0
-                    var response: Response<LoginResponse?>? = null
-
-                    while (!responseOK && tryCount < 3) {
-                        try {
-                            response = runBlocking {
-                                api.refreshToken(refresh_token = refresh)
-                            }
-                            responseOK = response?.isSuccessful == true
-                        } catch (e: Exception) {
-                            responseOK = false
-                        } finally {
-//                            if (tryCount == 2 && !responseOK) {
-//                                navigate()
-//                            }
-                            tryCount++
-                        }
-                    }
-                    if (responseOK) {
-                        saveToken(response)
-                    } else
-                        Log.i("teja12345", "refresh : failed")
-                }
-            }
-        }
-    }
-
-    private fun saveToken(response: Response<LoginResponse?>?) {
-        Log.i("teja12345", "refresh : success")
-        sessionManager.saveAuthToken(response?.body()?.accessToken ?: "")
-        sessionManager.saveRefreshToken(response?.body()?.refreshToken ?: "")
-        sessionManager.saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
-        val time = kotlin.math.abs((sessionManager.fetchAuthTokenTimeout() - 100) * 1000) //ms
-        initTimerObject(time.toLong())
-        startTimerAPi()
-    }
-
-    fun startTimerAPi() {
-        if (timer != null)
-            timer?.start()
-    }
-
-    fun stopTimerAPi() {
-        if (timer != null) {
-            timer?.cancel()
-            timer = null
-        }
-    }
 
 //    private fun navigate() {
 //        baseContext.startActivity(
@@ -155,5 +118,4 @@ class BaseApplication : Application() {
             Log.i("teja1234", "firebase token is : ${task.result}")
         })
     }
-
 }

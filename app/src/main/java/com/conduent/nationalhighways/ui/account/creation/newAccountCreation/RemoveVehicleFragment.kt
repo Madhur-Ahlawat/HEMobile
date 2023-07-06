@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.vehicle.PlateInfoResponse
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentRemoveVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -20,6 +22,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
     private var index: Int? = null
     private lateinit var vehicleList:ArrayList<NewVehicleInfoDetails>
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
+    private var vehicleDetails : VehicleResponse? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -27,18 +30,46 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
 
     override fun init() {
         index = arguments?.getInt(Constants.VEHICLE_INDEX)
-        val accountData = NewCreateAccountRequestModel
-        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
-        nonUKVehicleModel = index?.let { vehicleList[it] }
-        val numberPlate = nonUKVehicleModel?.plateNumber ?: ""
-        binding.regNum.text = numberPlate
-        binding.typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass ?: "")
-        binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
-        binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
-        binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
+        var numberPlate = ""
+        when (index){
+            -1 -> {
+                setData()
+                binding.regNum.text = vehicleDetails?.plateInfo?.number.toString()
+                binding.isYourVehicle.text = getString(R.string.vehicle_details)
+                binding.confirmBtn.visibility  =View.GONE
+                binding.notVehicle.visibility  =View.GONE
+            }
+            -2 -> {
+                setData()
+                numberPlate = vehicleDetails?.plateInfo?.number.toString()
+                binding.regNum.text = numberPlate
+                binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle,numberPlate)
+            }
+            else -> {
+                val accountData = NewCreateAccountRequestModel
+                vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+                nonUKVehicleModel = index?.let { vehicleList[it] }
+                numberPlate = nonUKVehicleModel?.plateNumber ?: ""
+                binding.regNum.text = numberPlate
+                binding.typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass ?: "")
+                binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
+                binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
+                binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
+                binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle,numberPlate)
+            }
+        }
+
         binding.strEffectiveDateText.text= Utils.getYesterdayDate()
 
-        binding.isYourVehicle.text = getString(R.string.are_you_sure_you_want_to_remove_vehicle)+" $numberPlate?"
+
+    }
+
+    private fun setData() {
+        vehicleDetails = arguments?.getParcelable(Constants.DATA)
+        binding.typeOfVehicle.text = Utils.getVehicleType(vehicleDetails?.plateInfo?.type ?: "")
+        binding.vehicleMake.text = vehicleDetails?.vehicleInfo?.make ?: ""
+        binding.vehicleModel.text = vehicleDetails?.vehicleInfo?.model ?: ""
+        binding.vehicleColor.text = vehicleDetails?.vehicleInfo?.color ?: ""
     }
 
     override fun initCtrl() {

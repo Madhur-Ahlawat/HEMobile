@@ -55,8 +55,9 @@
                 android:textSize="@dimen/_13ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"

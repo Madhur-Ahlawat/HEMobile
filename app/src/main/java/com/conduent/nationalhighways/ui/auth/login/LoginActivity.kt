@@ -57,6 +57,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     override fun observeViewModel() {
         observe(viewModel.login, ::handleLoginResponse)
+        observe(dashboardViewModel.accountOverviewVal,::handleAccountDetails)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
 
     }
@@ -100,6 +101,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
+                if (status.errorModel?.errorCode == 5260) {
+                    binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                } else {
+                    binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+
+                }
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -193,7 +200,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-
                 launchIntent(status)
             }
 

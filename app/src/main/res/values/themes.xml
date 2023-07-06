@@ -163,7 +163,7 @@
 
     //Rebranding
 
-    <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="Widget.HeMobile.TextInputLayout.Transparent" parent="ThemeOverlay.AppTheme.TextInputEditText.Outlined">
         <item name="boxStrokeColor">@color/edit_text_selector</item>
         <item name="android:textColorHint">@color/edit_text_inactive</item>
         <item name="hintTextColor">@color/edittext_stroke_color</item>

@@ -41,8 +41,7 @@
         android:name="com.conduent.nationalhighways.ui.vehicle.vehiclehistory.VehicleHistoryListFragment"
         android:label="VehicleHistoryListFragment"
         tools:layout="@layout/fragment_vehicle_history_list">
-        <action
-            android:id="@+id/action_vehicleHistoryListFragment_to_vehicleHistoryVehicleDetailsFragment"
-            app:destination="@id/vehicleHistoryVehicleDetailsFragment" />
+
     </fragment>
+
 </navigation>
