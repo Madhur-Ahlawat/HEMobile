@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="115dp"
             android:paddingStart="18dp"
             android:paddingTop="@dimen/_20dp"
             android:paddingEnd="@dimen/margin_18dp"
@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_check_blue"
                 android:textSize="@dimen/font_14sp"
+                android:layout_marginTop="115dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -85,10 +87,9 @@
                 android:layout_height="@dimen/_74dp"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/btnTopUpNow"
                 app:cardCornerRadius="@dimen/_5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed">
@@ -131,19 +132,19 @@
                 android:layout_marginTop="@dimen/_30dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnNoIwillDoItLater"
                 style="@style/secondaryButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:text="@string/str_feedback_to_improve_the_service"
                 android:textSize="@dimen/font_14sp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:isEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

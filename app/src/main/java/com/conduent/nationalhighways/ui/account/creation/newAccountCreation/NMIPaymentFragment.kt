@@ -77,10 +77,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
-        NewCreateAccountRequestModel.emailAddress = "shivam.gupta@conduent.com"
-        NewCreateAccountRequestModel.firstName = "Shivam"
-        NewCreateAccountRequestModel.lastName = "Gupta"
-        NewCreateAccountRequestModel.mobileNumber = "9936609176"
+
 
         flow = arguments?.getString(Constants.SUSPENDED).toString()
 
