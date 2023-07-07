@@ -40,7 +40,7 @@
                 style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_42_68dp"
+                android:layout_marginTop="@dimen/_40dp"
                 android:maxLength="10"
                 android:textSize="@dimen/font_16sp"
                 app:imeOptions="actionDone"
@@ -67,7 +67,7 @@
                 android:id="@+id/recyclerViewLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_55dp"
+                android:layout_marginTop="@dimen/_30dp"
 
                 app:layout_constraintTop_toBottomOf="@id/tv_select_payment_method">
 
@@ -80,7 +80,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="2"
-                    android:visibility="gone"
                     tools:listitem="@layout/item_payment_method" />
 
                 <com.conduent.apollo.ui.CMButton
@@ -88,11 +87,10 @@
                     style="@style/PrimaryButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_99dp"
+                    android:layout_marginTop="@dimen/_30dp"
                     android:text="@string/str_continue"
                     android:textSize="@dimen/font_14sp"
                     app:isEnabled="false"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_payment_methods" />
@@ -174,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/str_new_payment_method"
                 android:textSize="@dimen/font_14sp"
+                android:layout_marginTop="@dimen/_30dp"
                 app:isEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

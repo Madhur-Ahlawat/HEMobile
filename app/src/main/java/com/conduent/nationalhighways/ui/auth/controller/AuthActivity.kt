@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.ActivityAuthBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -22,6 +23,7 @@ class AuthActivity : BaseActivity<Any?>() {
     private lateinit var navController: NavController
     private var navFlow:String=""
     private var currentBalance:String=""
+    private var personalInformation:PersonalInformation?=null
 
 
     @Inject
@@ -31,6 +33,10 @@ class AuthActivity : BaseActivity<Any?>() {
         setContentView(binding.root)
         if (intent.getStringExtra(Constants.NAV_FLOW_KEY)!=null){
             navFlow= intent.getStringExtra(Constants.NAV_FLOW_KEY)?:""
+
+        }
+        if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)!=null){
+            personalInformation=intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)
 
         }
         currentBalance= intent.getStringExtra(Constants.CURRENTBALANCE)?:""
@@ -81,6 +87,7 @@ class AuthActivity : BaseActivity<Any?>() {
 
             graph.setStartDestination(R.id.accountSuspendedFragment)
             bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+            bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
 
         }
 

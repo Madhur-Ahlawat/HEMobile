@@ -1,13 +1,15 @@
 package com.conduent.nationalhighways.ui.auth.adapter
 
+import android.R.attr.text
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
-import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
+
 
 class SuspendPaymentMethodAdapter(
     private var context: Context,
@@ -40,8 +42,9 @@ class SuspendPaymentMethodAdapter(
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
+        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+list?.get(position)?.cardNumber)
 
-        holder.binding.tvSelectPaymentMethod.text = list?.get(position)?.cardNumber ?: ""
+        holder.binding.tvSelectPaymentMethod.text = htmlText
 
 
         holder.binding.layout.setOnClickListener {

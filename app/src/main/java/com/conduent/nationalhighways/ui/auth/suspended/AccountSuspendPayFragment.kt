@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.Selection
 import android.text.TextWatcher
 import android.util.Log
@@ -15,8 +16,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.OnDrawableClickListener
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -33,12 +36,15 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>(),
     View.OnClickListener {
+    private var responseModel: CardResponseModel?=null
 
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var position: Int = 0
     private var lowBalance: Boolean = false
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
+    private var currentBalance:String=""
 
 
     private var topUpAmount = 0.0
@@ -49,49 +55,75 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     ): FragmentAccountSuspendPayBinding =
         FragmentAccountSuspendPayBinding.inflate(inflater, container, false)
 
-    override fun init() {
+
+    override fun initCtrl() {
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        binding.lowBalance.setDrawableClickListener(object : OnDrawableClickListener {
-            override fun onDrawableLeftClick(view: View) {
+
+
+        if (arguments?.getParcelable<CardResponseModel>(Constants.DATA)!=null){
+            responseModel=arguments?.getParcelable<CardResponseModel>(Constants.DATA)
+
+            if (responseModel?.card?.type.equals("visa", true)) {
+                binding.ivCardType.setImageResource(R.drawable.visablue)
+            } else if (responseModel?.card?.type.equals("maestro", true)) {
+                binding.ivCardType.setImageResource(R.drawable.maestro)
+
+            } else {
+                binding.ivCardType.setImageResource(R.drawable.mastercard)
 
             }
+            val htmlText = Html.fromHtml(responseModel?.card?.type?.uppercase()+"<br>"+responseModel?.card?.number)
 
-            override fun onDrawableRightClick(view: View) {
-                findNavController().popBackStack()
-            }
-        })
+            binding.tvSelectPaymentMethod.text = htmlText
+
+
+        }
     }
 
-    override fun initCtrl() {
+    override fun init() {
+
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
 
         binding.lowBalance.setText("£$topUpAmount")
+        if (paymentList?.isNotEmpty() == true){
+            if (paymentList?.get(position)?.cardType.equals("visa", true)) {
+                binding.ivCardType.setImageResource(R.drawable.visablue)
+            } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
+                binding.ivCardType.setImageResource(R.drawable.maestro)
 
-        if (paymentList?.get(position)?.cardType.equals("visa", true)) {
-            binding.ivCardType.setImageResource(R.drawable.visablue)
-        } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
-            binding.ivCardType.setImageResource(R.drawable.maestro)
+            } else {
+                binding.ivCardType.setImageResource(R.drawable.mastercard)
 
-        } else {
-            binding.ivCardType.setImageResource(R.drawable.mastercard)
+            }
+            val htmlText = Html.fromHtml(paymentList?.get(position)?.cardType+"<br>"+paymentList?.get(position)?.cardNumber)
+
+            binding.tvSelectPaymentMethod.text = htmlText
 
         }
 
-        binding.tvSelectPaymentMethod.text = paymentList?.get(position)?.cardNumber ?: ""
+
+
 
 
     }
+
 
     override fun observer() {
        /* lifecycleScope.launch {
@@ -106,10 +138,17 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (v?.id) {
 
             R.id.btnPay -> {
-                payWithExistingCard()
                 val bundle = Bundle()
-              //  bundle.putParcelable(Constants.DATA, status.data)
-                bundle.putString("amount", arguments?.getString("amount"))
+
+                if (responseModel!=null){
+                    bundle.putParcelable(Constants.DATA, responseModel)
+                }else{
+                    payWithExistingCard()
+                    //  bundle.putParcelable(Constants.DATA, status.data)
+                    bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                }
                 findNavController().navigate(
                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                     bundle
@@ -118,7 +157,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             R.id.btnCancel -> {
-
+                findNavController().popBackStack()
             }
         }
     }
@@ -221,6 +260,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.DATA, status.data)
                     bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle
