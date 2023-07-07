@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
@@ -61,6 +62,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var creditCardType: String = ""
     private var flow: String = ""
     private var responseModel: CardResponseModel? = null
+
+    private var personalInformation: PersonalInformation? = null
+    private var currentBalance:String=""
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -81,6 +86,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
 
         binding.webView.settings.apply {
@@ -145,6 +157,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                         "3DSLoaded" -> {
                             hideLoader()
+                        }
+                        "true"->{
+                            NewCreateAccountRequestModel.isRucEligible=true
                         }
                     }
 
@@ -362,9 +377,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText = =\\\"CONTINUE\\\";})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
 
-                // view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
 
 
                 super.onPageFinished(view, url)

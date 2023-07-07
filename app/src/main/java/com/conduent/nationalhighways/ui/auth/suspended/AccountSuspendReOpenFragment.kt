@@ -4,8 +4,10 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.payment.Card
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
@@ -22,6 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopenedBinding>(), View.OnClickListener {
     private var responseModel: CardResponseModel?=null
     private var paymentSuccessResponse:PaymentSuccessResponse?=null
+    private var personalInformation: PersonalInformation? = null
+    private var currentBalance:String=""
+    private var backIcon:ImageView?=null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -31,12 +36,27 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
 
     override fun initCtrl() {
+        backIcon = requireActivity().findViewById(R.id.back_button)
+        backIcon?.visibility = View.GONE
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+
+
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA)!=null){
             responseModel=arguments?.getParcelable<CardResponseModel>(Constants.DATA)
 
-            binding.tvAccountSuspended.text=getString(R.string.success)
-            binding.tvYouWillNeedToPay.text=getString(R.string.str_you_have_successfully_added_new_card)
-            binding.cardView.visibility=View.VISIBLE
+            if (NewCreateAccountRequestModel.isRucEligible){
+                binding.cardView.visibility=View.VISIBLE
+
+            }else{
+                binding.cardView.visibility=View.GONE
+
+            }
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -57,9 +77,11 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
             binding.cardView.visibility=View.GONE
             binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"5.00")
 
-            binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
-                NewCreateAccountRequestModel.emailAddress)
         }
+
+        binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
+            NewCreateAccountRequestModel.emailAddress)
+
     }
     override fun init() {
         binding.btnTopUpNow.setOnClickListener(this)

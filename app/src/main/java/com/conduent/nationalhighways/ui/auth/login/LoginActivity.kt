@@ -79,7 +79,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(Constants.PERSONALDATA,status.data?.personalInformation)
                     NewCreateAccountRequestModel.emailAddress=binding.edtEmail.getText().toString()
+                    NewCreateAccountRequestModel.isRucEligible=false
+
                     intent.putExtra(
                         Constants.CURRENTBALANCE,
                         status.data?.replenishmentInformation?.currentBalance
@@ -197,9 +200,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
-        if (loader?.isVisible == true) {
+       /* if (loader?.isVisible == true) {
             loader?.dismiss()
-        }
+        }*/
         when (status) {
             is Resource.Success -> {
                 launchIntent(status)

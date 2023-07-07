@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.OnDrawableClickListener
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
@@ -42,6 +43,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var lowBalance: Boolean = false
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
+    private var currentBalance:String=""
 
 
     private var topUpAmount = 0.0
@@ -60,6 +63,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -137,7 +146,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
                     bundle.putString("amount", arguments?.getString("amount"))
-
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 }
                 findNavController().navigate(
                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
@@ -250,6 +260,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.DATA, status.data)
                     bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle

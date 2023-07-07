@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltBinding
@@ -45,6 +46,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var loader: LoaderDialog? = null
     private var position: Int = 0
     private var isViewCreated: Boolean = false
+    private var personalInformation: PersonalInformation? = null
+    private var currentBalance:String=""
 
 
     override fun getFragmentBinding(
@@ -53,19 +56,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     ): FragmentAccountSuspendHaltBinding =
         FragmentAccountSuspendHaltBinding.inflate(inflater, container, false)
 
-    override fun init() {
-
-
-        val linearLayoutManager = LinearLayoutManager(requireContext())
-        binding.rvPaymentMethods.layoutManager = linearLayoutManager
-
-        suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireContext(), paymentList, this)
-        binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
-
-        binding.lowBalance.setText("£10.00")
-
-    }
 
     override fun initCtrl() {
         loader = LoaderDialog()
@@ -82,8 +72,28 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-    }
 
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+
+    }
+    override fun init() {
+
+
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        binding.rvPaymentMethods.layoutManager = linearLayoutManager
+
+        suspendPaymentMethodAdapter =
+            SuspendPaymentMethodAdapter(requireContext(), paymentList, this)
+        binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
+
+        binding.lowBalance.setText("£10.00")
+
+    }
     override fun observer() {
         lifecycleScope.launch {
             observe(viewModel.savedCardList, ::handleSaveCardResponse)
@@ -165,6 +175,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                 bundle.putInt(Constants.POSITION, position)
+                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
@@ -177,6 +189,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.SUSPENDED, Constants.SUSPENDED)
+                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
                     bundle

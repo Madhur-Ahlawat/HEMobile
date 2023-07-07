@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     //state: '10 address street',
                 address1: "HE" /*document.getElementById("address1").innerText*/,
                 country:  "GB"/*document.getElementById("country").innerText*/,
-                firstName:"Shivam"  /*document.getElementById("name").value*/,
-                lastName: "Gupta" /*document.getElementById("name").value*/,
+                firstName: e.check.name /*document.getElementById("name").value*/,
+                lastName:  e.check.name/*document.getElementById("name").value*/,
                 postalCode:"B100js"  /*document.getElementById("postalCode").innerText*/
                 };
                 window.appInterface.postMessage(options);
@@ -232,6 +232,6 @@ function checkNumber() {
 }
 function saveCardClick() {
     var checkBox = document.getElementById("cardChecked");
-    window.appInterface.postMessage("saveCardChecked"+ checkBox.checked);
+    window.appInterface.postMessage(checkBox.checked);
 }
 
