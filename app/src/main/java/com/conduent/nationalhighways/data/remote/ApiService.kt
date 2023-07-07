@@ -41,6 +41,7 @@ import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
+import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants.AGENCY_ID
 import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
@@ -125,6 +126,8 @@ interface ApiService {
 
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?
+    @POST(VEHICLE)
+    suspend fun addVehicleApiNew(@Body model: AddVehicleRequest?): Response<EmptyApiResponse?>?
 
     @PUT(VEHICLE)
     suspend fun updateVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?

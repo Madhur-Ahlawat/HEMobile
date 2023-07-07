@@ -4,29 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
+import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleListAdapter.VehicleListCallBack,View.OnClickListener {
 
     private lateinit var vehicleList:ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter:VehicleListAdapter
-
-
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private var loader: LoaderDialog? = null
+    private var apiRequestCount = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentVehicleList2Binding= FragmentVehicleList2Binding.inflate(inflater,container,false)
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
 
     }
@@ -38,11 +50,42 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
     }
 
     override fun onResume() {
         super.onResume()
         invalidateList()
+    }
+
+    private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
+        var apiStatus = false
+        when (status) {
+            is Resource.Success -> {
+                apiStatus = true
+            }
+            is Resource.DataError -> {
+                apiStatus = false
+            }
+            else -> {
+            }
+        }
+
+        if(indexExists(vehicleList,apiRequestCount)){
+            vehicleList[apiRequestCount].status = apiStatus
+            apiRequestCount++
+        }
+
+        if(apiRequestCount<vehicleList.size){
+            apiCall(apiRequestCount)
+        }else{
+            loader?.dismiss()
+            findNavController().navigate(R.id.action_vehicleListFragment_to_vehicleResultFragment)
+        }
+    }
+
+    fun indexExists(list: List<*>, index: Int): Boolean {
+        return index >= 0 && index < list.size
     }
 
 
@@ -53,9 +96,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         isDblaAvailable: Boolean?
     ) {
         if (value== Constants.REMOVE_VEHICLE){
-                val bundle = Bundle()
-                bundle.putInt(Constants.VEHICLE_INDEX, position)
-                findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment,bundle)
+            val bundle = Bundle()
+            bundle.putInt(Constants.VEHICLE_INDEX, position)
+            findNavController().navigate(R.id.action_vehicleListFragment_to_removeVehicleFragment,bundle)
         }else{
 
             val bundle = Bundle()
@@ -83,15 +126,15 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
         vehicleAdapter= VehicleListAdapter(requireContext(), vehicleList,this)
-            val size = vehicleAdapter.itemCount
-            var text ="vehicle"
-            if(size>1){
-                text ="vehicles"
-            }
-            binding.youHaveAddedVehicle.text = "You've added $size $text"
-            if(size == 0){
-                binding.btnNext.disable()
-            }
+        val size = vehicleAdapter.itemCount
+        var text ="vehicle"
+        if(size>1){
+            text ="vehicles"
+        }
+        binding.youHaveAddedVehicle.text = "You've added $size $text"
+        if(size == 0){
+            binding.btnNext.disable()
+        }
         binding.recyclerView.adapter=vehicleAdapter
     }
 
@@ -119,8 +162,53 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             }
 
             R.id.btnNext -> {
-                findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountSummaryFragment)
+                if(NewCreateAccountRequestModel.isVehicleManagementCall){
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    if(vehicleList.size>0){
+                        apiCall(apiRequestCount)
+                    }
+
+
+                }else {
+                    findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountSummaryFragment)
+                }
             }
         }
-        }
     }
+
+    private fun apiCall(index : Int) {
+        val obj = vehicleList[index]
+        val data = AddVehicleRequest()
+        data.plateInfo?.number = obj.plateNumber
+        if(obj.plateCountry.isNullOrEmpty()){
+            data.plateInfo?.country = "UK"
+        }else{
+            data.plateInfo?.country = obj.plateCountry
+        }
+        data.plateInfo?.vehicleGroup = " "
+        data.plateInfo?.vehicleComments = "new Vehicle"
+        data.plateInfo?.planName = ""
+        data.plateInfo?.state = "HE"
+        data.plateInfo?.type = "STANDARD"
+
+        data.vehicleInfo?.color = obj.vehicleColor
+        data.vehicleInfo?.year = 2021
+        data.vehicleInfo?.effectiveStartDate = ""
+        if(obj.vehicleModel.isNullOrEmpty()){
+            data.vehicleInfo?.model = "MODEL"
+        }else{
+            data.vehicleInfo?.model = obj.vehicleModel
+        }
+        data.vehicleInfo?.typeId = ""
+        data.vehicleInfo?.typeDescription = "REGULAR"
+        data.vehicleInfo?.make = obj.vehicleMake
+//        if(obj.vehicleClass.isNullOrEmpty()){
+            data.vehicleInfo?.vehicleClassDesc = "2"
+//        }else{
+//            data.vehicleInfo?.vehicleClassDesc = obj.vehicleClass
+//        }
+
+
+        vehicleMgmtViewModel.addVehicleApiNew(data)
+    }
+}

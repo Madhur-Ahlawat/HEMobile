@@ -9,7 +9,6 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -48,9 +47,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
+        dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
         dataBinding.idToolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-
         }
 
         dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(
@@ -62,18 +61,19 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
+                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
                                     .navigate(R.id.dashBoardFragment)
                             }
                         }
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+                            /*if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
                                 dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.vehicle_management)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
                                     .navigate(R.id.vehicleHomeListFragment)
-                            }
+                            }*/
                         }
                         2 -> {
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
@@ -84,6 +84,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
                         3 -> {
                             if (navController.currentDestination?.id != R.id.accountFragment) {
+                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.txt_my_account)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
                                     .navigate(R.id.accountFragment)

@@ -138,6 +138,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.edtEmail.setText("HIGHWAYS-TEST668100@CONDUENT.COM")
+        binding.edtPwd.setText("Welcome1")
+        binding.btnLogin.isEnabled = true
+
         init()
         initCtrl()
     }
@@ -294,9 +298,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     intent.putExtra(Constants.NAV_FLOW_KEY, "")
                     intent.putExtra(Constants.CURRENTBALANCE, "£1.00")
 
-                    startActivity(intent)
+//                    startActivity(intent)
 
-                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
+                     startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })

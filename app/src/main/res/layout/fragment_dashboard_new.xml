@@ -71,7 +71,7 @@
                     app:autoSizeTextType="uniform"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="£134444.50" />
+                    tools:text="£44.50" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_account_number_heading"
@@ -80,16 +80,15 @@
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
                     android:text="@string/txt_account_number"
-
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/_14sp"
+                    android:layout_marginTop="@dimen/_20dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_available_balance" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_available_balance_heading" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_account_number_value"
                     android:layout_width="wrap_content"
-                    android:layout_marginRight="@dimen/_10dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
@@ -104,10 +103,9 @@
                     android:id="@+id/tv_account_status_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_22dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
-
+                    android:layout_marginTop="@dimen/_20dp"
                     android:text="@string/txt_account_status"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sp"
@@ -117,12 +115,11 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_indicator_account_status"
                     android:layout_width="wrap_content"
-                    android:layout_marginRight="@dimen/_10dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green_status"
                     app:cardCornerRadius="@dimen/_5dp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_account_status_heading"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_account_status_heading">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -130,11 +127,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/open_sans_semibold"
                         android:paddingHorizontal="@dimen/_12dp"
                         android:paddingVertical="@dimen/_1dp"
                         tools:text="@string/open"
-                        android:paddingBottom="@dimen/_1dp"
+                        android:paddingBottom="@dimen/_1_5dp"
                         android:textSize="@dimen/_14sp"
                         android:textStyle="bold" />
 
@@ -149,7 +146,8 @@
                     android:text="@string/plus_top_up"
                     android:textSize="@dimen/_14sp"
                     app:isEnabled="true"
-                    app:layout_constraintTop_toBottomOf="@id/card_indicator_account_status" />
+                    android:layout_marginTop="@dimen/_14dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -182,7 +180,7 @@
                 <View
                     android:id="@+id/v_account_numner"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_20dp"
+                    android:layout_height="@dimen/_18dp"
                     android:layout_centerInParent="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +194,7 @@
                     android:layout_below="@+id/v_account_numner"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
+                    android:textSize="@dimen/_12sp"
                     android:text="@string/txt_topup_amount"
                     android:textColor="@color/label_color"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -234,7 +233,7 @@
                 <View
                     android:id="@+id/v_low_balance_threshold"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_20dp"
+                    android:layout_height="@dimen/_18dp"
                     android:layout_centerInParent="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -247,6 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/v_low_balance_threshold"
                     android:fontFamily="@font/open_sans"
+                    android:textSize="@dimen/_12sp"
                     android:gravity="center"
                     android:text="@string/txt_low_threshold_balance"
                     android:textColor="@color/label_color"
@@ -285,7 +285,7 @@
                 <View
                     android:id="@+id/v_autopay"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_20dp"
+                    android:layout_height="@dimen/_18dp"
                     android:layout_centerInParent="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -302,6 +302,7 @@
                     android:textColor="@color/label_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="@dimen/_12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/v_autopay" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -326,7 +327,7 @@
                     android:layout_marginTop="@dimen/_7dp"
                     android:layout_marginBottom="@dimen/_9dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/visablue"
+                    tools:src="@drawable/visablue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -337,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_29_59dp"
                     android:fontFamily="@font/open_sans"
-                    android:text="@string/txt_dumy_card_number"
+                    tools:text="@string/txt_dumy_card_number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sp"
                     app:layout_constraintBottom_toBottomOf="@id/cardLogo"
@@ -415,9 +416,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/logo"
-                android:layout_width="40dp"
-                android:layout_marginTop="36dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_35dp"
+                android:layout_marginTop="@dimen/_26dp"
+                android:layout_height="@dimen/_35dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintEnd_toStartOf="@+id/textView"
                 app:layout_constraintHorizontal_bias="1.0"

@@ -4,13 +4,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.databinding.FragmentAccountBinding
+import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.communication.CommunicationActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
@@ -35,7 +39,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickListener,
+class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
     OnLogOutListener {
 
     private val viewModel: NominatedContactListViewModel by viewModels()
@@ -50,28 +54,43 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
+    ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
-        if (isSecondaryUser)
-            binding.nominatedContactsLyt.gone()
+        initUI()
+    }
 
-       if (sessionManager.fetchAccountType().equals(Constants.PERSONAL_ACCOUNT, true) && sessionManager.fetchSubAccountType()
-               .equals(Constants.PAYG, true)
-      ) {
-            binding.nominatedContactsLyt.gone()
+    private fun initUI() {
+        binding?.run {
+            if (isSecondaryUser)
+                contactUs.gone()
+
+            if (sessionManager.fetchAccountType().equals(
+                    Constants.PERSONAL_ACCOUNT,
+                    true
+                ) && sessionManager.fetchSubAccountType()
+                    .equals(Constants.PAYG, true)
+            ) {
+                contactUs.gone()
+            }
+
+            if (sessionManager.fetchAccountType()
+                    .equals("NonRevenue", true)
+            ) {
+                paymentManagement.gone()
+            }
+            valueName.text = sessionManager.fetchName()
+            tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
+            DashboardUtils.setAccountStatusNew(
+                sessionManager.fetchAccountStatus()!!,
+                indicatorAccountStatus,
+                binding.cardIndicatorAccountStatus
+            )
         }
-
-       if (sessionManager.fetchAccountType()
-               .equals("NonRevenue", true)
-        ) {
-           binding.payment.gone()
-      }
-
     }
 
     private fun setPaymentsVisibility() {
@@ -79,31 +98,33 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
             || (sessionManager.fetchSubAccountType().equals("STANDARD", true) &&
                     sessionManager.fetchAccountType().equals("PRIVATE", true))
         ) {
-            binding.payment.visible()
-            binding.nominatedContactsLyt.visible()
+            binding.paymentManagement.visible()
+            binding.contactUs.visible()
         } else {
-            if(sessionManager.fetchSubAccountType().equals(Constants.PAYG, true) &&
-                    sessionManager.fetchAccountType().equals("PRIVATE", true)){
-                binding.payment.visible()
+            if (sessionManager.fetchSubAccountType().equals(Constants.PAYG, true) &&
+                sessionManager.fetchAccountType().equals("PRIVATE", true)
+            ) {
+                binding.paymentManagement.visible()
 
-            }else{
-                binding.payment.gone()
+            } else {
+                binding.paymentManagement.gone()
 
             }
-            binding.nominatedContactsLyt.gone()
+            binding.contactUs.gone()
         }
     }
 
     override fun initCtrl() {
         binding.apply {
-            profile.setOnClickListener(this@AccountFragment)
-            payment.setOnClickListener(this@AccountFragment)
-            rlAccount.setOnClickListener(this@AccountFragment)
-            logOutLyt.setOnClickListener(this@AccountFragment)
-            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
-            nominatedContactsLyt.setOnClickListener(this@AccountFragment)
-            rlAccountStatement.setOnClickListener(this@AccountFragment)
-            rlBiometrics.setOnClickListener(this@AccountFragment)
+            profileManagement.setOnClickListener(this@AccountFragment)
+            paymentManagement.setOnClickListener(this@AccountFragment)
+            vehicleManagement.setOnClickListener(this@AccountFragment)
+            communicationPreferences.setOnClickListener(this@AccountFragment)
+            signOut.setOnClickListener(this@AccountFragment)
+//            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
+            contactUs.setOnClickListener(this@AccountFragment)
+//            rlAccountStatement.setOnClickListener(this@AccountFragment)
+//            rlBiometrics.setOnClickListener(this@AccountFragment)
         }
 
     }
@@ -118,25 +139,26 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         when (v?.id) {
 
-            R.id.profile -> {
+            R.id.profile_management -> {
                 requireActivity().startNormalActivity(ProfileActivity::class.java)
             }
 
-            R.id.payment -> {
+            R.id.payment_management -> {
                 requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
-            R.id.rl_account -> {
+            R.id.communication_preferences -> {
                 requireActivity().startNormalActivity(CommunicationActivity::class.java)
             }
 
-            R.id.nominated_contacts_lyt -> {
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.nominatedContactList()
+            R.id.vehicle_management -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.vehicle_management)
+                findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
 
             }
 
-            R.id.rl_case_and_enquiry -> {
+            R.id.contact_us -> {
                 requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
@@ -145,19 +167,19 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                 }
             }
 
-            R.id.rl_account_statement -> {
-                requireActivity().startNormalActivity(AccountStatementActivity::class.java)
-            }
-            R.id.rl_biometrics->{
-                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
-                    putInt(
-                        Constants.FROM_LOGIN_TO_BIOMETRIC,
-                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
-                    )
-                }
-            }
+//            R.id.rl_account_statement -> {
+//                requireActivity().startNormalActivity(AccountStatementActivity::class.java)
+//            }
+//            R.id.rl_biometrics->{
+//                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
+//                    putInt(
+//                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+//                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
+//                    )
+//                }
+//            }
 
-            R.id.log_out_lyt -> {
+            R.id.sign_out -> {
                 LogoutDialog.newInstance(
                     this
                 ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
@@ -183,9 +205,11 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
                 }
 
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
+
             else -> {
             }
         }
@@ -195,14 +219,15 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(), View.OnClickList
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        status?.let {  }
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status?.errorMsg)
             }
+
             else -> {
             }
         }

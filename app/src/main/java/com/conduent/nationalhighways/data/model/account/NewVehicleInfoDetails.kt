@@ -16,7 +16,8 @@ data class NewVehicleInfoDetails(
 	var vehicleMake: String? = null,
 	var isRUCEligible: String? = null,
 	var isDblaAvailable: Boolean? = true,
-	var isUK: Boolean? = true
+	var isUK: Boolean? = true,
+	var status: Boolean? = false
 ) : Parcelable
 
 

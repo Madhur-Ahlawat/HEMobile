@@ -1215,12 +1215,25 @@
 
     <string name="plus_top_up">+ TOP UP</string>
     <string name="txt_low_threshold_balance">Low Balance Threshold</string>
-    <string name="txt_topup_method">Top-Up\nMethod</string>
+    <string name="txt_topup_method">Top-Up Method</string>
     <string name="txt_dumy_card_number">••••••7890</string>
     <string name="txt_recent_transacions">Recent Transactions</string>
     <string name="top_up">Top- Up</string>
     <string name="txt_topup_amount">Top-Up\nAmount</string>
+    <string name="vehicle_deleted">Vehicle Deleted</string>
+    <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
+    <string name="vehicles_not_added">Vehicles not added</string>
+    <string name="vehicles_added">Vehicles added</string>
     <string name="txt_account_balance">Account Balance</string>
+    <string name="txt_account_number_">Account Number:</string>
+    <string name="profile_management">Profile Management</string>
+    <string name="communication_preferences">Communication Preferences</string>
+    <string name="payment_management">Payment Management</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="str_dummy_name">Alex Jonson</string>
+    <string name="account">Account</string>
+    <string name="txt_my_account">My Account</string>
+    <string name="no_vehicle_found">No vehicle found</string>
     <string name="success">Success</string>
     <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
 

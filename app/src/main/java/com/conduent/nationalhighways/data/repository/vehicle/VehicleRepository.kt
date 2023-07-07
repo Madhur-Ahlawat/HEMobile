@@ -6,12 +6,16 @@ import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHisto
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.remote.ApiService
+import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import javax.inject.Inject
 
 class VehicleRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun addVehicleApiCall(requestParam: VehicleResponse?) =
         apiService.addVehicleApi(requestParam)
+
+    suspend fun addVehicleApiCallNew(requestParam: AddVehicleRequest?) =
+        apiService.addVehicleApiNew(requestParam)
 
     suspend fun updateVehicleApiCall(requestParam: VehicleResponse?) =
         apiService.updateVehicleApi(requestParam)
