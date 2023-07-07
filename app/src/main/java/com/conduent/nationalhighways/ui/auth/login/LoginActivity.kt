@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -78,6 +79,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    NewCreateAccountRequestModel.emailAddress=binding.edtEmail.getText().toString()
                     intent.putExtra(
                         Constants.CURRENTBALANCE,
                         status.data?.replenishmentInformation?.currentBalance

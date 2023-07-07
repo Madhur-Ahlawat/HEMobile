@@ -40,10 +40,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var lowBalance: Boolean = false
-    private var cardSelection:Boolean=false
+    private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var position:Int=0
+    private var position: Int = 0
+    private var isViewCreated: Boolean = false
 
 
     override fun getFragmentBinding(
@@ -69,8 +70,14 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     override fun initCtrl() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        viewModel.saveCardList()
+        if (!isViewCreated) {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            viewModel.saveCardList()
+        }
+
+        isViewCreated = false
+        checkButton()
+
 
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
@@ -145,7 +152,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun checkButton() {
-        binding.btnContinue.isEnabled = lowBalance&&cardSelection
+        binding.btnContinue.isEnabled = lowBalance && cardSelection
 
     }
 
@@ -157,7 +164,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
-                bundle.putInt(Constants.POSITION,position)
+                bundle.putInt(Constants.POSITION, position)
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
@@ -168,8 +175,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             R.id.btnAddNewPaymentMethod -> {
                 val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
-                bundle.putDouble(Constants.DATA,topUpAmount.toDouble())
-                bundle.putString(Constants.SUSPENDED,Constants.SUSPENDED)
+                bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
+                bundle.putString(Constants.SUSPENDED, Constants.SUSPENDED)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
                     bundle
@@ -184,7 +191,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
         when (status) {
             is Resource.Success -> {
-                paymentList?.clear()
+               // paymentList?.clear()
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
                     suspendPaymentMethodAdapter.updateList(paymentList)
@@ -212,10 +219,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun paymentMethodCallback(position: Int) {
-        this.position=position
+        this.position = position
         suspendPaymentMethodAdapter?.notifyDataSetChanged()
         cardSelection = paymentList?.get(position)?.isSelected == true
-        lowBalance=true
+        lowBalance = true
         checkButton()
 
     }

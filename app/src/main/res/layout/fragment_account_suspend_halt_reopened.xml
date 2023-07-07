@@ -77,23 +77,65 @@
                 android:text="@string/str_you_have_less_than"
                 android:textAlignment="center"
                 android:textSize="15sp"
+                android:fontFamily="@font/open_sans"
+
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
                 app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_74dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="@dimen/_5dp"
+                android:elevation="3dp"
+                android:visibility="gone"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivCardType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/tv_select_payment_method"
+                        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/grayColorIcon"
+                        android:textSize="@dimen/font_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnTopUpNow"
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_106dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="30dp"
                 />
 
             <com.conduent.apollo.ui.CMButton

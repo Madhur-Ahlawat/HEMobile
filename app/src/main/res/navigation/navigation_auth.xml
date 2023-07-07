@@ -153,7 +153,13 @@
         android:id="@+id/nmiPaymentFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.NMIPaymentFragment"
         android:label="NMIFragment"
-        tools:layout="@layout/nmi_payment_fragment"/>
+        tools:layout="@layout/nmi_payment_fragment">
+
+
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment"
+            app:destination="@id/accountSuspendedFinalPayFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountSuspendReOpenFragment"
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment"

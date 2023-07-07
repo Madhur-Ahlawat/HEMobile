@@ -95,21 +95,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 var errorMessage = ""
                 if (field.localeCompare('ccnumber')  == "0") {
                     if(message.localeCompare('Field is empty') == "0" ){
-                      errorMessage = "Enter a card number";
+                        errorMessage = "Enter a card number";
                     } else if(message.localeCompare('Card number must be 13-19 digits and a recognizable card format') == "0") {
                         errorMessage = "Card number must be 16 digits or more";
-                      } else {
-                          errorMessage = message;
-                      }
+                    } else {
+                        errorMessage = message;
+                    }
                     document.getElementById("ccerrormesages").style.display = "";
                     document.getElementById("ccerrormesages").innerText = errorMessage;
                 } else  if (field.localeCompare('cvv') == "0") {
                     if(message.localeCompare('Field is empty') == "0") {
-                      errorMessage = "Enter the card security code";
+                        errorMessage = "Enter the card security code";
                     } else if(message.localeCompare('CVV must be 3 or 4 digits') == "0") {
-                     errorMessage = "Card security code must be 3 digits or more";
+                        errorMessage = "Card security code must be 3 digits or more";
                     } else {
-                     errorMessage = message;
+                        errorMessage = message;
                     }
                     document.getElementById("cvverrormesages").style.display = "";
                     document.getElementById("cvverrormesages").innerText = errorMessage;
@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(message.localeCompare('Field is empty') == "0") {
                         errorMessage = "Enter an expiry date";
                     } else if(message.localeCompare('Expiration date must be a present or future month and year') == "0") {
-                      errorMessage = "Expiry date cannot be in the past";
-
+                        errorMessage = "Expiry date cannot be in the past";
+                        
                     } else {
                         errorMessage = message;
                     }
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById("cscerrormesages").innerText = errorMessage;
                 } else if (field.localeCompare('checkname') == "0") {
                     if(message.localeCompare('Field is empty') == "0") {
-                      errorMessage = "Enter the name on card";
+                        errorMessage = "Enter the name on card";
                     } else if(message.localeCompare('Account owner\'s name should be at least 3 characters') == "0") {
                         errorMessage = "Name on card should be at least 3 characters";
                     } else {
@@ -152,23 +152,36 @@ document.addEventListener('DOMContentLoaded', function () {
             var apiResponse = JSON.stringify(e, null, "");
             window.appInterface.postMessage(apiResponse);
             var card = e.card;
-            if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
+            var amt =  document.getElementById("amount").value;
+            if ((amt < 10) && (amt > 10000)) {
+                if (amt < 10) {
+                    document.getElementById("errorMessageForAmount").style.display="";
+                    document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310 or more";
+                } else  if (amt > 10000) {
+                    document.getElementById("errorMessageForAmount").style.display="";
+                    document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310,000 or less";
+                } else {
+                    document.getElementById("errorMessageForAmount").style.display="none";
+                }
+            } else if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
             {
-                window.appInterface.postMessage("3");
+                var amt =  document.getElementById("amount").value;
+                window.appInterface.postMessage("amounttoIncrease"+ amt);
+                window.appInterface.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
                 paymentToken: e.token,
-                currency:  "GBP",
-                amount: document.getElementById("amount").value,
-                email:  "omvir.singh@conduent.com"/*document.getElementById("email").innerText*/,
-                phone:  "7589485763"/*document.getElementById("phone").innerText*/,
+                currency:  document.getElementById("currency").innerText,
+                amount:  document.getElementById("amount").value,
+                email: "shivam.gupta@conduent.com" /*document.getElementById("email").innerText*/,
+                phone: "99336609176" /*document.getElementById("phone").innerText*/,
                 city: "HE"/*document.getElementById("city").innerText*/,
                     //state: '10 address street',
-                address1:  "HE"/*document.getElementById("address1").innerText*/,
-                country:  "GB",
-                firstName:  "Ankit"/*document.getElementById("name").value*/,
-                lastName:  "Kumar"/*document.getElementById("name").value*/,
-                postalCode:  "b100js"/*document.getElementById("postalCode").innerText*/
+                address1: "HE" /*document.getElementById("address1").innerText*/,
+                country:  "GB"/*document.getElementById("country").innerText*/,
+                firstName:"Shivam"  /*document.getElementById("name").value*/,
+                lastName: "Gupta" /*document.getElementById("name").value*/,
+                postalCode:"B100js"  /*document.getElementById("postalCode").innerText*/
                 };
                 window.appInterface.postMessage(options);
                 const threeDSecureInterface = threeDS.createUI(options);
@@ -202,6 +215,23 @@ document.addEventListener('DOMContentLoaded', function () {
 function buttonClicked() {
     window.appInterface.postMessage("3DStarted");
 }
-
-
+function checkNumber() {
+    var amt =  document.getElementById("amount").value;
+    if (amt < 10) {
+        //errorMessageForAmount
+        //Top-up amount must be £10,000 or less
+        //Top-up amount must be £@ or more
+        document.getElementById("errorMessageForAmount").style.display="";
+        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be £10 or more";
+    } else  if (amt > 10000) {
+        document.getElementById("errorMessageForAmount").style.display="";
+        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be £10,000 or less";
+    } else {
+        document.getElementById("errorMessageForAmount").style.display="none";
+    }
+}
+function saveCardClick() {
+    var checkBox = document.getElementById("cardChecked");
+    window.appInterface.postMessage("saveCardChecked"+ checkBox.checked);
+}
 

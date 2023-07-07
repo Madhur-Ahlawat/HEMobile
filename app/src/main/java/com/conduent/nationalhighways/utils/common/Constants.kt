@@ -2,6 +2,8 @@ package com.conduent.nationalhighways.utils.common
 
 object Constants {
 
+    const val NEW_CARD="newcard"
+    const val EXISTING_CARD="existing_card"
     const val EXPIRED = "EXPIRED"
     const val MASTERCARD = "MASTERCARD"
     const val MAESTRO = "MAESTRO"
