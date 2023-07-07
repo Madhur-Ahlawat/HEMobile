@@ -284,6 +284,10 @@
         android:label="Account Management"
         tools:layout="@layout/fragment_account">
 
+        <action
+            android:id="@+id/action_accountFragment_to_vehicleManagementFragment"
+            app:destination="@id/vehicleHomeListFragment" />
+
     </fragment>
 
 

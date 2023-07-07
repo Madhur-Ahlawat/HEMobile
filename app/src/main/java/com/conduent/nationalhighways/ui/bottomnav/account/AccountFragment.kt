@@ -4,9 +4,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
@@ -115,6 +118,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
             paymentManagement.setOnClickListener(this@AccountFragment)
+            vehicleManagement.setOnClickListener(this@AccountFragment)
             communicationPreferences.setOnClickListener(this@AccountFragment)
             signOut.setOnClickListener(this@AccountFragment)
 //            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
@@ -147,11 +151,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 requireActivity().startNormalActivity(CommunicationActivity::class.java)
             }
 
-//            R.id.nominated_contacts_lyt -> {
-//                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-//                viewModel.nominatedContactList()
-//
-//            }
+            R.id.vehicle_management -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.vehicle_management)
+                findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
+
+            }
 
             R.id.contact_us -> {
                 requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {

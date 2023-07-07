@@ -76,6 +76,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
         NewCreateAccountRequestModel.isVehicleManagementCall = false
+        checkData()
     }
 
     override fun initCtrl() {}
@@ -88,8 +89,10 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         super.onResume()
         if(needRefresh) {
             showLoader()
-            vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
+            isVehicleHistory = true
             needRefresh = false
+            vehicleMgmtViewModel.getVehicleInformationApi(startIndex.toString(), count.toString())
+
         }
     }
 
@@ -103,27 +106,21 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                     resource.data?.let {
                         val response = resource.data
                         totalCount = response.size
+                        mList.clear()
                         mList.addAll(response)
                         isLoading = false
                         mAdapter.setList(mList)
                         binding.recyclerView.adapter?.notifyDataSetChanged()
 
-                        if (mList.size == 0) {
-                            binding.recyclerView.gone()
-//                            binding.tvNoVehicles.visible()
-                            hideLoader()
-                        } else {
-                            binding.recyclerView.visible()
-                            hideLoader()
-//                            binding.tvNoVehicles.gone()
-                        }
-                        endlessScroll()
+                        checkData()
+//                        endlessScroll()
                     }
                 }
                 is Resource.DataError -> {
                     binding.recyclerView.gone()
                     hideLoader()
-//                    binding.tvNoVehicles.visible()
+                    binding.recyclerView.gone()
+                    binding.notFound.visible()
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
@@ -131,6 +128,18 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
         }
 
+    }
+
+    private fun checkData() {
+        if (mList.size == 0) {
+            binding.recyclerView.gone()
+            binding.notFound.visible()
+            hideLoader()
+        } else {
+            binding.recyclerView.visible()
+            hideLoader()
+            binding.notFound.gone()
+        }
     }
 
     private fun endlessScroll() {

@@ -38,7 +38,18 @@
             android:nestedScrollingEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/youHaveAddedVehicle" />
 
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/notFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="@string/no_vehicle_found"
+            android:textColor="@color/re_send_color"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"/>
 
 
         <com.conduent.apollo.ui.CMButton
@@ -50,7 +61,7 @@
             android:layout_marginTop="@dimen/_50sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/notFound"
             />
 
         <com.conduent.apollo.ui.CMButton

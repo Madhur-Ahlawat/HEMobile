@@ -68,12 +68,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             }
                         }
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+                            /*if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
                                 dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.vehicle_management)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
                                     .navigate(R.id.vehicleHomeListFragment)
-                            }
+                            }*/
                         }
                         2 -> {
                             if (navController.currentDestination?.id != R.id.notificationFragment) {

@@ -3,7 +3,9 @@ package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
@@ -37,8 +39,9 @@ class VrmHistoryAdapter(private val context: Context?, private val onItemClick: 
             onItemClick.onItemDeleteClick(vehicleList.get(position),position)
 
         }
+        holder.binding.updateVehicle.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.baseline_keyboard_arrow_right_24) });
         holder.binding.updateVehicle.setOnClickListener{
-
+            onItemClick.onItemClick(vehicleList.get(position),position)
         }
 
     }

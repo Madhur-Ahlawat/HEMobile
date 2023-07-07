@@ -1233,6 +1233,7 @@
     <string name="str_dummy_name">Alex Jonson</string>
     <string name="account">Account</string>
     <string name="txt_my_account">My Account</string>
+    <string name="no_vehicle_found">No vehicle found</string>
 
 
 </resources>

@@ -19,7 +19,6 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,14 +71,21 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             }
         }
 
-        vehicleList[apiRequestCount].status = apiStatus
-        apiRequestCount++
+        if(indexExists(vehicleList,apiRequestCount)){
+            vehicleList[apiRequestCount].status = apiStatus
+            apiRequestCount++
+        }
+
         if(apiRequestCount<vehicleList.size){
             apiCall(apiRequestCount)
         }else{
             loader?.dismiss()
             findNavController().navigate(R.id.action_vehicleListFragment_to_vehicleResultFragment)
         }
+    }
+
+    fun indexExists(list: List<*>, index: Int): Boolean {
+        return index >= 0 && index < list.size
     }
 
 
@@ -174,29 +180,33 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
         val obj = vehicleList[index]
         val data = AddVehicleRequest()
         data.plateInfo?.number = obj.plateNumber
-        data.plateInfo?.country = obj.plateCountry
+        if(obj.plateCountry.isNullOrEmpty()){
+            data.plateInfo?.country = "UK"
+        }else{
+            data.plateInfo?.country = obj.plateCountry
+        }
         data.plateInfo?.vehicleGroup = " "
         data.plateInfo?.vehicleComments = "new Vehicle"
         data.plateInfo?.planName = ""
-        data.plateInfo?.state = "NA"
+        data.plateInfo?.state = "HE"
         data.plateInfo?.type = "STANDARD"
 
         data.vehicleInfo?.color = obj.vehicleColor
         data.vehicleInfo?.year = 2021
         data.vehicleInfo?.effectiveStartDate = ""
         if(obj.vehicleModel.isNullOrEmpty()){
-            data.vehicleInfo?.model = "NA"
+            data.vehicleInfo?.model = "MODEL"
         }else{
             data.vehicleInfo?.model = obj.vehicleModel
         }
         data.vehicleInfo?.typeId = ""
         data.vehicleInfo?.typeDescription = "REGULAR"
         data.vehicleInfo?.make = obj.vehicleMake
-        if(obj.vehicleModel.isNullOrEmpty()){
-            data.vehicleInfo?.vehicleClassDesc = "1"
-        }else{
-            data.vehicleInfo?.vehicleClassDesc = obj.vehicleClass
-        }
+//        if(obj.vehicleClass.isNullOrEmpty()){
+            data.vehicleInfo?.vehicleClassDesc = "2"
+//        }else{
+//            data.vehicleInfo?.vehicleClassDesc = obj.vehicleClass
+//        }
 
 
         vehicleMgmtViewModel.addVehicleApiNew(data)

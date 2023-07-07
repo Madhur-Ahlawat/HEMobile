@@ -60,7 +60,8 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
         if(tempSuccessList.isEmpty()) {
             binding.vehicleAddedNote.visibility = View.GONE
             binding.recyclerViewSuccess.visibility = View.GONE
-            binding.warningIcon2.visibility = View.GONE
+            binding.maximumVehicleAdded.visibility = View.GONE
+            binding.warningIcon.visibility = View.GONE
         }else{
             val vehicleAdapterSuccess= VehiclesResultAdapter(requireContext(), tempSuccessList)
             binding.recyclerViewSuccess.adapter = vehicleAdapterSuccess
