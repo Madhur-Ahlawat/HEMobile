@@ -149,14 +149,29 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
                     } else {
-                        findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                        if(NewCreateAccountRequestModel.isVehicleManagementCall){
+                            if(vehicleList.size>=5){
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+                            }else{
+                                findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                            }
+                        }
+
                     }
                 }else {
                     if (vehicleList.size >= 50000) {
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
                     } else {
-                        findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                        if(NewCreateAccountRequestModel.isVehicleManagementCall){
+                            if(vehicleList.size>=5){
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment)
+                            }else{
+                                findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
+                            }
+                        }
                     }
                 }
             }

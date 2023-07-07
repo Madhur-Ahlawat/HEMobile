@@ -115,14 +115,14 @@
                 android:layout_height="@dimen/_55dp"
                 android:layout_marginHorizontal="@dimen/_20dp"
                 android:layout_marginTop="@dimen/_32dp"
-                android:elevation="@dimen/margin_5dp"
+                android:elevation="@dimen/_6dp"
                 app:cardCornerRadius="@dimen/margin_5dp"
                 app:layout_constraintTop_toBottomOf="@id/profile_pic">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_main"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon"
@@ -177,7 +177,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon2"
@@ -231,7 +231,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon3"
@@ -285,7 +285,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon4"
@@ -339,7 +339,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon5"
@@ -392,7 +392,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon6"
@@ -445,7 +445,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_62dp">
+                    android:layout_height="@dimen/_55dp">
 
                     <ImageView
                         android:id="@+id/left_icon7"

@@ -1049,7 +1049,7 @@
     <string name="add_another_vehicle">Add Another Vehicle</string>
     <string name="for_example_cu57abc">For example, CU57ABC</string>
     <string name="the_vehicle_has_already_been_added">The vehicle has already been added.</string>
-    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle %s?</string>
+    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle\n%s?</string>
     <string name="it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them">It is required that you have two vehicles before you are able to delete one of them.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -1191,7 +1191,7 @@
     <string name="vehicle_management">Vehicle Management</string>
     <string name="vehicle_list">Vehicle List</string>
     <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
-    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of £5.00</string>
+    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of $5</string>
     <string name="str_you_crossing">You will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
     <string name="str_top_up_now">Top Up Now</string>
     <string name="str_enter_amount_you_want_to_pop_up">Enter the amount you want to Top-Up</string>
@@ -1210,8 +1210,8 @@
     <string name="str_you_have_no_payment_method">You have no payment methods on file</string>
     <string name="str_you_must_pay_the_dart_charge_by_midnight">You must pay the Dart Charge by midnight the\n day after you cross, otherwise you may get a fine\n (Penalty Charge Notice).</string>
     <string name="str_pay">PAY</string>
-    <string name="str_check_your_answer_before_payment">Check your answers before making a payment</string>
-    <string name="str_you_have_less_than">You have less than %s credit left on your account.You will need to top up again soon.\n\n You have successfully added the new card:</string>
+    <string name="str_check_your_answer_before_payment">Check your answers before making a payment.</string>
+    <string name="str_you_have_less_than">You have less than %s credit left on your account.\n You will need to top up again soon.</string>
 
     <string name="plus_top_up">+ TOP UP</string>
     <string name="txt_low_threshold_balance">Low Balance Threshold</string>
@@ -1236,6 +1236,7 @@
     <string name="no_vehicle_found">No vehicle found</string>
     <string name="success">Success</string>
     <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
+    <string name="txt_dummy_date">28 Jan 2020</string>
 
 
 </resources>

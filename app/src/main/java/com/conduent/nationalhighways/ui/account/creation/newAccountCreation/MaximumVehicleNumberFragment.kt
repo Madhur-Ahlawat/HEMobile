@@ -117,7 +117,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                       getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
-                            if (NewCreateAccountRequestModel.isExempted) {
+                            if (NewCreateAccountRequestModel.isExempted || NewCreateAccountRequestModel.isVehicleManagementCall) {
                                 findNavController().popBackStack()
                             } else {
                                 noVehicleAddedDialog()
@@ -143,7 +143,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     }
                 }
 
-
+                NewCreateAccountRequestModel.isMaxVehicleAdded = false
             }
 
             R.id.cancel_btn -> {
@@ -154,7 +154,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
                 }
 
-
+                NewCreateAccountRequestModel.isMaxVehicleAdded = false
             }
         }
     }

@@ -12,6 +12,8 @@ import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +24,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     @Inject
     lateinit var sessionManager: SessionManager
+
     @Inject
     lateinit var api: ApiService
     lateinit var dataBinding: ActivityHomeMainBinding
@@ -48,6 +51,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
         dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
+        dataBinding.idToolBarLyt.materialToolbar.gone()
         dataBinding.idToolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
@@ -61,65 +65,79 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
-                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
+                                dataBinding.idToolBarLyt.materialToolbar.gone()
+                                dataBinding.idToolBarLyt.titleTxt.text =
+                                    getString(R.string.dashboard)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
                                     .navigate(R.id.dashBoardFragment)
                             }
                         }
+
                         1 -> {
-                            /*if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
-                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.vehicle_management)
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.vehicleHomeListFragment)
-                            }*/
-                        }
-                        2 -> {
-                            if (navController.currentDestination?.id != R.id.notificationFragment) {
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.notificationFragment)
-                            }
-                        }
-                        3 -> {
-                            if (navController.currentDestination?.id != R.id.accountFragment) {
-                                dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.txt_my_account)
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.accountFragment)
-                            }
-                        }
-                    }
-                }
-            }
-        )
-    }
+/*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+       dataBinding.idToolBarLyt.materialToolbar.visible()
+       dataBinding.idToolBarLyt.titleTxt.text =
+           getString(R.string.vehicle_management)
+       navController.popBackStack(R.id.bottom_navigation_graph, true)
+       dataBinding.fragmentContainerView.findNavController()
+           .navigate(R.id.vehicleHomeListFragment)
+   }
+    */
+}
 
-    override fun observeViewModel() {}
 
-    override fun onStart() {
-        super.onStart()
-        loadSession()
-    }
 
-    override fun onUserInteraction() {
-        super.onUserInteraction()
-        loadSession()
-    }
+2 -> {
+   if (navController.currentDestination?.id != R.id.notificationFragment) {
+       dataBinding.idToolBarLyt.materialToolbar.visible()
 
-    private fun loadSession() {
-        LogoutUtil.stopLogoutTimer()
-        LogoutUtil.startLogoutTimer(this)
-    }
+       navController.popBackStack(R.id.bottom_navigation_graph, true)
+       dataBinding.fragmentContainerView.findNavController()
+           .navigate(R.id.notificationFragment)
+   }
+}
 
-    override fun onLogout() {
-        sessionManager.clearAll()
-        Utils.sessionExpired(this)
-    }
+3 -> {
+   if (navController.currentDestination?.id != R.id.accountFragment) {
+       dataBinding.idToolBarLyt.materialToolbar.gone()
+       dataBinding.idToolBarLyt.titleTxt.text =
+           getString(R.string.txt_my_account)
+       navController.popBackStack(R.id.bottom_navigation_graph, true)
+       dataBinding.fragmentContainerView.findNavController()
+           .navigate(R.id.accountFragment)
+   }
+}
+}
+}
+}
+)
+}
 
-    override fun onDestroy() {
-        LogoutUtil.stopLogoutTimer()
-        super.onDestroy()
-    }
+override fun observeViewModel() {}
+
+override fun onStart() {
+super.onStart()
+loadSession()
+}
+
+override fun onUserInteraction() {
+super.onUserInteraction()
+loadSession()
+}
+
+private fun loadSession() {
+LogoutUtil.stopLogoutTimer()
+LogoutUtil.startLogoutTimer(this)
+}
+
+override fun onLogout() {
+sessionManager.clearAll()
+Utils.sessionExpired(this)
+}
+
+override fun onDestroy() {
+LogoutUtil.stopLogoutTimer()
+super.onDestroy()
+}
 }

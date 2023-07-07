@@ -49,10 +49,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         plateNumber = arguments?.getString(Constants.PLATE_NUMBER,"").toString()
         binding.editNumberPlate.setText(plateNumber)
 
-        NewCreateAccountRequestModel.isExempted=false
-        NewCreateAccountRequestModel.isRucEligible=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
         if(plateNumber.isNotEmpty()){
             binding.findVehicle.isEnabled = true
         }
@@ -98,6 +94,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+                NewCreateAccountRequestModel.isExempted=false
+                NewCreateAccountRequestModel.isRucEligible=false
+                NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+                NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+                NewCreateAccountRequestModel.isMaxVehicleAdded=false
+                NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
 
                 if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim()){
                     if(NewCreateAccountRequestModel.isEditCall){
@@ -131,7 +133,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-
+        val accountData = NewCreateAccountRequestModel
+        val vehicleList = accountData.vehicleList
         if (isObserverBack) {
             when (resource) {
                 is Resource.Success -> {
@@ -139,8 +142,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         val bundle = Bundle()
                         Log.d("responseData", Gson().toJson(apiData))
 
-                        val accountData = NewCreateAccountRequestModel
-                        val vehicleList = accountData.vehicleList
+
                         if(vehicleList.contains(apiData[0])){
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
@@ -191,13 +193,28 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 is Resource.DataError -> {
 
                     isObserverBack = false
-                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                    val bundle = Bundle()
-                    bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,bundle)
+                    var isVehicleExist = false
+                    val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                    for(obj in vehicleList){
+                        if(obj.plateNumber.equals(numberPlate, true)){
+                            isVehicleExist = true
+                        }
+                    }
 
+                    if(isVehicleExist){
+                        accountData.isVehicleAlreadyAddedLocal = true
+                        val bundleData = Bundle()
+                        bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
+                        return
+                    }else{
+                        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
+                        val bundle = Bundle()
+                        bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,bundle)
+                    }
 
                 }
 
@@ -233,9 +250,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
+//                binding.editNumberPlate.setErrorText(resource.errorMsg)
+                val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                NewCreateAccountRequestModel.plateNumber = numberPlate
                 NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
-                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
 
+                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
             }
 
             else -> {

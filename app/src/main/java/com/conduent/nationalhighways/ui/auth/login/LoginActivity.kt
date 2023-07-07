@@ -138,7 +138,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.edtEmail.setText("HIGHWAYS-TEST668100@CONDUENT.COM")
+        binding.edtEmail.setText("dk04pg@tyss.com")
         binding.edtPwd.setText("Welcome1")
         binding.btnLogin.isEnabled = true
 

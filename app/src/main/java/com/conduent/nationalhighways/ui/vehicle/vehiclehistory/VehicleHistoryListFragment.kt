@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,7 +77,10 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
         NewCreateAccountRequestModel.isVehicleManagementCall = false
-        checkData()
+        Handler().postDelayed({
+            checkData()
+        }, 1000)
+        NewCreateAccountRequestModel.vehicleList.clear()
     }
 
     override fun initCtrl() {}
@@ -204,17 +208,21 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
             R.id.btnNext -> {
                 if(isBusinessAccount.not()){
+                    NewCreateAccountRequestModel.isVehicleManagementCall = true
                     if (mList.size >= 10) {
+                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
                     } else {
-                        NewCreateAccountRequestModel.isVehicleManagementCall = true
+
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
                     }
                 }else {
+                    NewCreateAccountRequestModel.isVehicleManagementCall = true
                     if (mList.size >= 50000) {
+                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
                     } else {
-                        NewCreateAccountRequestModel.isVehicleManagementCall = true
+
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
                     }
                 }            }
