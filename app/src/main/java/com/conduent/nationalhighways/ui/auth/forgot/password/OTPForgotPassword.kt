@@ -22,9 +22,11 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.getValue
@@ -135,10 +137,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     loader?.dismiss()
                 }
 
-                /*findNavController().navigate(
-                    R.id.action_otpForgotFragment_to_createVehicleFragment
-                )*/
-
                 if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
                     if (!timeFinish) {
                         loader?.show(
@@ -176,48 +174,50 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
 
+                }else if(navFlow==Constants.SUSPENDED){
+
+                    hitTWOFAVerifyAPI()
+
                 } else {
-                    NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.getText().toString().trim()
-                    val bundle=Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    findNavController().navigate(
-                        R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                        bundle
-                    )
-                  //  confirmEmailCode()
+
+                    confirmEmailCode()
                 }
 
             }
 
             R.id.btn_Resend -> {
-                if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-                    AdobeAnalytics.setActionTrack(
-                        "resend",
-                        "login:forgot password:choose options:otp",
-                        "forgot password",
-                        "english",
-                        "login", "Create Account",
-                        sessionManager.getLoggedInUser()
-                    )
-                } else if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
-                    AdobeAnalytics.setActionTrack(
-                        "resend",
-                        "login:forgot password:choose options:otp",
-                        "forgot password",
-                        "english",
-                        "login", "Create Account",
-                        sessionManager.getLoggedInUser()
-                    )
-                } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-                    AdobeAnalytics.setActionTrack(
-                        "resend",
-                        "login:forgot password:choose options:otp",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen,
-                        sessionManager.getLoggedInUser()
-                    )
+                when (navFlow) {
+                    Constants.ACCOUNT_CREATION_EMAIL_FLOW -> {
+                        AdobeAnalytics.setActionTrack(
+                            "resend",
+                            "login:forgot password:choose options:otp",
+                            "forgot password",
+                            "english",
+                            "login", "Create Account",
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
+                    Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
+                        AdobeAnalytics.setActionTrack(
+                            "resend",
+                            "login:forgot password:choose options:otp",
+                            "forgot password",
+                            "english",
+                            "login", "Create Account",
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
+                    Constants.FORGOT_PASSWORD_FLOW -> {
+                        AdobeAnalytics.setActionTrack(
+                            "resend",
+                            "login:forgot password:choose options:otp",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen,
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
                 }
 
                 val bundle = Bundle()
@@ -230,6 +230,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                  viewModel.requestOTP(data)*/
             }
         }
+    }
+
+    private fun hitTWOFAVerifyAPI() {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = VerifyRequestOtpReq(  binding.edtOtp.getText().toString().trim(),
+            response?.referenceId?.toString() ?: "",
+
+
+        )
+        viewModel.twoFAVerifyRequestCode(request)
     }
 
     private fun confirmEmailCode() {
@@ -287,27 +297,33 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         when (status) {
             is Resource.Success -> {
-                val bundle = Bundle()
-                response?.code = binding.edtOtp.getText().toString()
-                bundle.putParcelable("data", response)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                if (navFlow==Constants.SUSPENDED){
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
 
-                Logg.logging("NewPassword", "response $response")
-                AdobeAnalytics.setActionTrack(
-                    "verify",
-                    "login:forgot password:choose options:otp",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    sessionManager.getLoggedInUser()
-                )
+                }else{
+                    val bundle = Bundle()
+                    response?.code = binding.edtOtp.getText().toString()
+                    bundle.putParcelable("data", response)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+
+                    Logg.logging("NewPassword", "response $response")
+                    AdobeAnalytics.setActionTrack(
+                        "verify",
+                        "login:forgot password:choose options:otp",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        sessionManager.getLoggedInUser()
+                    )
 
 
                     findNavController().navigate(
                         R.id.action_otpFragment_to_createPasswordFragment,
                         bundle
                     )
+                }
+
 
 
                 AdobeAnalytics.setActionTrack1(

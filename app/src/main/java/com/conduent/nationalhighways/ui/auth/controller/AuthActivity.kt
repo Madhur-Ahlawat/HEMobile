@@ -21,9 +21,9 @@ class AuthActivity : BaseActivity<Any?>() {
     private lateinit var binding: ActivityAuthBinding
     public var previousScreen = "home"
     private lateinit var navController: NavController
-    private var navFlow:String=""
-    private var currentBalance:String=""
-    private var personalInformation:PersonalInformation?=null
+    private var navFlow: String = ""
+    private var currentBalance: String = ""
+    private var personalInformation: PersonalInformation? = null
 
 
     @Inject
@@ -31,15 +31,16 @@ class AuthActivity : BaseActivity<Any?>() {
     override fun initViewBinding() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (intent.getStringExtra(Constants.NAV_FLOW_KEY)!=null){
-            navFlow= intent.getStringExtra(Constants.NAV_FLOW_KEY)?:""
+        if (intent.getStringExtra(Constants.NAV_FLOW_KEY) != null) {
+            navFlow = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
 
         }
-        if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)!=null){
-            personalInformation=intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)
+        if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)
 
         }
-        currentBalance= intent.getStringExtra(Constants.CURRENTBALANCE)?:""
+        currentBalance = intent.getStringExtra(Constants.CURRENTBALANCE) ?: ""
 
 
 
@@ -75,19 +76,25 @@ class AuthActivity : BaseActivity<Any?>() {
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
         val bundle = Bundle()
-        if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
+        if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
             binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
 
             graph.setStartDestination(R.id.forgotPasswordFragment)
             bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
-        }else{
+        } else if (navFlow == Constants.TWOFA) {
+            graph.setStartDestination(R.id.chooseOptionFragment)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+            bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+            binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
+
+        } else if (navFlow==Constants.SUSPENDED){
 
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
 
             graph.setStartDestination(R.id.accountSuspendedFragment)
-            bundle.putString(Constants.CURRENTBALANCE,currentBalance)
-            bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+            bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
         }
 

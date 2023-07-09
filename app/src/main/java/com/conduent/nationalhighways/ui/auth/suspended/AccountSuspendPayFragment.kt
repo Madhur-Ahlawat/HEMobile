@@ -17,7 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.OnDrawableClickListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
+import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -28,10 +30,12 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>(),
@@ -45,7 +49,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
     private var currentBalance:String=""
+    private var paymentSuccessResponse:PaymentSuccessResponse?=null
 
+    private var cardModel: PaymentWithNewCardModel? = null
 
     private var topUpAmount = 0.0
 
@@ -126,11 +132,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
     override fun observer() {
+
        /* lifecycleScope.launch {
             observe(
                 manualTopUpViewModel.paymentWithExistingCard,
                 ::handlePaymentWithExistingCardResponse
             )
+            observe(manualTopUpViewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
+
         }*/
     }
 
@@ -141,7 +150,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 val bundle = Bundle()
 
                 if (responseModel!=null){
+                    newPaymentMethod()
                     bundle.putParcelable(Constants.DATA, responseModel)
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 }else{
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
@@ -160,6 +172,45 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 findNavController().popBackStack()
             }
         }
+    }
+
+    private fun newPaymentMethod() {
+         cardModel = PaymentWithNewCardModel(
+                                    addressLine1 = "HE",
+                                    addressLine2 = "HE",
+                                    bankRoutingNumber = "",
+                                    cardNumber = responseModel?.token,
+                                    cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
+                                    city = "HE",
+                                    country = "GB",
+                                    cvv = "",
+                                    easyPay = "Y",
+                                    expMonth = responseModel?.card?.exp?.substring(0, 2),
+                                    expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
+                                    firstName = responseModel?.check?.name ?: "",
+                                    middleName = "",
+                                    lastName = "Gupta",
+                                    maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
+                                    paymentType = "card",
+                                    primaryCard = "N",
+                                    saveCard = "Y",
+                                    state = "HE",
+                                    transactionAmount = "",
+                                    useAddressCheck = "N",
+                                    "B100js",
+                                    "",
+                                    directoryServerId = paymentSuccessResponse?.directoryServerId.toString(),
+                                    cavv = paymentSuccessResponse?.cavv.toString(),
+                                    xid = paymentSuccessResponse?.xid.toString(),
+                                    threeDsVersion = paymentSuccessResponse?.threeDsVersion.toString(),
+                                    cardHolderAuth = paymentSuccessResponse?.cardHolderAuth.toString(),
+                                    eci = paymentSuccessResponse?.eci.toString()
+
+
+                                )
+
+                                manualTopUpViewModel.paymentWithNewCard(cardModel)
+                                Log.d("request", Gson().toJson(cardModel))
     }
 
     private fun payWithExistingCard() {
@@ -267,6 +318,33 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
 
+                }
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+
+            else -> {
+            }
+        }
+    }
+
+    private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("0") == true) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(Constants.DATA, responseModel)
+                    /* findNavController().navigate(
+                         R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
+                         bundle
+                     )*/
+                } else {
+                    ErrorUtil.showError(binding.root, status.data?.message)
                 }
             }
 

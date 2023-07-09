@@ -104,8 +104,21 @@ interface ApiService {
         @Body model: RequestOTPModel?
     ): Response<SecurityCodeResponseModel?>?
 
+
     @POST(VERIFY_REQUEST_CODE)
     suspend fun verifyRequestCode(
+        @Body model: VerifyRequestOtpReq?
+    ): Response<VerifyRequestOtpResp?>?
+
+    @POST(TWO_FA_REQUEST_OTP)
+    suspend fun twoFARequestCode(
+        @Query("agencyId") agencyId: String?,
+        @Body model: RequestOTPModel?
+    ): Response<SecurityCodeResponseModel?>?
+
+    @POST(TWO_FA_VERIFY_OTP)
+    suspend fun twoFAVerifyRequestCode(
+        @Query("agencyId") agencyId: String?,
         @Body model: VerifyRequestOtpReq?
     ): Response<VerifyRequestOtpResp?>?
 

@@ -10,5 +10,7 @@ data class CardResponseModel(
     val initiatedBy: InitiatedBy? = null,
     val token: String? = null,
     val tokenType: String? = null,
-    val wallet: Wallet? = null
+    val wallet: Wallet? = null,
+    var checkCheckBox:Boolean=false
+
 ) : Parcelable

@@ -23,5 +23,6 @@ data class PaymentSuccessResponse(
     val cardHolderAuth: String? = null,
 
     @field:SerializedName("eci")
-    val eci: String? = null
+    val eci: String? = null,
+
 ):Parcelable

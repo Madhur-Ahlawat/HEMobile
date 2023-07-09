@@ -107,5 +107,24 @@ class ForgotPasswordViewModel @Inject constructor(
         return ret
     }
 
+    fun twoFARequestOTP(model: RequestOTPModel?) {
+        viewModelScope.launch {
+            try {
+                _otp.postValue(success(repository.twoFARequestOTP(model), errorManager))
+            } catch (e: Exception) {
+                _otp.postValue(failure(e))
+            }
+        }
+    }
+    fun twoFAVerifyRequestCode(model: VerifyRequestOtpReq) {
+        viewModelScope.launch {
+            try {
+                _verifyRequestCode.postValue(success(repository.twoFAVerifyOTP(model), errorManager))
+            } catch (e: Exception) {
+                _verifyRequestCode.postValue(failure(e))
+            }
+        }
+    }
+
 }
 

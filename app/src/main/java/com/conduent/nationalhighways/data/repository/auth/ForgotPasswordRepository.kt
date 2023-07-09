@@ -9,11 +9,22 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import javax.inject.Inject
 
 
-class ForgotPasswordRepository @Inject constructor(private val apiService: ApiService)  {
+class ForgotPasswordRepository @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun confirmOptionForForgot(model: ConfirmOptionModel?) = apiService.confirmOptionForForgot(BuildConfig.AGENCY_ID,model)
-    suspend fun requestOTP(model: RequestOTPModel?) = apiService.requestOTP(BuildConfig.AGENCY_ID,model)
+    suspend fun confirmOptionForForgot(model: ConfirmOptionModel?) =
+        apiService.confirmOptionForForgot(BuildConfig.AGENCY_ID, model)
+
+    suspend fun requestOTP(model: RequestOTPModel?) =
+        apiService.requestOTP(BuildConfig.AGENCY_ID, model)
+
     suspend fun verifyRequestCode(model: VerifyRequestOtpReq?) = apiService.verifyRequestCode(model)
-    suspend fun resetPassword(model: ResetPasswordModel?) = apiService.resetPassword(BuildConfig.AGENCY_ID,model)
+    suspend fun resetPassword(model: ResetPasswordModel?) =
+        apiService.resetPassword(BuildConfig.AGENCY_ID, model)
+
+    suspend fun twoFARequestOTP(model: RequestOTPModel?) =
+        apiService.twoFARequestCode(BuildConfig.AGENCY_ID, model)
+
+    suspend fun twoFAVerifyOTP(model: VerifyRequestOtpReq) =
+        apiService.twoFAVerifyRequestCode(BuildConfig.AGENCY_ID, model)
 
 }

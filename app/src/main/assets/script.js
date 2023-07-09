@@ -173,15 +173,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 paymentToken: e.token,
                 currency:  document.getElementById("currency").innerText,
                 amount:  document.getElementById("amount").value,
-                email: "shivam.gupta@conduent.com" /*document.getElementById("email").innerText*/,
-                phone: "99336609176" /*document.getElementById("phone").innerText*/,
+                email:  document.getElementById("email").innerText,
+                phone:  document.getElementById("phone").innerText,
                 city: "HE"/*document.getElementById("city").innerText*/,
                     //state: '10 address street',
                 address1: "HE" /*document.getElementById("address1").innerText*/,
                 country:  "GB"/*document.getElementById("country").innerText*/,
                 firstName: e.check.name /*document.getElementById("name").value*/,
                 lastName:  e.check.name/*document.getElementById("name").value*/,
-                postalCode:"B100js"  /*document.getElementById("postalCode").innerText*/
+                postalCode: document.getElementById("postalCode").innerText
                 };
                 window.appInterface.postMessage(options);
                 const threeDSecureInterface = threeDS.createUI(options);
