@@ -50,9 +50,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
-        dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
-        dataBinding.idToolBarLyt.materialToolbar.gone()
-        dataBinding.idToolBarLyt.backButton.setOnClickListener {
+        dataBinding.titleTxt.text = getString(R.string.dashboard)
+        dataBinding.idToolBarLyt.gone()
+        dataBinding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -65,8 +65,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
-                                dataBinding.idToolBarLyt.materialToolbar.gone()
-                                dataBinding.idToolBarLyt.titleTxt.text =
+                                dataBinding.idToolBarLyt.gone()
+                                dataBinding.titleTxt.text =
                                     getString(R.string.dashboard)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
@@ -90,7 +90,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
 2 -> {
    if (navController.currentDestination?.id != R.id.notificationFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.visible()
+       dataBinding.idToolBarLyt.visible()
 
        navController.popBackStack(R.id.bottom_navigation_graph, true)
        dataBinding.fragmentContainerView.findNavController()
@@ -100,8 +100,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
 3 -> {
    if (navController.currentDestination?.id != R.id.accountFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.gone()
-       dataBinding.idToolBarLyt.titleTxt.text =
+       dataBinding.idToolBarLyt.gone()
+       dataBinding.titleTxt.text =
            getString(R.string.txt_my_account)
        navController.popBackStack(R.id.bottom_navigation_graph, true)
        dataBinding.fragmentContainerView.findNavController()
