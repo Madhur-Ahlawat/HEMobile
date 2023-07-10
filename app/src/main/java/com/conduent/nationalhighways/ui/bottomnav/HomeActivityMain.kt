@@ -100,8 +100,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                         3 -> {
                             if (navController.currentDestination?.id != R.id.accountFragment) {
-                                dataBinding.idToolBarLyt.materialToolbar.visible()
-                                dataBinding.idToolBarLyt.titleTxt.text =
+                                dataBinding.idToolBarLyt.visible()
+                                dataBinding.titleTxt.text =
                                     getString(R.string.txt_my_account)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
