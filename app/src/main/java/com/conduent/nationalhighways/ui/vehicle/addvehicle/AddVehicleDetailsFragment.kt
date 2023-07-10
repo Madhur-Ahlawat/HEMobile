@@ -148,6 +148,15 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.modelInputLayout.setText(nonUKVehicleModel?.vehicleModel.toString())
         binding.colorInputLayout.setText(nonUKVehicleModel?.vehicleColor.toString())
         binding.typeVehicle.setSelectedValue(Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString()))
+        if(nonUKVehicleModel?.vehicleClass.equals("D",true)){
+            typeOfVehicle.clear()
+            typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
+            typeOfVehicle.add("Vehicle with more than 2 axles")
+            binding.apply {
+                typeVehicle.dataSet.clear()
+                typeVehicle.dataSet.addAll(typeOfVehicle)
+            }
+        }
         if (nonUKVehicleModel?.isUK == true) {
             binding.radioButtonYes.isChecked = true
         } else {
@@ -267,7 +276,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.editVehicle -> {
-                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment)
+                val bundle = Bundle()
+                 bundle.putString(Constants.PLATE_NUMBER, binding.vehiclePlateNumber.text.toString())
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment,bundle)
             }
 
             R.id.next_btn -> {

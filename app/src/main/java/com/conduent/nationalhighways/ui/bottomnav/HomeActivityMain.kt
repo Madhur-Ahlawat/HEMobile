@@ -75,69 +75,69 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         1 -> {
-/*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.visible()
-       dataBinding.idToolBarLyt.titleTxt.text =
-           getString(R.string.vehicle_management)
-       navController.popBackStack(R.id.bottom_navigation_graph, true)
-       dataBinding.fragmentContainerView.findNavController()
-           .navigate(R.id.vehicleHomeListFragment)
-   }
-    */
-}
+                            /*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+                                   dataBinding.idToolBarLyt.materialToolbar.visible()
+                                   dataBinding.idToolBarLyt.titleTxt.text =
+                                       getString(R.string.vehicle_management)
+                                   navController.popBackStack(R.id.bottom_navigation_graph, true)
+                                   dataBinding.fragmentContainerView.findNavController()
+                                       .navigate(R.id.vehicleHomeListFragment)
+                               }
+                                */
+                        }
 
 
 
-2 -> {
-   if (navController.currentDestination?.id != R.id.notificationFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.visible()
+                        2 -> {
+                            if (navController.currentDestination?.id != R.id.notificationFragment) {
+                                dataBinding.idToolBarLyt.materialToolbar.visible()
 
-       navController.popBackStack(R.id.bottom_navigation_graph, true)
-       dataBinding.fragmentContainerView.findNavController()
-           .navigate(R.id.notificationFragment)
-   }
-}
+                                navController.popBackStack(R.id.bottom_navigation_graph, true)
+                                dataBinding.fragmentContainerView.findNavController()
+                                    .navigate(R.id.notificationFragment)
+                            }
+                        }
 
-3 -> {
-   if (navController.currentDestination?.id != R.id.accountFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.gone()
-       dataBinding.idToolBarLyt.titleTxt.text =
-           getString(R.string.txt_my_account)
-       navController.popBackStack(R.id.bottom_navigation_graph, true)
-       dataBinding.fragmentContainerView.findNavController()
-           .navigate(R.id.accountFragment)
-   }
-}
-}
-}
-}
-)
-}
+                        3 -> {
+                            if (navController.currentDestination?.id != R.id.accountFragment) {
+                                dataBinding.idToolBarLyt.materialToolbar.visible()
+                                dataBinding.idToolBarLyt.titleTxt.text =
+                                    getString(R.string.txt_my_account)
+                                navController.popBackStack(R.id.bottom_navigation_graph, true)
+                                dataBinding.fragmentContainerView.findNavController()
+                                    .navigate(R.id.accountFragment)
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
 
-override fun observeViewModel() {}
+    override fun observeViewModel() {}
 
-override fun onStart() {
-super.onStart()
-loadSession()
-}
+    override fun onStart() {
+        super.onStart()
+        loadSession()
+    }
 
-override fun onUserInteraction() {
-super.onUserInteraction()
-loadSession()
-}
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
 
-private fun loadSession() {
-LogoutUtil.stopLogoutTimer()
-LogoutUtil.startLogoutTimer(this)
-}
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
 
-override fun onLogout() {
-sessionManager.clearAll()
-Utils.sessionExpired(this)
-}
+    override fun onLogout() {
+        sessionManager.clearAll()
+        Utils.sessionExpired(this)
+    }
 
-override fun onDestroy() {
-LogoutUtil.stopLogoutTimer()
-super.onDestroy()
-}
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }

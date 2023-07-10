@@ -46,8 +46,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun init() {
-        plateNumber = arguments?.getString(Constants.PLATE_NUMBER,"").toString()
+        arguments?.getString(Constants.PLATE_NUMBER,"").toString().let { plateNumber = it.replace("null","") }
+
         binding.editNumberPlate.setText(plateNumber)
+        val filter = InputFilter.AllCaps()
+        binding.editNumberPlate.editText.filters =  arrayOf( filter)
 
         if(plateNumber.isNotEmpty()){
             binding.findVehicle.isEnabled = true
@@ -118,10 +121,33 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     binding.findVehicle.isEnabled = true
                 }, time)
 
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
                 isObserverBack = true
 
-                checkForDuplicateVehicle(numberPlate)
+                val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
+                var isVehicleExist = false
+                for(obj in addedVehicleList){
+                    if(obj?.plateInfo?.number.equals(numberPlate, true)){
+                        isVehicleExist = true
+                    }
+                }
+
+                if(isVehicleExist){
+                    NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
+                    val bundleData = Bundle()
+                    bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
+                    findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
+                }else {
+                    val vehicleList = NewCreateAccountRequestModel.addedVehicleList
+                    val size = addedVehicleList.size+vehicleList.size
+                    if(size>=10){
+                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                    }else {
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        checkForDuplicateVehicle(numberPlate)
+                    }
+                }
 
 
 
@@ -206,7 +232,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         val bundleData = Bundle()
                         bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
                         findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
-                        return
                     }else{
                         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                         val bundle = Bundle()

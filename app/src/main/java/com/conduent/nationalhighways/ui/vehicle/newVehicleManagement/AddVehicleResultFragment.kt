@@ -65,6 +65,11 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
         }else{
             val vehicleAdapterSuccess= VehiclesResultAdapter(requireContext(), tempSuccessList)
             binding.recyclerViewSuccess.adapter = vehicleAdapterSuccess
+            if(tempSuccessList.size>1){
+                binding.vehicleAddedNote.text = getString(R.string.vehicles_added)
+            }else{
+                binding.vehicleAddedNote.text = getString(R.string.vehicle_added)
+            }
         }
         if(tempFailedList.isEmpty()) {
             binding.vehicleNotAdded.visibility = View.GONE
@@ -73,6 +78,11 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
         }else{
             val vehicleAdapterFailed = VehiclesResultAdapter(requireContext(), tempFailedList)
             binding.recyclerViewFaied.adapter = vehicleAdapterFailed
+            if(tempFailedList.size>1){
+                binding.vehicleNotAdded.text = getString(R.string.vehicles_not_added)
+            }else{
+                binding.vehicleNotAdded.text = getString(R.string.vehicle_not_added)
+            }
         }
     }
 
