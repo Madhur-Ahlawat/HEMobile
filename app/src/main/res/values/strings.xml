@@ -1237,6 +1237,16 @@
     <string name="success">Success</string>
     <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
     <string name="txt_dummy_date">28 Jan 2020</string>
+    <string name="txt_crossing_amount">Crossing Amount</string>
+    <string name="txt_vehicle_registration">Vehicle Registration</string>
+    <string name="txt_status">Status</string>
+    <string name="txt_location">Location</string>
+    <string name="txt_payment_date">Payment Date</string>
+    <string name="txt_payment_time">Payment Time</string>
+    <string name="txt_payment_reference">Payment Reference</string>
+    <string name="txt_type_of_payment">Type of payment</string>
+    <string name="txt_channel">Channel</string>
+    <string name="txt_last_digits_of_card">Last four digit of card</string>
 
 
 </resources>
