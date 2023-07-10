@@ -50,9 +50,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
-        dataBinding.idToolBarLyt.titleTxt.text = getString(R.string.dashboard)
-        dataBinding.idToolBarLyt.materialToolbar.gone()
-        dataBinding.idToolBarLyt.backButton.setOnClickListener {
+        dataBinding.titleTxt.text = getString(R.string.dashboard)
+        dataBinding.idToolBarLyt.gone()
+        dataBinding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -65,8 +65,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
-                                dataBinding.idToolBarLyt.materialToolbar.gone()
-                                dataBinding.idToolBarLyt.titleTxt.text =
+                                dataBinding.idToolBarLyt.gone()
+                                dataBinding.titleTxt.text =
                                     getString(R.string.dashboard)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding.fragmentContainerView.findNavController()
@@ -75,28 +75,28 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         1 -> {
-                            /*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
-                                   dataBinding.idToolBarLyt.materialToolbar.visible()
-                                   dataBinding.idToolBarLyt.titleTxt.text =
-                                       getString(R.string.vehicle_management)
-                                   navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                   dataBinding.fragmentContainerView.findNavController()
-                                       .navigate(R.id.vehicleHomeListFragment)
-                               }
-                                */
-                        }
+/*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+       dataBinding.idToolBarLyt.materialToolbar.visible()
+       dataBinding.idToolBarLyt.titleTxt.text =
+           getString(R.string.vehicle_management)
+       navController.popBackStack(R.id.bottom_navigation_graph, true)
+       dataBinding.fragmentContainerView.findNavController()
+           .navigate(R.id.vehicleHomeListFragment)
+   }
+    */
+}
 
 
 
-                        2 -> {
-                            if (navController.currentDestination?.id != R.id.notificationFragment) {
-                                dataBinding.idToolBarLyt.materialToolbar.visible()
+2 -> {
+   if (navController.currentDestination?.id != R.id.notificationFragment) {
+       dataBinding.idToolBarLyt.visible()
 
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.notificationFragment)
-                            }
-                        }
+       navController.popBackStack(R.id.bottom_navigation_graph, true)
+       dataBinding.fragmentContainerView.findNavController()
+           .navigate(R.id.notificationFragment)
+   }
+}
 
                         3 -> {
                             if (navController.currentDestination?.id != R.id.accountFragment) {
@@ -114,30 +114,30 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         )
     }
 
-    override fun observeViewModel() {}
+override fun observeViewModel() {}
 
-    override fun onStart() {
-        super.onStart()
-        loadSession()
-    }
+override fun onStart() {
+super.onStart()
+loadSession()
+}
 
-    override fun onUserInteraction() {
-        super.onUserInteraction()
-        loadSession()
-    }
+override fun onUserInteraction() {
+super.onUserInteraction()
+loadSession()
+}
 
-    private fun loadSession() {
-        LogoutUtil.stopLogoutTimer()
-        LogoutUtil.startLogoutTimer(this)
-    }
+private fun loadSession() {
+LogoutUtil.stopLogoutTimer()
+LogoutUtil.startLogoutTimer(this)
+}
 
-    override fun onLogout() {
-        sessionManager.clearAll()
-        Utils.sessionExpired(this)
-    }
+override fun onLogout() {
+sessionManager.clearAll()
+Utils.sessionExpired(this)
+}
 
-    override fun onDestroy() {
-        LogoutUtil.stopLogoutTimer()
-        super.onDestroy()
-    }
+override fun onDestroy() {
+LogoutUtil.stopLogoutTimer()
+super.onDestroy()
+}
 }

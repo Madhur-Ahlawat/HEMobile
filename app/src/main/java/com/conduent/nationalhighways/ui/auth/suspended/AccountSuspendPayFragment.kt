@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.suspended
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -174,6 +175,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun newPaymentMethod() {
          cardModel = PaymentWithNewCardModel(
                                     addressLine1 = "HE",
@@ -182,14 +184,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                                     cardNumber = responseModel?.token,
                                     cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
                                     city = "HE",
-                                    country = "GB",
+                                    country = personalInformation?.country,
                                     cvv = "",
                                     easyPay = "Y",
                                     expMonth = responseModel?.card?.exp?.substring(0, 2),
                                     expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
                                     firstName = responseModel?.check?.name ?: "",
                                     middleName = "",
-                                    lastName = "Gupta",
+                                    lastName = personalInformation?.lastName,
                                     maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
                                     paymentType = "card",
                                     primaryCard = "N",
@@ -197,7 +199,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                                     state = "HE",
                                     transactionAmount = "",
                                     useAddressCheck = "N",
-                                    "B100js",
+                                    personalInformation?.zipcode,
                                     "",
                                     directoryServerId = paymentSuccessResponse?.directoryServerId.toString(),
                                     cavv = paymentSuccessResponse?.cavv.toString(),
@@ -338,11 +340,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("0") == true) {
                     val bundle = Bundle()
+                    bundle.putString("amount", arguments?.getString("amount"))
                     bundle.putParcelable(Constants.DATA, responseModel)
-                    /* findNavController().navigate(
-                         R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
-                         bundle
-                     )*/
+                    bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
+                        bundle
+                    )
                 } else {
                     ErrorUtil.showError(binding.root, status.data?.message)
                 }

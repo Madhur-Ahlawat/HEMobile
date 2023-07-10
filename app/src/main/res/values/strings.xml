@@ -1220,7 +1220,7 @@
     <string name="txt_dumy_card_number">••••••7890</string>
     <string name="txt_recent_transacions">Recent Transactions</string>
     <string name="top_up">Top- Up</string>
-    <string name="txt_topup_amount">Top-Up\nAmount</string>
+    <string name="txt_topup_amount">Top-Up Amount</string>
     <string name="vehicle_deleted">Vehicle Deleted</string>
     <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
     <string name="vehicles_not_added">Vehicles not added</string>
@@ -1240,6 +1240,16 @@
     <string name="txt_dummy_date">28 Jan 2020</string>
     <string name="vehicle_added">Vehicle added</string>
     <string name="vehicle_not_added">Vehicle not added</string>
+    <string name="txt_crossing_amount">Crossing Amount</string>
+    <string name="txt_vehicle_registration">Vehicle Registration</string>
+    <string name="txt_status">Status</string>
+    <string name="txt_location">Location</string>
+    <string name="txt_payment_date">Payment Date</string>
+    <string name="txt_payment_time">Payment Time</string>
+    <string name="txt_payment_reference">Payment Reference</string>
+    <string name="txt_type_of_payment">Type of payment</string>
+    <string name="txt_channel">Channel</string>
+    <string name="txt_last_digits_of_card">Last four digit of card</string>
 
 
 </resources>
