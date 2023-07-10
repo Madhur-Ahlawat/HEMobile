@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
@@ -20,6 +22,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +35,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var loader: LoaderDialog? = null
     private var response: SecurityCodeResponseModel? = null
     private var isViewCreated: Boolean = false
+    private var personalInformation: PersonalInformation? = null
+
     private lateinit var navFlow: String// create account , forgot password
 
 
@@ -48,18 +53,36 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
-
-        responseModel = arguments?.getParcelable(Constants.OPTIONS)
-
-        if (responseModel?.phone != null) {
-            binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
-            binding.radioSms.visibility = View.VISIBLE
-        } else {
-            binding.radioSms.visibility = View.GONE
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
 
 
-        binding.radioEmail.text = getString(R.string.str_radio_email, responseModel?.email)
+        responseModel = arguments?.getParcelable(Constants.OPTIONS)
+
+        if (navFlow == Constants.SUSPENDED) {
+            binding.radioSms.text =
+                getString(R.string.str_radio_sms, personalInformation?.phoneNumber)
+
+
+
+            binding.radioEmail.text =
+                getString(R.string.str_radio_email, personalInformation?.emailAddress)
+            viewModel.confirmOptionForForgot(personalInformation?.emailAddress.toString())
+
+        } else {
+            if (responseModel?.phone != null) {
+                binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
+                binding.radioSms.visibility = View.VISIBLE
+            } else {
+                binding.radioSms.visibility = View.GONE
+            }
+
+
+            binding.radioEmail.text = getString(R.string.str_radio_email, responseModel?.email)
+        }
+
+
 
         binding.radioGroup.setOnCheckedChangeListener(this)
 
@@ -83,27 +106,45 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun observer() {
+        lifecycleScope.launch {
+            observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
+        }
         if (!isViewCreated) {
             observe(viewModel.otp, ::handleOTPResponse)
+
 
         }
 
         isViewCreated = true
     }
 
+
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (group?.checkedRadioButtonId) {
 
 
             R.id.radio_sms -> {
+                if (navFlow == Constants.SUSPENDED) {
+                    model?.optionType = Constants.SMS
+                    model?.optionValue = personalInformation?.phoneNumber
+                } else {
+                    model?.optionType = Constants.SMS
+                    model?.optionValue = responseModel?.phone
+                }
                 binding.btn.isEnabled = true
-                model?.optionType = Constants.SMS
-                model?.optionValue = responseModel?.phone
+
             }
 
             R.id.radio_email -> {
-                model?.optionType = Constants.EMAIL
-                model?.optionValue = responseModel?.email
+                if (navFlow == Constants.SUSPENDED) {
+                    model?.optionType = Constants.EMAIL
+                    model?.optionValue = responseModel?.email
+
+                } else {
+                    model?.optionType = Constants.EMAIL
+                    model?.optionValue = responseModel?.email
+
+                }
 
                 binding.btn.isEnabled = true
             }
@@ -117,11 +158,18 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn -> {
+
                 if (!TextUtils.isEmpty(model?.optionType ?: "")) {
                     loader = LoaderDialog()
                     loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    viewModel.requestOTP(model)
+                    if (navFlow == Constants.SUSPENDED) {
+                        viewModel.twoFARequestOTP(model)
+
+                    } else {
+                        viewModel.requestOTP(model)
+
+                    }
 
 
                 }
@@ -130,18 +178,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         }
     }
 
-    private fun hitApi() {
-        if (!TextUtils.isEmpty(model?.optionType ?: "")) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.requestOTP(model)
-
-
-        } else {
-            showError(binding.root, getString(R.string.please_select_one_mode_for_password))
-        }
-    }
 
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
 
@@ -168,21 +204,12 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                     sessionManager.getLoggedInUser()
                 )
 
-                when (model?.optionType) {
-                    Constants.POST_MAIL -> {
-                        findNavController().navigate(
-                            R.id.action_chooseOptionFragment_to_postalEmailFragment,
-                            bundle
-                        )
-                    }
 
-                    else -> {
-                        findNavController().navigate(
-                            R.id.action_chooseOptionFragment_to_otpFragment,
-                            bundle
-                        )
-                    }
-                }
+                findNavController().navigate(
+                    R.id.action_chooseOptionFragment_to_otpFragment,
+                    bundle
+                )
+
 
             }
 
@@ -195,5 +222,59 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         }
     }
+
+    private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("1054") == true) {
+                    // status.data.message?.let { binding.edtEmail.setErrorText(it) }
+                } else {
+                    binding.root.post {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                        bundle.putParcelable(Constants.OPTIONS, status.data)
+                        findNavController().navigate(
+                            R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
+                            bundle
+                        )
+                    }
+                }
+                AdobeAnalytics.setActionTrackError(
+                    "next",
+                    "login:forgot password",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen, "success",
+                    sessionManager.getLoggedInUser()
+                )
+
+            }
+
+            is Resource.DataError -> {
+                //  binding.edtEmail.setErrorText(status.errorMsg)
+
+                AdobeAnalytics.setActionTrackError(
+                    "next",
+                    "login:forgot password",
+                    "forgot password",
+                    "english",
+                    "login",
+                    (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                    sessionManager.getLoggedInUser()
+                )
+
+            }
+
+            else -> {
+            }
+        }
+
+
+    }
+
 
 }

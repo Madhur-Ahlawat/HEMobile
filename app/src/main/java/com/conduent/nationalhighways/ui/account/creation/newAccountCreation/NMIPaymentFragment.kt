@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -47,7 +48,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private val viewModel: CreateAccountViewModel by viewModels()
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
-    private var cardModel: PaymentWithNewCardModel? = null
 
 
     private var loader: LoaderDialog? = null
@@ -64,7 +64,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var responseModel: CardResponseModel? = null
 
     private var personalInformation: PersonalInformation? = null
-    private var currentBalance:String=""
+    private var currentBalance: String = ""
+    private var checkBox: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -77,10 +78,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
-        NewCreateAccountRequestModel.emailAddress = "shivam.gupta@conduent.com"
-        NewCreateAccountRequestModel.firstName = "Shivam"
-        NewCreateAccountRequestModel.lastName = "Gupta"
-        NewCreateAccountRequestModel.mobileNumber = "9936609176"
+
 
         flow = arguments?.getString(Constants.SUSPENDED).toString()
 
@@ -111,7 +109,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun observer() {
         observe(viewModel.account, ::handleAccountResponse)
-        observe(manualTopUpViewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
 
     }
 
@@ -158,8 +155,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         "3DSLoaded" -> {
                             hideLoader()
                         }
-                        "true"->{
-                            NewCreateAccountRequestModel.isRucEligible=true
+
+                        "true" -> {
+                            checkBox = true
                         }
                     }
 
@@ -167,6 +165,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     if (check) {
                         responseModel =
                             Gson().fromJson(data, CardResponseModel::class.java)
+                        responseModel?.checkCheckBox = checkBox
+
                         expMonth = responseModel?.card?.exp?.subSequence(0, 2).toString()
                         expYear = "20" + responseModel?.card?.exp?.subSequence(2, 4).toString()
                         isTrusted = responseModel?.initiatedBy?.isTrusted == true
@@ -194,48 +194,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             } else {
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.DATA, responseModel)
-                                bundle.putParcelable(Constants.NEW_CARD,paymentSuccessResponse)
-                                bundle.putDouble(Constants.PAYMENT_TOP_UP,10.00)
+                                bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
+                                bundle.putDouble(Constants.PAYMENT_TOP_UP, 10.00)
                                 findNavController().navigate(
                                     R.id.action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment,
                                     bundle
                                 )
-                               /* cardModel = PaymentWithNewCardModel(
-                                    addressLine1 = "HE",
-                                    addressLine2 = "HE",
-                                    bankRoutingNumber = "",
-                                    cardNumber = responseModel?.token,
-                                    cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
-                                    city = "HE",
-                                    country = "GB",
-                                    cvv = "",
-                                    easyPay = "Y",
-                                    expMonth = responseModel?.card?.exp?.substring(0, 2),
-                                    expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
-                                    firstName = responseModel?.check?.name ?: "",
-                                    middleName = "",
-                                    lastName = "Gupta",
-                                    maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
-                                    paymentType = "card",
-                                    primaryCard = "N",
-                                    saveCard = "Y",
-                                    state = "HE",
-                                    transactionAmount = "",
-                                    useAddressCheck = "N",
-                                    "B100js",
-                                    "",
-                                    directoryServerId = paymentSuccessResponse.directoryServerId.toString(),
-                                    cavv = paymentSuccessResponse.cavv.toString(),
-                                    xid = paymentSuccessResponse.xid.toString(),
-                                    threeDsVersion = paymentSuccessResponse.threeDsVersion.toString(),
-                                    cardHolderAuth = paymentSuccessResponse.cardHolderAuth.toString(),
-                                    eci = paymentSuccessResponse.eci.toString()
-
-
-                                )
-
-                                manualTopUpViewModel.paymentWithNewCard(cardModel)
-                                Log.d("request", Gson().toJson(cardModel))*/
 
 
                             }
@@ -251,7 +215,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-       // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
     }
 
     private fun hideLoader() {
@@ -375,12 +339,26 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
+
+                if (flow == Constants.SUSPENDED) {
+                    view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+
+
+                } else {
+                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
+
+
+                }
 
 
 
@@ -392,31 +370,5 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun getRequiredText(text: String) = text.substringAfter(' ')
 
-    private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                if (status.data?.statusCode?.equals("0") == true) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.DATA, responseModel)
-                   /* findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
-                        bundle
-                    )*/
-                } else {
-                    ErrorUtil.showError(binding.root, status.data?.message)
-                }
-            }
-
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-            }
-        }
-    }
 
 }

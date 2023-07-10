@@ -106,6 +106,9 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         R.id.action_resenedCodeFragment_to_otpFragment,
                         bundle
                     )
+                }else if (navFlow==Constants.SUSPENDED){
+                    viewModel.twoFARequestOTP(data)
+
                 }
 
 

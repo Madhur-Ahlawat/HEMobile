@@ -48,6 +48,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private lateinit var loginModel: LoginModel
     private var emailCheck: Boolean = false
     private var passwordCheck: Boolean = false
+    private var twoFAEnable:Boolean=false
 
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
@@ -70,37 +71,50 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.accountInformation?.accountStatus.equals(
-                        Constants.SUSPENDED,
-                        true
-                    )
-                ) {
-
-
+                if (twoFAEnable){
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                     intent.putExtra(Constants.PERSONALDATA,status.data?.personalInformation)
-                    NewCreateAccountRequestModel.emailAddress=binding.edtEmail.getText().toString()
-                    NewCreateAccountRequestModel.isRucEligible=false
+
 
                     intent.putExtra(
                         Constants.CURRENTBALANCE,
                         status.data?.replenishmentInformation?.currentBalance
                     )
                     startActivity(intent)
-                } else {
-                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                            .trim()
+                }else{
+                    if (status.data?.accountInformation?.accountStatus.equals(
+                            Constants.SUSPENDED,
+                            true
+                        )
                     ) {
 
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                        intent.putExtra(Constants.PERSONALDATA,status.data?.personalInformation)
 
 
+                        intent.putExtra(
+                            Constants.CURRENTBALANCE,
+                            status.data?.replenishmentInformation?.currentBalance
+                        )
+                        startActivity(intent)
                     } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                                .trim()
+                        ) {
 
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                        } else {
+                            startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                        }
+                        sessionManager.saveUserName(binding.edtEmail.text.toString())
                     }
-                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+
                 }
 
             }
@@ -138,9 +152,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.edtEmail.setText("dk04pg@tyss.com")
-        binding.edtPwd.setText("Welcome1")
-        binding.btnLogin.isEnabled = true
+
 
         init()
         initCtrl()
@@ -204,15 +216,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
-       /* if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }*/
+
         when (status) {
             is Resource.Success -> {
                 launchIntent(status)
             }
 
             is Resource.DataError -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
                 if (status.errorModel?.errorCode == 5260) {
                     binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                 } else if (status.errorModel?.error.equals("unauthorized", true)) {
@@ -253,6 +266,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAuthTokenTimeOut(response.data?.expiresIn ?: 0)
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
+            twoFAEnable= response.data?.require2FA == true
         }
 
 

@@ -50,7 +50,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA)!=null){
             responseModel=arguments?.getParcelable<CardResponseModel>(Constants.DATA)
 
-            if (NewCreateAccountRequestModel.isRucEligible){
+            if (responseModel?.checkCheckBox == true){
                 binding.cardView.visibility=View.VISIBLE
 
             }else{
@@ -70,17 +70,27 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
             val htmlText = Html.fromHtml(responseModel?.card?.type?.uppercase()+"<br>"+responseModel?.card?.number)
 
             binding.tvSelectPaymentMethod.text = htmlText
-            binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"5.00")
 
 
         }else{
             binding.cardView.visibility=View.GONE
-            binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"5.00")
+
+        }
+        val balance = currentBalance.replace("£", "")
+        val doubleBalance = balance.toDouble()
+        val intBalance = doubleBalance.toInt()
+        val finalCurrentBalance = 5.00 - doubleBalance
+        if (finalCurrentBalance<5.00){
+            binding.tvYouWillAlsoNeed.visibility=View.VISIBLE
+        }else{
+            binding.tvYouWillAlsoNeed.visibility=View.GONE
 
         }
 
+        binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"5.00")
+
         binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
-            NewCreateAccountRequestModel.emailAddress)
+            personalInformation?.emailAddress)
 
     }
     override fun init() {
