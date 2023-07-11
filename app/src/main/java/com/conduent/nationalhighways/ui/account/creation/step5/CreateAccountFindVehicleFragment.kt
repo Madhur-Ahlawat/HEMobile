@@ -142,7 +142,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val size = addedVehicleList.size+vehicleList.size
                     if(size>=10){
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
                     }else {
                         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                         checkForDuplicateVehicle(numberPlate)
