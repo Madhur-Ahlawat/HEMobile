@@ -72,8 +72,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             val isDblaAvailable = arguments?.getBoolean(Constants.IS_DBLA_AVAILABLE, true)
             if (isDblaAvailable != null) {
                 if (isDblaAvailable.not()) {
-                    val editUKVehicleModel = index?.let { vehicleList?.get(it) }
-                    updateView(editUKVehicleModel)
+                    nonUKVehicleModel = index?.let { vehicleList?.get(it) }
+                    updateView(nonUKVehicleModel)
                 }
             }
         }
