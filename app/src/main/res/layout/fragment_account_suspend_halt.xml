@@ -24,12 +24,12 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_enter_amount"
-                style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12dp"
                 android:text="@string/str_enter_amount_you_want_to_pop_up"
                 android:textSize="@dimen/font_16sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/open_sans_semibold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +59,7 @@
                 android:layout_marginTop="@dimen/_24_32dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_select_payment_method"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lowBalance" />
@@ -170,11 +171,27 @@
                 style="@style/secondaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
                 android:text="@string/str_new_payment_method"
                 android:textSize="@dimen/font_14sp"
-                android:layout_marginTop="@dimen/_30dp"
                 app:isEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewLayout" />
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnAddNewPayment"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:text="@string/str_new_payment_method"
+                android:textSize="@dimen/font_14sp"
+                android:visibility="gone"
+
+                app:isEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewLayout" />
 

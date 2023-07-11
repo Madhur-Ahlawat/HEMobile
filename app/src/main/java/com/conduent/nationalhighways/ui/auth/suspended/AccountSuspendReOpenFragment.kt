@@ -92,12 +92,15 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
         }
 
-        binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"5.00")
+        binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"£5.00")
 
         binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
             personalInformation?.emailAddress)
 
-        binding.tvPaymentReference.text=getString(R.string.str_payment_reference,transactionId)
+        val htmlText = Html.fromHtml("<b>"+getString(R.string.str_payment_reference)+"</b>"+"<br>"+transactionId)
+
+        binding.tvPaymentReference.text = htmlText
+
 
     }
     override fun init() {

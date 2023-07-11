@@ -1191,7 +1191,7 @@
     <string name="vehicle_management">Vehicle Management</string>
     <string name="vehicle_list">Vehicle List</string>
     <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
-    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of $5.00</string>
+    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of £5.00</string>
     <string name="str_you_crossing">You will also need to pay %s for %s crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
     <string name="str_top_up_now">Top Up Now</string>
     <string name="str_enter_amount_you_want_to_pop_up">Enter the amount you want to Top-Up</string>
@@ -1212,7 +1212,7 @@
     <string name="str_you_must_pay_the_dart_charge_by_midnight">You must pay the Dart Charge by midnight the\n day after you cross, otherwise you may get a fine\n (Penalty Charge Notice).</string>
     <string name="str_pay">PAY</string>
     <string name="str_check_your_answer_before_payment">Check your answers before making a payment.</string>
-    <string name="str_you_have_less_than">You have less than %s credit left on your account.You will need to top up again soon.</string>
+    <string name="str_you_have_less_than">You have less than %s credit left on your account. You will need to top up again soon.</string>
 
     <string name="plus_top_up">+ TOP UP</string>
     <string name="txt_low_threshold_balance">Low Balance Threshold</string>
@@ -1238,7 +1238,7 @@
     <string name="success">Success</string>
     <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
     <string name="txt_dummy_date">28 Jan 2020</string>
-    <string name="str_payment_reference">Payment reference %s</string>
+    <string name="str_payment_reference">Payment reference</string>
     <string name="vehicle_added">Vehicle added</string>
     <string name="vehicle_not_added">Vehicle not added</string>
     <string name="txt_crossing_amount">Crossing Amount</string>

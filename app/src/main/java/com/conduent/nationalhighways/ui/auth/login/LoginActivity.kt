@@ -60,6 +60,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
+    private var isViewCreated:Boolean=false
 
 
     @Inject
@@ -67,12 +68,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     override fun observeViewModel() {
-        lifecycleScope.launch {
-            observe(viewModel.login, ::handleLoginResponse)
-            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+        if (!isViewCreated){
+            lifecycleScope.launch {
+                observe(viewModel.login, ::handleLoginResponse)
+                observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+                observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+                observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+            }
         }
+
+        isViewCreated=true
+
 
 
     }
@@ -336,6 +342,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
 
+
         initBiometric()
 
 
@@ -443,7 +450,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
 
-             /*if (twoFAEnable){
+            /* if (twoFAEnable){
                  val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                  intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                  intent.putExtra(Constants.PERSONALDATA, personalInformation)

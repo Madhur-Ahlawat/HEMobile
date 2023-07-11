@@ -52,21 +52,22 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/margin_50dp"
+                android:minHeight="@dimen/margin_60dp"
                 android:layout_marginHorizontal="2dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_account_suspended"
-                android:background="@drawable/bg_card_type">
+                android:background="@drawable/bg_card_type"
+                >
 
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_payment_reference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8dp"
+                    android:layout_marginStart="@dimen/_12dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_payment_reference"
@@ -110,22 +111,17 @@
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
                 app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_74dp"
-                android:layout_marginHorizontal="1dp"
-                android:layout_marginTop="30dp"
-                android:elevation="3dp"
-
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/_5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="74dp"
+                    android:id="@+id/cardView"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_card_type"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/_15dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed"
+                    >
 
                     <ImageView
                         android:id="@+id/ivCardType"
@@ -150,7 +146,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnTopUpNow"

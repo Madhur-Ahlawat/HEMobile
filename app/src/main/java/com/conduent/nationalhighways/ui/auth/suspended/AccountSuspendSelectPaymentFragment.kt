@@ -66,12 +66,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
 
         isViewCreated = false
-        checkButton()
 
 
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.btnAddNewPayment.setOnClickListener(this)
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -93,6 +93,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         binding.lowBalance.setText("£10.00")
 
+
     }
     override fun observer() {
         lifecycleScope.launch {
@@ -101,7 +102,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher() : TextWatcher {
 
         override fun beforeTextChanged(
             charSequence: CharSequence?,
@@ -118,7 +119,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             count: Int
         ) {
 
-            if (index == 0) {
+
 
                 val text = binding.lowBalance.getText().toString().trim()
                 val updatedText = text.replace("£", "")
@@ -126,7 +127,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 if (updatedText.isNotEmpty()) {
                     val str: String = updatedText.substringBeforeLast(".")
                     lowBalance = if (str.length < 8) {
-                        if (updatedText.toDouble() < 5) {
+                        if (updatedText.toDouble() < 10) {
                             binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
@@ -150,10 +151,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     binding.lowBalance.getText().toString().length
                 )
                 binding.lowBalance.editText.addTextChangedListener(this)
-            }
+
 
 
             checkButton()
+            checkNewPaymentMethodButton()
         }
 
         override fun afterTextChanged(editable: Editable?) {
@@ -163,6 +165,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     private fun checkButton() {
         binding.btnContinue.isEnabled = lowBalance && cardSelection
+
+    }
+    private fun checkNewPaymentMethodButton(){
+        binding.btnAddNewPayment.isEnabled=lowBalance
+        binding.btnAddNewPaymentMethod.isEnabled=lowBalance
+
 
     }
 
@@ -196,6 +204,19 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     bundle
                 )
             }
+
+            R.id.btnAddNewPayment -> {
+                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                val bundle = Bundle()
+                bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
+                bundle.putString(Constants.SUSPENDED, Constants.SUSPENDED)
+                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                findNavController().navigate(
+                    R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
+                    bundle
+                )
+            }
         }
     }
 
@@ -214,7 +235,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
                     binding.noCardFoundLayout.gone()
 
+                    binding.btnAddNewPayment.gone()
+                    binding.btnAddNewPaymentMethod.visible()
+
                 } else {
+                    binding.btnAddNewPayment.visible()
+                    binding.btnAddNewPaymentMethod.gone()
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()
