@@ -10,12 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.conduent.apollo.interfaces.OnDrawableClickListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
@@ -32,10 +29,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -151,16 +146,25 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 val bundle = Bundle()
 
                 if (responseModel!=null){
-                    newPaymentMethod()
+                    if (responseModel?.checkCheckBox == true){
+                        newPaymentMethod("Y")
+                    }else{
+                        newPaymentMethod("N")
+                    }
+
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                    bundle.putString(Constants.TRANSACTIONID,"541232435465")
+
                 }else{
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
                     bundle.putString("amount", arguments?.getString("amount"))
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                    bundle.putString(Constants.TRANSACTIONID,"761234567892")
+
                 }
                 findNavController().navigate(
                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
@@ -176,14 +180,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun newPaymentMethod() {
+    private fun newPaymentMethod(s: String) {
          cardModel = PaymentWithNewCardModel(
-                                    addressLine1 = "HE",
-                                    addressLine2 = "HE",
+                                    addressLine1 = personalInformation?.addressLine1,
+                                    addressLine2 = personalInformation?.addressLine2,
                                     bankRoutingNumber = "",
                                     cardNumber = responseModel?.token,
                                     cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
-                                    city = "HE",
+                                    city = personalInformation?.city,
                                     country = personalInformation?.country,
                                     cvv = "",
                                     easyPay = "Y",
@@ -195,9 +199,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                                     maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
                                     paymentType = "card",
                                     primaryCard = "N",
-                                    saveCard = "Y",
+                                    saveCard = s,
                                     state = "HE",
-                                    transactionAmount = "",
+                                    transactionAmount =binding.lowBalance.getText().toString().trim().replace("£",""),
                                     useAddressCheck = "N",
                                     personalInformation?.zipcode,
                                     "",
@@ -315,6 +319,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString("amount", arguments?.getString("amount"))
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                    bundle.putString(Constants.TRANSACTIONID,status.data?.transactionId)
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle
@@ -344,6 +349,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putString(Constants.TRANSACTIONID,status.data.transactionId)
+
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle

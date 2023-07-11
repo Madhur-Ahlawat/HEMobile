@@ -195,7 +195,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.DATA, responseModel)
                                 bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
-                                bundle.putDouble(Constants.PAYMENT_TOP_UP, 10.00)
+                                bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                                 bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                                 findNavController().navigate(

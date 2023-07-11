@@ -26,6 +26,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
     private var paymentSuccessResponse:PaymentSuccessResponse?=null
     private var personalInformation: PersonalInformation? = null
     private var currentBalance:String=""
+    private var transactionId:String=""
     private var backIcon:ImageView?=null
 
     override fun getFragmentBinding(
@@ -37,6 +38,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
     override fun initCtrl() {
         NewCreateAccountRequestModel.isBackButtonVisible=false
+        transactionId= arguments?.getString(Constants.TRANSACTIONID).toString()
 
         if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD)!=null){
             paymentSuccessResponse=arguments?.getParcelable(Constants.NEW_CARD)
@@ -95,7 +97,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
         binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
             personalInformation?.emailAddress)
 
-        binding.tvPaymentReference.text=getString(R.string.str_payment_reference,"543211232243")
+        binding.tvPaymentReference.text=getString(R.string.str_payment_reference,transactionId)
 
     }
     override fun init() {

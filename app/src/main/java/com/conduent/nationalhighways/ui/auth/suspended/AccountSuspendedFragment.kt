@@ -35,6 +35,19 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
 
+        if (crossingCount.isNotEmpty()){
+
+            if (crossingCount.toInt()>0){
+                binding.maximumVehicleAddedNote.text=getString(R.string.str_you_crossing,"£5.00",crossingCount)
+                binding.maximumVehicleAddedNote.visibility=View.VISIBLE
+            }else{
+                binding.maximumVehicleAddedNote.visibility=View.GONE
+
+            }
+        }
+
+
+
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)

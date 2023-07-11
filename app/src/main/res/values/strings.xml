@@ -1191,8 +1191,8 @@
     <string name="vehicle_management">Vehicle Management</string>
     <string name="vehicle_list">Vehicle List</string>
     <string name="str_your_account_has_been_suspended">Your account has been suspended</string>
-    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of $5</string>
-    <string name="str_you_crossing">You will also need to pay {$} for {Y} crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
+    <string name="str_you_will_need_to_pay">You will need to pay %s to bring your account\nto the low balance threshold of $5.00</string>
+    <string name="str_you_crossing">You will also need to pay %s for %s crossings\nmade since your account was suspended to avoid any Penalty Charge notices.</string>
     <string name="str_top_up_now">Top Up Now</string>
     <string name="str_enter_amount_you_want_to_pop_up">Enter the amount you want to Top-Up</string>
     <string name="str_select_payment_method">Select payment method</string>

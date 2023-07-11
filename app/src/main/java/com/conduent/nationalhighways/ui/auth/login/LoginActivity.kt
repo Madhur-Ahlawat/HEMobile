@@ -101,9 +101,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
                     startActivity(intent)
-                }else{
+                }else {
 
-                    if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED,true)) {
+                    if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
 
 
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
@@ -117,7 +117,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         )
                         startActivity(intent)
                     } else {
-                        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                                 .trim()
                         ) {
 
@@ -131,11 +131,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         sessionManager.saveUserName(binding.edtEmail.text.toString())
                     }
 
+
+
+
+                    //crossingHistoryApi()
                 }
 
 
 
-                //crossingHistoryApi()
+
 
 
             }
@@ -215,6 +219,87 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun navigateWithCrossing(count: String) {
+
+        if (count.isNotEmpty()){
+            if (count.toInt()>0){
+
+
+
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, count)
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
+
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
+
+            }else {
+                if (accountInformation?.status.equals(Constants.SUSPENDED)){
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, "")
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
+
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
+                }else{
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                            .trim()
+                    ) {
+
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+                }
+                }
+
+
+
+        }else {
+
+            if (accountInformation?.status.equals(Constants.SUSPENDED)){
+                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                intent.putExtra(Constants.CROSSINGCOUNT, "")
+                intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
+
+                intent.putExtra(
+                    Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                )
+                startActivity(intent)
+            }else{
+                if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                        .trim()
+                ) {
+
+                    displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                } else {
+                    startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                }
+                sessionManager.saveUserName(binding.edtEmail.text.toString())
+            }
+
+
+        }
+
+
+
+
 
 
 
