@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.new_account_creation.model
 
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 
 
 object NewCreateAccountRequestModel{
@@ -27,6 +28,7 @@ object NewCreateAccountRequestModel{
     var plateNumber:String=""
     var plateNumberIsNotInDVLA:Boolean=false
     var vehicleList = mutableListOf<NewVehicleInfoDetails>()
+    var addedVehicleList = ArrayList<VehicleResponse?>()
     var isRucEligible:Boolean=false
     var isExempted:Boolean=false
     var isVehicleAlreadyAdded:Boolean=false

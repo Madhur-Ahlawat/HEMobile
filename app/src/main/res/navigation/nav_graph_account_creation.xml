@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/topUpFragment">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
     <!-- Step 1 -->
@@ -221,13 +221,6 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountFindVehicleFragment"
         android:label="FindYourVehicleFragment"
         tools:layout="@layout/fragment_create_account_find_vehicle">
-
-        <argument
-            android:name="plateNumber"
-            app:argType="string" />
-        <argument
-            android:name="vehicle_position"
-            app:argType="integer" />
 
         <action
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"

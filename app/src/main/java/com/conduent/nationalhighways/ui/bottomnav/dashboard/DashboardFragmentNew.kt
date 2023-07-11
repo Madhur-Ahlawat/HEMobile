@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.dashboard//package com.conduent.nationalhighways.ui.bottomnav.dashboard
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -53,7 +52,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener {
 
-    private var topup: String?=null
+    private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var dateRangeModel: PaymentDateRangeModel? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -77,16 +76,22 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             with(viewDataBinding as ItemRecentTansactionsBinding) {
                 viewDataBinding.apply {
                     valueCurrentBalance.text = recentTransactionItem.balance
-                    tvTransactionType.text=recentTransactionItem.activity?.substring(0,1)!!.toUpperCase().plus(recentTransactionItem.activity?.substring(1,recentTransactionItem.activity.length)!!.toLowerCase())
+                    tvTransactionType.text =
+                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
+                            recentTransactionItem.activity?.substring(
+                                1,
+                                recentTransactionItem.activity.length
+                            )!!.toLowerCase()
+                        )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
-                        topup = "+"+recentTransactionItem.amount
+                        topup = "+" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                     } else {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
-                        topup = "-"+recentTransactionItem.amount
+                        topup = "-" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                     }
                     root.setOnClickListener {
@@ -186,11 +191,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             )
         }
         binding.logout.setOnClickListener {
-            LogoutDialog.newInstance(
-                this
-            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
+//            LogoutDialog.newInstance(
+//                this
+//            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
+            dashboardViewModel.logout()
         }
-
     }
 
     override fun observer() {

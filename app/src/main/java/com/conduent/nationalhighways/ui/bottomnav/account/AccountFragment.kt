@@ -46,7 +46,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -180,9 +179,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 //            }
 
             R.id.sign_out -> {
-                LogoutDialog.newInstance(
-                    this
-                ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
+//                LogoutDialog.newInstance(
+//                    this
+//                ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
+                logOutViewModel.logout()
+
             }
 
         }

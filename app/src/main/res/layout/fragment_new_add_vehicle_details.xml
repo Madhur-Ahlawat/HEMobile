@@ -95,6 +95,7 @@
                         android:id="@+id/vehiclePlateNumber"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistrationPlate" />
                     <ImageView

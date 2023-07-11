@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 
 class VrmHistoryAdapter(private val context: Context?, private val onItemClick: ItemClickListener) :
@@ -18,6 +19,7 @@ class VrmHistoryAdapter(private val context: Context?, private val onItemClick: 
     fun setList(list: ArrayList<VehicleResponse?>) {
         list.let {
                 vehicleList = list
+                NewCreateAccountRequestModel.addedVehicleList = list
         }
     }
 

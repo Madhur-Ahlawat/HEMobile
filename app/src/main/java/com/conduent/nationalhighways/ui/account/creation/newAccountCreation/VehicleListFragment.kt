@@ -156,6 +156,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
                             }else{
                                 findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                             }
+                        }else{
+                            findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                         }
 
                     }
@@ -171,6 +173,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
                             }else{
                                 findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                             }
+                        }else{
+                            findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment)
                         }
                     }
                 }

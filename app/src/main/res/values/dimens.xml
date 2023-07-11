@@ -117,5 +117,11 @@
     <dimen name="_1_5dp">1.5dp</dimen>
     <dimen name="_6dp">6dp</dimen>
     <dimen name="_4dp">4dp</dimen>
+    <dimen name="_73dp">73dp</dimen>
+    <dimen name="_65dp">65dp</dimen>
+    <dimen name="_36dp">36dp</dimen>
+    <dimen name="_72dp">72dp</dimen>
+    <dimen name="_23dp">23dp</dimen>
+    <dimen name="_108dp">108dp</dimen>
     />
 </resources>
