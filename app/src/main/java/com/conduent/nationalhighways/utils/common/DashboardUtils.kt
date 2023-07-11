@@ -38,16 +38,16 @@ object DashboardUtils {
             viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status));
         } else if (status.equals("SUSPENDED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.suspended)
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_C93E28));
+            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_C93E28));
         } else if (status.equals("DORMANT", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.dormant)
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514));
+            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_942514));
         } else if (status.equals("CLOSED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.closed)
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_383f43));
+            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_383f43));
         } else if (status.equals("CLOSE PEND", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.close_Pending)
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_144e81));
+            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_144e81));
         } else {
             tvTitle.text = status
             viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF));

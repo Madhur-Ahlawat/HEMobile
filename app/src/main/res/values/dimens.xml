@@ -123,5 +123,6 @@
     <dimen name="_72dp">72dp</dimen>
     <dimen name="_23dp">23dp</dimen>
     <dimen name="_108dp">108dp</dimen>
+    <dimen name="_75sp">75sp</dimen>
     />
 </resources>

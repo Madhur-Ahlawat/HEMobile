@@ -223,7 +223,17 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_last_four_digits_of_the_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_last_four_digits_of_the_card"
-            tools:text="Web" />
+            tools:text="5175" />
+<com.conduent.nationalhighways.utils.widgets.NHButton
+    android:id="@+id/button_email_reciept"
+    style="@style/secondaryButton"
+    app:layout_constraintTop_toBottomOf="@id/tv_last_four_digits_of_the_card"
+    android:layout_marginTop="@dimen/_75sp"
+    android:text="@string/email_reciept"
+    android:layout_width="match_parent"
+    android:textSize="@dimen/_14sp"
+    android:fontFamily="@font/open_sans_semibold"
 
+    android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

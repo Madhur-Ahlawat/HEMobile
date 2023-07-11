@@ -88,11 +88,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         topup = "+" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
+                        valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                     } else {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
                         indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
                         topup = "-" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
+                        valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
                         valueTopUpAmount
@@ -361,12 +363,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         this
                     )
                     if (accountInformation?.accountType.equals("BUSINESS", true)
-                        || (accountInformation?.accSubType.equals("STANDARD", true) &&
-                                accountInformation?.accountType.equals(
-                                    "PRIVATE",
-                                    true
-                                ))
-                    ) {
+                        || ((accountInformation?.accSubType.equals("STANDARD", true) && accountInformation?.accountType.equals("PRIVATE", true
+                        )))) {
                         showNonPayGUI(this)
                     } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                         showPayGUI(this)
@@ -375,6 +373,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             is Resource.DataError -> {
+                binding.loaderPlaceholder.visibility == View.GONE
+
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
 

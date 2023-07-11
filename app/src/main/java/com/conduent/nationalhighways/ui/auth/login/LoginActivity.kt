@@ -448,7 +448,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-
+//            navigateHomeActivity()
 
             /* if (twoFAEnable){
                  val intent = Intent(this@LoginActivity, AuthActivity::class.java)
@@ -654,7 +654,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-
+    private fun navigateHomeActivity() {
+        startActivity(
+            Intent(this, HomeActivityMain::class.java)
+        )
+        finish()
+    }
 }
 
 
