@@ -102,8 +102,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
-        binding.lowBalance.setText("£$topUpAmount")
+
+        binding.lowBalance.setText("£"+String.format("%.2f",topUpAmount))
         if (paymentList?.isNotEmpty() == true){
             if (paymentList?.get(position)?.cardType.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -125,7 +127,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
     }
-
+    private fun topBalanceDecimal(b: Boolean) {
+        if(b.not()){
+            val text = binding.lowBalance.getText().toString().trim()
+            val updatedText = text.replace("£","")
+            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+                binding.lowBalance.setText(String.format("%.2f",updatedText.toDouble()))
+            }
+        }
+    }
 
     override fun observer() {
 

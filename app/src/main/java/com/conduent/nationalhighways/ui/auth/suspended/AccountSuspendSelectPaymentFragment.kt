@@ -40,7 +40,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     View.OnClickListener, SuspendPaymentMethodAdapter.paymentMethodSelectCallBack {
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
-    private var lowBalance: Boolean = false
+    private var lowBalance: Boolean =true
     private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -72,6 +72,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -94,6 +96,15 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.lowBalance.setText("£10.00")
 
 
+    }
+    private fun topBalanceDecimal(b: Boolean) {
+        if(b.not()){
+            val text = binding.lowBalance.getText().toString().trim()
+            val updatedText = text.replace("£","")
+            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+                binding.lowBalance.setText(String.format("%.2f",updatedText.toDouble()))
+            }
+        }
     }
     override fun observer() {
         lifecycleScope.launch {
@@ -262,7 +273,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         this.position = position
         suspendPaymentMethodAdapter?.notifyDataSetChanged()
         cardSelection = paymentList?.get(position)?.isSelected == true
-        lowBalance = true
         checkButton()
 
     }
