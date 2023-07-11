@@ -138,7 +138,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
                     findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
                 }else {
-                    val vehicleList = NewCreateAccountRequestModel.addedVehicleList
+                    val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = addedVehicleList.size+vehicleList.size
                     if(size>=10){
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
