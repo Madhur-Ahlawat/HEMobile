@@ -54,6 +54,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     override fun initCtrl() {
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -65,6 +68,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         if (navFlow == Constants.TWOFA) {
 
             viewModel.twoFAConfirmOption()
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         } else {
             if (responseModel?.phone != null) {
@@ -146,8 +150,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             R.id.btn -> {
 
                 if (!TextUtils.isEmpty(model?.optionType ?: "")) {
-                    loader = LoaderDialog()
-                    loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     if (navFlow == Constants.TWOFA) {
                         viewModel.twoFARequestOTP(model)
