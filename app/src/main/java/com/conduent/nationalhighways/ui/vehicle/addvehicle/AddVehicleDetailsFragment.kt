@@ -345,13 +345,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.vehiclePlateNumber.text.toString()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
-                        vehicleList?.add(newVehicleInfoDetails)
-                        if(NewCreateAccountRequestModel.isEditCall){
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
-                        }else {
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
-                        }
-                        return
+                        checkRUC(newVehicleInfoDetails)
+
 
                     } else {
                         newVehicleInfoDetails.vehicleMake =
@@ -366,12 +361,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.vehiclePlateNumber.text.toString()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
-                        vehicleList?.add(newVehicleInfoDetails)
-                        if(NewCreateAccountRequestModel.isEditCall){
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
-                        }else {
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
-                        }
+                        checkRUC(newVehicleInfoDetails)
+
 
                     }
 
@@ -383,6 +374,31 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         }
     }
+
+    private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails) {
+        if(newVehicleInfoDetails.vehicleClass.equals("A",true)) {
+            NewCreateAccountRequestModel.isRucEligible = true
+            val bundle = Bundle()
+            bundle.putParcelable(
+                Constants.VEHICLE_DETAIL,
+                newVehicleInfoDetails
+            )
+            findNavController().navigate(
+                R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
+                bundle
+            )
+
+        }else{
+            vehicleList?.add(newVehicleInfoDetails)
+            if(NewCreateAccountRequestModel.isEditCall){
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
+            }else {
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+            }
+        }
+    }
+
+
 
     override fun onHashMapItemSelected(key: String?, value: Any?) {
     }

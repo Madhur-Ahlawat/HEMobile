@@ -443,7 +443,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
 
-             if (twoFAEnable){
+             /*if (twoFAEnable){
                  val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                  intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                  intent.putExtra(Constants.PERSONALDATA, personalInformation)
@@ -459,11 +459,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                  )
 
                  startActivity(intent)
-             }
+             }*/
         }
 
 
-       // dashboardViewModel.getAccountDetailsData()
+        dashboardViewModel.getAccountDetailsData()
 
 
         AdobeAnalytics.setLoginActionTrackError(
