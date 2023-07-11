@@ -110,6 +110,8 @@ interface ApiService {
         @Body model: VerifyRequestOtpReq?
     ): Response<VerifyRequestOtpResp?>?
 
+    @POST(TWO_FA_CONFIRMATION_OPTION)
+    suspend fun twoFAConfirmOption(@Query("agencyId") agencyId: String?):Response<ConfirmOptionResponseModel>
     @POST(TWO_FA_REQUEST_OTP)
     suspend fun twoFARequestCode(
         @Query("agencyId") agencyId: String?,

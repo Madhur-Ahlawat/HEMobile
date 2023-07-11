@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltTopUpBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
@@ -21,6 +22,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
     View.OnClickListener {
     private var currentBalance: String = ""
     private var personalInformation: PersonalInformation? = null
+    private var crossingCount: String = ""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -31,6 +33,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
     override fun init() {
 
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+        crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -39,15 +42,18 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         }
 
         val balance = currentBalance.replace("£", "")
-        val doubleBalance = balance.toDouble()
-        val intBalance = doubleBalance.toInt()
-        val finalCurrentBalance = 5.00 - doubleBalance
+        if (balance.isNotEmpty()){
+            val doubleBalance = balance.toDouble()
+            val intBalance = doubleBalance.toInt()
+            val finalCurrentBalance = 5.00 - doubleBalance
 
 
-        binding.textMaximumVehicle.text = getString(
-            R.string.str_you_will_need_to_pay,
-            "£" + String.format("%.2f", finalCurrentBalance)
-        )
+            binding.textMaximumVehicle.text = getString(
+                R.string.str_you_will_need_to_pay,
+                "£" + String.format("%.2f", finalCurrentBalance)
+            )
+
+        }
 
 
     }

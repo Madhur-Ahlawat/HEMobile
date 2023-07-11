@@ -107,6 +107,31 @@ class ForgotPasswordViewModel @Inject constructor(
         return ret
     }
 
+    fun twoFAConfirmOption() {
+
+        viewModelScope.launch {
+            try {
+                val response = repository.towFAConfirmOption()
+                if (response.isSuccessful) {
+                    val serverToken =
+                        response.headers()["Authorization"]?.split("Bearer ")?.get(1)
+                    _confirmOption.postValue(Resource.Success(response.body()))
+                } else {
+                    _confirmOption.postValue(
+                        Resource.DataError(
+                            errorManager.getError(
+                                response.code()
+                            ).description
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _confirmOption.postValue(failure(e))
+            }
+        }
+    }
+
+
     fun twoFARequestOTP(model: RequestOTPModel?) {
         viewModelScope.launch {
             try {

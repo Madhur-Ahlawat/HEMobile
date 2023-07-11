@@ -5,9 +5,13 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.ActivityAuthBinding
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -24,6 +28,9 @@ class AuthActivity : BaseActivity<Any?>() {
     private var navFlow: String = ""
     private var currentBalance: String = ""
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
+    private var replenishmentInformation: ReplenishmentInformation? = null
+    private var crossingCount: String = ""
 
 
     @Inject
@@ -40,6 +47,17 @@ class AuthActivity : BaseActivity<Any?>() {
                 intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)
 
         }
+        if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION)
+        }
+
+        if (intent.getParcelableExtra<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
+            replenishmentInformation =
+                intent.getParcelableExtra<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+        }
+
+        crossingCount = intent.getStringExtra(Constants.CROSSINGCOUNT) ?: ""
         currentBalance = intent.getStringExtra(Constants.CURRENTBALANCE) ?: ""
 
 
@@ -83,18 +101,22 @@ class AuthActivity : BaseActivity<Any?>() {
             bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
         } else if (navFlow == Constants.TWOFA) {
-            graph.setStartDestination(R.id.chooseOptionFragment)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-            bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
+            graph.setStartDestination(R.id.chooseOptionFragment)
 
-        } else if (navFlow==Constants.SUSPENDED){
+
+        } else if (navFlow == Constants.SUSPENDED) {
 
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
 
-            graph.setStartDestination(R.id.accountSuspendedFragment)
             bundle.putString(Constants.CURRENTBALANCE, currentBalance)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putString(Constants.CROSSINGCOUNT,crossingCount)
+            graph.setStartDestination(R.id.accountSuspendedFragment)
+
 
         }
 
@@ -115,5 +137,18 @@ class AuthActivity : BaseActivity<Any?>() {
     }
 
     override fun observeViewModel() {}
+    override fun onBackPressed() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is AccountSuspendReOpenFragment) {
 
+                } else {
+                    onBackPressedDispatcher.onBackPressed()
+                }
+
+            }
+        }
+
+    }
 }

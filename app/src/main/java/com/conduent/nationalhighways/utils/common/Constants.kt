@@ -4,6 +4,8 @@ object Constants {
 
     const val NEW_CARD="newcard"
     const val PERSONALDATA="personaldata"
+    const val ACCOUNTINFORMATION="accountinformation"
+    const val REPLENISHMENTINFORMATION="ReplenishmentInformation"
     const val EXISTING_CARD="existing_card"
     const val EXPIRED = "EXPIRED"
     const val MASTERCARD = "MASTERCARD"
@@ -237,6 +239,7 @@ object Constants {
     const val LIST="list"
     const val REMOVE_VEHICLE="remove_vehicle"
     const val EDIT_VEHICLE="edit_vehicle"
+    const val CROSSINGCOUNT="crossingCount"
 
 
 

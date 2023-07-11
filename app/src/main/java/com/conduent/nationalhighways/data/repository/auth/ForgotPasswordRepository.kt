@@ -21,6 +21,7 @@ class ForgotPasswordRepository @Inject constructor(private val apiService: ApiSe
     suspend fun resetPassword(model: ResetPasswordModel?) =
         apiService.resetPassword(BuildConfig.AGENCY_ID, model)
 
+    suspend fun towFAConfirmOption()=apiService.twoFAConfirmOption(BuildConfig.AGENCY_ID)
     suspend fun twoFARequestOTP(model: RequestOTPModel?) =
         apiService.twoFARequestCode(BuildConfig.AGENCY_ID, model)
 

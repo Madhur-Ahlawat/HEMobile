@@ -36,8 +36,11 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
 
     override fun initCtrl() {
-        backIcon = requireActivity().findViewById(R.id.back_button)
-        backIcon?.visibility = View.GONE
+        NewCreateAccountRequestModel.isBackButtonVisible=false
+
+        if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD)!=null){
+            paymentSuccessResponse=arguments?.getParcelable(Constants.NEW_CARD)
+        }
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -91,6 +94,8 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
         binding.tvYouWillNeedToPay.text=getString(R.string.str_we_have_sent_confirmation,
             personalInformation?.emailAddress)
+
+        binding.tvPaymentReference.text=getString(R.string.str_payment_reference,"543211232243")
 
     }
     override fun init() {

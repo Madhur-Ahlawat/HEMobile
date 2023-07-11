@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -12,6 +13,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.AccountInformation
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
@@ -43,13 +47,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
     private var isCalled = true
-    private var btnEnabled:Boolean=false
+    private var btnEnabled: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
     private var isViewCreated: Boolean = false
     private lateinit var navFlow: String
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
+    private var replenishmentInformation: ReplenishmentInformation? = null
 
 
     override fun getFragmentBinding(
@@ -61,16 +68,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
-        if (arguments != null) {
-            data = arguments?.getParcelable("data")
-            response = arguments?.getParcelable("response")
-        }
 
         binding.isEnable = false
         loadUI()
-
 
 
         /*AdobeAnalytics.setScreenTrack(
@@ -87,6 +88,27 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     override fun initCtrl() {
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+        }
+
+        if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
+            replenishmentInformation =
+                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+        }
+
+        if (arguments != null) {
+            data = arguments?.getParcelable("data")
+            response = arguments?.getParcelable("response")
+        }
+
+
         binding.apply {
             btnVerify.setOnClickListener(this@OTPForgotPassword)
             btnResend.setOnClickListener(this@OTPForgotPassword)
@@ -100,12 +122,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun verifyCodeErrorMessage() {
-        if (binding.edtOtp.getText().toString().trim().length<6){
+        if (binding.edtOtp.getText().toString().trim().length < 6) {
             binding.edtOtp.setErrorText(getString(R.string.str_security_code_must_be_6_characters))
-            btnEnabled=false
-        }else{
+            btnEnabled = false
+        } else {
             binding.edtOtp.removeError()
-            btnEnabled=true
+            btnEnabled = true
         }
 
 
@@ -113,7 +135,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         checkButtonEnable()
     }
 
-    private fun checkButtonEnable(){
+    private fun checkButtonEnable() {
         binding.btnVerify.isEnabled = btnEnabled
 
     }
@@ -155,26 +177,27 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         showError(binding.root, getString(R.string.error_otp_time_expire))
                     }
                 } else if (navFlow == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
-                    if(NewCreateAccountRequestModel.isEditCall ){
-                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                    if (NewCreateAccountRequestModel.isEditCall) {
+                        if (NewCreateAccountRequestModel.isAccountTypeEditCall) {
                             findNavController().navigate(
                                 R.id.action_otpForgotFragment_to_createVehicleFragment
                             )
-                        }else{
+                        } else {
                             findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
                             )
                         }
 
-                    }else{
-                        NewCreateAccountRequestModel.smsSecurityCode=binding.edtOtp.getText().toString().trim()
+                    } else {
+                        NewCreateAccountRequestModel.smsSecurityCode =
+                            binding.edtOtp.getText().toString().trim()
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_createVehicleFragment
                         )
                     }
 
 
-                }else if(navFlow==Constants.SUSPENDED){
+                } else if (navFlow == Constants.TWOFA) {
 
                     hitTWOFAVerifyAPI()
 
@@ -197,6 +220,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             sessionManager.getLoggedInUser()
                         )
                     }
+
                     Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
                         AdobeAnalytics.setActionTrack(
                             "resend",
@@ -207,6 +231,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             sessionManager.getLoggedInUser()
                         )
                     }
+
                     Constants.FORGOT_PASSWORD_FLOW -> {
                         AdobeAnalytics.setActionTrack(
                             "resend",
@@ -223,6 +248,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
                 bundle.putParcelable("data", data)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
+
                 findNavController().navigate(R.id.action_otpFragment_to_resenedCodeFragment, bundle)
 
                 /* isCalled = true
@@ -234,11 +263,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun hitTWOFAVerifyAPI() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = VerifyRequestOtpReq(  binding.edtOtp.getText().toString().trim(),
+        val request = VerifyRequestOtpReq(
+            binding.edtOtp.getText().toString().trim(),
             response?.referenceId?.toString() ?: "",
 
 
-        )
+            )
         viewModel.twoFAVerifyRequestCode(request)
     }
 
@@ -273,6 +303,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 }
             }
+
             Constants.EMAIL -> {
                 binding.topTitle.text = getString(R.string.str_check_your_mail)
                 binding.notReceivedTxt.text = getString(R.string.str_not_received_otp_txt)
@@ -297,11 +328,22 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         when (status) {
             is Resource.Success -> {
-                if (navFlow==Constants.SUSPENDED){
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                val bundle = Bundle()
 
-                }else{
-                    val bundle = Bundle()
+                if (navFlow == Constants.TWOFA) {
+                    if (accountInformation?.status.equals(Constants.SUSPENDED)) {
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+                        bundle.putString(
+                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                        )
+                    } else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+
+
+                } else {
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -337,6 +379,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 )
 
             }
+
             is Resource.DataError -> {
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
@@ -352,9 +395,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 )
 
 
-
-
             }
+
             else -> {
             }
         }
@@ -383,9 +425,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                 }
+
                 is Resource.DataError -> {
                     showError(binding.root, status.errorMsg)
                 }
+
                 else -> {
                 }
             }
@@ -415,19 +459,19 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    if(NewCreateAccountRequestModel.isEditCall ){
-                        if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                    if (NewCreateAccountRequestModel.isEditCall) {
+                        if (NewCreateAccountRequestModel.isAccountTypeEditCall) {
                             findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createPasswordFragment,
                                 bundle
                             )
-                        }else {
+                        } else {
                             findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createAccountSummaryFragment,
                                 bundle
                             )
                         }
-                    }else {
+                    } else {
                         findNavController().navigate(
                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
                             bundle
@@ -437,6 +481,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
             }
+
             is Resource.DataError -> {
 
                 when (resource.errorModel?.errorCode) {
@@ -444,15 +489,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
 
                     }
+
                     2 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
 
                     }
+
                     else -> {
                         binding.edtOtp.setErrorText(resource.errorModel?.message.toString())
                     }
                 }
             }
+
             else -> {
             }
         }

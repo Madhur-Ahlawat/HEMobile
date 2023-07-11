@@ -10,6 +10,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
@@ -21,6 +24,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnClickListener {
@@ -32,25 +36,51 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     private var response: SecurityCodeResponseModel? = null
     private lateinit var  navFlow:String
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation?=null
+    private var replenishmentInformation: ReplenishmentInformation?=null
 
 
+
+
+
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentResendCodeBinding = FragmentResendCodeBinding.inflate(inflater, container, false)
 
-    override fun init() {
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+    override fun initCtrl() {
+        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         if (arguments!=null){
             data = arguments?.getParcelable("data")
         }
-    }
 
-    override fun initCtrl() {
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)!=null){
+            accountInformation=arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+        }
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+
+        if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)!=null){
+            replenishmentInformation=arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+        }
+    }
+    override fun init() {
+
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+
+
 
         if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW||navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
             if (data?.optionType==Constants.EMAIL){
@@ -74,6 +104,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
         binding.apply {
             btnVerify.setOnClickListener(this@ResendCodeFragment)
         }
+
     }
 
     override fun observer() {
@@ -106,7 +137,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         R.id.action_resenedCodeFragment_to_otpFragment,
                         bundle
                     )
-                }else if (navFlow==Constants.SUSPENDED){
+                }else if (navFlow==Constants.TWOFA){
                     viewModel.twoFARequestOTP(data)
 
                 }
@@ -128,6 +159,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     response = status.data
                     bundle.putParcelable("response", response)
                     bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                    bundle.putParcelable(Constants.REPLENISHMENTINFORMATION,replenishmentInformation)
+
                     findNavController().navigate(
                         R.id.action_resenedCodeFragment_to_otpFragment,
                         bundle

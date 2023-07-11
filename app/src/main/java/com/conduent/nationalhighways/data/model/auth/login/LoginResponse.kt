@@ -60,7 +60,7 @@ data class LoginResponse(
     var Permission: String?,
 
     @SerializedName("require2FA")
-    var require2FA: Boolean?,
+    var require2FA: String?,
 
     var mfaEnabled:String?,
 

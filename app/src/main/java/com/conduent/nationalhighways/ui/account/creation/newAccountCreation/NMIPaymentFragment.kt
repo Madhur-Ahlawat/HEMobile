@@ -196,6 +196,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putParcelable(Constants.DATA, responseModel)
                                 bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, 10.00)
+                                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                                 findNavController().navigate(
                                     R.id.action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment,
                                     bundle
@@ -215,7 +217,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-        // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
     }
 
     private fun hideLoader() {
