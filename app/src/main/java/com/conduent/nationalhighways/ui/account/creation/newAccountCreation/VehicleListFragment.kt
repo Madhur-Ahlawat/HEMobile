@@ -80,6 +80,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
             apiCall(apiRequestCount)
         }else{
             loader?.dismiss()
+            NewCreateAccountRequestModel.isBackButtonVisible = false
             findNavController().navigate(R.id.action_vehicleListFragment_to_vehicleResultFragment)
         }
     }
