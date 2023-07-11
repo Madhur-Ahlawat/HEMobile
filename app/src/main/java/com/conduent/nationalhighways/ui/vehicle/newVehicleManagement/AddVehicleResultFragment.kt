@@ -67,6 +67,7 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
             binding.recyclerViewSuccess.adapter = vehicleAdapterSuccess
             if(tempSuccessList.size>1){
                 binding.vehicleAddedNote.text = getString(R.string.vehicles_added)
+                binding.maximumVehicleAdded.text = getString(R.string.vehicles_added_to_your_account)
             }else{
                 binding.vehicleAddedNote.text = getString(R.string.vehicle_added)
             }
@@ -91,6 +92,7 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
         when(v?.id) {
             R.id.btnContinue -> {
                 NewCreateAccountRequestModel.vehicleList.clear()
+                NewCreateAccountRequestModel.isBackButtonVisible = true
                 findNavController().navigate(R.id.action_vehicleResultFragment_to_vehicleHistoryListFragment)
             }
         }
