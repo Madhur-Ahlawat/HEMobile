@@ -329,7 +329,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-
+//            navigateHomeActivity()
 
         }
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
@@ -545,7 +545,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-
+    private fun navigateHomeActivity() {
+        startActivity(
+            Intent(this, HomeActivityMain::class.java)
+        )
+        finish()
+    }
 }
 
 

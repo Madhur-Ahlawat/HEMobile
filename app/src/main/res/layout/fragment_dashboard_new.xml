@@ -418,7 +418,7 @@
                 android:id="@+id/logo"
                 android:layout_width="@dimen/_35dp"
                 android:layout_height="@dimen/_35dp"
-                android:layout_marginTop="@dimen/_26dp"
+                android:layout_marginTop="@dimen/_16dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintEnd_toStartOf="@+id/textView"
                 app:layout_constraintHorizontal_bias="1.0"
