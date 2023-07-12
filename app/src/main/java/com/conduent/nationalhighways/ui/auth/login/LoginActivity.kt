@@ -60,7 +60,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var isViewCreated:Boolean=false
 
 
     @Inject
@@ -68,17 +67,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     override fun observeViewModel() {
-        if (!isViewCreated){
-            lifecycleScope.launch {
-                observe(viewModel.login, ::handleLoginResponse)
-                observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-                observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-                observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-            }
+        lifecycleScope.launch {
+            observe(viewModel.login, ::handleLoginResponse)
+            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+            observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
-
-        isViewCreated=true
-
 
 
     }
@@ -88,64 +82,33 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
         when (status) {
             is Resource.Success -> {
-                personalInformation=status.data?.personalInformation
-                accountInformation=status.data?.accountInformation
-                replenishmentInformation=status.data?.replenishmentInformation
+                personalInformation = status.data?.personalInformation
+                accountInformation = status.data?.accountInformation
+                replenishmentInformation = status.data?.replenishmentInformation
 
-                if (twoFAEnable) {
+
+                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                    if (loader?.isVisible == true) {
+                        loader?.dismiss()
+                    }
+
+
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(
-                        Constants.REPLENISHMENTINFORMATION,
-                        replenishmentInformation
-                    )
 
 
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
                     startActivity(intent)
-                }else {
-
-                    if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
 
 
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                        intent.putExtra(Constants.CROSSINGCOUNT, "")
-                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                } else {
+                    crossingHistoryApi()
 
-
-                        intent.putExtra(
-                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                        )
-                        startActivity(intent)
-                    } else {
-                         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                                .trim()
-                        ) {
-
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-                        } else {
-                            startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                        }
-                        sessionManager.saveUserName(binding.edtEmail.text.toString())
-                    }
-
-
-
-
-                    //crossingHistoryApi()
                 }
-
-
-
-
 
 
             }
@@ -186,27 +149,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 resource.data?.let {
                     it.transactionList?.count?.let { count ->
 
-                        if (twoFAEnable) {
-                            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                            intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                            intent.putExtra(
-                                Constants.REPLENISHMENTINFORMATION,
-                                replenishmentInformation
-                            )
 
-
-                            intent.putExtra(
-                                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                            )
-                            startActivity(intent)
-                        } else {
-
-                            navigateWithCrossing(count)
-
-
-                        }
+                        navigateWithCrossing(count)
 
 
                     }
@@ -217,6 +161,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
+                startNewActivityByClearingStack(HomeActivityMain::class.java)
             }
 
             else -> {
@@ -224,90 +169,26 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
     }
 
-    private fun navigateWithCrossing(count: String) {
-
-        if (count.isNotEmpty()){
-            if (count.toInt()>0){
+    private fun navigateWithCrossing(count: Int) {
 
 
-
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, count)
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+        if (count > 0) {
 
 
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-
-            }else {
-                if (accountInformation?.status.equals(Constants.SUSPENDED)){
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, "")
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+            intent.putExtra(Constants.CROSSINGCOUNT, count)
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
 
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-                }else{
-                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                            .trim()
-                    ) {
+            intent.putExtra(
+                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+            )
+            startActivity(intent)
 
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                    }
-                    sessionManager.saveUserName(binding.edtEmail.text.toString())
-                }
-                }
-
-
-
-        }else {
-
-            if (accountInformation?.status.equals(Constants.SUSPENDED)){
-                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                intent.putExtra(Constants.CROSSINGCOUNT, "")
-                intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
-                intent.putExtra(
-                    Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                )
-                startActivity(intent)
-            }else{
-                if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                        .trim()
-                ) {
-
-                    displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
-                } else {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                }
-                sessionManager.saveUserName(binding.edtEmail.text.toString())
-            }
-
-
+        } else {
+            startNewActivityByClearingStack(HomeActivityMain::class.java)
         }
-
-
-
-
-
-
 
 
     }
@@ -318,8 +199,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             count = 0,
             transactionType = Constants.TOLL_TRANSACTION,
             searchDate = Constants.TRANSACTION_DATE,
-            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
-            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
+            startDate = DateUtils.lastPriorDate(-90) ?: "",
+            endDate = DateUtils.currentDate() ?: ""
         )
         dashboardViewModel.crossingHistoryApiCall(request)
     }
@@ -450,27 +331,32 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
 
-            /* if (twoFAEnable){
-                 val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                 intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                 intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                 intent.putExtra(
-                     Constants.REPLENISHMENTINFORMATION,
-                     replenishmentInformation
-                 )
+        }
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                .trim()
+        ) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
 
-                 intent.putExtra(
-                     Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                 )
+        } else {
+            if (twoFAEnable) {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
+                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                startActivity(intent)
+            } else {
+                dashboardViewModel.getAccountDetailsData()
 
-                 startActivity(intent)
-             }*/
+            }
         }
 
+        sessionManager.saveUserName(binding.edtEmail.text.toString())
 
-        dashboardViewModel.getAccountDetailsData()
 
 
         AdobeAnalytics.setLoginActionTrackError(
@@ -494,12 +380,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    openActivityWithData(BiometricActivity::class.java) {
-                        putInt(
-                            Constants.FROM_LOGIN_TO_BIOMETRIC,
-                            Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
-                        )
-                    }
+                    val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
+                    intent.putExtra(Constants.TWOFA, twoFAEnable)
+                    intent.putExtra(
+                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+                        Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
+                    )
+                    startActivity(intent)
+
 
                     //dialog.dismiss()
 
@@ -508,13 +396,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, "")
-                    intent.putExtra(Constants.CURRENTBALANCE, "£1.00")
+                    if (twoFAEnable) {
+                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                        startActivity(intent)
+                    } else {
+                        dashboardViewModel.getAccountDetailsData()
 
-//                    startActivity(intent)
+                    }
 
-                    startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })
