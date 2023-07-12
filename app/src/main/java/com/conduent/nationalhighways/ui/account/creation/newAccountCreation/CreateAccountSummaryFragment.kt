@@ -104,9 +104,12 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
 
             }
-            val i = Intent(Intent.ACTION_VIEW)
+            val bundle=Bundle()
+            bundle.putString(Constants.TERMSCONDITIONURL,url)
+            findNavController().navigate(R.id.action_accountSummaryFragment_to_termsConditionFragment,bundle)
+          /*  val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
-            startActivity(i)
+            startActivity(i)*/
 
 
         }))

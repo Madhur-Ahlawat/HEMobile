@@ -69,10 +69,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
 
             }
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
-
+            val bundle=Bundle()
+            bundle.putString(Constants.TERMSCONDITIONURL,url)
+            findNavController().navigate(R.id.action_optForSmsFragment_to_termsConditionFragment,bundle)
 
         }))
 

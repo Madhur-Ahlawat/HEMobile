@@ -95,6 +95,7 @@ object Constants {
     const val VIEW_ALL = "view_all"
     const val ALL = "ALL"
     const val DATE_FILTER = "date_filter"
+    const val TERMSCONDITIONURL="termsConditionUrl"
     const val NO = "no"
     const val YES = "yes"
     const val Y = "Y"
