@@ -72,7 +72,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             lifecycleScope.launch {
                 observe(viewModel.login, ::handleLoginResponse)
                 observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-                observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
                 observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
             }
         }
@@ -448,7 +447,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-//            navigateHomeActivity()
+            navigateHomeActivity()
 
             /* if (twoFAEnable){
                  val intent = Intent(this@LoginActivity, AuthActivity::class.java)
@@ -470,7 +469,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
 
-        dashboardViewModel.getAccountDetailsData()
+//        dashboardViewModel.getAccountDetailsData()
 
 
         AdobeAnalytics.setLoginActionTrackError(

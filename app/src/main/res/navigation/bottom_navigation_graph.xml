@@ -14,10 +14,10 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_vehicleListFragment2"
             app:destination="@id/vehicleListFragment2" />
+
         <action
             android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
             app:destination="@id/crossingHistoryFragment" />
-
     </fragment>
 
     <fragment

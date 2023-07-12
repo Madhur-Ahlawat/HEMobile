@@ -8,8 +8,8 @@
 
     <fragment
         android:id="@+id/crossingHistoryFragment"
-        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
-        tools:layout="@layout/fragment_crossing_history"
+        android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
+        tools:layout="@layout/all_transactions"
         android:label="CrossingHistoryFragment" >
 
         <action
