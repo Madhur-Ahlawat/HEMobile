@@ -20,12 +20,17 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
+import kotlin.properties.Delegates
 
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
-
+    lateinit var navFlowCall: String
+    var backButton : Boolean? = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +38,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = getFragmentBinding(inflater, container)
+        navFlowCall = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        backButton = arguments?.getBoolean(SHOW_BACK_BUTTON,true)
         return binding.root
     }
 
@@ -52,7 +59,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
          val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
-        if(NewCreateAccountRequestModel.isBackButtonVisible.not()){
+        if(backButton == false){
             backIcon?.visibility = View.GONE
         }else{
             backIcon?.visibility = View.VISIBLE

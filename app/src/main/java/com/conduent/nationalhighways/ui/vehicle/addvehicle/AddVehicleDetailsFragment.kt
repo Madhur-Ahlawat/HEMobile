@@ -274,9 +274,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     override fun onClick(v: View?) {
+        val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+
         when (v?.id) {
             R.id.editVehicle -> {
                 val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                  bundle.putString(Constants.PLATE_NUMBER, binding.vehiclePlateNumber.text.toString())
                 findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment,bundle)
             }
@@ -291,9 +294,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
 
                 nonUKVehicleModel?.let {
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                     if (vehicleList?.contains(nonUKVehicleModel) == true) {
                         accountData?.isVehicleAlreadyAddedLocal = true
-                        val bundle = Bundle()
+
                         nonUKVehicleModel.let {
                             bundle.putString(
                                 Constants.PLATE_NUMBER,
@@ -307,10 +312,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     } else {
                         it.isUK = binding.radioButtonYes.isChecked
                         vehicleList?.add(it)
-                        if(NewCreateAccountRequestModel.isEditCall){
+                        if(editCall){
                             findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
                         }else {
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
                         }
                     }
                     return
@@ -323,6 +328,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             if (vehicleList?.get(i)?.plateNumber == numberPlate) {
                                 accountData?.isVehicleAlreadyAddedLocal = true
                                 val bundle = Bundle()
+                                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                                 bundle.putString(Constants.PLATE_NUMBER, numberPlate)
                                 findNavController().navigate(
                                     R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
@@ -376,9 +382,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails) {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
         if(newVehicleInfoDetails.vehicleClass.equals("A",true)) {
             NewCreateAccountRequestModel.isRucEligible = true
-            val bundle = Bundle()
+
             bundle.putParcelable(
                 Constants.VEHICLE_DETAIL,
                 newVehicleInfoDetails
@@ -390,10 +398,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         }else{
             vehicleList?.add(newVehicleInfoDetails)
-            if(NewCreateAccountRequestModel.isEditCall){
-                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
+            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+            if(editCall){
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment,bundle)
             }else {
-                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment)
+                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
             }
         }
     }

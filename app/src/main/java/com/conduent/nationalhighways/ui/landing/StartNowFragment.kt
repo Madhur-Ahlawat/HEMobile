@@ -24,7 +24,6 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private var backButton:ImageView?=null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -52,7 +51,7 @@ class StartNowFragment : BaseFragment<FragmentStartNowBinding>(), View.OnClickLi
             rlViewCharges.setOnClickListener(this@StartNowFragment)
             btnLogin.setOnClickListener(this@StartNowFragment)
         }
-        backButton=requireActivity().findViewById(R.id.back_button)
+        val backButton:ImageView?=requireActivity().findViewById(R.id.back_button)
 
         backButton?.visibility=View.VISIBLE
     }

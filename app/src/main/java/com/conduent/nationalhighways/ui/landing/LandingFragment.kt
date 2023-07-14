@@ -37,7 +37,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     private var isChecked = true
     private var isPushNotificationChecked = true
     private var count = 1
-    private var backButton: ImageView? = null
 
     private var navFlow: String = Constants.ACCOUNT_CREATION_MOBILE_FLOW
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
@@ -66,7 +65,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
-        backButton = requireActivity().findViewById(R.id.back_button)
+        var backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
 
         backButton?.visibility = View.GONE
 

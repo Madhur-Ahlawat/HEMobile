@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPrerequisi
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +42,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         when (v?.id) {
             binding.btnCreateAccount.id -> {
                 val bundle = Bundle()
-//                bundle.putParcelable("response", status.data)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
                 findNavController().navigate(
                     R.id.action_createAccountPrerequisite_to_fragment_choose_account_type,
                     bundle

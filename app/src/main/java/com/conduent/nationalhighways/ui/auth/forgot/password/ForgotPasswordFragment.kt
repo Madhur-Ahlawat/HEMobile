@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -23,9 +22,19 @@ import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmai
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_EMAIL_FLOW
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.toolbar
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +47,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     private var loader: LoaderDialog? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var isCalled = false
-    private lateinit var navFlow: String// create account , forgot password
+//    private lateinit var navFlow: String// create account , forgot password
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
@@ -51,7 +60,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     override fun init() {
         sessionManager.clearAll()
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+//        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
 
         // binding.model = ConfirmOptionModel(identifier = "", enable = false)
@@ -62,18 +71,17 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
         binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
-        if (NewCreateAccountRequestModel.isEditCall) {
-            navFlow = Constants.ACCOUNT_CREATION_EMAIL_FLOW
-            NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
-        }
-        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-            binding.textUsername.visible()
-            binding.enterDetailsTxt.text = getString(R.string.createAccount_email_screenHeading)
-            requireActivity().toolbar(getString(R.string.str_create_an_account))
-        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.enterDetailsTxt.text = getString(R.string.forgotPassword_email_screenHeading)
-            requireActivity().toolbar(getString(R.string.forgot_password))
-            binding.textUsername.gone()
+
+        when(navFlowCall){
+
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+                NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
+            setView()}
+            FORGOT_PASSWORD_FLOW -> {binding.enterDetailsTxt.text = getString(R.string.forgotPassword_email_screenHeading)
+                requireActivity().toolbar(getString(R.string.forgot_password))
+                binding.textUsername.gone()}
+            else -> {setView()}
+
         }
 
         /*AdobeAnalytics.setScreenTrack(
@@ -86,6 +94,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             sessionManager.getLoggedInUser()
         )*/
 
+    }
+
+    private fun setView() {
+        binding.textUsername.visible()
+        binding.enterDetailsTxt.text = getString(R.string.createAccount_email_screenHeading)
+        requireActivity().toolbar(getString(R.string.str_create_an_account))
     }
 
     override fun initCtrl() {
@@ -117,7 +131,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     } else {
                         binding.root.post {
                             val bundle = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                             bundle.putParcelable(Constants.OPTIONS, status.data)
                             findNavController().navigate(
                                 R.id.action_forgotPasswordFragment_to_chooseOptionFragment,
@@ -173,7 +187,8 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 bundle.putParcelable("response", status.data)
 
 
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_EMAIL_FLOW)
+                bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                 findNavController().navigate(
                     R.id.action_forgotPasswordFragment_to_otpFragment,
                     bundle
@@ -209,36 +224,46 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 hideKeyboard()
 
                 val emailText = binding.edtEmail.getText().toString().trim()
-                if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    sessionManager.saveAccountNumber(emailText)
-                    isCalled = true
-                    viewModel.confirmOptionForForgot(emailText)
 
-                } else {
-                    if (NewCreateAccountRequestModel.isEditCall && emailText == NewCreateAccountRequestModel.emailAddress) {
-                        if (NewCreateAccountRequestModel.isAccountTypeEditCall) {
-                            val bundle = Bundle()
-                            bundle.putString(
-                                Constants.NAV_FLOW_KEY,
-                                Constants.ACCOUNT_CREATION_MOBILE_FLOW
-                            )
-                            findNavController().navigate(
-                                R.id.action_forgotPasswordFragment_to_createPasswordFragment,
-                                bundle
-                            )
-                        } else {
-                            findNavController().popBackStack()
-                        }
-                    } else {
-                        NewCreateAccountRequestModel.emailAddress = emailText
-                        hitApi()
-                    }
+                when(navFlowCall){
+
+                    EDIT_SUMMARY -> {handleEditNavigation(emailText)}
+                    EDIT_ACCOUNT_TYPE -> {handleAccountEditNavigation(emailText)}
+                    FORGOT_PASSWORD_FLOW -> {loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        sessionManager.saveAccountNumber(emailText)
+                        isCalled = true
+                        viewModel.confirmOptionForForgot(emailText)}
+                    else -> {NewCreateAccountRequestModel.emailAddress = emailText
+                        hitApi()}
 
                 }
-
-
             }
+        }
+    }
+
+    private fun handleEditNavigation(emailText: String) {
+        if (emailText == NewCreateAccountRequestModel.emailAddress) {
+                findNavController().popBackStack()
+        } else {
+            NewCreateAccountRequestModel.emailAddress = emailText
+            hitApi()
+        }
+    }
+
+    private fun handleAccountEditNavigation(emailText: String) {
+        if (emailText == NewCreateAccountRequestModel.emailAddress) {
+            val bundle = Bundle()
+            bundle.putString(
+                Constants.NAV_FLOW_KEY,
+                navFlowCall
+            )
+            findNavController().navigate(
+                R.id.action_forgotPasswordFragment_to_createPasswordFragment,
+                bundle
+            )
+        } else {
+            NewCreateAccountRequestModel.emailAddress = emailText
+            hitApi()
         }
     }
 
@@ -310,7 +335,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 )
 
 
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
                 NewCreateAccountRequestModel.referenceId = resource.data?.referenceId
                 findNavController().navigate(

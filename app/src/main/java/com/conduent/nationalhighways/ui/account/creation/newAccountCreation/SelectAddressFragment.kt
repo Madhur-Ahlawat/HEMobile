@@ -20,6 +20,8 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -158,32 +160,35 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-
+        val bundle = Bundle()
+        bundle.putString(
+            Constants.NAV_FLOW_KEY,
+            navFlowCall
+        )
         when (response) {
             is Resource.Success -> {
                 NewCreateAccountRequestModel.isManualAddress = false
                 if (response.data?.lrdsEligible.equals("true", true)) {
-                    findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2)
+                    findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountEligibleLRDS2,bundle)
 
                 } else {
-                    if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()) {
-                        findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountSummary)
-                    }else {
-                        if (NewCreateAccountRequestModel.personalAccount) {
-                            findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment)
+
+                    when(navFlowCall){
+
+
+                        EDIT_SUMMARY -> {findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountSummary,bundle)}
+                        else -> { if (NewCreateAccountRequestModel.personalAccount) {
+                            findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment,bundle)
 
                         } else {
-                            val bundle = Bundle()
-                            bundle.putString(
-                                Constants.NAV_FLOW_KEY,
-                                Constants.ACCOUNT_CREATION_EMAIL_FLOW
-                            )
+
                             findNavController().navigate(
                                 R.id.action_selectaddressfragment_to_forgotPasswordFragment,
                                 bundle
                             )
 
-                        }
+                        }}
+
                     }
                 }
 

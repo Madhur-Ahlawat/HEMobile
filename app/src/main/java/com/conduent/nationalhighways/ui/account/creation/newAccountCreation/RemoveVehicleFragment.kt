@@ -102,6 +102,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
             is Resource.Success -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.REMOVE_VEHICLE)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                 findNavController().navigate(R.id.action_removeVehicleFragment_to_resetForgotPassword,bundle)
             }
             is Resource.DataError -> {

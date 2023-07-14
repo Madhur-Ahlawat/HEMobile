@@ -19,6 +19,8 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.google.gson.Gson
 
@@ -113,7 +115,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
 
         }))
-        disableEditMode()
+
     }
     fun getRequiredText(text: String) = text.substringAfter(' ')
     override fun initCtrl() {
@@ -131,52 +133,44 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
             }
             R.id.editFullName -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_personalInfoFragment)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_personalInfoFragment,enableEditMode())
             }
             R.id.editAddress -> {
-                enableEditMode()
                 if(NewCreateAccountRequestModel.isManualAddress) {
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_manualAddressFragment)
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_manualAddressFragment,enableEditMode())
                 }else{
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_postCodeFragment)
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_postCodeFragment,enableEditMode())
                 }
             }
             R.id.editEmailAddress -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_emailAddressFragment)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_emailAddressFragment,enableEditMode())
             }
             R.id.editMobileNumber -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_mobileNumberFragment)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_mobileNumberFragment,enableEditMode())
             }
             R.id.editAccountType -> {
-                enableEditMode()
-                NewCreateAccountRequestModel.isBackButtonVisible = false
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_typeAccountFragment)
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY,EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_typeAccountFragment,bundle)
             }
             R.id.editSubAccountType -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_createAccountTypesFragment)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_createAccountTypesFragment,enableEditMode())
             }
             R.id.editCommunications -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_communicationFragment)
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_communicationFragment,enableEditMode())
             }
             R.id.editTwoStepVerification -> {
-                enableEditMode()
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment)
+
+                findNavController().navigate(R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,enableEditMode())
             }
         }
     }
 
-    private fun enableEditMode() {
-        NewCreateAccountRequestModel.isEditCall = true
-    }
-    private fun disableEditMode() {
-        NewCreateAccountRequestModel.isEditCall = false
-        NewCreateAccountRequestModel.isAccountTypeEditCall = false
-        NewCreateAccountRequestModel.isBackButtonVisible = true
+    private fun enableEditMode() : Bundle {
+        val bundle = Bundle()
+        bundle.putString(NAV_FLOW_KEY,EDIT_SUMMARY)
+        return bundle
     }
 
 

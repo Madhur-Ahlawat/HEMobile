@@ -22,6 +22,8 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -84,14 +86,16 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         binding.postCode.editText.filters = arrayOf(filter)
         binding.postCode.setMaxLength(10)
-        if(NewCreateAccountRequestModel.isEditCall) {
-            binding.address.setText(NewCreateAccountRequestModel.addressline1)
-            binding.address2.setText(NewCreateAccountRequestModel.addressline2)
-            binding.townCity.setText(NewCreateAccountRequestModel.townCity)
-            binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
-            binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
-            requiredCountry = true
-            checkButton()
+        when(navFlowCall){
+
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {binding.address.setText(NewCreateAccountRequestModel.addressline1)
+                binding.address2.setText(NewCreateAccountRequestModel.addressline2)
+                binding.townCity.setText(NewCreateAccountRequestModel.townCity)
+                binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
+                binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
+                requiredCountry = true
+                checkButton()}
+
         }
     }
 
@@ -358,27 +362,23 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.isManualAddress = true
                 if (response.data?.lrdsEligible.equals("true", true)) {
 
-                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2)
+                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2,bundle())
 
                 } else {
-                    if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()) {
-                        findNavController().popBackStack()
-                    }else{
-                        if (NewCreateAccountRequestModel.personalAccount) {
-                            findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment)
+                    when(navFlowCall){
+
+                        EDIT_SUMMARY -> {findNavController().popBackStack()}
+                        else -> {if (NewCreateAccountRequestModel.personalAccount) {
+                            findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment,bundle())
 
                         } else {
-                            val bundle = Bundle()
-                            bundle.putString(
-                                Constants.NAV_FLOW_KEY,
-                                Constants.ACCOUNT_CREATION_EMAIL_FLOW
-                            )
                             findNavController().navigate(
                                 R.id.action_manualaddressfragment_to_forgotPasswordFragment,
-                                bundle
+                                bundle()
                             )
 
-                        }
+                        }}
+
                     }
 
                 }
@@ -395,6 +395,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             }
         }
 
+    }
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        return bundle
     }
 
 }

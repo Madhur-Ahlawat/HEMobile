@@ -10,6 +10,8 @@ import com.conduent.nationalhighways.databinding.FragmentTwoStepVerificationBind
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 
 class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBinding>(),
     View.OnClickListener {
@@ -46,13 +48,15 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             }
         }
         binding.btnNext.setOnClickListener(this)
-        if(NewCreateAccountRequestModel.isEditCall) {
-            oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
-            if(oldtwoStepVerification){
-                binding.radioButtonYes.isChecked = true
-            }else{
-                binding.radioButtonNo.isChecked = true
-            }
+
+        when(navFlowCall){
+
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> { oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
+                if(oldtwoStepVerification){
+                    binding.radioButtonYes.isChecked = true
+                }else{
+                    binding.radioButtonNo.isChecked = true
+                }}
 
         }
     }
@@ -67,24 +71,21 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         when(v?.id){
             R.id.btnNext ->{
                 val bundle= Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                when(navFlowCall){
 
-                if(NewCreateAccountRequestModel.isEditCall ) {
-                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
-                        if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
-                            bundle.putString(Constants.PLATE_NUMBER, "")
-                            bundle.putInt(Constants.VEHICLE_INDEX, 0)
-                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
-                        }else{
-                            findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
-                        }
+                    EDIT_SUMMARY -> {findNavController().popBackStack()}
+                    EDIT_ACCOUNT_TYPE -> { if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
+                        bundle.putString(Constants.PLATE_NUMBER, "")
+                        bundle.putInt(Constants.VEHICLE_INDEX, 0)
+                        findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
+                    }else{
+                        findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
+                    }}
+                    else -> {findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)}
 
-                    }else {
-                        findNavController().popBackStack()
-                    }
-                }else {
-                    findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
                 }
+
 
             }
         }

@@ -37,7 +37,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
 
     override fun initCtrl() {
-        NewCreateAccountRequestModel.isBackButtonVisible=false
+
         transactionId= arguments?.getString(Constants.TRANSACTIONID).toString()
 
         if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD)!=null){

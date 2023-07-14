@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.DialogInterface
+import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.VEHICLE_MANAGEMENT
 
 
 class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBinding>(),
@@ -112,12 +114,13 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             R.id.btnContinue -> {
 
                 when (binding.btnContinue.text) {
-                    getString(R.string.str_add_another) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment)
+                    getString(R.string.str_add_another) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment,bundle())
 
                       getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
-                            if (NewCreateAccountRequestModel.isExempted || NewCreateAccountRequestModel.isVehicleManagementCall) {
+                            val navCall = navFlowCall.equals(VEHICLE_MANAGEMENT,true)
+                            if (NewCreateAccountRequestModel.isExempted || navCall) {
                                 findNavController().popBackStack()
                             } else {
                                 noVehicleAddedDialog()
@@ -126,7 +129,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
 
                         } else {
-                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
+                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
 
                         }
                     getString(R.string.str_add_to_account) -> {
@@ -136,7 +139,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         nonUKVehicleModel?.let {
 
                             vehicleList.add(it)
-                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
+                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
 
 
                         }
@@ -151,12 +154,18 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 if(NewCreateAccountRequestModel.vehicleList.isEmpty()) {
                     findNavController().popBackStack()
                 }else{
-                    findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment)
+                    findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
                 }
 
                 NewCreateAccountRequestModel.isMaxVehicleAdded = false
             }
         }
+    }
+
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        return bundle
     }
 
     private fun noVehicleAddedDialog() {

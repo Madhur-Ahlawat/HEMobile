@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentChooseAccountTypeBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 
 
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
@@ -24,15 +27,18 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
         }
-        if(NewCreateAccountRequestModel.isEditCall) {
-            oldPersonalAccountValue = NewCreateAccountRequestModel.personalAccount
-            if(oldPersonalAccountValue){
-                binding.radioPersonalAccount.isChecked = true
-            }else{
-                binding.radioBusinessAccount.isChecked = true
-            }
-        }
 
+        when(navFlowCall){
+
+            EDIT_SUMMARY -> {
+                oldPersonalAccountValue = NewCreateAccountRequestModel.personalAccount
+                if(oldPersonalAccountValue){
+                    binding.radioPersonalAccount.isChecked = true
+                }else{
+                    binding.radioBusinessAccount.isChecked = true
+                }}
+
+        }
 
     }
 
@@ -54,15 +60,19 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
                      NewCreateAccountRequestModel.personalAccount = true
                 }
 
-                if(NewCreateAccountRequestModel.isEditCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
+               val editCall = navFlowCall.equals(EDIT_SUMMARY,true)
+                if(editCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
                     findNavController().popBackStack()
                 }else{
-                    if(NewCreateAccountRequestModel.isEditCall) {
-                        NewCreateAccountRequestModel.isAccountTypeEditCall = true
+                    val bundle = Bundle()
+                    if(editCall) {
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
+                    }else{
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
                     }
-                    NewCreateAccountRequestModel.isBackButtonVisible = true
+
                     findNavController().navigate(
-                        R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo
+                        R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,bundle
                     )
                 }
             }

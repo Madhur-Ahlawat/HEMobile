@@ -1,7 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +10,8 @@ import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.extn.makeLinks
 
 
@@ -74,14 +74,14 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             findNavController().navigate(R.id.action_optForSmsFragment_to_termsConditionFragment,bundle)
 
         }))
+        when(navFlowCall){
 
-        if(NewCreateAccountRequestModel.isEditCall) {
-            oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
-            if(oldCommunicationTextMessage){
-                binding.radioButtonYes.isChecked = true
-            }else{
-                binding.radioButtonNo.isChecked = true
-            }
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
+                if(oldCommunicationTextMessage){
+                    binding.radioButtonYes.isChecked = true
+                }else{
+                    binding.radioButtonNo.isChecked = true
+                }}
 
         }
     }
@@ -97,27 +97,28 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnNext ->{
-                if(NewCreateAccountRequestModel.isEditCall ) {
-                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
-                            findNavController().navigate(
-                                R.id.action_optForSmsFragment_to_twoStepVerificationFragment)
-                        }else{
-                            if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
-                                findNavController().popBackStack()
-                            }else{
-                                val bundle= Bundle()
-                                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_MOBILE_FLOW)
-                                findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
-                            }
-                        }
 
-                }else {
+                when(navFlowCall){
 
-                    findNavController().navigate(
-                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment)
+                    EDIT_SUMMARY -> {if(NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true){
+                        findNavController().popBackStack()
+                    }else{
+                        findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle())
+                    }}
+                    EDIT_ACCOUNT_TYPE -> {findNavController().navigate(
+                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle())}
+                    else -> {findNavController().navigate(
+                        R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle())}
+
                 }
             }
         }
+    }
+
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        return bundle
     }
 
 }

@@ -52,6 +52,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     }
 
     override fun onClick(view: View?) {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
         when (view?.id) {
             R.id.confirmBtn -> {
 
@@ -67,10 +69,11 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                 nonUKVehicleModel?.let {
 
                     vehicleList.add(it)
-                    if(NewCreateAccountRequestModel.isEditCall){
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment)
+                    val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+                    if(editCall){
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,bundle)
                     }else {
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment)
+                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,bundle)
                     }
 
                 }
@@ -79,7 +82,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.notVehicle -> {
-                val bundle = Bundle()
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                 findNavController().navigate(
                     R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
@@ -88,7 +90,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.inCorrectVehicleNumber -> {
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment)
+                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment,bundle)
             }
         }
     }

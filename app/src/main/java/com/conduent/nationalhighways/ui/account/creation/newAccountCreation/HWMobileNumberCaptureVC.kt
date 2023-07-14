@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -26,6 +25,9 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -44,7 +46,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var isViewCreated: Boolean = false
-    private lateinit var navFlow: String
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -53,7 +54,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
@@ -79,10 +79,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
-        if (NewCreateAccountRequestModel.isEditCall) {
-            navFlow = Constants.ACCOUNT_CREATION_MOBILE_FLOW
-            NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
-            NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
+        when(navFlowCall) {
+
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+                NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
+                NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
+                requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+                checkButton()
+            }
         }
     }
 
@@ -142,34 +146,39 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             binding.btnNext.id -> {
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
                 val countryCode = binding.inputCountry.selectedItemDescription.toString()
+                val noChanges = countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                when(navFlowCall){
 
-                if (NewCreateAccountRequestModel.isEditCall && countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber) {
-                    if (NewCreateAccountRequestModel.isAccountTypeEditCall) {
-                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment)
-                    } else {
-                        findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
-                    }
-                } else {
-                    NewCreateAccountRequestModel.mobileNumber = mobileNumber
-                    NewCreateAccountRequestModel.countryCode = countryCode
-                    if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-                        if (NewCreateAccountRequestModel.isEditCall) {
-                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment)
-                        } else {
-                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment)
+                    EDIT_SUMMARY -> {
+                        if(noChanges){
+                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,bundle)
+                        }else{
+                            val res : Int = R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
+                            handleNavFlow(mobileNumber,countryCode,bundle,res)
                         }
-
-                    } else {
-                        hitApi()
-
                     }
-
+                    EDIT_ACCOUNT_TYPE -> {findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment,bundle)}
+                    else -> {
+                        val res : Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                        handleNavFlow(mobileNumber,countryCode,bundle,res)
+                    }
                 }
-
-
             }
         }
     }
+
+    private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
+        NewCreateAccountRequestModel.mobileNumber = mobileNumber
+        NewCreateAccountRequestModel.countryCode = countryCode
+        if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+            findNavController().navigate(res,bundle)
+        } else {
+            hitApi()
+        }
+    }
+
 
     override fun onRetryClick() {
 
@@ -270,8 +279,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true
                     )
                 )
-
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
+                bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle
                 )

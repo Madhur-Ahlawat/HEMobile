@@ -47,7 +47,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     NewCreateAccountRequestModel.plateCountry =Constants.COUNTRY_TYPE_NON_UK
                 }
                 val bundle = Bundle()
-//                bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                 findNavController().navigate(
                     R.id.action_yourVehicleFragment_to_addVehicleFragment,bundle

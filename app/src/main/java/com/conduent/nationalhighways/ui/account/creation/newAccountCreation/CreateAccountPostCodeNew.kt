@@ -13,6 +13,9 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNe
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -38,8 +41,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
 
         binding.inputPostCode.setMaxLength(10)
-        if(NewCreateAccountRequestModel.isEditCall){
-            binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)
+        when(navFlowCall){
+
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> { binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)}
+
         }
     }
 
@@ -58,6 +63,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
             R.id.btnEnterAddressManually -> {
                 val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 findNavController().navigate(
                     R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle
                 )
@@ -69,8 +75,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     private fun validation() {
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
             NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
+            val bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
             findNavController().navigate(
-                R.id.action_createAccountPostCodeNew_to_selectaddressfragment
+                R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle
             )
         } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))

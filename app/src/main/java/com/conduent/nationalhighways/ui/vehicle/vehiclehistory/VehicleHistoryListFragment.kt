@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.vehicle.SelectedVehicleViewModel
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.VEHICLE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -76,7 +77,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
         }
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
-        NewCreateAccountRequestModel.isVehicleManagementCall = false
         Handler().postDelayed({
             checkData()
         }, 1000)
@@ -181,6 +181,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         val bundle = Bundle()
         bundle.putInt(Constants.VEHICLE_INDEX, -2)
         bundle.putParcelable(Constants.DATA, details)
+        bundle.putString(Constants.NAV_FLOW_KEY,VEHICLE_MANAGEMENT)
         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_removeVehicleFragment,bundle)
     }
 
@@ -189,6 +190,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         val bundle = Bundle()
         bundle.putInt(Constants.VEHICLE_INDEX, -1)
         bundle.putParcelable(Constants.DATA, details)
+        bundle.putString(Constants.NAV_FLOW_KEY,VEHICLE_MANAGEMENT)
         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_removeVehicleFragment,bundle)
     }
 
@@ -202,31 +204,37 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
     }
 
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,VEHICLE_MANAGEMENT)
+        return bundle
+    }
+
 
     override fun onClick(v: View?) {
         when(v?.id) {
 
             R.id.btnNext -> {
                 if(isBusinessAccount.not()){
-                    NewCreateAccountRequestModel.isVehicleManagementCall = true
                     if (mList.size >= 10) {
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
                     } else {
 
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,bundle())
                     }
                 }else {
-                    NewCreateAccountRequestModel.isVehicleManagementCall = true
                     if (mList.size >= 50000) {
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment)
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
                     } else {
 
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment)
+                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,bundle())
                     }
-                }            }
+                }
+            }
         }
+
     }
 }
 

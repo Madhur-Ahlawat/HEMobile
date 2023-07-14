@@ -116,8 +116,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         hideLoader()
         when (response) {
             is Resource.Success -> {
-                NewCreateAccountRequestModel.isBackButtonVisible = false
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment)
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,bundle)
 
 
             }

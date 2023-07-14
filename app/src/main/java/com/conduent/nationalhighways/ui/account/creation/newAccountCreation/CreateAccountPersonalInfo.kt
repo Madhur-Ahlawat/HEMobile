@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,6 +13,9 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalIn
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,18 +48,15 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         }
 
-        if(NewCreateAccountRequestModel.isEditCall){
-            binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
-            binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
-            binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
-            checkButtonEnable()
-        }
+        when(navFlowCall){
 
-        if (NewCreateAccountRequestModel.firstName.isNotEmpty()){
-            binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
-            binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
-            binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
-            checkButtonEnable()
+            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+                binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
+                binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
+                binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
+                checkButtonEnable()
+            }
+
         }
     }
 
@@ -69,27 +70,24 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         hideKeyboard()
         when (v?.id) {
             binding.btnNext.id -> {
-                if (NewCreateAccountRequestModel.personalAccount) {
-                    NewCreateAccountRequestModel.firstName =
-                        binding.inputFirstName.getText().toString()
-                    NewCreateAccountRequestModel.lastName =
-                        binding.inputLastName.getText().toString()
 
-                } else {
                     NewCreateAccountRequestModel.firstName =
                         binding.inputFirstName.getText().toString()
                     NewCreateAccountRequestModel.lastName =
                         binding.inputLastName.getText().toString()
                     NewCreateAccountRequestModel.companyName =
                         binding.inputCompanyName.getText().toString()
-                }
 
-                if(NewCreateAccountRequestModel.isEditCall &&  NewCreateAccountRequestModel.isAccountTypeEditCall.not()){
-                    findNavController().popBackStack()
-                }else {
-                    findNavController().navigate(
-                        R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew
-                    )
+                when(navFlowCall){
+
+                    EDIT_SUMMARY -> {findNavController().popBackStack()}
+                    else -> {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                        findNavController().navigate(
+                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,bundle
+                        )
+                    }
                 }
             }
         }

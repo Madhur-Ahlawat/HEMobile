@@ -53,7 +53,7 @@ class AccountSuccessfullyCreationFragment :
         when (v?.id) {
 
             R.id.signIn -> {
-                NewCreateAccountRequestModel.isBackButtonVisible = true
+
                 requireActivity().startNormalActivityWithFinish(LoginActivity::class.java)
             }
         }

@@ -92,7 +92,6 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),V
         when(v?.id) {
             R.id.btnContinue -> {
                 NewCreateAccountRequestModel.vehicleList.clear()
-                NewCreateAccountRequestModel.isBackButtonVisible = true
                 findNavController().navigate(R.id.action_vehicleResultFragment_to_vehicleHistoryListFragment)
             }
         }

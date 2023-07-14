@@ -34,11 +34,7 @@ object NewCreateAccountRequestModel{
     var isVehicleAlreadyAdded:Boolean=false
     var isVehicleAlreadyAddedLocal:Boolean=false
     var isMaxVehicleAdded:Boolean=false
-    var isEditCall = false
-    var isAccountTypeEditCall = false
-    var isVehicleManagementCall = false
     var isManualAddress = false
-    var isBackButtonVisible = true
     var emailSecurityCode:String=""
     var smsSecurityCode:String=""
     var password:String=""

@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountEligibleLrdsBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,21 +53,23 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         hideKeyboard()
         when (v?.id) {
             binding.continueWithoutApplying.id -> {
-                if(NewCreateAccountRequestModel.isEditCall ) {
-                    if(NewCreateAccountRequestModel.isAccountTypeEditCall){
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY,navFlowCall)
+                when(navFlowCall){
+
+                    EDIT_SUMMARY -> {
                         findNavController().navigate(
-                            R.id.action_createAccountEligibleLRDS_to_createAccountTypes
-                        )
-                    }else {
-                        findNavController().navigate(
-                            R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment
+                            R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment,bundle
                         )
                     }
-                }else {
-                    findNavController().navigate(
-                        R.id.action_createAccountEligibleLRDS_to_createAccountTypes
-                    )
+                    else ->{
+                        findNavController().navigate(
+                            R.id.action_createAccountEligibleLRDS_to_createAccountTypes,bundle
+                        )
+                    }
+
                 }
+
 
             }
             binding.btnContinue.id -> {
