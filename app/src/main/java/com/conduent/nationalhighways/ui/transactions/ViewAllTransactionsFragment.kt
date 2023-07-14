@@ -177,7 +177,12 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
-                        valueTopUpAmount
+                        val bundle = Bundle()
+//                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
+                        findNavController().navigate(
+                            R.id.action_dashBoardFragment_to_crossingHistoryFragment,
+                            bundle
+                        )
                     }
                 }
             }

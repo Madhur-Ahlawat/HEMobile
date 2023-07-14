@@ -2,7 +2,9 @@ package com.conduent.nationalhighways.utils.common
 
 object Constants {
 
+    const val CHANNEL_WEB="Web"
     const val NEW_CARD="newcard"
+    const val FROM_ALL_TRANSACTIONS_TO_DETAILS="FROM_ALL_TRANSACTIONS_TO_DETAILS"
     const val PERSONALDATA="personaldata"
     const val ACCOUNTINFORMATION="accountinformation"
     const val REPLENISHMENTINFORMATION="ReplenishmentInformation"

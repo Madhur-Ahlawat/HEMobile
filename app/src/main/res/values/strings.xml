@@ -1254,6 +1254,7 @@
     <string name="txt_last_digits_of_card">Last four digit of card</string>
     <string name="email_reciept">Email Reciept</string>
     <string name="vehicles_added_to_your_account">Vehicles added to your account</string>
+    <string name="email_receipt_send_successful">Email receipt send successful</string>
 
 
 </resources>

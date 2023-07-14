@@ -18,6 +18,24 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
             app:destination="@id/crossingHistoryFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment2"
+            app:destination="@id/crossingHistoryFragment2" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_transactionDetails"
+            app:destination="@id/transactionDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/allTransactionsFragment"
+        android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
+        android:label="All Transactions"
+        tools:layout="@layout/all_transactions">
+
+        <action
+            android:id="@+id/action_all_transactions_to_details"
+            app:destination="@id/transactionDetails" />
+
     </fragment>
 
     <fragment
@@ -307,6 +325,22 @@
         <action
             android:id="@+id/action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment"
             app:destination="@id/crossingHistoryMakePaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingHistoryFragment2"
+        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
+        tools:layout="@layout/fragment_crossing_history"
+        android:label="CrossingHistoryFragment" >
+
+        <action
+            android:id="@+id/action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment"
+            app:destination="@id/crossingHistoryMakePaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionDetails"
+        android:name="com.conduent.nationalhighways.ui.transactions.TransactionDetailsFragment"
+        tools:layout="@layout/fragment_crossing_details"
+        android:label="Transaction Details" >
     </fragment>
 
     <fragment

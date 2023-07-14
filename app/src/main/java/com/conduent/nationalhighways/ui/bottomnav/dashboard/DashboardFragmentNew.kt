@@ -54,15 +54,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var dateRangeModel: PaymentDateRangeModel? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
     private var loader: LoaderDialog? = null
     private val countPerPage = 10
     private var startIndex = 1
     private var noOfPages = 1
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
-
+    companion object{
+        var dateRangeModel: PaymentDateRangeModel?=null
+        var accountDetailsData: AccountResponse?=null
+        var crossing: TransactionData?=null
+        private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
+    }
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -97,7 +100,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
-                        valueTopUpAmount
+                        crossing=recentTransactionItem
+                        val bundle = Bundle()
+                        bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
+                        findNavController().navigate(
+                            R.id.action_dashBoardFragment_to_crossingHistoryFragment,
+                            bundle
+                        )
                     }
                 }
             }
@@ -271,6 +280,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             is Resource.Success -> {
                 binding.loaderPlaceholder.visibility == View.GONE
                 status.data?.apply {
+                    DashboardFragmentNew.accountDetailsData=this
                     sessionManager.saveAccountStatus(accountInformation?.status!!)
                     sessionManager.saveName(personalInformation?.customerName!!)
                     sessionManager.saveAccountNumber(accountInformation?.number!!)
