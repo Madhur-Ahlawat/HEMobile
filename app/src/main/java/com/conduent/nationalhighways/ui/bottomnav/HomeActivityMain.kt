@@ -2,9 +2,13 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
+import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
@@ -33,7 +37,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
+    companion object{
+        var dateRangeModel: PaymentDateRangeModel?=null
+        var accountDetailsData: AccountResponse?=null
+        var crossing: TransactionData?=null
+        var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
+    }
     override fun onResume() {
         super.onResume()
 
@@ -43,6 +52,24 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding.root)
         setView()
+        navController.addOnDestinationChangedListener(object:NavController.OnDestinationChangedListener{
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                dataBinding.titleTxt.text=destination.label
+                if (navController.currentDestination?.id != R.id.dashBoardFragment) {
+                    dataBinding.idToolBarLyt.visible()
+//                    navController.popBackStack(R.id.bottom_navigation_graph, true)
+//                    dataBinding.fragmentContainerView.findNavController()
+//                        .navigate(R.id.dashBoardFragment)
+                }
+                else{
+                    dataBinding.idToolBarLyt.gone()
+                }
+            }
+        })
     }
 
     private fun setView() {
@@ -56,62 +83,55 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             onBackPressedDispatcher.onBackPressed()
         }
 
-        dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(
-            object : OnNavigationItemChangeListener {
-                override fun onNavigationItemChanged(
-                    navigationItem: BottomNavigationView.NavigationItem
-                ) {
-
-                    when (navigationItem.position) {
-                        0 -> {
-                            if (navController.currentDestination?.id != R.id.dashBoardFragment) {
-                                dataBinding.idToolBarLyt.gone()
-                                dataBinding.titleTxt.text =
-                                    getString(R.string.dashboard)
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.dashBoardFragment)
-                            }
-                        }
-
-                        1 -> {
-/*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
-       dataBinding.idToolBarLyt.materialToolbar.visible()
-       dataBinding.idToolBarLyt.titleTxt.text =
-           getString(R.string.vehicle_management)
-       navController.popBackStack(R.id.bottom_navigation_graph, true)
-       dataBinding.fragmentContainerView.findNavController()
-           .navigate(R.id.vehicleHomeListFragment)
-   }
-    */
-}
-
-
-
-2 -> {
-   if (navController.currentDestination?.id != R.id.notificationFragment) {
-       dataBinding.idToolBarLyt.visible()
-
-       navController.popBackStack(R.id.bottom_navigation_graph, true)
-       dataBinding.fragmentContainerView.findNavController()
-           .navigate(R.id.notificationFragment)
-   }
-}
-
-                        3 -> {
-                            if (navController.currentDestination?.id != R.id.accountFragment) {
-                                dataBinding.idToolBarLyt.visible()
-                                dataBinding.titleTxt.text =
-                                    getString(R.string.txt_my_account)
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding.fragmentContainerView.findNavController()
-                                    .navigate(R.id.accountFragment)
-                            }
-                        }
-                    }
-                }
-            }
-        )
+//        dataBinding.bottomNavigationView.setOnNavigationItemChangedListener(
+//            object : OnNavigationItemChangeListener {
+//                override fun onNavigationItemChanged(
+//                    navigationItem: BottomNavigationView.NavigationItem
+//                ) {
+//
+//                    when (navigationItem.position) {
+//                        0 -> {
+//
+//                        }
+//
+//                        1 -> {
+///*   if (navController.currentDestination?.id != R.id.vehicleHomeListFragment) {
+//       dataBinding.idToolBarLyt.materialToolbar.visible()
+//       dataBinding.idToolBarLyt.titleTxt.text =
+//           getString(R.string.vehicle_management)
+//       navController.popBackStack(R.id.bottom_navigation_graph, true)
+//       dataBinding.fragmentContainerView.findNavController()
+//           .navigate(R.id.vehicleHomeListFragment)
+//   }
+//    */
+//}
+//
+//
+//
+//2 -> {
+//   if (navController.currentDestination?.id != R.id.notificationFragment) {
+//       dataBinding.idToolBarLyt.visible()
+//
+//       navController.popBackStack(R.id.bottom_navigation_graph, true)
+//       dataBinding.fragmentContainerView.findNavController()
+//           .navigate(R.id.notificationFragment)
+//   }
+//}
+//
+//                        3 -> {
+//                            if (navController.currentDestination?.id != R.id.accountFragment) {
+//                                dataBinding.idToolBarLyt.visible()
+//                                dataBinding.titleTxt.text =
+//                                    getString(R.string.txt_my_account)
+//                                navController.popBackStack(R.id.bottom_navigation_graph, true)
+//                                dataBinding.fragmentContainerView.findNavController()
+//                                    .navigate(R.id.accountFragment)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        )
     }
 
 override fun observeViewModel() {}

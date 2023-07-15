@@ -18,24 +18,13 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment"
             app:destination="@id/crossingHistoryFragment" />
-        <action
-            android:id="@+id/action_dashBoardFragment_to_crossingHistoryFragment2"
-            app:destination="@id/crossingHistoryFragment2" />
-        <action
-            android:id="@+id/action_dashBoardFragment_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/allTransactionsFragment"
-        android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
-        android:label="All Transactions"
-        tools:layout="@layout/all_transactions">
 
         <action
-            android:id="@+id/action_all_transactions_to_details"
-            app:destination="@id/transactionDetails" />
-
+            android:id="@+id/action_dashBoardFragment_to_tollDetails"
+            app:destination="@id/tollDetails" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_topUpDetails"
+            app:destination="@id/topUpDetails" />
     </fragment>
 
     <fragment
@@ -318,28 +307,35 @@
 
     <fragment
         android:id="@+id/crossingHistoryFragment"
-        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
+        android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
         tools:layout="@layout/fragment_crossing_history"
-        android:label="CrossingHistoryFragment" >
-
+        android:label="Crossing History" >
         <action
-            android:id="@+id/action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment"
-            app:destination="@id/crossingHistoryMakePaymentFragment" />
+            android:id="@+id/action_crossingHistoryFragment_to_tollDetails"
+            app:destination="@id/tollDetails" />
+        <action
+            android:id="@+id/action_crossingHistoryFragment_to_topUpDetails"
+            app:destination="@id/topUpDetails" />
     </fragment>
     <fragment
-        android:id="@+id/crossingHistoryFragment2"
-        android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryFragment"
-        tools:layout="@layout/fragment_crossing_history"
-        android:label="CrossingHistoryFragment" >
-
+        android:id="@+id/emailRecieptSuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.transactions.EmailRecieptSuccessFragment"
+        tools:layout="@layout/fragment_email_reciept_success"
+        android:label="Email Reciept Success" >
         <action
-            android:id="@+id/action_crossingHistoryFragment_to_crossingHistoryMakePaymentFragment"
-            app:destination="@id/crossingHistoryMakePaymentFragment" />
+            android:id="@+id/action_emailRecieptSuccessFragment_to_crossingdetails"
+            app:destination="@id/tollDetails" />
     </fragment>
     <fragment
-        android:id="@+id/transactionDetails"
-        android:name="com.conduent.nationalhighways.ui.transactions.TransactionDetailsFragment"
-        tools:layout="@layout/fragment_crossing_details"
+        android:id="@+id/tollDetails"
+        android:name="com.conduent.nationalhighways.ui.transactions.TollDetailsFragment"
+        tools:layout="@layout/fragment_toll_details"
+        android:label="Transaction Details" >
+    </fragment>
+    <fragment
+        android:id="@+id/topUpDetails"
+        android:name="com.conduent.nationalhighways.ui.transactions.TopUpDetailsFragment"
+        tools:layout="@layout/fragment_toll_details"
         android:label="Transaction Details" >
     </fragment>
 

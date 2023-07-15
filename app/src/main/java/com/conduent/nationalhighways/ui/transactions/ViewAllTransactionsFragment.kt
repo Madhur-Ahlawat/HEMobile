@@ -24,6 +24,8 @@ import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -81,6 +83,9 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     }
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -142,14 +147,14 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
         mLayoutManager = LinearLayoutManager(requireContext())
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(20, 1))
+                addItemDecoration(RecyclerViewItemDecorator(0, 1))
             }
             binding.rvRecenrTransactions.layoutManager = mLayoutManager
             adapter = recentTransactionAdapter
         }
     }
     fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
-        getViewLayout = { R.layout.item_recent_tansactions },
+        getViewLayout = { R.layout.item_all_tansactions },
         areItemsSame = ::areRecentTransactionsSame,
         areItemContentsEqual = ::areRecentTransactionsSame,
         onBind = { recentTransactionItem, viewDataBinding, _ ->
@@ -165,24 +170,32 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                         )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.background.setTint(resources.getColor(R.color.green_status))
-                        indicatorIconTransactionType.background.setTint(resources.getColor(R.color.green_status))
                         topup = "+" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                     } else {
                         verticalStripTransactionType.background.setTint(resources.getColor(R.color.red_status))
-                        indicatorIconTransactionType.background.setTint(resources.getColor(R.color.red_status))
                         topup = "-" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
                         val bundle = Bundle()
+                        crossing =recentTransactionItem
 //                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        findNavController().navigate(
-                            R.id.action_dashBoardFragment_to_crossingHistoryFragment,
-                            bundle
-                        )
+                        if(crossing!!.activity.equals("Toll")){
+                            findNavController().navigate(
+                                R.id.action_crossingHistoryFragment_to_tollDetails,
+                                bundle
+                            )
+                        }
+                        else{
+                            findNavController().navigate(
+                                R.id.action_crossingHistoryFragment_to_topUpDetails,
+                                bundle
+                            )
+                        }
+
                     }
                 }
             }

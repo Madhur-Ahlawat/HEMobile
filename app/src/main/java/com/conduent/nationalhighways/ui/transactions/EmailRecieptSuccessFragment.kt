@@ -1,43 +1,19 @@
 package com.conduent.nationalhighways.ui.transactions
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatButton
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
-import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
-import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
-import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
-import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
-import com.conduent.nationalhighways.databinding.AllTransactionsBinding
-import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
-import com.conduent.nationalhighways.databinding.FragmentDashboardBinding
 import com.conduent.nationalhighways.databinding.FragmentEmailRecieptSuccessBinding
-import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
-import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
-import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,12 +43,19 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
 //        binding.tvVehicleRegistrationValue.text=DashboardFragmentNew.dateRangeModel?.vehicleNumber
 //        binding.tvTimeValue.text=DashboardFragmentNew.crossing?.entryTime
 //        binding.tvLocationValue.text=DashboardFragmentNew.crossing?.entryPlaza
-        binding.btnContinue.setOnClickListener {
-            findNavController().popBackStack(R.id.allTransactionsFragment,false,false)
-        }
+
     }
 
     override fun initCtrl() {
+        try{
+            binding.message.text="We’ve sent a receipt email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}".toLowerCase()
+        }
+        catch (e:Exception){
+            binding.message.text="We’ve sent a receipt email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}"
+        }
+        binding.btnContinue.setOnClickListener {
+            findNavController().popBackStack(R.id.dashBoardFragment,false)
+        }
     }
 
     override fun observer() {

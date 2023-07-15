@@ -235,13 +235,16 @@ class DashboardViewModel @Inject constructor(
                             Resource.DataError("Something went wrong. Try again later")
                     }
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 if (e is NoConnectivityException) {
-                    _vehicleListVal.value = Resource.DataError(e.message)
+                    _accountDetailsVal.value = Resource.DataError(e.message)
                 } else if (e is SocketTimeoutException || e is InterruptedIOException) {
-                    _vehicleListVal.value = Resource.DataError(Constants.VPN_ERROR)
+                    _accountDetailsVal.value = Resource.DataError(Constants.VPN_ERROR)
                 }
-                _vehicleListVal.value = Resource.DataError(e.message)
+                else{
+                    _accountDetailsVal.value = Resource.DataError(e.message)
+                }
             }
         }
 

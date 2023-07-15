@@ -127,6 +127,7 @@ object Constants {
     const val POST_MAIL = "MAIL"
     const val SMS = "SMS"
     const val EMAIL = "EMAIL"
+    const val Email = "Email"
     const val MODE = "mode"
     const val CREATE_ACCOUNT = "CREATE ACCOUNT"
     const val VIEW_CHARGES = "VIEW CHARGES"

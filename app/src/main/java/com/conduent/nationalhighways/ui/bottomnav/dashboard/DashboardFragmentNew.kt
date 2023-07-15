@@ -30,6 +30,10 @@ import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.accountDetailsData
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -60,12 +64,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var startIndex = 1
     private var noOfPages = 1
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
-    companion object{
-        var dateRangeModel: PaymentDateRangeModel?=null
-        var accountDetailsData: AccountResponse?=null
-        var crossing: TransactionData?=null
-        private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
-    }
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -102,11 +100,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     root.setOnClickListener {
                         crossing=recentTransactionItem
                         val bundle = Bundle()
-                        bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
-                        findNavController().navigate(
-                            R.id.action_dashBoardFragment_to_crossingHistoryFragment,
-                            bundle
-                        )
+//                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
+                        if(crossing?.activity.equals("Toll")){
+                            findNavController().navigate(
+                                R.id.action_dashBoardFragment_to_tollDetails,
+                                bundle
+                            )
+                        }
+                        else{
+                            findNavController().navigate(
+                                R.id.action_dashBoardFragment_to_topUpDetails,
+                                bundle
+                            )
+                        }
                     }
                 }
             }
@@ -141,7 +147,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         mLayoutManager = LinearLayoutManager(requireContext())
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(20, 1))
+                addItemDecoration(RecyclerViewItemDecorator(10, 1))
             }
             binding.rvRecenrTransactions.layoutManager = mLayoutManager
             adapter = recentTransactionAdapter
@@ -176,6 +182,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun getPaymentHistoryList(
         index: Int
     ) {
+        if(loader?.isVisible==false && loader?.isAdded == true){
+            loader?.showsDialog
+        }
         dateRangeModel =
             PaymentDateRangeModel(
                 filterType = Constants.PAYMENT_FILTER_SPECIFIC,
@@ -217,6 +226,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -280,7 +292,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             is Resource.Success -> {
                 binding.loaderPlaceholder.visibility == View.GONE
                 status.data?.apply {
-                    DashboardFragmentNew.accountDetailsData=this
+                    accountDetailsData=this
                     sessionManager.saveAccountStatus(accountInformation?.status!!)
                     sessionManager.saveName(personalInformation?.customerName!!)
                     sessionManager.saveAccountNumber(accountInformation?.number!!)
