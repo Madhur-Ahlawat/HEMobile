@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
+import com.conduent.nationalhighways.databinding.FragmentCloseAccountBinding
 import com.conduent.nationalhighways.databinding.FragmentTopupDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
@@ -25,8 +26,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
 
-    private var dateRangeModel: PaymentDateRangeModel?=null
-    private var topup: String?=null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
     @Inject
@@ -44,19 +43,10 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
 
     override fun onResume() {
         super.onResume()
-        binding.crossingAmount.text=crossing?.balance
-        binding.tvPaymentDateValue.text=crossing?.transactionDate
-        binding.tvPaymentTimeValue.text=dateRangeModel?.vehicleNumber
-        binding.tvPaymentReferenceValue.text=crossing?.transactionNumber
-        binding.tvTypeOfPaymentValue.text=crossing?.activity
-        binding.tvPaymentMethodValue.text=crossing?.rebillPaymentType?.substring(0,
-            crossing?.rebillPaymentType?.indexOf("-")!!)
-        binding.tvChannelValue.text=Constants.CHANNEL_WEB
-        binding.tvFourDigitsOfTheCardValue.text=crossing?.rebillPaymentType?.substring(crossing?.rebillPaymentType?.indexOf("-")!!+1,crossing?.rebillPaymentType?.length!!)
     }
 
     override fun initCtrl() {
-        binding.buttonEmailReciept.setOnClickListener {
+        binding.btnCloseAccount.setOnClickListener {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             dashboardViewModel.whereToReceivePaymentReceipt(
                 PaymentReceiptDeliveryTypeSelectionRequest(crossing?.transactionNumber,Constants.Email)

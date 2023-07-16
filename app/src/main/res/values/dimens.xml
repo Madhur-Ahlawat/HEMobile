@@ -129,5 +129,11 @@
     <dimen name="_21dp">21dp</dimen>
     <dimen name="_70dp">70dp</dimen>
     <dimen name="_34_5dp">34.5dp</dimen>
+    <dimen name="_115dp">115dp</dimen>
+    <dimen name="_19dp">19dp</dimen>
+    <dimen name="_15sp">15sp</dimen>
+    <dimen name="_85dp">85dp</dimen>
+    <dimen name="_75dp">75dp</dimen>
+    <dimen name="_31dp">31dp</dimen>
     />
 </resources>

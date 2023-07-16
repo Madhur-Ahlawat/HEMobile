@@ -304,6 +304,12 @@ interface ApiService {
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
 
+
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
+    suspend fun getPaymentHistoryData(
+        @Body request: AccountPaymentHistoryRequest?
+    ): Response<AccountPaymentHistoryResponse?>?
+
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
 
