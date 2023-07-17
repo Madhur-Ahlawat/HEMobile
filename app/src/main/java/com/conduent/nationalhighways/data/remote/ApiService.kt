@@ -4,7 +4,6 @@ import com.conduent.nationalhighways.BuildConfig.*
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.*
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
-import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.data.model.accountpayment.*
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.model.auth.forgot.email.ForgotEmailModel
@@ -22,8 +21,8 @@ import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailReques
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelRequest
@@ -39,6 +38,7 @@ import com.conduent.nationalhighways.data.model.profile.*
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
+import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
@@ -304,11 +304,6 @@ interface ApiService {
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
 
-
-    @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
-    suspend fun getPaymentHistoryData(
-        @Body request: AccountPaymentHistoryRequest?
-    ): Response<AccountPaymentHistoryResponse?>?
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?

@@ -1,10 +1,10 @@
 package com.conduent.nationalhighways.ui.bottomnav.account
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -13,23 +13,25 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
-import com.conduent.nationalhighways.databinding.FragmentAccountBinding
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
-import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.communication.CommunicationActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
-import com.conduent.nationalhighways.ui.auth.logout.LogoutDialog
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.account.accountstatements.AccountStatementActivity
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.nominatedcontacts.NominatedContactActivity
 import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.DashboardUtils
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
@@ -120,6 +122,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             vehicleManagement.setOnClickListener(this@AccountFragment)
             communicationPreferences.setOnClickListener(this@AccountFragment)
             signOut.setOnClickListener(this@AccountFragment)
+            closeAcount.setOnClickListener(this@AccountFragment)
 //            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
 //            rlAccountStatement.setOnClickListener(this@AccountFragment)
@@ -155,6 +158,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 title?.text = getString(R.string.vehicle_management)
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
 
+            }
+
+            R.id.close_acount -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.str_close_account)
+                findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
             }
 
             R.id.contact_us -> {
@@ -247,6 +256,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     override fun onLogOutClick() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         logOutViewModel.logout()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
 }

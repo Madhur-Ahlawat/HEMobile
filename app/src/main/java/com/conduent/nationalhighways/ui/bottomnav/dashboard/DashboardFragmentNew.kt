@@ -1,11 +1,14 @@
 package com.conduent.nationalhighways.ui.bottomnav.dashboard//package com.conduent.nationalhighways.ui.bottomnav.dashboard
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -17,15 +20,11 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
-import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
-import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
-import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
-import com.conduent.nationalhighways.ui.auth.logout.LogoutDialog
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -38,6 +37,7 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpAct
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
+import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -64,6 +64,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var startIndex = 1
     private var noOfPages = 1
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -98,16 +99,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
-                        crossing=recentTransactionItem
+                        crossing = recentTransactionItem
                         val bundle = Bundle()
 //                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        if(crossing?.activity.equals("Toll")){
+                        if (crossing?.activity.equals("Toll")) {
                             findNavController().navigate(
                                 R.id.action_dashBoardFragment_to_tollDetails,
                                 bundle
                             )
-                        }
-                        else{
+                        } else {
                             findNavController().navigate(
                                 R.id.action_dashBoardFragment_to_topUpDetails,
                                 bundle
@@ -121,6 +121,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
         return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as HomeActivityMain).showHideToolbar(false)
     }
 
     override fun getFragmentBinding(
@@ -182,7 +187,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun getPaymentHistoryList(
         index: Int
     ) {
-        if(loader?.isVisible==false && loader?.isAdded == true){
+        if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog
         }
         dateRangeModel =
@@ -218,6 +223,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
@@ -225,6 +231,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -245,8 +252,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
-                        paymentHistoryListData.addAll(it)
-                        recentTransactionAdapter.submitList(paymentHistoryListData)
+                        paymentHistoryListData =
+                            sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
+                        recentTransactionAdapter.submitList(
+                            sortTransactionsDateWiseDescending(
+                                paymentHistoryListData
+                            )
+                        )
                     } else {
                         binding.boxViewAll.gone()
                         binding.rvRecenrTransactions.gone()
@@ -274,9 +286,31 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
+        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
+        for (transaction in transactions) {
+            if (transactionListSorted?.isEmpty() == true) {
+                transactionListSorted.add(transaction!!)
+            } else {
+                if (compareDates(
+                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
+                        transaction?.transactionDate + " " + transaction?.exitTime
+                    )
+                ) {
+                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
+
+                } else {
+                    transactionListSorted.add(transaction!!)
+                }
+            }
+        }
+        return transactionListSorted
+    }
+
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+            (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->
                 val badgeCountBtn =
                     list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                 badgeCountBtn.gone()
@@ -292,7 +326,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             is Resource.Success -> {
                 binding.loaderPlaceholder.visibility == View.GONE
                 status.data?.apply {
-                    accountDetailsData=this
+                    accountDetailsData = this
                     sessionManager.saveAccountStatus(accountInformation?.status!!)
                     sessionManager.saveName(personalInformation?.customerName!!)
                     sessionManager.saveAccountNumber(accountInformation?.number!!)
@@ -300,8 +334,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         this
                     )
                     if (accountInformation?.accountType.equals("BUSINESS", true)
-                        || ((accountInformation?.accSubType.equals("STANDARD", true) && accountInformation?.accountType.equals("PRIVATE", true
-                        )))) {
+                        || ((accountInformation?.accSubType.equals(
+                            "STANDARD",
+                            true
+                        ) && accountInformation?.accountType.equals(
+                            "PRIVATE", true
+                        )))
+                    ) {
                         showNonPayGUI(this)
                     } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                         showPayGUI(this)

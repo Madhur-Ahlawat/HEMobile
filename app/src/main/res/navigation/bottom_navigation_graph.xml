@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/dashBoardFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew"
-        android:label="Account Summary"
+        android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard">
 
         <action
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/removeVehicleFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.RemoveVehicleFragment"
-        android:label="RemoveVehicleFragment"
+        android:label="Remove Vehicle"
         tools:layout="@layout/fragment_remove_vehicle">
         <argument
             android:name="vehicle_position"
@@ -74,7 +74,7 @@
     <fragment
         android:id="@+id/resetFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
-        android:label="ResetFragment"
+        android:label="Reset Password"
         tools:layout="@layout/fragment_forgot_reset">
         <action
             android:id="@+id/action_resetFragment_to_loginFragment"
@@ -97,7 +97,7 @@
     <fragment
         android:id="@+id/maximumVehicleFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment"
-        android:label="MaximumVehicleFragment"
+        android:label="Maximum Vehicle Number"
         tools:layout="@layout/fragment_maximum_vehicle_number">
 
         <action
@@ -119,7 +119,7 @@
     <fragment
         android:id="@+id/findYourVehicleFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountFindVehicleFragment"
-        android:label="FindYourVehicleFragment"
+        android:label="Find Your Vehicle"
         tools:layout="@layout/fragment_create_account_find_vehicle">
 
 
@@ -151,7 +151,7 @@
     <fragment
         android:id="@+id/vehicleListFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.VehicleListFragment"
-        android:label="VehicleListFragment"
+        android:label="Vehicle List"
         tools:layout="@layout/fragment_vehicle_list2">
 
         <action
@@ -197,7 +197,7 @@
     <fragment
         android:id="@+id/businessVehicleDetailFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
-        android:label="BusinessVehicleDetail"
+        android:label="Business Vehicle"
         tools:layout="@layout/fragment_business_vehicle_detail">
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
@@ -235,7 +235,7 @@
     <fragment
         android:id="@+id/businessVehicleUKListFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK"
-        android:label="BusinessUKVehicleList"
+        android:label="Business UK Vehicle List"
         tools:layout="@layout/fragment_business_vehicle_find_uk">
 
         <action
@@ -280,10 +280,30 @@
     </fragment>
 
     <fragment
+        android:id="@+id/accountClosedFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment"
+        android:label="Account Closed"
+        tools:layout="@layout/fragment_account_closed">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/closeAccountFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.close_account.CloseAccountFragment"
+        android:label="Close Account"
+        tools:layout="@layout/fragment_close_account">
+
+    </fragment>
+
+    <fragment
         android:id="@+id/accountFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.AccountFragment"
         android:label="Account Management"
-        tools:layout="@layout/fragment_account">
+        tools:layout="@layout/fragment_account_new">
+
+        <action
+            android:id="@+id/action_accountFragment_to_closeAccountFragment"
+            app:destination="@id/closeAccountFragment" />
 
         <action
             android:id="@+id/action_accountFragment_to_vehicleManagementFragment"

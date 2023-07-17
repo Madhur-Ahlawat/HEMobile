@@ -46,7 +46,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         super.onResume()
         binding.crossingAmount.text=crossing?.balance
         binding.tvPaymentDateValue.text=crossing?.transactionDate
-        binding.tvPaymentTimeValue.text=dateRangeModel?.vehicleNumber
+        binding.tvPaymentTimeValue.text=crossing?.exitTime
         binding.tvPaymentReferenceValue.text=crossing?.transactionNumber
         binding.tvTypeOfPaymentValue.text=crossing?.activity
         binding.tvPaymentMethodValue.text=crossing?.rebillPaymentType?.substring(0,

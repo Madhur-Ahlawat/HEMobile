@@ -2,6 +2,8 @@ package com.conduent.nationalhighways.utils.common
 
 object Constants {
 
+    const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
+    const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
     const val CHANNEL_WEB="Web"
     const val NEW_CARD="newcard"
     const val FROM_ALL_TRANSACTIONS_TO_DETAILS="FROM_ALL_TRANSACTIONS_TO_DETAILS"

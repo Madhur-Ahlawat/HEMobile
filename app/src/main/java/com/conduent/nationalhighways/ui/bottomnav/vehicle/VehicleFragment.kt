@@ -1,10 +1,12 @@
 package com.conduent.nationalhighways.ui.bottomnav.vehicle
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.conduent.nationalhighways.databinding.FragmentVehicleBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtActivity
 import com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity
 import com.conduent.nationalhighways.utils.common.Constants
@@ -62,6 +64,10 @@ class VehicleFragment : BaseFragment<FragmentVehicleBinding>() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+    }
     private fun startVehicleMgmtActivity(type: Int) {
         startActivity(Intent(requireContext(), VehicleMgmtActivity::class.java).apply {
             putExtra(Constants.VEHICLE_SCREEN_KEY, type)

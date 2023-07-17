@@ -40,7 +40,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
         binding.crossingAmount.text = crossing?.balance
         binding.tvAccountNumberValue.text = accountDetailsData?.accountInformation?.number
         binding.tvVehicleRegistrationValue.text = dateRangeModel?.vehicleNumber
-        binding.tvTimeValue.text = crossing?.entryTime
+        binding.tvTimeValue.text = crossing?.exitTime
         binding.tvLocationValue.text = crossing?.entryPlaza
         binding.tvStatusValue.text = crossing?.tranSettleStatus
     }

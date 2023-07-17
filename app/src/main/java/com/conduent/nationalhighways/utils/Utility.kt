@@ -12,5 +12,7 @@ object Utility {
     }
 
 
+    inline fun <T> ArrayDeque<T>.push(element: T) = addLast(element) // returns Unit
 
+    inline fun <T> ArrayDeque<T>.pop() = removeLastOrNull()
 }
