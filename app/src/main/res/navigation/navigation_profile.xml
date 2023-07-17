@@ -202,9 +202,7 @@
         android:id="@+id/viewNominatedUserAccountProfileFragment"
         android:name="com.conduent.nationalhighways.ui.account.profile.profileContent.nominatedContactUser.ViewNominatedContactUserProfileFragment"
         tools:layout="@layout/fragment_view_nominated_contact_user_profile">
-        <action
-            android:id="@+id/action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo"
-            app:destination="@id/nominatedPersonalInfoFragment" />
+
         <action
             android:id="@+id/action_viewNominatedContactUserProfile_to_viewPrimaryAccountHolderProfile"
             app:destination="@id/viewPrimaryAccountUserProfileFragment" />
@@ -241,42 +239,6 @@
             app:destination="@id/personalInfoFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nominatedPersonalInfoFragment"
-        android:name="com.conduent.nationalhighways.ui.account.profile.personalInfo.NominatedPersonalInfoFragment"
-        tools:layout="@layout/fragment_nominated_personal_info">
-        <action
-            android:id="@+id/action_nominatedPersonalInfoFragment_to_nominatedPostCodeFragment"
-            app:destination="@id/nominatedPostCodeFragment" />
-        <action
-            android:id="@+id/action_personalInfoFragment_to_emailFragment"
-            app:destination="@id/emailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/nominatedPostCodeFragment"
-        android:name="com.conduent.nationalhighways.ui.account.profile.postcode.NominatedProfilePostCodeFragment"
-        tools:layout="@layout/fragment_nominated_profile_postcode">
-        <action
-            android:id="@+id/action_nominatedPostcodeFragment_to_nominatedPasswordFragment"
-            app:destination="@id/nominatedProfilePasswordFragment" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/nominatedPinFragment"
-        android:name="com.conduent.nationalhighways.ui.account.profile.pin.NominatedProfilePinFragment"
-        tools:layout="@layout/fragment_nominated_profile_pin">
-        <action
-            android:id="@+id/action_nominatedPinFragment_to_viewNominatedAccountProfile"
-            app:destination="@id/viewNominatedUserAccountProfileFragment"
-            app:popUpTo="@id/viewNominatedUserAccountProfileFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/nominatedProfilePasswordFragment"
-        android:name="com.conduent.nationalhighways.ui.account.profile.password.NominatedProfilePasswordFragment"
-        tools:layout="@layout/fragment_nominated_profile_password">
-        <action
-            android:id="@+id/action_nominatedPasswordFragment_to_nominatedPinFragment"
-            app:destination="@id/nominatedPinFragment" />
-    </fragment>
+
 </navigation>

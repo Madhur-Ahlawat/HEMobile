@@ -90,10 +90,7 @@ class ViewNominatedContactUserProfileFragment :
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.NOMINATED_ACCOUNT_DATA, binding.nominated)
                 bundle.putParcelable(Constants.DATA, binding.model)
-                findNavController().navigate(
-                    R.id.action_viewNominatedUserAccountProfile_to_UpdatePersonalInfo,
-                    bundle
-                )
+
             }
 
             R.id.rlAccountHolder -> {

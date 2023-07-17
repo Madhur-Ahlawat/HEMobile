@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -13,23 +12,22 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
-import com.conduent.nationalhighways.databinding.FragmentAccountBinding
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
-import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
-import com.conduent.nationalhighways.ui.account.communication.CommunicationActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
-import com.conduent.nationalhighways.ui.auth.logout.LogoutDialog
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.account.accountstatements.AccountStatementActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.nominatedcontacts.NominatedContactActivity
 import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.DashboardUtils
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
@@ -147,7 +145,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.communication_preferences -> {
-                requireActivity().startNormalActivity(CommunicationActivity::class.java)
+
             }
 
             R.id.vehicle_management -> {
@@ -195,15 +193,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
         when (status) {
             is Resource.Success -> {
-                Intent(requireActivity(), NominatedContactActivity::class.java).run {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                    putExtra(
-                        "count",
-                        status.data?.secondaryAccountDetailsType?.secondaryAccountList?.size
-                            ?: 0
-                    )
-                    startActivity(this)
-                }
+
 
             }
 

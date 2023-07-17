@@ -21,13 +21,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".ui.webview.WebViewActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".ui.account.biometric.BiometricActivity"
             android:exported="false"/>
         <activity
@@ -87,9 +80,6 @@
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name="com.conduent.nationalhighways.ui.nominatedcontacts.NominatedContactActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.conduent.nationalhighways.ui.account.communication.CommunicationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewAllActivity"
