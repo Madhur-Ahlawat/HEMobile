@@ -170,7 +170,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 binding.notificationsRecyclerview.gone()
-                binding.noNotificationsTxt.visible()
+//                binding.noNotificationsTxt.visible()
 
             }
 
@@ -198,7 +198,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 //        hashmap.toSortedMap()
         if (hashmap.isNotEmpty()) {
             binding.notificationsRecyclerview.visible()
-            binding.noNotificationsTxt.gone()
+//            binding.noNotificationsTxt.gone()
 
             val mAdapter = NotificationSectionAdapter(requireActivity(), hashmap)
 
@@ -208,7 +208,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             }
         } else {
             binding.notificationsRecyclerview.gone()
-            binding.noNotificationsTxt.visible()
+//            binding.noNotificationsTxt.visible()
         }
     }
 
