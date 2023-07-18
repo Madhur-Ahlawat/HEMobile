@@ -46,7 +46,6 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
             holder.binding.view.visibility= View.GONE
         }else{
             holder.binding.view.visibility= View.VISIBLE
-
         }
 
 
