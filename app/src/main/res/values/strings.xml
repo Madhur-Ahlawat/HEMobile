@@ -1263,6 +1263,8 @@
     <string name="we_will_send_an_email_to_johndoe_email_com_nwhen_the_account_has_been_closed">We will send an email to johndoe@email.com\nwhen the account has been closed.</string>
     <string name="what_happens_next">What happens next</string>
     <string name="str_account_closed">Account Closed</string>
+    <string name="resizable_text_read_more">See more</string>
+    <string name="resizable_text_read_less">See less</string>
 
 
 </resources>

@@ -135,5 +135,8 @@
     <dimen name="_85dp">85dp</dimen>
     <dimen name="_75dp">75dp</dimen>
     <dimen name="_31dp">31dp</dimen>
+    <dimen name="_114dp">114dp</dimen>
+    <dimen name="_53dp">53dp</dimen>
+    <dimen name="_187dp">187dp</dimen>
     />
 </resources>

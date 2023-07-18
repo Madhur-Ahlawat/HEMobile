@@ -12,14 +12,16 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.notification.NotificationModel
 import com.conduent.nationalhighways.listener.FilterDialogListener
 import com.conduent.nationalhighways.listener.NotificationItemClick
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationAdapterNew
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationSectionAdapter
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationTypeAdapter
-import com.conduent.nationalhighways.ui.bottomnav.notification.dialog.FilterDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -28,19 +30,23 @@ import com.conduent.nationalhighways.utils.extn.visible
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), FilterDialogListener,
     View.OnClickListener, NotificationItemClick {
 
+    private var mAdapter: NotificationAdapterNew?=null
+    private var isPrioritySelected: Boolean?=null
+    private var isStandardSelected: Boolean?=null
+    private var mLayoutManager: LinearLayoutManager?=null
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var notifications : MutableList<AlertMessage?>?= mutableListOf()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNotificationBinding = FragmentNotificationBinding.inflate(inflater, container, false)
 
-    override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        viewModel.getAlertsApi(Constants.LANGUAGE)
+    fun selectPriority() {
+        isPrioritySelected=true
+        isStandardSelected=false
+
         binding.priority.background =
             ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
         binding.standard.background =
@@ -48,91 +54,80 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         binding.standard.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.white
+                R.color.hyperlink_blue2
             )
         )
-        handleVisibility()
         binding.priority.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.high_lighted_text_color
+                R.color.white
             )
         )
+        viewModel.getAlertsApi(Constants.LANGUAGE)
+    }
 
+    fun selectStandard() {
+        isPrioritySelected=false
+        isStandardSelected=true
+        binding.priority.background =
+            ContextCompat.getDrawable(requireActivity(), R.drawable.text_unselected_transparent_bg)
+        binding.standard.background =
+            ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
+        binding.standard.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        binding.priority.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.hyperlink_blue2
+            )
+        )
+        viewModel.getAlertsApi(Constants.LANGUAGE)
+    }
+    override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        viewModel.getAlertsApi(Constants.LANGUAGE)
+        selectPriority()
+        setClickListeners()
+        initAdapter()
+
+//        binding.filterTxt.setOnClickListener {
+//            FilterDialog.newInstance(
+//                getString(R.string.str_sort),
+//                this
+//            ).show(requireActivity().supportFragmentManager, FilterDialog.TAG)
+//        }
+
+    }
+
+    private fun initAdapter() {
+        mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager!!.orientation=RecyclerView.VERTICAL
+        binding.notificationsRecyclerview.layoutManager=mLayoutManager
+        mAdapter=NotificationAdapterNew(requireActivity() as HomeActivityMain,notifications)
+        binding.notificationsRecyclerview.adapter=mAdapter
+    }
+
+    private fun setClickListeners() {
         binding.priority.setOnClickListener {
-            viewModel.getAlertsApi(Constants.LANGUAGE)
-
-            binding.standard.background =
-                ContextCompat.getDrawable(
-                    requireActivity(),
-                    R.drawable.text_unselected_transparent_bg
-                )
-            binding.priority.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
-            binding.standard.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.white
-                )
-            )
-            binding.priority.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.high_lighted_text_color
-                )
-            )
-            handleVisibility()
-//            setPriorityNotifications()
+            selectPriority()
         }
         binding.standard.setOnClickListener {
-            viewModel.getAlertsApi(Constants.LANGUAGE)
-            binding.priority.background =
-                ContextCompat.getDrawable(
-                    requireActivity(),
-                    R.drawable.text_unselected_transparent_bg
-                )
-            binding.standard.background =
-                ContextCompat.getDrawable(requireActivity(), R.drawable.text_selected_blue_bg)
-            binding.priority.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.black
-                )
-            )
-            binding.priority.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            binding.standard.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.high_lighted_text_color
-                )
-            )
-            binding.clearFilterLyt.visible()
-            binding.clearSelectAllLyt.gone()
-            binding.filterTxt.visible()
-
+            selectStandard()
 //            setStandardNotifications()
         }
-
-        binding.clearNotificationTxt.setOnClickListener {
-            binding.clearSelectAllLyt.visible()
-            binding.clearFilterLyt.gone()
-
-        }
-
-        binding.filterTxt.setOnClickListener {
-            FilterDialog.newInstance(
-                getString(R.string.str_sort),
-                this
-            ).show(requireActivity().supportFragmentManager, FilterDialog.TAG)
-        }
-
     }
 
 
     private fun handleVisibility() {
-        binding.clearSelectAllLyt.gone()
-        binding.clearFilterLyt.visible()
-        binding.filterTxt.gone()
+//        binding.clearSelectAllLyt.gone()
+//        binding.clearFilterLyt.visible()
+//        binding.filterTxt.gone()
 
     }
 
@@ -150,16 +145,35 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.messageList?.isNullOrEmpty() == false) {
+                    notifications?.clear()
+                    if(isPrioritySelected!!){
+                        resource.data?.messageList.forEach {
+                            if(it!!.category.equals(Constants.PRIORITY)){
+                                notifications!!.add(it)
+                            }
+                        }
+                    }
+                    else if(isStandardSelected!!){
+                        resource.data?.messageList.forEach {
+                            if(it!!.category.equals(Constants.STANDARD)){
+                                notifications!!.add(it)
+                            }
+                        }
+                    }
+                    mAdapter!!.notifyDataSetChanged()
 //                    setPriorityNotifications()
-                    setNotificationAlert(resource.data?.messageList)
+//                    setNotificationAlert(resource.data?.messageList)
+
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
                 binding.notificationsRecyclerview.gone()
                 binding.noNotificationsTxt.visible()
 
             }
+
             else -> {
                 // do nothing
             }

@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
@@ -140,7 +141,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun init() {
         initTransactionsRecyclerView()
         initLoaderDialog()
-
     }
 
     private fun initLoaderDialog() {
@@ -161,6 +161,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
+        dashboardViewModel.getAlertsApi()
         return {}
     }
 
@@ -221,6 +222,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 //            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
             dashboardViewModel.logout()
         }
+        binding.tvAvailableBalance.setOnClickListener {
+            findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -228,8 +232,30 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
         observe(dashboardViewModel.logout, ::handleLogout)
+        observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
     }
 
+    private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.messageList?.isNullOrEmpty() == false) {
+//                    setPriorityNotifications()
+//                    setNotificationAlert(resource.data?.messageList)
+
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+//                binding.notificationsRecyclerview.gone()
+//                binding.noNotificationsTxt.visible()
+
+            }
+            else -> {
+                // do nothing
+            }
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
@@ -307,7 +333,46 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
         return transactionListSorted
     }
+    private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                status.data?.messageList?.let { alerts ->
+                    if (alerts.isNotEmpty()) {
+//                        binding.notificationView.visible()
+//                        binding.viewAllNotifi.text =
+//                            getString(R.string.str_view_all, alerts.size.toString())
+//                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+                        if (requireActivity() is HomeActivityMain) {
+                            (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->
+                                val badgeCountBtn =
+                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                badgeCountBtn.visible()
+                                badgeCountBtn.text = alerts.size.toString()
+                            }
+                        }
+                    } else {
+                        hideNotification()
+                    }
+                }
+            }
 
+            is Resource.DataError -> {
+                if (status.errorModel?.errorCode == Constants.NO_DATA_FOR_NOTIFICATIONS) {
+                    hideNotification()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
+            }
+
+            else -> {
+
+            }
+        }
+
+    }
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->

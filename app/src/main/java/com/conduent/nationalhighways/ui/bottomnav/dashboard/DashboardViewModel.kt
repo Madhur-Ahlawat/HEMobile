@@ -37,7 +37,8 @@ class DashboardViewModel @Inject constructor(
     private val repository: DashBoardRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
-
+    private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal

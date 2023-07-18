@@ -24,7 +24,7 @@ import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
-    protected lateinit var binding: B
+    lateinit var binding: B
 
 
     override fun onCreateView(

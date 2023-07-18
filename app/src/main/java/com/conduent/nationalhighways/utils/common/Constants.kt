@@ -160,6 +160,7 @@ object Constants {
     const val EXEMPT_ACCOUNT = "NONREVENUE"
     const val PRE_PAY_ACCOUNT = "pre_pay_account"
     const val STANDARD ="STANDARD"
+    const val PRIORITY ="PRIORITY"
     const val PAYG_ACCOUNT = "pay_as_you_go_account"
     const val UK = "UK"
     const val NON_UK = "Non UK"
@@ -170,7 +171,7 @@ object Constants {
 
     const val EMAIL_SELECTION_TYPE = "Email"
     const val REFERENCE_ID = "Reference Id"
-    const val AGENCY_ID = "18"
+    const val AGENCY_ID = "16"
     const val NOT_IN_THE_LIST = "Not in the list"
     const val PHONE_COUNTRY_CODE= "PHONE_COUNTRY_CODE"
     const val FIND_VEHICLE_DATA = "FIND_VEHICLE_DATA"
