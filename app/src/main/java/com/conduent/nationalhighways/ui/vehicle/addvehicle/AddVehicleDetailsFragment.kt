@@ -214,7 +214,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                false
+                binding.colorInputLayout.removeError()
+                true
             }
 
             checkButton()

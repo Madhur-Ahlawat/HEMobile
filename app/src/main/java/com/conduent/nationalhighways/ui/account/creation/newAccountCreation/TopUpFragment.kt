@@ -125,6 +125,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             } else if (index == 1) {
                 val text = binding.top.getText().toString().trim()
                 val updatedText = text.replace("£","")
+                if(updatedText.trim()[0].equals(".")){
+                    updatedText.replace(".","")
+                }
                 if (updatedText.isNotEmpty()) {
                     val str: String = updatedText.substringBeforeLast(".")
                     topUpBalance = if (str.length < 8) {

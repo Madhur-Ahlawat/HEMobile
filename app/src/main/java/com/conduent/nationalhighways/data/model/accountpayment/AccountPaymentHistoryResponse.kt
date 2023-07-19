@@ -16,6 +16,7 @@ val count: String?
 
 @Parcelize
 class TransactionData (
+ var showDateHeader:Boolean,
  val postingDate: String?,
  val transactionDate: String?,
  val tagOrPlateNumber: String?,

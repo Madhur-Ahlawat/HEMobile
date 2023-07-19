@@ -34,7 +34,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
         }
 */
         if (list?.get(position)?.etcRate!=0.0){
-            holder.binding.title3.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
+            holder.binding.title3.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
             holder.binding.title4.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
 
         }else{
@@ -46,7 +46,6 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
             holder.binding.view.visibility= View.GONE
         }else{
             holder.binding.view.visibility= View.VISIBLE
-
         }
 
 

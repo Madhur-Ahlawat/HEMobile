@@ -1254,6 +1254,17 @@
     <string name="txt_last_digits_of_card">Last four digit of card</string>
     <string name="email_reciept">Email Reciept</string>
     <string name="vehicles_added_to_your_account">Vehicles added to your account</string>
+    <string name="email_receipt_send_successful">Email receipt send successful</string>
+    <string name="are_you_sure_you_want_to_close_your_dart_charge_account">Are you sure you want to close your Dart\nCharge account?</string>
+    <string name="we_ve_sent_a_receipt_email_to_njohndoe_email_com">We’ve sent a receipt email to\njohndoe@email.com</string>
+    <string name="any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method">Any remaining credit will be refunded to your\ndefault payment method.</string>
+    <string name="you_will_have_to_pay_for_any_future_crossings_nseparately">You will have to pay for any future crossings\nseparately.</string>
+    <string name="your_account_is_now_closed">Your account is now closed</string>
+    <string name="we_will_send_an_email_to_johndoe_email_com_nwhen_the_account_has_been_closed">We will send an email to johndoe@email.com\nwhen the account has been closed.</string>
+    <string name="what_happens_next">What happens next</string>
+    <string name="str_account_closed">Account Closed</string>
+    <string name="resizable_text_read_more">See more</string>
+    <string name="resizable_text_read_less">See less</string>
 
 
 </resources>

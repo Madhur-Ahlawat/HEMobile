@@ -103,7 +103,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.crossing_history)
                     binding.chipLayout.gone()
                     navHost = navHostFragment.navController
-                    navHost.setGraph(R.navigation.navigation_crossing_history)
+//                    navHost.setGraph(R.navigation.navigation_crossing_history)
                 }
             }
         }

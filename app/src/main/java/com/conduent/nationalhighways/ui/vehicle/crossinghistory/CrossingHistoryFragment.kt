@@ -386,5 +386,3 @@ class CrossingHistoryFragment : BaseFragment<FragmentCrossingHistoryBinding>(),
             }
         }
 }
-
-

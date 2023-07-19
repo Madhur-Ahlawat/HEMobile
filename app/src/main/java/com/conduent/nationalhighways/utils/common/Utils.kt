@@ -43,8 +43,8 @@ object Utils {
     var specialCharacter: Regex = Regex("[0-9$&+,:;=\\\\?@#|/'<>.^*()%!]")
     var excludeNumber: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
 
-    var colourSpecialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
-    var addressSpecialCharacter: Regex = Regex("[$&+:;=\\\\?@|/<>^*()%!]")
+    var colourSpecialCharacter: Regex = Regex("[$&\\[\\]+,:;=\\\\?@#|'<>.^*()%!{_}-]")
+    var addressSpecialCharacter: Regex = Regex("[\${_&\\[\\]+:;=\\\\?@|/<>^*()%!}]")
 
 
     fun hasInternetConnection(application: BaseApplication): Boolean {

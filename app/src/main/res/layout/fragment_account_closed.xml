@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_115dp"
+        android:src="@drawable/warningicon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_21dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/your_account_is_now_closed"
+        android:textSize="@dimen/_15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_check" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/message1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/open_sans"
+        android:text="You can no longer access this account.    "
+        android:textSize="@dimen/_14sp"
+        android:layout_marginHorizontal="@dimen/_27dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/message2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/open_sans"
+        android:text="We will send an email to johndoe@email.com\nwhen the account has been closed."
+        android:textSize="@dimen/_14sp"
+        android:layout_marginHorizontal="@dimen/_27dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message1" />
+
+    <ImageView
+        android:id="@+id/iv_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/warningicon"
+        android:layout_marginTop="@dimen/_18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message2" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/penalty_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/open_sans"
+        android:text="If you do not pay the Dart Charge when\ncrossing, you could get a fine (Penalty Charge\nNotice)"
+        android:textSize="@dimen/_14sp"
+        android:layout_marginHorizontal="@dimen/_27dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_warning" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/title_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_31dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/what_happens_next"
+        android:textSize="@dimen/_15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/penalty_message" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/what_happens_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
+        android:textSize="@dimen/_14sp"
+        android:layout_marginHorizontal="@dimen/_27dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_next" />
+
+
+    <com.conduent.nationalhighways.utils.widgets.NHButton
+        android:id="@+id/btn_continue"
+        style="@style/secondaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_34_5dp"
+        android:layout_marginBottom="@dimen/_45dp"
+        android:text="@string/str_feedback_to_improve_the_service"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

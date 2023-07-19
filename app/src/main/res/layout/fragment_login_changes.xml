@@ -98,6 +98,7 @@
             android:inputType="textEmailAddress"
             android:imeOptions="actionNext"
             android:singleLine="true"
+            android:autofillHints="emailAddress"
             app:labelText="@string/email_address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +107,7 @@
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/edt_pwd"
             style="@style/input_text"
+            android:autofillHints="password"
             android:inputType="textPassword"
             android:imeOptions="actionDone"
             app:imeOptions="actionDone"

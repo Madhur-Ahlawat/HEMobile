@@ -10,21 +10,24 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.conduent.nationalhighways.ui.base.BaseApplication"
+        android:name=".ui.base.BaseApplication"
         android:allowBackup="false"
+        android:debuggable="false"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
-        android:debuggable="false"
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/appicon_round"
         android:theme="@style/Theme.HEMobile"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".ui.account.biometric.BiometricActivity"
-            android:exported="false"/>
+            android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
+            android:exported="false" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.landing.SplashActivity"
+            android:name=".ui.account.biometric.BiometricActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.landing.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -35,79 +38,83 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity"
+            android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.startNow.StartNowBaseActivity"
+            android:name=".ui.startNow.StartNowBaseActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.auth.controller.AuthActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.CreateAccount"
-            />
-        <activity android:name=".ui.auth.login.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileDark"/>
-        <activity
-            android:name="com.conduent.nationalhighways.ui.landing.LandingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileDark" />
-        <activity
-            android:name="com.conduent.nationalhighways.ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobile" />
-        <activity
-            android:name="com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileDark" />
-        <activity
-            android:name="com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.CreateAccount"/>
-        <activity
-            android:name="com.conduent.nationalhighways.ui.futureModule.InProgressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity"
+            android:name=".ui.auth.controller.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.account.profile.ProfileActivity"
+            android:name=".ui.auth.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark" />
+        <activity
+            android:name=".ui.landing.LandingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark" />
+        <activity
+            android:name=".ui.vehicle.VehicleMgmtActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobile" />
+        <activity
+            android:name=".ui.bottomnav.HomeActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HEMobileDark" />
+        <activity
+            android:name=".ui.viewcharges.ViewChargesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CreateAccount" />
+        <activity
+            android:name=".ui.futureModule.InProgressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.account.creation.controller.CreateAccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CreateAccount" />
+        <activity
+            android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name="com.conduent.nationalhighways.ui.nominatedcontacts.NominatedContactActivity"
+            android:name=".ui.nominatedcontacts.NominatedContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewAllActivity"
+            android:name=".ui.account.communication.CommunicationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity"
+            android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity"
+            android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity"
+            android:name=".ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.payment.MakeOffPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.AccountPaymentActivity"
+            android:name=".ui.bottomnav.account.payments.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity"
+            android:name=".ui.vehicle.vehiclegroup.VehicleGroupMgmtActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.bottomnav.account.accountstatements.AccountStatementActivity"
+            android:name=".ui.bottomnav.account.accountstatements.AccountStatementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity"
+            android:name=".ui.checkpaidcrossings.CheckPaidCrossingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
 

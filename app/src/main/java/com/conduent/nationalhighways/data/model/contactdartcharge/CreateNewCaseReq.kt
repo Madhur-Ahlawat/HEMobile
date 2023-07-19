@@ -10,4 +10,4 @@ data class CreateNewCaseReq(
     val selectSubArea:String?,
     val seletedArea:String?,
     val fileNames:List<String>?,
-    val language:String?="")
+    val language:String?="",val phoneNoCountryCode:String="+44")
