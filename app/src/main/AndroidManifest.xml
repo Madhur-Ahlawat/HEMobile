@@ -82,13 +82,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
-            android:name="com.conduent.nationalhighways.ui.nominatedcontacts.NominatedContactActivity"
-            android:name=".ui.nominatedcontacts.NominatedContactActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.account.communication.CommunicationActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait" />
         <activity

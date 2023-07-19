@@ -14,7 +14,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
-import com.conduent.nationalhighways.ui.account.communication.CommunicationActivity
 import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
