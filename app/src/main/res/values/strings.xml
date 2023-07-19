@@ -1269,6 +1269,8 @@
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
     <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
+    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
+    <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
 
 
 </resources>

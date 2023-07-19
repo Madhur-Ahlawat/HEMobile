@@ -20,6 +20,11 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Utils.LOWER_CASE
+import com.conduent.nationalhighways.utils.common.Utils.hasDigits
+import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import org.bouncycastle.jce.provider.BrokenPBE.Util
@@ -172,7 +177,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    NewCreateAccountRequestModel.password=binding.edtNewPassword.getText().toString().trim()
+                    NewCreateAccountRequestModel.password =
+                        binding.edtNewPassword.getText().toString().trim()
                     findNavController().navigate(
                         R.id.action_createPasswordFragment_to_optForSmsFragment,
                         bundle
@@ -375,6 +381,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
+        } else if (hasSpecialCharacters(text)) {
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_not_have_special_characters))
         } else {
             binding.edtNewPassword.removeError()
         }
@@ -383,27 +391,30 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
 
 
+        if (hasLowerCase(text)) {
+            binding.imgDot3.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+        }
 
-        if (Utils.validateString(text, Utils.PASSWORD_RULE1)) {
+        if (hasUpperCase(text)) {
+            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (text.trim().length > 7) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (Utils.validateString(text, Utils.PASSWORD_RULE2)) {
-            binding.imgDot2.setImageResource(R.drawable.grin_tick)
-            binding.imgDot3.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
-            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
-
-        }
-
-        if (Utils.validateString(text, Utils.PASSWORD_RULE3)) {
+        if (hasDigits(text)) {
             binding.imgDot4.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
+
     }
 
 }

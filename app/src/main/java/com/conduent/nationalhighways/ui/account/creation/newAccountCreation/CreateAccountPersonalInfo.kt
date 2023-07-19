@@ -250,7 +250,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
-                    } else if (hasSpecialCharacters(binding.inputCompanyName.text.toString())) {
+                    } else if (hasSpecialCharacters(binding.inputCompanyName.getText().toString())) {
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_must_not_include_special_characters))
                         false
                     } else {

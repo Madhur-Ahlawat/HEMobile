@@ -76,16 +76,18 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     private fun validation() {
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
-            NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
-            val bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-            findNavController().navigate(
-                R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle
-            )
-        }
-        if(Utils.hasSpecialCharacters(binding.inputPostCode.text.toString())){
-            binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
-            false
+            if(hasSpecialCharacters(binding.inputPostCode.getText().toString())){
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                false
+            }
+            else{
+                NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                findNavController().navigate(
+                    R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle
+                )
+            }
         }
         else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))

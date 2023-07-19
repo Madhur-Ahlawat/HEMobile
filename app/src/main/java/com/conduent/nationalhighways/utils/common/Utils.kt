@@ -27,6 +27,8 @@ import java.util.regex.Pattern
 object Utils {
 
     var PASSWORD_RULE1 = ".{8,64}"
+    var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
+    var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
     var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
@@ -47,9 +49,27 @@ object Utils {
         str.forEach { char ->
             if (SPECIAL_CHARACTERS.contains(char)) {
                 hasSpecialChar=true
+                return@forEach
             }
-            else{
-                hasSpecialChar=false
+        }
+        return hasSpecialChar
+    }
+    fun hasLowerCase(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (LOWER_CASE.contains(char)) {
+                hasSpecialChar=true
+                return@forEach
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasUpperCase(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (UPPER_CASE.contains(char)) {
+                hasSpecialChar=true
+                return@forEach
             }
         }
         return hasSpecialChar
