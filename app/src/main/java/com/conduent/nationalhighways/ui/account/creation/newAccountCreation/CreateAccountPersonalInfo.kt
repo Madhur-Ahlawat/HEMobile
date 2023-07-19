@@ -17,8 +17,10 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -48,9 +50,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         }
 
-        when(navFlowCall){
+        when (navFlowCall) {
 
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
                 binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
                 binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
@@ -71,21 +73,25 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         when (v?.id) {
             binding.btnNext.id -> {
 
-                    NewCreateAccountRequestModel.firstName =
-                        binding.inputFirstName.getText().toString()
-                    NewCreateAccountRequestModel.lastName =
-                        binding.inputLastName.getText().toString()
-                    NewCreateAccountRequestModel.companyName =
-                        binding.inputCompanyName.getText().toString()
+                NewCreateAccountRequestModel.firstName =
+                    binding.inputFirstName.getText().toString()
+                NewCreateAccountRequestModel.lastName =
+                    binding.inputLastName.getText().toString()
+                NewCreateAccountRequestModel.companyName =
+                    binding.inputCompanyName.getText().toString()
 
-                when(navFlowCall){
+                when (navFlowCall) {
 
-                    EDIT_SUMMARY -> {findNavController().popBackStack()}
+                    EDIT_SUMMARY -> {
+                        findNavController().popBackStack()
+                    }
+
                     else -> {
                         val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         findNavController().navigate(
-                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,bundle
+                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
+                            bundle
                         )
                     }
                 }
@@ -159,14 +165,17 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-               // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+                // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
                 requiredFirstName = false
             } else {
 
                 if (binding.inputFirstName.getText().toString().trim().length < 50) {
 
                     if (binding.inputFirstName.getText().toString().trim()
-                            .contains(Utils.specialCharacter)||binding.inputFirstName.getText().toString().trim().matches(Utils.NUMBER)
+                            .contains(Utils.specialCharacter) || binding.inputFirstName.getText()
+                            .toString().trim().matches(Utils.NUMBER) || hasSpecialCharacters(
+                            binding.inputFirstName.getText().toString().trim()
+                        )
                     ) {
                         binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
                         requiredFirstName = false
@@ -198,13 +207,15 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-               // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+                // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
                 requiredLastName = false
             } else {
 
                 if (binding.inputLastName.getText().toString().trim().length < 50) {
                     if (binding.inputLastName.getText().toString().trim()
-                            .contains(Utils.specialCharacter)
+                            .contains(Utils.specialCharacter) || hasSpecialCharacters(
+                            binding.inputLastName.text.toString().trim()
+                        )
                     ) {
                         binding.inputLastName.setErrorText(getString(R.string.str_last_name_error_message))
                         requiredLastName = false
@@ -233,16 +244,20 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         } else if (index == 2) {
             requiredCompanyName =
                 if (binding.inputCompanyName.getText().toString().trim().isEmpty()) {
-                  //  binding.inputCompanyName.setErrorText(getString(R.string.str_enter_the_company_name))
+                    binding.inputCompanyName.setErrorText(getString(R.string.str_enter_the_company_name))
                     false
                 } else {
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
+                    } else if (hasSpecialCharacters(binding.inputCompanyName.text.toString())) {
+                        binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_must_not_include_special_characters))
+                        false
                     } else {
                         binding.inputCompanyName.removeError()
                         true
                     }
+
                 }
         }
         checkButtonEnable()
@@ -258,7 +273,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         if (index == 0) {
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
-               // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+                // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
                 requiredFirstName = false
             } else {
 
@@ -296,7 +311,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
-               // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+                // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
                 requiredLastName = false
             } else {
 

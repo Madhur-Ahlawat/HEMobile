@@ -17,6 +17,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,7 +82,12 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             findNavController().navigate(
                 R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle
             )
-        } else {
+        }
+        if(Utils.hasSpecialCharacters(binding.inputPostCode.text.toString())){
+            binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+            false
+        }
+        else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }
     }
@@ -116,10 +123,16 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                     false
 
-                } else {
+                }
+                else if(hasSpecialCharacters(finalString)){
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                    false
+                }
+                else{
                     binding.inputPostCode.removeError()
                     true
                 }
+
             }
 
 

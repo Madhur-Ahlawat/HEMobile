@@ -35,10 +35,49 @@ object Utils {
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
-
+    var POSTALCODE: Regex = Regex("/^[a-zA-Z0-9\\s]+(?:[-:%/\\\\()\\u2122.+][a-zA-Z0-9\\s]+)*\$/")
+    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:'\".,{}[]\\\\|~`"
+    var DIGITS = "0123456789"
+    var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     var passwordRegEX: Regex =
         Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
+    fun hasSpecialCharacters(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (SPECIAL_CHARACTERS.contains(char)) {
+                hasSpecialChar=true
+            }
+            else{
+                hasSpecialChar=false
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasDigits(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (DIGITS.contains(char)) {
+                hasSpecialChar=true
+            }
+            else{
+                hasSpecialChar=false
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasAlphabets(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (ALPHABETS.contains(char)) {
+                hasSpecialChar=true
+            }
+            else{
+                hasSpecialChar=false
+            }
+        }
+        return hasSpecialChar
+    }
 
     var specialCharacter: Regex = Regex("[0-9$&+,:;=\\\\?@#|/'<>.^*()%!]")
     var excludeNumber: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
@@ -146,7 +185,28 @@ object Utils {
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
     }
-
+//    fun getOccuringChar(str: String): Int {
+////creating an array of size 256 (ASCII_SIZE)
+//        val count = IntArray(256)
+//        //finds the length of the string
+//        val len = str.length
+//        //initialize count array index
+//        for (i in 0 until len) count[str[i].code]++
+//        //create an array of given String size
+//        val ch = CharArray(str.length)
+//        for (i in 0 until len) {
+//            ch[i] = str[i]
+//            var find = 0
+//            for (j in 0..i) {
+////if any matches found
+//                if (str[i] == ch[j]) find++
+//            }
+//            if (find == 1) //prints occurrence of the character
+//                return count[str[i].code]
+//            else
+//                return 0
+//        }
+//    }
 
     fun getStatusForCases(status: String, tvTitle: AppCompatTextView) {
         when (status) {
@@ -337,10 +397,9 @@ object Utils {
 
 
     }
+
     fun maskCardNumber(cardNumber: String): String {
         return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "************")
-
-
 
 
     }

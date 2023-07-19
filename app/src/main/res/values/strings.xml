@@ -1265,6 +1265,10 @@
     <string name="str_account_closed">Account Closed</string>
     <string name="resizable_text_read_more">See more</string>
     <string name="resizable_text_read_less">See less</string>
+    <string name="str_telephone_number_optional">Telephone number (optional)</string>
+    <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
+    <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
+    <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
 
 
 </resources>

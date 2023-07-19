@@ -61,7 +61,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
-            binding.inputMobileNumber.setLabel(getString(R.string.str_phone_number))
+            binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
             binding.txtBottom.visibility = View.GONE
             requiredMobileNumber = true
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
