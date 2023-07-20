@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -175,7 +176,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         checkButton()
         binding.makeInputLayout.editText.onTextChanged {
             makeInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.specialCharacter)) {
+                if (it.trim().length > 50) {
+                    binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
+                    false
+                }
+                else if (it.contains(Utils.specialCharacter) || hasSpecialCharacters(it)) {
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
@@ -190,7 +195,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
         binding.modelInputLayout.editText.onTextChanged {
             modelInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.excludeNumber)) {
+                if (it.trim().length > 50) {
+                    binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
+                    false
+                }
+                else if (it.contains(Utils.excludeNumber) || hasSpecialCharacters(it)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
@@ -214,7 +223,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                false
+                binding.colorInputLayout.removeError()
+                true
             }
 
             checkButton()

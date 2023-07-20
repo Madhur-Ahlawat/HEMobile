@@ -34,8 +34,11 @@ import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -65,7 +68,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
-            requiredPostcode  = true
+            requiredPostcode = true
 
         }
 
@@ -88,15 +91,17 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
         binding.postCode.editText.filters = arrayOf(filter)
         binding.postCode.setMaxLength(10)
-        when(navFlowCall){
+        when (navFlowCall) {
 
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {binding.address.setText(NewCreateAccountRequestModel.addressline1)
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+                binding.address.setText(NewCreateAccountRequestModel.addressline1)
                 binding.address2.setText(NewCreateAccountRequestModel.addressline2)
                 binding.townCity.setText(NewCreateAccountRequestModel.townCity)
                 binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
                 requiredCountry = true
-                checkButton()}
+                checkButton()
+            }
 
             Constants.PROFILE_MANAGEMENT -> {
                 val data = navData as ProfileDetailModel?
@@ -166,7 +171,8 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.addressline1 = binding.address.getText().toString()
                 NewCreateAccountRequestModel.addressline2 = binding.address2.getText().toString()
                 NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
-                NewCreateAccountRequestModel.country = binding.country.selectedItemDescription.toString()
+                NewCreateAccountRequestModel.country =
+                    binding.country.selectedItemDescription.toString()
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 if(navFlowCall.equals(Constants.PROFILE_MANAGEMENT,true)){
@@ -222,9 +228,9 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun hitlrdsCheckApi() {
         val lrdsEligibilityCheck = LrdsEligibiltyRequest()
-        if(NewCreateAccountRequestModel.country.equals(UK_COUNTRY,true)){
+        if (NewCreateAccountRequestModel.country.equals(UK_COUNTRY, true)) {
             lrdsEligibilityCheck.country = "UK"
-        }else {
+        } else {
             lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
         }
         lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
@@ -343,15 +349,28 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             false
         } else {
             val string = binding.postCode.getText().toString().trim()
+            val regex: Pattern = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
             val finalString = string.replace(" ", "")
+            val pattern = Pattern.compile("[^-]*-")
+            val matcher: Matcher = pattern.matcher(finalString)
+            var count = 0
+            while (matcher.find()) {
+                count++
+            }
             if (finalString.length < 4 || finalString.length > 11) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                 false
-
+            } else if (hasSpecialCharacters(finalString)) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                false
+            } else if (finalString.replace("-", "").contains("-")) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
+                false
             } else {
                 binding.postCode.removeError()
                 true
             }
+
         }
 
         checkButton()
@@ -412,22 +431,33 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.isManualAddress = true
                 if (response.data?.lrdsEligible.equals("true", true)) {
 
-                    findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2,bundle())
+                    findNavController().navigate(
+                        R.id.action_manualaddressfragment_to_createAccountEligibleLRDS2,
+                        bundle()
+                    )
 
                 } else {
-                    when(navFlowCall){
+                    when (navFlowCall) {
 
-                        EDIT_SUMMARY -> {findNavController().popBackStack()}
-                        else -> {if (NewCreateAccountRequestModel.personalAccount) {
-                            findNavController().navigate(R.id.action_manualaddressfragment_to_createAccountTypesFragment,bundle())
+                        EDIT_SUMMARY -> {
+                            findNavController().popBackStack()
+                        }
 
-                        } else {
-                            findNavController().navigate(
-                                R.id.action_manualaddressfragment_to_forgotPasswordFragment,
-                                bundle()
-                            )
+                        else -> {
+                            if (NewCreateAccountRequestModel.personalAccount) {
+                                findNavController().navigate(
+                                    R.id.action_manualaddressfragment_to_createAccountTypesFragment,
+                                    bundle()
+                                )
 
-                        }}
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_manualaddressfragment_to_forgotPasswordFragment,
+                                    bundle()
+                                )
+
+                            }
+                        }
 
                     }
 
@@ -446,9 +476,10 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         }
 
     }
-    private fun bundle() : Bundle {
+
+    private fun bundle(): Bundle {
         val bundle = Bundle()
-        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         return bundle
     }
 

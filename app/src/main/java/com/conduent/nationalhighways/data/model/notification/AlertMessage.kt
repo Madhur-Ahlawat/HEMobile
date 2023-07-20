@@ -14,6 +14,7 @@ data class AlertMessage(
     @SerializedName("updateTs") val updateTs: String?,
     @SerializedName("startTs") val startTs: String?,
     @SerializedName("endTs") val endTs: String?,
+    @SerializedName("field3") val field3: String?,
     @SerializedName("isViewed") val isViewed: String?,
     @SerializedName("isReminderReq") val isReminderReq: String?,
     @SerializedName("message") val message: String?,
@@ -21,5 +22,6 @@ data class AlertMessage(
     @SerializedName("cscLookUpKey") val cscLookUpKey: String?,
     var isRead: Boolean? = false,
     var iSel: Boolean? = false,
-    var isSelectListItem: Boolean? = false
+    var isSelectListItem: Boolean? = false,
+    var isExpanded: Boolean? = false
 ): Parcelable

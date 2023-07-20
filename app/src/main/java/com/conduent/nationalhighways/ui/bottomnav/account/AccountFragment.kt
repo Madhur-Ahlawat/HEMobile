@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -118,6 +120,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             vehicleManagement.setOnClickListener(this@AccountFragment)
             communicationPreferences.setOnClickListener(this@AccountFragment)
             signOut.setOnClickListener(this@AccountFragment)
+            closeAcount.setOnClickListener(this@AccountFragment)
 //            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
 //            rlAccountStatement.setOnClickListener(this@AccountFragment)
@@ -158,6 +161,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 title?.text = getString(R.string.vehicle_management)
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
 
+            }
+
+            R.id.close_acount -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.str_close_account)
+                findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
             }
 
             R.id.contact_us -> {
@@ -242,6 +251,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     override fun onLogOutClick() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         logOutViewModel.logout()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
 }

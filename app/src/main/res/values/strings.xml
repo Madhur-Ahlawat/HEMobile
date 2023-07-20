@@ -1262,6 +1262,23 @@
     <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to\n %s</string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
+    <string name="email_receipt_send_successful">Email receipt send successful</string>
+    <string name="are_you_sure_you_want_to_close_your_dart_charge_account">Are you sure you want to close your Dart\nCharge account?</string>
+    <string name="we_ve_sent_a_receipt_email_to_njohndoe_email_com">We’ve sent a receipt email to\njohndoe@email.com</string>
+    <string name="any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method">Any remaining credit will be refunded to your\ndefault payment method.</string>
+    <string name="you_will_have_to_pay_for_any_future_crossings_nseparately">You will have to pay for any future crossings\nseparately.</string>
+    <string name="your_account_is_now_closed">Your account is now closed</string>
+    <string name="we_will_send_an_email_to_johndoe_email_com_nwhen_the_account_has_been_closed">We will send an email to johndoe@email.com\nwhen the account has been closed.</string>
+    <string name="what_happens_next">What happens next</string>
+    <string name="str_account_closed">Account Closed</string>
+    <string name="resizable_text_read_more">See more</string>
+    <string name="resizable_text_read_less">See less</string>
+    <string name="str_telephone_number_optional">Telephone number (optional)</string>
+    <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
+    <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
+    <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
+    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
+    <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
 
 
 </resources>

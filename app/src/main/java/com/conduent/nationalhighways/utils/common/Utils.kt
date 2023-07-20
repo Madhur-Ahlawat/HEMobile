@@ -27,6 +27,8 @@ import java.util.regex.Pattern
 object Utils {
 
     var PASSWORD_RULE1 = ".{8,64}"
+    var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
+    var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
     var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
     var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
@@ -35,16 +37,73 @@ object Utils {
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
-
+    var POSTALCODE: Regex = Regex("/^[a-zA-Z0-9\\s]+(?:[-:%/\\\\()\\u2122.+][a-zA-Z0-9\\s]+)*\$/")
+    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:'\".,{}[]\\\\|~`"
+    var DIGITS = "0123456789"
+    var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     var passwordRegEX: Regex =
         Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
+    fun hasSpecialCharacters(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (SPECIAL_CHARACTERS.contains(char)) {
+                hasSpecialChar=true
+                return@forEach
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasLowerCase(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (LOWER_CASE.contains(char)) {
+                hasSpecialChar=true
+                return@forEach
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasUpperCase(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (UPPER_CASE.contains(char)) {
+                hasSpecialChar=true
+                return@forEach
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasDigits(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (DIGITS.contains(char)) {
+                hasSpecialChar=true
+            }
+            else{
+                hasSpecialChar=false
+            }
+        }
+        return hasSpecialChar
+    }
+    fun hasAlphabets(str: String): Boolean {
+        var hasSpecialChar=false
+        str.forEach { char ->
+            if (ALPHABETS.contains(char)) {
+                hasSpecialChar=true
+            }
+            else{
+                hasSpecialChar=false
+            }
+        }
+        return hasSpecialChar
+    }
 
     var specialCharacter: Regex = Regex("[0-9$&+,:;=\\\\?@#|/'<>.^*()%!]")
     var excludeNumber: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
 
-    var colourSpecialCharacter: Regex = Regex("[$&+,:;=\\\\?@#|'<>.^*()%!-]")
-    var addressSpecialCharacter: Regex = Regex("[$&+:;=\\\\?@|/<>^*()%!]")
+    var colourSpecialCharacter: Regex = Regex("[$&\\[\\]+,:;=\\\\?@#|'<>.^*()%!{_}-]")
+    var addressSpecialCharacter: Regex = Regex("[\${_&\\[\\]+:;=\\\\?@|/<>^*()%!}]")
 
 
     fun hasInternetConnection(application: BaseApplication): Boolean {
@@ -146,7 +205,28 @@ object Utils {
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
     }
-
+//    fun getOccuringChar(str: String): Int {
+////creating an array of size 256 (ASCII_SIZE)
+//        val count = IntArray(256)
+//        //finds the length of the string
+//        val len = str.length
+//        //initialize count array index
+//        for (i in 0 until len) count[str[i].code]++
+//        //create an array of given String size
+//        val ch = CharArray(str.length)
+//        for (i in 0 until len) {
+//            ch[i] = str[i]
+//            var find = 0
+//            for (j in 0..i) {
+////if any matches found
+//                if (str[i] == ch[j]) find++
+//            }
+//            if (find == 1) //prints occurrence of the character
+//                return count[str[i].code]
+//            else
+//                return 0
+//        }
+//    }
 
     fun getStatusForCases(status: String, tvTitle: AppCompatTextView) {
         when (status) {
@@ -337,10 +417,9 @@ object Utils {
 
 
     }
+
     fun maskCardNumber(cardNumber: String): String {
         return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "************")
-
-
 
 
     }

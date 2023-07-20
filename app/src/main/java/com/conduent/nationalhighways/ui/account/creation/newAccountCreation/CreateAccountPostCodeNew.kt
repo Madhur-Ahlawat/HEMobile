@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -102,15 +103,24 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     private fun validation() {
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
-            NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
-            val bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-            if(navFlowCall.equals(PROFILE_MANAGEMENT,true) && navData != null ) {
-                val data = navData as ProfileDetailModel?
-                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+            if(hasSpecialCharacters(binding.inputPostCode.getText().toString())){
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                false
             }
-            findNavController().navigate(R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle)
-        } else {
+            else {
+                NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                if (navFlowCall.equals(PROFILE_MANAGEMENT, true) && navData != null) {
+                    val data = navData as ProfileDetailModel?
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                }
+                findNavController().navigate(
+                    R.id.action_createAccountPostCodeNew_to_selectaddressfragment,
+                    bundle
+                )
+            }
+            } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }
     }
@@ -146,10 +156,16 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                     false
 
-                } else {
+                }
+                else if(hasSpecialCharacters(finalString)){
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                    false
+                }
+                else{
                     binding.inputPostCode.removeError()
                     true
                 }
+
             }
 
 

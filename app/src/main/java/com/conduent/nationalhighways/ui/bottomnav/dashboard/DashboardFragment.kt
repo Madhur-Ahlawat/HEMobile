@@ -19,7 +19,11 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.DashboardUtils
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
@@ -84,7 +88,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         binding.viewAllNotifi.setOnClickListener {
             if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain)
-                    .dataBinding.bottomNavigationView.setActiveNavigationIndex(2)
+                    .dataBinding?.bottomNavigationView?.setActiveNavigationIndex(2)
             }
         }
         binding.viewCrossings.setOnClickListener {
@@ -118,7 +122,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 resource.data?.let {
                     it.transactionList?.count?.let { count ->
                         binding.tvCrossingCount.text =
-                            getString(R.string.str_two_crossing, count)
+                            getString(R.string.str_two_crossing)
                     }
                 }
             }
@@ -165,11 +169,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 //                            getString(R.string.str_view_all, alerts.size.toString())
 //                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
-                            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+                            (requireActivity() as HomeActivityMain).dataBinding?.bottomNavigationView?.navigationItems.let { list ->
                                 val badgeCountBtn =
-                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
-                                badgeCountBtn.visible()
-                                badgeCountBtn.text = alerts.size.toString()
+                                    list!!.get(2).view.findViewById<AppCompatButton>(R.id.badge_btn)
+                                if (badgeCountBtn != null) {
+                                    badgeCountBtn.visible()
+                                }
+                                badgeCountBtn!!.text = alerts.size.toString()
                             }
                         }
                     } else {
@@ -193,7 +199,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).dataBinding.bottomNavigationView.navigationItems.let { list ->
+            (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->
                 val badgeCountBtn =
                     list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                 badgeCountBtn.gone()

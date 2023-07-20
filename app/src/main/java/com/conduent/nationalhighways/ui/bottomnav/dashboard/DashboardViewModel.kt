@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
+import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
 import com.conduent.nationalhighways.data.repository.dashboard.DashBoardRepo
@@ -25,6 +26,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
@@ -35,7 +37,8 @@ class DashboardViewModel @Inject constructor(
     private val repository: DashBoardRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
-
+    private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
@@ -61,6 +64,10 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val getAlertsVal: LiveData<Resource<AlertMessageApiResponse?>?> get() = _alertsVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _whereToReceivePaymentReceipt = MutableLiveData<Resource<ResponseBody?>?>()
+    val whereToReceivePaymentReceipt: LiveData<Resource<ResponseBody?>?> get() = _whereToReceivePaymentReceipt
 
     fun paymentHistoryDetails(request: AccountPaymentHistoryRequest) {
         viewModelScope.launch {
@@ -229,13 +236,16 @@ class DashboardViewModel @Inject constructor(
                             Resource.DataError("Something went wrong. Try again later")
                     }
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 if (e is NoConnectivityException) {
-                    _vehicleListVal.value = Resource.DataError(e.message)
+                    _accountDetailsVal.value = Resource.DataError(e.message)
                 } else if (e is SocketTimeoutException || e is InterruptedIOException) {
-                    _vehicleListVal.value = Resource.DataError(Constants.VPN_ERROR)
+                    _accountDetailsVal.value = Resource.DataError(Constants.VPN_ERROR)
                 }
-                _vehicleListVal.value = Resource.DataError(e.message)
+                else{
+                    _accountDetailsVal.value = Resource.DataError(e.message)
+                }
             }
         }
 
@@ -253,5 +263,19 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
-
+    fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest) {
+        viewModelScope.launch {
+            try {
+                _whereToReceivePaymentReceipt.postValue(
+                    ResponseHandler.success(
+                        repository.whereToReceivePaymentReceipt(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _whereToReceivePaymentReceipt.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
 }

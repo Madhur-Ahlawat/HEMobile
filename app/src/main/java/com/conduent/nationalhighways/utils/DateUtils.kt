@@ -1,10 +1,11 @@
 package com.conduent.nationalhighways.utils
 
-import java.lang.Exception
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 object DateUtils {
@@ -92,7 +93,30 @@ object DateUtils {
             return date ?: ""
         }
     }
-
+    fun compareDates(startDate: String?, endDate: String?): Boolean {
+        val dfDate = SimpleDateFormat("dd MMM yyyy hh:mm a")
+        var b = false
+        try {
+            b = if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+                true // If start date is before end date.
+            } else if (dfDate.parse(startDate) == dfDate.parse(endDate)) {
+                true // If two dates are equal.
+            } else {
+                false // If start date is after the end date.
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return b
+    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun sortTransactionsDateWiseDescendingOrder(transactions:MutableList<TransactionData?>){
+//        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+//
+//        val result = transactions.sortedByDescending {
+//            LocalDate.parse(it, dateTimeFormatter)
+//        }
+//    }
 
     //01/10/2022
     fun convertMonthNameAndDateFormat(date: String?): String {
