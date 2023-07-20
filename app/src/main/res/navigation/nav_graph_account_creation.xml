@@ -336,6 +336,9 @@
         <action
             android:id="@+id/action_otpForgotFragment_to_createVehicleFragment"
             app:destination="@+id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_otpForgotFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
 
     </fragment>
 

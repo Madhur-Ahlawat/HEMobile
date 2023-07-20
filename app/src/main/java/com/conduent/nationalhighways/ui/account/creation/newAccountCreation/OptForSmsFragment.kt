@@ -5,13 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModelList
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
+import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -22,13 +29,19 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private var oldCommunicationTextMessage = false
     private var loader: LoaderDialog? = null
-    private val viewModel: ProfileViewModel by viewModels()
+    //    private val viewModel: ProfileViewModel by viewModels()
+    private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+    private var mAccountResp: AccountResponse? = null
+    private val mCommunicationsList = ArrayList<CommunicationPrefsModel>()
+    private var smsFlag = "N"
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -62,7 +75,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
             }else{
                 NewCreateAccountRequestModel.termsCondition=false
-
                 binding.btnNext.disable()
             }
         }
@@ -90,13 +102,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
             Constants.PROFILE_MANAGEMENT -> {
                 val data = navData as ProfileDetailModel?
-                val communicationPreferences = data?.accountInformation?.communicationPreferences
-                if(communicationPreferences.isNullOrEmpty()){
-                    binding.switchCommunication.isChecked =
-                        communicationPreferences.equals("Y",true)
-                }
                 binding.pushCommunication.isChecked = data?.personalInformation?.pushNotifications == true
-
+                loader = LoaderDialog()
+                loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                communicationPrefsViewModel.getAccountSettingsPrefs()
+                binding.btnNext.enable()
             }
 
         }
@@ -108,7 +119,72 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     }
 
     override fun observer() {
-        observe(viewModel.updateProfileApiVal, ::handleUpdateProfileDetail)
+//        observe(viewModel.updateProfileApiVal, ::handleUpdateProfileDetail)
+        observe(communicationPrefsViewModel.getAccountSettingsPrefs, ::getCommunicationSettingsPref)
+        observe(communicationPrefsViewModel.updateCommunicationPrefs, ::updateCommunicationSettingsPrefs)
+    }
+
+    private fun updateCommunicationSettingsPrefs(resource: Resource<CommunicationPrefsResp?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.let { res ->
+                    if (res.data?.statusCode == "0") {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        findNavController().navigate(R.id.action_optForSmsFragment_to_resetForgotPassword,bundle)
+                    }else{
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
+    }
+
+    private fun getCommunicationSettingsPref(resource: Resource<AccountResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.let { res ->
+                    res.data?.let {
+                        mAccountResp = it
+                    }
+                    val mPhoneNumber = res.data?.personalInformation?.phoneNumber?.replace(
+                        "\\d(?=\\d{4})",
+                        "*"
+                    )
+
+                    res.data?.accountInformation?.communicationPreferences?.forEach {
+                        if (it != null) {
+                            mCommunicationsList.add(it)
+                        }
+                        if (it?.category.equals(Constants.CATEGORY_RECEIPTS, true)) {
+
+                            if (it?.smsFlag.equals("Y", true)) {
+                                binding.switchCommunication.isChecked  = true
+                                smsFlag = "Y"
+                            }
+                        }
+
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
@@ -143,14 +219,45 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }}
                     Constants.PROFILE_MANAGEMENT -> {
                         val data = navData as ProfileDetailModel?
-                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                         val communication = if (binding.switchCommunication.isChecked) "Y" else "N"
                         val push = binding.pushCommunication.isChecked
-                            if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
-                                updateStandardUserProfile(data,communication,push)
-                            }else{
-                                updateBusinessUserProfile(data,communication,push)
+                        if(smsFlag.equals(communication,true)){
+                            findNavController().popBackStack()
+                        }else{
+                            val mList = ArrayList<CommunicationPrefsRequestModelList?>()
+                            if (mCommunicationsList.size > 0 ) {
+                                mCommunicationsList.forEach {
+                                    val mListModel = CommunicationPrefsRequestModelList(
+                                        it.id,
+                                        it.category,
+                                        it.oneMandatory,
+                                        it.defEmail,
+                                        it.emailFlag,
+                                        it.mailFlag,
+                                        it.defSms,
+                                        communication,
+                                        it.defVoice,
+                                        it.voiceFlag,
+                                        it.pushNotFlag
+                                    )
+                                    mList.add(mListModel)
+
+                                }
+                                val model = CommunicationPrefsRequestModel(mList)
+                                if(data?.personalInformation?.phoneNumber.isNullOrEmpty()){
+                                    verifyMobileNumber(model)
+                                }else {
+                                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                                    communicationPrefsViewModel.updateCommunicationPrefs(model)
+                                }
+
                             }
+                        }
+                        /*if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                            updateStandardUserProfile(data,communication,push)
+                        }else{
+                            updateBusinessUserProfile(data,communication,push)
+                        }*/
                     }
                     EDIT_ACCOUNT_TYPE -> {findNavController().navigate(
                         R.id.action_optForSmsFragment_to_twoStepVerificationFragment,bundle())}
@@ -196,11 +303,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 businessName = personalInformation?.customerName
             )
 
-            if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
+            /*if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
                 verifyMobileNumber(request)
             }else {
                 viewModel.updateUserDetails(request)
-            }
+            }*/
         }
 
 
@@ -233,21 +340,19 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 phoneEvening = ""
             )
 
-            if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
-                verifyMobileNumber(request)
-            }else {
-                viewModel.updateUserDetails(request)
-            }
+            /* if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
+                 verifyMobileNumber(request)
+             }else {
+                 viewModel.updateUserDetails(request)
+             }*/
         }
 
     }
 
-    private fun verifyMobileNumber(request: UpdateProfileRequest) {
+    private fun verifyMobileNumber(model: CommunicationPrefsRequestModel) {
         val bundle = Bundle()
-        val data = navData as ProfileDetailModel?
-        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-        bundle.putParcelable(Constants.DATA, request)
+        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+        bundle.putParcelable(Constants.NAV_DATA_KEY, model)
         findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
     }
 

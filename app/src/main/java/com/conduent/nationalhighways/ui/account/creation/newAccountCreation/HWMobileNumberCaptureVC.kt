@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -32,6 +33,7 @@ import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOB
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -87,9 +89,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
                 requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                 checkButton()
-            }
-            PROFILE_MANAGEMENT -> {
-                val data = navData as ProfileDetailModel?
             }
         }
     }
@@ -283,18 +282,25 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true
                     )
                 )
-                if(navFlowCall.equals(PROFILE_MANAGEMENT,true)){
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        arguments?.getParcelable(Constants.DATA, UpdateProfileRequest::class.java)
-                    } else {
-                        arguments?.getParcelable(Constants.DATA)
+
+                when(navFlowCall) {
+
+
+                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY, CommunicationPrefsRequestModel::class.java)
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-                }else {
-                    bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
-                    bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
+                    else ->{
+                        bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
+                        bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
+                    }
                 }
+
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle
                 )

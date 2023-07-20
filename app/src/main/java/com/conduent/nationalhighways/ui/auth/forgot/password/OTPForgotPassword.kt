@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -19,8 +20,11 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPM
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
@@ -34,6 +38,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
@@ -65,6 +70,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
+    private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
 
     override fun getFragmentBinding(
@@ -152,11 +158,36 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             observe(viewModel.otp, ::handleOTPResponse)
             observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
             observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
-
+            observe(communicationPrefsViewModel.updateCommunicationPrefs, ::updateCommunicationSettingsPrefs)
         }
 
         isViewCreated = true
 
+    }
+
+    private fun updateCommunicationSettingsPrefs(resource: Resource<CommunicationPrefsResp?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.let { res ->
+                    if (res.data?.statusCode == "0") {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        findNavController().navigate(R.id.action_otpForgotFragment_to_resetForgotPassword,bundle)
+                    }else{
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -178,6 +209,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             findNavController().navigate(
                                 R.id.action_otpForgotFragment_to_createVehicleFragment
                             )
+                        }
+                    }
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY, CommunicationPrefsRequestModel::class.java)
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        if (data != null) {
+                            communicationPrefsViewModel.updateCommunicationPrefs(data)
                         }
                     }
                     FORGOT_PASSWORD_FLOW -> {if (!timeFinish) {
