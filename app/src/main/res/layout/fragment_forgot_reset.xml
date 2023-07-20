@@ -17,13 +17,25 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans_bold"
             android:text="@string/str_password_reset_successfull"
             android:textColor="@color/re_send_color"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/subTitle"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/we_ve_sent_a_confirmation_email_to_s"
+            android:textColor="@color/re_send_color"
+            android:textSize="14sp" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_submit"

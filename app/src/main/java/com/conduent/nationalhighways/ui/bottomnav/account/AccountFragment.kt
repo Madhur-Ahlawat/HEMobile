@@ -137,15 +137,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                requireActivity().startNormalActivity(ProfileActivity::class.java)
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.profile_management)
+                findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
+
             }
 
             R.id.payment_management -> {
-                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
+//                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
             R.id.communication_preferences -> {
-
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.communication_preferences)
+                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment)
             }
 
             R.id.vehicle_management -> {

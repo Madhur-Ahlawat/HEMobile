@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.address.DataAddress
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
@@ -17,11 +21,13 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.viewModel.LrdsEligibilityViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
+import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -37,6 +43,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     private var mainList: MutableList<DataAddress?> = ArrayList()
     private var isViewCreated: Boolean = false
     private val lrdsViewModel: LrdsEligibilityViewModel by viewModels()
+    private val viewModelProfile: ProfileViewModel by viewModels()
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -71,7 +78,27 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
         }
         isViewCreated = true
+        observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
+    }
 
+    private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                Log.d("Success", "Updated successfully")
+                val data = navData as ProfileDetailModel?
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, PROFILE_MANAGEMENT_ADDRESS_CHANGED)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                findNavController().navigate(R.id.action_selectaddressfragment_to_resetForgotPassword,bundle)
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
@@ -103,11 +130,26 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             binding.btnNext -> {
 
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                hitlrdsCheckApi()
+                if(navFlowCall.equals(PROFILE_MANAGEMENT,true)){
+                    val data = navData as ProfileDetailModel?
+                    if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                        updateStandardUserProfile(data)
+                    }else{
+                        updateBusinessUserProfile(data)
+                    }
+                }else {
+                    hitlrdsCheckApi()
+                }
             }
 
             binding.enterAddressManually -> {
-                findNavController().navigate(R.id.fragment_manual_address)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                if(navData != null){
+                    val data = navData as ProfileDetailModel?
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                }
+                findNavController().navigate(R.id.fragment_manual_address,bundle)
             }
         }
 
@@ -133,7 +175,14 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
     }
 
     private fun enterAddressManual() {
-        findNavController().navigate(R.id.fragment_manual_address)
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        if(navData != null){
+            val data = navData as ProfileDetailModel?
+            bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+        }
+
+        findNavController().navigate(R.id.fragment_manual_address,bundle)
     }
 
 
@@ -177,6 +226,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
 
                         EDIT_SUMMARY -> {findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountSummary,bundle)}
+
                         else -> { if (NewCreateAccountRequestModel.personalAccount) {
                             findNavController().navigate(R.id.action_selectaddressfragment_to_createAccountTypesFragment,bundle)
 
@@ -202,6 +252,64 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
             }
         }
+
+    }
+
+    private fun updateStandardUserProfile(data: ProfileDetailModel?) {
+
+        data?.personalInformation?.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = NewCreateAccountRequestModel.addressline1,
+                addressLine2 = NewCreateAccountRequestModel.addressline2,
+                city = NewCreateAccountRequestModel.townCity,
+                state = state,
+                zipCode = NewCreateAccountRequestModel.zipCode,
+                zipCodePlus = zipCodePlus,
+                country = NewCreateAccountRequestModel.country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneNumber ?: "",
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = ""
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+    }
+
+    private fun updateBusinessUserProfile(data: ProfileDetailModel?) {
+        data?.run {
+            val request = UpdateProfileRequest(
+                firstName = personalInformation?.firstName,
+                lastName = personalInformation?.lastName,
+                addressLine1 = NewCreateAccountRequestModel.addressline1,
+                addressLine2 = NewCreateAccountRequestModel.addressline2,
+                city = NewCreateAccountRequestModel.townCity,
+                state = personalInformation?.state,
+                zipCode = NewCreateAccountRequestModel.zipCode,
+                zipCodePlus = personalInformation?.zipCodePlus,
+                country = NewCreateAccountRequestModel.country,
+                emailAddress = personalInformation?.emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
+                phoneCell = personalInformation?.phoneNumber ?: "",
+                phoneDay = personalInformation?.phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                fein = accountInformation?.fein,
+                businessName = personalInformation?.customerName
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
 
     }
 

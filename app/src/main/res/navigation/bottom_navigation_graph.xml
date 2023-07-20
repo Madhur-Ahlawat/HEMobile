@@ -73,6 +73,9 @@
             android:id="@+id/action_resetFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment" />
+        <action
+            android:id="@+id/action_resetFragment_to_profileManagementFragment"
+            app:destination="@id/profileManagementFragment" />
     </fragment>
 
     <fragment
@@ -281,6 +284,157 @@
         <action
             android:id="@+id/action_accountFragment_to_vehicleManagementFragment"
             app:destination="@id/vehicleHomeListFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_profileManagementFragment"
+            app:destination="@id/profileManagementFragment" />
+
+        <action
+            android:id="@+id/action_accountFragment_to_optForSmsFragment"
+            app:destination="@id/optForSmsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/optForSmsFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.OptForSmsFragment"
+        android:label="OptForSmsFragment"
+        tools:layout="@layout/fragment_opt_for_sms">
+        <action
+            android:id="@+id/action_optForSmsFragment_to_mobileVerificationFragment"
+            app:destination="@id/HWMobileNumberCaptureVC" />
+        <action
+            android:id="@+id/action_optForSmsFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment"/>
+        <action
+            android:id="@+id/action_optForSmsFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/HWMobileNumberCaptureVC"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.HWMobileNumberCaptureVC"
+        android:label="HWMobileNumberCaptureVC"
+        tools:layout="@layout/fragment_mobile_number_capture_vc">
+
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
+            app:destination="@+id/forgotOtpFragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotOtpFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.OTPForgotPassword"
+        android:label="OTPCreateAccountPassword"
+        tools:layout="@layout/fragment_forgot_otpchanges">
+
+        <action
+            android:id="@+id/action_otpFragment_to_resenedCodeFragment"
+            app:destination="@id/resend_code_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/resend_code_fragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
+        android:label="ResendCodeFragment"
+        tools:layout="@layout/fragment_resend_code">
+        <action
+            android:id="@+id/action_resenedCodeFragment_to_otpFragment"
+            app:destination="@id/forgotOtpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileManagementFragment"
+        android:name="com.conduent.nationalhighways.ui.account.profile.ProfileManagementFragment"
+        android:label="ProfileManagementFragment"
+        tools:layout="@layout/fragment_create_account_summary">
+
+        <action
+            android:id="@+id/action_profileManagementFragment_to_personalInfoFragment"
+            app:destination="@id/createAccountPersonalInfo" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_postCodeFragment"
+            app:destination="@id/createAccountPostCodeNew" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_manualAddressFragment"
+            app:destination="@id/fragment_manual_address" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_emailAddressFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_mobileNumberFragment"
+            app:destination="@id/HWMobileNumberCaptureVC" />
+
+        <action
+            android:id="@+id/action_profileManagementFragment_to_twoStepCommunicationFragment"
+            app:destination="@id/twoStepVerificationFragment" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_manual_address"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
+        android:label="ManualAddress"
+        tools:layout="@layout/fragment_manual_address">
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
+            app:destination="@id/createAccountEligibleLRDS" />
+
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountTypesFragment"
+            app:destination="@+id/createAccountTypes" />
+        <action
+            android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
+            app:destination="@+id/forgotPasswordFragment" />
+
+        <action
+            android:id="@+id/action_manualaddressfragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccountPersonalInfo"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPersonalInfo"
+        android:label="CreateAccountPersonalInfo"
+        tools:layout="@layout/fragment_create_account_personal_info_new">
+
+        <action
+            android:id="@+id/action_createAccountPersonalInfo_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccountPostCodeNew"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountPostCodeNew"
+        android:label="CreateAccountPostCodeNew"
+        tools:layout="@layout/fragment_create_account_post_code_new">
+        <action
+            android:id="@+id/action_createAccountPostCodeNew_to_selectaddressfragment"
+            app:destination="@id/selectaddressfragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
+            app:destination="@+id/fragment_manual_address" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectaddressfragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.SelectAddressFragment"
+        android:label="selectAddressFragment"
+        tools:layout="@layout/fragment_select_address">
+
+        <action
+            android:id="@+id/action_selectaddressfragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/removeVehicleFragment"/>
 
     </fragment>
 

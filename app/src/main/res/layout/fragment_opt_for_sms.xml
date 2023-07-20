@@ -10,69 +10,58 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="20dp">
+        android:orientation="vertical"
+        android:paddingHorizontal="25dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/top_title"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchCommunication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             style="@style/MediumTextBlack"
             android:textColor="@color/black"
             android:text="@string/would_you_like_to_receive"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/message_received_txt"
-            style="@style/RegularText"
-            android:textColor="@color/txt_grey"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:text="@string/this_will_be_in_addition"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_title" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupYesNo"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/btnNext"
-            app:layout_constraintStart_toStartOf="@+id/btnNext"
-            app:layout_constraintTop_toBottomOf="@+id/message_received_txt" >
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:layout_width="match_parent"
-                style="@style/RadioButtonStyle"
-                android:text="Yes"
-                android:checked="false"
-                android:id="@+id/radioButtonYes"
-                android:layout_height="@dimen/margin_40dp"/>
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:layout_width="match_parent"
-                android:text="No"
-                style="@style/RadioButtonStyle"
-                android:id="@+id/radioButtonNo"
-                android:layout_height="@dimen/margin_40dp"/>
-
-        </RadioGroup>
+            />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkBoxTerms"
             style="@style/CheckBoxStyle"
             android:checked="true"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:text="@string/agree_terms_condition"
             android:visibility="gone"
-            android:gravity="top"
-            android:layout_marginStart="@dimen/margin_10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupYesNo"
-            tools:visibility="visible" />
+            android:gravity="top"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/message_received_txt"
+            style="@style/RegularText"
+            android:textColor="@color/txt_grey"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/this_will_be_in_addition"
+            />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/pushCommunication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            style="@style/MediumTextBlack"
+            android:textColor="@color/black"
+            android:text="@string/would_you_like_to_receive_push"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/message_received_txt2"
+            style="@style/RegularText"
+            android:textColor="@color/txt_grey"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/this_will_be_in_addition_push"
+            />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
@@ -80,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
+            android:layout_marginTop="@dimen/_50sdp"
             android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +79,6 @@
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

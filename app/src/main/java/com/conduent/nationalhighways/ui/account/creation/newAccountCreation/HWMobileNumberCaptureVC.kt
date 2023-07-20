@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -13,10 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountryCodes
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
@@ -28,6 +31,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -73,9 +77,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
 
-
-
-
         }
 
         binding.btnNext.setOnClickListener(this)
@@ -86,6 +87,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
                 requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                 checkButton()
+            }
+            PROFILE_MANAGEMENT -> {
+                val data = navData as ProfileDetailModel?
             }
         }
     }
@@ -279,8 +283,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true
                     )
                 )
-                bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
-                bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
+                if(navFlowCall.equals(PROFILE_MANAGEMENT,true)){
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        arguments?.getParcelable(Constants.DATA, UpdateProfileRequest::class.java)
+                    } else {
+                        arguments?.getParcelable(Constants.DATA)
+                    }
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                }else {
+                    bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
+                    bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
+                }
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle
                 )

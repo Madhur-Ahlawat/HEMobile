@@ -226,12 +226,16 @@ object Constants {
 
 
     const val NAV_FLOW_KEY = "navFlowKey"
+    const val NAV_DATA_KEY = "navDataKey"
     const val Edit_REQUEST_KEY = "editRequestKey"
     const val SHOW_BACK_BUTTON = "showBackButton"
     const val EDIT_SUMMARY = "editSummary"
     const val EDIT_ACCOUNT_TYPE = "editAccountType"
     const val EDIT_PROFILE = "editProfile"
     const val VEHICLE_MANAGEMENT = "vehicleManagement"
+    const val PROFILE_MANAGEMENT = "profileManagement"
+    const val PROFILE_MANAGEMENT_ADDRESS_CHANGED = "profileManagementAddressChanged"
+    const val PROFILE_MANAGEMENT_COMMUNICATION_CHANGED = "profileManagementCommunicationChanged"
     const val TWOFA="twofa"
     const val ACCOUNT_CREATION_EMAIL_FLOW = "accountCreationEmailFlow"
     const val FORGOT_PASSWORD_FLOW = "forgotPasswordFlow"

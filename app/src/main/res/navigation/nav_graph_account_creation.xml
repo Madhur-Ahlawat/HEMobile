@@ -237,10 +237,7 @@
         <action
             android:id="@+id/action_createAccountPersonalInfo_to_createAccountPostCodeNew"
             app:destination="@id/createAccountPostCodeNew" />
-        <argument
-            android:name="isPersonalAccount"
-            android:defaultValue="false"
-            app:argType="boolean" />
+
     </fragment>
     <fragment
         android:id="@+id/createAccountPostCodeNew"
@@ -254,12 +251,7 @@
         <action
             android:id="@+id/action_createAccountPostCodeNew_to_ManualAddress"
             app:destination="@+id/fragment_manual_address" />
-        <argument
-            android:name="isPersonalAccount"
-            app:argType="boolean" />
-        <argument
-            android:name="postcode"
-            app:argType="string" />
+
     </fragment>
 
     <fragment
@@ -279,10 +271,12 @@
         <action
             android:id="@+id/action_selectaddressfragment_to_forgotPasswordFragment"
             app:destination="@+id/forgotPasswordFragment" />
-        <argument
-            android:name="isPersonalAccount"
-            android:defaultValue="false"
-            app:argType="boolean" />
+        <action
+            android:id="@+id/action_selectaddressfragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/removeVehicleFragment"/>
+
     </fragment>
 
     <fragment
@@ -416,12 +410,6 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.ManualAddressFragment"
         android:label="ManualAddress"
         tools:layout="@layout/fragment_manual_address">
-        <argument
-            android:name="isPersonalAccount"
-            app:argType="boolean" />
-        <argument
-            android:name="postcode"
-            app:argType="string" />
         <action
             android:id="@+id/action_manualaddressfragment_to_createAccountEligibleLRDS2"
             app:destination="@id/createAccountEligibleLRDS" />

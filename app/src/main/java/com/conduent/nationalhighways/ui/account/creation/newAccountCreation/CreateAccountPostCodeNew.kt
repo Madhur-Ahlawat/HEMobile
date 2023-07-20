@@ -2,13 +2,14 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -16,8 +17,8 @@ import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
-
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,19 +34,37 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
-        if (NewCreateAccountRequestModel.personalAccount) {
-            binding.txtHeading.text = getString(R.string.personal_address)
-            binding.txtThisShouldBeVehicle.text =
-                getString(R.string.this_should_be_the_address_were_the_vehicle_is_registered)
-        }
+
 
 
         binding.inputPostCode.setMaxLength(10)
         when(navFlowCall){
 
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> { binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)}
+            PROFILE_MANAGEMENT -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.profile_address)
+                val data = navData as ProfileDetailModel?
+                data?.personalInformation?.zipcode?.let { binding.inputPostCode.setText(it) }
+
+                if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                    setPersonalView()
+                }
+
+            }
+            else -> {
+                if (NewCreateAccountRequestModel.personalAccount) {
+                    setPersonalView()
+                }
+            }
 
         }
+    }
+
+    private fun setPersonalView() {
+        binding.txtHeading.text = getString(R.string.personal_address)
+        binding.txtThisShouldBeVehicle.text =
+            getString(R.string.this_should_be_the_address_were_the_vehicle_is_registered)
     }
 
     override fun initCtrl() {
@@ -58,12 +77,21 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         hideKeyboard()
         when (v?.id) {
             R.id.btnFindAddress -> {
-                validation()
+                val data = navData as ProfileDetailModel?
+                if(binding.inputPostCode.getText().toString().equals(data?.personalInformation?.zipcode, true)){
+                    findNavController().popBackStack()
+                }else {
+                    validation()
+                }
             }
 
             R.id.btnEnterAddressManually -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                if(navFlowCall.equals(PROFILE_MANAGEMENT,true) && navData != null){
+                    val data = navData as ProfileDetailModel?
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                }
                 findNavController().navigate(
                     R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle
                 )
@@ -77,9 +105,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-            findNavController().navigate(
-                R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle
-            )
+            if(navFlowCall.equals(PROFILE_MANAGEMENT,true) && navData != null ) {
+                val data = navData as ProfileDetailModel?
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+            }
+            findNavController().navigate(R.id.action_createAccountPostCodeNew_to_selectaddressfragment,bundle)
         } else {
             ErrorUtil.showError(binding.root, getString(R.string.please_enter_postcode))
         }

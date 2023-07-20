@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.base
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +12,19 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import kotlin.properties.Delegates
@@ -30,6 +34,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
     lateinit var navFlowCall: String
+    var navData: Any? = null
     var backButton : Boolean? = true
 
     override fun onCreateView(
@@ -39,6 +44,11 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         binding = getFragmentBinding(inflater, container)
         navFlowCall = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        navData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(NAV_DATA_KEY,Any::class.java)
+        } else {
+            arguments?.getParcelable(NAV_DATA_KEY)
+        }
         backButton = arguments?.getBoolean(SHOW_BACK_BUTTON,true)
         return binding.root
     }

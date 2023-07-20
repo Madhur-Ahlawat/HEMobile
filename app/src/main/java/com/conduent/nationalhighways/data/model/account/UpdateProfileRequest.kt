@@ -1,7 +1,10 @@
 package com.conduent.nationalhighways.data.model.account
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UpdateProfileRequest(
 
     @SerializedName("firstName") val firstName: String? = null,
@@ -32,4 +35,4 @@ data class UpdateProfileRequest(
     @SerializedName("businessName") val businessName: String?=null,
     @SerializedName("fein") var fein: String?=null,
 
-    )
+    ) : Parcelable

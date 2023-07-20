@@ -4,21 +4,27 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.CountriesModel
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentManualAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.viewModel.LrdsEligibilityViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
+import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -46,7 +52,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     private var requiredCountry: Boolean = false
     private var country: String = ""
     private var isViewCreated: Boolean = false
-
+    private val viewModelProfile: ProfileViewModel by viewModels()
     private val lrdsViewModel: LrdsEligibilityViewModel by viewModels()
 
 
@@ -56,10 +62,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        if (NewCreateAccountRequestModel.personalAccount) {
-            binding.txtHeading.text = getString(R.string.personal_address)
-        }
 
         if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
@@ -96,7 +98,25 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 requiredCountry = true
                 checkButton()}
 
+            Constants.PROFILE_MANAGEMENT -> {
+                val data = navData as ProfileDetailModel?
+
+                if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                    setPersonalView()
+                }
+
+            }
+            else ->{
+                if (NewCreateAccountRequestModel.personalAccount) {
+                    setPersonalView()
+                }
+            }
+
         }
+    }
+
+    private fun setPersonalView() {
+        binding.txtHeading.text = getString(R.string.personal_address)
     }
 
 
@@ -112,8 +132,30 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         }
 
         isViewCreated = true
+        observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
 
+    }
 
+    private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                Log.d("Success", "Updated successfully")
+                val data = navData as ProfileDetailModel?
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
+                )
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                findNavController().navigate(R.id.action_manualaddressfragment_to_resetForgotPassword,bundle)
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -127,8 +169,16 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.country = binding.country.selectedItemDescription.toString()
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
-                hitlrdsCheckApi()
+                if(navFlowCall.equals(Constants.PROFILE_MANAGEMENT,true)){
+                    val data = navData as ProfileDetailModel?
+                    if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                        updateStandardUserProfile(data)
+                    }else{
+                        updateBusinessUserProfile(data)
+                    }
+                }else {
+                    hitlrdsCheckApi()
+                }
 
 
             }
@@ -400,6 +450,64 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
         return bundle
+    }
+
+    private fun updateStandardUserProfile(data: ProfileDetailModel?) {
+
+        data?.personalInformation?.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = NewCreateAccountRequestModel.addressline1,
+                addressLine2 = NewCreateAccountRequestModel.addressline2,
+                city = NewCreateAccountRequestModel.townCity,
+                state = state,
+                zipCode = NewCreateAccountRequestModel.zipCode,
+                zipCodePlus = zipCodePlus,
+                country = NewCreateAccountRequestModel.country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneNumber ?: "",
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = ""
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+    }
+
+    private fun updateBusinessUserProfile(data: ProfileDetailModel?) {
+        data?.run {
+            val request = UpdateProfileRequest(
+                firstName = personalInformation?.firstName,
+                lastName = personalInformation?.lastName,
+                addressLine1 = personalInformation?.addressLine1,
+                addressLine2 = personalInformation?.addressLine2,
+                city = personalInformation?.city,
+                state = personalInformation?.state,
+                zipCode = personalInformation?.zipcode,
+                zipCodePlus = personalInformation?.zipCodePlus,
+                country = personalInformation?.country,
+                emailAddress = personalInformation?.emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
+                phoneCell = personalInformation?.phoneNumber ?: "",
+                phoneDay = personalInformation?.phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                fein = accountInformation?.fein,
+                businessName = personalInformation?.customerName
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+
     }
 
 }

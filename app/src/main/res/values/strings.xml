@@ -965,8 +965,10 @@
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
     <string name="should_be_company_name">This should be your company name</string>
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
-    <string name="would_you_like_to_receive">Would you like to receive communications about your account by text message?</string>
+    <string name="would_you_like_to_receive">Would you like to receive \ncommunications about \nyour account by text message?</string>
+    <string name="would_you_like_to_receive_push">Would you like to receive \npush notification about \nyour account?</string>
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
+    <string name="this_will_be_in_addition_push">This will be enabled in your device settings.</string>
     <string name="agree_terms_condition">I agree to the <u>terms and conditions</u> and understand that standard text message and data charges may apply</string>
 
 
@@ -1254,6 +1256,12 @@
     <string name="txt_last_digits_of_card">Last four digit of card</string>
     <string name="email_reciept">Email Reciept</string>
     <string name="vehicles_added_to_your_account">Vehicles added to your account</string>
+    <string name="name_change_successful">Name change successful</string>
+    <string name="address_change_successful">Address change successful</string>
+    <string name="communication_change_successful">Communication preference change successful</string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to\n %s</string>
+    <string name="profile_name">Profile Name</string>
+    <string name="profile_address">Profile Address</string>
 
 
 </resources>

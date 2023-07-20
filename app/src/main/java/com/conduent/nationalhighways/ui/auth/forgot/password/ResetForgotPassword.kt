@@ -5,15 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,7 +25,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
-    private lateinit var  navFlow:String
+//    private lateinit var  navFlow:String
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,21 +36,33 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     lateinit var sessionManager: SessionManager
     override fun init() {
         binding.btnSubmit.setOnClickListener(this)
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+//        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
-        if(navFlow.equals(REMOVE_VEHICLE,true)){
-            binding.title.text = getString(R.string.vehicle_deleted)
-            binding.btnSubmit.text = getString(R.string.str_continue)
-        }else{
-            AdobeAnalytics.setScreenTrack(
-                "login:forgot password:choose options:otp:new password set:password reset success",
-                "forgot password",
-                "english",
-                "login",
-                (requireActivity() as AuthActivity).previousScreen,
-                "login:forgot password:choose options:otp:new password set:password reset success",
-                sessionManager.getLoggedInUser()
-            )
+        when(navFlowCall) {
+
+            REMOVE_VEHICLE -> {
+                binding.subTitle.gone()
+                binding.title.text = getString(R.string.vehicle_deleted)
+                binding.btnSubmit.text = getString(R.string.str_continue)
+            }
+
+            Constants.PROFILE_MANAGEMENT -> {
+                val data = navData as PersonalInformation?
+                binding.title.text = getString(R.string.name_change_successful)
+                binding.subTitle.text = getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress)
+                binding.btnSubmit.text = getString(R.string.str_continue)
+            }
+            Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
+                val data = navData as PersonalInformation?
+                binding.title.text = getString(R.string.address_change_successful)
+                binding.subTitle.text = getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress)
+                binding.btnSubmit.text = getString(R.string.str_continue)
+            }
+            Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                binding.title.text = getString(R.string.communication_change_successful)
+                binding.subTitle.gone()
+                binding.btnSubmit.text = getString(R.string.str_continue)
+            }
         }
 
 
@@ -61,21 +77,31 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_submit -> {
-                if(binding.btnSubmit.text.equals(getString(R.string.str_continue))){
-                    findNavController().popBackStack()
-                }else {
-                    AdobeAnalytics.setActionTrack(
-                        "submit",
-                        "login:forgot password:choose options:otp:new password set:password reset success",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen,
-                        sessionManager.getLoggedInUser()
-                    )
 
-                    requireActivity().startNormalActivity(LoginActivity::class.java)
-                    requireActivity().finish()
+                when(navFlowCall) {
+
+                    REMOVE_VEHICLE -> {
+                        findNavController().popBackStack()
+                    }
+
+                    Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED,Constants.PROFILE_MANAGEMENT -> {
+                        findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
+                    }
+
+                    else -> {
+                        AdobeAnalytics.setActionTrack(
+                            "submit",
+                            "login:forgot password:choose options:otp:new password set:password reset success",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen,
+                            sessionManager.getLoggedInUser()
+                        )
+
+                        requireActivity().startNormalActivity(LoginActivity::class.java)
+                        requireActivity().finish()
+                    }
                 }
             }
         }
