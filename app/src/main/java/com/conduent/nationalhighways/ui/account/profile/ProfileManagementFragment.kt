@@ -145,7 +145,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_MOBILE_CHANGE)
                 bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
-                findNavController().navigate(R.id.action_profileManagementFragment_to_mobileNumberFragment,bundle())
+                findNavController().navigate(R.id.action_profileManagementFragment_to_mobileNumberFragment,bundle)
             }
 
             R.id.editTwoStepVerification -> {

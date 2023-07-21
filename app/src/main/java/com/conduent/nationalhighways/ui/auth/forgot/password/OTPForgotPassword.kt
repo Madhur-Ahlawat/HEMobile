@@ -342,7 +342,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             data?.optionValue.toString()
                         ) + "."
 
-                } else {
+                } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE) {
+                    binding.messageReceivedTxt.text =
+                        getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                            data?.optionValue.toString()
+                        ) + "."
+
+                }else {
                     binding.messageReceivedTxt.text =
                         getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
 
