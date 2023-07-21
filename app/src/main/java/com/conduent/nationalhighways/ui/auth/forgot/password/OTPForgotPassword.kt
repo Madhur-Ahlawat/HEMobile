@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyReque
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -174,7 +175,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 resource.let { res ->
                     if (res.data?.statusCode == "0") {
                         val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                         findNavController().navigate(R.id.action_otpForgotFragment_to_resetForgotPassword,bundle)
                     }else{
@@ -221,6 +222,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         if (data != null) {
                             communicationPrefsViewModel.updateCommunicationPrefs(data)
                         }
+                    }
+                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE ->{
+                        val bundle = Bundle()
+                        val data = navData as ProfileDetailModel?
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        findNavController().navigate(R.id.action_otpForgotFragment_to_resetForgotPassword,bundle)
                     }
                     FORGOT_PASSWORD_FLOW -> {if (!timeFinish) {
                         loader?.show(

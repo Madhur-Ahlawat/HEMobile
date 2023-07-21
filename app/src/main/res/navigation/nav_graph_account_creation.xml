@@ -278,6 +278,19 @@
             app:popUpTo="@id/removeVehicleFragment"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_forgot_reset">
+        <action
+            android:id="@+id/action_resetFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
+        <action
+            android:id="@+id/action_resetFragment_to_profileManagementFragment"
+            app:destination="@id/profileManagementFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/createAccountEligibleLRDS"
@@ -336,9 +349,7 @@
         <action
             android:id="@+id/action_otpForgotFragment_to_createVehicleFragment"
             app:destination="@+id/findYourVehicleFragment" />
-        <action
-            android:id="@+id/action_otpForgotFragment_to_resetForgotPassword"
-            app:destination="@id/resetFragment"/>
+
 
     </fragment>
 

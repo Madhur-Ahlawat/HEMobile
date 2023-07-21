@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -59,7 +61,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.accountDetail()
-
+        val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+        title?.text = getString(R.string.profile_management)
     }
     override fun initCtrl() {
 
@@ -86,25 +89,32 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         profileDetailModel = status.data
                         (personalInformation?.firstName +" "+ personalInformation?.lastName).also { binding.fullName.text = it }
 
-                    /*if (dataModel.twoStepVerification) {
-                        binding.twoStepVerification.text = getString(R.string.yes)
-                    } else {
-                        binding.twoStepVerification.text = getString(R.string.no)
-                    }*/
+                        /*if (dataModel.twoStepVerification) {
+                            binding.twoStepVerification.text = getString(R.string.yes)
+                        } else {
+                            binding.twoStepVerification.text = getString(R.string.no)
+                        }*/
 
-                    binding.address.text =
-                        personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
+                        binding.address.text =
+                            personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
 
-                    binding.mobileNumber.text =personalInformation?.phoneNumber
-                    binding.emailAddressProfile.text =personalInformation?.emailAddress
+                        binding.emailAddressProfile.text =personalInformation?.emailAddress
 
+                        if(personalInformation?.phoneCell.isNullOrEmpty().not()){
+                            binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
+                            personalInformation?.phoneCell?.let { binding.mobileNumber.text = it }
+                        }
+                        if(personalInformation?.phoneDay.isNullOrEmpty().not()){
+                            binding.txtMobileNumber.text = getString(R.string.telephone_number)
+                            personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
+                        }
 
-                   /* if (NewCreateAccountRequestModel.communicationTextMessage && NewCreateAccountRequestModel.twoStepVerification) {
-                        binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
-                    } else {
-                        binding.txtMobileNumber.text = getString(R.string.telephone_number)
-                    }*/
-                }
+                        /* if (NewCreateAccountRequestModel.communicationTextMessage && NewCreateAccountRequestModel.twoStepVerification) {
+                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
+                         } else {
+                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
+                         }*/
+                    }
                 }
 
             }
@@ -132,6 +142,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 findNavController().navigate(R.id.action_profileManagementFragment_to_emailAddressFragment,bundle())
             }
             R.id.editMobileNumber -> {
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_MOBILE_CHANGE)
+                bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
                 findNavController().navigate(R.id.action_profileManagementFragment_to_mobileNumberFragment,bundle())
             }
 

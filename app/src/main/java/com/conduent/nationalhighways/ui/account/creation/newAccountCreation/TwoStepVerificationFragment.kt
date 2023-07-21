@@ -24,39 +24,24 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     override fun init() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
-        when (binding.radioGroupYesNo.checkedRadioButtonId) {
-            R.id.radioButtonYes -> {
+        binding.twoFactor.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked){
+                NewCreateAccountRequestModel.twoStepVerification=true
+                binding.btnNext.enable()
+            }else{
+                NewCreateAccountRequestModel.twoStepVerification=false
                 binding.btnNext.enable()
             }
-            R.id.radioButtonNo -> {
 
-                binding.btnNext.enable()
-            }
         }
-        binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId -> // checkedId is the RadioButton selected
-            when(checkedId){
-                R.id.radioButtonYes -> {
-                    NewCreateAccountRequestModel.twoStepVerification=true
 
-                    binding.btnNext.enable()
-                }
-                R.id.radioButtonNo -> {
-                    NewCreateAccountRequestModel.twoStepVerification=false
-
-                    binding.btnNext.enable()
-                }
-            }
-        }
         binding.btnNext.setOnClickListener(this)
 
         when(navFlowCall){
 
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> { oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
-                if(oldtwoStepVerification){
-                    binding.radioButtonYes.isChecked = true
-                }else{
-                    binding.radioButtonNo.isChecked = true
-                }}
+                binding.twoFactor.isChecked = oldtwoStepVerification
+            }
 
         }
     }

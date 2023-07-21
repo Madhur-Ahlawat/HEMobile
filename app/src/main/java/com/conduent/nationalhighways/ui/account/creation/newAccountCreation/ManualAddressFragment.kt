@@ -104,8 +104,9 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             Constants.PROFILE_MANAGEMENT -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
-
                 if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
                     setPersonalView()
                 }

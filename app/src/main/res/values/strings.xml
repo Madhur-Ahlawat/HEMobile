@@ -1259,6 +1259,7 @@
     <string name="name_change_successful">Name change successful</string>
     <string name="address_change_successful">Address change successful</string>
     <string name="communication_change_successful">Communication preference change successful</string>
+    <string name="mobile_change_successful">Mobile phone change successful</string>
     <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to\n %s</string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
@@ -1279,6 +1280,10 @@
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
+    <string name="profile_mobile_number">Profile mobile number</string>
+    <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
+    <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
+    <string name="two_factor_verification">Two Factor Verification</string>
 
 
 </resources>

@@ -78,10 +78,7 @@
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="Reset Password"
         tools:layout="@layout/fragment_forgot_reset">
-        <action
-            android:id="@+id/action_resetFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" />
+
         <action
             android:id="@+id/action_resetFragment_to_profileManagementFragment"
             app:destination="@id/profileManagementFragment" />
@@ -339,6 +336,12 @@
             app:destination="@id/resetFragment"/>
     </fragment>
     <fragment
+        android:id="@+id/termsConditionFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TermsConditionFragment"
+        android:label="TermsConditionFragment"
+        tools:layout="@layout/fragment_terms_condition"
+        />
+    <fragment
         android:id="@+id/HWMobileNumberCaptureVC"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.HWMobileNumberCaptureVC"
         android:label="HWMobileNumberCaptureVC"
@@ -360,6 +363,10 @@
         <action
             android:id="@+id/action_otpFragment_to_resenedCodeFragment"
             app:destination="@id/resend_code_fragment" />
+        <action
+            android:id="@+id/action_otpForgotFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
+
 
     </fragment>
 
@@ -401,6 +408,17 @@
         <action
             android:id="@+id/action_profileManagementFragment_to_termsConditionFragment"
             app:destination="@id/termsConditionFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/twoStepVerificationFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoStepVerificationFragment"
+        android:label="TwoStepVerificationFragment"
+        tools:layout="@layout/fragment_two_step_verification">
+        <action
+            android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
+            app:destination="@id/HWMobileNumberCaptureVC" />
+
     </fragment>
 
     <fragment
@@ -461,9 +479,7 @@
 
         <action
             android:id="@+id/action_selectaddressfragment_to_resetForgotPassword"
-            app:destination="@id/resetFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/removeVehicleFragment"/>
+            app:destination="@id/resetFragment"/>
 
     </fragment>
 

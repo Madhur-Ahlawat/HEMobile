@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -101,6 +102,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 binding.switchCommunication.isChecked = oldCommunicationTextMessage
             }
             Constants.PROFILE_MANAGEMENT -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.communication_preferences)
                 val data = navData as ProfileDetailModel?
                 binding.pushCommunication.isChecked = data?.personalInformation?.pushNotifications == true
                 loader = LoaderDialog()
@@ -195,6 +198,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 val data = navData as ProfileDetailModel?
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                 findNavController().navigate(R.id.action_optForSmsFragment_to_resetForgotPassword,bundle)
             }

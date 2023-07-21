@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -153,7 +154,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.communication_preferences -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT)
+                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
             }
 
             R.id.vehicle_management -> {

@@ -57,12 +57,13 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnNext.setOnClickListener(this)
 
+        if (NewCreateAccountRequestModel.personalAccount) {
+            enablePersonalView()
+        }
+
         when(navFlowCall){
 
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
-                if (NewCreateAccountRequestModel.personalAccount) {
-                    enablePersonalView()
-                }
                 binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
                 binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
                 binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)
@@ -155,7 +156,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                         findNavController().navigate(
-                            R.id.action_createAccountPersonalInfo_to_resetForgotPassword,bundle
+                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,bundle
                         )
                     }
                 }

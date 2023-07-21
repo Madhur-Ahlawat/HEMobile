@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -66,18 +68,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
 
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-            binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
-            binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
-            binding.txtBottom.visibility = View.GONE
-            requiredMobileNumber = true
-            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+            setTelephoneView()
 
         } else {
-            binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
-            binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
-            binding.txtBottom.visibility = View.VISIBLE
 
-            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+            setMobileView()
 
         }
 
@@ -90,7 +85,52 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                 checkButton()
             }
+            PROFILE_MANAGEMENT_COMMUNICATION_CHANGED ->{
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.communication_preferences)
+                setMobileView()
+                setData()
+            }
+
+            PROFILE_MANAGEMENT,PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.profile_mobile_number)
+                setMobileView()
+                setData()
+            }
         }
+    }
+
+    private fun setData() {
+        val data = navData as ProfileDetailModel?
+        if(data != null){
+            if(data.personalInformation?.phoneCell.isNullOrEmpty().not()){
+                setMobileView()
+                data.personalInformation?.phoneCell?.let { binding.inputMobileNumber.setText(it) }
+            }else if(data.personalInformation?.phoneDay.isNullOrEmpty().not()){
+                setTelephoneView()
+                data.personalInformation?.phoneDay?.let { binding.inputMobileNumber.setText(it) }
+            }
+            data.personalInformation?.phoneCellCountryCode?.let { binding.inputCountry.setSelectedValue(it) }
+            requiredCountryCode = true
+            checkButton()
+        }
+    }
+
+    private fun setTelephoneView() {
+        binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
+        binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
+        binding.txtBottom.visibility = View.GONE
+        requiredMobileNumber = true
+        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+    }
+
+    private fun setMobileView() {
+        binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
+        binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
+        binding.txtBottom.visibility = View.VISIBLE
+
+        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
     }
 
     override fun initCtrl() {
@@ -149,12 +189,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             binding.btnNext.id -> {
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
                 val countryCode = binding.inputCountry.selectedItemDescription.toString()
-                val noChanges = countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 when(navFlowCall){
 
                     EDIT_SUMMARY -> {
+                        val noChanges = countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
                         if(noChanges){
                             findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,bundle)
                         }else{
@@ -163,6 +203,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
                     EDIT_ACCOUNT_TYPE -> {findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment,bundle)}
+
+                    PROFILE_MANAGEMENT -> {
+                        val data = navData as ProfileDetailModel?
+                        if(data != null){
+                            val phone = data.personalInformation?.phoneNumber
+                            if(phone.isNullOrEmpty() && phone.equals(binding.inputMobileNumber.getText().toString().trim(),true)){
+                                findNavController().popBackStack()
+                            }else{
+                                hitApi()
+                            }
+                        }
+                    }
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE,PROFILE_MANAGEMENT_COMMUNICATION_CHANGED ->{ hitApi()}
                     else -> {
                         val res : Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
                         handleNavFlow(mobileNumber,countryCode,bundle,res)
@@ -295,15 +348,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                        val data = navData as ProfileDetailModel?
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
                     else ->{
                         bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
                         bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                     }
                 }
 
-                findNavController().navigate(
-                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle
-                )
+                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle)
             }
 
             is Resource.DataError -> {

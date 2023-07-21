@@ -58,6 +58,8 @@ data class PersonalInformation(
     val vrSmsTc: String?,
     val zipCode: String?,
     val zipCodePlus: String?,
-    var zipcode: String?
+    var zipcode: String?,
+    var phoneCellCountryCode: String?,
+    var phoneCell: String?
 ) : Parcelable
 
