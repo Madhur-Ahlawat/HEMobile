@@ -354,7 +354,7 @@
     <fragment
         android:id="@+id/optForSmsFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.OptForSmsFragment"
-        android:label="OptForSmsFragment"
+        android:label="Communication Preferences"
         tools:layout="@layout/fragment_opt_for_sms">
         <action
             android:id="@+id/action_optForSmsFragment_to_twoStepVerificationFragment"

@@ -115,6 +115,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_indicator_account_status"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green_status"
                     app:cardCornerRadius="@dimen/_5dp"

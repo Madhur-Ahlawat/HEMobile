@@ -1279,6 +1279,11 @@
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
+    <string name="change_your_password">Change your password</string>
+    <string name="enter_current_password">Enter current password</string>
+    <string name="str_current_password">Current Password</string>
+    <string name="str_enter_new_password">Enter New Password</string>
+    <string name="str_confirm_new_password">Confirm New Password</string>
 
 
 </resources>
