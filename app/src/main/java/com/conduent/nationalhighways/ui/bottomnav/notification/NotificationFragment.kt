@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -215,6 +216,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun onClick(v: View?) {
         when (v?.id) {
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
     override fun onApplyCLickListener(cat: String) {

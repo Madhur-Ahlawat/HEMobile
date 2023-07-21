@@ -156,9 +156,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:layout_width="0dp"
+                        android:gravity="left|center"
+                        android:layout_height="wrap_content"
                         android:id="@+id/emailAddress"
                         style="@style/RegularTextBlack"
-
+                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
@@ -206,6 +209,7 @@
                     <TextView
                         android:id="@+id/mobileNumber"
                         style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
                         android:text="Not provided"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"

@@ -1284,6 +1284,11 @@
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
     <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
     <string name="two_factor_verification">Two Factor Verification</string>
+    <string name="change_your_password">Change your password</string>
+    <string name="enter_current_password">Enter current password</string>
+    <string name="str_current_password">Current Password</string>
+    <string name="str_enter_new_password">Enter New Password</string>
+    <string name="str_confirm_new_password">Confirm New Password</string>
 
 
 </resources>

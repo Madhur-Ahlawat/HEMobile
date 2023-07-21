@@ -95,7 +95,7 @@
                     tools:listitem="@layout/item_case_history" />
 
 
-                <com.google.android.material.button.MaterialButton
+                <com.conduent.nationalhighways.utils.widgets.NHButton
                     android:id="@+id/btnGoStart"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
@@ -112,7 +112,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
+                <com.conduent.nationalhighways.utils.widgets.NHButton
                     android:id="@+id/btnRaiseNewQuery"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
@@ -136,6 +136,7 @@
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"

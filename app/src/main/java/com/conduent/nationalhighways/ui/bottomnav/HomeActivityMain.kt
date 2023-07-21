@@ -89,16 +89,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         1 -> {
                             if (navController.currentDestination?.id != R.id.vehicleFragment) {
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding!!.fragmentContainerView.findNavController()
-                                    .navigate(R.id.vehicleFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()
+                                    ?.navigate(R.id.vehicleFragment)
                             }
                         }
 
                         2 -> {
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
+
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding!!.fragmentContainerView.findNavController()
-                                    .navigate(R.id.notificationFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()
+                                    ?.navigate(R.id.notificationFragment)
                             }
                         }
 
@@ -108,8 +109,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 dataBinding?.titleTxt?.text =
                                     getString(R.string.txt_my_account)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding!!.fragmentContainerView.findNavController()
-                                    .navigate(R.id.accountFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()
+                                    ?.navigate(R.id.accountFragment)
                             }
                         }
                     }

@@ -72,6 +72,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editMobileNumber.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
+        binding.editPassword.setOnClickListener(this)
+        binding.editEmailAddress.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -134,9 +136,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 findNavController().navigate(R.id.action_profileManagementFragment_to_personalInfoFragment,bundle())
             }
             R.id.editAddress -> {
-
                 findNavController().navigate(R.id.action_profileManagementFragment_to_postCodeFragment,bundle())
-
             }
             R.id.editEmailAddress -> {
                 findNavController().navigate(R.id.action_profileManagementFragment_to_emailAddressFragment,bundle())
@@ -149,8 +149,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
             R.id.editTwoStepVerification -> {
-
                 findNavController().navigate(R.id.action_profileManagementFragment_to_twoStepCommunicationFragment,bundle())
+            }
+            R.id.editPassword -> {
+                findNavController().navigate(R.id.action_profileManagementFragment_to_changePassword,bundle())
             }
         }
     }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/dashBoardFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew"
-        android:label="Dashboard"
+        android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashBoardFragment_to_notificationsFrament"
@@ -300,7 +300,7 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.AccountFragment"
-        android:label="Account Management"
+        android:label="My Account"
         tools:layout="@layout/fragment_account_new">
 
         <action
@@ -323,7 +323,7 @@
     <fragment
         android:id="@+id/optForSmsFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.OptForSmsFragment"
-        android:label="OptForSmsFragment"
+        android:label="Communication preferences"
         tools:layout="@layout/fragment_opt_for_sms">
         <action
             android:id="@+id/action_optForSmsFragment_to_mobileVerificationFragment"
@@ -344,7 +344,7 @@
     <fragment
         android:id="@+id/HWMobileNumberCaptureVC"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.HWMobileNumberCaptureVC"
-        android:label="HWMobileNumberCaptureVC"
+        android:label="Profile mobile number"
         tools:layout="@layout/fragment_mobile_number_capture_vc">
 
         <action
@@ -383,9 +383,11 @@
     <fragment
         android:id="@+id/profileManagementFragment"
         android:name="com.conduent.nationalhighways.ui.account.profile.ProfileManagementFragment"
-        android:label="ProfileManagementFragment"
+        android:label="Profile Management"
         tools:layout="@layout/fragment_create_account_summary">
-
+        <action
+            android:id="@+id/action_profileManagementFragment_to_changePassword"
+            app:destination="@id/twoStepVerificationFragment" />
         <action
             android:id="@+id/action_profileManagementFragment_to_personalInfoFragment"
             app:destination="@id/createAccountPersonalInfo" />
@@ -487,7 +489,7 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment"
-        android:label="Notification Screen"
+        android:label="Notifications"
         tools:layout="@layout/fragment_notification">
 
     </fragment>
