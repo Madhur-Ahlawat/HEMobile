@@ -248,7 +248,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                                 }
                                 val model = CommunicationPrefsRequestModel(mList)
-                                if(data?.personalInformation?.phoneNumber.isNullOrEmpty()){
+                                if(data?.personalInformation?.phoneCell.isNullOrEmpty()){
                                     verifyMobileNumber(model)
                                 }else {
                                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

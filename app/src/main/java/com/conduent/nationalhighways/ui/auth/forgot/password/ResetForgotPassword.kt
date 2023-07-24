@@ -78,6 +78,14 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.subTitle.text = getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+            Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.profile_2fa)
+                val data = navData as PersonalInformation?
+                binding.title.text = getString(R.string.two_factor_change_successful)
+                binding.subTitle.text = getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress)
+                binding.btnSubmit.text = getString(R.string.str_continue)
+            }
         }
 
 
@@ -99,12 +107,12 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         findNavController().popBackStack()
                     }
 
-                    Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED,Constants.PROFILE_MANAGEMENT -> {
+                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE,Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED,Constants.PROFILE_MANAGEMENT -> {
                         findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                     }
 
                     else -> {
-                        AdobeAnalytics.setActionTrack(
+                       /* AdobeAnalytics.setActionTrack(
                             "submit",
                             "login:forgot password:choose options:otp:new password set:password reset success",
                             "forgot password",
@@ -112,10 +120,11 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                             "login",
                             (requireActivity() as AuthActivity).previousScreen,
                             sessionManager.getLoggedInUser()
-                        )
+                        )*/
 
                         requireActivity().startNormalActivity(LoginActivity::class.java)
                         requireActivity().finish()
+
                     }
                 }
             }

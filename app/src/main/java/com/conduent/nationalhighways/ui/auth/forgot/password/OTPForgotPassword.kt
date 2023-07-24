@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
@@ -28,6 +30,7 @@ import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
+import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -72,6 +75,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var accountInformation: AccountInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+    private val viewModelProfile: ProfileViewModel by viewModels()
 
 
     override fun getFragmentBinding(
@@ -160,10 +164,32 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
             observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
             observe(communicationPrefsViewModel.updateCommunicationPrefs, ::updateCommunicationSettingsPrefs)
+            observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
         }
 
         isViewCreated = true
 
+    }
+
+    private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                Log.d("Success", "Updated successfully")
+                val data = navData as ProfileDetailModel?
+                val bundle = Bundle()
+
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                findNavController().navigate(R.id.action_otpForgotFragment_to_resetForgotPassword,bundle)
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
     }
 
     private fun updateCommunicationSettingsPrefs(resource: Resource<CommunicationPrefsResp?>?) {
@@ -224,12 +250,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         }
                     }
                     Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE ->{
-                        val bundle = Bundle()
                         val data = navData as ProfileDetailModel?
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                        findNavController().navigate(R.id.action_otpForgotFragment_to_resetForgotPassword,bundle)
+                        if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                            updateStandardUserProfile(data)
+                        }else{
+                            updateBusinessUserProfile(data)
+                        }
                     }
                     FORGOT_PASSWORD_FLOW -> {if (!timeFinish) {
                         loader?.show(
@@ -553,6 +579,68 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
             else -> {
             }
+        }
+
+    }
+
+    private fun updateBusinessUserProfile(
+        dataModel: ProfileDetailModel?
+    ) {
+        dataModel?.run {
+            val request = UpdateProfileRequest(
+                firstName = personalInformation?.firstName,
+                lastName = personalInformation?.lastName,
+                addressLine1 = personalInformation?.addressLine1,
+                addressLine2 = personalInformation?.addressLine2,
+                city = personalInformation?.city,
+                state = personalInformation?.state,
+                zipCode = personalInformation?.zipcode,
+                zipCodePlus = personalInformation?.zipCodePlus,
+                country = personalInformation?.country,
+                emailAddress = personalInformation?.emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
+                phoneCell = data?.optionValue.toString(),
+                phoneDay = personalInformation?.phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                fein = accountInformation?.fein,
+                businessName = personalInformation?.customerName
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+
+    }
+
+    private fun updateStandardUserProfile(
+        dataModel: ProfileDetailModel?
+    ) {
+
+        dataModel?.personalInformation?.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = data?.optionValue.toString(),
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = ""
+            )
+
+            viewModelProfile.updateUserDetails(request)
         }
 
     }

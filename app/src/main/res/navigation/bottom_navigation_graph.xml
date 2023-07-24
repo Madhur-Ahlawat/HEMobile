@@ -420,6 +420,9 @@
         <action
             android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
             app:destination="@id/HWMobileNumberCaptureVC" />
+        <action
+            android:id="@+id/action_twoStepVerificationFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment"/>
 
     </fragment>
 

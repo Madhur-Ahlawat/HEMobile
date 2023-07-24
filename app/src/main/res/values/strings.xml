@@ -1260,6 +1260,7 @@
     <string name="address_change_successful">Address change successful</string>
     <string name="communication_change_successful">Communication preference change successful</string>
     <string name="mobile_change_successful">Mobile phone change successful</string>
+    <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
     <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to\n %s</string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
@@ -1289,6 +1290,7 @@
     <string name="str_current_password">Current Password</string>
     <string name="str_enter_new_password">Enter New Password</string>
     <string name="str_confirm_new_password">Confirm New Password</string>
+    <string name="profile_2fa">Profile 2FA</string>
 
 
 </resources>

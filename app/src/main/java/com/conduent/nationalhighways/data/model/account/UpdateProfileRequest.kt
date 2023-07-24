@@ -34,5 +34,6 @@ data class UpdateProfileRequest(
     @SerializedName("securityCode") val securityCode: String?=null,
     @SerializedName("businessName") val businessName: String?=null,
     @SerializedName("fein") var fein: String?=null,
+    @SerializedName("mfaEnabled") var mfaEnabled: String?=null,
 
     ) : Parcelable

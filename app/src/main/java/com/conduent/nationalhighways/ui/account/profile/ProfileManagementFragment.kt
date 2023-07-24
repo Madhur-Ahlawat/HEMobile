@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -91,11 +92,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         profileDetailModel = status.data
                         (personalInformation?.firstName +" "+ personalInformation?.lastName).also { binding.fullName.text = it }
 
-                        /*if (dataModel.twoStepVerification) {
+                        if (accountInformation?.mfaEnabled.equals("true",true)){
                             binding.twoStepVerification.text = getString(R.string.yes)
                         } else {
                             binding.twoStepVerification.text = getString(R.string.no)
-                        }*/
+                        }
 
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
@@ -104,18 +105,12 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                         if(personalInformation?.phoneCell.isNullOrEmpty().not()){
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
-                            personalInformation?.phoneCell?.let { binding.mobileNumber.text = it }
+                            personalInformation?.phoneCell?.let { binding.mobileNumber.text = personalInformation?.phoneCellCountryCode+" "+it }
                         }
                         if(personalInformation?.phoneDay.isNullOrEmpty().not()){
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                             personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
                         }
-
-                        /* if (NewCreateAccountRequestModel.communicationTextMessage && NewCreateAccountRequestModel.twoStepVerification) {
-                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
-                         } else {
-                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
-                         }*/
                     }
                 }
 
@@ -129,7 +124,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     }
 
     override fun onClick(v: View?) {
-
+        val bundle = Bundle()
+        bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
         when (v?.id) {
 
             R.id.editFullName -> {
@@ -142,14 +138,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 findNavController().navigate(R.id.action_profileManagementFragment_to_emailAddressFragment,bundle())
             }
             R.id.editMobileNumber -> {
-                val bundle = Bundle()
+
                 bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_MOBILE_CHANGE)
-                bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
                 findNavController().navigate(R.id.action_profileManagementFragment_to_mobileNumberFragment,bundle)
             }
 
             R.id.editTwoStepVerification -> {
-                findNavController().navigate(R.id.action_profileManagementFragment_to_twoStepCommunicationFragment,bundle())
+                bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_2FA_CHANGE)
+                findNavController().navigate(R.id.action_profileManagementFragment_to_twoStepCommunicationFragment,bundle)
             }
             R.id.editPassword -> {
                 findNavController().navigate(R.id.action_profileManagementFragment_to_changePassword,bundle())
