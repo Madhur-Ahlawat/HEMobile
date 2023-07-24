@@ -177,7 +177,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
             val intent = Intent(this@LoginActivity, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.CROSSINGCOUNT, count)
+            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
 
@@ -331,7 +331,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-            navigateHomeActivity()
+            // navigateHomeActivity()
 
         }
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()

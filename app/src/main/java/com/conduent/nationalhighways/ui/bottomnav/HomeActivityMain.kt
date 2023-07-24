@@ -31,7 +31,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     @Inject
     lateinit var api: ApiService
-    var dataBinding: ActivityHomeMainBinding?=null
+    var dataBinding: ActivityHomeMainBinding? = null
     private lateinit var navController: NavController
 
     companion object {
@@ -40,24 +40,18 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var crossing: TransactionData? = null
         var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
     }
-    fun showHideToolbar(isShown:Boolean){
-        if(isShown) dataBinding?.idToolBarLyt?.visible() else dataBinding?.idToolBarLyt?.gone()
+
+    fun showHideToolbar(isShown: Boolean) {
+        if (isShown) dataBinding?.idToolBarLyt?.visible() else dataBinding?.idToolBarLyt?.gone()
     }
 
     override fun initViewBinding() {
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
-        navController.addOnDestinationChangedListener(object :
-            NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                dataBinding!!.titleTxt.text = destination.label
-            }
-        })
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            dataBinding!!.titleTxt.text = destination.label
+        }
     }
 
     private fun setView() {
@@ -119,30 +113,30 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         )
     }
 
-override fun observeViewModel() {}
+    override fun observeViewModel() {}
 
-override fun onStart() {
-super.onStart()
-loadSession()
-}
+    override fun onStart() {
+        super.onStart()
+        loadSession()
+    }
 
-override fun onUserInteraction() {
-super.onUserInteraction()
-loadSession()
-}
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
 
-private fun loadSession() {
-LogoutUtil.stopLogoutTimer()
-LogoutUtil.startLogoutTimer(this)
-}
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
 
-override fun onLogout() {
-sessionManager.clearAll()
-Utils.sessionExpired(this)
-}
+    override fun onLogout() {
+        sessionManager.clearAll()
+        Utils.sessionExpired(this)
+    }
 
-override fun onDestroy() {
-LogoutUtil.stopLogoutTimer()
-super.onDestroy()
-}
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }
