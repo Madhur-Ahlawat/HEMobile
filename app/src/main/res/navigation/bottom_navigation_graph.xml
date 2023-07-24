@@ -369,7 +369,21 @@
 
 
     </fragment>
-
+    <fragment
+        android:id="@+id/changePasswordSuccessProfile"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
+        android:label="Profile password"
+        tools:layout="@layout/fragment_change_password_profile">
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordProfile"
+        android:name="com.conduent.nationalhighways.ui.account.profile.password.ChangePasswordProfileFragment"
+        android:label="Profile password"
+        tools:layout="@layout/fragment_change_password_profile">
+        <action
+            android:id="@+id/action_changePasswordProfile_to_profileParsswordSuccessFragment"
+            app:destination="@id/changePasswordSuccessProfile" />
+    </fragment>
     <fragment
         android:id="@+id/resend_code_fragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
@@ -387,7 +401,7 @@
         tools:layout="@layout/fragment_create_account_summary">
         <action
             android:id="@+id/action_profileManagementFragment_to_changePassword"
-            app:destination="@id/twoStepVerificationFragment" />
+            app:destination="@id/changePasswordProfile" />
         <action
             android:id="@+id/action_profileManagementFragment_to_personalInfoFragment"
             app:destination="@id/createAccountPersonalInfo" />

@@ -44,6 +44,10 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _resetPassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
     val resetPassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _resetPassword
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _changePassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
+    val changePassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _changePassword
+
 
     fun confirmOptionForForgot(email:String) {
 
