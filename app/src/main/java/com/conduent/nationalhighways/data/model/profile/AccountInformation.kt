@@ -49,7 +49,7 @@ data class AccountInformation(
     val businessName: String?,
     var fein: String?,  // company reg no.
     val accSubType: String?,
-    val mfaEnabled: String?,
+    var mfaEnabled: String?,
     val ncId: String?=""
 ) : Parcelable
 

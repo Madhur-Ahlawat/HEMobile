@@ -106,10 +106,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         if(personalInformation?.phoneCell.isNullOrEmpty().not()){
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
                             personalInformation?.phoneCell?.let { binding.mobileNumber.text = personalInformation?.phoneCellCountryCode+" "+it }
-                        }
-                        if(personalInformation?.phoneDay.isNullOrEmpty().not()){
+                        }else if(personalInformation?.phoneDay.isNullOrEmpty().not()){
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                             personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
+                        } else{
+                            binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
                     }
                 }
