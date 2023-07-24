@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -26,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
+import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,6 +77,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editTwoStepVerification.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
         binding.editEmailAddress.setOnClickListener(this)
+        binding.biometricsCard.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -150,6 +153,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
             R.id.editPassword -> {
                 findNavController().navigate(R.id.action_profileManagementFragment_to_changePassword,bundle())
+            }
+            R.id.biometricsCard->{
+                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
+                   putInt(
+                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+                       Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
+                    )
+               }
             }
         }
     }

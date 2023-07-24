@@ -9,6 +9,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
@@ -19,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import com.conduent.nationalhighways.utils.common.Utils
+import androidx.databinding.Observable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,15 +30,15 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     val errorManager: ErrorManager
-) : ViewModel() {
+) : ViewModel(),Observable {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
     val accountDetail: LiveData<Resource<ProfileDetailModel?>?> get() = _accountDetail
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _updatePassword = MutableLiveData<Resource<UpdatePasswordResponseModel?>?>()
-    val updatePassword: LiveData<Resource<UpdatePasswordResponseModel?>?> get() = _updatePassword
+    private val _updatePassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
+    val updatePassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _updatePassword
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _emailValidation = MutableLiveData<Resource<EmailVerificationResponse?>?>()
@@ -118,7 +121,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun updatePassword(model: UpdateAccountPassword?) {
+    fun updatePassword(model: ResetPasswordModel?) {
         viewModelScope.launch {
             try {
                 _updatePassword.postValue(success(repository.updatePassword(model), errorManager))
@@ -127,8 +130,17 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
-    fun checkPassword(model: UpdateAccountPassword?): Pair<Boolean, String> {
+    fun checkPassword(newPassword:String, confirmPassword:String?, currentPassword:String?): Pair<Boolean, String> {
+        var ret = Pair(true, "")
+        if (!Utils.isValidPassword(newPassword)) ret =
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
+        else if (!Utils.isValidPassword(confirmPassword)) ret =
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
+        else if (currentPassword?.equals(newPassword) == true) ret =
+            Pair(false, BaseApplication.INSTANCE?.getString(R.string.current_password_validation) ?: "")
+        return ret
+    }
+    fun checkPassword(model: ResetPasswordModel?): Pair<Boolean, String> {
         var ret = Pair(true, "")
         if (!Utils.isValidPassword(model?.newPassword)) ret =
             Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
@@ -168,5 +180,13 @@ class ProfileViewModel @Inject constructor(
                 _getNominatedContactsApiVal.postValue(ResponseHandler.failure(e))
             }
         }
+    }
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+        TODO("Not yet implemented")
     }
 }

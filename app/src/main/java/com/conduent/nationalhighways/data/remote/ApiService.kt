@@ -296,14 +296,14 @@ interface ApiService {
 
     @PUT(UPDATE_PASSWORD)
     suspend fun updatePassword(
-        @Body model: UpdateAccountPassword?
-    ): Response<UpdatePasswordResponseModel?>?
+        @Body model: ResetPasswordModel?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+        ): Response<ForgotPasswordResponseModel?>?
 
     @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
     suspend fun getPaymentHistoryData(
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
-
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?

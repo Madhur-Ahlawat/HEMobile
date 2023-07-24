@@ -15,12 +15,10 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
-import com.conduent.nationalhighways.ui.account.profile.ProfileActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.account.payments.AccountPaymentActivity
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
@@ -33,7 +31,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

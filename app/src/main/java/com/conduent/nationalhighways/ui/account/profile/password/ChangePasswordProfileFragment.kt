@@ -1,35 +1,46 @@
 package com.conduent.nationalhighways.ui.account.profile.password
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.auth.forgot.password.*
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordViewModel
+import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfileBinding>(),
     View.OnClickListener {
-    private val viewModel: ForgotPasswordViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
     private var passwordVisibile: Boolean = false
@@ -46,46 +57,11 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         FragmentChangePasswordProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
 
         data = arguments?.getParcelable("data")
-        binding.model = ResetPasswordModel(
-            code = data?.code,
-            referenceId = data?.referenceId,
-            newPassword = "",
-            confirmPassword = "",
-            enable = false
-        )
-
-        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_continue)
-            /* AdobeAnalytics.setScreenTrack(
-                 "createAccount:email_setPassword",
-                 "set password",
-                 "english",
-                 "create Account",
-                 "createAccount_email",
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_submit)
-
-            /* AdobeAnalytics.setScreenTrack(
-                 "login:forgot password:choose options:otp:new password set",
-                 "forgot password",
-                 "english",
-                 "login",
-                 (requireActivity() as AuthActivity).previousScreen,
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        }
-
 
         //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
@@ -162,7 +138,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     }
 
     override fun observer() {
-        observe(viewModel.resetPassword, ::handleResetResponse)
+        observe(viewModel.updatePassword, ::handleResetResponse)
         //observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
 
@@ -170,22 +146,21 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
-                if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    NewCreateAccountRequestModel.password =
-                        binding.edtNewPassword.getText().toString().trim()
-                    findNavController().navigate(
-                        R.id.action_createPasswordFragment_to_optForSmsFragment,
-                        bundle
-                    )
-                    return
-                }
-                val validation = viewModel.checkPassword(binding.model)
+                val validation = viewModel.checkPassword(
+                    newPassword = binding.edtNewPassword.editText.text.toString().trim(),
+                    currentPassword = binding.edtCurrentPassword.editText.text.toString().trim(),
+                    confirmPassword = binding.edtConfirmPassword.editText.text.toString().trim()
+                )
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    Logg.logging("NewPassword", "binding.model ${binding.model}")
-                    viewModel.resetPassword(binding.model)
+                    disableButton()
+                    viewModel.updatePassword(
+                        ResetPasswordModel(
+                            currentPassword = binding.edtCurrentPassword.editText.text.toString(),
+                            newPassword = binding.edtNewPassword.editText.text.toString(),
+                            confirmPassword = binding.edtConfirmPassword.editText.text.toString()
+                        )
+                    )
                 } else {
                     showError(binding.root, validation.second)
                 }
@@ -193,46 +168,14 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         }
     }
 
+    fun enableButton() {
+        binding.btnSubmit.isEnabled = true
+        binding.btnSubmit.isFocusable = true
+    }
 
-    private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen, "success",
-                     sessionManager.getLoggedInUser()
-                 )*/
-
-            }
-
-            is Resource.DataError -> {
-                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
-
-                /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen,
-                     status.errorMsg,
-                     sessionManager.getLoggedInUser()
-                 )
- */
-
-                showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-            }
-        }
+    fun disableButton() {
+        binding.btnSubmit.isEnabled = false
+        binding.btnSubmit.isFocusable = false
     }
 
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
@@ -241,7 +184,9 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.success == true) {
+                if (status.data?.statusCode != "1308" && status.data?.message!!.lowercase(Locale.ROOT)
+                        .contains("success")
+                ) {
                     /* AdobeAnalytics.setActionTrack1(
                          "submit",
                          "login:forgot password:choose options:otp:new password set",
@@ -252,22 +197,20 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                          "success",
                          sessionManager.getLoggedInUser()
                      )*/
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-                        findNavController().navigate(
-                            R.id.action_createPasswordFragment_to_resetFragment,
-                            bundle
-                        )
-
-                    } else {
-                        findNavController().navigate(
-                            R.id.action_createPasswordFragment_to_optForSmsFragment,
-                            bundle
-                        )
+                    sessionManager.clearAll()
+                    Intent(
+                        requireActivity(),
+                        ProfilePasswordChangeSuccessActivity::class.java
+                    ).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(this)
                     }
-                } else
+
+                } else {
+                    enableButton()
                     showError(binding.root, status.data?.message)
+                }
             }
 
             is Resource.DataError -> {
@@ -298,25 +241,10 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 .trim().length) > 7) && (binding.edtNewPassword.getText().toString()
                 .trim() == binding.edtConfirmPassword.getText().toString().trim())
         ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConfirmPassword.getText().toString(),
-                enable = true
-            )
             binding.btnSubmit.isEnabled = true
 
         } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConfirmPassword.getText().toString(),
-                enable = false
-            )
             binding.btnSubmit.isEnabled = false
-
         }
 
         if (binding.edtNewPassword.getText().toString()
@@ -338,26 +266,9 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 .trim().length) > 7 && (binding.edtNewPassword.getText().toString()
                 .trim() == binding.edtConfirmPassword.getText().toString().trim()))
         ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConfirmPassword.getText().toString(),
-                enable = true
-            )
             binding.btnSubmit.isEnabled = true
-
         } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConfirmPassword.getText().toString(),
-                enable = false
-            )
             binding.btnSubmit.isEnabled = false
-
-
         }
 
 

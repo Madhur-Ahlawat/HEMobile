@@ -70,7 +70,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         lifecycleScope.launch {
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
 
@@ -177,7 +176,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
             val intent = Intent(this@LoginActivity, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.CROSSINGCOUNT, count)
+            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
 
@@ -285,6 +284,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
+                binding.btnLogin.isEnabled=true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -312,7 +312,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
-
+                binding.btnLogin.isEnabled=true
             }
         }
 
@@ -331,7 +331,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-            navigateHomeActivity()
+            // navigateHomeActivity()
 
         }
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
