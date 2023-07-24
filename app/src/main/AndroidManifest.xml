@@ -51,6 +51,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount" />
         <activity
+            android:name=".ui.account.profile.password.ProfilePasswordChangeSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CreateAccount" />
+        <activity
             android:name=".ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileDark" />

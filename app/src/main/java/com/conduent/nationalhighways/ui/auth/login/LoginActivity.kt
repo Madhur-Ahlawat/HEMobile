@@ -70,7 +70,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         lifecycleScope.launch {
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
 
@@ -285,6 +284,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
+                binding.btnLogin.isEnabled=true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -312,7 +312,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
-
+                binding.btnLogin.isEnabled=true
             }
         }
 

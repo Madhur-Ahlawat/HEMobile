@@ -373,7 +373,7 @@
         android:id="@+id/changePasswordSuccessProfile"
         android:name="com.conduent.nationalhighways.ui.account.profile.password.ProfilePasswordSuccessfulFragment"
         android:label="Profile password"
-        tools:layout="@layout/fragment_change_password_profile">
+        tools:layout="@layout/activity_change_password_success_profile">
     </fragment>
     <fragment
         android:id="@+id/changePasswordProfile"

@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.profile.password
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswo
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -32,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -150,6 +153,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 )
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    disableButton()
                     viewModel.updatePassword(
                         ResetPasswordModel(
                             currentPassword = binding.edtCurrentPassword.editText.text.toString(),
@@ -164,13 +168,25 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         }
     }
 
+    fun enableButton() {
+        binding.btnSubmit.isEnabled = true
+        binding.btnSubmit.isFocusable = true
+    }
+
+    fun disableButton() {
+        binding.btnSubmit.isEnabled = false
+        binding.btnSubmit.isFocusable = false
+    }
+
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.success == true) {
+                if (status.data?.statusCode != "1308" && status.data?.message!!.lowercase(Locale.ROOT)
+                        .contains("success")
+                ) {
                     /* AdobeAnalytics.setActionTrack1(
                          "submit",
                          "login:forgot password:choose options:otp:new password set",
@@ -181,15 +197,20 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                          "success",
                          sessionManager.getLoggedInUser()
                      )*/
+                    sessionManager.clearAll()
+                    Intent(
+                        requireActivity(),
+                        ProfilePasswordChangeSuccessActivity::class.java
+                    ).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(this)
+                    }
 
-                    findNavController().navigate(
-                        R.id.action_changePasswordProfile_to_profileParsswordSuccessFragment
-                    )
-
-
-
-                } else
+                } else {
+                    enableButton()
                     showError(binding.root, status.data?.message)
+                }
             }
 
             is Resource.DataError -> {
