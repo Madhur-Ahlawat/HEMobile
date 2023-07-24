@@ -388,7 +388,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
             val intent = Intent(this, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.CROSSINGCOUNT, count)
+            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
 
