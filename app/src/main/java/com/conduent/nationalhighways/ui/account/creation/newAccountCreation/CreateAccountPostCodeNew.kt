@@ -79,11 +79,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         when (v?.id) {
             R.id.btnFindAddress -> {
                 val data = navData as ProfileDetailModel?
-                if(binding.inputPostCode.getText().toString().equals(data?.personalInformation?.zipcode, true)){
+              /*  if(binding.inputPostCode.getText().toString().equals(data?.personalInformation?.zipcode, true)){
                     findNavController().popBackStack()
-                }else {
+                }else {*/
                     validation()
-                }
+//                }
             }
 
             R.id.btnEnterAddressManually -> {

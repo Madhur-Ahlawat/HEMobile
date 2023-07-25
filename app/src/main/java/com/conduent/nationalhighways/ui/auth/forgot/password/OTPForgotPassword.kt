@@ -41,6 +41,7 @@ import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOB
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
@@ -172,7 +173,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
@@ -249,7 +252,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             communicationPrefsViewModel.updateCommunicationPrefs(data)
                         }
                     }
-                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE ->{
+                    PROFILE_MANAGEMENT_2FA_CHANGE,Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE ->{
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                         val data = navData as ProfileDetailModel?
                         if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
                             updateStandardUserProfile(data)

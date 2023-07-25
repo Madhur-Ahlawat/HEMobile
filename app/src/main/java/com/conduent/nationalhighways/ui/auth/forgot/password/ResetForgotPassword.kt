@@ -16,6 +16,11 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
@@ -107,8 +112,12 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         findNavController().popBackStack()
                     }
 
-                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE,Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED,Constants.PROFILE_MANAGEMENT -> {
+                    PROFILE_MANAGEMENT_2FA_CHANGE,PROFILE_MANAGEMENT_MOBILE_CHANGE,
+                    PROFILE_MANAGEMENT_ADDRESS_CHANGED,PROFILE_MANAGEMENT -> {
                         findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
+                    }
+                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED->{
+                        findNavController().navigate(R.id.action_resetFragment_to_accountManagementFragment)
                     }
 
                     else -> {

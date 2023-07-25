@@ -8,7 +8,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.UpdateAccountPassword
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.profile.UpdatePasswordResponseModel
 import com.conduent.nationalhighways.databinding.FragmentProfilePasswordUpdateBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -33,8 +34,8 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
 
     override fun init() {
         checkButton()
-        binding.data = UpdateAccountPassword(
-            currentPassword = "", newPassword = "", confirmPassword = ""
+        binding.data = ResetPasswordModel(
+            currentPassword = "", newPassword = "", confirmPassword = "", enable = true
         )
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -78,7 +79,7 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
         }
     }
 
-    private fun handleUpdatePasswordResponse(status: Resource<UpdatePasswordResponseModel?>?) {
+    private fun handleUpdatePasswordResponse(status: Resource<ForgotPasswordResponseModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }

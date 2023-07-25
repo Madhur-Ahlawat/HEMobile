@@ -26,7 +26,9 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBinding>(),
     View.OnClickListener {
 //    private lateinit var  navFlow:String // create account , forgot password
@@ -62,9 +64,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
                 val data = navData as ProfileDetailModel?
                 if(data != null){
-                    if(data.accountInformation?.mfaEnabled.equals("true",true)){
-                        binding.twoFactor.isChecked =true
-                    }
+                    binding.twoFactor.isChecked = data.accountInformation?.mfaEnabled.equals("true",true)
                 }
                 binding.btnNext.enable()
             }
@@ -110,7 +110,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                     PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         if(data?.personalInformation?.phoneCell.isNullOrEmpty()){
-//                            verifyMobileNumber(model)
+                            verifyMobileNumber(data)
                         }else {
                             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                             if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
@@ -136,11 +136,12 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         }
     }
 
-    private fun verifyMobileNumber(model: CommunicationPrefsRequestModel) {
+    private fun verifyMobileNumber(model: ProfileDetailModel?) {
         val bundle = Bundle()
+        model?.accountInformation?.mfaEnabled = if(binding.twoFactor.isChecked) "Y" else "N"
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putParcelable(Constants.NAV_DATA_KEY, model)
-//        findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle)
+        findNavController().navigate(R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,bundle)
     }
 
     private fun updateBusinessUserProfile(
@@ -167,7 +168,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 phoneEvening = "",
                 fein = accountInformation?.fein,
                 businessName = personalInformation?.customerName,
-                mfaEnabled = ""+binding.twoFactor.isChecked
+                mfaEnabled = if(binding.twoFactor.isChecked) "Y" else "N"
             )
 
             viewModel.updateUserDetails(request)
@@ -199,7 +200,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
-                mfaEnabled = ""+binding.twoFactor.isChecked
+                mfaEnabled = if(binding.twoFactor.isChecked) "Y" else "N"
             )
 
             viewModel.updateUserDetails(request)

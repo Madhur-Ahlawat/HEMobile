@@ -101,7 +101,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
                 binding.switchCommunication.isChecked = oldCommunicationTextMessage
             }
-            Constants.PROFILE_MANAGEMENT -> {
+            Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val data = navData as ProfileDetailModel?
@@ -110,7 +110,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 communicationPrefsViewModel.getAccountSettingsPrefs()
-                binding.btnNext.enable()
             }
 
         }
@@ -162,10 +161,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     res.data?.let {
                         mAccountResp = it
                     }
-                    val mPhoneNumber = res.data?.personalInformation?.phoneNumber?.replace(
-                        "\\d(?=\\d{4})",
-                        "*"
-                    )
 
                     res.data?.accountInformation?.communicationPreferences?.forEach {
                         if (it != null) {
@@ -177,6 +172,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 binding.switchCommunication.isChecked  = true
                                 smsFlag = "Y"
                             }
+                            binding.checkBoxTerms.visibility = View.GONE
+                            binding.btnNext.enable()
                         }
 
                     }
@@ -221,8 +218,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }else{
                         findNavController().navigate(R.id.action_optForSmsFragment_to_mobileVerificationFragment,bundle())
                     }}
-                    Constants.PROFILE_MANAGEMENT -> {
-                        val data = navData as ProfileDetailModel?
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         val communication = if (binding.switchCommunication.isChecked) "Y" else "N"
                         val push = binding.pushCommunication.isChecked
                         if(smsFlag.equals(communication,true)){
@@ -248,7 +244,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                                 }
                                 val model = CommunicationPrefsRequestModel(mList)
-                                if(data?.personalInformation?.phoneCell.isNullOrEmpty()){
+                                if(mAccountResp?.personalInformation?.phoneCell.isNullOrEmpty()){
                                     verifyMobileNumber(model)
                                 }else {
                                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
