@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AlertMessage(
-    val viewType: Int? = 0,
+    val viewType: Int = 0,
     @SerializedName("messageType") val messageType: String?,
     @SerializedName("category") val category: String?,
     @SerializedName("subCategory") val subCategory: String?,
@@ -20,8 +20,9 @@ data class AlertMessage(
     @SerializedName("message") val message: String?,
     @SerializedName("messageId") val messageId: Int?,
     @SerializedName("cscLookUpKey") val cscLookUpKey: String?,
-    var isRead: Boolean? = false,
-    var iSel: Boolean? = false,
-    var isSelectListItem: Boolean? = false,
-    var isExpanded: Boolean? = false
-): Parcelable
+    var isRead: Boolean = false,
+    var iSel: Boolean = false,
+    var isSelectListItem: Boolean = false,
+    var isExpanded: Boolean = false,
+    var isSeeMore: Boolean = false
+) : Parcelable
