@@ -34,7 +34,6 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     private var isViewCreated:Boolean=false
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var response: SecurityCodeResponseModel? = null
-    private lateinit var  navFlow:String
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation?=null
@@ -54,7 +53,6 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
 
     override fun initCtrl() {
-        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         if (arguments!=null){
             data = arguments?.getParcelable("data")
@@ -82,7 +80,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
 
 
-        if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW||navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
+        if (navFlowCall==Constants.ACCOUNT_CREATION_EMAIL_FLOW||navFlowCall==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
             if (data?.optionType==Constants.EMAIL){
                 binding.subTitle.text=getString(R.string.resend_code,Utils.maskEmail(data?.optionValue.toString()))
 
@@ -122,25 +120,39 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_verify->{
-                if (navFlow==Constants.FORGOT_PASSWORD_FLOW){
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    viewModel.requestOTP(data)
+                when(navFlowCall){
+                    Constants.FORGOT_PASSWORD_FLOW -> {
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        viewModel.requestOTP(data)
+                    }
+                    Constants.ACCOUNT_CREATION_EMAIL_FLOW -> {
+                        hitApi()
+                    }
+                    Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
+                        val bundle = Bundle()
+                        bundle.putParcelable("data", data)
+                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
 
-                }else if (navFlow==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
-                    hitApi()
-                }else if (navFlow==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
-                    val bundle = Bundle()
-                    bundle.putParcelable("data", data)
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                        findNavController().navigate(
+                            R.id.action_resenedCodeFragment_to_otpFragment,
+                            bundle
+                        )
+                    }
+                    Constants.TWOFA -> {
+                        viewModel.twoFARequestOTP(data)
+                    }
+                    else ->{
+                        val bundle = Bundle()
+                        bundle.putParcelable("data", data)
+                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
 
-                    findNavController().navigate(
-                        R.id.action_resenedCodeFragment_to_otpFragment,
-                        bundle
-                    )
-                }else if (navFlow==Constants.TWOFA){
-                    viewModel.twoFARequestOTP(data)
-
+                        findNavController().navigate(
+                            R.id.action_resenedCodeFragment_to_otpFragment,
+                            bundle
+                        )
+                    }
                 }
+
 
 
             }
@@ -158,7 +170,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     bundle.putParcelable("data", data)
                     response = status.data
                     bundle.putParcelable("response", response)
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                    bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                     bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
                     bundle.putParcelable(Constants.REPLENISHMENTINFORMATION,replenishmentInformation)
@@ -208,7 +220,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
 
 
-                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
                     bundle
