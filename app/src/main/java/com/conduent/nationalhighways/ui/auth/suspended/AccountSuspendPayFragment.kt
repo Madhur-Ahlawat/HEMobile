@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
@@ -29,8 +30,10 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -139,14 +142,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     override fun observer() {
 
-       /* lifecycleScope.launch {
+        lifecycleScope.launch {
             observe(
                 manualTopUpViewModel.paymentWithExistingCard,
                 ::handlePaymentWithExistingCardResponse
             )
             observe(manualTopUpViewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
 
-        }*/
+        }
     }
 
     override fun onClick(v: View?) {
@@ -176,11 +179,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString(Constants.TRANSACTIONID,"761234567892")
 
                 }
-                findNavController().navigate(
+               /* findNavController().navigate(
                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                     bundle
-                )
-               // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                )*/
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             }
 
             R.id.btnCancel -> {
@@ -247,7 +250,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             easyPay = ""
         )
         Log.d("paymentRequest",Gson().toJson(model))
-       // manualTopUpViewModel.paymentWithExistingCard(model)
+        manualTopUpViewModel.paymentWithExistingCard(model)
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
