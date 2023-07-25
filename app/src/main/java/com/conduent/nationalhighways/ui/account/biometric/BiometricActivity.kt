@@ -106,6 +106,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         binding.switchFingerprintLogin.isChecked = sessionManager.fetchTouchIdEnabled()
 
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
+            binding.btnSave.isEnabled=true
 
             if (isChecked) {
                 val biometricManager = BiometricManager.from(this)
@@ -237,22 +238,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.biometric_cancel -> {
-                if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-                    if (twoFA) {
-                        val intent = Intent(this, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                        startActivity(intent)
-                    } else {
-                        dashboardViewModel.getAccountDetailsData()
+                checkTwoFA()
 
-                    }
-
-                } else {
-                    finish()
-                }
             }
         }
     }
+
 
     private fun saveBiometric() {
         if (binding.switchFingerprintLogin.isChecked) {
@@ -263,22 +254,28 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             sessionManager.saveTouchIdEnabled(false)
 
 
-
         }
+        checkTwoFA()
+
+
+    }
+
+    private fun checkTwoFA() {
         if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
             if (twoFA) {
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                 startActivity(intent)
             } else {
+                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+
                 dashboardViewModel.getAccountDetailsData()
+
             }
 
         } else {
             finish()
         }
-
-
     }
 
 
@@ -380,6 +377,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
         }
     }
+
     private fun navigateWithCrossing(count: Int) {
 
 
@@ -403,7 +401,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
 
     }
-
 
 
 }

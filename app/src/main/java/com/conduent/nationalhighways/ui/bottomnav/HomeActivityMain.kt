@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
-import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
@@ -49,9 +47,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            dataBinding!!.titleTxt.text = destination.label
-        }
     }
 
     private fun setView() {
@@ -75,8 +70,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding!!.fragmentContainerView.findNavController()
-                                    .navigate(R.id.dashBoardFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()
+                                    ?.navigate(R.id.dashBoardFragment)
                             }
                         }
 

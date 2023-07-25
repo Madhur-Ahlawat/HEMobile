@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_resetFragment_to_profileManagementFragment"
             app:destination="@id/profileManagementFragment" />
+        <action
+            android:id="@+id/action_resetFragment_to_accountManagementFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 
     <fragment
