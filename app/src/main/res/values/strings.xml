@@ -1292,6 +1292,7 @@
     <string name="str_confirm_new_password">Confirm New Password</string>
     <string name="profile_2fa">Profile 2FA</string>
     <string name="password_change_successful">Password change successful</string>
+    <string name="clear_notification">CLEAR NOTIFICATION</string>
 
 
 </resources>
