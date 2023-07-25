@@ -24,12 +24,14 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
@@ -37,7 +39,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var profileDetailModel : ProfileDetailModel? = null
+    private var profileDetailModel: ProfileDetailModel? = null
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -67,6 +72,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
     }
+
     override fun initCtrl() {
 
         binding.editFullName.setOnClickListener(this)
@@ -77,9 +83,19 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editTwoStepVerification.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
         binding.editEmailAddress.setOnClickListener(this)
-        binding.biometricsCard.setOnClickListener(this)
+        binding.editBiometrics.setOnClickListener(this)
+
+
     }
 
+    override fun onStart() {
+        if (sessionManager.fetchTouchIdEnabled()) {
+            binding.biometrics.text = getString(R.string.yes)
+        } else {
+            binding.biometrics.text = getString(R.string.no)
+        }
+        super.onStart()
+    }
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
     }
@@ -93,9 +109,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         profileDetailModel = status.data
-                        (personalInformation?.firstName +" "+ personalInformation?.lastName).also { binding.fullName.text = it }
+                        (personalInformation?.firstName + " " + personalInformation?.lastName).also {
+                            binding.fullName.text = it
+                        }
 
-                        if (accountInformation?.mfaEnabled.equals("true",true)){
+                        if (accountInformation?.mfaEnabled.equals("true", true)) {
                             binding.twoStepVerification.text = getString(R.string.yes)
                         } else {
                             binding.twoStepVerification.text = getString(R.string.no)
@@ -104,24 +122,29 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
 
-                        binding.emailAddressProfile.text =personalInformation?.emailAddress
+                        binding.emailAddressProfile.text = personalInformation?.emailAddress
 
-                        if(personalInformation?.phoneCell.isNullOrEmpty().not()){
+                        if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
-                            personalInformation?.phoneCell?.let { binding.mobileNumber.text = personalInformation?.phoneCellCountryCode+" "+it }
-                        }else if(personalInformation?.phoneDay.isNullOrEmpty().not()){
+                            personalInformation?.phoneCell?.let {
+                                binding.mobileNumber.text =
+                                    personalInformation?.phoneCellCountryCode + " " + it
+                            }
+                        } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                             personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
-                        } else{
+                        } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
                     }
                 }
 
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, status.errorMsg)
             }
+
             else -> {
             }
         }
@@ -129,46 +152,69 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     override fun onClick(v: View?) {
         val bundle = Bundle()
-        bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
+        bundle.putParcelable(NAV_DATA_KEY, profileDetailModel)
         when (v?.id) {
 
             R.id.editFullName -> {
-                findNavController().navigate(R.id.action_profileManagementFragment_to_personalInfoFragment,bundle())
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_personalInfoFragment,
+                    bundle()
+                )
             }
+
             R.id.editAddress -> {
-                findNavController().navigate(R.id.action_profileManagementFragment_to_postCodeFragment,bundle())
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_postCodeFragment,
+                    bundle()
+                )
             }
+
             R.id.editEmailAddress -> {
-                findNavController().navigate(R.id.action_profileManagementFragment_to_emailAddressFragment,bundle())
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_emailAddressFragment,
+                    bundle()
+                )
             }
+
             R.id.editMobileNumber -> {
 
-                bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_MOBILE_CHANGE)
-                findNavController().navigate(R.id.action_profileManagementFragment_to_mobileNumberFragment,bundle)
+                bundle.putString(NAV_FLOW_KEY, PROFILE_MANAGEMENT_MOBILE_CHANGE)
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_mobileNumberFragment,
+                    bundle
+                )
             }
 
             R.id.editTwoStepVerification -> {
-                bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT_2FA_CHANGE)
-                findNavController().navigate(R.id.action_profileManagementFragment_to_twoStepCommunicationFragment,bundle)
+                bundle.putString(NAV_FLOW_KEY, PROFILE_MANAGEMENT_2FA_CHANGE)
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_twoStepCommunicationFragment,
+                    bundle
+                )
             }
+
             R.id.editPassword -> {
-                findNavController().navigate(R.id.action_profileManagementFragment_to_changePassword,bundle())
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_changePassword,
+                    bundle()
+                )
             }
-            R.id.biometricsCard->{
+
+            R.id.editBiometrics -> {
                 requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
-                   putInt(
+                    putInt(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
-                       Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
+                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
                     )
-               }
+                }
             }
         }
     }
 
-    private fun bundle() : Bundle {
+    private fun bundle(): Bundle {
         val bundle = Bundle()
-        bundle.putString(NAV_FLOW_KEY,PROFILE_MANAGEMENT)
-        bundle.putParcelable(NAV_DATA_KEY,profileDetailModel)
+        bundle.putString(NAV_FLOW_KEY, PROFILE_MANAGEMENT)
+        bundle.putParcelable(NAV_DATA_KEY, profileDetailModel)
         return bundle
     }
 

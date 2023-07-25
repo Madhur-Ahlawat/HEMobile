@@ -140,5 +140,8 @@
     <dimen name="_187dp">187dp</dimen>
     <dimen name="_37dp">37dp</dimen>
     <dimen name="_121dp">121dp</dimen>
+    <dimen name="_60dp">60dp</dimen>
+    <dimen name="_39dp">39dp</dimen>
+    <dimen name="_52dp">52dp</dimen>
     />
 </resources>

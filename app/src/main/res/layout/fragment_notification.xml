@@ -68,7 +68,6 @@
                 android:elevation="@dimen/_5dp">
 
                 <CheckBox
-                    android:buttonTint="#E0E0E0"
                     android:id="@+id/selectAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,6 +75,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/_25dp"
                     android:layout_marginTop="@dimen/_26dp"
+                    android:buttonTint="#E0E0E0"
                     android:gravity="center" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView

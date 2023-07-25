@@ -32,13 +32,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     View.OnClickListener, NotificationItemClick {
 
     private var mAdapter: NotificationAdapterNew?=null
-    private var isPrioritySelected: Boolean?=null
-    private var isStandardSelected: Boolean?=null
+    private var isPrioritySelected: Boolean=true
+    private var isStandardSelected: Boolean=false
     private var mLayoutManager: LinearLayoutManager?=null
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var notifications : MutableList<AlertMessage?>?= mutableListOf()
-
+companion object{
+    var isSelectionMode:Boolean=false
+}
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -122,6 +124,25 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             selectStandard()
 //            setStandardNotifications()
         }
+        binding?.selectAll?.setOnClickListener {
+            if(binding.selectAll.isChecked){
+                selectAllNotification()
+            }
+            else{
+                unSelectAllNotifications()
+            }
+        }
+    }
+
+    fun selectAllNotification() {
+        isSelectionMode=true
+        notifications?.forEach { it?.isSelectListItem=true }
+        mAdapter?.notifyDataSetChanged()
+    }
+
+    fun unSelectAllNotifications() {
+        notifications?.forEach { it?.isSelectListItem=false }
+        mAdapter?.notifyDataSetChanged()
     }
 
 
