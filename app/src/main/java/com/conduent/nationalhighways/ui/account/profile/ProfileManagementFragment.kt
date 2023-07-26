@@ -169,7 +169,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 )
             }
 
-            R.id.editEmailAddress -> {
+            R.id.editEmailAddressProfile -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_emailAddressFragment,
                     bundle()

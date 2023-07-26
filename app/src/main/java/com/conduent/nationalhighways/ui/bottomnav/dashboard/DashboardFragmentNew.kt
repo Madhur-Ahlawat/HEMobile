@@ -594,6 +594,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
+        requireActivity().finish()
     }
 
     override fun onLogOutClick() {
