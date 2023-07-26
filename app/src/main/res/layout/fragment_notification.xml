@@ -43,7 +43,6 @@
                 android:id="@+id/standard"
                 android:layout_width="@dimen/_187dp"
                 android:layout_height="@dimen/_53dp"
-                android:layout_marginEnd="@dimen/_12sdp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_standard"

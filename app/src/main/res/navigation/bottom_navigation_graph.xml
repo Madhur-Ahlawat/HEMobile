@@ -403,6 +403,9 @@
         android:label="Profile Management"
         tools:layout="@layout/fragment_create_account_summary">
         <action
+            android:id="@+id/action_profileManagementFragment_to_change_email_profile"
+            app:destination="@id/fragmentChangeEmailProfile" />
+        <action
             android:id="@+id/action_profileManagementFragment_to_changePassword"
             app:destination="@id/changePasswordProfile" />
         <action
@@ -416,7 +419,7 @@
             app:destination="@id/fragment_manual_address" />
         <action
             android:id="@+id/action_profileManagementFragment_to_emailAddressFragment"
-            app:destination="@id/forgotPasswordFragment" />
+            app:destination="@id/fragmentChangeEmailProfile" />
         <action
             android:id="@+id/action_profileManagementFragment_to_mobileNumberFragment"
             app:destination="@id/HWMobileNumberCaptureVC" />
@@ -475,6 +478,38 @@
         <action
             android:id="@+id/action_createAccountPersonalInfo_to_resetForgotPassword"
             app:destination="@id/resetFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentProfileEmailChangeSuccess"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.FragmentProfileEmailChangeSuccessful"
+        android:label="Chnage email"
+        tools:layout="@layout/fragment_profile_email_change_success">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentProfileConfirmEmailSecurityCode"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.FragmentProfileConfirmEmailSecurityCode"
+        android:label="Confirm code"
+        tools:layout="@layout/fragment_profile_confirm_email_security_code">
+
+        <action
+            android:id="@+id/action_createAccountPersonalInfo_to_email_change_success"
+            app:destination="@id/fragmentProfileEmailChangeSuccess"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentChangeEmailProfile"
+        android:name="com.conduent.nationalhighways.ui.account.profile.email.FragmentChangeEmailProfile"
+        android:label="Change Email"
+        tools:layout="@layout/fragment_change_email_profile">
+
+        <action
+            android:id="@+id/action_change_email_profile_to_confirm_security_code"
+            app:destination="@id/fragmentProfileConfirmEmailSecurityCode"/>
 
     </fragment>
 

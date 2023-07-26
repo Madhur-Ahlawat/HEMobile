@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.utils.common
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import java.security.PublicKey
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,7 +16,6 @@ import javax.inject.Singleton
 class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     /*private var prefs: SharedPreferences =
         context.getSharedPreferences("HE_MOBILE", Context.MODE_PRIVATE)*/
-
 
 
     companion object {
@@ -35,13 +35,13 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
         const val PUSH_TOKEN = "firebase_notification_token"
-        const val USER_NAME="username"
-        const val NAME="name"
+        const val USER_NAME = "username"
+        const val NAME = "name"
 
-        val BIOMETRICTOKEN: String="ACSInrixTrafficApp"
-        val TOUCH_ID_ENABLED: String="touch_ID"
-        val PRIVATE_KEY: String=""
-        val PUBLIC_KEY: String=""
+        val BIOMETRICTOKEN: String = "ACSInrixTrafficApp"
+        val TOUCH_ID_ENABLED: String = "touch_ID"
+        val PRIVATE_KEY: String = ""
+        val PUBLIC_KEY: String = ""
     }
 
     /**
@@ -105,11 +105,13 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putString(ACCOUNT_STATUS, accountStatus)
         }.apply()
     }
+
     fun saveName(name: String) {
         prefs.edit().apply {
             putString(NAME, name)
         }.apply()
     }
+
     fun fetchName(): String? {
         return prefs.getString(NAME, null)
     }
@@ -162,6 +164,10 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun clearAll() {
         prefs.edit().clear().apply()
+        HomeActivityMain.accountDetailsData = null
+        HomeActivityMain.crossing = null
+        HomeActivityMain.dateRangeModel = null
+        HomeActivityMain.paymentHistoryListData = mutableListOf()
     }
 
     fun setSessionTime(code: Long?) {

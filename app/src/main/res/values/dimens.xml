@@ -143,5 +143,11 @@
     <dimen name="_60dp">60dp</dimen>
     <dimen name="_39dp">39dp</dimen>
     <dimen name="_52dp">52dp</dimen>
+    <dimen name="_13dp">13dp</dimen>
+    <dimen name="_94dp">94dp</dimen>
+    <dimen name="_51dp">51dp</dimen>
+    <dimen name="_17dp">17dp</dimen>
+    <dimen name="_20_dp">20.dp</dimen>
+    <dimen name="_98dp">98dp</dimen>
     />
 </resources>

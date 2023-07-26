@@ -117,6 +117,13 @@ companion object{
     }
 
     private fun setClickListeners() {
+        binding?.btnClearNotification?.setOnClickListener {
+            notifications?.forEach {
+                if(it?.isSelectListItem == true){
+                    viewModel.deleteAlertItem(it?.cscLookUpKey!!)
+                }
+            }
+        }
         binding.priority.setOnClickListener {
             selectPriority()
         }
@@ -160,6 +167,7 @@ companion object{
 
     override fun observer() {
         observe(viewModel.alertLivData, ::handleAlertResponse)
+        observe(viewModel.dismissAlertLiveData, ::handleDismissAlertResponse)
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
@@ -187,6 +195,47 @@ companion object{
 //                    setNotificationAlert(resource.data?.messageList)
 
                 }
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+                binding.notificationsRecyclerview.gone()
+//                binding.noNotificationsTxt.visible()
+
+            }
+
+            else -> {
+                // do nothing
+            }
+        }
+    }
+
+    private fun handleDismissAlertResponse(resource: Resource<String?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                notifications
+//                if (resource.data?.messageList?.isNullOrEmpty() == false) {
+//                    notifications?.clear()
+//                    if(isPrioritySelected!!){
+//                        resource.data?.messageList.forEach {
+//                            if(it!!.category.equals(Constants.PRIORITY)){
+//                                notifications!!.add(it)
+//                            }
+//                        }
+//                    }
+//                    else if(isStandardSelected!!){
+//                        resource.data?.messageList.forEach {
+//                            if(it!!.category.equals(Constants.STANDARD)){
+//                                notifications!!.add(it)
+//                            }
+//                        }
+//                    }
+//                    mAdapter!!.notifyDataSetChanged()
+////                    setPriorityNotifications()
+////                    setNotificationAlert(resource.data?.messageList)
+//
+//                }
             }
 
             is Resource.DataError -> {

@@ -18,10 +18,24 @@ class NotificationViewModel @Inject constructor(
     private val repo: NotificationRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
-
+    private val dismissAlertMutData = MutableLiveData<Resource<String?>?>()
+    val dismissAlertLiveData: LiveData<Resource<String?>?> get() = dismissAlertMutData
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
-
+    fun deleteAlertItem(cssLookUpKey: String) {
+        viewModelScope.launch {
+            try {
+                dismissAlertMutData.postValue(
+                    ResponseHandler.success(
+                        repo.deleteAlertItem(cssLookUpKey),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                alertMutData.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
     fun getAlertsApi(lang: String) {
         viewModelScope.launch {
             try {

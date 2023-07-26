@@ -36,7 +36,7 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
 
         binding.notificationDate.text = Html.fromHtml(item?.createTs, Html.FROM_HTML_MODE_LEGACY)
         binding.message.text = item?.message
-        binding.message.movementMethod = LinkMovementMethod.getInstance()
+//        binding.message.movementMethod = LinkMovementMethod.getInstance()
         if(item!!.isSeeMore){
             binding.message.minLines=1
             binding.message.maxLines=20
