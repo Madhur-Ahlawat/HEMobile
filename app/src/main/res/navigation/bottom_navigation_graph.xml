@@ -354,6 +354,10 @@
             android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
             app:destination="@+id/forgotOtpFragment" />
 
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_resetFragment"
+            app:destination="@+id/resetFragment" />
+
 
     </fragment>
 

@@ -235,6 +235,7 @@ object Constants {
     const val NAV_DATA_KEY = "navDataKey"
     const val Edit_REQUEST_KEY = "editRequestKey"
     const val SHOW_BACK_BUTTON = "showBackButton"
+    const val IS_MOBILE_NUMBER= "isMobileNumber"
     const val EDIT_SUMMARY = "editSummary"
     const val EDIT_ACCOUNT_TYPE = "editAccountType"
     const val EDIT_PROFILE = "editProfile"

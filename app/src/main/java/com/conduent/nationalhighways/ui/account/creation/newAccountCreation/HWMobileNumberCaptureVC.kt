@@ -165,7 +165,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,bundle)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
+                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_resetFragment,bundle)
             }
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)

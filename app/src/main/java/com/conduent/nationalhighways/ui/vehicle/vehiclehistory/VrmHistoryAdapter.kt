@@ -17,10 +17,11 @@ class VrmHistoryAdapter(private val context: Context?, private val onItemClick: 
     var vehicleList: List<VehicleResponse?> = mutableListOf()
 
     fun setList(list: ArrayList<VehicleResponse?>) {
-        list.let {
+//        list.let {
                 vehicleList = list
                 NewCreateAccountRequestModel.addedVehicleList = list
-        }
+            notifyDataSetChanged()
+//        }
     }
 
     override fun onCreateViewHolder(

@@ -109,6 +109,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         profileDetailModel = status.data
+//                        profileDetailModel?.personalInformation?.phoneCell = ""
                         (personalInformation?.firstName + " " + personalInformation?.lastName).also {
                             binding.fullName.text = it
                         }
@@ -136,6 +137,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
+                        if (accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT,true)) {
+                            binding.companyNameCard.visible()
+                            binding.companyName.text = personalInformation?.customerName
+                        }
                     }
                 }
 
@@ -155,7 +160,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         bundle.putParcelable(NAV_DATA_KEY, profileDetailModel)
         when (v?.id) {
 
-            R.id.editFullName -> {
+            R.id.editCompanyName,R.id.editFullName -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_personalInfoFragment,
                     bundle()

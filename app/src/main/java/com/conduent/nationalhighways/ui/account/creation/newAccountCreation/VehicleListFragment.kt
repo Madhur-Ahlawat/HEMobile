@@ -156,12 +156,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment,bundle)
                     } else {
                         if(navCall){
-                            if(vehicleList.size>=5){
-                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                                findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment,bundle)
-                            }else{
+
                                 findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
-                            }
+
                         }else{
                             findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
                         }
@@ -173,12 +170,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),VehicleL
                         findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment,bundle)
                     } else {
                         if(navCall){
-                            if(vehicleList.size>=5){
-                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                                findNavController().navigate(R.id.action_vehicleListFragment_to_maximumVehicleFragment,bundle)
-                            }else{
+
                                 findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
-                            }
+
                         }else{
                             findNavController().navigate(R.id.action_vehicleListFragment_to_createAccountFindVehicleFragment,bundle)
                         }

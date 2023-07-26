@@ -137,6 +137,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 if(isVehicleExist){
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
                     val bundleData = Bundle()
+                    bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
                     findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
                 }else {

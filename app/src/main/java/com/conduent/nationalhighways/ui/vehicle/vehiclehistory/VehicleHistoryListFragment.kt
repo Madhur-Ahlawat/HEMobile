@@ -104,7 +104,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.recyclerView.visible()
         hideLoader()
         if (isVehicleHistory) {
-            isVehicleHistory = false
+//            isVehicleHistory = false
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let {
@@ -114,7 +114,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         mList.addAll(response)
                         isLoading = false
                         mAdapter.setList(mList)
-                        binding.recyclerView.adapter?.notifyDataSetChanged()
+
 
                         checkData()
 //                        endlessScroll()
@@ -122,10 +122,11 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                 }
                 is Resource.DataError -> {
                     binding.recyclerView.gone()
+                    mList.clear()
+                    mAdapter.setList(mList)
                     hideLoader()
-                    binding.recyclerView.gone()
                     binding.notFound.visible()
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+//                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
                 }
