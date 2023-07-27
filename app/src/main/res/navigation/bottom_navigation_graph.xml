@@ -321,6 +321,10 @@
             android:id="@+id/action_accountFragment_to_optForSmsFragment"
             app:destination="@id/optForSmsFragment" />
 
+        <action
+            android:id="@+id/action_accountFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment" />
+
     </fragment>
 
     <fragment
@@ -597,6 +601,12 @@
         android:name="com.conduent.nationalhighways.ui.vehicle.crossinghistory.CrossingHistoryMakePaymentFragment"
         tools:layout="@layout/fragment_crossing_history_make_payment"
         android:label="CrossingHistoryMakePaymentFragment" />
+
+    <fragment
+        android:id="@+id/paymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment"
+        tools:layout="@layout/fragment_payment_method2"
+        android:label="Payment Management"/>
 
 
 

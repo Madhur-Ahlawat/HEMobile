@@ -1304,6 +1304,8 @@
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_verify_code">VERIFY CODE</string>
     <string name="email_address_change_successful">Email address change successful</string>
+    <string name="payment_method_information">Payment Method Information</string>
+    <string name="set_threshold_limit">Set Threshold Limit</string>
 
 
 </resources>
