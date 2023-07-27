@@ -40,11 +40,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deleteTitle"
             android:layout_width="match_parent"
-            android:gravity="start"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_bold"
+            android:gravity="start"
+            android:visibility="gone"
             android:text="@string/vehicle_deleted"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_20sdp"
             android:id="@+id/cardView"
+            android:visibility="gone"
             app:cardCornerRadius="5dp"
             android:elevation="3dp">
 

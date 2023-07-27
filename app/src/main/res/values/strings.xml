@@ -1262,7 +1262,7 @@
     <string name="mobile_change_successful">Mobile phone change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to\n %s</string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>

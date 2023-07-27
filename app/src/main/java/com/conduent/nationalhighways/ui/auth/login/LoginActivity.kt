@@ -209,7 +209,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         setContentView(binding.root)
 
         /*binding.edtEmail.setText("anilkumar.thallapelli@conduent.com")
-        binding.edtPwd.setText("Welcome2")
+        binding.edtPwd.setText("Welcome1")
         binding.btnLogin.isEnabled = true*/
 
         init()
