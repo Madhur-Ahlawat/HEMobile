@@ -36,12 +36,16 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
 
         binding.notificationDate.text = Html.fromHtml(item?.createTs, Html.FROM_HTML_MODE_LEGACY)
         binding.message.text = item?.message
-        binding.message.movementMethod = LinkMovementMethod.getInstance()
+//        binding.message.movementMethod = LinkMovementMethod.getInstance()
         if(item!!.isSeeMore){
-            binding.message.minLines=2
+            binding.message.minLines=1
+            binding.message.maxLines=20
+            binding.seeMore.text= "See less"
         }
         else{
             binding.message.maxLines=2
+            binding.message.minLines=1
+            binding.seeMore.text= "See more"
         }
         if (item!!.isSelectListItem!!) {
             binding.selectNotification.isChecked=true
@@ -58,11 +62,11 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
             clickedItem=position
             if(item!!.isSeeMore){
                 item!!.isSeeMore=false
-                notifyItemChanged(clickedItem)
             }
             else{
                 item!!.isSeeMore=true
             }
+            notifyItemChanged(clickedItem)
         }
         binding.message.setOnLongClickListener(object:OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {

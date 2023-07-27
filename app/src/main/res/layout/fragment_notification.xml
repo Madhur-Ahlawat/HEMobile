@@ -7,13 +7,13 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:background="@color/white">
 
         <LinearLayout
+            android:layout_alignParentTop="true"
             android:id="@+id/llyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,6 @@
                 android:id="@+id/standard"
                 android:layout_width="@dimen/_187dp"
                 android:layout_height="@dimen/_53dp"
-                android:layout_marginEnd="@dimen/_12sdp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_standard"
@@ -54,6 +53,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_above="@+id/btn_clear_notification"
+            android:layout_below="@+id/llyt"
             android:layout_marginTop="@dimen/_1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -107,6 +108,14 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_notifications" />
         </LinearLayout>
-
-    </LinearLayout>
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:layout_width="match_parent"
+            style="@style/PrimaryButton"
+            android:layout_marginBottom="@dimen/_19dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btn_clear_notification"
+            android:textColor="@color/white"
+            android:text="@string/clear_notification"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </layout>

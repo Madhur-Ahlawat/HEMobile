@@ -206,6 +206,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(this)
                     }
+                    requireActivity().finish()
 
                 } else {
                     enableButton()
