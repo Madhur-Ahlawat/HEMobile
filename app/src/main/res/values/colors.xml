@@ -82,6 +82,7 @@
     <color name="color_144e81">#144e81</color>
     <color name="color_DDE8E3">#DDE8E3</color>
     <color name="newViewLineColour">#7D7D7D</color>
+    <color name="blue_vehicle_charge_heading">#1E78BE</color>
 
 
     <!--  rebranding colors  -->
@@ -118,7 +119,8 @@
     <color name="toolbarColor" tools:ignore="MissingDefaultResource">#298AC7</color>
 
     <color name="grayColorIcon">#707070</color>
-    <color name="opacity_gray_ColorIcon">#FF707070</color>
+    <color name="opacity_gray_ColorIcon">#FF957070</color>
+    <color name="color_strip_toll_charges">#707070</color>
 
     <color name="buttonColorPrimary">#0099E0</color>
     <color name="buttonColorPrimaryDisable">#00567D</color>

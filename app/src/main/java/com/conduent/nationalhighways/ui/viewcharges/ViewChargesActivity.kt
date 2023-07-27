@@ -105,7 +105,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Vehicles with 2 axles",
+                                    "Vehicles\nwith 2 axles",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
@@ -115,7 +115,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>() {
                             mTollRatesList.add(
                                 TollRatesResp(
                                     it?.vehicleId,
-                                    "Vehicles with more than 2 axles",
+                                    "Vehicles\nwith more than 2 axles",
                                     it?.videoRate,
                                     it?.etcRate
                                 )
