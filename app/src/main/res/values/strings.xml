@@ -1306,6 +1306,8 @@
     <string name="email_address_change_successful">Email address change successful</string>
     <string name="payment_method_information">Payment Method Information</string>
     <string name="set_threshold_limit">Set Threshold Limit</string>
+    <string name="top_up_your_balance">Top-Up your Balance</string>
+    <string name="add_new_payment_method">+ ADD NEW PAYMENT METHOD</string>
 
 
 </resources>
