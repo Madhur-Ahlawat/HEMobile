@@ -171,7 +171,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun getDashBoardAllData() {
-        binding.loaderPlaceholder.visibility == View.VISIBLE
+        binding.loaderPlaceholder.visibility = View.GONE
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = CrossingHistoryRequest(
             startIndex = 1,

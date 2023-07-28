@@ -179,13 +179,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, "541232435465")
+                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
 
 
                 } else {
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
-                    bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, "761234567892")
@@ -208,8 +210,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     @SuppressLint("SuspiciousIndentation")
     private fun newPaymentMethod(s: String) {
         cardModel = PaymentWithNewCardModel(
-            addressLine1 = personalInformation?.addressLine1.toString().replace(" ",""),
-            addressLine2 = personalInformation?.addressLine2.toString().replace(" ",""),
+            addressLine1 = personalInformation?.addressLine1.toString(),
+            addressLine2 = personalInformation?.addressLine2.toString(),
             bankRoutingNumber = "",
             cardNumber = responseModel?.token,
             cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
@@ -239,8 +241,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
         )
+        Log.d("paymentRequest", Gson().toJson(cardModel))
 
-        manualTopUpViewModel.paymentWithNewCard(cardModel)
+       // manualTopUpViewModel.paymentWithNewCard(cardModel)
     }
 
     private fun payWithExistingCard() {
@@ -341,8 +344,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     ErrorUtil.showError(binding.root, status.data.message)
                 } else {
                     val bundle = Bundle()
-                    bundle.putParcelable(Constants.DATA, status.data)
-                    bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putParcelable(Constants.DATA, responseModel)
+                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
@@ -372,12 +375,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("0") == true) {
                     val bundle = Bundle()
-                    bundle.putString("amount", arguments?.getString("amount"))
+                    bundle.putString(Constants.TOP_UP_AMOUNT,topUpAmount.toString())
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
 
                     findNavController().navigate(
