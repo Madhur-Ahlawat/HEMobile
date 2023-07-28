@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,120 +11,222 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/layout"
-        >
+        app:cardElevation="@dimen/_3dp">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_line_vertical1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="105dp" />
-
-
-<!--
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_line_vertical2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.50" />
--->
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_line_vertical3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:fontFamily="@font/open_sans"
-            android:textSize="14sp"
-            tools:text="Cars,\nMotorhomes,\nMinibuses"
-            android:padding="@dimen/_2sdp"
-            android:gravity="center|start"
-            android:text="@{data.vehicleType}"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-<!--
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:fontFamily="@font/open_sans"
-            android:textSize="14sp"
-            android:padding="@dimen/_2sdp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
-            app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
-            app:layout_constraintTop_toTopOf="parent" />
--->
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:fontFamily="@font/open_sans"
-            android:textSize="14sp"
-            android:padding="@dimen/_2sdp"
-            android:gravity="center|start"
-            android:layout_marginStart="@dimen/_42sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
-            app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:fontFamily="@font/open_sans"
-            android:textSize="14sp"
-            android:gravity="center|start"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-        <View
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:id="@+id/view"
-            android:background="@color/opacity_gray_ColorIcon"
-            app:layout_constraintTop_toBottomOf="@id/layout"
-            app:layout_constraintStart_toStartOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <!--
+                                <androidx.constraintlayout.widget.Guideline
+                                    android:id="@+id/guide_line_vertical2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    app:layout_constraintGuide_percent="0.50" />
+                -->
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_type_of_vehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_21dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center|left"
+                    android:text="@string/str_type_of_vehicle"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/label_pay_as_you_go"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_pay_as_you_go" />
+
+                <!--
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/title2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_2sdp"
+                                    android:text="@string/str_one_of_payment"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:visibility="gone"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
+                                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                -->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_pay_as_you_go"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_21dp"
+                    android:text="@string/str_pay_g_service"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lable_prepay"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/str_pre_pay_service"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/label_pay_as_you_go"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
+                    app:layout_constraintTop_toTopOf="@id/label_pay_as_you_go" />
+
+                <View
+                    android:id="@+id/view_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="@dimen/_17dp"
+                    android:background="@color/blue_vehicle_charge_heading"
+                    app:layout_constraintTop_toBottomOf="@id/label_pay_as_you_go" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_line_vertical1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.38"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <!--
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guide_line_vertical2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.50" />
+                -->
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_line_vertical3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.61"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/gap"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_31dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_footer" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_type_ofVehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_21dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center|left"
+
+                    android:padding="@dimen/_2sdp"
+                    android:text="@{data.vehicleType}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/gap"
+                    tools:text="Cars,\nMotorhomes,\nMinibuses" />
+
+                <!--
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/open_sans"
+                            android:textSize="14sp"
+                            android:padding="@dimen/_2sdp"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                            app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
+                            app:layout_constraintTop_toTopOf="parent" />
+                -->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_pay_as_you_go"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="$2.50"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/value_type_ofVehicle"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                    app:layout_constraintTop_toTopOf="@id/value_type_ofVehicle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_prepay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="$2.50"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/value_pay_as_you_go"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
+                    app:layout_constraintTop_toTopOf="@id/value_pay_as_you_go" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/view_footer_gap"
+                app:layout_constraintTop_toBottomOf="@id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_36dp"/>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/grayColorIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_footer_gap" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

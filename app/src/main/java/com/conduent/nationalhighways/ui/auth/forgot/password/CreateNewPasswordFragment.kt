@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.*
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -13,21 +12,17 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.*
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
-import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Utils.LOWER_CASE
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import org.bouncycastle.jce.provider.BrokenPBE.Util
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -100,7 +95,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         binding.edtNewPassword.editText.addTextChangedListener {
             isEnable(it.toString())
         }
-        binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
+        binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
 
 
 
@@ -128,6 +123,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         passwordVisibile = true
                     }
                 }
+                var text = binding.edtConformPassword.editText.text.toString().trim()
+                isEnable(text)
             }
 
             false
@@ -157,6 +154,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         confirmPasswordVisibile = true
                     }
                 }
+                var text = binding.edtConformPassword.editText.text.toString().trim()
+                isEnable1(text)
             }
 
             false
@@ -294,7 +293,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
     }
 
-    private fun isEnable1() {
+    private fun isEnable1(text: String) {
         if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
             && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
             && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
@@ -330,7 +329,59 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         } else {
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
         }
+        if (binding.edtConformPassword.getText().toString().trim().length < 3) {
 
+            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
+
+        } else if (!binding.edtConformPassword.getText().toString().trim()
+                .contains(Utils.UPPERCASE)
+        ) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
+
+        } else if (!binding.edtConformPassword.getText().toString().trim()
+                .contains(Utils.LOWECASE)
+        ) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+
+        } else if (hasSpecialCharacters(text)) {
+            binding.edtConformPassword.setErrorText(getString(R.string.password_must_not_have_special_characters))
+        } else {
+            binding.edtConformPassword.removeError()
+        }
+
+
+
+
+
+        if (hasLowerCase(text)) {
+            binding.imgDot3.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (hasUpperCase(text)) {
+            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (text.trim().length > 7) {
+            binding.imgDot1.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (hasDigits(text)) {
+            binding.imgDot4.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+        }
 
     }
 

@@ -116,6 +116,13 @@ object Constants {
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
     const val DATA = "data"
+    const val ALLOWED_CHARACTERS_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/"
+    const val LOWER_CASE_ALPHABETS = "qwertyuiopasdfghjklzxcvbnm"
+    const val UPPER_CASE_ALPHABETS = "QWERTYUIOPASDFGHJKLZXCVBNM"
+    const val ALLOWED_CHARACTERS_IN_EMAIL = "-._+"
+    const val ALLOWED_CHARACTERS_IN_ADDRESS = "',.-"
+    const val ALLOWED_CHARACTERS_IN_POSTCODE = "',.-"
+
     const val CURRENTBALANCE="currentBalance"
     const val SUSPENDED="suspended"
     const val NOTSUSPENDED="notsuspended"

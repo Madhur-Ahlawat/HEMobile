@@ -36,9 +36,10 @@ object Utils {
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
+    var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
     var POSTALCODE: Regex = Regex("/^[a-zA-Z0-9\\s]+(?:[-:%/\\\\()\\u2122.+][a-zA-Z0-9\\s]+)*\$/")
-    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:'\".,{}[]\\\\|~`"
+    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-"
     var DIGITS = "0123456789"
     var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     var passwordRegEX: Regex =
