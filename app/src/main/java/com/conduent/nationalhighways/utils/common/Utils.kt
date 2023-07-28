@@ -37,6 +37,7 @@ object Utils {
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
     var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
+    var TWO_OR_MORE_HYPEN: Regex = Regex("[\\-]+[\\-]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
     var POSTALCODE: Regex = Regex("/^[a-zA-Z0-9\\s]+(?:[-:%/\\\\()\\u2122.+][a-zA-Z0-9\\s]+)*\$/")
     var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-"
