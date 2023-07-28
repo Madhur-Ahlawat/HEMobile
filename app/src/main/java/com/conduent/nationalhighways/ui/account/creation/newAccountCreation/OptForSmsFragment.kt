@@ -83,7 +83,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
         binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
-            var url:String=""
+            var url =""
             url = if (NewCreateAccountRequestModel.prePay){
                 "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
 

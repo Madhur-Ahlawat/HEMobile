@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.onTextChanged
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -70,6 +71,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun isEnable() {
         if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
             binding.findVehicle.isEnabled = false
+            removeError()
         } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.excludeNumber)) {
             binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
             binding.findVehicle.isEnabled = false
