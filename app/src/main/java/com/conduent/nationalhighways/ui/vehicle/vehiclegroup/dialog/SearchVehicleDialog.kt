@@ -22,7 +22,7 @@ class SearchVehicleDialog : BaseDialog<DialogSearchVehicleBinding>() {
         dialog?.setCanceledOnTouchOutside(false)
         setBtnDisabled()
         binding.addVrmInput.onTextChanged {
-            if (binding.addVrmInput.text.toString().trim().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().trim().isNotEmpty()) {
                 setBtnActivated()
             } else {
                 setBtnDisabled()
@@ -53,9 +53,9 @@ class SearchVehicleDialog : BaseDialog<DialogSearchVehicleBinding>() {
         }
         binding.applyBtn.setOnClickListener {
             binding.addVrmInput.hideKeyboard()
-            if (binding.addVrmInput.text.toString().trim().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().trim().isNotEmpty()) {
                 dismiss()
-                mListener?.onClick(binding.addVrmInput.text.toString().trim())
+                mListener?.onClick(binding.addVrmInput.getText().toString().trim())
             } else {
                 requireContext().showToast("Please enter your vehicle number")
             }

@@ -51,14 +51,14 @@ class BusinessVehicleNonUKMakeFragment: BaseFragment<FragmentBusinessVehicleNonU
         when (view?.id) {
 
             R.id.nextBtnBusiness -> {
-                if (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-                    && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-                    && binding.colorInputEditText.text.toString().trim().isNotEmpty()) {
+                if (binding.makeInputEditText.getText().toString().trim().isNotEmpty()
+                    && binding.modelInputEditText.getText().toString().trim().isNotEmpty()
+                    && binding.colorInputEditText.getText().toString().trim().isNotEmpty()) {
 
                     nonUKVehicleModel?.apply {
-                        vehicleMake = binding.makeInputEditText.text.toString()
-                        vehicleModel = binding.modelInputEditText.text.toString()
-                        vehicleColor = binding.colorInputEditText.text.toString()
+                        vehicleMake = binding.makeInputEditText.getText().toString()
+                        vehicleModel = binding.modelInputEditText.getText().toString()
+                        vehicleColor = binding.colorInputEditText.getText().toString()
                     }
 
                     val bundle = Bundle()
@@ -71,9 +71,9 @@ class BusinessVehicleNonUKMakeFragment: BaseFragment<FragmentBusinessVehicleNonU
     }
 
     private fun checkButton() {
-        binding.model = (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-                && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-                && binding.colorInputEditText.text.toString().trim().isNotEmpty())
+        binding.model = (binding.makeInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.modelInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.colorInputEditText.getText().toString().trim().isNotEmpty())
     }
 
 }

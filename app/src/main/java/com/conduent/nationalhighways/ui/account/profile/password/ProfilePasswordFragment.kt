@@ -230,7 +230,7 @@ class ProfilePasswordFragment : BaseFragment<FragmentProfilePasswordBinding>(),
 
 
     private fun checkButton() {
-        binding.enable = (binding.tiePassword.text.toString().trim().isNotEmpty()
+        binding.enable = (binding.tiePassword.getText().toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
                 && binding.tieConfirmPassword.text.toString()
             .trim() == binding.tiePassword.text.toString().trim())

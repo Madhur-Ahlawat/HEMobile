@@ -41,7 +41,7 @@ class ProfilePersonalInfoFragment : BaseFragment<FragmentProfilePersonalInfoBind
     }
 
     private fun checkButton() {
-        binding.enable = Utils.isEmailValid(binding.tieEmailId.text.toString().trim())
+        binding.enable = Utils.isEmailValid(binding.tieEmailId.getText().toString().trim())
     }
 
     private fun setView() {

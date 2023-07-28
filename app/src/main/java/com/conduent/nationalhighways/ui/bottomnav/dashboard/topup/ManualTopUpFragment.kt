@@ -34,7 +34,7 @@ class ManualTopUpFragment : BaseFragment<FragmentManualTopUpBinding>(), View.OnC
         when (v?.id) {
             R.id.btnNext -> {
                 val bundle = Bundle()
-                bundle.putString("amount", binding.tieAmount.text.toString())
+                bundle.putString("amount", binding.tieAmount.getText().toString())
                 findNavController().navigate(
                     R.id.action_manualTopUpFragment_to_manualTopUpCardFragment,
                     bundle
@@ -44,6 +44,6 @@ class ManualTopUpFragment : BaseFragment<FragmentManualTopUpBinding>(), View.OnC
     }
 
     private fun checkButton() {
-        binding.model = binding.tieAmount.text.toString().trim().isNotEmpty()
+        binding.model = binding.tieAmount.getText().toString().trim().isNotEmpty()
     }
 }

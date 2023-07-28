@@ -234,7 +234,7 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     private fun changeAccountPin() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = AccountPinChangeModel(
-            binding.tvPinOne.text.toString() +
+            binding.tvPinOne.getText().toString() +
                     binding.tvPinTwo.text.toString() +
                     binding.tvPinThree.text +
                     binding.tvPinFour.text

@@ -7,10 +7,8 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -29,27 +27,33 @@ object Utils {
     var PASSWORD_RULE1 = ".{8,64}"
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
     var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
-    var PASSWORD_RULE2 = "^(?=.*?[A-Z])(?=.*?[a-z]).{1,}\$"
-    var PASSWORD_RULE3 = "^(?=.*?[0-9]).{1,}\$"
-    var PASSWORD_RULE4 = "^(?=.*?[#!@\$%*-.,;~=+_()]).{1,}\$"
     var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
+    var SPECIAL_CHARACTERS_FOR_MODEL = "!\$%^*<>?;{}[]\\\\|~',`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
     var TWO_OR_MORE_HYPEN: Regex = Regex("[\\-]+[\\-]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
-    var POSTALCODE: Regex = Regex("/^[a-zA-Z0-9\\s]+(?:[-:%/\\\\()\\u2122.+][a-zA-Z0-9\\s]+)*\$/")
-    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-"
+    var SPECIAL_CHARACTERS_FOR_MAKE = "!@#\$%^&*<>?;:{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_COLOR = "!@#\$%^&*()+<>?;:{}[]\\\\|~',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_COMPANY_NAME = "#\$%^*()+<>/{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_NAME = "!@#\$%^&*()+<>?/;:{}[]\\\\|~'_,.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_ADDRESS = "!@\$%^&*()+<>?/;:{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_TOWN_OR_CITY = "!@\$%^&*()+<>?,./;:{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_POSTCODE = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',\"._`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var DIGITS = "0123456789"
+    var SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/`•√π÷×§∆£¢€¥^°\\©®™✓"
     var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     var passwordRegEX: Regex =
         Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
-    fun hasSpecialCharacters(str: String): Boolean {
+    fun hasSpecialCharacters(str: String,specialCharacterString:String): Boolean {
         var hasSpecialChar=false
         str.forEach { char ->
-            if (SPECIAL_CHARACTERS.contains(char)) {
+
+            if (specialCharacterString.contains(char.toString())) {
                 hasSpecialChar=true
                 return@forEach
             }
@@ -206,6 +210,29 @@ object Utils {
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
+    }
+    fun removeGivenStringCharactersFromString(characterString:String,input:String): String {
+        var input=input
+        characterString.forEach {
+            input.replace(it.toString(),"")
+        }
+        return input
+    }
+    fun makeCommaSeperatedStringForPassword(input:String): String {
+        var output=""
+        input.forEachIndexed { index, c ->
+            if(input.length==1){
+                output=output+c.toString()
+            }
+            else if(index<input.length){
+                output=output+c.toString()+", "
+            }
+            else{
+                output=output+c.toString()
+
+            }
+        }
+        return output
     }
 //    fun getOccuringChar(str: String): Int {
 ////creating an array of size 256 (ASCII_SIZE)
