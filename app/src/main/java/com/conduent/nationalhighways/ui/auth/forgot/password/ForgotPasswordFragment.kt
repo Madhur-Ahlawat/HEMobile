@@ -30,6 +30,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -279,7 +280,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                 false
             } else {
-                if (binding.edtEmail.getText().toString().trim().length < 8) {
+                if(binding.edtEmail.editText.getText().toString().trim().length>0 && (binding.edtEmail.editText.getText().toString().trim().contains(
+                        Utils.TWO_OR_MORE_DOTS)) ||(binding.edtEmail.editText.getText().toString().trim().last().toString().equals(".") || binding.edtEmail.editText.getText().toString().first().toString().equals("."))){
+                    binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                    false
+                }
+                else if (binding.edtEmail.getText().toString().trim().length < 8) {
                     binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
                     false
                 } else {

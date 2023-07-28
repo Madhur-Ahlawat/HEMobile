@@ -249,6 +249,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
+            edtEmail.editText.setText("abc098@tyss.com")
+            edtPwd.editText.setText("Welcome1")
         }
 
         if (displayFingerPrintPopup()) {

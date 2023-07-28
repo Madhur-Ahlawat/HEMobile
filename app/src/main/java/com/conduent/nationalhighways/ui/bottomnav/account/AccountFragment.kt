@@ -151,14 +151,23 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.payment_management -> {
+
+                findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
+                title?.text = getString(R.string.payment_management)
 //                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
             R.id.communication_preferences -> {
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                )
+                findNavController().navigate(
+                    R.id.action_accountFragment_to_optForSmsFragment,
+                    bundle
+                )
             }
 
             R.id.vehicle_management -> {
@@ -258,6 +267,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 

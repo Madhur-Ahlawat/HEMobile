@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.databinding.FragmentChangeEmailProfileBinding
@@ -80,8 +81,17 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     val bundle = Bundle()
                     binding.data?.referenceId = resource.data?.referenceId
                     bundle.putParcelable(DATA, binding.data)
+                    bundle.putParcelable(
+                        "response",
+                        SecurityCodeResponseModel(
+                            resource.data?.emailStatusCode,
+                            0L,
+                            resource.data?.referenceId,
+                            true
+                        )
+                    )
                     findNavController().navigate(
-                        R.id.action_emailFragment_to_confirmEmailFragment,
+                        R.id.action_change_email_profile_to_confirm_security_code,
                         bundle
                     )
                 }

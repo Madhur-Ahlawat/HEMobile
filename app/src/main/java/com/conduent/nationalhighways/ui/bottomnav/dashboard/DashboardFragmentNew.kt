@@ -392,8 +392,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 binding.loaderPlaceholder.visibility == View.GONE
                 status.data?.apply {
                     accountDetailsData = this
-                    sessionManager.saveAccountStatus(accountInformation?.status!!)
-                    sessionManager.saveName(personalInformation?.customerName!!)
+                    sessionManager.saveAccountStatus(accountInformation?.status?:"")
+                    sessionManager.saveName(personalInformation?.customerName?:"")
+                    sessionManager.saveZipCode(personalInformation?.zipCode?:"")
+                    sessionManager.savePhoneNumber(personalInformation?.phoneNumber?:"")
                     sessionManager.saveAccountNumber(accountInformation?.number!!)
                     (requireActivity().applicationContext as BaseApplication).setAccountSavedData(
                         this

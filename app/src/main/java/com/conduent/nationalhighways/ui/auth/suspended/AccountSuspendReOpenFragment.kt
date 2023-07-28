@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
@@ -28,6 +29,7 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
     private var currentBalance:String=""
     private var transactionId:String=""
     private var backIcon:ImageView?=null
+    private var navFlow:String=""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -81,16 +83,19 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
             binding.cardView.visibility=View.GONE
 
         }
-        val balance = currentBalance.replace("£", "")
-        val doubleBalance = balance.toDouble()
-        val intBalance = doubleBalance.toInt()
-        val finalCurrentBalance = 5.00 - doubleBalance
-        if (finalCurrentBalance<5.00){
-            binding.tvYouWillAlsoNeed.visibility=View.VISIBLE
-        }else{
-            binding.tvYouWillAlsoNeed.visibility=View.GONE
+        if (currentBalance.isNotEmpty()){
+            val balance = currentBalance.replace("£", "")
+            val doubleBalance = balance.toDouble()
+            val intBalance = doubleBalance.toInt()
+            val finalCurrentBalance = 5.00 - doubleBalance
+            if (finalCurrentBalance<5.00){
+                binding.tvYouWillAlsoNeed.visibility=View.VISIBLE
+            }else{
+                binding.tvYouWillAlsoNeed.visibility=View.GONE
 
+            }
         }
+
 
         binding.tvYouWillAlsoNeed.text=getString(R.string.str_you_have_less_than,"£5.00")
 
@@ -101,6 +106,12 @@ class AccountSuspendReOpenFragment:BaseFragment<FragmentAccountSuspendHaltReopen
 
         binding.tvPaymentReference.text = htmlText
 
+
+        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
+            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
+
+        }
+        Toast.makeText(requireContext(),navFlow,Toast.LENGTH_SHORT).show()
 
     }
     override fun init() {

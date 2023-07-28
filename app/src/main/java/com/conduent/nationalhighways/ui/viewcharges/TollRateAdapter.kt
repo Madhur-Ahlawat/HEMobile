@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.databinding.AdapterViewChargesBinding
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 
 class TollRateAdapter(private val context: Context?, var list: List<TollRatesResp?>?) :
     RecyclerView.Adapter<TollRateAdapter.VehicleViewHolder>() {
@@ -33,13 +35,38 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
 
         }
 */
+        if(position==0){
+            holder.binding?.run {
+                lablePrepay.visible()
+                labelTypeOfVehicle.visible()
+                labelPayAsYouGo.visible()
+                viewFooter.visible()
+            }
+        }
+        else if(position>0 && position<list!!.size){
+            holder.binding?.run {
+                lablePrepay.gone()
+                labelTypeOfVehicle.gone()
+                labelPayAsYouGo.gone()
+                viewFooter.gone()
+            }
+        }
+        else if(position==list!!.size){
+            holder.binding?.run {
+                lablePrepay.gone()
+                labelTypeOfVehicle.gone()
+                labelPayAsYouGo.gone()
+                viewFooter.gone()
+
+            }
+        }
         if (list?.get(position)?.etcRate!=0.0){
-            holder.binding.title3.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
-            holder.binding.title4.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
+            holder.binding.valuePayAsYouGo.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
+            holder.binding.valuePrepay.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
 
         }else{
-            holder.binding.title3.text=context?.getString(R.string.str_free)
-            holder.binding.title4.text=context?.getString(R.string.str_free)
+            holder.binding.valuePayAsYouGo.text=context?.getString(R.string.str_free)
+            holder.binding.valuePrepay.text=context?.getString(R.string.str_free)
 
         }
         if (position==3){

@@ -48,6 +48,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private var currentBalance:String=""
+    private var navFlow:String=""
 
 
     override fun getFragmentBinding(
@@ -78,6 +79,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+
+        }
+        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
+            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -196,6 +201,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 bundle.putInt(Constants.POSITION, position)
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
@@ -207,7 +214,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
-                bundle.putString(Constants.SUSPENDED, Constants.SUSPENDED)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 findNavController().navigate(
@@ -220,7 +227,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
-                bundle.putString(Constants.SUSPENDED, Constants.SUSPENDED)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE,currentBalance)
                 findNavController().navigate(

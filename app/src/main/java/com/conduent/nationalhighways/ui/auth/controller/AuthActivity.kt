@@ -111,6 +111,7 @@ class AuthActivity : BaseActivity<Any?>() {
         } else if (navFlow == Constants.SUSPENDED) {
 
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
 
             bundle.putString(Constants.CURRENTBALANCE, currentBalance)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
@@ -118,6 +119,14 @@ class AuthActivity : BaseActivity<Any?>() {
             graph.setStartDestination(R.id.accountSuspendedFragment)
 
 
+        }else if (navFlow==Constants.PAYMENT_TOP_UP){
+            binding.toolBarLyt.titleTxt.text = getString(R.string.top_up)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+
+
+            graph.setStartDestination(R.id.accountSuspendedPaymentFragment)
         }
 
         navController = navHostFragment.navController

@@ -107,12 +107,17 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
-                if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                if (data?.accountInformation?.accountType.equals(
+                        Constants.PERSONAL_ACCOUNT,
+                        true
+                    )
+                ) {
                     setPersonalView()
                 }
 
             }
-            else ->{
+
+            else -> {
                 if (NewCreateAccountRequestModel.personalAccount) {
                     setPersonalView()
                 }
@@ -149,16 +154,22 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 Log.d("Success", "Updated successfully")
                 val data = navData as ProfileDetailModel?
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
                     Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
                 )
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_manualaddressfragment_to_resetForgotPassword,bundle)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_manualaddressfragment_to_resetForgotPassword,
+                    bundle
+                )
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -176,14 +187,18 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     binding.country.selectedItemDescription.toString()
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                if(navFlowCall.equals(Constants.PROFILE_MANAGEMENT,true)){
+                if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT, true)) {
                     val data = navData as ProfileDetailModel?
-                    if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                    if (data?.accountInformation?.accountType.equals(
+                            Constants.PERSONAL_ACCOUNT,
+                            true
+                        )
+                    ) {
                         updateStandardUserProfile(data)
-                    }else{
+                    } else {
                         updateBusinessUserProfile(data)
                     }
-                }else {
+                } else {
                     hitlrdsCheckApi()
                 }
 
@@ -296,7 +311,12 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         } else {
             if (binding.address.getText().toString().trim().length < 200) {
                 requiredAddress = if (binding.address.getText().toString()
-                        .contains(Utils.addressSpecialCharacter)
+                        .contains(
+                            Utils.SPECIAL_CHARACTERS.replace(
+                                Constants.ALLOWED_CHARACTERS_IN_ADDRESS,
+                                ""
+                            )
+                        )
                 ) {
                     binding.address.setErrorText(getString(R.string.str_building_number_character_allowed))
                     false
@@ -304,7 +324,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     binding.address.removeError()
                     true
                 }
-
             } else {
                 requiredAddress = if (binding.address.getText().toString().trim().length > 200) {
                     binding.address.setErrorText(getString(R.string.str_building_number_error_message))

@@ -37,6 +37,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val PUSH_TOKEN = "firebase_notification_token"
         const val USER_NAME = "username"
         const val NAME = "name"
+        const val ZIPCODE="zipcode"
+        const val PHONE_NUMBER="phoneNumber"
 
         val BIOMETRICTOKEN: String = "ACSInrixTrafficApp"
         val TOUCH_ID_ENABLED: String = "touch_ID"
@@ -264,25 +266,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getString(USER_NAME, null)
     }
 
-    fun savePublicKey(publicKey: String?) {
-        prefs.edit().apply {
-            putString(PUBLIC_KEY, publicKey)
-        }.apply()
-    }
 
-    fun fetchPublicKey(): String? {
-        return prefs.getString(PUBLIC_KEY, null)
-    }
-
-    fun savePrivateKey(privateKey: String?) {
-        prefs.edit().apply {
-            putString(PRIVATE_KEY, privateKey)
-        }.apply()
-    }
-
-    fun fetchPrivateKey(): String? {
-        return prefs.getString(PRIVATE_KEY, null)
-    }
 
     fun saveTouchIdEnabled(privateKey: Boolean) {
         prefs.edit().apply {
@@ -294,11 +278,25 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getBoolean(TOUCH_ID_ENABLED, false)
     }
 
-    /**
-     * Function to fetch bio metric token
-     */
-    fun fetchBiometricToken(): String? {
-        return prefs.getString(BIOMETRICTOKEN, "ACSInrixTrafficApp")
+    fun saveZipCode(privateKey: String) {
+        prefs.edit().apply {
+            putString(ZIPCODE, privateKey)
+        }.apply()
     }
+
+    fun fetchZipCode(): Boolean {
+        return prefs.getBoolean(ZIPCODE, false)
+    }
+
+    fun savePhoneNumber(privateKey: String) {
+        prefs.edit().apply {
+            putString(PHONE_NUMBER, privateKey)
+        }.apply()
+    }
+
+    fun fetchPhoneNumber(): Boolean {
+        return prefs.getBoolean(PHONE_NUMBER, false)
+    }
+
 
 }

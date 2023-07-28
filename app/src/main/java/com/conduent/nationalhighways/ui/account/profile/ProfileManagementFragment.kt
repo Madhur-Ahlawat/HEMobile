@@ -77,13 +77,19 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
         binding.editFullName.setOnClickListener(this)
         binding.editAddress.setOnClickListener(this)
-        binding.editEmailAddressProfile.setOnClickListener(this)
+        binding.editEmailAddressProfile.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_profileManagementFragment_to_emailAddressFragment,
+                bundle()
+            )
+        }
         binding.editMobileNumber.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
         binding.editEmailAddress.setOnClickListener(this)
         binding.editBiometrics.setOnClickListener(this)
+        binding.editAccountType.setOnClickListener(this)
 
 
     }
@@ -122,7 +128,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-
+                        binding.password.text = accountInformation?.password
                         binding.emailAddressProfile.text = personalInformation?.emailAddress
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
@@ -174,7 +180,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 )
             }
 
-            R.id.editEmailAddressProfile -> {
+            R.id.editEmailAddress -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_emailAddressFragment,
                     bundle()
@@ -199,6 +205,12 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
             R.id.editPassword -> {
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_changePassword,
+                    bundle()
+                )
+            }
+            R.id.editAccountType -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_changePassword,
                     bundle()

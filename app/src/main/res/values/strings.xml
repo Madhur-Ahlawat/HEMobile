@@ -233,7 +233,7 @@
     <string name="str_contact_dart_charge_online"><u>Contact Dart Charge online</u></string>
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
-    <string name="str_type_of_vehicle">Type of vehicle</string>
+    <string name="str_type_of_vehicle">Type of\nvehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">Pre-Pay</string>
@@ -1201,7 +1201,7 @@
     <string name="str_select_payment_method">Select payment method</string>
     <string name="str_Mastercard">Mastercard ****4563</string>
     <string name="str_account_reopened">Account reopened</string>
-    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\n%s</string>
+    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\n<Data><![CDATA[<b><br>%s</b>]]></Data></string>
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
     <string name="str_feedback_to_improve_the_service"><u>FEEDBACK_TO_IMPROVE_THE_SERVICE</u></string>
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
@@ -1222,7 +1222,7 @@
     <string name="txt_topup_method">Top-Up Method</string>
     <string name="txt_dumy_card_number">••••••7890</string>
     <string name="txt_recent_transacions">Recent Transactions</string>
-    <string name="top_up">Top- Up</string>
+    <string name="top_up">Top Up</string>
     <string name="txt_topup_amount">Top-Up Amount</string>
     <string name="vehicle_deleted">Vehicle Deleted</string>
     <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
@@ -1308,6 +1308,8 @@
     <string name="set_threshold_limit">Set Threshold Limit</string>
     <string name="top_up_your_balance">Top-Up your Balance</string>
     <string name="add_new_payment_method">+ ADD NEW PAYMENT METHOD</string>
+    <string name="choose_your_new_payment_method">Choose your new payment method</string>
+    <string name="debit_credit_card">Debit or Credit Card</string>
 
 
 </resources>

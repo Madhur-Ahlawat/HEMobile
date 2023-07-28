@@ -606,7 +606,18 @@
         android:id="@+id/paymentMethodFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment"
         tools:layout="@layout/fragment_payment_method2"
-        android:label="Payment Management"/>
+        android:label="Payment Management">
+        <action
+            android:id="@+id/action_paymentMethodFragment_to_selectPaymentMethodFragment"
+            app:destination="@id/selectPaymentMethodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectPaymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.SelectPaymentMethodFragment"
+        tools:layout="@layout/fragment_select_payment_method"
+        android:label="SelectPaymentFragment"
+        />
 
 
 
