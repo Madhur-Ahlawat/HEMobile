@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.payment.adapter
 import android.content.Context
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -28,7 +29,6 @@ class PaymentMethodAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
 
-
     }
 
     override fun onBindViewHolder(
@@ -44,15 +44,26 @@ class PaymentMethodAdapter(
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
-        val htmlText = Html.fromHtml(paymentList?.get(position)?.cardType+"<br>"+paymentList?.get(position)?.cardNumber)
+        val htmlText =
+            Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber)
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
 
+        if (paymentList?.get(position)?.primaryCard == true) {
+            holder.binding.textDefault.visibility = View.VISIBLE
 
-        holder.binding.cardView.setOnClickListener {
-            paymentList?.get(position)?.isSelected = paymentList?.get(position)?.isSelected != true
+        } else {
+            holder.binding.textDefault.visibility = View.GONE
 
-            paymentMethodCallback.paymentMethodCallback(position)
+        }
+
+
+        holder.binding.delete.setOnClickListener {
+
+            paymentMethodCallback.paymentMethodCallback(
+                position,
+                com.conduent.nationalhighways.utils.common.Constants.DELETE_CARD
+            )
             notifyDataSetChanged()
         }
     }
@@ -68,7 +79,7 @@ class PaymentMethodAdapter(
     }
 
     interface PaymentMethodCallback {
-        fun paymentMethodCallback(position: Int)
+        fun paymentMethodCallback(position: Int, value: String)
 
     }
 }

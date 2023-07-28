@@ -50,6 +50,7 @@ object Constants {
     const val PAYMENT_HISTORY = "payment_history"
     const val PAYMENT_METHOD = "payment_method"
     const val PAYMENT_TOP_UP = "payment_top_up"
+    const val TOP_UP_AMOUNT="top_up_amount"
     const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"
     const val NORMAL_LOGIN_FLOW_CODE = 1001
@@ -214,6 +215,7 @@ object Constants {
     const val LIVE = "LIVE"
     const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
     const val VEHICLE_DETAIL="vehicle detail"
+    const val DELETE_CARD="delete_card"
 
 
     const val EMAIL_ADDRESS = "Email address"

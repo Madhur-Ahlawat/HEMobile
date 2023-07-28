@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +16,8 @@ import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.databinding.FragmentPaymentMethod2Binding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
@@ -24,13 +26,13 @@ import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.Paymen
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.adapter.PaymentMethodAdapter
-import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     PaymentMethodAdapter.PaymentMethodCallback, View.OnClickListener {
@@ -39,12 +41,15 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private val viewModel: PaymentMethodViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
+
     private var loader: LoaderDialog? = null
     private var position: Int = 0
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
+    private lateinit var title: TextView
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -57,6 +62,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         paymentList = ArrayList()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        title = requireActivity().findViewById(R.id.title_txt)
+
 
         if (!isViewCreated) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -84,13 +92,38 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         lifecycleScope.launch {
             observe(viewModel.savedCardList, ::handleSaveCardResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+            observe(viewModel.deleteCard, ::handleDeleteCardResponse)
+
 
         }
     }
 
-    override fun paymentMethodCallback(position: Int) {
+    private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                if (status.data?.statusCode?.equals("500") == true) {
+                    ErrorUtil.showError(binding.root, status.data.message)
+                    return
+                }
 
+                paymentList?.removeAt(position)
+                paymentMethodAdapter.updateList(paymentList)
+
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+
+            else -> {
+            }
+        }
     }
+
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
 
@@ -103,22 +136,12 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
 
-
-
-
-
             }
 
             is Resource.DataError -> {
-
-
-
-
-
             }
 
             else -> {
-
             }
         }
 
@@ -140,7 +163,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 }
 
 
-
             }
 
             is Resource.DataError -> {
@@ -159,7 +181,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 findNavController().navigate(R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment)
 
             }
-            R.id.cardViewTopYourBalance->{
+
+            R.id.cardViewTopYourBalance -> {
                 val intent = Intent(requireContext(), AuthActivity::class.java)
                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
                 intent.putExtra(Constants.PERSONALDATA, personalInformation)
@@ -167,7 +190,30 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 startActivity(intent)
 
             }
+
+            R.id.cardViewThresholdLimit -> {
+                title.text = getString(R.string.set_threshold_limit)
+
+                findNavController().navigate(R.id.action_paymentMethodFragment_to_topUpFragment)
+
+            }
         }
     }
 
+    override fun paymentMethodCallback(position: Int, value: String) {
+        if (value == Constants.DELETE_CARD) {
+            if (paymentList?.get(position)?.primaryCard != true) {
+                this.position = position
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
+                viewModel.deleteCard(PaymentMethodDeleteModel(paymentList?.get(position)?.rowId))
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        title.text = getString(R.string.payment_management)
+        super.onResume()
+    }
 }

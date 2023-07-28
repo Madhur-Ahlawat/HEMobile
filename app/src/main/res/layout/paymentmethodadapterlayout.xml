@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_74dp"
     android:layout_marginTop="5dp"
-    app:layout_goneMarginBottom="5dp"
+    android:layout_marginBottom="5dp"
     app:cardCornerRadius="@dimen/_5dp"
     android:elevation="3dp"
     android:layout_marginHorizontal="1dp"
@@ -42,6 +42,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivCardType"
             app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_default"
+            android:textColor="@color/label_color"
+            android:fontFamily="@font/open_sans"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/_18dp"
+            app:layout_constraintEnd_toStartOf="@id/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/text_default"/>
+        
 
         <ImageView
             android:layout_width="wrap_content"

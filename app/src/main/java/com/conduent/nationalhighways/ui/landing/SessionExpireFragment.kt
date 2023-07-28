@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentSessionExpireBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
@@ -62,7 +63,7 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
                         requireActivity().startActivity(
                             Intent(
                                 requireActivity(),
-                                AuthActivity::class.java
+                                LoginActivity::class.java
                             )
                         )
                     }
