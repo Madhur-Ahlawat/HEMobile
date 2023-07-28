@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,12 +61,8 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
                 requireActivity().finish()
                 when (type) {
                     Constants.LOGIN -> {
-                        requireActivity().startActivity(
-                            Intent(
-                                requireActivity(),
-                                LoginActivity::class.java
-                            )
-                        )
+                        requireActivity().startNormalActivity(LoginActivity::class.java)
+
                     }
                     //  "SIGN IN" ->{ requireActivity().startActivity(Intent(requireActivity(),ActivityHome::class.java)) }
                     Constants.REFRESH_TOKEN -> {// refresh token api call

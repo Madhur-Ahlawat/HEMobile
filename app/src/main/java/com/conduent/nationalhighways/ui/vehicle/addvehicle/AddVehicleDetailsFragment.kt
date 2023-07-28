@@ -93,8 +93,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             checkButton()
         }
 
-        binding.checkBoxTerms.setOnCheckedChangeListener { _, checkedId ->
-            checkBoxChecked = true
+        binding.checkBoxTerms.setOnCheckedChangeListener { _,  isChecked ->
+            checkBoxChecked = isChecked
             checkButton()
         }
 
@@ -215,7 +215,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.colorInputLayout.editText.onTextChanged {
 
             colourInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.colourSpecialCharacter)) {
+                if (it.contains(Utils.colourSpecialCharacter) || hasSpecialCharacters(it)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {

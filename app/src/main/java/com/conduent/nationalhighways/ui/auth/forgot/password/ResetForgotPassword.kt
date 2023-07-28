@@ -32,6 +32,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
 
+    private var title: TextView? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -41,7 +42,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     lateinit var sessionManager: SessionManager
     override fun init() {
         binding.btnSubmit.setOnClickListener(this)
-
+        title= requireActivity().findViewById(R.id.title_txt)
         when(navFlowCall) {
 
             REMOVE_VEHICLE -> {
@@ -55,7 +56,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             }
 
             PROFILE_MANAGEMENT -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+
                 title?.text = getString(R.string.profile_name)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.name_change_successful)
@@ -63,7 +64,6 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
@@ -71,14 +71,12 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 binding.title.text = getString(R.string.communication_change_successful)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_mobile_number)
                 val data = navData as PersonalInformation?
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER,true)
@@ -91,7 +89,6 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_2fa)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.two_factor_change_successful)

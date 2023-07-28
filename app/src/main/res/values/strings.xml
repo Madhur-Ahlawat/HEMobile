@@ -202,7 +202,7 @@
     <string name="str_password_recovery">Password recovery</string>
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
-    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\nIf you did not get a code, or it has expired, select resend security code.</string>
+    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\n\nIf you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive. \n\nIf you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>

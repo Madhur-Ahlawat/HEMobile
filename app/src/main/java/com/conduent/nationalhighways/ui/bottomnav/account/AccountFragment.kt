@@ -47,6 +47,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     @Inject
     lateinit var sessionManager: SessionManager
+    private var title: TextView? = null
 
 
     override fun getFragmentBinding(
@@ -63,6 +64,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     private fun initUI() {
+        title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
             if (isSecondaryUser)
                 contactUs.gone()
@@ -112,6 +114,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        title?.text  = getString(R.string.txt_my_account)
+    }
+
     override fun initCtrl() {
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
@@ -139,7 +146,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_management)
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
 
@@ -154,28 +160,19 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.communication_preferences -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(
-                    Constants.NAV_FLOW_KEY,
-                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
-                )
-                findNavController().navigate(
-                    R.id.action_accountFragment_to_optForSmsFragment,
-                    bundle
-                )
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
             }
 
             R.id.vehicle_management -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.vehicle_management)
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
 
             }
 
             R.id.close_acount -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.str_close_account)
                 findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
             }
