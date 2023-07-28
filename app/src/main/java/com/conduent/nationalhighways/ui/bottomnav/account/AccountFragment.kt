@@ -44,6 +44,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -62,7 +63,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     private fun initUI() {
-        binding?.run {
+        binding.run {
             if (isSecondaryUser)
                 contactUs.gone()
 
@@ -145,6 +146,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.payment_management -> {
+
+                findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.payment_management)
 //                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
@@ -152,8 +157,14 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                )
+                findNavController().navigate(
+                    R.id.action_accountFragment_to_optForSmsFragment,
+                    bundle
+                )
             }
 
             R.id.vehicle_management -> {
@@ -255,6 +266,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 

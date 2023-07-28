@@ -33,6 +33,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
@@ -40,6 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -48,6 +50,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private val viewModel: CreateAccountViewModel by viewModels()
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     private var loader: LoaderDialog? = null
@@ -73,14 +78,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     ): NmiPaymentFragmentBinding = NmiPaymentFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
 
 
-        flow = arguments?.getString(Constants.SUSPENDED).toString()
+        flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
@@ -103,6 +107,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun initCtrl() {
         loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         setupWebView()
     }
@@ -117,8 +122,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         when (response) {
             is Resource.Success -> {
                 val bundle = Bundle()
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,bundle)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,
+                    bundle
+                )
 
 
             }
@@ -150,7 +158,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         }
 
                         "3DStarted" -> {
-                            showLoader()
+                           // showLoader()
                         }
 
                         "3DSLoaded" -> {
@@ -197,8 +205,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putParcelable(Constants.DATA, responseModel)
                                 bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
-                                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
-                                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                                bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 findNavController().navigate(
                                     R.id.action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment,
                                     bundle
@@ -218,7 +227,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
     }
 
     private fun hideLoader() {
@@ -343,7 +352,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
-                if (flow == Constants.SUSPENDED) {
+                if (flow == Constants.SUSPENDED||flow==Constants.PAYMENT_TOP_UP) {
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
@@ -355,7 +364,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
 
 
-                } else {
+                }  else {
                     view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")

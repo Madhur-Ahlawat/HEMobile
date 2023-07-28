@@ -424,12 +424,7 @@ object Utils {
 
     }
 
-    fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
-        val lp = view.layoutParams as ConstraintLayout.LayoutParams
-        lp.setMargins(left, top, right, bottom)
-        view.layoutParams = lp
 
-    }
 
     fun getYesterdayDate(): String {
         val dateFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")

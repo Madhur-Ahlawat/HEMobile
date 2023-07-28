@@ -1,35 +1,73 @@
 package com.conduent.nationalhighways.ui.payment.adapter
 
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.PaymentmethodadapterlayoutBinding
 
-class PaymentMethodAdapter(private var context:Context,private var paymentList:ArrayList<String>,private val paymentMethodCallback:PaymentMethodCallback
-):
+class PaymentMethodAdapter(
+    private var context: Context,
+    private var paymentList: MutableList<CardListResponseModel?>?,
+    private val paymentMethodCallback: PaymentMethodCallback
+) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PaymentMethodViewHolder= PaymentMethodViewHolder(PaymentmethodadapterlayoutBinding.inflate(
-        LayoutInflater.from(context),parent,false))
+    ): PaymentMethodViewHolder = PaymentMethodViewHolder(
+        PaymentmethodadapterlayoutBinding.inflate(
+            LayoutInflater.from(context), parent, false
+        )
+    )
 
-    class PaymentMethodViewHolder(val binding:PaymentmethodadapterlayoutBinding):RecyclerView.ViewHolder(binding.root) {
+    class PaymentMethodViewHolder(val binding: PaymentmethodadapterlayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+
 
     }
 
     override fun onBindViewHolder(
-        holder:PaymentMethodViewHolder,
+        holder: PaymentMethodViewHolder,
         position: Int
     ) {
+        if (paymentList?.get(position)?.cardType.equals("visa", true)) {
+            holder.binding.ivCardType.setImageResource(R.drawable.visablue)
+        } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
+            holder.binding.ivCardType.setImageResource(R.drawable.maestro)
+
+        } else {
+            holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
+
+        }
+        val htmlText = Html.fromHtml(paymentList?.get(position)?.cardType+"<br>"+paymentList?.get(position)?.cardNumber)
+
+        holder.binding.tvSelectPaymentMethod.text = htmlText
+
+
+        holder.binding.cardView.setOnClickListener {
+            paymentList?.get(position)?.isSelected = paymentList?.get(position)?.isSelected != true
+
+            paymentMethodCallback.paymentMethodCallback(position)
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int {
-        return paymentList.size
+        return paymentList?.size ?: 0
     }
 
-    interface PaymentMethodCallback{
+    fun updateList(paymentList: MutableList<CardListResponseModel?>?) {
+        this.paymentList = paymentList
+        notifyDataSetChanged()
+
+    }
+
+    interface PaymentMethodCallback {
         fun paymentMethodCallback(position: Int)
 
     }

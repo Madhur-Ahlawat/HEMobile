@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
@@ -12,6 +13,7 @@ import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltTopUp
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
     private var currentBalance: String = ""
     private var personalInformation: PersonalInformation? = null
     private var crossingCount: String = ""
+    private var navFlow: String = ""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -71,6 +74,11 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
     override fun initCtrl() {
         binding.btnTopUpNow.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
+        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
+            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
+
+        }
+
     }
 
     override fun observer() {
@@ -83,6 +91,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
                 findNavController().navigate(
                     R.id.action_accountSuspendedFragment_to_accountSuspendedPaymentFragment,
                     bundle
@@ -90,8 +99,8 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             }
 
             R.id.cancel_btn -> {
-                val intent = Intent(requireContext(), HomeActivityMain::class.java)
-                startActivity(intent)
+                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
             }
 
         }

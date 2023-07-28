@@ -35,19 +35,118 @@
                 android:textSize="@dimen/font_16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paymentRecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/payment_method_information"
                 android:layout_marginTop="18dp"
                 android:nestedScrollingEnabled="false"
-                android:id="@+id/paymentRecycleView"/>
+                app:layout_constraintTop_toBottomOf="@id/payment_method_information" />
 
             <com.conduent.apollo.ui.CMButton
+                android:id="@+id/addNewPaymentMethod"
                 style="@style/PrimaryButton"
-                app:layout_constraintTop_toBottomOf="@id/paymentRecycleView"
+                android:text="@string/add_new_payment_method"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/add_new_payment_method"/>
+                app:layout_constraintTop_toBottomOf="@id/paymentRecycleView" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewThresholdLimit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_74dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginTop="16dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/_5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addNewPaymentMethod"
+                app:layout_goneMarginBottom="5dp"
+
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/tv_select_payment_method"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        android:layout_marginEnd="18dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="@string/set_threshold_limit"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/forward"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/forward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="18dp"
+                        android:src="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewTopYourBalance"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_74dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginTop="16dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/_5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardViewThresholdLimit"
+                app:layout_goneMarginBottom="5dp"
+
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/tv_topUpYourBalance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        android:layout_marginEnd="18dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="@string/top_up_your_balance"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/forward_top_balance"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/forward_top_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="18dp"
+                        android:src="@drawable/ic_right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
