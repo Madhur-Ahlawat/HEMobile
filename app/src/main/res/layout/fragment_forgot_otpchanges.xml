@@ -33,7 +33,7 @@
             android:id="@+id/message_received_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:gravity="start"
             android:lineSpacingExtra="2dp"
             android:textColor="@color/black"

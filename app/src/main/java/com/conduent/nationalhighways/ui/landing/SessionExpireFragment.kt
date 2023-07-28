@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentSessionExpireBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,12 +61,8 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
                 requireActivity().finish()
                 when (type) {
                     Constants.LOGIN -> {
-                        requireActivity().startActivity(
-                            Intent(
-                                requireActivity(),
-                                AuthActivity::class.java
-                            )
-                        )
+                        requireActivity().startNormalActivity(LoginActivity::class.java)
+
                     }
                     //  "SIGN IN" ->{ requireActivity().startActivity(Intent(requireActivity(),ActivityHome::class.java)) }
                     Constants.REFRESH_TOKEN -> {// refresh token api call

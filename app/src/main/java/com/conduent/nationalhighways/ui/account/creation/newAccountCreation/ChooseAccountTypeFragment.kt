@@ -55,9 +55,12 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
             R.id.btnAccountType->{
                 val id: Int = binding.radioGroup.checkedRadioButtonId
-                NewCreateAccountRequestModel.personalAccount=false
+
                 if (id == R.id.radio_personal_account) {
-                     NewCreateAccountRequestModel.personalAccount = true
+                    NewCreateAccountRequestModel.personalAccount = true
+                }else{
+                    NewCreateAccountRequestModel.prePay = true
+                    NewCreateAccountRequestModel.personalAccount=false
                 }
 
                val editCall = navFlowCall.equals(EDIT_SUMMARY,true)
