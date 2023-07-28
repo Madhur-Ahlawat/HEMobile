@@ -120,7 +120,6 @@
 
     <color name="grayColorIcon">#707070</color>
     <color name="opacity_gray_ColorIcon">#FF957070</color>
-    <color name="color_strip_toll_charges">#707070</color>
 
     <color name="buttonColorPrimary">#0099E0</color>
     <color name="buttonColorPrimaryDisable">#00567D</color>
