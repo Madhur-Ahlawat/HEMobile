@@ -44,7 +44,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
-
     @Inject
     lateinit var sessionManager: SessionManager
     private var title: TextView? = null
@@ -154,7 +153,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.payment_management -> {
 
                 findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.payment_management)
 //                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
