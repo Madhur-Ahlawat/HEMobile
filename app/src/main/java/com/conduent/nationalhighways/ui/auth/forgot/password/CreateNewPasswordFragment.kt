@@ -351,31 +351,32 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
-        } else {
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.LOWER_CASE,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.UPPER_CASE,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.DIGITS,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            if (filterTextForSpecialChars.length > 0) {
-                commaSeperatedString =
-                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
-                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-            } else {
-                binding.edtNewPassword.removeError()
-            }
         }
+//        else {
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.LOWER_CASE,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.UPPER_CASE,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.DIGITS,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            if (filterTextForSpecialChars.length > 0) {
+//                commaSeperatedString =
+//                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
+//                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+//            } else {
+//                binding.edtNewPassword.removeError()
+//            }
+//        }
 
 
 
@@ -453,31 +454,32 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
-        } else {
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.LOWER_CASE,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.UPPER_CASE,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.DIGITS,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
-                binding.edtNewPassword.getText().toString().trim()
-            )
-            if (filterTextForSpecialChars.length > 0) {
-                commaSeperatedString =
-                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
-                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-            } else {
-                binding.edtNewPassword.removeError()
-            }
         }
+//        else {
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.LOWER_CASE,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.UPPER_CASE,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.DIGITS,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+//                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
+//                binding.edtNewPassword.getText().toString().trim()
+//            )
+//            if (filterTextForSpecialChars.length > 0) {
+//                commaSeperatedString =
+//                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
+//                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+//            } else {
+//                binding.edtNewPassword.removeError()
+//            }
+//        }
 
 
 

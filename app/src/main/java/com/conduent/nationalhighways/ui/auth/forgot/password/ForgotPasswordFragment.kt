@@ -280,17 +280,25 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                 false
             } else {
-                if(binding.edtEmail.editText.getText().toString().trim().length>0 && (binding.edtEmail.editText.getText().toString().trim().contains(
-                        Utils.TWO_OR_MORE_DOTS)) ||(binding.edtEmail.editText.getText().toString().trim().last().toString().equals(".") || binding.edtEmail.editText.getText().toString().first().toString().equals("."))){
-                    binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                    false
+                if(binding.edtEmail.editText.getText().toString().trim().length>0){
+                    if(binding.edtEmail.editText.getText().toString().trim().contains(
+                            Utils.TWO_OR_MORE_DOTS) || (binding.edtEmail.editText.getText().toString().trim().last().toString().equals(".") || binding.edtEmail.editText.getText().toString().first().toString().equals("."))
+                        || (binding.edtEmail.editText.getText().toString().trim().last().toString().equals("-") || binding.edtEmail.editText.getText().toString().first().toString().equals("-"))
+                    ){
+                        binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                        false
+                    }
+                    else if (binding.edtEmail.getText().toString().trim().length < 8) {
+                        binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
+                        false
+                    } else {
+                        binding.edtEmail.removeError()
+                        true
+                    }
                 }
-                else if (binding.edtEmail.getText().toString().trim().length < 8) {
-                    binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
-                    false
-                } else {
+                else{
                     binding.edtEmail.removeError()
-                    true
+                    false
                 }
 
             }
