@@ -168,6 +168,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                     }
                     else if(transactionItem==null){
                         transactionItem=recentTransactionItem
+                        headerDate.text=recentTransactionItem.transactionDate
                         headerDate.visible()
                     }
                     else{
