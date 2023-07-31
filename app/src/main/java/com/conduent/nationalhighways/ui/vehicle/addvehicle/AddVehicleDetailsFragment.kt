@@ -180,7 +180,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (it.contains(Utils.specialCharacter) || hasSpecialCharacters(it)) {
+                else if (it.contains(Utils.NUMBER) || it.contains(Utils.specialCharacter) || hasSpecialCharacters(it)) {
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
@@ -215,7 +215,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.colorInputLayout.editText.onTextChanged {
 
             colourInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.colourSpecialCharacter) || hasSpecialCharacters(it)) {
+                if (it.contains(Utils.NUMBER) || it.contains(Utils.colourSpecialCharacter) || hasSpecialCharacters(it)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {

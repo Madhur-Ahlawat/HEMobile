@@ -6,7 +6,7 @@
     app:startDestination="@id/landingFragment">
     <fragment
         android:id="@+id/startNow"
-        android:name="com.conduent.nationalhighways.ui.landing.StartNowFragment"
+        android:name="com.content.nationalhighways.ui.landing.StartNowFragment"
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now"/>
 

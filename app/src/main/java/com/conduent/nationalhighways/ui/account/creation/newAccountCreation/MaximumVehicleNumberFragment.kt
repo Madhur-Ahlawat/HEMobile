@@ -110,6 +110,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     }
 
     override fun onClick(view: View?) {
+        val navCall = navFlowCall.equals(VEHICLE_MANAGEMENT,true)
         when (view?.id) {
             R.id.btnContinue -> {
 
@@ -119,7 +120,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                       getString(R.string.str_continue) ->
 
                         if (NewCreateAccountRequestModel.vehicleList.size == 0) {
-                            val navCall = navFlowCall.equals(VEHICLE_MANAGEMENT,true)
+
                             if (NewCreateAccountRequestModel.isExempted || navCall) {
                                 findNavController().popBackStack()
                             } else {
@@ -152,7 +153,11 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             R.id.cancel_btn -> {
 
                 if(NewCreateAccountRequestModel.vehicleList.isEmpty()) {
-                    findNavController().popBackStack()
+                    if(navCall) {
+                        findNavController().popBackStack()
+                    }else{
+                        noVehicleAddedDialog()
+                    }
                 }else{
                     findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
                 }
@@ -181,9 +186,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    dialog.dismiss()
-
-
+                    findNavController().navigate(R.id.action_maximumFragment_to_landingFragment)
                 }
             })
     }

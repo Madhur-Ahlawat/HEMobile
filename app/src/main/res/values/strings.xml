@@ -1310,6 +1310,7 @@
     <string name="add_new_payment_method">+ ADD NEW PAYMENT METHOD</string>
     <string name="choose_your_new_payment_method">Choose your new payment method</string>
     <string name="debit_credit_card">Debit or Credit Card</string>
+    <string name="currency_symbol">£</string>
 
 
 </resources>
