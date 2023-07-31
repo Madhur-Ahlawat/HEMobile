@@ -352,6 +352,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
         }
+        else{
+            binding.edtConformPassword.removeError()
+        }
 //        else {
 //            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
 //                Utils.LOWER_CASE,
@@ -454,6 +457,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+        }
+        else{
+            binding.edtNewPassword.removeError()
         }
 //        else {
 //            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
