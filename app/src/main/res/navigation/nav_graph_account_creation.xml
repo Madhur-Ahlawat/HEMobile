@@ -491,9 +491,9 @@
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
 
-        <argument
-            android:name="plateNumber"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_maximumFragment_to_landingFragment"
+            app:destination="@+id/landingFragment" />
 
     </fragment>
     <fragment
