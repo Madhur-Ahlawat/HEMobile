@@ -149,5 +149,7 @@
     <dimen name="_17dp">17dp</dimen>
     <dimen name="_20_dp">20.dp</dimen>
     <dimen name="_98dp">98dp</dimen>
+    <dimen name="_28dp">28dp</dimen>
+    <dimen name="_26_7dp">26.7dp</dimen>
     />
 </resources>
