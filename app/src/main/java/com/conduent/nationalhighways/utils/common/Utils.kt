@@ -31,13 +31,13 @@ object Utils {
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
-    var SPECIAL_CHARACTERS_FOR_MODEL = "!\$%^*<>?;{}[]\\\\|~',`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_MODEL = "!\$%^*<>?;{}[]\\\\|~,`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
     var TWO_OR_MORE_HYPEN: Regex = Regex("[\\-]+[\\-]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
     var SPECIAL_CHARACTERS_FOR_MAKE = "!@#\$%^&*<>?;:{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_FOR_COLOR = "!@#\$%^&*()+<>?;:{}[]\\\\|~',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_COLOR = "!@#\$%^&*()+<>?;:{}[]\\\\|~'\",._-`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var SPECIAL_CHARACTERS_FOR_COMPANY_NAME = "#\$%^*()+<>/{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var SPECIAL_CHARACTERS_FOR_NAME = "!@#\$%^&*()+<>?/;:{}[]\\\\|~'_,.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var SPECIAL_CHARACTERS_ADDRESS = "!@\$%^&*()+<>?/;#\":{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
