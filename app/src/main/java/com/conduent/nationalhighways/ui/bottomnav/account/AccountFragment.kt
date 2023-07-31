@@ -160,14 +160,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.communication_preferences -> {
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(
-                    Constants.NAV_FLOW_KEY,
-                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
-                )
-                findNavController().navigate(
-                    R.id.action_accountFragment_to_optForSmsFragment,
-                    bundle
-                )
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
             }
 
             R.id.vehicle_management -> {

@@ -153,8 +153,8 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
 
 
     private fun checkButton() {
-        if (binding.edFrom.text.toString().trim().isBlank() ||
-            binding.edTo.text.toString().trim().isBlank()){
+        if (binding.edFrom.getText().toString().trim().isBlank() ||
+            binding.edTo.getText().toString().trim().isBlank()){
             setButtonDisable()
         } else {
             setBtnEnable()
@@ -182,8 +182,8 @@ class CrossingHistoryFilterDialog : BaseDialog<DialogCrossingHistoryFilterBindin
                 loadRange(lastPriorDate(-90), currentDate())
             }
             R.id.rbCustom -> {
-                loadRange(convertDateToMonth(binding.edFrom.text.toString().trim()),
-                    convertDateToMonth(binding.edTo.text.toString().trim()))
+                loadRange(convertDateToMonth(binding.edFrom.getText().toString().trim()),
+                    convertDateToMonth(binding.edTo.getText().toString().trim()))
             }
         }
     }

@@ -42,7 +42,7 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
         binding.apply {
             enable = false
             etCode.onTextChanged {
-                enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString()
+                enable = etCode.getText().toString().trim().isNotEmpty() && etCode.text.toString()
                     .trim().length > 5
             }
             btnAction.setOnClickListener(this@ProfileConfirmEmailFragment)

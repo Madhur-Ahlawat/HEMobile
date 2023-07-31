@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,7 +104,13 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     private fun validation() {
         if (binding.inputPostCode.getText().toString().isNotEmpty()) {
-            if(hasSpecialCharacters(binding.inputPostCode.getText().toString())){
+            if (binding.inputPostCode.editText.getText().toString()
+                    .contains(Utils.TWO_OR_MORE_HYPEN)
+            ) {
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
+                false
+            }
+            else if(hasSpecialCharacters(binding.inputPostCode.getText().toString(), Utils.SPECIAL_CHARACTERS_POSTCODE)){
                 binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                 false
             }
@@ -157,7 +164,13 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     false
 
                 }
-                else if(hasSpecialCharacters(finalString)){
+                else if (binding.inputPostCode.editText.getText().toString()
+                        .contains(Utils.TWO_OR_MORE_HYPEN)
+                ) {
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
+                    false
+                }
+                else if(hasSpecialCharacters(finalString,Utils.SPECIAL_CHARACTERS_POSTCODE)){
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                     false
                 }

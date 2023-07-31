@@ -88,13 +88,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
-                        indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
+                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
                         topup = "+" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                     } else {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
-                        indicatorIconTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
+                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
                         topup = "-" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
@@ -171,7 +171,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun getDashBoardAllData() {
-        binding.loaderPlaceholder.visibility == View.VISIBLE
+        binding.loaderPlaceholder.visibility = View.GONE
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = CrossingHistoryRequest(
             startIndex = 1,

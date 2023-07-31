@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -180,7 +181,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (it.contains(Utils.NUMBER) || it.contains(Utils.specialCharacter) || hasSpecialCharacters(it)) {
+                else if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MAKE)) {
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
@@ -199,7 +200,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (it.contains(Utils.excludeNumber) || hasSpecialCharacters(it)) {
+                else if (hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MODEL)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
@@ -214,8 +215,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
         binding.colorInputLayout.editText.onTextChanged {
 
-            colourInputCheck = if (it.isNotEmpty()) {
-                if (it.contains(Utils.NUMBER) || it.contains(Utils.colourSpecialCharacter) || hasSpecialCharacters(it)) {
+            colourInputCheck = if (it!=null && it.trim().length>0) {
+                if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_COLOR)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {
@@ -223,8 +224,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                binding.colorInputLayout.removeError()
-                true
+                binding.colorInputLayout.setErrorText(getString(R.string.enter_your_vihicle_color))
+                false
             }
 
             checkButton()

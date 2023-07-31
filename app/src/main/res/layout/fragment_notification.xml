@@ -17,7 +17,7 @@
             android:id="@+id/llyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_8dp"
+            android:layout_marginHorizontal="@dimen/_11dp"
             android:layout_marginTop="@dimen/_11dp"
             android:background="@drawable/bg_rounded_corner_5dp"
             android:elevation="@dimen/_5dp"
@@ -52,8 +52,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_above="@+id/btn_clear_notification"
+        <RelativeLayout
             android:layout_below="@+id/llyt"
             android:layout_marginTop="@dimen/_1dp"
             android:layout_width="match_parent"
@@ -64,6 +63,8 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_checkbox"
+                android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/_5dp">
@@ -75,7 +76,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/_25dp"
-                    android:layout_marginTop="@dimen/_26dp"
+                    android:layout_marginTop="@dimen/_28dp"
                     android:buttonTint="#E0E0E0"
                     android:gravity="center" />
 
@@ -92,30 +93,30 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/rl_checkbox"
                 android:id="@+id/notifications_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_12dp"
                 android:clickable="true"
                 android:clipToPadding="false"
                 android:focusable="true"
                 android:paddingBottom="@dimen/_190sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llyt"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_notifications" />
-        </LinearLayout>
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:layout_width="match_parent"
-            style="@style/PrimaryButton"
-            android:layout_marginBottom="@dimen/_19dp"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/btn_clear_notification"
-            android:textColor="@color/white"
-            android:text="@string/clear_notification"
-            android:layout_height="wrap_content"/>
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:layout_width="match_parent"
+                style="@style/PrimaryButton"
+                android:layout_marginBottom="@dimen/_19dp"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_clear_notification"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="@dimen/_26_7dp"
+                android:text="@string/clear_notification"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

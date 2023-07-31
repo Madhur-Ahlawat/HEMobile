@@ -28,7 +28,7 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         dialog?.setCanceledOnTouchOutside(false)
         setBtnDisabled()
         binding.addVrmInput.onTextChanged {
-            if (binding.addVrmInput.text.toString().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().isNotEmpty()) {
                 setBtnActivated()
             } else {
                 setBtnDisabled()
@@ -61,14 +61,14 @@ class AddVehicleDialog : BaseDialog<DialogAddVehicleBinding>() {
         binding.addVehicleBtn.setOnClickListener {
             binding.addVrmInput.hideKeyboard()
             val country: String
-            if (binding.addVrmInput.text.toString().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
                     "Non-UK"
                 } else {
                     "UK"
                 }
                 val plateInfoResp = PlateInfoResponse(
-                    binding.addVrmInput.text.toString().trim(),
+                    binding.addVrmInput.getText().toString().trim(),
                     country, "", "",
                     "", "", ""
                 )

@@ -43,7 +43,7 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
 
     override fun initCtrl() {
         binding.apply {
-            etEmail.onTextChanged { enable = isEmailValid(etEmail.text.toString()) }
+            etEmail.onTextChanged { enable = isEmailValid(etEmail.getText().toString()) }
             btnAction.setOnClickListener(this@ProfileEmailVerificationFragment)
         }
     }

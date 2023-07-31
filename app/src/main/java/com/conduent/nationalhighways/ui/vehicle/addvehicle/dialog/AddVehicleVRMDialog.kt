@@ -57,7 +57,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
         dialog?.setCanceledOnTouchOutside(false)
         setBtnDisabled()
         binding.addVrmInput.onTextChanged {
-            if (binding.addVrmInput.text.toString().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().isNotEmpty()) {
                 setBtnActivated()
             } else {
                 setBtnDisabled()
@@ -113,7 +113,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
             )
 
             binding.addVrmInput.hideKeyboard()
-            if (binding.addVrmInput.text.toString().isNotEmpty()) {
+            if (binding.addVrmInput.getText().toString().isNotEmpty()) {
                 country = if (!binding.switchView.isChecked) {
                     "Non-UK"
                 } else {
@@ -205,7 +205,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     }
 
     private fun getVehicleDataFromDVRM() {
-        viewModel.getVehicleData(binding.addVrmInput.text.toString().trim(), Constants.AGENCY_ID.toInt())
+        viewModel.getVehicleData(binding.addVrmInput.getText().toString().trim(), Constants.AGENCY_ID.toInt())
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
@@ -244,7 +244,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     private fun setNavigation() {
         plateInfoResponse = PlateInfoResponse()
         plateInfoResponse?.country = country
-        plateInfoResponse?.number = binding.addVrmInput.text.toString()
+        plateInfoResponse?.number = binding.addVrmInput.getText().toString()
 
         vehicleResponse =
             VehicleResponse(plateInfoResponse, plateInfoResponse, VehicleInfoResponse())
@@ -309,7 +309,7 @@ class AddVehicleVRMDialog : BaseDialog<DialogAddVehicleBinding>() {
     private fun setVrmDetails() {
 
         val plateInfoResp = PlateInfoResponse(
-            binding.addVrmInput.text.toString().trim(),
+            binding.addVrmInput.getText().toString().trim(),
             country, "", "",
             "", "", ""
         )
