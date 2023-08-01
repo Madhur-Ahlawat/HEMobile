@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import org.bouncycastle.jce.provider.BrokenPBE.Util
 
 @AndroidEntryPoint
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
@@ -171,7 +172,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 val finalString = string.replace(" ", "")
                 if (hasSpecialCharacters(
                         binding.inputPostCode.getText().toString().trim(),
-                        ""
+                        Utils.getSplCharString("")
                     )
                 ) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
