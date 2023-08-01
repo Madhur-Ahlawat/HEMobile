@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -170,7 +171,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                     false
                 }
-                else if(hasSpecialCharacters(finalString,Utils.SPECIAL_CHARACTERS_POSTCODE)){
+                else if(hasSpecialCharacters(finalString, splCharPostCode)){
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                     false
                 }

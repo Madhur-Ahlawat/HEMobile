@@ -1096,7 +1096,7 @@
     <string name="str_email_error_message">Enter your email address</string>
     <string name="str_email_format_error_message">Enter an email address in the correct format, like name@example.com</string>
     <string name="str_email_already_associated_with_other_account">An account with this email address already exists</string>
-    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more </string>
+    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more</string>
     <string name="str_email_length_more_than_100">Email address must be 64 100 characters or fewer</string>
     <string name="str_email_disallowed_character">Email address must not include [disallowed character]</string>
 
@@ -1278,7 +1278,7 @@
     <string name="resizable_text_read_less">See less</string>
     <string name="str_telephone_number_optional">Telephone number (optional)</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
-    <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
+    <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
@@ -1316,6 +1316,7 @@
     <string name="str_balance_topped_up_with">Balance topped up with %s</string>
     <string name="pound_symbol">£</string>
     <string name="enter_your_vihicle_color">Enter your vehicle color</string>
+    <string name="email_address_must_be_100_characters_or_fewer">Email address must be 100 characters or fewer</string>
 
 
 </resources>
