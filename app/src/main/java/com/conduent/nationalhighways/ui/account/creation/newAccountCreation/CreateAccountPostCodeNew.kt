@@ -118,16 +118,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         if (binding.inputPostCode.getText().toString().trim().isNotEmpty()) {
             if (hasSpecialCharacters(
                     binding.inputPostCode.getText().toString().trim(),
-                    splCharPostCode
+                    ""
                 )
             ) {
                 binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
-            } else if (Utils.countOccurenceOfChar(
-                    binding.inputPostCode.getText().toString().trim(),
-                    '-'
-                ) > 1
-            ) {
-                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
             } else if (finalString.length < 4 || finalString.length > 10) {
                 binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
             } else {
@@ -177,23 +171,13 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 val finalString = string.replace(" ", "")
                 if (hasSpecialCharacters(
                         binding.inputPostCode.getText().toString().trim(),
-                        splCharPostCode
+                        ""
                     )
                 ) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                     false
-                } else if (binding.inputPostCode.editText.getText().toString()
-                        .contains(Utils.TWO_OR_MORE_HYPEN)
-                ) {
-                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
-                    false
-                } else if (countOccurenceOfChar(
-                        binding.inputPostCode.getText().toString().trim(), '-'
-                    ) > 1
-                ) {
-                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
-                    false
-                } else if (finalString.length < 4 || finalString.length > 10) {
+                }
+                else if (finalString.length < 4 || finalString.length > 10) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                     false
                 } else {

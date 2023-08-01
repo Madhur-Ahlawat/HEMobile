@@ -375,7 +375,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     splCharPostCode
                 )
             ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters_except_single_hypen))
                 false
             }
             else if(Utils.countOccurenceOfChar(binding.postCode.getText().toString().trim(),'-')>1){
