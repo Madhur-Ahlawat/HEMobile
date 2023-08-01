@@ -114,8 +114,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onResume() {
-        super.onResume()
         title?.text  = getString(R.string.txt_my_account)
+
+        super.onResume()
     }
 
     override fun initCtrl() {
@@ -267,8 +268,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
 
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+
     }
+
 
 }

@@ -1314,6 +1314,33 @@
     <string name="str_balance_topped_up_with">Balance topped up with %s</string>
     <string name="pound_symbol">£</string>
 
+    <!--
+    payment method string 
+    -->
+    <string name="str_you_are_removing_all_the_payments_method">You are removing all the payment methods registered on the account</string>
+    <string name="str_remove_card_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_payment_method_deleted">Payment Method deleted</string>
+    <string name="str_your_default_payment_method">Your default payment method is now:</string>
+    <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
+    <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically. If you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_have_no_payment_methods_on_file">You have no payment methods on file</string>
+    <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_your_new_direct">Your new Direct Debit will take up to 4 days to get setup</string>
+    <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
+    <string name="str_your_direct_debit_for">Your Direct Debit for %s is pending. While it gets set up, we’ll use your current default payment method.</string>
+    <string name="str_your_direct_debit_was_not_setup">Your Direct Debit was not setup</string>
+    <string name="str_you_can_try">You can try again or contact your bank for more details.</string>
+    <string name="the_card_you_are_trying_to_add_is_already">The card you are trying to add is already registered to your account.</string>
+    <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
+    <string name="add_another_card">ADD ANOTHER CARD</string>
+    <string name="str_threshold_limit">Threshold limit updated successfully</string>
+    <string name="str_your_low_balance_limit">Your low balance limit is %s\nYour top-up amount is %s</string>
+    <string name="str_you_have_successfully_added_card">You have successfully added card:</string>
+    <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
+    <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
+    <string name="str_add_another_card">ADD ANOTHER CARD</string>
+
 
 </resources>
 

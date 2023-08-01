@@ -336,13 +336,11 @@ interface ApiService {
 
     @POST(PAYMENT_WITH_NEW_CARD)
     suspend fun paymentWithNewCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: PaymentWithNewCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
     @POST(PAYMENT_WITH_EXISTING_CARD)
     suspend fun paymentWithExistingCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: PaymentWithExistingCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 

@@ -7,10 +7,8 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -18,6 +16,7 @@ import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
 import java.lang.reflect.Field
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
@@ -448,6 +447,30 @@ object Utils {
     private const val CSV = "text/csv"
     private const val AUDIO = "audio/*"
     private const val TEXT = "text/*"
+
+    fun convertToPoundFormat(currentBalance: String?): CharSequence? {
+        var balance = currentBalance
+        if (balance.isNullOrEmpty()) {
+            return "£ 0.00"
+        }
+        try {
+            balance = currentBalance?.replace("£", "")?.replace(",", "")
+            val number = NumberFormat.getCurrencyInstance(Locale.UK)
+
+            return if (balance?.contains("(") == true && balance.contains(")")) {
+                val doublePayment = balance?.replace("(", "")?.replace(")", "")?.toDouble()
+                number.format(doublePayment)
+            } else {
+                val doublePayment = balance?.toDouble()
+                number.format(doublePayment)
+            }
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return "£$balance"
+    }
+
 
 
 }

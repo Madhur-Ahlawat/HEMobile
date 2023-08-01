@@ -69,7 +69,8 @@
         <activity
             android:name=".ui.bottomnav.HomeActivityMain"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileDark" />
+            android:theme="@style/Theme.HEMobileDark"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.viewcharges.ViewChargesActivity"
             android:screenOrientation="portrait"
