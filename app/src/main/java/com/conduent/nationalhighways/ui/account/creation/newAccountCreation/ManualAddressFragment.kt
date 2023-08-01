@@ -370,22 +370,25 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             while (matcher.find()) {
                 count++
             }
-            if (finalString.length < 4 || finalString.length > 11) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+            if (Utils.hasSpecialCharacters(
+                    binding.postCode.getText().toString().trim(),
+                    splCharPostCode
+                )
+            ) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                 false
-            } else if (binding.postCode.editText.getText().toString()
+            }
+            else if (binding.postCode.editText.getText().toString()
                     .contains(Utils.TWO_OR_MORE_HYPEN)
             ) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                 false
             }
-
-            else if (Utils.hasSpecialCharacters(binding.postCode.getText().toString().trim(),
-                    splCharPostCode)
-            ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+            else if (finalString.length < 4 || finalString.length > 10) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                 false
-            } else {
+            }
+            else {
                 binding.postCode.removeError()
                 true
             }
