@@ -216,7 +216,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             cardNumber = responseModel?.token,
             cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
             city = personalInformation?.city,
-            country = personalInformation?.country,
+            country = "GB",
             cvv = "",
             easyPay = "N",
             expMonth = responseModel?.card?.exp?.substring(0, 2),
@@ -243,7 +243,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         )
         Log.d("paymentRequest", Gson().toJson(cardModel))
 
-       // manualTopUpViewModel.paymentWithNewCard(cardModel)
+        manualTopUpViewModel.paymentWithNewCard(cardModel)
     }
 
     private fun payWithExistingCard() {

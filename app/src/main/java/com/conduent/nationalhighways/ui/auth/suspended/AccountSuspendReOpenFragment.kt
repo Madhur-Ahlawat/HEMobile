@@ -160,7 +160,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                     getString(R.string.str_continue) ->
-                        findNavController().navigate(R.id.accountSuspendReOpenFragment_to_accountFragment)
+                        findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
                 }
 
 

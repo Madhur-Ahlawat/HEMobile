@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp"
+            tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+
+            <ImageView
+                android:id="@+id/warningIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/checkicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/maximumVehicleAdded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@string/str_payment_method_deleted"
+                android:textColor="@color/new_btn_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
+                android:text="@string/str_you_must_pay"
+                android:lineSpacingExtra="2dp"
+                android:gravity="center"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:layout_marginTop="17dp"
+                android:textSize="14sp"
+                android:id="@+id/textMaximumVehicle" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_74dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="@dimen/_5dp"
+                android:elevation="3dp"
+                android:layout_marginHorizontal="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
+
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivCardType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/visablue"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/tv_select_payment_method"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        android:layout_marginEnd="18dp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_16sp"
+                        app:layout_constraintEnd_toStartOf="@id/text_default"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_default"
+                        android:textColor="@color/label_color"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="@dimen/_18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/text_default"/>
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <com.conduent.apollo.ui.CMButton
+                style="@style/PrimaryButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
+                android:text="@string/str_continue"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="@dimen/margin_70dp"
+                android:id="@+id/btnContinue"/>
+
+            <com.conduent.apollo.ui.CMButton
+                style="@style/secondaryButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/cancel"
+                android:textColor="@color/doItLaterColour"
+                app:borderColor="@color/doItLaterColour"
+                android:id="@+id/cancel_btn"
+                android:layout_marginBottom="@dimen/_30dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>
