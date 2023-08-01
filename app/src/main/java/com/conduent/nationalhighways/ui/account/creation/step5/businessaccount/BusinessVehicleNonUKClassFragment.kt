@@ -248,9 +248,9 @@ class BusinessVehicleNonUKClassFragment :
             nonUKVehicleModel?.apply {
                 vehicleClassDesc = VehicleClassTypeConverter.toClassName(mClassType)
                 if (requestModel?.accountType == Constants.BUSINESS_ACCOUNT)
-                    vehicleGroup = groupName.text.toString()
+                    vehicleGroup = groupName.getText().toString()
                 else
-                    vehicleComments = groupName.text.toString()
+                    vehicleComments = groupName.getText().toString()
 
             }
             Logg.logging("ClassesVehicle", "create acccount Vehicle details $nonUKVehicleModel")

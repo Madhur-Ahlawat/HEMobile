@@ -26,8 +26,7 @@ import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBinding>(),
-    View.OnClickListener {
+class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBinding>(){
 
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
@@ -43,18 +42,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     override fun initCtrl() {
         binding.apply {
             edtEmail.onTextChanged { enable = isEmailValid(edtEmail.text.toString()) }
-            btnNext.setOnClickListener(this@FragmentChangeEmailProfile)
-        }
-    }
-
-    override fun observer() {
-        observe(viewModel.emailVerificationApiVal, ::handleEmailVerification)
-    }
-
-    override fun onClick(v: View?) {
-        hideKeyboard()
-        when (v?.id) {
-            R.id.btn_action -> {
+            btnNext.setOnClickListener {
+                hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.emailVerificationApi(
                     EmailVerificationRequest(
@@ -64,6 +53,10 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 )
             }
         }
+    }
+
+    override fun observer() {
+        observe(viewModel.emailVerificationApiVal, ::handleEmailVerification)
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {

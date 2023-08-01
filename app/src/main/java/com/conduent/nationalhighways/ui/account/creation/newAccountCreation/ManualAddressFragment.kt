@@ -34,7 +34,7 @@ import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
@@ -277,19 +277,19 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         ) {
             when (index) {
                 0 -> {
-                    addressErrorMessage()
+                    addressErrorMessage(charSequence)
                 }
 
                 1 -> {
-                    address2ErrorMessage()
+                    address2ErrorMessage(charSequence)
                 }
 
                 2 -> {
-                    townCityErrorMessage()
+                    townCityErrorMessage(charSequence)
                 }
 
                 3 -> {
-                    postCodeErrorMessage()
+                    postCodeErrorMessage(charSequence)
                 }
             }
 
@@ -304,19 +304,13 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     }
 
 
-    private fun addressErrorMessage() {
+    private fun addressErrorMessage(char: CharSequence?) {
         if (binding.address.getText().toString().trim().isEmpty()) {
             binding.address.setErrorText(getString(R.string.str_building_error_message))
             requiredAddress = false
         } else {
             if (binding.address.getText().toString().trim().length < 200) {
-                requiredAddress = if (binding.address.getText().toString()
-                        .contains(
-                            Utils.SPECIAL_CHARACTERS.replace(
-                                Constants.ALLOWED_CHARACTERS_IN_ADDRESS,
-                                ""
-                            )
-                        )
+                requiredAddress = if (Utils.hasSpecialCharacters(binding.address.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_ADDRESS)
                 ) {
                     binding.address.setErrorText(getString(R.string.str_building_number_character_allowed))
                     false
@@ -325,31 +319,24 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     true
                 }
             } else {
-                requiredAddress = if (binding.address.getText().toString().trim().length > 200) {
-                    binding.address.setErrorText(getString(R.string.str_building_number_error_message))
-                    false
-                } else {
-                    binding.address.removeError()
-                    true
-                }
+                requiredAddress = false
+                binding.address.setErrorText(getString(R.string.str_building_number_error_message))
             }
         }
         checkButton()
 
     }
 
-    private fun address2ErrorMessage() {
+    private fun address2ErrorMessage(char: CharSequence?) {
         if (binding.address2.getText().toString().isEmpty()) {
             binding.address2.removeError()
             requiredAddress2 = true
         }
         requiredAddress2 = if (binding.address2.getText().toString().trim().length < 100) {
-            if (binding.address2.getText().toString().trim()
-                    .contains(Utils.addressSpecialCharacter)
+            if (Utils.hasSpecialCharacters(binding.address2.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_ADDRESS)
             ) {
                 binding.address2.setErrorText(getString(R.string.str_address_line2_character_allowed))
                 false
-
             } else {
                 binding.address2.removeError()
                 true
@@ -363,7 +350,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     }
 
-    private fun postCodeErrorMessage() {
+    private fun postCodeErrorMessage(char: CharSequence?) {
         requiredPostcode = if (binding.postCode.getText().toString().trim().isEmpty()) {
             binding.postCode.setErrorText(getString(R.string.str_post_code_error_message))
             false
@@ -380,32 +367,38 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             if (finalString.length < 4 || finalString.length > 11) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                 false
-            } else if (hasSpecialCharacters(finalString)) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
-                false
-            } else if (finalString.replace("-", "").contains("-")) {
+            } else if (binding.postCode.editText.getText().toString()
+                    .contains(Utils.TWO_OR_MORE_HYPEN)
+            ) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
+                false
+            }
+
+            else if (Utils.hasSpecialCharacters(binding.postCode.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_POSTCODE)
+            ) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                 false
             } else {
                 binding.postCode.removeError()
                 true
             }
-
         }
 
         checkButton()
 
     }
 
-    private fun townCityErrorMessage() {
+    private fun townCityErrorMessage(char: CharSequence?) {
         if (binding.townCity.getText().toString().trim().isEmpty()) {
             binding.townCity.setErrorText(getString(R.string.str_town_city_error_message))
             requiredCityTown = false
         } else {
             requiredCityTown = if (binding.townCity.getText().toString().trim().length < 50) {
-
-                if (binding.townCity.getText().toString().trim()
-                        .contains(Utils.addressSpecialCharacter)
+                if(hasDigits(binding.townCity.getText().toString().trim())){
+                    binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
+                    false
+                }
+                else if (Utils.hasSpecialCharacters(binding.townCity.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_TOWN_OR_CITY)
                 ) {
                     binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
                     false

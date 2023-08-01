@@ -250,12 +250,12 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         dateRangeModel.endDate = DateUtils.currentDate()
         if (binding.rbSpecificDay.isChecked) {
             dateRangeModel.startDate =
-                DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
+                DateUtils.convertDateToMonth(binding.edSpecificDay.getText().toString())
             dateRangeModel.endDate =
-                DateUtils.convertDateToMonth(binding.edSpecificDay.text.toString())
+                DateUtils.convertDateToMonth(binding.edSpecificDay.getText().toString())
         } else if (binding.rbDateRange.isChecked){
-            dateRangeModel.startDate = DateUtils.convertDateToMonth(binding.edFrom.text.toString())
-            dateRangeModel.endDate = DateUtils.convertDateToMonth(binding.edTo.text.toString())
+            dateRangeModel.startDate = DateUtils.convertDateToMonth(binding.edFrom.getText().toString())
+            dateRangeModel.endDate = DateUtils.convertDateToMonth(binding.edTo.getText().toString())
         }
         binding.paymentRecycleView.gone()
         binding.progressBar.visible()
@@ -517,21 +517,21 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         when {
             binding.rbSpecificDay.isChecked -> {
                 binding.applyBtnModel =
-                    (!binding.edSpecificDay.text.isNullOrEmpty())
+                    (!binding.edSpecificDay.getText().isNullOrEmpty())
             }
             binding.rbDateRange.isChecked -> {
                 binding.applyBtnModel =
-                    !binding.edFrom.text.isNullOrEmpty()
-                            && !binding.edTo.text.isNullOrEmpty()
+                    !binding.edFrom.getText().isNullOrEmpty()
+                            && !binding.edTo.getText().isNullOrEmpty()
             }
             else -> {
                 binding.applyBtnModel = true
             }
         }
 //        binding.applyBtnModel =
-//            (binding.rbSpecificDay.isChecked && !binding.edSpecificDay.text.isNullOrEmpty()) ||
-//                    (binding.rbDateRange.isChecked && !binding.edFrom.text.isNullOrEmpty()
-//                            && !binding.edTo.text.isNullOrEmpty() ||
+//            (binding.rbSpecificDay.isChecked && !binding.edSpecificDay.getText().isNullOrEmpty()) ||
+//                    (binding.rbDateRange.isChecked && !binding.edFrom.getText().isNullOrEmpty()
+//                            && !binding.edTo.getText().isNullOrEmpty() ||
 //                            dateRangeModel.vehicleNumber?.isNotEmpty() == true)
     }
 

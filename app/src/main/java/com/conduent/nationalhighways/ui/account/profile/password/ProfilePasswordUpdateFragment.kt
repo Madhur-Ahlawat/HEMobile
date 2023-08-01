@@ -56,11 +56,11 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
     }
 
     private fun checkButton() {
-        binding.enable = (binding.tiePassword.text.toString().trim().isNotEmpty()
-                && binding.tieConfirmPassword.text.toString().trim()
-            .isNotEmpty() && binding.tieConfirmPassword.text.toString().trim().isNotEmpty()
-                && binding.tieConfirmPassword.text.toString()
-            .trim() == binding.tiePassword.text.toString().trim())
+        binding.enable = (binding.tiePassword.getText().toString().trim().isNotEmpty()
+                && binding.tieConfirmPassword.getText().toString().trim()
+            .isNotEmpty() && binding.tieConfirmPassword.getText().toString().trim().isNotEmpty()
+                && binding.tieConfirmPassword.getText().toString()
+            .trim() == binding.tiePassword.getText().toString().trim())
 
     }
 

@@ -52,7 +52,7 @@ class FilterVehicleNamesAdapter(private val fragment: Fragment) :
         checkedPos = holder.absoluteAdapterPosition
         notifyDataSetChanged()
         (fragment as AccountPaymentHistoryFragment).setSelectedVehicleName(
-            holder.binding.rbVehicleName.text.toString().trim()
+            holder.binding.rbVehicleName.getText().toString().trim()
         )
     }
 

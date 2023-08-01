@@ -31,6 +31,8 @@ import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
+import com.conduent.nationalhighways.utils.common.Utils.makeCommaSeperatedStringForPassword
+import com.conduent.nationalhighways.utils.common.Utils.removeGivenStringCharactersFromString
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -260,6 +262,9 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     }
 
     private fun isEnable(text: String) {
+        var filterTextForSpecialChars = ""
+        var commaSeperatedString = ""
+
         if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
             && binding.edtConfirmPassword.getText().toString().trim().isNotEmpty()
             && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
@@ -277,7 +282,8 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
             binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
 
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+        }
+        else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
 
@@ -289,10 +295,19 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
-        } else if (hasSpecialCharacters(text)) {
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_not_have_special_characters))
-        } else {
-            binding.edtNewPassword.removeError()
+        }
+        else {
+            filterTextForSpecialChars = removeGivenStringCharactersFromString(Utils.LOWER_CASE,binding.edtNewPassword.getText().toString().trim())
+            filterTextForSpecialChars = removeGivenStringCharactersFromString(Utils.UPPER_CASE,binding.edtNewPassword.getText().toString().trim())
+            filterTextForSpecialChars = removeGivenStringCharactersFromString(Utils.DIGITS,binding.edtNewPassword.getText().toString().trim())
+            filterTextForSpecialChars = removeGivenStringCharactersFromString(Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,binding.edtNewPassword.getText().toString().trim())
+            commaSeperatedString= makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
+            if(filterTextForSpecialChars.length>0){
+                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+            }
+            else{
+                binding.edtNewPassword.removeError()
+            }
         }
 
 

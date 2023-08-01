@@ -55,8 +55,8 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
             tvChange.setOnClickListener(this@ProfilePostCodeFragment)
             binding.tilAddress.setOnClickListener(this@ProfilePostCodeFragment)
             binding.tiePostCode.doAfterTextChanged {
-                enable = tiePostCode.text.toString().isNotEmpty() && tieAddress.text.toString()
-                    .isNotEmpty() && tieAddress.text.toString() != "Select Address"
+                enable = tiePostCode.getText().toString().isNotEmpty() && tieAddress.getText().toString()
+                    .isNotEmpty() && tieAddress.getText().toString() != "Select Address"
             }
         }
     }
@@ -117,7 +117,7 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
             R.id.btnFindAddress -> {
                 if (binding.tiePostCode.length() > 0) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    viewModel.fetchAddress(binding.tiePostCode.text.toString())
+                    viewModel.fetchAddress(binding.tiePostCode.getText().toString())
                 } else {
                     showError(binding.root, getString(R.string.please_enter_postcode))
                 }
