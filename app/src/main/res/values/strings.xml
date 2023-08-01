@@ -1345,6 +1345,9 @@
     <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
     <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
     <string name="str_add_another_card">ADD ANOTHER CARD</string>
+    <string name="enter_the_primary_account_contact_first_name">Enter the primary account contact first name</string>
+    <string name="enter_the_primary_account_contact_last_name">Enter the primary account contact last name</string>
+    <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
 
 
 </resources>

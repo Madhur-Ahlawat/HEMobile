@@ -30,6 +30,7 @@ object Utils {
     var ALLOWED_CHARS_ADDRESS_LINE_2 = "',.-#"
     var ALLOWED_CHARS_TOWN_OR_CITY = "'-"
     var ALLOWED_CHARS_POSTCODE = "-"
+    var ALLOWED_CHARS_COMPANY_NAME = "-'.,:;?!&@"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
     var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
@@ -80,7 +81,9 @@ object Utils {
     val splCharEmailCode: String by lazy {
         getSplCharString(ALLOWED_CHARS_EMAIL)
     }
-
+    val splCharCompanyName: String by lazy {
+        getSplCharString(ALLOWED_CHARS_COMPANY_NAME)
+    }
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
         for (i in 0 until s.length) {

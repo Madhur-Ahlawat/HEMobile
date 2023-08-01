@@ -33,6 +33,7 @@ import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_C
 import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_NAME
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.splCharCompanyName
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +60,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnNext.setOnClickListener(this)
-
         if (NewCreateAccountRequestModel.personalAccount) {
             enablePersonalView()
         }
@@ -242,7 +242,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-                 binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+                 binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_contact_first_name))
                 requiredFirstName = false
             }
             else {
@@ -266,7 +266,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_contact_last_name))
                 requiredLastName = false
             }
             else {
@@ -296,8 +296,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
                     } else if (hasSpecialCharacters(binding.inputCompanyName.getText().toString(),
-                            SPECIAL_CHARACTERS_FOR_COMPANY_NAME)) {
-                        binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_must_not_include_special_characters))
+                            splCharCompanyName)) {
+                        binding.inputCompanyName.setErrorText(getString(R.string.company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens))
                         false
                     } else {
                         binding.inputCompanyName.removeError()
