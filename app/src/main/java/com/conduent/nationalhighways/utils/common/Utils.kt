@@ -38,6 +38,7 @@ object Utils {
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
     var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
+    var ACCOUNT_NAME_FIRSTNAME_LASTNAME: Regex = Regex("[a-zA-Z\\-]+")
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
