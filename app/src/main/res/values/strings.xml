@@ -1282,7 +1282,7 @@
     <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z and numbers 0 to 9</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
-    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
+    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be 50 characters or fewer</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
     <string name="profile_mobile_number">Profile mobile number</string>
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
@@ -1348,6 +1348,8 @@
     <string name="enter_the_primary_account_contact_first_name">Enter the primary account contact first name</string>
     <string name="enter_the_primary_account_contact_last_name">Enter the primary account contact last name</string>
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
+    <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
+    <string name="enter_your_vehicle_model">Enter your vehicle model</string>
 
 
 </resources>

@@ -184,7 +184,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MAKE)) {
+                else if (hasDigits(it) || hasSpecialCharacters(it,Utils.splCharVehicleMake)) {
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
@@ -192,6 +192,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
+                binding.makeInputLayout.setErrorText(getString(R.string.enter_the_make_of_your_vehicle))
                 false
             }
 
@@ -203,7 +204,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MODEL)) {
+                else if (hasSpecialCharacters(it,Utils.splCharVehicleModel)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
@@ -211,6 +212,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
+                binding.modelInputLayout.setErrorText(getString(R.string.enter_your_vehicle_model))
                 false
             }
 
@@ -219,7 +221,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.colorInputLayout.editText.onTextChanged {
 
             colourInputCheck = if (it!=null && it.trim().length>0) {
-                if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_COLOR)) {
+                if (hasDigits(it) || hasSpecialCharacters(it,Utils.splCharVehicleColor)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {
