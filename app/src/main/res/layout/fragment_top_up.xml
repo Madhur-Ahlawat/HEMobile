@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:maxLength="50"
-            app:imeOptions="actionNext"
-            app:inputType="numberDecimal"
             app:labelText="@string/str_low_balance"
+
+
             />
         <TextView
             android:layout_width="wrap_content"

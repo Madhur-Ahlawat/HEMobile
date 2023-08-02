@@ -98,7 +98,7 @@ class PaymentMethodCardFragment : BaseFragment<FragmentPaymentMethodCardBinding>
                                          expMonth = responseModel.card?.exp?.substring(0, 2), expYear = responseModel.card?.exp?.substring(2, 4), firstName = "",
                                          middleName = "",lastName = "", maskedCardNumber = responseModel.card?.number,
                                          paymentType = "card", primaryCard = "N", state = "",
-                                         zipcode1 = "", zipcode2 = "",cvv=null)
+                                         zipcode1 = "", zipcode2 = "",cvv=null, directoryServerId = "", eci = "", cavv = "", threeDsVersion = "", cardHolderAuth = "")
 
                 binding.apply {
                     tieCardNo.setText( cardModel?.maskedCardNumber?:"")

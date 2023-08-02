@@ -1,6 +1,6 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
-import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +16,8 @@ import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.databinding.FragmentPaymentMethod2Binding
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
@@ -30,6 +27,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -43,7 +42,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
     private var loader: LoaderDialog? = null
-    private var position: Int = 0
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
@@ -92,37 +90,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         lifecycleScope.launch {
             observe(viewModel.savedCardList, ::handleSaveCardResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(viewModel.deleteCard, ::handleDeleteCardResponse)
 
 
         }
     }
 
-    private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                if (status.data?.statusCode?.equals("500") == true) {
-                    ErrorUtil.showError(binding.root, status.data.message)
-                    return
-                }
-
-                paymentList?.removeAt(position)
-                paymentMethodAdapter.updateList(paymentList)
-
-
-            }
-
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-            }
-        }
-    }
 
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
@@ -135,6 +107,15 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
+
+                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                    binding.cardViewThresholdLimit.visibility = View.GONE
+                    binding.cardViewTopYourBalance.visibility = View.GONE
+
+                } else {
+                    binding.cardViewThresholdLimit.visibility = View.VISIBLE
+                    binding.cardViewTopYourBalance.visibility = View.VISIBLE
+                }
 
             }
 
@@ -155,11 +136,25 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             is Resource.Success -> {
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
+                    binding.paymentMethodInformation.visible()
+                    binding.paymentRecycleView.visible()
+
+                    binding.warningIcon.gone()
+                    binding.maximumVehicleAdded.gone()
+                    binding.textMaximumVehicle.gone()
+
                     paymentMethodAdapter.updateList(paymentList)
 
 
                     binding.addNewPaymentMethod.isEnabled = (paymentList?.size ?: 0) < 2
 
+                } else {
+                    binding.paymentMethodInformation.gone()
+                    binding.paymentRecycleView.gone()
+
+                    binding.warningIcon.visible()
+                    binding.maximumVehicleAdded.visible()
+                    binding.textMaximumVehicle.visible()
                 }
 
 
@@ -183,18 +178,25 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             R.id.cardViewTopYourBalance -> {
-                val intent = Intent(requireContext(), AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
-                intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                title.text = getString(R.string.top_up)
 
-                startActivity(intent)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+                findNavController().navigate(
+                    R.id.action_paymentMethodFragment_to_accountSuspendedPaymentFragment,
+                    bundle
+                )
+
 
             }
 
             R.id.cardViewThresholdLimit -> {
                 title.text = getString(R.string.set_threshold_limit)
-
-                findNavController().navigate(R.id.action_paymentMethodFragment_to_topUpFragment)
+                val bundle=Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY,Constants.THRESHOLD)
+                findNavController().navigate(R.id.action_paymentMethodFragment_to_topUpFragment,bundle)
 
             }
         }
@@ -202,12 +204,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun paymentMethodCallback(position: Int, value: String) {
         if (value == Constants.DELETE_CARD) {
-            if (paymentList?.get(position)?.primaryCard != true) {
-                this.position = position
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                val bundle=Bundle()
+                bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
+                findNavController().navigate(R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,bundle)
 
-                viewModel.deleteCard(PaymentMethodDeleteModel(paymentList?.get(position)?.rowId))
-            }
+
         }
 
     }

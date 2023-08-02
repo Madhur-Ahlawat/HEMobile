@@ -23,33 +23,87 @@
             android:paddingBottom="@dimen/margin_20dp"
             tools:context=".ui.payment.newpaymentmethod.NewPaymentMethodFragment">
 
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/payment_method_information"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/payment_method_information"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/paymentRecycleView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/payment_method_information" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/layout"
+                >
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/payment_method_information"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/payment_method_information"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/paymentRecycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/payment_method_information" />
+
+                <ImageView
+                    android:id="@+id/warningIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/warningicon"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/maximumVehicleAdded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/str_you_have_no_payment_methods_on_file"
+                    android:textColor="@color/new_btn_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/str_you_must_pay_crossing"
+                    android:lineSpacingExtra="2dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="17dp"
+                    android:textSize="14sp"
+                    android:id="@+id/textMaximumVehicle" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/addNewPaymentMethod"
                 style="@style/PrimaryButton"
                 android:text="@string/add_new_payment_method"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/paymentRecycleView" />
+                app:layout_constraintTop_toBottomOf="@id/layout" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewThresholdLimit"

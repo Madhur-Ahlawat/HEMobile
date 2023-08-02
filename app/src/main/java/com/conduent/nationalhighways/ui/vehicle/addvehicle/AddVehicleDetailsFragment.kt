@@ -65,6 +65,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)
+            modelInputLayout.setMaxLength(50)
+            makeInputLayout.setMaxLength(50)
+            colorInputLayout.setMaxLength(50)
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
         accountData = NewCreateAccountRequestModel

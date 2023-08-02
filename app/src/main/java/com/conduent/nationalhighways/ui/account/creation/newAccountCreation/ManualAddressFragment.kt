@@ -35,6 +35,10 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
+import com.conduent.nationalhighways.utils.common.Utils.splCharAddress1
+import com.conduent.nationalhighways.utils.common.Utils.splCharAddress2
+import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
+import com.conduent.nationalhighways.utils.common.Utils.splCharTownCity
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
@@ -310,7 +314,8 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             requiredAddress = false
         } else {
             if (binding.address.getText().toString().trim().length < 200) {
-                requiredAddress = if (Utils.hasSpecialCharacters(binding.address.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_ADDRESS)
+                requiredAddress = if (Utils.hasSpecialCharacters(binding.address.getText().toString().trim(),
+                        splCharAddress1)
                 ) {
                     binding.address.setErrorText(getString(R.string.str_building_number_character_allowed))
                     false
@@ -333,7 +338,8 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             requiredAddress2 = true
         }
         requiredAddress2 = if (binding.address2.getText().toString().trim().length < 100) {
-            if (Utils.hasSpecialCharacters(binding.address2.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_ADDRESS)
+            if (Utils.hasSpecialCharacters(binding.address2.getText().toString().trim(),
+                    splCharAddress2)
             ) {
                 binding.address2.setErrorText(getString(R.string.str_address_line2_character_allowed))
                 false
@@ -364,21 +370,25 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             while (matcher.find()) {
                 count++
             }
-            if (finalString.length < 4 || finalString.length > 11) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+            if (Utils.hasSpecialCharacters(
+                    binding.postCode.getText().toString().trim(),
+                    splCharPostCode
+                )
+            ) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                 false
-            } else if (binding.postCode.editText.getText().toString()
+            }
+            else if (binding.postCode.editText.getText().toString()
                     .contains(Utils.TWO_OR_MORE_HYPEN)
             ) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                 false
             }
-
-            else if (Utils.hasSpecialCharacters(binding.postCode.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_POSTCODE)
-            ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+            else if (finalString.length < 4 || finalString.length > 10) {
+                binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                 false
-            } else {
+            }
+            else {
                 binding.postCode.removeError()
                 true
             }
@@ -398,7 +408,8 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
                     false
                 }
-                else if (Utils.hasSpecialCharacters(binding.townCity.getText().toString().trim(),Utils.SPECIAL_CHARACTERS_TOWN_OR_CITY)
+                else if (Utils.hasSpecialCharacters(binding.townCity.getText().toString().trim(),
+                        splCharTownCity)
                 ) {
                     binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
                     false

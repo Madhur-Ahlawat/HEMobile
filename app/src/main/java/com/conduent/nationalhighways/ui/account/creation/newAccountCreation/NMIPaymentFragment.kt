@@ -19,12 +19,14 @@ import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
+import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
+import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -36,6 +38,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -44,7 +47,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     private val viewModel: CreateAccountViewModel by viewModels()
-    private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
+    private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -86,7 +89,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -109,6 +112,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun observer() {
         observe(viewModel.account, ::handleAccountResponse)
+        observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
+
 
     }
 
@@ -153,7 +158,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         }
 
                         "3DStarted" -> {
-                           // showLoader()
+                            // showLoader()
                         }
 
                         "3DSLoaded" -> {
@@ -195,6 +200,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     paymentSuccessResponse.directoryServerId,
                                     paymentSuccessResponse.eci
                                 )
+                            } else if (flow == Constants.ADD_PAYMENT_METHOD) {
+
+                                saveNewCard(responseModel, paymentSuccessResponse)
+
                             } else {
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.DATA, responseModel)
@@ -217,6 +226,47 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
         }
+
+
+    }
+
+    private fun saveNewCard(
+        responseModel: CardResponseModel?,
+        paymentSuccessResponse: PaymentSuccessResponse?
+    ) {
+        showLoader()
+        val addCardModel = AddCardModel(
+            addressLine1 = personalInformation?.addressLine1.toString(),
+            addressLine2 = personalInformation?.addressLine2.toString(),
+            bankRoutingNumber = "",
+            cardNumber = responseModel?.token,
+            cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
+            city = personalInformation?.city,
+            country = "GB",
+            cvv = "",
+            easyPay = "N",
+            expMonth = responseModel?.card?.exp?.substring(0, 2),
+            expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
+            firstName = responseModel?.check?.name ?: "",
+            middleName = "",
+            lastName = "",
+            maskedCardNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
+            paymentType = "card",
+            primaryCard = "N",
+            saveCard = "",
+            state = "HE",
+            useAddressCheck = "N",
+            zipcode1 = personalInformation?.zipcode.toString().replace(" ", ""),
+            zipcode2 = "",
+            directoryServerId = paymentSuccessResponse?.directoryServerId.toString(),
+            cavv = paymentSuccessResponse?.cavv.toString(),
+            threeDsVersion = paymentSuccessResponse?.threeDsVersion.toString(),
+            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth.toString(),
+            eci = paymentSuccessResponse?.eci.toString(),
+            customerVaultId = null
+        )
+
+        paymentMethodViewModel.saveNewCard(addCardModel)
 
 
     }
@@ -347,7 +397,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
-                if (flow == Constants.SUSPENDED||flow==Constants.PAYMENT_TOP_UP) {
+                if (flow == Constants.SUSPENDED || flow == Constants.PAYMENT_TOP_UP) {
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
@@ -357,12 +407,18 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
 
 
-                }  else {
+                } else {
                     view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
 
 
                 }
@@ -377,5 +433,36 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun getRequiredText(text: String) = text.substringAfter(' ')
 
+    private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        hideLoader()
+        when (status) {
+            is Resource.Success -> {
+                val bundle = Bundle()
+
+                if (status.data?.statusCode?.equals("0") == true) {
+                    bundle.putParcelable(Constants.DATA, responseModel)
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2)
+                } else if (status.data?.statusCode?.equals("1337") == true) {
+
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.CARD_IS_ALREADY_REGISTERED
+                    )
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2)
+                } else {
+
+
+                    ErrorUtil.showError(binding.root, status.data?.message)
+                }
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, status.errorMsg)
+            }
+
+            else -> {
+            }
+        }
+    }
 
 }

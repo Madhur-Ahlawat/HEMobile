@@ -49,6 +49,7 @@ object Constants {
     const val PAYG = "PAYG"
     const val PAYMENT_HISTORY = "payment_history"
     const val PAYMENT_METHOD = "payment_method"
+    const val ADD_PAYMENT_METHOD="add_payment_method"
     const val PAYMENT_TOP_UP = "payment_top_up"
     const val TOP_UP_AMOUNT="top_up_amount"
     const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
@@ -128,6 +129,7 @@ object Constants {
     const val SUSPENDED="suspended"
     const val NOTSUSPENDED="notsuspended"
     const val THRESHOLD_AMOUNT="threshold_amount"
+    const val THRESHOLD="threshold_amount"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"
     const val OLD_PLATE_NUMBER = "oldPlateNumber"
@@ -270,6 +272,11 @@ object Constants {
     const val EDIT_VEHICLE="edit_vehicle"
     const val CROSSINGCOUNT="crossingCount"
     const val TRANSACTIONID="tranasactionId"
+    const val LOW_BALANCE="lowbalance"
+    const val LOW_BALANCE_AMOUNT="lowbalance"
+    const val CARD_IS_ALREADY_REGISTERED="card_is_already_registered"
+
+    const val TOP_UP_BALANCE="top_up_balance"
 
 
 

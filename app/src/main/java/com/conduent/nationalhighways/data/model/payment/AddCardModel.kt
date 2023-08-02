@@ -28,5 +28,10 @@ data class AddCardModel(
     var zipcode1: String?,
     var zipcode2: String?,
     val cvv: String?,
+    val directoryServerId:String?,
+    val cavv:String?,
+    val threeDsVersion:String?,
+    val cardHolderAuth:String?,
+    val eci:String?,
     var default: Boolean?=false
 ) : Parcelable

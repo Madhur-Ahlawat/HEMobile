@@ -1096,7 +1096,7 @@
     <string name="str_email_error_message">Enter your email address</string>
     <string name="str_email_format_error_message">Enter an email address in the correct format, like name@example.com</string>
     <string name="str_email_already_associated_with_other_account">An account with this email address already exists</string>
-    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more </string>
+    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more</string>
     <string name="str_email_length_more_than_100">Email address must be 64 100 characters or fewer</string>
     <string name="str_email_disallowed_character">Email address must not include [disallowed character]</string>
 
@@ -1278,7 +1278,7 @@
     <string name="resizable_text_read_less">See less</string>
     <string name="str_telephone_number_optional">Telephone number (optional)</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
-    <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
+    <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
@@ -1317,6 +1317,34 @@
     <string name="pound_symbol">£</string>
     <string name="enter_your_vihicle_color">Enter your vehicle color</string>
     <string name="an_account_with_this_email_address_already_exists">An account with this email address already exists</string>
+    <string name="email_address_must_be_100_characters_or_fewer">Email address must be 100 characters or fewer</string>
+
+    <!--
+    payment method string
+    -->
+    <string name="str_you_are_removing_all_the_payments_method">You are removing all the payment methods registered on the account</string>
+    <string name="str_remove_card_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_payment_method_deleted">Payment Method deleted</string>
+    <string name="str_your_default_payment_method">Your default payment method is now:</string>
+    <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
+    <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically. If you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_have_no_payment_methods_on_file">You have no payment methods on file</string>
+    <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_your_new_direct">Your new Direct Debit will take up to 4 days to get setup</string>
+    <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
+    <string name="str_your_direct_debit_for">Your Direct Debit for %s is pending. While it gets set up, we’ll use your current default payment method.</string>
+    <string name="str_your_direct_debit_was_not_setup">Your Direct Debit was not setup</string>
+    <string name="str_you_can_try">You can try again or contact your bank for more details.</string>
+    <string name="the_card_you_are_trying_to_add_is_already">The card you are trying to add is already registered to your account.</string>
+    <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
+    <string name="add_another_card">ADD ANOTHER CARD</string>
+    <string name="str_threshold_limit">Threshold limit updated successfully</string>
+    <string name="str_your_low_balance_limit">Your low balance limit is %s\nYour top-up amount is %s</string>
+    <string name="str_you_have_successfully_added_card">You have successfully added card:</string>
+    <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
+    <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
+    <string name="str_add_another_card">ADD ANOTHER CARD</string>
 
 
 </resources>

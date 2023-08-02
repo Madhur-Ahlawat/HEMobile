@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -154,15 +155,18 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         ) {
 
             requiredPostCode = if (binding.inputPostCode.getText().toString().trim().isEmpty()) {
-                //binding.inputPostCode.setErrorText(getString(R.string.str_post_code_error_message))
+                binding.inputPostCode.removeError()
                 false
             } else {
                 val string = binding.inputPostCode.getText().toString().trim()
                 val finalString = string.replace(" ", "")
-                if (finalString.length < 4 || finalString.length > 11) {
-                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+                if (Utils.hasSpecialCharacters(
+                        binding.inputPostCode.getText().toString().trim(),
+                        splCharPostCode
+                    )
+                ) {
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                     false
-
                 }
                 else if (binding.inputPostCode.editText.getText().toString()
                         .contains(Utils.TWO_OR_MORE_HYPEN)
@@ -170,11 +174,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                     false
                 }
-                else if(hasSpecialCharacters(finalString,Utils.SPECIAL_CHARACTERS_POSTCODE)){
-                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                else if (finalString.length < 4 || finalString.length > 10) {
+                    binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                     false
                 }
-                else{
+                else {
                     binding.inputPostCode.removeError()
                     true
                 }
