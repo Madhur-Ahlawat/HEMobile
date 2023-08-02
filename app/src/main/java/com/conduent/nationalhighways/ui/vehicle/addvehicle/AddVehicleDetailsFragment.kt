@@ -215,7 +215,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
         binding.colorInputLayout.editText.onTextChanged {
 
-            colourInputCheck = if (it!=null && it.trim().length>0) {
+            colourInputCheck = if (it.trim().isNotEmpty()) {
                 if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_COLOR)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
@@ -322,12 +322,16 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         )
                     } else {
                         it.isUK = binding.radioButtonYes.isChecked
-                        vehicleList?.add(it)
-                        if(editCall){
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
-                        }else {
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
-                        }
+                        it.vehicleMake =
+                            binding.makeInputLayout.getText().toString()
+                        it.vehicleModel =
+                            binding.modelInputLayout.getText().toString()
+                        it.vehicleColor =
+                            binding.colorInputLayout.getText().toString()
+                        it.vehicleClass =
+                            Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
+                        checkRUC(it)
+
                     }
                     return
                 }

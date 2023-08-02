@@ -10,8 +10,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.CheckBox
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,9 +19,7 @@ import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
-import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -40,7 +36,6 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 

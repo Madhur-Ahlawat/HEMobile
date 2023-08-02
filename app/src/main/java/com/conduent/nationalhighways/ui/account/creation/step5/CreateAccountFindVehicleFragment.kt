@@ -23,7 +23,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.onTextChanged
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 

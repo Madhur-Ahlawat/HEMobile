@@ -19,7 +19,6 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
-import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint

@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
-import com.conduent.nationalhighways.data.model.profile.UpdatePasswordResponseModel
 import com.conduent.nationalhighways.databinding.FragmentProfilePasswordUpdateBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment

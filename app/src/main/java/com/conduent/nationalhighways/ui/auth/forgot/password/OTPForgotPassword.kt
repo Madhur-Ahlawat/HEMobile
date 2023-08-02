@@ -350,7 +350,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = ConfirmEmailRequest(
-            response?.referenceId?.toString() ?: "",
+            response?.referenceId ?: "",
             data?.optionValue,
             binding.edtOtp.getText().toString().trim()
         )
@@ -380,7 +380,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 }else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
+                        getString(R.string.wehavesentatextmessageto) + " " + data?.optionValue + "."
 
                 }
             }
@@ -395,7 +395,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentanemail) + " " + data!!.optionValue
+                        getString(R.string.wehavesentanemail) + " " + data?.optionValue
 
                 }
             }

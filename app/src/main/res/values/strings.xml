@@ -1316,6 +1316,7 @@
     <string name="str_balance_topped_up_with">Balance topped up with %s</string>
     <string name="pound_symbol">£</string>
     <string name="enter_your_vihicle_color">Enter your vehicle color</string>
+    <string name="an_account_with_this_email_address_already_exists">An account with this email address already exists</string>
 
 
 </resources>

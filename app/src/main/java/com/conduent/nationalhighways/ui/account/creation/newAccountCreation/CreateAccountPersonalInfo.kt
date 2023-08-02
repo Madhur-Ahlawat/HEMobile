@@ -36,7 +36,6 @@ import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 
 
 @AndroidEntryPoint

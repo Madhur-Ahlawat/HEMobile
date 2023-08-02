@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPM
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
-import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment

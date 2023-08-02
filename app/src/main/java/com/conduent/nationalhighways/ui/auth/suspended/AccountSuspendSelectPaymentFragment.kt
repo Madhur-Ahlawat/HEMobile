@@ -3,14 +3,10 @@ package com.conduent.nationalhighways.ui.auth.suspended
 import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextWatcher
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +19,6 @@ import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseMod
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltBinding
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentCardAdapter
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
