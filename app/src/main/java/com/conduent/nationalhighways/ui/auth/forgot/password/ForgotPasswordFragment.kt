@@ -362,7 +362,12 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else {
+                        }
+                        else if(!(Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')>0 && Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')<2)){
+                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                            false
+                        }
+                        else {
                             binding.edtEmail.removeError()
                             true
                         }

@@ -509,13 +509,19 @@
             app:destination="@id/findYourVehicleFragment" />
 
     </fragment>
-
+    <fragment
+        android:id="@+id/amountKeyPadFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AmountKeyPadFragment"
+        android:label="AmountKeyPadFragment"
+        tools:layout="@layout/fragment_amount_key_pad" />
     <fragment
         android:id="@+id/topUpFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TopUpFragment"
         android:label="TopUpFragment"
         tools:layout="@layout/fragment_top_up">
-
+        <action
+            android:id="@+id/action_topUpFragment_to_amountKeyPadFragment"
+            app:destination="@id/amountKeyPadFragment" />
         <action
             android:id="@+id/action_topUpFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />

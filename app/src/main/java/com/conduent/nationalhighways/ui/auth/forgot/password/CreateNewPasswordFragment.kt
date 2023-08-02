@@ -297,33 +297,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private fun isEnable1(text: String) {
         var filterTextForSpecialChars = ""
         var commaSeperatedString = ""
-        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
-            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7) && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim())
-        ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
-            )
-            binding.btnSubmit.isEnabled = true
-
-        } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = false
-            )
-            binding.btnSubmit.isEnabled = false
-
-        }
         if (hasSpecialCharacters(
                 binding.edtConformPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
@@ -390,6 +363,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.edtConformPassword.removeError()
             binding.edtNewPassword.removeError()
         }
+
 //        else {
 //            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
 //                Utils.LOWER_CASE,
@@ -429,7 +403,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (text.trim().length > 7) {
+        if (text.trim().length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
@@ -441,17 +415,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
 
-    }
-
-    private fun isEnable(text: String) {
-        var filterTextForSpecialChars = ""
-        var commaSeperatedString = ""
         if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
             && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
+            && ((binding.edtNewPassword.getText().toString().trim().length) >= 8)
             && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7 && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()))
+                .trim().length) >= 8) && (binding.edtNewPassword.getText().toString()
+                .trim() == binding.edtConformPassword.getText().toString().trim() && hasDigits(binding.edtConformPassword.editText.getText().toString().trim()) && hasLowerCase(binding.edtConformPassword.editText.getText().toString().trim()) && hasUpperCase(binding.edtConformPassword.editText.getText().toString().trim()))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
@@ -471,7 +440,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 enable = false
             )
             binding.btnSubmit.isEnabled = false
+
         }
+    }
+
+    private fun isEnable(text: String) {
+        var filterTextForSpecialChars = ""
+        var commaSeperatedString = ""
+
         if (hasSpecialCharacters(
                 binding.edtNewPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
@@ -573,7 +549,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (text.trim().length > 7) {
+        if (text.trim().length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
@@ -584,7 +560,32 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
+        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
+            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
+            && ((binding.edtNewPassword.getText().toString().trim().length) >= 8)
+            && ((binding.edtConformPassword.getText().toString()
+                .trim().length) >= 8 && (binding.edtNewPassword.getText().toString()
+                .trim() == binding.edtConformPassword.getText().toString().trim()) && hasDigits(binding.edtNewPassword.editText.getText().toString().trim()) && hasLowerCase(binding.edtNewPassword.editText.getText().toString().trim()) && hasUpperCase(binding.edtNewPassword.editText.getText().toString().trim()))
+        ) {
+            binding.model = ResetPasswordModel(
+                code = data?.code,
+                referenceId = data?.referenceId,
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
+                enable = true
+            )
+            binding.btnSubmit.isEnabled = true
 
+        } else {
+            binding.model = ResetPasswordModel(
+                code = data?.code,
+                referenceId = data?.referenceId,
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
+                enable = false
+            )
+            binding.btnSubmit.isEnabled = false
+        }
     }
 
 }

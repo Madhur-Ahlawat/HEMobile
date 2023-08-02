@@ -177,15 +177,13 @@ object Utils {
     }
 
     fun hasDigits(str: String): Boolean {
-        var hasSpecialChar = false
+        var hasDigit = false
         str.forEach { char ->
             if (DIGITS.contains(char)) {
-                hasSpecialChar = true
-            } else {
-                hasSpecialChar = false
+                hasDigit = true
             }
         }
-        return hasSpecialChar
+        return hasDigit
     }
 
     fun hasAlphabets(str: String): Boolean {
