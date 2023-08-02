@@ -34,6 +34,7 @@ object Utils {
     var ALLOWED_CHARS_VEHICLE_MAKE = "-._/()+\'"
     var ALLOWED_CHARS_VEHICLE_MODEL = "&-.@:_/()#+\'"
     var ALLOWED_CHARS_VEHICLE_COLOR = "/"
+    var ALLOWED_CHARS_PASSWORD = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
     var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
@@ -95,6 +96,9 @@ object Utils {
     }
     val splCharVehicleColor: String by lazy {
         getSplCharString(ALLOWED_CHARS_VEHICLE_COLOR)
+    }
+    val splCharsPassword: String by lazy {
+        getSplCharString(ALLOWED_CHARS_PASSWORD)
     }
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
