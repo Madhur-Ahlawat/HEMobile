@@ -297,7 +297,34 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private fun isEnable1(text: String) {
         var filterTextForSpecialChars = ""
         var commaSeperatedString = ""
-        if (hasSpecialCharacters(
+
+        if (binding.edtConformPassword.getText().toString().trim().length == 0) {
+            binding.edtConformPassword.setErrorText(getString(R.string.str_confirm_password_error_message))
+        } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
+
+        } else if (!binding.edtConformPassword.getText().toString().trim()
+                .contains(Utils.UPPERCASE)
+        ) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
+
+        } else if (!binding.edtConformPassword.getText().toString().trim()
+                .contains(Utils.LOWECASE)
+        ) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+
+        } else if (binding.edtConformPassword.getText().toString().trim().length < 8) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
+        ) {
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        } else if (hasSpecialCharacters(
                 binding.edtConformPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
             )
@@ -329,37 +356,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             } else {
                 binding.edtConformPassword.removeError()
             }
-        }
-        else if (binding.edtConformPassword.getText().toString().trim().length == 0) {
-            binding.edtConformPassword.setErrorText(getString(R.string.str_confirm_password_error_message))
-        } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
-
-        } else if (!binding.edtConformPassword.getText().toString().trim()
-                .contains(Utils.UPPERCASE)
-        ) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
-
-        } else if (!binding.edtConformPassword.getText().toString().trim()
-                .contains(Utils.LOWECASE)
-        ) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
-
-        }
-        else if (binding.edtConformPassword.getText().toString().trim().length < 8) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
-        }
-        else if (binding.edtNewPassword.getText().toString()
-                .trim() != binding.edtConformPassword.getText().toString().trim()
-        ) {
-            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
-        }
-        else {
+        } else {
             binding.edtConformPassword.removeError()
             binding.edtNewPassword.removeError()
         }
@@ -420,7 +417,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             && ((binding.edtNewPassword.getText().toString().trim().length) >= 8)
             && ((binding.edtConformPassword.getText().toString()
                 .trim().length) >= 8) && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim() && hasDigits(binding.edtConformPassword.editText.getText().toString().trim()) && hasLowerCase(binding.edtConformPassword.editText.getText().toString().trim()) && hasUpperCase(binding.edtConformPassword.editText.getText().toString().trim()))
+                .trim() == binding.edtConformPassword.getText().toString().trim() && hasDigits(
+                binding.edtConformPassword.editText.getText().toString().trim()
+            ) && hasLowerCase(
+                binding.edtConformPassword.editText.getText().toString().trim()
+            ) && hasUpperCase(binding.edtConformPassword.editText.getText().toString().trim()))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
@@ -448,7 +449,29 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         var filterTextForSpecialChars = ""
         var commaSeperatedString = ""
 
-        if (hasSpecialCharacters(
+
+        if (binding.edtNewPassword.getText().toString().trim().length == 0) {
+            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+        } else if (binding.edtNewPassword.getText().toString().trim().length < 8) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
+        ) {
+            binding.edtNewPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        } else if (hasSpecialCharacters(
                 binding.edtNewPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
             )
@@ -480,32 +503,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             } else {
                 binding.edtNewPassword.removeError()
             }
-        }
-        else if (binding.edtNewPassword.getText().toString().trim().length == 0) {
-            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
-        }
-        else if (binding.edtNewPassword.getText().toString().trim().length < 8) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
-        }
-        else if (binding.edtNewPassword.getText().toString()
-                .trim() != binding.edtConformPassword.getText().toString().trim()
-        ) {
-            binding.edtNewPassword.setErrorText(getString(R.string.str_your_password_must_match))
-        }
-        else {
+        } else {
             binding.edtConformPassword.removeError()
             binding.edtNewPassword.removeError()
 
@@ -565,7 +563,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             && ((binding.edtNewPassword.getText().toString().trim().length) >= 8)
             && ((binding.edtConformPassword.getText().toString()
                 .trim().length) >= 8 && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()) && hasDigits(binding.edtNewPassword.editText.getText().toString().trim()) && hasLowerCase(binding.edtNewPassword.editText.getText().toString().trim()) && hasUpperCase(binding.edtNewPassword.editText.getText().toString().trim()))
+                .trim() == binding.edtConformPassword.getText().toString().trim()) && hasDigits(
+                binding.edtNewPassword.editText.getText().toString().trim()
+            ) && hasLowerCase(
+                binding.edtNewPassword.editText.getText().toString().trim()
+            ) && hasUpperCase(binding.edtNewPassword.editText.getText().toString().trim()))
         ) {
             binding.model = ResetPasswordModel(
                 code = data?.code,
