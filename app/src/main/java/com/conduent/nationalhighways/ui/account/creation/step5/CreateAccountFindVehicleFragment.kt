@@ -72,8 +72,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
             binding.findVehicle.isEnabled = false
             removeError()
-        } else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.excludeNumber)) {
-            binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+        }
+        else if(binding.editNumberPlate.getText().toString().trim().length>10){
+            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
+            binding.findVehicle.isEnabled = false
+        }
+        else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.excludeNumber)) {
+            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
             binding.findVehicle.isEnabled = false
         } else {
             removeError()

@@ -242,7 +242,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-                 binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_contact_first_name))
                 requiredFirstName = false
             }
             else {
@@ -266,7 +265,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_contact_last_name))
                 requiredLastName = false
             }
             else {
@@ -289,7 +287,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         } else if (index == 2) {
             requiredCompanyName =
                 if (binding.inputCompanyName.getText().toString().trim().isEmpty()) {
-                    binding.inputCompanyName.setErrorText(getString(R.string.str_enter_the_company_name))
+                    binding.inputCompanyName.removeError()
                     false
                 } else {
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
@@ -320,7 +318,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-                binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_contact_first_name))
                 requiredFirstName = false
             }
             else {
@@ -342,7 +339,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         } else if (index == 1) {
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_contact_last_name))
                 requiredLastName = false
             }
             else {
