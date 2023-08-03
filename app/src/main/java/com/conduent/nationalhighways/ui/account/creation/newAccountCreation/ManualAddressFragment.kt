@@ -310,7 +310,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun addressErrorMessage(char: CharSequence?) {
         if (binding.address.getText().toString().trim().isEmpty()) {
-            binding.address.setErrorText(getString(R.string.str_building_error_message))
+            binding.address.removeError()
             requiredAddress = false
         } else {
             if (binding.address.getText().toString().trim().length < 200) {
@@ -358,7 +358,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun postCodeErrorMessage(char: CharSequence?) {
         requiredPostcode = if (binding.postCode.getText().toString().trim().isEmpty()) {
-            binding.postCode.setErrorText(getString(R.string.str_post_code_error_message))
+            binding.postCode.removeError()
             false
         } else {
             val string = binding.postCode.getText().toString().trim()
@@ -370,16 +370,13 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             while (matcher.find()) {
                 count++
             }
+
             if (Utils.hasSpecialCharacters(
                     binding.postCode.getText().toString().trim(),
                     Utils.getSplCharString("")
                 )
             ) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
-                false
-            }
-            else if(Utils.countOccurenceOfChar(binding.postCode.getText().toString().trim(),'-')>1){
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                 false
             }
             else if (finalString.length < 4 || finalString.length > 10) {
@@ -398,7 +395,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun townCityErrorMessage(char: CharSequence?) {
         if (binding.townCity.getText().toString().trim().isEmpty()) {
-            binding.townCity.setErrorText(getString(R.string.str_town_city_error_message))
+            binding.townCity.removeError()
             requiredCityTown = false
         } else {
             requiredCityTown = if (binding.townCity.getText().toString().trim().length < 50) {
