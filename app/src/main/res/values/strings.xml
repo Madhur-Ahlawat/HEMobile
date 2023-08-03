@@ -1317,10 +1317,11 @@
     <string name="str_balance_topped_up_with">Balance topped up with %s</string>
     <string name="pound_symbol">£</string>
     <string name="enter_your_vihicle_color">Enter your vehicle color</string>
+    <string name="an_account_with_this_email_address_already_exists">An account with this email address already exists</string>
     <string name="email_address_must_be_100_characters_or_fewer">Email address must be 100 characters or fewer</string>
 
     <!--
-    payment method string 
+    payment method string
     -->
     <string name="str_you_are_removing_all_the_payments_method">You are removing all the payment methods registered on the account</string>
     <string name="str_remove_card_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>

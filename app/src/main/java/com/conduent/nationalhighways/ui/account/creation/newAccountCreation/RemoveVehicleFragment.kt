@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.vehicle.PlateInfoResponse
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentRemoveVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -22,7 +21,6 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

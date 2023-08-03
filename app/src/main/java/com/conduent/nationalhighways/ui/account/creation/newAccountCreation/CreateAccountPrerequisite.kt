@@ -42,7 +42,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         when (v?.id) {
             binding.btnCreateAccount.id -> {
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(
                     R.id.action_createAccountPrerequisite_to_fragment_choose_account_type,
                     bundle

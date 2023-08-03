@@ -208,9 +208,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.edtEmail.setText("anilkumar.thallapelli@conduent.com")
-        binding.edtPwd.setText("Welcome1")
-        binding.btnLogin.isEnabled = true
+//        binding.edtEmail.setText("anilkumar.thallapelli@conduent.com")
+//        binding.edtPwd.setText("Welcome1")
+//        binding.btnLogin.isEnabled = true
 
         init()
         initCtrl()
@@ -249,8 +249,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
-            edtEmail.editText.setText("abc098@tyss.com")
-            edtPwd.editText.setText("Welcome1")
+//            edtEmail.editText.setText("abc098@tyss.com")
+//            edtPwd.editText.setText("Welcome1")
         }
 
         if (displayFingerPrintPopup()) {

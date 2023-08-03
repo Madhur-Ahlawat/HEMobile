@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
@@ -52,9 +53,8 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     lateinit var sessionManager: SessionManager
     private var loader: LoaderDialog? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
+    private val viewModelEmail: CreateAccountEmailViewModel by viewModels()
     private var isCalled = false
-
-    //    private lateinit var navFlow: String// create account , forgot password
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
@@ -128,10 +128,29 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         }
         if (!isViewCreated) {
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+            observe(viewModelEmail.userNameAvailabilityCheck, :: handleEmailCheck)
 
         }
 
         isViewCreated = true
+    }
+
+    private fun handleEmailCheck(response : Resource<Boolean?>?){
+
+        if(response?.data == true){
+            val request = EmailVerificationRequest(
+                Constants.EMAIL,
+                binding.edtEmail.getText().toString().trim()
+            )
+            createAccountViewModel.emailVerificationApi(request)
+        }else{
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
+
+        }
+
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
@@ -257,13 +276,9 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                         )
                         sessionManager.saveAccountNumber(emailText)
                         isCalled = true
-                        viewModel.confirmOptionForForgot(emailText)
-                    }
-
-                    else -> {
-                        NewCreateAccountRequestModel.emailAddress = emailText
-                        hitApi()
-                    }
+                        viewModel.confirmOptionForForgot(emailText)}
+                    else -> {NewCreateAccountRequestModel.emailAddress = emailText
+                        checkEmailAddress()}
 
                 }
             }
@@ -272,10 +287,10 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     private fun handleEditNavigation(emailText: String) {
         if (emailText == NewCreateAccountRequestModel.emailAddress) {
-            findNavController().popBackStack()
+                findNavController().popBackStack()
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
-            hitApi()
+            checkEmailAddress()
         }
     }
 
@@ -292,7 +307,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             )
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
-            hitApi()
+            checkEmailAddress()
         }
     }
 
@@ -386,16 +401,11 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         binding.btnNext.isFocusable = btnEnabled
     }
 
-    private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    private fun checkEmailAddress() {
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = EmailVerificationRequest(
-            Constants.EMAIL,
-            binding.edtEmail.getText().toString().trim()
-        )
-        createAccountViewModel.emailVerificationApi(request)
+        val request = UserNameCheckReq(binding.edtEmail.getText().toString().trim())
+        viewModelEmail.userNameAvailabilityCheck(request)
 
 
     }

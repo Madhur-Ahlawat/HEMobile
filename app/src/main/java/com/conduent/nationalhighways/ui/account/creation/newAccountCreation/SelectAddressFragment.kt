@@ -166,6 +166,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
         lrdsEligibilityCheck.zipcode1 = NewCreateAccountRequestModel.zipCode
+        lrdsEligibilityCheck.city = NewCreateAccountRequestModel.townCity
+        lrdsEligibilityCheck.state = NewCreateAccountRequestModel.townCity
         lrdsEligibilityCheck.action = Constants.LRDS_ELIGIBILITY_CHECK
 
 

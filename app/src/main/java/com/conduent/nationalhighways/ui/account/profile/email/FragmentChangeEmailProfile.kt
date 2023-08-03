@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.account.profile.email
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -12,7 +11,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.databinding.FragmentChangeEmailProfileBinding
-import com.conduent.nationalhighways.databinding.FragmentProfileEmailVerificationBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog

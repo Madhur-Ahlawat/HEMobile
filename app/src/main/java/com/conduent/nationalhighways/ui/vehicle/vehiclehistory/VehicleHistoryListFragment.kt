@@ -22,7 +22,6 @@ import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.VEHICLE_MANAGEMENT
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe

@@ -10,7 +10,6 @@ import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
