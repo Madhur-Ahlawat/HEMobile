@@ -247,7 +247,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                     isObserverBack = false
                     var isVehicleExist = false
-                    val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                    val numberPlate = binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-","")
                     for(obj in vehicleList){
                         if(obj.plateNumber.equals(numberPlate, true)){
                             isVehicleExist = true
