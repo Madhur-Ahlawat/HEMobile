@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.splCharsVehicleRegistration
 import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,17 +71,31 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun isEnable() {
         if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
             binding.findVehicle.isEnabled = false
-            removeError()
+            binding.editNumberPlate.removeError()
+        }
+        else
+            if ( Utils.countOccurenceOfChar(binding.editNumberPlate.editText.getText().toString().trim(),'-')>1 || binding.editNumberPlate.editText.getText().toString().trim().contains(
+                    Utils.TWO_OR_MORE_HYPEN
+                ) || (binding.editNumberPlate.editText.getText().toString().trim().last()
+                    .toString().equals(".") || binding.editNumberPlate.editText.getText()
+                    .toString().first().toString().equals("."))
+                || (binding.editNumberPlate.editText.getText().toString().trim().last().toString()
+                    .equals("-") || binding.editNumberPlate.editText.getText().toString().first()
+                    .toString().equals("-"))
+            ) {
+                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                binding.findVehicle.isEnabled = false
+            }
+        else if (Utils.hasSpecialCharacters(binding.editNumberPlate.getText().toString().trim(),splCharsVehicleRegistration)) {
+            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+            binding.findVehicle.isEnabled = false
         }
         else if(binding.editNumberPlate.getText().toString().trim().length>10){
             binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
             binding.findVehicle.isEnabled = false
         }
-        else if (binding.editNumberPlate.getText().toString().trim().contains(Utils.excludeNumber)) {
-            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
-            binding.findVehicle.isEnabled = false
-        } else {
-            removeError()
+         else {
+                binding.editNumberPlate.removeError()
             binding.findVehicle.isEnabled = true
         }
 
