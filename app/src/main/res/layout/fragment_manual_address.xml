@@ -38,7 +38,6 @@
             app:labelText="@string/txt_postcode"
             style="@style/input_text"
             app:maxLength="200"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtHeading" />
@@ -82,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:labelText="@string/postcode"
-            android:maxLength="10"
+            app:maxLength="10"
             style="@style/input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

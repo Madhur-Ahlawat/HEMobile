@@ -313,7 +313,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             binding.address.removeError()
             requiredAddress = false
         } else {
-            if (binding.address.getText().toString().trim().length < 200) {
+            if (binding.address.getText().toString().trim().length <= 200) {
                 requiredAddress = if (Utils.hasSpecialCharacters(binding.address.getText().toString().trim(),
                         splCharAddress1)
                 ) {
@@ -337,7 +337,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             binding.address2.removeError()
             requiredAddress2 = true
         }
-        requiredAddress2 = if (binding.address2.getText().toString().trim().length < 100) {
+        requiredAddress2 = if (binding.address2.getText().toString().trim().length <= 100) {
             if (Utils.hasSpecialCharacters(binding.address2.getText().toString().trim(),
                     splCharAddress2)
             ) {
@@ -398,7 +398,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             binding.townCity.removeError()
             requiredCityTown = false
         } else {
-            requiredCityTown = if (binding.townCity.getText().toString().trim().length < 50) {
+            requiredCityTown = if (binding.townCity.getText().toString().trim().length <= 50) {
                 if(hasDigits(binding.townCity.getText().toString().trim())){
                     binding.townCity.setErrorText(getString(R.string.str_town_city_character_allowed))
                     false
