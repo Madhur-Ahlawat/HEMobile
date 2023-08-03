@@ -49,7 +49,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun init() {
         arguments?.getString(Constants.PLATE_NUMBER,"").toString().let { plateNumber = it.replace("null","") }
 
-        binding.editNumberPlate.setText(plateNumber)
+        binding.editNumberPlate.setText(plateNumber.trim().replace(" ","").replace("-",""))
         val filter = InputFilter.AllCaps()
         binding.editNumberPlate.editText.filters =  arrayOf( filter)
 
@@ -296,7 +296,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             is Resource.Success -> {
 
                 viewModel.getNewVehicleData(
-                    binding.editNumberPlate.getText().toString().trim(),
+                    binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-",""),
                     Constants.AGENCY_ID.toInt()
                 )
 
@@ -305,7 +305,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
             is Resource.DataError -> {
 //                binding.editNumberPlate.setErrorText(resource.errorMsg)
-                val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                val numberPlate = binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-","")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
                 NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
 
