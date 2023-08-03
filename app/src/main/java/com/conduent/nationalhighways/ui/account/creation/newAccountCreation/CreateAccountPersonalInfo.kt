@@ -33,6 +33,7 @@ import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_C
 import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_NAME
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.splCharCompanyName
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +59,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnNext.setOnClickListener(this)
-
         if (NewCreateAccountRequestModel.personalAccount) {
             enablePersonalView()
         }
@@ -241,30 +241,18 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-                // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+                 binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_contact_first_name))
                 requiredFirstName = false
             }
             else {
-                if (binding.inputFirstName.getText().toString().trim().length < 50) {
-                    if (binding.inputFirstName.editText.getText().toString()
-                            .contains(Utils.TWO_OR_MORE_HYPEN)
-                    ) {
-                        binding.inputFirstName.setErrorText(getString(R.string.name_must_not_contain_hypen_more_than_once))
-                        false
-                    }
-                    else if (hasDigits(binding.inputFirstName.getText().toString().trim()) || hasSpecialCharacters(
-                            binding.inputFirstName.getText().toString().trim(),
-                            SPECIAL_CHARACTERS_FOR_NAME
-                        )
-                    ) {
-                        binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
-                        requiredFirstName = false
-
-                    } else {
+                if (binding.inputFirstName.getText().toString().trim().length <= 50) {
+                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
+                    } else {
+                        binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
+                        requiredFirstName = false
                     }
-
                 } else {
                     requiredFirstName = false
                     binding.inputFirstName.setErrorText(getString(R.string.str_first_name_length_error_message))
@@ -277,35 +265,22 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-               // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_contact_last_name))
                 requiredLastName = false
             }
             else {
-                if (binding.inputLastName.getText().toString().trim().length < 50) {
-                    if (binding.inputLastName.editText.getText().toString()
-                            .contains(Utils.TWO_OR_MORE_HYPEN)
-                    ) {
-                        binding.inputLastName.setErrorText(getString(R.string.name_must_not_contain_hypen_more_than_once))
-                        false
-                    }
-                    else if (hasDigits(binding.inputLastName.getText().toString().trim()) || hasSpecialCharacters(
-                            binding.inputLastName.getText().toString().trim(),
-                            SPECIAL_CHARACTERS_FOR_NAME
-                        )
-                    ) {
-                        binding.inputLastName.setErrorText(getString(R.string.str_last_name_error_message))
-                        requiredLastName = false
-
-                    } else {
+                if (binding.inputLastName.getText().toString().trim().length <= 50) {
+                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
+                    } else {
+                        binding.inputLastName.setErrorText(getString(R.string.str_last_name_error_message))
+                        requiredLastName = false
                     }
-
                 } else {
                     requiredLastName = false
-                    binding.inputLastName.setErrorText(getString(R.string.str_first_name_length_error_message))
+                    binding.inputLastName.setErrorText(getString(R.string.str_last_name_length_error_message))
                 }
-
             }
 
 
@@ -320,8 +295,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
                     } else if (hasSpecialCharacters(binding.inputCompanyName.getText().toString(),
-                            SPECIAL_CHARACTERS_FOR_COMPANY_NAME)) {
-                        binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_must_not_include_special_characters))
+                            splCharCompanyName)) {
+                        binding.inputCompanyName.setErrorText(getString(R.string.company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens))
                         false
                     } else {
                         binding.inputCompanyName.removeError()
@@ -344,32 +319,18 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
-                // binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_first_name))
+                binding.inputFirstName.setErrorText(getString(R.string.enter_the_primary_account_contact_first_name))
                 requiredFirstName = false
             }
             else {
-
-                if (binding.inputFirstName.getText().toString().trim().length < 50) {
-                    if (binding.inputFirstName.editText.getText().toString()
-                            .contains(Utils.TWO_OR_MORE_HYPEN)
-                    ) {
-                        binding.inputFirstName.setErrorText(getString(R.string.name_must_not_contain_hypen_more_than_once))
-                        false
-                    }
-                    else if (hasDigits(binding.inputFirstName.getText().toString().trim()) || hasSpecialCharacters(
-                            binding.inputFirstName.getText().toString().trim(),
-                            SPECIAL_CHARACTERS_FOR_NAME
-                        )
-                    ) {
-                        binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
-                        requiredFirstName = false
-
-                    }  else {
+                if (binding.inputFirstName.getText().toString().trim().length <= 50) {
+                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
+                    } else {
+                        binding.inputFirstName.setErrorText(getString(R.string.str_first_name_error_message))
+                        requiredFirstName = false
                     }
-
-
                 } else {
                     requiredFirstName = false
                     binding.inputFirstName.setErrorText(getString(R.string.str_first_name_length_error_message))
@@ -378,41 +339,25 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             checkButtonEnable()
         } else if (index == 1) {
-
-
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
-                // binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_holder_s_last_name))
+                binding.inputLastName.setErrorText(getString(R.string.enter_the_primary_account_contact_last_name))
                 requiredLastName = false
             }
             else {
-                if (binding.inputLastName.getText().toString().trim().length < 50) {
-                    if (binding.inputLastName.editText.getText().toString()
-                            .contains(Utils.TWO_OR_MORE_HYPEN)
-                    ) {
-                        binding.inputLastName.setErrorText(getString(R.string.name_must_not_contain_hypen_more_than_once))
-                        false
-                    }
-                    else if (hasDigits(binding.inputLastName.getText().toString().trim()) || hasSpecialCharacters(
-                            binding.inputLastName.getText().toString().trim(),
-                            SPECIAL_CHARACTERS_FOR_NAME
-                        )
-                    ) {
-                        binding.inputLastName.setErrorText(getString(R.string.str_last_name_error_message))
-                        requiredLastName = false
-
-                    } else {
+                if (binding.inputLastName.getText().toString().trim().length <= 50) {
+                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
+                    } else {
+                        binding.inputLastName.setErrorText(getString(R.string.str_last_name_error_message))
+                        requiredLastName = false
                     }
-
                 } else {
                     requiredLastName = false
-                    binding.inputLastName.setErrorText(getString(R.string.str_first_name_length_error_message))
+                    binding.inputLastName.setErrorText(getString(R.string.str_last_name_length_error_message))
                 }
-
             }
-
         }
         checkButtonEnable()
     }

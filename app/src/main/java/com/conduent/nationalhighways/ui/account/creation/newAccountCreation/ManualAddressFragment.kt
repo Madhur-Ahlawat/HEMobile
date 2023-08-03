@@ -370,17 +370,15 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             while (matcher.find()) {
                 count++
             }
-            if (Utils.hasSpecialCharacters(
+           if (Utils.hasSpecialCharacters(
                     binding.postCode.getText().toString().trim(),
                     splCharPostCode
                 )
             ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters_except_single_hypen))
                 false
             }
-            else if (binding.postCode.editText.getText().toString()
-                    .contains(Utils.TWO_OR_MORE_HYPEN)
-            ) {
+            else if(Utils.countOccurenceOfChar(binding.postCode.getText().toString().trim(),'-')>1){
                 binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_hypen_more_than_once))
                 false
             }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Patterns
 import android.view.*
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -322,18 +323,41 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.btnSubmit.isEnabled = false
 
         }
-
-        if (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()
+        if (hasSpecialCharacters(
+                binding.edtConformPassword.editText.getText().toString().trim(),
+                Utils.splCharsPassword
+            )
         ) {
-            binding.edtConformPassword.removeError()
-        } else {
-            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.LOWER_CASE,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.UPPER_CASE,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.DIGITS,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.ALLOWED_CHARS_EMAIL,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            commaSeperatedString =
+                Utils.makeCommaSeperatedStringForPassword(
+                    Utils.removeAllCharacters(
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
+                    )
+                )
+            if (filterTextForSpecialChars!!.length > 0) {
+                binding.edtConformPassword.setErrorText("Password must not include $commaSeperatedString")
+            } else {
+                binding.edtConformPassword.removeError()
+            }
         }
-        if (binding.edtConformPassword.getText().toString().trim().length < 3) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
+        else if (binding.edtConformPassword.getText().toString().trim().length == 0) {
+            binding.edtConformPassword.setErrorText(getString(R.string.str_confirm_password_error_message))
         } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
 
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
@@ -351,8 +375,19 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
         }
-        else{
+        else if (binding.edtConformPassword.getText().toString().trim().length < 8) {
+
+            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        }
+        else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
+        ) {
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        }
+        else {
             binding.edtConformPassword.removeError()
+            binding.edtNewPassword.removeError()
         }
 //        else {
 //            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
@@ -379,9 +414,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 //                binding.edtNewPassword.removeError()
 //            }
 //        }
-
-
-
 
 
         if (hasLowerCase(text)) {
@@ -439,12 +471,41 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             )
             binding.btnSubmit.isEnabled = false
         }
-
-
-        if (binding.edtNewPassword.getText().toString().trim().length < 3) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
+        if (hasSpecialCharacters(
+                binding.edtNewPassword.editText.getText().toString().trim(),
+                Utils.splCharsPassword
+            )
+        ) {
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.LOWER_CASE,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.UPPER_CASE,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.DIGITS,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.ALLOWED_CHARS_EMAIL,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            commaSeperatedString =
+                Utils.makeCommaSeperatedStringForPassword(
+                    Utils.removeAllCharacters(
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
+                    )
+                )
+            if (filterTextForSpecialChars!!.length > 0) {
+                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+            } else {
+                binding.edtNewPassword.removeError()
+            }
+        }
+        else if (binding.edtNewPassword.getText().toString().trim().length == 0) {
+            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
         } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
@@ -457,8 +518,20 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
         }
-        else{
+        else if (binding.edtNewPassword.getText().toString().trim().length < 8) {
+
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        }
+        else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
+        ) {
+            binding.edtNewPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        }
+        else {
+            binding.edtConformPassword.removeError()
             binding.edtNewPassword.removeError()
+
         }
 //        else {
 //            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
@@ -485,9 +558,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 //                binding.edtNewPassword.removeError()
 //            }
 //        }
-
-
-
 
 
         if (hasLowerCase(text)) {

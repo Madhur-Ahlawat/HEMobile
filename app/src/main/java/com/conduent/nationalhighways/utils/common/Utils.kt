@@ -26,18 +26,24 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    var ALLOWED_CHARS_BUILDING_STREE_NO = "',.-#"
-    var ALLOWED_CHARS_ADDRESS_LINE_2 = "',.-#"
-    var ALLOWED_CHARS_TOWN_OR_CITY = "'-"
+    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-#"
+    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-#"
+    var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
     var ALLOWED_CHARS_POSTCODE = "-"
+    var ALLOWED_CHARS_COMPANY_NAME = "-\'.,:;?!&@"
+    var ALLOWED_CHARS_VEHICLE_MAKE = "-._/()+\'"
+    var ALLOWED_CHARS_VEHICLE_MODEL = "&-.@:_/()#+\'"
+    var ALLOWED_CHARS_VEHICLE_COLOR = "/"
+    var ALLOWED_CHARS_PASSWORD = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
-    var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
 
     var PASSWORD_RULE1 = ".{8,64}"
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
     var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
+    var ACCOUNT_NAME_FIRSTNAME_LASTNAME: Regex = Regex("[a-zA-Z\\-]+")
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
@@ -79,7 +85,21 @@ object Utils {
     val splCharEmailCode: String by lazy {
         getSplCharString(ALLOWED_CHARS_EMAIL)
     }
-
+    val splCharCompanyName: String by lazy {
+        getSplCharString(ALLOWED_CHARS_COMPANY_NAME)
+    }
+    val splCharVehicleMake: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_MAKE)
+    }
+    val splCharVehicleModel: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_MODEL)
+    }
+    val splCharVehicleColor: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_COLOR)
+    }
+    val splCharsPassword: String by lazy {
+        getSplCharString(ALLOWED_CHARS_PASSWORD)
+    }
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
         for (i in 0 until s.length) {
