@@ -126,14 +126,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         hitApi()
                     }
                     Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
-                        val bundle = Bundle()
-                        bundle.putParcelable("data", data)
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-
-                        findNavController().navigate(
-                            R.id.action_resenedCodeFragment_to_otpFragment,
-                            bundle
-                        )
+                        hitApi()
                     }
                     Constants.TWOFA -> {
                         viewModel.twoFARequestOTP(data)
@@ -195,7 +188,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
-            Constants.EMAIL,
+            data?.optionType,
             data?.optionValue
         )
         createAccountViewModel.emailVerificationApi(request)
@@ -212,7 +205,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,data?.optionValue))
+                bundle.putParcelable("data", RequestOTPModel(data?.optionType,data?.optionValue))
 
                 bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
 
