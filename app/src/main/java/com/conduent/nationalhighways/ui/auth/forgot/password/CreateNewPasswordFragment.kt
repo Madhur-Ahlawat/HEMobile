@@ -323,7 +323,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.btnSubmit.isEnabled = false
 
         }
-        if (hasSpecialCharacters(
+        if (Utils.hasSpecialCharacters(
                 binding.edtConformPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
             )
@@ -471,7 +471,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             )
             binding.btnSubmit.isEnabled = false
         }
-        if (hasSpecialCharacters(
+        if (Utils.hasSpecialCharacters(
                 binding.edtNewPassword.editText.getText().toString().trim(),
                 Utils.splCharsPassword
             )
