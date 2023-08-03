@@ -73,7 +73,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             binding.findVehicle.isEnabled = false
             binding.editNumberPlate.removeError()
         }
-        else
+        else{
             if ( Utils.countOccurenceOfChar(binding.editNumberPlate.editText.getText().toString().trim(),'-')>1 || binding.editNumberPlate.editText.getText().toString().trim().contains(
                     Utils.TWO_OR_MORE_HYPEN
                 ) || (binding.editNumberPlate.editText.getText().toString().trim().last()
@@ -86,17 +86,18 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
                 binding.findVehicle.isEnabled = false
             }
-        else if (Utils.hasSpecialCharacters(binding.editNumberPlate.getText().toString().trim(),splCharsVehicleRegistration)) {
-            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
-            binding.findVehicle.isEnabled = false
-        }
-        else if(binding.editNumberPlate.getText().toString().trim().length>10){
-            binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
-            binding.findVehicle.isEnabled = false
-        }
-         else {
+            else if (Utils.hasSpecialCharacters(binding.editNumberPlate.getText().toString().trim(),splCharsVehicleRegistration)) {
+                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                binding.findVehicle.isEnabled = false
+            }
+            else if(binding.editNumberPlate.getText().toString().trim().length>10){
+                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
+                binding.findVehicle.isEnabled = false
+            }
+            else {
                 binding.editNumberPlate.removeError()
-            binding.findVehicle.isEnabled = true
+                binding.findVehicle.isEnabled = true
+            }
         }
 
     }
