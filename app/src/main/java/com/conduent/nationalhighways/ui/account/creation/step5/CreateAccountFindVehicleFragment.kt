@@ -138,7 +138,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 binding.findVehicle.isEnabled = false
-                val numberPlate = binding.editNumberPlate.getText().toString().trim()
+                val numberPlate = binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-","")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
                 Handler(Looper.getMainLooper()).postDelayed({
