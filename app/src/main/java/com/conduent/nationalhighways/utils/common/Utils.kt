@@ -34,7 +34,8 @@ object Utils {
     var ALLOWED_CHARS_VEHICLE_MAKE = "-._/()+\'"
     var ALLOWED_CHARS_VEHICLE_MODEL = "&-.@:_/()#+\'"
     var ALLOWED_CHARS_VEHICLE_COLOR = "/"
-    var ALLOWED_CHARS_PASSWORD = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
+    var ALLOWED_CHARS_PASSWORD =
+        "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
     var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
@@ -110,15 +111,15 @@ object Utils {
     }
 
     fun isLastCharOfStringACharacter(input: String): Boolean {
-        var isAlphabet=false
+        var isAlphabet = false
         LOWER_CASE.forEach {
-            if(input.last().toString().equals(it.toString())){
-                isAlphabet=true
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
             }
         }
         UPPER_CASE.forEach {
-            if(input.last().toString().equals(it.toString())){
-                isAlphabet=true
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
             }
         }
         return isAlphabet
@@ -322,10 +323,12 @@ object Utils {
                 output1 = output1 + c.toString()
             }
         }
-        if(output1.contains(',')){
-            return output1.substring(0,output1.lastIndexOf(',')) +" and" + output1.substring(output1.lastIndexOf(',')+1,output1.length)
-        }
-        else{
+        if (output1.contains(',')) {
+            return output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
+                output1.lastIndexOf(',') + 1,
+                output1.length
+            )
+        } else {
             return output1
         }
     }
