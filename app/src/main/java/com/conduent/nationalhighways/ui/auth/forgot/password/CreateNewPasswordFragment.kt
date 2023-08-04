@@ -497,8 +497,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             != binding.edtConformPassword.getText().toString()
         ) {
             isNewPasswordValid = false
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_your_password_must_match))
+            binding.edtNewPassword.removeError()
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
         } else {
             binding.model = ResetPasswordModel(
                 code = data?.code,
