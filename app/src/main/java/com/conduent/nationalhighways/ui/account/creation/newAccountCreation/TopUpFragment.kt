@@ -305,7 +305,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 )
                 binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
-                val text = binding.top.getText().toString().trim()
+                val text = binding.lowBalance.getText().toString().trim()
                 var updatedText: String = ""
                 updatedText = if (text.contains("$")) {
                     text.replace("$", "")

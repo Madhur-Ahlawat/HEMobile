@@ -513,7 +513,11 @@
         android:id="@+id/amountKeyPadFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AmountKeyPadFragment"
         android:label="AmountKeyPadFragment"
-        tools:layout="@layout/fragment_amount_key_pad" />
+        tools:layout="@layout/fragment_amount_key_pad">
+        <action
+            android:id="@+id/action_amountKeyPadFragment_to_topUpFragment"
+            app:destination="@id/topUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/topUpFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TopUpFragment"
