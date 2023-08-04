@@ -175,23 +175,23 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         newPaymentMethod("N")
                     }
 
-                    bundle.putParcelable(Constants.DATA, responseModel)
+                   /* bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, "541232435465")
                     bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
 
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
 
 
                 } else {
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
-                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+                   /* bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, "761234567892")
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
 
                 }
                 /* findNavController().navigate(

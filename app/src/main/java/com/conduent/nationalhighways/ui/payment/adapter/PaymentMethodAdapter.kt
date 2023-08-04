@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.PaymentmethodadapterlayoutBinding
+import com.conduent.nationalhighways.utils.common.Constants
 
 class PaymentMethodAdapter(
     private var context: Context,
@@ -40,30 +41,59 @@ class PaymentMethodAdapter(
         } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
             holder.binding.ivCardType.setImageResource(R.drawable.maestro)
 
+        }else if(paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
+            holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
+
+
         } else {
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
-        val htmlText =
-            Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber)
 
-        holder.binding.tvSelectPaymentMethod.text = htmlText
+        if (paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
+            holder.binding.tvSelectPaymentMethod.text = context.getString(R.string.str_your_direct_debit_for,paymentList?.get(position)?.cardNumber)
 
-        if (paymentList?.get(position)?.primaryCard == true) {
-            holder.binding.textDefault.visibility = View.VISIBLE
+        }else{
+            val htmlText =
+                Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber)
 
-        } else {
-            holder.binding.textDefault.visibility = View.GONE
-
+            holder.binding.tvSelectPaymentMethod.text = htmlText
         }
 
 
-        holder.binding.delete.setOnClickListener {
 
+        if (paymentList?.get(position)?.primaryCard == true) {
+            holder.binding.textDefault.visibility = View.VISIBLE
+            holder.binding.textMakeDefault.visibility=View.GONE
+
+        } else {
+            holder.binding.textDefault.visibility = View.GONE
+            holder.binding.textMakeDefault.visibility=View.VISIBLE
+
+
+        }
+
+        holder.binding.textMakeDefault.setOnClickListener{
             paymentMethodCallback.paymentMethodCallback(
                 position,
-                com.conduent.nationalhighways.utils.common.Constants.DELETE_CARD
+                Constants.MAKE_DEFAULT
             )
+        }
+
+        holder.binding.delete.setOnClickListener {
+            if (paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
+                paymentMethodCallback.paymentMethodCallback(
+                    position,
+                    Constants.DIRECT_DEBIT
+                )
+            }else{
+                paymentMethodCallback.paymentMethodCallback(
+                    position,
+                    Constants.DELETE_CARD
+                )
+            }
+
+
             notifyDataSetChanged()
         }
     }

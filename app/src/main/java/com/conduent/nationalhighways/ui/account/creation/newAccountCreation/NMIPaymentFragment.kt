@@ -82,6 +82,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
 
+
         flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
@@ -132,10 +133,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                //ErrorUtil.showError(binding.root, response.errorMsg)
             }
 
             else -> {
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
             }
 
         }
@@ -158,7 +162,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         }
 
                         "3DStarted" -> {
-                            // showLoader()
+                           // showLoader()
                         }
 
                         "3DSLoaded" -> {
@@ -412,6 +416,22 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
 
 
+                } else if (flow == Constants.ADD_PAYMENT_METHOD) {
+                    view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+
                 } else {
                     view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
@@ -437,18 +457,21 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         hideLoader()
         when (status) {
             is Resource.Success -> {
-                val bundle = Bundle()
 
                 if (status.data?.statusCode?.equals("0") == true) {
+                    val bundle = Bundle()
+
                     bundle.putParcelable(Constants.DATA, responseModel)
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2)
+
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,bundle)
                 } else if (status.data?.statusCode?.equals("1337") == true) {
+                    val bundle = Bundle()
 
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CARD_IS_ALREADY_REGISTERED
                     )
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2)
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,bundle)
                 } else {
 
 
@@ -457,10 +480,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
             }
 
             else -> {
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
             }
         }
     }

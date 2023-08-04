@@ -1,6 +1,9 @@
 package com.conduent.nationalhighways.ui.vehicle.addvehicle
 
+import android.R.attr.maxLength
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>(),
@@ -65,9 +69,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)
-            modelInputLayout.setMaxLength(50)
-            makeInputLayout.setMaxLength(50)
-            colorInputLayout.setMaxLength(50)
+            modelInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
+            makeInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
+            colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
         accountData = NewCreateAccountRequestModel

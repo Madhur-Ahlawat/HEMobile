@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -29,6 +30,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
+    private var flow: String = ""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,6 +45,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+        flow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
@@ -51,11 +54,17 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
             paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
 
         }
+        if (flow==Constants.PAYG){
+            binding.textMaximumVehicle.text=getString(R.string.payg_delete_description)
+        }else if (flow==Constants.PRE_PAY_ACCOUNT){
+            binding.textMaximumVehicle.text=getString(R.string.str_your_balance_will_no_longer_available)
+
+        }
 
     }
 
     override fun observer() {
-        observe(viewModel.deleteCard, ::handleDeleteCardResponse)
+        observe(viewModel.deletePrimaryCard, ::handleDeleteCardResponse)
 
     }
 
@@ -65,13 +74,21 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.statusCode?.equals("500") == true||status.data?.statusCode?.equals("1209")==true) {
+                if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
+                        "1209"
+                    ) == true
+                ) {
                     ErrorUtil.showError(binding.root, status.data.message)
                     return
                 }
-                val bundle= Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.DELETE_CARD)
-                findNavController().navigate(R.id.action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment,bundle)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.DELETE_CARD)
+                bundle.putBoolean(SHOW_BACK_BUTTON,false)
+
+                findNavController().navigate(
+                    R.id.action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment,
+                    bundle
+                )
 
 
             }
@@ -89,12 +106,12 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         when (v?.id) {
 
             R.id.btnContinue -> {
-                viewModel.deleteCard(PaymentMethodDeleteModel(paymentList?.rowId))
+                viewModel.deletePrimaryCard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
             }
 
-            R.id.cancelBtn -> {
+            R.id.cancel_btn -> {
                 findNavController().popBackStack()
             }
 

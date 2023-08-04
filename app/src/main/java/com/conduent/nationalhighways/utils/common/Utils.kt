@@ -26,15 +26,17 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-#"
-    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-#"
+    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
+    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
     var ALLOWED_CHARS_POSTCODE = "-"
     var ALLOWED_CHARS_COMPANY_NAME = "-\'.,:;?!&@"
     var ALLOWED_CHARS_VEHICLE_MAKE = "-._/()+\'"
     var ALLOWED_CHARS_VEHICLE_MODEL = "&-.@:_/()#+\'"
     var ALLOWED_CHARS_VEHICLE_COLOR = "/"
-    var ALLOWED_CHARS_PASSWORD = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
+    var ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE = "-"
+    var ALLOWED_CHARS_PASSWORD =
+        "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
     var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
@@ -100,6 +102,9 @@ object Utils {
     val splCharsPassword: String by lazy {
         getSplCharString(ALLOWED_CHARS_PASSWORD)
     }
+    val splCharsVehicleRegistration: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE)
+    }
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
         for (i in 0 until s.length) {
@@ -110,15 +115,15 @@ object Utils {
     }
 
     fun isLastCharOfStringACharacter(input: String): Boolean {
-        var isAlphabet=false
+        var isAlphabet = false
         LOWER_CASE.forEach {
-            if(input.last().toString().equals(it.toString())){
-                isAlphabet=true
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
             }
         }
         UPPER_CASE.forEach {
-            if(input.last().toString().equals(it.toString())){
-                isAlphabet=true
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
             }
         }
         return isAlphabet
@@ -177,15 +182,13 @@ object Utils {
     }
 
     fun hasDigits(str: String): Boolean {
-        var hasSpecialChar = false
+        var hasDigit = false
         str.forEach { char ->
             if (DIGITS.contains(char)) {
-                hasSpecialChar = true
-            } else {
-                hasSpecialChar = false
+                hasDigit = true
             }
         }
-        return hasSpecialChar
+        return hasDigit
     }
 
     fun hasAlphabets(str: String): Boolean {
@@ -324,10 +327,12 @@ object Utils {
                 output1 = output1 + c.toString()
             }
         }
-        if(output1.contains(',')){
-            return output1.substring(0,output1.lastIndexOf(',')) +" and" + output1.substring(output1.lastIndexOf(',')+1,output1.length)
-        }
-        else{
+        if (output1.contains(',')) {
+            return output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
+                output1.lastIndexOf(',') + 1,
+                output1.length
+            )
+        } else {
             return output1
         }
     }
