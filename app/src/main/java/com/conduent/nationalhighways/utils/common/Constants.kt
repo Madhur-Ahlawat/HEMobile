@@ -2,10 +2,14 @@ package com.conduent.nationalhighways.utils.common
 
 object Constants {
 
+    const val DIRECT_DEBIT: String="directdebit"
+    const val DIRECT_DEBIT_DELETE="direct_debit_delete"
+    const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
     const val CHANNEL_WEB="Web"
     const val NEW_CARD="newcard"
+    const val MAKE_DEFAULT="make_default"
     const val FROM_ALL_TRANSACTIONS_TO_DETAILS="FROM_ALL_TRANSACTIONS_TO_DETAILS"
     const val PERSONALDATA="personaldata"
     const val ACCOUNTINFORMATION="accountinformation"
@@ -275,6 +279,8 @@ object Constants {
     const val LOW_BALANCE="lowbalance"
     const val LOW_BALANCE_AMOUNT="lowbalance"
     const val CARD_IS_ALREADY_REGISTERED="card_is_already_registered"
+    const val SECONDARY_CARD_DELETE="secondary_card_delete"
+    const val NOT_SECONDARY_CARD_DELETE="not_secondary_card_delete"
 
     const val TOP_UP_BALANCE="top_up_balance"
 

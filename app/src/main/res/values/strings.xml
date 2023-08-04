@@ -1305,7 +1305,7 @@
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_verify_code">VERIFY CODE</string>
     <string name="email_address_change_successful">Email address change successful</string>
-    <string name="payment_method_information">Payment Method Information</string>
+    <string name="payment_method_information">Payment Methods</string>
     <string name="set_threshold_limit">Set Threshold Limit</string>
     <string name="top_up_your_balance">Top-Up your Balance</string>
     <string name="add_new_payment_method">+ ADD NEW PAYMENT METHOD</string>
@@ -1322,7 +1322,7 @@
     -->
     <string name="str_you_are_removing_all_the_payments_method">You are removing all the payment methods registered on the account</string>
     <string name="str_remove_card_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
-    <string name="str_payment_method_deleted">Payment Method deleted</string>
+    <string name="str_payment_method_deleted">Your Credit Card for %s\n has been removed</string>
     <string name="str_your_default_payment_method">Your default payment method is now:</string>
     <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
     <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically. If you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
@@ -1343,6 +1343,12 @@
     <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
     <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
     <string name="str_add_another_card">ADD ANOTHER CARD</string>
+    <string name="payg_delete_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="minimum_amount_five_pound">Minimum amount £5.00</string>
+    <string name="minimum_amount_ten_pound">Minimum amount £10.00</string>
+    <string name="your_direct_debit_has_been_removed">Your Direct Debit for %s\n has been removed.</string>
+    <string name="str_try_again">TRY AGAIN</string>
+    <string name="str_make_default"><u>Make\nDefault</u></string>
 
 
 </resources>

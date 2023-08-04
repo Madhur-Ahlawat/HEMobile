@@ -41,6 +41,16 @@ class PaymentMethodViewModel @Inject constructor(
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _saveDirectDebitNewCard =
+        MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val saveDirectDebitNewCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCard
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _deletePrimaryCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
+    val deletePrimaryCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _deletePrimaryCard
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
     val accountDetail: LiveData<Resource<ProfileDetailModel?>?> get() = _accountDetail
 
@@ -84,6 +94,32 @@ class PaymentMethodViewModel @Inject constructor(
                 _saveNewCard.postValue(success(repository.saveNewCard(model)))
             } catch (e: Exception) {
                 _saveNewCard.postValue(failure(e))
+            }
+        }
+    }
+
+    fun saveDirectDebitNewCard(model: SaveNewCardRequest?) {
+        viewModelScope.launch {
+            try {
+                _saveDirectDebitNewCard.postValue(
+                    success(
+                        repository.saveDirectDebitNewCard(
+                            model
+                        )
+                    )
+                )
+            } catch (e: Exception) {
+                _saveDirectDebitNewCard.postValue(failure(e))
+            }
+        }
+    }
+
+    fun deletePrimaryCard() {
+        viewModelScope.launch {
+            try {
+                _deletePrimaryCard.postValue(success(repository.deletePrimaryCard()))
+            } catch (e: Exception) {
+                _deletePrimaryCard.postValue(failure(e))
             }
         }
     }
