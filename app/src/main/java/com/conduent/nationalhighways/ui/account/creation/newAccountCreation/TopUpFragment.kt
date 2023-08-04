@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -36,7 +37,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var lowBalance: Boolean = false
     private var topUpBalance: Boolean = false
     private var navFlow: String = ""
-    private var isViewCreated:Boolean=false
+    private var isViewCreated: Boolean = false
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
@@ -54,14 +55,14 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     override fun initCtrl() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
-        if(navFlow==Constants.THRESHOLD){
-            if (!isViewCreated){
+        if (navFlow == Constants.THRESHOLD) {
+            if (!isViewCreated) {
                 getThresholdAmount()
 
             }
 
         }
-        isViewCreated=false
+        isViewCreated = true
 
 
         binding.topUpBtn.setOnClickListener(this)
@@ -83,7 +84,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 bundle.putString(Constants.LOW_BALANCE, Constants.LOW_BALANCE)
-                bundle.putString(Constants.TOP_UP_AMOUNT,binding.top.editText.text.toString())
+                bundle.putString(Constants.TOP_UP_AMOUNT, binding.top.editText.text.toString())
 
                 findNavController().navigate(
                     R.id.action_topUpFragment_to_amountKeyPadFragment,
@@ -99,7 +100,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
-                bundle.putString(Constants.LOW_BALANCE_AMOUNT,binding.lowBalance.editText.text.toString())
+                bundle.putString(
+                    Constants.LOW_BALANCE_AMOUNT,
+                    binding.lowBalance.editText.text.toString()
+                )
 
                 findNavController().navigate(
                     R.id.action_topUpFragment_to_amountKeyPadFragment,
@@ -110,8 +114,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
 
 
-         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
 
         /* binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
          binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
@@ -130,7 +134,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             }
 
 
-
         }
 
         setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
@@ -142,7 +145,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             }
 
 
-            if (bundle.getString(Constants.TOP_UP_BALANCE)!=null) {
+            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
                 binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
 
             }
@@ -154,8 +157,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.getThresholdAmount()
     }
+
     override fun observer() {
-        lifecycleScope.launch(){
+        lifecycleScope.launch() {
             observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
             observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
         }
@@ -201,7 +205,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 bundle.putString(Constants.LOW_BALANCE, Constants.LOW_BALANCE)
-                bundle.putString(Constants.TOP_UP_AMOUNT,binding.top.text.toString())
+                bundle.putString(Constants.TOP_UP_AMOUNT, binding.top.text.toString())
 
                 findNavController().navigate(
                     R.id.action_topUpFragment_to_amountKeyPadFragment,
@@ -213,7 +217,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
-                bundle.putString(Constants.LOW_BALANCE_AMOUNT,binding.lowBalance.text.toString())
+                bundle.putString(Constants.LOW_BALANCE_AMOUNT, binding.lowBalance.text.toString())
 
 
                 findNavController().navigate(
@@ -266,7 +270,12 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (index == 0) {
 
                 val text = binding.lowBalance.getText().toString().trim()
-                val updatedText = text.replace("£", "")
+                var updatedText: String = ""
+                updatedText = if (text.contains("$")) {
+                    text.replace("$", "")
+                } else {
+                    text.replace("£", "")
+                }
 
                 if (updatedText.isNotEmpty()) {
                     val str: String = updatedText.substringBeforeLast(".")
@@ -297,7 +306,12 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
                 val text = binding.top.getText().toString().trim()
-                val updatedText = text.replace("£", "")
+                var updatedText: String = ""
+                updatedText = if (text.contains("$")) {
+                    text.replace("$", "")
+                } else {
+                    text.replace("£", "")
+                }
                 if (updatedText.trim()[0].equals(".")) {
                     updatedText.replace(".", "")
                 }
@@ -340,6 +354,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private fun checkButton() {
         binding.topUpBtn.isEnabled = lowBalance && topUpBalance
     }
+
     private fun getThresholdApiResponse(resource: Resource<AccountGetThresholdResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -349,11 +364,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 resource.data?.apply {
                     if (statusCode == "0") {
                         binding.apply {
-                            if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true){
+                            if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true) {
                                 binding.lowBalance.editText.setText(thresholdAmountVo.customerAmount)
                             }
 
-                            if (thresholdAmountVo?.thresholdAmount?.isNotEmpty()==true){
+                            if (thresholdAmountVo?.thresholdAmount?.isNotEmpty() == true) {
                                 binding.top.editText.setText(thresholdAmountVo.thresholdAmount)
 
                             }
@@ -362,9 +377,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -379,12 +396,13 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             is Resource.Success -> {
                 resource.data?.apply {
                     if (statusCode == "0") {
-                        val bundle=Bundle()
+                        val bundle = Bundle()
                         val amount = binding.top.getText().toString().trim().replace("£", "")
                         val thresholdAmount =
                             binding.lowBalance.getText().toString().trim().replace("£", "")
                         bundle.putDouble(Constants.TOP_UP_AMOUNT, amount.toDouble())
                         bundle.putDouble(Constants.THRESHOLD_AMOUNT, thresholdAmount.toDouble())
+                        bundle.putBoolean(SHOW_BACK_BUTTON, false)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
 
                         findNavController().navigate(
@@ -394,14 +412,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
     }
-
 
 
 }

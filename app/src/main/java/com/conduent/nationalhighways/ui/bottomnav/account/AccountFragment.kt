@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -247,7 +248,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
-        Intent(requireActivity(), LandingActivity::class.java).apply {
+        Intent(requireActivity(), LoginActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

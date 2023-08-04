@@ -1,13 +1,44 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.payment.SaveNewCardRequest
 import com.conduent.nationalhighways.databinding.FragmentDirectDebitBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 
 @AndroidEntryPoint
 class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
+
+    private var loader: LoaderDialog? = null
+    private var personalInformation: PersonalInformation? = null
+    private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
 
 
     override fun getFragmentBinding(
@@ -15,15 +46,186 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
         container: ViewGroup?
     ): FragmentDirectDebitBinding = FragmentDirectDebitBinding.inflate(inflater, container, false)
 
-    override fun init() {
-        binding.webView.loadUrl("https://customer.nuapaytest.com/en/signup/sign-up-to-dart-charge/")
-
-    }
 
     override fun initCtrl() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable(Constants.PERSONALDATA)
+
+        }
+        setupWebView()
+
     }
 
     override fun observer() {
+        lifecycleScope.launch() {
+            observe(paymentMethodViewModel.saveDirectDebitNewCard, ::handleSaveNewCardResponse)
+
+        }
+    }
+
+    private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        hideLoader()
+        when (status) {
+            is Resource.Success -> {
+
+                if (status.data?.statusCode?.equals("0") == true) {
+                    val bundle = Bundle()
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.DIRECT_DEBIT
+                    )
+
+
+                    findNavController().navigate(
+                        R.id.directDebitFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+                } else if (status.data?.statusCode?.equals("1337") == true) {
+                    val bundle = Bundle()
+
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.CARD_IS_ALREADY_REGISTERED
+                    )
+                    findNavController().navigate(
+                        R.id.directDebitFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+                } else {
+                    val bundle = Bundle()
+
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.DIRECT_DEBIT_NOT_SET_UP
+                    )
+                    findNavController().navigate(
+                        R.id.directDebitFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+
+                }
+            }
+
+            is Resource.DataError -> {
+                val bundle = Bundle()
+
+                bundle.putString(
+                    Constants.CARD_IS_ALREADY_REGISTERED,
+                    Constants.DIRECT_DEBIT_NOT_SET_UP
+                )
+                findNavController().navigate(
+                    R.id.directDebitFragment_to_paymentSuccessFragment2,
+                    bundle
+                )
+
+            }
+
+            else -> {
+            }
+        }
+
+
+    }
+
+    override fun init() {
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.loadUrl("https://customer.nuapaytest.com/en/signup/sign-up-to-dart-charge/")
+
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.saveFormData = true
+        binding.webView.settings.allowContentAccess = true
+        binding.webView.settings.allowFileAccess = true
+        binding.webView.settings.allowFileAccessFromFileURLs = true
+        binding.webView.settings.allowUniversalAccessFromFileURLs = true
+        binding.webView.settings.setSupportZoom(true)
+        binding.webView.isClickable = true
+        binding.webView.webChromeClient = WebChromeClient()
+
+    }
+
+    private fun setupWebView() {
+
+        val webViewClient: WebViewClient = object : WebViewClient() {
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                view?.loadUrl(request?.url.toString())
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                showLoader()
+                if (url?.contains("https://web-highwaystest.services.conduent.com/Dashboard/account-management/payment/eDD/response/success?token") == true) {
+                    val uri = Uri.parse(binding.webView.url)
+                    val encodedschemeid = uri.getQueryParameter("encodedschemeid")
+                    val mandateid = uri.getQueryParameter("mandateid")
+
+                    val bundle=Bundle()
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.DIRECT_DEBIT
+                    )
+
+
+                    findNavController().navigate(
+                        R.id.directDebitFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+/*
+                    if (encodedschemeid != null && mandateid != null) {
+                        val bundle=Bundle()
+                        bundle.putString(
+                            Constants.CARD_IS_ALREADY_REGISTERED,
+                            Constants.DIRECT_DEBIT
+                        )
+
+
+                        findNavController().navigate(
+                            R.id.directDebitFragment_to_paymentSuccessFragment2,
+                            bundle
+                        )
+                       // addNewCardApi(encodedschemeid, mandateid)
+
+                    }
+*/
+                }
+
+                super.onPageStarted(view, url, favicon)
+                return
+
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                hideLoader()
+
+                super.onPageFinished(view, url)
+            }
+        }
+        binding.webView.webViewClient = webViewClient
+    }
+
+    private fun addNewCardApi(encodedschemeid: String, mandateid: String) {
+        showLoader()
+        val saveDirectDebitNewCard = SaveNewCardRequest(encodedschemeid, mandateid)
+
+        paymentMethodViewModel.saveDirectDebitNewCard(saveDirectDebitNewCard)
+
+    }
+
+    private fun showLoader() {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+    }
+
+    private fun hideLoader() {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
     }
 
 }

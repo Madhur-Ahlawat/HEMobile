@@ -334,6 +334,15 @@ interface ApiService {
         @Body model: AddCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
+    @GET(DELETE_PRIMARY_CARD)
+    suspend fun deletePrimaryCard():Response<PaymentMethodDeleteResponseModel>
+
+    @POST(SAVED_CARD_LIST)
+    suspend fun saveDirectDebitNewCard(
+        @Body model: SaveNewCardRequest?
+    ): Response<PaymentMethodDeleteResponseModel?>?
+
+
     @POST(PAYMENT_WITH_NEW_CARD)
     suspend fun paymentWithNewCard(
         @Body model: PaymentWithNewCardModel?

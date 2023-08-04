@@ -12,9 +12,8 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import javax.annotation.meta.When
 
 
-class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),View.OnClickListener {
-
-
+class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
+    View.OnClickListener {
 
 
     override fun getFragmentBinding(
@@ -35,10 +34,10 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),V
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.tryPaymentAgain->{
-               // findNavController().navigate(R.id.action_tryPaymentAgainFragment_to_successfullyFragment)
+            R.id.tryPaymentAgain -> {
+                findNavController().popBackStack()
             }
         }
     }

@@ -599,6 +599,11 @@
         android:label="Payment Management"
         tools:layout="@layout/fragment_payment_method2">
         <action
+            android:id="@+id/paymentMethodFragment_to_action_paymentSuccessFragment"
+            app:destination="@id/paymentSuccessFragment"/>
+
+
+        <action
             android:id="@+id/action_paymentMethodFragment_to_selectPaymentMethodFragment"
             app:destination="@id/selectPaymentMethodFragment" />
         <action
@@ -610,6 +615,9 @@
         <action
             android:id="@+id/action_paymentMethodFragment_to_deletePaymentMethodFragment"
             app:destination="@id/deletePaymentMethodFragment" />
+        <action
+            android:id="@+id/action_paymentMethodFragment_to_nmiPaymentFragment"
+            app:destination="@+id/nmiPaymentFragment"/>
     </fragment>
 
     <fragment
@@ -672,6 +680,9 @@
         <action
             android:id="@+id/action_nmiPaymentFragment_to_paymentSuccessFragment2"
             app:destination="@id/paymentSuccessFragment" />
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
+            app:destination="@id/tryPaymentAgainFragment"/>
     </fragment>
     <fragment
         android:id="@+id/accountSuspendReOpenFragment"
@@ -714,13 +725,36 @@
         android:id="@+id/directDebitFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DirectDebitFragment"
         android:label="Direct Debit Fragment"
-        tools:layout="@layout/fragment_direct_debit" />
+        tools:layout="@layout/fragment_direct_debit">
+        <action
+            android:id="@+id/directDebitFragment_to_paymentSuccessFragment2"
+            app:destination="@id/paymentSuccessFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/paymentSuccessFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment"
         tools:layout="@layout/fragment_new_card_success_screen"
-        android:label="Add New Card Success"/>
+        android:label="Add New Card Success">
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_paymentMethodFragment"
+            app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/paymentMethodFragment"/>
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_nmiPaymentFragment"
+            app:popUpTo="@id/nmiPaymentFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/nmiPaymentFragment"/>
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/tryPaymentAgainFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
+        android:label="TryPaymentAgainFragment"
+        tools:layout="@layout/fragment_try_payment_again"/>
+
 
 
 </navigation>
