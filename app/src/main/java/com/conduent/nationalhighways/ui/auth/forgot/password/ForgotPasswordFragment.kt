@@ -315,7 +315,6 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     private fun isEnable() {
         btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().length > 0) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
-                binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
                 false
             }
             else {

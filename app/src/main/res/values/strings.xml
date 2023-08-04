@@ -1083,9 +1083,9 @@
     <!-- Manual Address Error Message-->
     <string name="str_building_error_message">Enter a building number and street </string>
     <string name="str_building_number_error_message">Building number and street must be 200 characters or fewer</string>
-    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_address_line2_length_error_message">Address line 2 must be 100 characters or fewer</string>
-    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_town_city_error_message">Enter a town or city </string>
     <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
     <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>

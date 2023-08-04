@@ -26,8 +26,8 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-#"
-    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-#"
+    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
+    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
     var ALLOWED_CHARS_POSTCODE = "-"
     var ALLOWED_CHARS_COMPANY_NAME = "-\'.,:;?!&@"

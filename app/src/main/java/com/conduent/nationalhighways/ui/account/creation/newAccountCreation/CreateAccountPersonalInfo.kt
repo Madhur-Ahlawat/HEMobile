@@ -245,7 +245,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -268,7 +268,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -321,7 +321,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -342,7 +342,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {

@@ -21,7 +21,10 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.countOccurenceOfChar
+import com.conduent.nationalhighways.utils.common.Utils.hasDigits
+import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -170,7 +173,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else {
                 val string = binding.inputPostCode.getText().toString().trim()
                 val finalString = string.replace(" ", "")
-                if (hasSpecialCharacters(
+                if (!(hasLowerCase(binding.inputPostCode.editText.getText().toString().trim()) || hasUpperCase(binding.inputPostCode.editText.getText().toString().trim())) || !hasDigits(binding.inputPostCode.editText.getText().toString().trim()) || hasSpecialCharacters(
                         binding.inputPostCode.getText().toString().trim(),
                         Utils.getSplCharString("")
                     )
