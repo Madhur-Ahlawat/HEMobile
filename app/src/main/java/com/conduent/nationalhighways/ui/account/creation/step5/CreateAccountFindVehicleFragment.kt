@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.step5
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Html
 import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.visible
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +60,15 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.
         STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+        when(navFlowCall) {
+
+            Constants.PAY_FOR_CROSSINGS -> {
+                    NewCreateAccountRequestModel.vehicleList.clear()
+                    binding.titleText1.visible()
+                    binding.titleText2.visible()
+            }
+        }
 
     }
 

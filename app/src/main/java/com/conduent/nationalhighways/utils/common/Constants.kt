@@ -248,6 +248,7 @@ object Constants {
     const val SHOW_BACK_BUTTON = "showBackButton"
     const val IS_MOBILE_NUMBER= "isMobileNumber"
     const val EDIT_SUMMARY = "editSummary"
+    const val PAY_FOR_CROSSINGS = "payForCrossings"
     const val EDIT_ACCOUNT_TYPE = "editAccountType"
     const val EDIT_PROFILE = "editProfile"
     const val VEHICLE_MANAGEMENT = "vehicleManagement"
