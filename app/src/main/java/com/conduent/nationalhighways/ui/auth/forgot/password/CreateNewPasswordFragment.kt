@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Patterns
 import android.view.*
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -21,6 +22,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
+import com.conduent.nationalhighways.utils.common.Utils.splCharsPassword
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,6 +30,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBinding>(),
     View.OnClickListener {
+    private var isNewPasswordValid: Boolean = false
+    private var isConfirmPasswordValid: Boolean = false
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
@@ -296,131 +300,80 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private fun isEnable1(text: String) {
         var filterTextForSpecialChars = ""
         var commaSeperatedString = ""
-        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
-            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7) && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim())
-        ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
+        isConfirmPasswordValid=true
+
+        if (binding.edtConformPassword.getText().toString().trim().length == 0) {
+            isConfirmPasswordValid=false
+            binding.edtConformPassword.setErrorText(getString(R.string.str_confirm_password_error_message))
+        } else if (hasSpecialCharacters(
+                binding.edtConformPassword.editText.getText().toString().trim(),
+                Utils.splCharsPassword
             )
-            binding.btnSubmit.isEnabled = true
-
-        } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = false
-            )
-            binding.btnSubmit.isEnabled = false
-
-        }
-
-        if (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()
         ) {
-            binding.edtConformPassword.removeError()
-        } else {
-            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
-        }
-        if (binding.edtConformPassword.getText().toString().trim().length < 3) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
+            isConfirmPasswordValid=false
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.LOWER_CASE,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.UPPER_CASE,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.DIGITS,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.ALLOWED_CHARS_EMAIL,
+                binding.edtConformPassword.getText().toString().trim()
+            )
+            commaSeperatedString =
+                Utils.makeCommaSeperatedStringForPassword(
+                    Utils.removeAllCharacters(
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
+                    )
+                )
+            if (filterTextForSpecialChars!!.length > 0) {
+                binding.edtConformPassword.setErrorText("Password must not include $commaSeperatedString")
+            } else {
+                binding.edtConformPassword.removeError()
+            }
         } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+            isConfirmPasswordValid=false
 
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
 
         } else if (!binding.edtConformPassword.getText().toString().trim()
                 .contains(Utils.UPPERCASE)
         ) {
+            isConfirmPasswordValid=false
 
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
 
         } else if (!binding.edtConformPassword.getText().toString().trim()
                 .contains(Utils.LOWECASE)
         ) {
+            isConfirmPasswordValid=false
 
             binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
 
-        }
-        else{
-            binding.edtConformPassword.removeError()
-        }
-//        else {
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.LOWER_CASE,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.UPPER_CASE,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.DIGITS,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            if (filterTextForSpecialChars.length > 0) {
-//                commaSeperatedString =
-//                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
-//                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-//            } else {
-//                binding.edtNewPassword.removeError()
-//            }
-//        }
+        } else if (binding.edtConformPassword.getText().toString().trim().length < 8) {
+            isConfirmPasswordValid=false
 
+            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
 
-
-
-
-        if (hasLowerCase(text)) {
-            binding.imgDot3.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (hasUpperCase(text)) {
-            binding.imgDot2.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (text.trim().length > 7) {
-            binding.imgDot1.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (hasDigits(text)) {
-            binding.imgDot4.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
-        }
-
-    }
-
-    private fun isEnable(text: String) {
-        var filterTextForSpecialChars = ""
-        var commaSeperatedString = ""
-        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
-            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7 && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()))
+        } else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
         ) {
+            isConfirmPasswordValid=false
+
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        } else {
+            isConfirmPasswordValid=true
+            isNewPasswordValid=true
+            binding.edtConformPassword.removeError()
+            binding.edtNewPassword.removeError()
+
             binding.model = ResetPasswordModel(
                 code = data?.code,
                 referenceId = data?.referenceId,
@@ -428,68 +381,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 confirmPassword = binding.edtConformPassword.getText().toString(),
                 enable = true
             )
-            binding.btnSubmit.isEnabled = true
-
-        } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = false
-            )
-            binding.btnSubmit.isEnabled = false
         }
-
-
-        if (binding.edtNewPassword.getText().toString().trim().length < 3) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
-        }
-        else{
-            binding.edtNewPassword.removeError()
-        }
-//        else {
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.LOWER_CASE,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.UPPER_CASE,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.DIGITS,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-//                Utils.SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD,
-//                binding.edtNewPassword.getText().toString().trim()
-//            )
-//            if (filterTextForSpecialChars.length > 0) {
-//                commaSeperatedString =
-//                    Utils.makeCommaSeperatedStringForPassword(filterTextForSpecialChars)
-//                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-//            } else {
-//                binding.edtNewPassword.removeError()
-//            }
-//        }
-
-
-
-
 
         if (hasLowerCase(text)) {
             binding.imgDot3.setImageResource(R.drawable.grin_tick)
@@ -503,7 +395,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (text.trim().length > 7) {
+        if (text.trim().length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
@@ -515,6 +407,128 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
 
+        if (isNewPasswordValid && isConfirmPasswordValid) {
+            binding.btnSubmit.isEnabled = true
+        } else {
+            binding.btnSubmit.isEnabled = false
+        }
+    }
+
+    private fun isEnable(text: String) {
+        var filterTextForSpecialChars = ""
+        var commaSeperatedString = ""
+        isNewPasswordValid = true
+
+        if (binding.edtNewPassword.getText().toString().trim().length == 0) {
+            isNewPasswordValid = false
+            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
+        } else if (hasSpecialCharacters(
+                binding.edtNewPassword.editText.getText().toString().trim(),
+                splCharsPassword
+            )
+        ) {
+            isNewPasswordValid = false
+
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.LOWER_CASE,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.UPPER_CASE,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.DIGITS,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.ALLOWED_CHARS_EMAIL,
+                binding.edtNewPassword.getText().toString().trim()
+            )
+            commaSeperatedString =
+                Utils.makeCommaSeperatedStringForPassword(
+                    Utils.removeAllCharacters(
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
+                    )
+                )
+            if (filterTextForSpecialChars!!.length > 0) {
+                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+                false
+            } else {
+                binding.edtNewPassword.removeError()
+                true
+            }
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+            isNewPasswordValid = false
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
+            isNewPasswordValid = false
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
+
+        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
+            isNewPasswordValid = false
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+        } else if (binding.edtNewPassword.getText().toString().trim().length < 8) {
+            isNewPasswordValid = false
+
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (binding.edtNewPassword.getText().toString()
+                .trim() != binding.edtConformPassword.getText().toString().trim()
+        ) {
+            isNewPasswordValid = false
+
+            binding.edtNewPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        } else {
+            binding.model = ResetPasswordModel(
+                code = data?.code,
+                referenceId = data?.referenceId,
+                newPassword = binding.edtNewPassword.getText().toString(),
+                confirmPassword = binding.edtConformPassword.getText().toString(),
+                enable = true
+            )
+
+            isNewPasswordValid = true
+            isConfirmPasswordValid = true
+            binding.edtConformPassword.removeError()
+            binding.edtNewPassword.removeError()
+
+        }
+
+        if (hasLowerCase(text)) {
+            binding.imgDot3.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (hasUpperCase(text)) {
+            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (text.trim().length >= 8) {
+            binding.imgDot1.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+        }
+
+        if (hasDigits(text)) {
+            binding.imgDot4.setImageResource(R.drawable.grin_tick)
+        } else {
+            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+        }
+//new password
+
+        if (isNewPasswordValid && isConfirmPasswordValid) {
+            binding.btnSubmit.isEnabled = true
+        } else {
+            binding.btnSubmit.isEnabled = false
+        }
     }
 
 }

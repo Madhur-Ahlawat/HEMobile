@@ -1,6 +1,9 @@
 package com.conduent.nationalhighways.ui.vehicle.addvehicle
 
+import android.R.attr.maxLength
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBinding>(),
@@ -65,9 +69,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)
-            modelInputLayout.setMaxLength(50)
-            makeInputLayout.setMaxLength(50)
-            colorInputLayout.setMaxLength(50)
+            modelInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
+            makeInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
+            colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
         accountData = NewCreateAccountRequestModel
@@ -184,7 +188,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MAKE)) {
+                else if (hasDigits(it) || hasSpecialCharacters(it,Utils.splCharVehicleMake)) {
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
@@ -192,6 +196,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
+                binding.makeInputLayout.setErrorText(getString(R.string.enter_the_make_of_your_vehicle))
                 false
             }
 
@@ -203,7 +208,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_MODEL)) {
+                else if (hasSpecialCharacters(it,Utils.splCharVehicleModel)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
@@ -211,6 +216,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
+                binding.modelInputLayout.setErrorText(getString(R.string.enter_your_vehicle_model))
                 false
             }
 
@@ -219,7 +225,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.colorInputLayout.editText.onTextChanged {
 
             colourInputCheck = if (it!=null && it.trim().length>0) {
-                if (hasDigits(it) || hasSpecialCharacters(it,Utils.SPECIAL_CHARACTERS_FOR_COLOR)) {
+                if (hasDigits(it) || hasSpecialCharacters(it,Utils.splCharVehicleColor)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {

@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPM
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
-import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -129,14 +126,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         hitApi()
                     }
                     Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
-                        val bundle = Bundle()
-                        bundle.putParcelable("data", data)
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-
-                        findNavController().navigate(
-                            R.id.action_resenedCodeFragment_to_otpFragment,
-                            bundle
-                        )
+                        hitApi()
                     }
                     Constants.TWOFA -> {
                         viewModel.twoFARequestOTP(data)
@@ -198,7 +188,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
-            Constants.EMAIL,
+            data?.optionType,
             data?.optionValue
         )
         createAccountViewModel.emailVerificationApi(request)
@@ -215,7 +205,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL,data?.optionValue))
+                bundle.putParcelable("data", RequestOTPModel(data?.optionType,data?.optionValue))
 
                 bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode,0L,resource.data?.referenceId,true))
 

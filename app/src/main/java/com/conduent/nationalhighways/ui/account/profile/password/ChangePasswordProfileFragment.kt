@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.account.profile.password
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -12,14 +11,12 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -29,7 +26,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
-import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.makeCommaSeperatedStringForPassword
 import com.conduent.nationalhighways.utils.common.Utils.removeGivenStringCharactersFromString

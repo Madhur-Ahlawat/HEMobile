@@ -8,6 +8,7 @@ class LrdsEligibiltyRequest {
     var addressline1:String=""
     var addressline2:String=""
     var state:String=""
+    var city:String=""
     var country:String=""
     var zipcode1:String=""
 

@@ -21,7 +21,6 @@ import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -30,7 +29,6 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import dagger.hilt.android.AndroidEntryPoint
 

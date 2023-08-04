@@ -18,89 +18,186 @@ import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
 object Utils {
+    var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-#"
+    var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-#"
+    var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
+    var ALLOWED_CHARS_POSTCODE = "-"
+    var ALLOWED_CHARS_COMPANY_NAME = "-\'.,:;?!&@"
+    var ALLOWED_CHARS_VEHICLE_MAKE = "-._/()+\'"
+    var ALLOWED_CHARS_VEHICLE_MODEL = "&-.@:_/()#+\'"
+    var ALLOWED_CHARS_VEHICLE_COLOR = "/"
+    var ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE = "-"
+    var ALLOWED_CHARS_PASSWORD =
+        "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
+    var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
+    var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+
 
     var PASSWORD_RULE1 = ".{8,64}"
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
     var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
+    var ACCOUNT_NAME_FIRSTNAME_LASTNAME: Regex = Regex("[a-zA-Z\\-]+")
     var PHONENUMBER: Regex = Regex("[0]{0,3}[1-9]{1}[0-9]{7,14}")
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
-    var SPECIAL_CHARACTERS_FOR_MODEL = "!\$%^*<>?;{}[]\\\\|~,`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_MODEL = "!\$%^*<>?;₹{}[]\\\\|~\",`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
+    var TWO_OR_MORE_AT_THE_RATE: Regex = Regex("[@]+[@]+")
     var TWO_OR_MORE_HYPEN: Regex = Regex("[\\-]+[\\-]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
-    var SPECIAL_CHARACTERS_FOR_MAKE = "!@#\$%^&*<>?;:{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_FOR_COLOR = "!@#\$%^&*()+<>?;:{}[]\\\\|~'\",._-`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_FOR_COMPANY_NAME = "#\$%^*()+<>/{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_FOR_NAME = "!@#\$%^&*()+<>?/;:{}[]\\\\|~'_,.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_ADDRESS = "!@\$%^&*()+<>?/;#\":{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_TOWN_OR_CITY = "#!@\$%^&*()+<>?,\"./;:{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
-    var SPECIAL_CHARACTERS_POSTCODE = "!@#\$%^&*()+<>?/;:{}[]\\\\|~',\"._`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_MAKE = "!@#\$%^&*<>₹?;:{}[]\\\\|\"~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_COLOR = "!@#\$%^&*()+₹<>?;:{}[]\\\\|~'\",._-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_COMPANY_NAME = "#\$%^*₹()+<>/{}[]\\\\|~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_FOR_NAME = "!@#\$%^&*()+<₹>?/;:{}[]\\\\|~'_,.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_ADDRESS = "!@\$%^&*()+<>?/;₹\":{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_TOWN_OR_CITY = "#!@\$%^&*₹()+<>?\"/;:{}[]\\\\|_~`•√π÷×§∆£¢€¥^°=\\©®™✓"
+    var SPECIAL_CHARACTERS_POSTCODE = "!@#\$%^&*()+<₹>?/;:{}[]\\\\|~',\"._`•√π÷×§∆£¢€¥^°=\\©®™✓"
     var DIGITS = "0123456789"
-    var SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/`•√π÷×§∆£¢€¥^°\\©®™✓"
+    var SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD =
+        "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/`•√π÷×§∆£¢€¥^°\\©®™✓"
     var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
     var passwordRegEX: Regex =
         Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
 
-    fun hasSpecialCharacters(str: String,specialCharacterString:String): Boolean {
-        var hasSpecialChar=false
-        str.forEach { char ->
+    val splCharAddress1: String by lazy {
+        getSplCharString(ALLOWED_CHARS_BUILDING_STREE_NO)
+    }
 
+    val splCharAddress2: String by lazy {
+        getSplCharString(ALLOWED_CHARS_ADDRESS_LINE_2)
+    }
+
+    val splCharTownCity: String by lazy {
+        getSplCharString(ALLOWED_CHARS_TOWN_OR_CITY)
+    }
+
+    val splCharPostCode: String by lazy {
+        getSplCharString(ALLOWED_CHARS_POSTCODE)
+    }
+
+    val splCharEmailCode: String by lazy {
+        getSplCharString(ALLOWED_CHARS_EMAIL)
+    }
+    val splCharCompanyName: String by lazy {
+        getSplCharString(ALLOWED_CHARS_COMPANY_NAME)
+    }
+    val splCharVehicleMake: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_MAKE)
+    }
+    val splCharVehicleModel: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_MODEL)
+    }
+    val splCharVehicleColor: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_COLOR)
+    }
+    val splCharsPassword: String by lazy {
+        getSplCharString(ALLOWED_CHARS_PASSWORD)
+    }
+    val splCharsVehicleRegistration: String by lazy {
+        getSplCharString(ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE)
+    }
+    fun countOccurenceOfChar(s: String, c: Char): Int {
+        var res = 0
+        for (i in 0 until s.length) {
+            // checking character in string
+            if (s[i] == c) res++
+        }
+        return res
+    }
+
+    fun isLastCharOfStringACharacter(input: String): Boolean {
+        var isAlphabet = false
+        LOWER_CASE.forEach {
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
+            }
+        }
+        UPPER_CASE.forEach {
+            if (input.last().toString().equals(it.toString())) {
+                isAlphabet = true
+            }
+        }
+        return isAlphabet
+    }
+    fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
+        var input = input
+        charsToBeRemoved.forEach {
+            input = input.replace(it.toString(), "")
+        }
+        return input
+    }
+
+
+    fun getSplCharString(allowedChars: String): String {
+        var splChar = ""
+        SPECIAL_CHARACTERS.forEach { c ->
+            if (!allowedChars.contains(c.toString())) {
+                splChar = splChar + c
+            }
+        }
+        return splChar
+    }
+
+    fun hasSpecialCharacters(str: String, specialCharacterString: String): Boolean {
+        //
+        var hasSpecialChar = false
+        str.forEach { char ->
             if (specialCharacterString.contains(char.toString())) {
-                hasSpecialChar=true
+                hasSpecialChar = true
                 return@forEach
             }
         }
         return hasSpecialChar
     }
+
     fun hasLowerCase(str: String): Boolean {
-        var hasSpecialChar=false
+        var hasSpecialChar = false
         str.forEach { char ->
             if (LOWER_CASE.contains(char)) {
-                hasSpecialChar=true
+                hasSpecialChar = true
                 return@forEach
             }
         }
         return hasSpecialChar
     }
+
     fun hasUpperCase(str: String): Boolean {
-        var hasSpecialChar=false
+        var hasSpecialChar = false
         str.forEach { char ->
             if (UPPER_CASE.contains(char)) {
-                hasSpecialChar=true
+                hasSpecialChar = true
                 return@forEach
             }
         }
         return hasSpecialChar
     }
+
     fun hasDigits(str: String): Boolean {
-        var hasSpecialChar=false
+        var hasDigit = false
         str.forEach { char ->
             if (DIGITS.contains(char)) {
-                hasSpecialChar=true
-            }
-            else{
-                hasSpecialChar=false
+                hasDigit = true
             }
         }
-        return hasSpecialChar
+        return hasDigit
     }
+
     fun hasAlphabets(str: String): Boolean {
-        var hasSpecialChar=false
+        var hasSpecialChar = false
         str.forEach { char ->
             if (ALPHABETS.contains(char)) {
-                hasSpecialChar=true
-            }
-            else{
-                hasSpecialChar=false
+                hasSpecialChar = true
+            } else {
+                hasSpecialChar = false
             }
         }
         return hasSpecialChar
@@ -212,28 +309,32 @@ object Utils {
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
     }
-    fun removeGivenStringCharactersFromString(characterString:String,input:String): String {
-        var input=input
+
+    fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
+        var input = input
         characterString.forEach {
-            input.replace(it.toString(),"")
+            input.replace(it.toString(), "")
         }
         return input
     }
-    fun makeCommaSeperatedStringForPassword(input:String): String {
-        var output=""
-        input.forEachIndexed { index, c ->
-            if(input.length==1){
-                output=output+c.toString()
-            }
-            else if(index<input.length){
-                output=output+c.toString()+", "
-            }
-            else{
-                output=output+c.toString()
 
+    fun makeCommaSeperatedStringForPassword(input: String): String {
+        var output1 = ""
+        input.forEachIndexed { index, c ->
+            if (index > 0) {
+                output1 = output1 + ", " + c.toString()
+            } else {
+                output1 = output1 + c.toString()
             }
         }
-        return output
+        if (output1.contains(',')) {
+            return output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
+                output1.lastIndexOf(',') + 1,
+                output1.length
+            )
+        } else {
+            return output1
+        }
     }
 //    fun getOccuringChar(str: String): Int {
 ////creating an array of size 256 (ASCII_SIZE)
@@ -453,7 +554,6 @@ object Utils {
 
 
     }
-
 
 
     fun getYesterdayDate(): String {

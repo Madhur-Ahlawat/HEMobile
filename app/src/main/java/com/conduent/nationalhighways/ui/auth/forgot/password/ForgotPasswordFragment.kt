@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
@@ -31,6 +32,8 @@ import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.ALLOWED_CHARS_EMAIL
+import com.conduent.nationalhighways.utils.common.Utils.splCharEmailCode
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -43,12 +46,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), View.OnClickListener {
 
+    private var commaSeperatedString: String? = null
+    private var filterTextForSpecialChars: String? = null
+
     @Inject
     lateinit var sessionManager: SessionManager
     private var loader: LoaderDialog? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
+    private val viewModelEmail: CreateAccountEmailViewModel by viewModels()
     private var isCalled = false
-//    private lateinit var navFlow: String// create account , forgot password
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
@@ -73,15 +79,23 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
 
-        when(navFlowCall){
+        when (navFlowCall) {
 
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
-            setView()}
-            FORGOT_PASSWORD_FLOW -> {binding.enterDetailsTxt.text = getString(R.string.forgotPassword_email_screenHeading)
+                setView()
+            }
+
+            FORGOT_PASSWORD_FLOW -> {
+                binding.enterDetailsTxt.text =
+                    getString(R.string.forgotPassword_email_screenHeading)
                 requireActivity().toolbar(getString(R.string.forgot_password))
-                binding.textUsername.gone()}
-            else -> {setView()}
+                binding.textUsername.gone()
+            }
+
+            else -> {
+                setView()
+            }
 
         }
 
@@ -114,10 +128,29 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         }
         if (!isViewCreated) {
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+            observe(viewModelEmail.userNameAvailabilityCheck, :: handleEmailCheck)
 
         }
 
         isViewCreated = true
+    }
+
+    private fun handleEmailCheck(response : Resource<Boolean?>?){
+
+        if(response?.data == true){
+            val request = EmailVerificationRequest(
+                Constants.EMAIL,
+                binding.edtEmail.getText().toString().trim()
+            )
+            createAccountViewModel.emailVerificationApi(request)
+        }else{
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
+
+        }
+
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
@@ -226,16 +259,26 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
                 val emailText = binding.edtEmail.getText().toString().trim()
 
-                when(navFlowCall){
+                when (navFlowCall) {
 
-                    EDIT_SUMMARY -> {handleEditNavigation(emailText)}
-                    EDIT_ACCOUNT_TYPE -> {handleAccountEditNavigation(emailText)}
-                    FORGOT_PASSWORD_FLOW -> {loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    EDIT_SUMMARY -> {
+                        handleEditNavigation(emailText)
+                    }
+
+                    EDIT_ACCOUNT_TYPE -> {
+                        handleAccountEditNavigation(emailText)
+                    }
+
+                    FORGOT_PASSWORD_FLOW -> {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
                         sessionManager.saveAccountNumber(emailText)
                         isCalled = true
                         viewModel.confirmOptionForForgot(emailText)}
                     else -> {NewCreateAccountRequestModel.emailAddress = emailText
-                        hitApi()}
+                        checkEmailAddress()}
 
                 }
             }
@@ -247,7 +290,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                 findNavController().popBackStack()
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
-            hitApi()
+            checkEmailAddress()
         }
     }
 
@@ -264,63 +307,105 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             )
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
-            hitApi()
+            checkEmailAddress()
         }
     }
 
 
     private fun isEnable() {
-        if (binding.edtEmail.getText().toString().trim().isEmpty()) {
-            binding.edtEmail.removeError()
-            btnEnabled = false
-        } else {
-            btnEnabled = if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString())
-                    .matches()
-            ) {
-                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+        btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().length > 0) {
+            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+                binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
                 false
-            } else {
-                if(binding.edtEmail.editText.getText().toString().trim().length>0){
-                    if(binding.edtEmail.editText.getText().toString().trim().contains(
-                            Utils.TWO_OR_MORE_DOTS) || (binding.edtEmail.editText.getText().toString().trim().last().toString().equals(".") || binding.edtEmail.editText.getText().toString().first().toString().equals("."))
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString().equals("-") || binding.edtEmail.editText.getText().toString().first().toString().equals("-"))
-                    ){
+            }
+            else {
+                if(binding.edtEmail.editText.getText().toString().length>100){
+                    binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
+                    false
+                }
+                else{
+                    if ( !Utils.isLastCharOfStringACharacter(binding.edtEmail.editText.getText().toString().trim()) || Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')>1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                            Utils.TWO_OR_MORE_DOTS
+                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString().equals(".") || binding.edtEmail.editText.getText()
+                            .toString().first().toString().equals("."))
+                        || (binding.edtEmail.editText.getText().toString().trim().last().toString()
+                            .equals("-") || binding.edtEmail.editText.getText().toString().first()
+                            .toString().equals("-"))
+                    ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     }
-                    else if (binding.edtEmail.getText().toString().trim().length < 8) {
-                        binding.edtEmail.setErrorText(getString(R.string.str_email_length_less_than_eight))
-                        false
-                    } else {
-                        binding.edtEmail.removeError()
-                        true
+                    else {
+                        if (Utils.hasSpecialCharacters(
+                                binding.edtEmail.editText.getText().toString().trim(),
+                                splCharEmailCode.replace("@", "")
+                            )
+                        ) {
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.LOWER_CASE,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.UPPER_CASE,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.DIGITS,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                ALLOWED_CHARS_EMAIL,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            commaSeperatedString =
+                                Utils.makeCommaSeperatedStringForPassword(
+                                    Utils.removeAllCharacters(
+                                        ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                    )
+                                )
+                            if (filterTextForSpecialChars!!.length > 0) {
+                                binding.edtEmail.setErrorText("Email address must not include $commaSeperatedString")
+                                false
+                            } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                                    binding.edtEmail.getText().toString()
+                                ).matches()
+                            ) {
+                                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                                false
+                            } else {
+                                binding.edtEmail.removeError()
+                                true
+                            }
+                        }
+                        else if(!(Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')>0 && Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')<2)){
+                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                            false
+                        }
+                        else {
+                            binding.edtEmail.removeError()
+                            true
+                        }
                     }
                 }
-                else{
-                    binding.edtEmail.removeError()
-                    false
-                }
-
             }
-
+        } else {
+            binding.edtEmail.removeError()
+            false
         }
         checkButton()
     }
 
     private fun checkButton() {
         binding.btnNext.isEnabled = btnEnabled
+        binding.btnNext.isFocusable = btnEnabled
     }
 
-    private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    private fun checkEmailAddress() {
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = EmailVerificationRequest(
-            Constants.EMAIL,
-            binding.edtEmail.getText().toString().trim()
-        )
-        createAccountViewModel.emailVerificationApi(request)
+        val request = UserNameCheckReq(binding.edtEmail.getText().toString().trim())
+        viewModelEmail.userNameAvailabilityCheck(request)
 
 
     }
