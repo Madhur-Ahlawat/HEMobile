@@ -158,7 +158,6 @@ object Utils {
         }
         return hasSpecialChar
     }
-
     fun hasLowerCase(str: String): Boolean {
         var hasSpecialChar = false
         str.forEach { char ->

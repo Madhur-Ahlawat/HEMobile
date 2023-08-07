@@ -58,6 +58,7 @@
                 android:paddingHorizontal="@dimen/_15dp"
                 android:layout_marginTop="20dp"
                 android:hint="@string/plz_enter_email"
+                android:text="@={data.emailAddress}"
                 android:background="@drawable/bg_rounded_corner_5dp"
                 android:elevation="@dimen/_5dp"
                 app:imeOptions="actionDone"

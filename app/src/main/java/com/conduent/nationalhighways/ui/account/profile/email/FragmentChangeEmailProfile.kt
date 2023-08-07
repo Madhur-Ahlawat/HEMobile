@@ -42,7 +42,9 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
 
     override fun initCtrl() {
         binding.apply {
-            edtEmail.addTextChangedListener { enable = isEnable() }
+            edtEmail.addTextChangedListener {
+                enable = isEnable()
+            }
 
             btnNext.setOnClickListener {
                 hideKeyboard()
@@ -50,7 +52,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 viewModel.emailVerificationApi(
                     EmailVerificationRequest(
                         selectionType = EMAIL_SELECTION_TYPE,
-                        selectionValues = binding.data?.emailAddress ?: ""
+                        selectionValues = binding.edtEmail.getText().toString().trim() ?: ""
                     )
                 )
             }
