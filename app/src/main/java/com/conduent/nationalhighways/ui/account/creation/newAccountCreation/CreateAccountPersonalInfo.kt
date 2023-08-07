@@ -29,9 +29,6 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_COMPANY_NAME
-import com.conduent.nationalhighways.utils.common.Utils.SPECIAL_CHARACTERS_FOR_NAME
-import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.splCharCompanyName
 import com.conduent.nationalhighways.utils.common.observe
@@ -245,7 +242,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -268,7 +265,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -321,7 +318,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -342,7 +339,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             }
             else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {

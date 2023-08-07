@@ -151,5 +151,7 @@
     <dimen name="_98dp">98dp</dimen>
     <dimen name="_28dp">28dp</dimen>
     <dimen name="_26_7dp">26.7dp</dimen>
+    <dimen name="_50dp">50dp</dimen>
+    <dimen name="_6_5dp">6.5dp</dimen>
     />
 </resources>

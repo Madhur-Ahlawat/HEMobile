@@ -1083,9 +1083,9 @@
     <!-- Manual Address Error Message-->
     <string name="str_building_error_message">Enter a building number and street </string>
     <string name="str_building_number_error_message">Building number and street must be 200 characters or fewer</string>
-    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_address_line2_length_error_message">Address line 2 must be 100 characters or fewer</string>
-    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_town_city_error_message">Enter a town or city </string>
     <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
     <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>
@@ -1279,6 +1279,7 @@
     <string name="str_telephone_number_optional">Telephone number (optional)</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
     <string name="postcode_must_not_contain_special_characters_except_single_hypen">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
+    <string name="postcode_must_not_contain_special_characters_except_hypen">Postcode must only include letters a to z and numbers 0 to 9 and single hypen</string>
     <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z and numbers 0 to 9</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
@@ -1358,6 +1359,8 @@
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="enter_your_password">Enter your password</string>
 
 
 </resources>

@@ -86,7 +86,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
                 binding.findVehicle.isEnabled = false
             }
-            else if (Utils.hasSpecialCharacters(binding.editNumberPlate.getText().toString().trim(),splCharsVehicleRegistration)) {
+            else if (Utils.hasSpecialCharacters(binding.editNumberPlate.getText().toString().trim().replace(" ",""),splCharsVehicleRegistration)) {
                 binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
                 binding.findVehicle.isEnabled = false
             }
