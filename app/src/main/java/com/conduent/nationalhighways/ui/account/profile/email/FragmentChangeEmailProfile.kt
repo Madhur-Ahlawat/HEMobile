@@ -1,8 +1,10 @@
 package com.conduent.nationalhighways.ui.account.profile.email
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,8 +26,9 @@ import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBinding>(){
+class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBinding>() {
 
+    private var btnEnabled: Boolean = false
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
 
@@ -39,7 +42,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
 
     override fun initCtrl() {
         binding.apply {
-            edtEmail.onTextChanged { enable = isEmailValid(edtEmail.text.toString()) }
+            edtEmail.addTextChangedListener { enable = isEnable() }
+
             btnNext.setOnClickListener {
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -50,7 +54,113 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     )
                 )
             }
+            isEnable()
+            checkButton()
         }
+    }
+
+    fun checkButton() {
+        binding?.btnNext?.isEnabled = btnEnabled
+        binding?.btnNext?.isFocusable = btnEnabled
+    }
+
+    private var commaSeperatedString: String? = null
+    private var filterTextForSpecialChars: String? = null
+    private fun isEnable(): Boolean {
+        btnEnabled =
+            if (binding.edtEmail.getText().toString().trim().length > 0) {
+                if (binding.edtEmail.getText().toString().trim().length < 8) {
+                    false
+                } else {
+                    if (binding.edtEmail.getText().toString().length > 100) {
+                        binding.edtEmail.setError(getString(R.string.email_address_must_be_100_characters_or_fewer))
+                        false
+                    } else {
+                        if (!Utils.isLastCharOfStringACharacter(
+                                binding.edtEmail.getText().toString().trim()
+                            ) || Utils.countOccurenceOfChar(
+                                binding.edtEmail.getText().toString().trim(), '@'
+                            ) > 1 || binding.edtEmail.getText().toString().trim().contains(
+                                Utils.TWO_OR_MORE_DOTS
+                            ) || (binding.edtEmail.getText().toString().trim().last()
+                                .toString().equals(".") || binding.edtEmail.getText()
+                                .toString().first().toString().equals("."))
+                            || (binding.edtEmail.getText().toString().trim().last().toString()
+                                .equals("-") || binding.edtEmail.getText().toString().first()
+                                .toString().equals("-"))
+                            || (Utils.countOccurenceOfChar(
+                                binding.edtEmail.getText().toString().trim(), '.'
+                            ) < 1) || (Utils.countOccurenceOfChar(
+                                binding.edtEmail.getText().toString().trim(), '@'
+                            ) < 1)
+                        ) {
+                            binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                            false
+                        } else {
+                            if (Utils.hasSpecialCharacters(
+                                    binding.edtEmail.getText().toString().trim(),
+                                    Utils.splCharEmailCode.replace("@", "")
+                                )
+                            ) {
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.LOWER_CASE,
+                                        binding.edtEmail.getText().toString().trim()
+                                    )
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.UPPER_CASE,
+                                        binding.edtEmail.getText().toString().trim()
+                                    )
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.DIGITS,
+                                        binding.edtEmail.getText().toString().trim()
+                                    )
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.ALLOWED_CHARS_EMAIL,
+                                        binding.edtEmail.getText().toString().trim()
+                                    )
+                                commaSeperatedString =
+                                    Utils.makeCommaSeperatedStringForPassword(
+                                        Utils.removeAllCharacters(
+                                            Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                        )
+                                    )
+                                if (filterTextForSpecialChars!!.length > 0) {
+                                    binding.edtEmail.setError("Email address must not include $commaSeperatedString")
+                                    false
+                                } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                                        binding.edtEmail.getText().toString()
+                                    ).matches()
+                                ) {
+                                    binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                                    false
+                                } else {
+                                    binding.edtEmail.setError(null)
+                                    true
+                                }
+                            } else if (!(Utils.countOccurenceOfChar(
+                                    binding.edtEmail.getText().toString().trim(), '@'
+                                ) > 0 && Utils.countOccurenceOfChar(
+                                    binding.edtEmail.getText().toString().trim(), '@'
+                                ) < 2)
+                            ) {
+                                binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                                false
+                            } else {
+                                binding.edtEmail.setError(null)
+                                true
+                            }
+                        }
+                    }
+                }
+            } else {
+                binding.edtEmail.setError(null)
+                false
+            }
+        return btnEnabled
     }
 
     override fun observer() {
@@ -87,9 +197,11 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     )
                 }
             }
+
             is Resource.DataError -> {
                 showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }

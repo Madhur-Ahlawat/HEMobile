@@ -1,33 +1,22 @@
 package com.conduent.nationalhighways.ui.account.profile.email
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
-import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
-import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
-import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileUpdateEmailModel
-import com.conduent.nationalhighways.databinding.FragmentProfileConfirmEmailBinding
 import com.conduent.nationalhighways.databinding.FragmentProfileConfirmEmailSecurityCodeBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.Constants.DATA
-import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
-import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,9 +65,9 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
     }
 
     override fun observer() {
-//        observe(viewModel.emailVerificationApiVal, ::handleEmailVerification)
+        observe(viewModel.emailVerificationApiVal, ::handleEmailVerification)
 //        observe(viewModel.emailValidation, ::handleEmailValidation)
-//        observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
+        observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
 
     }
     private var accountInformation: AccountInformation? = null
