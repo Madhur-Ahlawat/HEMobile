@@ -382,7 +382,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     splCharPostCode
                 )
             ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters_except_hypen))
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters_except_hyphen))
                 false
             } else if (finalString.length < 4 || finalString.length > 10) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
