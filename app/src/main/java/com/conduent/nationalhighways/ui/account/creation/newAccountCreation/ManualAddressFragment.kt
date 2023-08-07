@@ -34,7 +34,6 @@ import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.Utils.ALLOWED_CHARS_POSTCODE
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.splCharAddress1
 import com.conduent.nationalhighways.utils.common.Utils.splCharAddress2
@@ -380,10 +379,10 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     binding.postCode.editText.getText().toString().trim()
                 ) || Utils.hasUpperCase(binding.postCode.editText.getText().toString().trim())) || !hasDigits(binding.postCode.editText.getText().toString().trim()) || Utils.hasSpecialCharacters(
                     binding.postCode.getText().toString().trim(),
-                    Utils.getSplCharString(ALLOWED_CHARS_POSTCODE)
+                    splCharPostCode
                 )
             ) {
-                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                binding.postCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters_except_hypen))
                 false
             } else if (finalString.length < 4 || finalString.length > 10) {
                 binding.postCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))

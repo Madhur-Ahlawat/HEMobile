@@ -175,7 +175,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 val finalString = string.replace(" ", "")
                 if (!(hasLowerCase(binding.inputPostCode.editText.getText().toString().trim()) || hasUpperCase(binding.inputPostCode.editText.getText().toString().trim())) || !hasDigits(binding.inputPostCode.editText.getText().toString().trim()) || hasSpecialCharacters(
                         binding.inputPostCode.getText().toString().trim(),
-                        Utils.getSplCharString("")
+                        ""
                     )
                 ) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))

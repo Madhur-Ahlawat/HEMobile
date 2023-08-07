@@ -101,7 +101,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                         } else {
                             if (Utils.hasSpecialCharacters(
                                     binding.edtEmail.getText().toString().trim(),
-                                    Utils.splCharEmailCode.replace("@", "")
+                                    Utils.splCharEmailCode
                                 )
                             ) {
                                 filterTextForSpecialChars =

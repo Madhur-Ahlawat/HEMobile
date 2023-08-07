@@ -338,7 +338,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                     else {
                         if (Utils.hasSpecialCharacters(
                                 binding.edtEmail.editText.getText().toString().trim(),
-                                splCharEmailCode.replace("@", "")
+                                splCharEmailCode
                             )
                         ) {
                             filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
