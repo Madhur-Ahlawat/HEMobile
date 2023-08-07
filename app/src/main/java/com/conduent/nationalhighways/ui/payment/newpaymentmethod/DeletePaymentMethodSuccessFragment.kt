@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,11 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class DeletePaymentMethodSuccessFragment :
     BaseFragment<FragmentDeletePaymentMethodSuccessBinding>(), View.OnClickListener {
     private var navFlow: String = ""
-    private var lowBalance: Double = 0.0
-    private var topUpBalance: Double = 0.0
+    private var lowBalance: String =""
+    private var topUpBalance: String = ""
 
 
     override fun getFragmentBinding(
@@ -28,18 +28,43 @@ class DeletePaymentMethodSuccessFragment :
     override fun init() {
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initCtrl() {
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
-        lowBalance = arguments?.getDouble(Constants.THRESHOLD_AMOUNT) ?: 0.0
-        topUpBalance = arguments?.getDouble(Constants.TOP_UP_AMOUNT) ?: 0.0
+        lowBalance = arguments?.getString(Constants.THRESHOLD_AMOUNT) ?:""
+        topUpBalance = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
+        var lBalance=0.0
+        var tBalance=0.0
+        if (lowBalance.isNotEmpty()){
+             lBalance=lowBalance.replace("£","").toDouble()
+        }
+        if (topUpBalance.isNotEmpty()){
+            tBalance=topUpBalance.replace("£","").toDouble()
+        }
 
         if (navFlow == Constants.THRESHOLD) {
             binding.maximumVehicleAdded.text = getString(R.string.str_threshold_limit)
-            binding.textMaximumVehicle.text = getString(
-                R.string.str_your_low_balance_limit,
-                (String.format("%.2f", lowBalance)),
-                (String.format("%.2f", topUpBalance))
-            )
+            if (lowBalance.isEmpty()){
+                binding.textMaximumVehicle.text = getString(
+                    R.string.str_your_top_amount_limit,
+                    (String.format("%.2f", lBalance.toDouble()))
+                )
+            }else if (topUpBalance.isEmpty()){
+                binding.textMaximumVehicle.text = getString(
+                    R.string.str_your_low_balance_limit,
+                    (String.format("%.2f", tBalance.toDouble()))
+                )
+            }else{
+                binding.textMaximumVehicle.text = getString(
+                    R.string.str_your_low_balance_limit,
+                    (String.format("%.2f", lBalance.toDouble()))
+                )+"\n"+getString(
+                    R.string.str_your_top_amount_limit,
+                    (String.format("%.2f", tBalance.toDouble())))
+            }
+
+
+
 
             binding.cancelBtn.visibility = View.GONE
         }

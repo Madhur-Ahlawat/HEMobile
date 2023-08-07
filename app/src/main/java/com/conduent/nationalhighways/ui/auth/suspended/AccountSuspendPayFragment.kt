@@ -8,9 +8,11 @@ import android.text.Selection
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -97,7 +99,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             }
             val htmlText =
-                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number)
+                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                })
 
             binding.tvSelectPaymentMethod.text = htmlText
 
@@ -110,14 +116,31 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun init() {
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        //binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
+        binding.lowBalance.editText.setOnTouchListener { _, event ->
+            if (MotionEvent.ACTION_UP == event.action) {
+                val bundle = Bundle()
 
+                bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
+                bundle.putString(
+                    Constants.TOP_UP_AMOUNT,
+                    binding.lowBalance.editText.text.toString()
+                )
+
+                findNavController().navigate(
+                    R.id.action_accountSuspendedFinalPayFragment_to_amountKeyPadFragment,
+                    bundle
+                )
+            }
+            true
+        }
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
         if (paymentList?.isNotEmpty() == true) {
             if (paymentList?.get(position)?.cardType.equals("visa", true)) {
@@ -137,7 +160,17 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         }
 
+        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
 
+
+            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
+                binding.lowBalance.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
+
+
+            }
+
+
+        }
     }
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -175,23 +208,23 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         newPaymentMethod("N")
                     }
 
-                   /* bundle.putParcelable(Constants.DATA, responseModel)
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                    bundle.putString(Constants.TRANSACTIONID, "541232435465")
-                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+                    /* bundle.putParcelable(Constants.DATA, responseModel)
+                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                     bundle.putString(Constants.TRANSACTIONID, "541232435465")
+                     bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
 
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
+                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
 
 
                 } else {
                     payWithExistingCard()
                     //  bundle.putParcelable(Constants.DATA, status.data)
-                   /* bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                    bundle.putString(Constants.TRANSACTIONID, "761234567892")
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
+                    /* bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                     bundle.putString(Constants.TRANSACTIONID, "761234567892")
+                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
 
                 }
                 /* findNavController().navigate(
@@ -231,7 +264,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             state = "HE",
             transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", ""),
             useAddressCheck = "N",
-            personalInformation?.zipcode.toString().replace(" ",""),
+            personalInformation?.zipcode.toString().replace(" ", ""),
             "",
             directoryServerId = paymentSuccessResponse?.directoryServerId.toString(),
             cavv = paymentSuccessResponse?.cavv.toString(),
@@ -248,8 +281,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private fun payWithExistingCard() {
         val model = PaymentWithExistingCardModel(
-            addressline1 = personalInformation?.addressLine1.toString().replace(" ",""),
-            addressline2=personalInformation?.addressLine2.toString().replace(" ",""),
+            addressline1 = personalInformation?.addressLine1.toString().replace(" ", ""),
+            addressline2 = personalInformation?.addressLine2.toString().replace(" ", ""),
             transactionAmount = topUpAmount.toString(),
             cardType = "",
             cardNumber = "",
@@ -289,12 +322,17 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             if (index == 0) {
 
                 val text = binding.lowBalance.getText().toString().trim()
-                val updatedText = text.replace("£", "")
+                var updatedText: String = ""
+                updatedText = if (text.contains("$")) {
+                    text.replace("$", "")
+                } else {
+                    text.replace("£", "")
+                }
 
                 if (updatedText.isNotEmpty()) {
                     val str: String = updatedText.substringBeforeLast(".")
                     lowBalance = if (str.length < 8) {
-                        if (updatedText.toDouble() < 5) {
+                        if (updatedText.toDouble() < 10) {
                             binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
@@ -350,6 +388,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle
@@ -375,12 +415,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("0") == true) {
                     val bundle = Bundle()
-                    bundle.putString(Constants.TOP_UP_AMOUNT,topUpAmount.toString())
+                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
 
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,

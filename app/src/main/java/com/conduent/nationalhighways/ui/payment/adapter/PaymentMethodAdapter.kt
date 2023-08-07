@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.PaymentmethodadapterlayoutBinding
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 
 class PaymentMethodAdapter(
     private var context: Context,
@@ -55,7 +56,11 @@ class PaymentMethodAdapter(
 
         }else{
             val htmlText =
-                Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber)
+                Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                })
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
         }

@@ -1341,7 +1341,8 @@
     <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
     <string name="add_another_card">ADD ANOTHER CARD</string>
     <string name="str_threshold_limit">Threshold limit updated successfully</string>
-    <string name="str_your_low_balance_limit">Your low balance limit is %s\nYour top-up amount is %s</string>
+    <string name="str_your_low_balance_limit">Your low balance limit is £%s</string>
+    <string name="str_your_top_amount_limit">Your top-up amount is £%s</string>
     <string name="str_you_have_successfully_added_card">You have successfully added card:</string>
     <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
     <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>

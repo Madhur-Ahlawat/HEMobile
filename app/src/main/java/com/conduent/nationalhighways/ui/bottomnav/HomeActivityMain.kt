@@ -12,8 +12,12 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -160,5 +164,19 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
+    }
+    override fun onBackPressed() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
+                if (fragment is DeletePaymentMethodSuccessFragment||fragment is AccountSuspendReOpenFragment||fragment is NewCardSuccessScreenFragment){
+
+                }else{
+                    onBackPressedDispatcher.onBackPressed()
+                }
+
+            }
+        }
+
     }
 }

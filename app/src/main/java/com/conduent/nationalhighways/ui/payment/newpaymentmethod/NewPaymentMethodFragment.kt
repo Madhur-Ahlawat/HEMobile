@@ -191,6 +191,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
                     bundle.putDouble(Constants.DATA, 0.0)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
 
                     findNavController().navigate(
                         R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
@@ -199,6 +201,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 } else {
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
 
                     findNavController().navigate(
                         R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
@@ -229,6 +233,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 title.text = getString(R.string.set_threshold_limit)
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.THRESHOLD)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
                 findNavController().navigate(
                     R.id.action_paymentMethodFragment_to_topUpFragment,
                     bundle
