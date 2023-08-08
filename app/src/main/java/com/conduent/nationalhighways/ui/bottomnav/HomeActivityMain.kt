@@ -165,6 +165,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
     }
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->

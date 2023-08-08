@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBindin
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSingletonClass
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -160,6 +161,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         }
 
+/*
         setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
 
 
@@ -171,8 +173,26 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
         }
+*/
     }
-
+    override fun onResume() {
+        if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
+            val tBalance = PaymentSingletonClass.topUpBalance
+            var fBalance: String = ""
+            fBalance = if (tBalance.contains("$")) {
+                tBalance.replace("$", "")
+            } else {
+                tBalance.replace("£", "").toString()
+            }
+            binding.lowBalance.editText.setText(
+                (String.format(
+                    "%.2f",
+                    fBalance.toDouble()
+                ))
+            )
+        }
+        super.onResume()
+    }
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
             val text = binding.lowBalance.getText().toString().trim()

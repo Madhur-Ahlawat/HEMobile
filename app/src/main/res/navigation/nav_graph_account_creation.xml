@@ -529,6 +529,20 @@
         <action
             android:id="@+id/action_topUpFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_topUpFragment_to_deletePaymentMethodSuccessFragment"
+            app:destination="@+id/deletePaymentMethodSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deletePaymentMethodSuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment"
+        android:label="deletePaymentMethodSuccessFragment"
+        tools:layout="@layout/fragment_delete_payment_method_success">
+        <action
+            android:id="@+id/deletePaymentMethodSuccessFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/accountFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSingletonClass
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -45,6 +46,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var paymentListSize: Int = 0
     private var apiLowBalanceAmount: String = ""
     private var apiTopUpAmountBalance: String = ""
+    private var isClick = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -133,37 +135,45 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         /* binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
          binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 */
-        setFragmentResultListener(Constants.LOW_BALANCE) { _, bundle ->
 
+    }
 
-            if (bundle.getString(Constants.LOW_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
-
-
+    override fun onResume() {
+        isClick = false
+        if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
+            val tBalance = PaymentSingletonClass.topUpBalance
+            var fBalance: String = ""
+            fBalance = if (tBalance.contains("$")) {
+                tBalance.replace("$", "")
+            } else {
+                tBalance.replace("£", "").toString()
             }
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-
-                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-            }
-
-
+            binding.top.editText.setText(
+                (String.format(
+                    "%.2f",
+                    fBalance.toDouble()
+                ))
+            )
         }
 
-        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-
-            if (bundle.getString(Constants.LOW_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
-
-
+        if (PaymentSingletonClass.lowBalance.isNotEmpty()) {
+            val lBalance = PaymentSingletonClass.lowBalance
+            var lfBalance: String = ""
+            lfBalance = if (lBalance.contains("$")) {
+                lBalance.replace("$", "")
+            } else {
+                lBalance.replace("£", "").toString()
             }
+            binding.lowBalance.editText.setText(
+                (String.format(
+                    "%.2f", lfBalance.toDouble()
 
-
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-
-            }
+                ))
+            )
         }
 
+
+        super.onResume()
     }
 
     private fun getThresholdAmount() {
@@ -172,10 +182,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     override fun observer() {
-        lifecycleScope.launch() {
-            observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
-            observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
-        }
+
+        observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
+        observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
+
     }
 
     override fun onClick(v: View?) {
@@ -197,6 +207,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                         Constants.LOADER_DIALOG
                     )
                     viewModel.updateThresholdAmount(request)
+                    binding.topUpBtn.isEnabled = false
+                    isClick = true
 
                 } else {
                     val amount = binding.top.editText.text.toString().trim().replace("£", "")
@@ -385,6 +397,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                             if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true) {
                                 binding.lowBalance.editText.setText(thresholdAmountVo.customerAmount)
                                 apiLowBalanceAmount = thresholdAmountVo.customerAmount
+
                             }
 
                             if (thresholdAmountVo?.thresholdAmount?.isNotEmpty() == true) {
@@ -414,43 +427,51 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
         when (resource) {
             is Resource.Success -> {
-                resource.data?.apply {
-                    if (statusCode == "0") {
-                        val bundle = Bundle()
+                binding.topUpBtn.isEnabled = true
+
+                if (resource.data?.statusCode == "0") {
+                    val bundle = Bundle()
 
 
-                        val amount = binding.top.editText.text.toString().trim().replace("£", "")
-                        val thresholdAmount =
-                            binding.lowBalance.editText.text.toString().trim().replace("£", "")
-                        if (apiLowBalanceAmount == binding.lowBalance.editText.text.toString()
-                                .trim()
-                        ) {
-                            bundle.putString(Constants.THRESHOLD_AMOUNT, "")
+                      val amount = binding.top.editText.text.toString().trim().replace("£", "")
+                      val thresholdAmount =
+                          binding.lowBalance.editText.text.toString().trim().replace("£", "")
+                      if (apiLowBalanceAmount == binding.lowBalance.editText.text.toString()
+                              .trim()
+                      ) {
+                          bundle.putString(Constants.THRESHOLD_AMOUNT, "")
 
-                        } else {
-                            bundle.putString(
-                                Constants.THRESHOLD_AMOUNT,
-                                binding.lowBalance.editText.text.toString().trim()
-                            )
+                      } else {
+                          bundle.putString(
+                              Constants.THRESHOLD_AMOUNT,
+                              binding.lowBalance.editText.text.toString().trim()
+                          )
 
-                        }
+                      }
 
 
-                        if (apiTopUpAmountBalance == binding.top.editText.text.toString().trim()) {
-                            bundle.putString(Constants.TOP_UP_AMOUNT, "")
+                      if (apiTopUpAmountBalance == binding.top.editText.text.toString().trim()) {
+                          bundle.putString(Constants.TOP_UP_AMOUNT, "")
 
-                        } else {
-                            bundle.putString(
-                                Constants.TOP_UP_AMOUNT,
-                                binding.top.editText.text.toString().trim()
-                            )
+                      } else {
+                          bundle.putString(
+                              Constants.TOP_UP_AMOUNT,
+                              binding.top.editText.text.toString().trim()
+                          )
 
-                        }
-                        bundle.putBoolean(SHOW_BACK_BUTTON, false)
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                      }
+                      bundle.putBoolean(SHOW_BACK_BUTTON, false)
+                      bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
 
-                        findNavController().navigate(R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment, bundle)
+                    if (isClick) {
+                        findNavController().navigate(
+                            R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment,
+                            bundle
+                        )
+
                     }
+                    isClick = false
+
                 }
             }
 

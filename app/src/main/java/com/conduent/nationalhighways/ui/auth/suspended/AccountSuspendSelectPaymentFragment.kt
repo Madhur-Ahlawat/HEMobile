@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSingletonClass
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -96,17 +97,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             true
         }
 
-        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-
-
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-
-
-            }
-
-
-        }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
@@ -152,6 +142,24 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
     }
 
+    override fun onResume() {
+        if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
+            val tBalance = PaymentSingletonClass.topUpBalance
+            var fBalance: String = ""
+            fBalance = if (tBalance.contains("$")) {
+                tBalance.replace("$", "")
+            } else {
+                tBalance.replace("£", "").toString()
+            }
+            binding.lowBalance.editText.setText(
+                (String.format(
+                    "%.2f",
+                    fBalance.toDouble()
+                ))
+            )
+        }
+        super.onResume()
+    }
     inner class GenericTextWatcher() : TextWatcher {
 
         override fun beforeTextChanged(

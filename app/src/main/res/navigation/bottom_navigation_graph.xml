@@ -647,6 +647,9 @@
         <action
             android:id="@+id/action_topUpFragment_to_deletePaymentMethodSuccessFragment"
             app:destination="@+id/deletePaymentMethodSuccessFragment" />
+        <action
+            android:id="@+id/action_topUpFragment_to_paymentSuccessFragment"
+            app:destination="@+id/paymentSuccessFragment"/>
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedPaymentFragment"
@@ -719,7 +722,7 @@
     <fragment
         android:id="@+id/deletePaymentMethodSuccessFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment"
-        android:label="DeletePaymentMethodSuccessFragment"
+        android:label="deletePaymentMethodSuccessFragment"
         tools:layout="@layout/fragment_delete_payment_method_success">
         <action
             android:id="@+id/deletePaymentMethodSuccessFragment_to_paymentMethodFragment"

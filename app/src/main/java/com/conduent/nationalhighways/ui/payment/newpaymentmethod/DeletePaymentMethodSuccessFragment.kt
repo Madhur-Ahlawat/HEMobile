@@ -10,7 +10,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodSuccessBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import dagger.hilt.android.AndroidEntryPoint
 
 class DeletePaymentMethodSuccessFragment :
     BaseFragment<FragmentDeletePaymentMethodSuccessBinding>(), View.OnClickListener {
@@ -47,20 +46,20 @@ class DeletePaymentMethodSuccessFragment :
             if (lowBalance.isEmpty()){
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_top_amount_limit,
-                    (String.format("%.2f", lBalance.toDouble()))
+                    (String.format("%.2f", lBalance))
                 )
             }else if (topUpBalance.isEmpty()){
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_low_balance_limit,
-                    (String.format("%.2f", tBalance.toDouble()))
+                    (String.format("%.2f", tBalance))
                 )
             }else{
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_low_balance_limit,
-                    (String.format("%.2f", lBalance.toDouble()))
+                    (String.format("%.2f", lBalance))
                 )+"\n"+getString(
                     R.string.str_your_top_amount_limit,
-                    (String.format("%.2f", tBalance.toDouble())))
+                    (String.format("%.2f", tBalance)))
             }
 
 
