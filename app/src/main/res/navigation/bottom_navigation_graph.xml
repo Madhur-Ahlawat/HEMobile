@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_topUpDetails"
             app:destination="@id/topUpDetails" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
     <fragment
@@ -643,7 +646,7 @@
             app:destination="@id/amountKeyPadFragment" />
         <action
             android:id="@+id/action_topUpFragment_to_deletePaymentMethodSuccessFragment"
-            app:destination="@id/deletePaymentMethodSuccessFragment" />
+            app:destination="@+id/deletePaymentMethodSuccessFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedPaymentFragment"
@@ -656,6 +659,10 @@
         <action
             android:id="@+id/action_accountSuspendedPaymentFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedPaymentFragment_to_amountKeyPadFragment"
+            app:destination="@id/amountKeyPadFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedFinalPayFragment"
@@ -665,6 +672,10 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
             app:destination="@id/accountSuspendReOpenFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_amountKeyPadFragment"
+            app:destination="@id/amountKeyPadFragment" />
+
     </fragment>
 
     <fragment

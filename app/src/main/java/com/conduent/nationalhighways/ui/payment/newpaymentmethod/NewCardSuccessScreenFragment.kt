@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,7 +65,11 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
             }
             val htmlText =
-                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number)
+                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                })
 
             binding.tvSelectPaymentMethod.text = htmlText
 

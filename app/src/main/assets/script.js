@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "display": "show",
                 "selector": "#name",
                 "title": "Name on Checking Account",
-                "placeholder": "Name",
+                "placeholder": "Fred Bloggs",
             }
         },
         'validationCallback' : function(field, status, message) {

@@ -23,6 +23,8 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
     private var personalInformation: PersonalInformation? = null
     private var crossingCount: String = ""
     private var navFlow: String = ""
+    private var paymentListSize:Int=0
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -31,6 +33,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         FragmentAccountSuspendHaltTopUpBinding.inflate(inflater, container, false)
 
     override fun init() {
+        paymentListSize=arguments?.getInt(Constants.PAYMENT_METHOD_SIZE)?:0
 
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""

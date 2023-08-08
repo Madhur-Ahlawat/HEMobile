@@ -38,16 +38,20 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
         binding.btnContinueReload.setOnClickListener(this)
         lowBalanceClick = arguments?.getString(Constants.LOW_BALANCE) ?: ""
 
-        if (lowBalanceClick == Constants.LOW_BALANCE) {
-            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_five_pound)
 
-        } else {
-            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_ten_pound)
-
-        }
 
         lowBalanceAmount = arguments?.getString(Constants.LOW_BALANCE_AMOUNT) ?: ""
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
+
+        if (lowBalanceClick == Constants.LOW_BALANCE) {
+            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_five_pound)
+            replenishedAmount = lowBalanceAmount
+
+        } else {
+            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_ten_pound)
+            replenishedAmount = topUpAmount
+
+        }
 
         val value = Utils.convertToPoundFormat(replenishedAmount?.replace("£", "")!!).toString()
 
@@ -142,7 +146,6 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
 
                 }
-
 
 
             }
