@@ -55,6 +55,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         setView()
     }
 
+    fun viewAllTransactions(){
+        dataBinding?.apply {
+            bottomNavigationView?.setActiveNavigationIndex(1)
+        }
+    }
+
     private fun setView() {
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
         navController = (supportFragmentManager.findFragmentById(
@@ -104,13 +110,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleFragment) {
+                            if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
-                                    getString(R.string.vehicle_management)
+                                    getString(R.string.transactions)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding?.fragmentContainerView?.findNavController()
-                                    ?.navigate(R.id.vehicleFragment)
+                                    ?.navigate(R.id.crossingHistoryFragment)
                             }
                         }
 

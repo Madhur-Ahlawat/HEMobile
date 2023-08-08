@@ -562,7 +562,7 @@
         android:id="@+id/crossingHistoryFragment"
         android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
         android:label="Crossing History"
-        tools:layout="@layout/fragment_crossing_history">
+        tools:layout="@layout/all_transactions">
         <action
             android:id="@+id/action_crossingHistoryFragment_to_tollDetails"
             app:destination="@id/tollDetails" />
