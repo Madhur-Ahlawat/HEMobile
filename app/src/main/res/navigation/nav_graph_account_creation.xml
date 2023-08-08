@@ -178,6 +178,19 @@
             android:id="@+id/action_businessVehicleDetailFragment_to_yourVehicleFragment"
             app:destination="@+id/yourVehicleFragment" />
 
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_pay_for_crossingFragment"
+            app:destination="@+id/payCrossingsFragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/payCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PayForCrossingsFragment"
+        android:label="Pay Crossings Screen"
+        tools:layout="@layout/fragment_pay_for_crossings">
+
 
     </fragment>
 

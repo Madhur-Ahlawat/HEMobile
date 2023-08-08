@@ -1362,12 +1362,18 @@
     <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000" >\u25CF</font> pay for crossings you’ve made since yesterday \n<font color="#000000" >\u25CF</font> pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
-    <string name="recent_crossings_txt"><font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
-        \n<font color="#000000" >\u25CF</font> it costs £{x} per crossing for a {type of vehicle}
-        \n<font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
-        \n<font color="#000000" >\u25CF</font> a return trip is 2 crossings
-        \n<font color="#000000" >\u25CF</font> late payments will be used for future crossings - you may receive a PCN for any late payment</string>
+    <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
+        <br><br><font color="#000000" >\u25CF</font> it costs £{x} per crossing for a {type of vehicle}
+        <br><br><font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
+        <br><br><font color="#000000" >\u25CF</font> a return trip is 2 crossings
+        <br><br><font color="#000000" >\u25CF</font> late payments will be used for future crossings - you may receive a PCN for any late payment]]></string>
     <string name="additional_crossings">+ ADDITIONAL CROSSINGS</string>
+    <string name="additional_crossings_txt">Additional Crossings</string>
+    <string name="number_of_additional_crossings">Number of additional crossings</string>
+    <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for ?</string>
+    <string name="a_crossing_is_a_single_journey"><![CDATA[<font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
+        <br><br><font color="#000000" >\u25CF</font>a return trip is 2 crossings
+        <br><br><font color="#000000" >\u25CF</font>these payments are valid up to 12 months or till they are used]]></string>
 
 
 </resources>

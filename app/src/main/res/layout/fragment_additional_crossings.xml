@@ -13,44 +13,60 @@
             android:id="@+id/txtTitleTop"
             style="@style/MediumTextBlack"
             android:layout_width="match_parent"
-            android:text="@string/recent_crossings"
+            android:text="@string/additional_crossings_txt"
             android:textColor="@color/black" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:layout_width="match_parent"
-            android:id="@+id/inputMobileNumber"
+            android:id="@+id/numberCrossing"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20dp"
-            app:labelText="Payment Amount"
+            app:labelText="@string/number_of_additional_crossings"
             app:inputType="phone"
             app:maxLength="15"
             android:maxLength="15"
             app:imeOptions="actionNext"
             android:textColor="@color/black"/>
 
-        <com.conduent.apollo.ui.CMDropDownView
-            android:id="@+id/inputCountry"
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:layout_width="match_parent"
+            android:id="@+id/paymentCrossing"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20dp"
-            app:labelText="Number of crossings"
-            android:padding="0dp"
-            app:inputType="number"
-            android:textColor="@color/black" />
+            app:labelText="Payment Amount for additional crossings"
+            app:inputType="phone"
+            app:maxLength="15"
+            android:maxLength="15"
+            app:imeOptions="actionNext"
+            android:textColor="@color/black"/>
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:layout_width="match_parent"
+            android:id="@+id/totalAmount"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            app:labelText="Total Amount"
+            app:inputType="phone"
+            app:maxLength="15"
+            android:maxLength="15"
+            app:imeOptions="actionNext"
+            android:textColor="@color/black"/>
+
+
 
         <TextView
             android:id="@+id/txtBottom"
             style="@style/MediumTextBlack"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/margin_20dp"
-            android:text="@string/how_your_payment_gets_calculated"
+            android:text="@string/how_many_payments_do_you_need_to_pay_for"
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/titleText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recent_crossings_txt"
+            android:text="@string/a_crossing_is_a_single_journey"
             android:layout_marginTop="@dimen/margin_20dp"
             android:layout_marginBottom="@dimen/margin_20dp"
             android:textColor="@color/grayColorIcon"
@@ -64,15 +80,6 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/str_continue"
-            app:radius="@dimen/margin_5dp" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnAdditionalCrossing"
-            style="@style/secondaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/additional_crossings"
             app:radius="@dimen/margin_5dp" />
 
 
