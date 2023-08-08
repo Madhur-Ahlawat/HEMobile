@@ -209,12 +209,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun initCtrl() {
         binding.labelViewAll.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
-            findNavController().navigate(
-                R.id.action_dashBoardFragment_to_crossingHistoryFragment,
-                bundle
-            )
+            (requireActivity() as HomeActivityMain).viewAllTransactions()
+//            val bundle = Bundle()
+//            bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
+//            findNavController().navigate(
+//                R.id.action_dashBoardFragment_to_crossingHistoryFragment,
+//                bundle
+//            )
         }
         binding.logout.setOnClickListener {
 //            LogoutDialog.newInstance(
