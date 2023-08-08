@@ -152,6 +152,7 @@ object Constants {
     const val ONE_OFF_PAYMENT = "ONE OFF PAYMENT"
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
+    const val PAYMENT_METHOD_SIZE="payment_method_size"
     const val VEHICLE_DATA = "vehicle_data"
     const val VEHICLE_SCREEN_TYPE_LIST = 1
     const val VEHICLE_SCREEN_TYPE_ADD = 2
@@ -278,7 +279,7 @@ object Constants {
     const val CROSSINGCOUNT="crossingCount"
     const val TRANSACTIONID="tranasactionId"
     const val LOW_BALANCE="lowbalance"
-    const val LOW_BALANCE_AMOUNT="lowbalance"
+    const val LOW_BALANCE_AMOUNT="lowbalanceamount"
     const val CARD_IS_ALREADY_REGISTERED="card_is_already_registered"
     const val SECONDARY_CARD_DELETE="secondary_card_delete"
     const val NOT_SECONDARY_CARD_DELETE="not_secondary_card_delete"

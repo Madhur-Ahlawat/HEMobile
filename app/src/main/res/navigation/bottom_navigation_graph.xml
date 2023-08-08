@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_dashBoardFragment_to_topUpDetails"
             app:destination="@id/topUpDetails" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
     <fragment
@@ -559,7 +562,7 @@
         android:id="@+id/crossingHistoryFragment"
         android:name="com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment"
         android:label="Crossing History"
-        tools:layout="@layout/fragment_crossing_history">
+        tools:layout="@layout/all_transactions">
         <action
             android:id="@+id/action_crossingHistoryFragment_to_tollDetails"
             app:destination="@id/tollDetails" />
@@ -643,7 +646,10 @@
             app:destination="@id/amountKeyPadFragment" />
         <action
             android:id="@+id/action_topUpFragment_to_deletePaymentMethodSuccessFragment"
-            app:destination="@id/deletePaymentMethodSuccessFragment" />
+            app:destination="@+id/deletePaymentMethodSuccessFragment" />
+        <action
+            android:id="@+id/action_topUpFragment_to_paymentSuccessFragment"
+            app:destination="@+id/paymentSuccessFragment"/>
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedPaymentFragment"
@@ -656,6 +662,10 @@
         <action
             android:id="@+id/action_accountSuspendedPaymentFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedPaymentFragment_to_amountKeyPadFragment"
+            app:destination="@id/amountKeyPadFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedFinalPayFragment"
@@ -665,6 +675,10 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
             app:destination="@id/accountSuspendReOpenFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_amountKeyPadFragment"
+            app:destination="@id/amountKeyPadFragment" />
+
     </fragment>
 
     <fragment
@@ -708,7 +722,7 @@
     <fragment
         android:id="@+id/deletePaymentMethodSuccessFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment"
-        android:label="DeletePaymentMethodSuccessFragment"
+        android:label="deletePaymentMethodSuccessFragment"
         tools:layout="@layout/fragment_delete_payment_method_success">
         <action
             android:id="@+id/deletePaymentMethodSuccessFragment_to_paymentMethodFragment"
@@ -720,7 +734,12 @@
         android:id="@+id/amountKeyPadFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AmountKeyPadFragment"
         android:label="AmountKeyPadFragment"
-        tools:layout="@layout/fragment_amount_key_pad" />
+        tools:layout="@layout/fragment_amount_key_pad" >
+        <action
+            android:id="@+id/action_amountKeyPadFragment_to_topUpFragment"
+            app:destination="@id/topUpFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/directDebitFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DirectDebitFragment"

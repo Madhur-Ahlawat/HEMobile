@@ -12,8 +12,12 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -49,6 +53,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
+    }
+
+    fun viewAllTransactions(){
+        dataBinding?.apply {
+            bottomNavigationView?.setActiveNavigationIndex(1)
+        }
     }
 
     private fun setView() {
@@ -100,13 +110,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         1 -> {
-                            if (navController.currentDestination?.id != R.id.vehicleFragment) {
+                            if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
-                                    getString(R.string.vehicle_management)
+                                    getString(R.string.transactions)
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding?.fragmentContainerView?.findNavController()
-                                    ?.navigate(R.id.vehicleFragment)
+                                    ?.navigate(R.id.crossingHistoryFragment)
                             }
                         }
 
@@ -160,5 +170,20 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
+                if (fragment is DeletePaymentMethodSuccessFragment||fragment is AccountSuspendReOpenFragment||fragment is NewCardSuccessScreenFragment){
+
+                }else{
+                    onBackPressedDispatcher.onBackPressed()
+                }
+
+            }
+        }
+
     }
 }

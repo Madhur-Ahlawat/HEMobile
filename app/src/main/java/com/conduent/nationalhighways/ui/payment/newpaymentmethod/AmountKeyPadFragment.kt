@@ -38,16 +38,20 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
         binding.btnContinueReload.setOnClickListener(this)
         lowBalanceClick = arguments?.getString(Constants.LOW_BALANCE) ?: ""
 
-        if (lowBalanceClick == Constants.LOW_BALANCE) {
-            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_five_pound)
 
-        } else {
-            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_ten_pound)
-
-        }
 
         lowBalanceAmount = arguments?.getString(Constants.LOW_BALANCE_AMOUNT) ?: ""
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
+
+        if (lowBalanceClick == Constants.LOW_BALANCE) {
+            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_five_pound)
+            replenishedAmount = lowBalanceAmount
+
+        } else {
+            binding.txtMinimumLabel.text = getString(R.string.minimum_amount_ten_pound)
+            replenishedAmount = topUpAmount
+
+        }
 
         val value = Utils.convertToPoundFormat(replenishedAmount?.replace("£", "")!!).toString()
 
@@ -99,50 +103,52 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
                 if (lowBalanceClick == Constants.LOW_BALANCE) {
 
-                    if (updatedText.toDouble() < 5) {
+                    if (updatedText.replace("$", "").replace("£", "").toDouble() < 5) {
                         ErrorUtil.showError(
                             binding.root,
                             getString(R.string.str_low_balance_must_be_more)
                         )
 
                     } else {
-                        setFragmentResult(
+                        PaymentSingletonClass.lowBalance=binding.txtPaymentAmount.text.toString().replace("$", "").replace("£", "").trim()
+                        PaymentSingletonClass.topUpBalance=topUpAmount
+                        /*setFragmentResult(
                             Constants.LOW_BALANCE,
                             bundleOf(
-                                Constants.LOW_BALANCE to binding.txtPaymentAmount.text.toString()
-                                    .trim(),
+                                Constants.LOW_BALANCE to binding.txtPaymentAmount.getText().toString().replace("$", "").replace("£", "").trim(),
                                 Constants.TOP_UP_BALANCE to topUpAmount
                             )
 
-                        )
+                        )*/
                         findNavController().popBackStack()
 
                     }
 
 
                 } else {
-                    if (updatedText.toDouble() < 10) {
+                    if (updatedText.replace("$", "").replace("£", "").toDouble() < 10) {
                         ErrorUtil.showError(
                             binding.root,
                             getString(R.string.str_top_up_amount_must_be_more)
                         )
 
                     } else {
-                        setFragmentResult(
+                        PaymentSingletonClass.lowBalance=lowBalanceAmount
+                        PaymentSingletonClass.topUpBalance=binding.txtPaymentAmount.text.toString().trim()
+                       /* setFragmentResult(
                             Constants.TOP_UP_BALANCE,
                             bundleOf(
                                 Constants.TOP_UP_BALANCE to binding.txtPaymentAmount.text.toString()
                                     .trim(),
-                                Constants.LOW_BALANCE_AMOUNT to lowBalanceAmount
+                                Constants.LOW_BALANCE to lowBalanceAmount
                             )
-                        )
+                        )*/
                         findNavController().popBackStack()
 
                     }
 
 
                 }
-
 
 
             }

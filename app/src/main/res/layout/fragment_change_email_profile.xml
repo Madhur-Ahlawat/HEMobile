@@ -58,6 +58,7 @@
                 android:paddingHorizontal="@dimen/_15dp"
                 android:layout_marginTop="20dp"
                 android:hint="@string/plz_enter_email"
+                android:text="@={data.emailAddress}"
                 android:background="@drawable/bg_rounded_corner_5dp"
                 android:elevation="@dimen/_5dp"
                 app:imeOptions="actionDone"
@@ -88,7 +89,7 @@
             android:layout_marginBottom="@dimen/_94dp"
             android:text="@string/str_continue"
             android:enabled="@{enable}"
-            app:isEnabled="true"
+            android:focusable="@{enable}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

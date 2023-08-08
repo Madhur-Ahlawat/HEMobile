@@ -18,6 +18,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
     View.OnClickListener {
 
     private var personalInformation: PersonalInformation? = null
+    private var paymentListSize: Int = 0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -26,8 +27,8 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
         FragmentSelectPaymentMethodBinding.inflate(inflater, container, false)
 
 
-
     override fun initCtrl() {
+        paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -46,24 +47,33 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-          R.id.cardViewDebit->{
-              val bundle=Bundle()
-              bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            R.id.cardViewDebit -> {
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
-              bundle.putString(Constants.NAV_FLOW_KEY,Constants.ADD_PAYMENT_METHOD)
-              bundle.putDouble(Constants.DATA, 0.0)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
 
-              findNavController().navigate(R.id.action_selectPaymentMethodFragment_to_nmiPaymentFragment,bundle)
+                bundle.putDouble(Constants.DATA, 0.0)
 
-          }
-          R.id.cardViewDirectDebit->{
-              val bundle=Bundle()
-              bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                findNavController().navigate(
+                    R.id.action_selectPaymentMethodFragment_to_nmiPaymentFragment,
+                    bundle
+                )
 
-              findNavController().navigate(R.id.action_selectPaymentMethodFragment_to_directDebitFragment,bundle)
-          }
+            }
+
+            R.id.cardViewDirectDebit -> {
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+                findNavController().navigate(
+                    R.id.action_selectPaymentMethodFragment_to_directDebitFragment,
+                    bundle
+                )
+            }
         }
     }
 

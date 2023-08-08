@@ -62,9 +62,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         }
 
-        binding.pushCommunication.setOnCheckedChangeListener { _, isChecked ->
-
-        }
+//        binding.pushCommunication.setOnCheckedChangeListener { _, isChecked ->
+//
+//        }
 
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
@@ -103,7 +103,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val data = navData as ProfileDetailModel?
-                binding.pushCommunication.isChecked = data?.personalInformation?.pushNotifications == true
+//                binding.pushCommunication.isChecked = data?.personalInformation?.pushNotifications == true
                 loader = LoaderDialog()
                 loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -218,7 +218,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }}
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         val communication = if (binding.switchCommunication.isChecked) "Y" else "N"
-                        val push = binding.pushCommunication.isChecked
+//                        val push = binding.pushCommunication.isChecked
                         if(smsFlag.equals(communication,true)){
                             findNavController().popBackStack()
                         }else{

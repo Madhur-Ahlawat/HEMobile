@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
@@ -55,7 +57,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener {
+class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,View.OnClickListener {
 
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
@@ -71,6 +73,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     @Inject
     lateinit var api: ApiService
+    private var personalInformation: PersonalInformation? = null
+
     fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.item_recent_tansactions },
         areItemsSame = ::areRecentTransactionsSame,
@@ -168,6 +172,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun onResume() {
         super.onResume()
         BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        (requireActivity() as HomeActivityMain).showHideToolbar(false)
+
     }
 
     private fun getDashBoardAllData() {
@@ -209,12 +215,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun initCtrl() {
         binding.labelViewAll.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt(Constants.FROM, Constants.FROM_DASHBOARD_TO_CROSSING_HISTORY)
-            findNavController().navigate(
-                R.id.action_dashBoardFragment_to_crossingHistoryFragment,
-                bundle
-            )
+            (requireActivity() as HomeActivityMain).viewAllTransactions()
         }
         binding.logout.setOnClickListener {
 //            LogoutDialog.newInstance(
@@ -225,6 +226,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.tvAvailableBalance.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
         }
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -390,7 +393,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         when (status) {
             is Resource.Success -> {
                 binding.loaderPlaceholder.visibility == View.GONE
+                personalInformation = status.data?.personalInformation
+
                 status.data?.apply {
+
                     accountDetailsData = this
                     sessionManager.saveAccountStatus(accountInformation?.status?:"")
                     sessionManager.saveName(personalInformation?.customerName?:"")
@@ -517,9 +523,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.visible()
 
             buttonTopup.visible()
-            buttonTopup.setOnClickListener {
-                requireActivity().startNormalActivity(ManualTopUpActivity::class.java)
-            }
+            binding.buttonTopup.setOnClickListener{
+                val title = requireActivity().findViewById<TextView>(R.id.title_txt)
+
+                title.text = getString(R.string.top_up)
+
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+                findNavController().navigate(
+                    R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment,
+                    bundle
+                )        }
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
@@ -601,6 +617,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onLogOutClick() {
         dashboardViewModel.logout()
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+
+            R.id.button_topup->{
+
+            }
+        }
     }
 }
 

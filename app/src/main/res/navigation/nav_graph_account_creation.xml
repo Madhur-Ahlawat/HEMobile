@@ -526,7 +526,11 @@
         android:id="@+id/amountKeyPadFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AmountKeyPadFragment"
         android:label="AmountKeyPadFragment"
-        tools:layout="@layout/fragment_amount_key_pad" />
+        tools:layout="@layout/fragment_amount_key_pad">
+        <action
+            android:id="@+id/action_amountKeyPadFragment_to_topUpFragment"
+            app:destination="@id/topUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/topUpFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TopUpFragment"
@@ -538,6 +542,20 @@
         <action
             android:id="@+id/action_topUpFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_topUpFragment_to_deletePaymentMethodSuccessFragment"
+            app:destination="@+id/deletePaymentMethodSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deletePaymentMethodSuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment"
+        android:label="deletePaymentMethodSuccessFragment"
+        tools:layout="@layout/fragment_delete_payment_method_success">
+        <action
+            android:id="@+id/deletePaymentMethodSuccessFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/accountFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

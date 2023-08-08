@@ -266,6 +266,7 @@
     <string name="str_communication">Communication</string>
     <string name="str_communications">Communications</string>
     <string name="crossing_history">Crossing history</string>
+    <string name="str_crossing_history">Crossing History</string>
     <string name="str_activity_log">Activity log</string>
     <string name="str_close_account">Close account</string>
     <string name="str_close">Close</string>
@@ -278,7 +279,6 @@
     <string name="str_dart_charge_pin">Dart Charge pin</string>
     <string name="str_vehicle_management">Vehicle management</string>
     <string name="str_vehicle_history">Vehicle history</string>
-    <string name="str_crossing_history">Crossing history</string>
     <string name="str_change_password">Change Password</string>
     <string name="str_edit_details">Edit details</string>
     <string name="str_save">Save</string>
@@ -1280,6 +1280,7 @@
     <string name="str_telephone_number_optional">Telephone number (optional)</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
     <string name="postcode_must_not_contain_special_characters_except_single_hypen">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
+    <string name="postcode_must_not_contain_special_characters_except_hyphen">Postcode must only include letters a to z and numbers 0 to 9 and single hyphen</string>
     <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z and numbers 0 to 9</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
@@ -1342,7 +1343,8 @@
     <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
     <string name="add_another_card">ADD ANOTHER CARD</string>
     <string name="str_threshold_limit">Threshold limit updated successfully</string>
-    <string name="str_your_low_balance_limit">Your low balance limit is %s\nYour top-up amount is %s</string>
+    <string name="str_your_low_balance_limit">Your low balance limit is £%s</string>
+    <string name="str_your_top_amount_limit">Your top-up amount is £%s</string>
     <string name="str_you_have_successfully_added_card">You have successfully added card:</string>
     <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
     <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
@@ -1374,6 +1376,9 @@
     <string name="a_crossing_is_a_single_journey"><![CDATA[<font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
         <br><br><font color="#000000" >\u25CF</font>a return trip is 2 crossings
         <br><br><font color="#000000" >\u25CF</font>these payments are valid up to 12 months or till they are used]]></string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="transactions">Transactions</string>
 
 
 </resources>

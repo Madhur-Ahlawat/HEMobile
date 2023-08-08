@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 class SuspendPaymentMethodAdapter(
@@ -42,7 +43,11 @@ class SuspendPaymentMethodAdapter(
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
-        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+list?.get(position)?.cardNumber)
+        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+ list?.get(position)?.cardNumber?.let {
+            Utils.maskCardNumber(
+                it
+            )
+        })
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
 

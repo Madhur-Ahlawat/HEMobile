@@ -208,7 +208,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
                 }
-                else if (hasSpecialCharacters(it,Utils.splCharVehicleModel)) {
+                else if (hasSpecialCharacters(it.trim().replace(" ",""),Utils.splCharVehicleModel)) {
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
@@ -225,7 +225,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.colorInputLayout.editText.onTextChanged {
 
             colourInputCheck = if (it!=null && it.trim().length>0) {
-                if (hasDigits(it) || hasSpecialCharacters(it,Utils.splCharVehicleColor)) {
+                if (hasDigits(it) || hasSpecialCharacters(it.trim(),Utils.splCharVehicleColor)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {

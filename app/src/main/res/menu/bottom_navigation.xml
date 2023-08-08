@@ -5,9 +5,9 @@
         android:icon="@drawable/dash_board_menu_selector"
         android:title="@string/txt_dashboard"/>
     <item
-        android:id="@+id/navigation_vehicle"
+        android:id="@+id/navigation_transaction"
         android:icon="@drawable/ic_vehicle_menu_selector"
-        android:title="@string/txt_vehicle"/>
+        android:title="@string/transactions"/>
     <item
         android:id="@+id/navigation_notification"
         android:icon="@drawable/notification_menu_selector"

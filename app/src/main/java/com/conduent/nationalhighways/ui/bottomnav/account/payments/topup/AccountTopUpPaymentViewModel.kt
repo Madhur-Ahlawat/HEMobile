@@ -24,9 +24,9 @@ class AccountTopUpPaymentViewModel @Inject constructor(
     private val thresholdMutLiveData = MutableLiveData<Resource<AccountGetThresholdResponse?>?>()
     val thresholdLiveData: LiveData<Resource<AccountGetThresholdResponse?>?> get() = thresholdMutLiveData
 
-    private val updateAmountMutLiveData =
+    private val _updateAmountMutLiveData =
         MutableLiveData<Resource<AccountTopUpUpdateThresholdResponse?>?>()
-    val updateAmountLiveData: LiveData<Resource<AccountTopUpUpdateThresholdResponse?>?> get() = updateAmountMutLiveData
+    val updateAmountLiveData: LiveData<Resource<AccountTopUpUpdateThresholdResponse?>?> get() = _updateAmountMutLiveData
 
     fun getThresholdAmount() {
         viewModelScope.launch {
@@ -46,7 +46,7 @@ class AccountTopUpPaymentViewModel @Inject constructor(
     fun updateThresholdAmount(request: AccountTopUpUpdateThresholdRequest?) {
         viewModelScope.launch {
             try {
-                updateAmountMutLiveData.postValue(
+                _updateAmountMutLiveData.postValue(
                     ResponseHandler.success(
                         repo.updateThresholdAmount(
                             request
@@ -54,7 +54,7 @@ class AccountTopUpPaymentViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                updateAmountMutLiveData.postValue(ResponseHandler.failure(e))
+                _updateAmountMutLiveData.postValue(ResponseHandler.failure(e))
             }
         }
     }
