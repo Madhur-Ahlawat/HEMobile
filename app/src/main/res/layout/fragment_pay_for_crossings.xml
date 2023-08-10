@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_20sdp">
+
+        <TextView
+            android:id="@+id/txtTitleTop"
+            style="@style/MediumTextBlack"
+            android:layout_width="match_parent"
+            android:text="@string/recent_crossings"
+            android:textColor="@color/black" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:layout_width="match_parent"
+            android:id="@+id/inputMobileNumber"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            app:labelText="Payment Amount"
+            app:inputType="phone"
+            app:maxLength="15"
+            android:maxLength="15"
+            app:imeOptions="actionNext"
+            android:textColor="@color/black"/>
+
+        <com.conduent.apollo.ui.CMDropDownView
+            android:id="@+id/inputCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            app:labelText="Number of crossings"
+            android:padding="0dp"
+            app:inputType="number"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txtBottom"
+            style="@style/MediumTextBlack"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="@string/how_your_payment_gets_calculated"
+            android:textColor="@color/black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recent_crossings_txt"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginBottom="@dimen/margin_20dp"
+            android:textColor="@color/grayColorIcon"
+            android:textSize="14sp"
+            android:fontFamily="@font/open_sans" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/str_continue"
+            app:radius="@dimen/margin_5dp" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnAdditionalCrossing"
+            style="@style/secondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/additional_crossings"
+            app:radius="@dimen/margin_5dp" />
+
+
+    </LinearLayout>
+</layout>

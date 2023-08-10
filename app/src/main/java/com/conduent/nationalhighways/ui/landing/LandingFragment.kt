@@ -98,7 +98,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         binding.payCrossingLayout.setOnClickListener {
 
             AdobeAnalytics.setActionTrack(
-                "create account",
+                "one of payment",
                 "home",
                 "home",
                 "english",
@@ -112,7 +112,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
         binding.pcnLayout.setOnClickListener {
             AdobeAnalytics.setActionTrack(
-                "one of payment",
+                "create account",
                 "home",
                 "home",
                 "english",
