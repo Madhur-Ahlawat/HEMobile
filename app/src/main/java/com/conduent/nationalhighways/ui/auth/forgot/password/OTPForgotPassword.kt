@@ -564,7 +564,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 R.id.action_forgotOtpFragment_to_createPasswordFragment,
                                 bundle
                             )}
-                            else -> {findNavController().navigate(
+                            else -> {
+                                NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
+                                findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createPasswordFragment,
                                 bundle
                             )}

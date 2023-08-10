@@ -46,8 +46,10 @@ class AccountCreationRequest {
     var creditCExpYear: String? = null
     var creditCExpMonth: String? = null
     var creditCardNumber: String? = null
-    var directoryServerID: String? = null
+    var directoryServerId: String? = null
     var mfaFlag: String? = null
+    var planType:String?=null
+
 }
 
 

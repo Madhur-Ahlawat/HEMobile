@@ -135,45 +135,37 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         /* binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
          binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 */
+        setFragmentResultListener(Constants.LOW_BALANCE) { _, bundle ->
 
-    }
 
-    override fun onResume() {
-        isClick = false
-        if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
-            val tBalance = PaymentSingletonClass.topUpBalance
-            var fBalance: String = ""
-            fBalance = if (tBalance.contains("$")) {
-                tBalance.replace("$", "")
-            } else {
-                tBalance.replace("£", "").toString()
+            if (bundle.getString(Constants.LOW_BALANCE) != null) {
+                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
+
+
             }
-            binding.top.editText.setText(
-                (String.format(
-                    "%.2f",
-                    fBalance.toDouble()
-                ))
-            )
+            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
+
+                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
+            }
+
+
         }
 
-        if (PaymentSingletonClass.lowBalance.isNotEmpty()) {
-            val lBalance = PaymentSingletonClass.lowBalance
-            var lfBalance: String = ""
-            lfBalance = if (lBalance.contains("$")) {
-                lBalance.replace("$", "")
-            } else {
-                lBalance.replace("£", "").toString()
-            }
-            binding.lowBalance.editText.setText(
-                (String.format(
-                    "%.2f", lfBalance.toDouble()
+        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
 
-                ))
-            )
+            if (bundle.getString(Constants.LOW_BALANCE) != null) {
+                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
+
+
+            }
+
+
+            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
+                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
+
+            }
         }
 
-
-        super.onResume()
     }
 
     private fun getThresholdAmount() {
@@ -182,10 +174,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     override fun observer() {
+        lifecycleScope.launch() {
+            observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
+            observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
+        }
+    }
 
-        observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
-        observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
-
+    override fun onResume() {
+        isClick=false
+        super.onResume()
     }
 
     override fun onClick(v: View?) {
@@ -202,10 +199,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                         amount,
                         thresholdAmount
                     )
-                    loader?.show(
+                   /* loader?.show(
                         requireActivity().supportFragmentManager,
                         Constants.LOADER_DIALOG
-                    )
+                    )*/
                     viewModel.updateThresholdAmount(request)
                     binding.topUpBtn.isEnabled = false
                     isClick = true
@@ -342,7 +339,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 } else {
                     text.replace("£", "")
                 }
-                if (updatedText.trim()[0].equals(".")) {
+                if (updatedText.trim() == ".") {
                     updatedText.replace(".", "")
                 }
                 if (updatedText.isNotEmpty()) {
@@ -436,7 +433,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                       val amount = binding.top.editText.text.toString().trim().replace("£", "")
                       val thresholdAmount =
                           binding.lowBalance.editText.text.toString().trim().replace("£", "")
-                      if (apiLowBalanceAmount == binding.lowBalance.editText.text.toString()
+                      if (apiLowBalanceAmount == thresholdAmount
                               .trim()
                       ) {
                           bundle.putString(Constants.THRESHOLD_AMOUNT, "")
@@ -450,7 +447,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                       }
 
 
-                      if (apiTopUpAmountBalance == binding.top.editText.text.toString().trim()) {
+                      if (apiTopUpAmountBalance == amount) {
                           bundle.putString(Constants.TOP_UP_AMOUNT, "")
 
                       } else {

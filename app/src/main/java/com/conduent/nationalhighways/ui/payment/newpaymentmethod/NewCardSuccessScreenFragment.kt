@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,13 +92,20 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
         } else if (flow == Constants.DELETE_CARD) {
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_payment_method_deleted, paymentList?.cardNumber)
-            binding.textMaximumVehicle.text = getString(R.string.str_your_default_payment_method)
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
 
+            if (paymentList?.primaryCard == true) {
+                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                viewModel.saveCardList()
+                binding.textMaximumVehicle.text = getString(R.string.str_your_default_payment_method)
 
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.saveCardList()
+            } else {
+                binding.cardView.visibility = View.GONE
+                binding.textMaximumVehicle.visibility =View.GONE
+
+            }
+
         } else if (flow == Constants.DIRECT_DEBIT_DELETE) {
             binding.maximumVehicleAdded.text =
                 getString(R.string.your_direct_debit_has_been_removed, paymentList?.cardNumber)
