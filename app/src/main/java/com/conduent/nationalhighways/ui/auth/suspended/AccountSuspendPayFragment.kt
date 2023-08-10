@@ -161,7 +161,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         }
 
-/*
         setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
 
 
@@ -173,8 +172,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
         }
-*/
     }
+/*
     override fun onResume() {
         if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
             val tBalance = PaymentSingletonClass.topUpBalance
@@ -193,6 +192,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
         super.onResume()
     }
+*/
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
             val text = binding.lowBalance.getText().toString().trim()

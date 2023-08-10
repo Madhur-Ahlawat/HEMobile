@@ -46,12 +46,12 @@ class DeletePaymentMethodSuccessFragment :
             if (lowBalance.isEmpty()){
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_top_amount_limit,
-                    (String.format("%.2f", lBalance))
+                    (String.format("%.2f", tBalance))
                 )
             }else if (topUpBalance.isEmpty()){
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_low_balance_limit,
-                    (String.format("%.2f", tBalance))
+                    (String.format("%.2f", lBalance))
                 )
             }else{
                 binding.textMaximumVehicle.text = getString(

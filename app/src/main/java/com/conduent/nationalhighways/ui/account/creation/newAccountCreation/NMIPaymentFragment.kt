@@ -65,6 +65,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var creditCardType: String = ""
     private var flow: String = ""
     private var responseModel: CardResponseModel? = null
+    private var isViewCreated: Boolean = false
 
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
@@ -116,8 +117,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     override fun observer() {
-        observe(viewModel.account, ::handleAccountResponse)
-        observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
+        if (!isViewCreated){
+            observe(viewModel.account, ::handleAccountResponse)
+            observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
+
+        }
+        isViewCreated=true
 
 
     }
@@ -286,7 +291,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        if (!isViewCreated){
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
+        }
+        isViewCreated=true
     }
 
     private fun hideLoader() {
@@ -306,18 +315,25 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.stateType = "HE"
         model.cardStateType = "HE"
         model.tcAccepted = "Y"
-        model.mailPreference = "Y"
+        model.mailPreference = "N"
         model.emailPreference = "Y"
         model.mfaFlag = "N"
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
+       /* if (NewCreateAccountRequestModel.prePay){
+            model.planType=""
+
+        }else{
+            model.planType="PAYG"
+
+        }*/
         if (NewCreateAccountRequestModel.country.equals("UK", true)) {
             model.countryType = "UK"
 
         } else {
-            model.countryType = "NON-UK"
+            model.countryType = "UK"
 
         }
         model.referenceId = data.referenceId
@@ -348,7 +364,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             maskedCardNumber// card masked number only we need to send last four digit
         model.creditCardNumber = cardToken// card number should be token number
         model.cavv = cavv // 3ds cavv
-        model.correspDeliveryMode = ""/*"EMAIL"*/
+        model.correspDeliveryMode = "EMAIL"
         model.password = data.password  //model password
         model.firstName = data.firstName
         model.creditCardType = creditCardType.uppercase() // need to send upper case
@@ -361,10 +377,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardLastName = data.lastName  // model name
         model.lastName = data.lastName
         model.digitPin = "2465"
-        model.correspDeliveryFrequency = "" /*"MONTHLY"*/
+        model.correspDeliveryFrequency ="MONTHLY"
         model.eci = eci // 3ds eci
-        model.replenishmentAmount = "10" // payment amount
-        model.directoryServerID = directoryServerId // 3ds serverId
+        model.replenishmentAmount = "10.00" // payment amount
+        model.directoryServerId = directoryServerId // 3ds serverId
+        model.smsOption="N"
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
         for (obj in data.vehicleList) {
@@ -375,8 +392,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
-            item.plateTypeDesc = obj.vehicleClass
-            item.plateCountry = obj.plateCountry
+            item.plateTypeDesc = "STANDARD"
+            item.plateCountry = "UK"
             item.vehicleYear = ""
             listVehicle.add(item)
 
@@ -451,6 +468,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
 
 
                 }
@@ -479,7 +498,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                         bundle
                     )
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
                     val bundle = Bundle()
@@ -488,7 +507,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CARD_IS_ALREADY_REGISTERED
                     )
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                     findNavController().navigate(
                         R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,

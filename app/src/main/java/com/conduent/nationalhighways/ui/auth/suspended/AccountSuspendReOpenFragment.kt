@@ -136,6 +136,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             )
             binding.tvYouWillAlsoNeed.visibility = View.GONE
             binding.btnTopUpNow.text = getString(R.string.str_continue)
+            binding.tvPaymentReference.visibility=View.GONE
 
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")

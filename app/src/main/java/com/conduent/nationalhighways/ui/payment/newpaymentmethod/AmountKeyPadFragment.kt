@@ -110,16 +110,15 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
                         )
 
                     } else {
-                        PaymentSingletonClass.lowBalance=binding.txtPaymentAmount.text.toString().replace("$", "").replace("£", "").trim()
-                        PaymentSingletonClass.topUpBalance=topUpAmount
-                        /*setFragmentResult(
+                        setFragmentResult(
                             Constants.LOW_BALANCE,
                             bundleOf(
-                                Constants.LOW_BALANCE to binding.txtPaymentAmount.getText().toString().replace("$", "").replace("£", "").trim(),
+                                Constants.LOW_BALANCE to binding.txtPaymentAmount.getText().toString().replace("$", "").replace("£", "")
+                                    .trim(),
                                 Constants.TOP_UP_BALANCE to topUpAmount
                             )
 
-                        )*/
+                        )
                         findNavController().popBackStack()
 
                     }
@@ -133,16 +132,14 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
                         )
 
                     } else {
-                        PaymentSingletonClass.lowBalance=lowBalanceAmount
-                        PaymentSingletonClass.topUpBalance=binding.txtPaymentAmount.text.toString().trim()
-                       /* setFragmentResult(
+                        setFragmentResult(
                             Constants.TOP_UP_BALANCE,
                             bundleOf(
                                 Constants.TOP_UP_BALANCE to binding.txtPaymentAmount.text.toString()
                                     .trim(),
                                 Constants.LOW_BALANCE to lowBalanceAmount
                             )
-                        )*/
+                        )
                         findNavController().popBackStack()
 
                     }
