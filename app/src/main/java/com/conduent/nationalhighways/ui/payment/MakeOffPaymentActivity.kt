@@ -62,19 +62,4 @@ class MakeOffPaymentActivity : BaseActivity<Any>() {
 
     override fun observeViewModel() {}
 
-    override fun onBackPressed() {
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-        navHost?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment){
-
-                }else{
-                    onBackPressedDispatcher.onBackPressed()
-                }
-
-            }
-        }
-
-    }
-
 }

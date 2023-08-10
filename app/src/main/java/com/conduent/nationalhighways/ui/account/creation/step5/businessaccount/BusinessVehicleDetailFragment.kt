@@ -32,6 +32,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var isViewCreated = false
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
 
@@ -64,7 +65,10 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     }
 
     override fun observer() {
-        observe(viewModel.getCrossingDetails, ::getUnSettledCrossings)
+        if (!isViewCreated) {
+            observe(viewModel.getCrossingDetails, ::getUnSettledCrossings)
+        }
+        isViewCreated = true
     }
 
 
@@ -76,10 +80,19 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             is Resource.Success -> {
                 resource.data?.let {
                     it.let {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                        bundle.putParcelable(Constants.NAV_DATA_KEY,resource.data)
-                        findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,bundle)
+                        val unSettledTrips = it.unSettledTrips?.toInt()
+                        if (unSettledTrips != null) {
+                            val bundle = Bundle()
+                            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                            bundle.putParcelable(Constants.NAV_DATA_KEY,resource.data)
+                            if(unSettledTrips>0){
+
+                                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,bundle)
+
+                            }else{
+                                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_additional_crossingFragment,bundle)
+                              }
+                        }
 
                     }
                 }

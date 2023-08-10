@@ -69,6 +69,17 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     binding.titleText1.visible()
                     binding.titleText2.visible()
             }
+            Constants.PAID_CROSSINGS -> {
+                /*NewCreateAccountRequestModel.vehicleList.clear()
+                binding.titleText1.text = getString(R.string.paid_for_please_note)
+                binding.titleText1.visible()
+                binding.enterReferenceTxt.visible()
+                binding.editReferenceNumber.visible()
+                binding.referenceNumberHint.visible()
+                binding.titleText2.text = Html.fromHtml(getString(R.string.paid_by_web_or_phone), Html.FROM_HTML_MODE_COMPACT)
+                binding.titleText2.visible()
+                binding.enterDetailsTxt.text = getString(R.string.vehicle_registration_number_plate)*/
+            }
         }
 
     }
