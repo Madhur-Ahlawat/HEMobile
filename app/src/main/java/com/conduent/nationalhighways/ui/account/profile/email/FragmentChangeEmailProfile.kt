@@ -52,7 +52,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 viewModel.emailVerificationApi(
                     EmailVerificationRequest(
                         selectionType = EMAIL_SELECTION_TYPE,
-                        selectionValues = binding.edtEmail.getText().toString().trim() ?: ""
+                        selectionValues = binding.edtEmail.getText().toString().trim().replace(" ","") ?: ""
                     )
                 )
             }
