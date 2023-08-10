@@ -379,7 +379,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.digitPin = "2465"
         model.correspDeliveryFrequency ="MONTHLY"
         model.eci = eci // 3ds eci
-        model.replenishmentAmount = "10.00" // payment amount
+        model.replenishmentAmount = "10.00" // top up amount
         model.directoryServerId = directoryServerId // 3ds serverId
         model.smsOption="N"
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
