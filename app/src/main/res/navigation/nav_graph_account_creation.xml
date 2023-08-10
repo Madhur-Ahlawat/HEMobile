@@ -181,16 +181,33 @@
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_pay_for_crossingFragment"
             app:destination="@+id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_additional_crossingFragment"
+            app:destination="@+id/additionalCrossingsFragment" />
 
 
     </fragment>
 
     <fragment
+        android:id="@+id/additionalCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AdditionalCrossingsFragment"
+        android:label="additionalCrossingsFragment"
+        tools:layout="@layout/fragment_additional_crossings">
+
+        <action
+            android:id="@+id/action_additionalCrossingsFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/payCrossingsFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PayForCrossingsFragment"
-        android:label="Pay Crossings Screen"
+        android:label="payCrossingsFragment"
         tools:layout="@layout/fragment_pay_for_crossings">
 
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
 
     </fragment>
 
@@ -608,6 +625,18 @@
         android:label="TermsConditionFragment"
         tools:layout="@layout/fragment_terms_condition"
         />
+
+    <fragment
+        android:id="@+id/crossingCheck"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_paid_previous_crossings">
+
+        <action
+            android:id="@+id/action_crossingCheck_to_checkChargesOption"
+            app:destination="@id/checkChargesOption" />
+
+
+    </fragment>
 
 
 </navigation>
