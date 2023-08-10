@@ -322,18 +322,18 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
-        if (NewCreateAccountRequestModel.prePay){
-            model.planType="PrePay"
+       /* if (NewCreateAccountRequestModel.prePay){
+            model.planType=""
 
         }else{
             model.planType="PAYG"
 
-        }
+        }*/
         if (NewCreateAccountRequestModel.country.equals("UK", true)) {
             model.countryType = "UK"
 
         } else {
-            model.countryType = "NON-UK"
+            model.countryType = "UK"
 
         }
         model.referenceId = data.referenceId
@@ -351,8 +351,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cardholderAuth = ""
         }
 
-        model.transactionAmount = topUpAmount // html Amount
-        model.thresholdAmount = thresholdAmount // threshold Amount
+        model.transactionAmount = "10.00" // html Amount
+        model.thresholdAmount = "10.00" // threshold Amount
         model.securityCode = ""
         model.smsReferenceId = ""
         model.securityCd = data.emailSecurityCode   // email security code
@@ -379,8 +379,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.digitPin = "2465"
         model.correspDeliveryFrequency ="MONTHLY"
         model.eci = eci // 3ds eci
-        model.replenishmentAmount = topUpAmount // payment amount
+        model.replenishmentAmount = "10.00" // payment amount
         model.directoryServerId = directoryServerId // 3ds serverId
+        model.smsOption="N"
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
         for (obj in data.vehicleList) {
@@ -391,7 +392,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
-            item.plateTypeDesc = obj.vehicleClass
+            item.plateTypeDesc = "STANDARD"
             item.plateCountry = "UK"
             item.vehicleYear = ""
             listVehicle.add(item)
@@ -467,6 +468,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
 
 
                 }
