@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:maxLength="50"
-            app:drawableRight="@drawable/edit"
             app:labelText="@string/str_low_balance"
 
 
@@ -101,9 +100,6 @@
             app:imeOptions="actionGo"
             app:inputType="numberDecimal"
             app:labelText="@string/top_up_amount"
-            app:drawableRight="@drawable/edit"
-
-
             />
         <TextView
             android:layout_width="wrap_content"
