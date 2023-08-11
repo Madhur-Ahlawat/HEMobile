@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCros
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsRequest
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaidCrossingCheckBinding
+import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
+class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBinding>(),
     View.OnClickListener {
 
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
@@ -35,7 +36,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentPaidCrossingCheckBinding.inflate(inflater, container, false)
+    ) = FragmentPaidPreviousCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
 
@@ -49,16 +50,16 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
             sessionManager.getLoggedInUser()
         )
 
-        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
+//        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         isEnable()
     }
 
     override fun initCtrl() {
-        binding.paymentRefNo.addTextChangedListener { isEnable() }
-        binding.vrmNo.addTextChangedListener { isEnable() }
-        binding.continueBtn.setOnClickListener(this)
+//        binding.paymentRefNo.addTextChangedListener { isEnable() }
+//        binding.vrmNo.addTextChangedListener { isEnable() }
+//        binding.continueBtn.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -68,7 +69,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     }
 
     private fun isEnable() {
-        if (binding.paymentRefNo.length() > 0 && binding.vrmNo.length() > 0) binding.model =
+        /*if (binding.paymentRefNo.length() > 0 && binding.vrmNo.length() > 0) binding.model =
             CheckPaidCrossingsOptionsModel(
                 enable = true,
                 ref = binding.paymentRefNo.text.toString(),
@@ -78,7 +79,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
             enable = false,
             ref = binding.paymentRefNo.text.toString(),
             vrm = binding.vrmNo.text.toString()
-        )
+        )*/
     }
 
     override fun onClick(v: View?) {
@@ -98,9 +99,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
                 hideKeyboard()
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val checkPaidCrossingReq =
-                    CheckPaidCrossingsRequest(binding.model?.ref, binding.model?.vrm)
-                viewModel.checkPaidCrossings(checkPaidCrossingReq)
+//                val checkPaidCrossingReq = CheckPaidCrossingsRequest(binding.model?.ref, binding.model?.vrm)
+//                viewModel.checkPaidCrossings(checkPaidCrossingReq)
             }
         }
 
@@ -114,10 +114,10 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
             when (status) {
                 is Resource.Success -> {
                     val bundle = Bundle().apply {
-                        putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
-                        putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
+//                        putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
+//                        putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
                     }
-                    viewModel.setPaidCrossingOption(binding.model)
+//                    viewModel.setPaidCrossingOption(binding.model)
                     viewModel.setPaidCrossingResponse(status.data)
                     findNavController().navigate(
                         R.id.action_crossingCheck_to_checkChargesOption,

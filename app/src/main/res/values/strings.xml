@@ -1379,6 +1379,11 @@
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="transactions">Transactions</string>
+    <string name="check_for_previous_crossings">Check for previous crossings</string>
+    <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
+    <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
+    <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
+       <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
 
 
 </resources>

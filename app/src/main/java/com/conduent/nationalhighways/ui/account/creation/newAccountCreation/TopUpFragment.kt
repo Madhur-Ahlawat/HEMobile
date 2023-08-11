@@ -149,7 +149,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             }
 
             if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
-                binding.topUpBtn.isButtonEnabled=true
+                binding.topUpBtn.isEnabled=true
             }
         }
 
@@ -167,7 +167,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
             }
             if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
-                binding.topUpBtn.isButtonEnabled=true
+                binding.topUpBtn.isEnabled=true
             }
         }
 
@@ -197,9 +197,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 if (navFlow == Constants.THRESHOLD) {
-                    val amount = binding.top.editText.getText().toString().trim().replace("£", "")
+                    val amount = binding.top.editText.getText().toString().trim().replace("$", "£").replace("£", "")
                     val thresholdAmount =
-                        binding.lowBalance.editText.getText().toString().trim().replace("£", "")
+                        binding.lowBalance.editText.getText().toString().trim().replace("$", "£").replace("£", "")
                     val request = AccountTopUpUpdateThresholdRequest(
                         amount,
                         thresholdAmount
@@ -213,9 +213,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     isClick = true
 
                 } else {
-                    val amount = binding.top.editText.getText().toString().trim().replace("£", "")
+                    val amount = binding.top.editText.getText().toString().trim().replace("$", "£").replace("£", "")
                     val thresholdAmount =
-                        binding.lowBalance.editText.getText().toString().trim().replace("£", "")
+                        binding.lowBalance.editText.getText().toString().trim().replace("$", "£").replace("£", "")
                     bundle.putDouble(Constants.DATA, amount.toDouble())
                     bundle.putDouble(Constants.THRESHOLD_AMOUNT, thresholdAmount.toDouble())
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.NOTSUSPENDED)

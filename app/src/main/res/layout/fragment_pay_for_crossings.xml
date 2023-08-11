@@ -18,11 +18,11 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:layout_width="match_parent"
-            android:id="@+id/inputMobileNumber"
+            android:id="@+id/inputTotalAmount"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20dp"
             app:labelText="Payment Amount"
-            app:inputType="phone"
+            app:inputType="numberDecimal"
             app:maxLength="15"
             android:maxLength="15"
             app:imeOptions="actionNext"

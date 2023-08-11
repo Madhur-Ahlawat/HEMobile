@@ -9,80 +9,90 @@ input[type=text] {
     margin: 15px 0;
     text-align: bottom;
     font-family: 'opensans_regular';
-    }
-    input[type=number] {
-      width: 100%;
-      height: 44px;
-      border-radius : 0px;
-      padding: 1px;
-      border: none;
-      border-bottom: 1px solid black;
-      font-size: 16px;
-      margin: 15px 0;
-      text-align: bottom;
-      font-family: 'opensans_regular';
-    }
-    button[type=button] {
-      width: 100%;
-      height: 44px;
-      border-radius : 0px;
-      color: white;
-      background-color: #002E5F;
-    }
-    @font-face {
-      font-family: 'opensans_regular';
-      src: url('OpenSans-Regular.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'OpenSans-Semibold';
-      src: url('OpenSans-Semibold.ttf');
-    }
-    @font-face {
-        font-family: 'OpenSans-Bold';
-        src: url('OpenSans-Bold.ttf');
-    }
-    h3 {
-      font-family: 'OpenSans-Semibold';
-      font-size: 16;
-    }
-    #label, #payment {
-        font-family: 'opensans_regular';
-        font-size: 16;
-        color: #555B5A;
-    }
-    #hint {
-        font-family: 'opensans_regular';
-        font-size: 16;
-        color: #000000;
-    }
-    #ccerrormesages, #cvverrormesages, #cscerrormesages, #nameerrormesages, #errorMessageForAmount {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-        color: red;
-    }
-    .center {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    table,.separator {
-      border-spacing: 0px;
-    }
-    #errorPayment {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-        color: red;
-        text-align: center; 
-    }
-    #currency {
-        font-family: 'OpenSans-Bold';
-        font-size: 16;
-    }
-    #title {
-        font-family: 'OpenSans-Semibold';
-        font-size: 16;
-    }
-    #demoPayButton {
-        font-family: 'opensans_regular';
-        font-size: 16;
-    }
-   
+    outline: none;
+}
+input[type=number] {
+    width: 100%;
+    height: 44px;
+    border-radius : 0px;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    text-align: bottom;
+    font-family: 'opensans_regular';
+    outline: none;
+}
+button[type=button] {
+    width: 100%;
+    height: 44px;
+    border-radius : 0px;
+    color: white;
+    background-color: #002E5F;
+}
+@font-face {
+    font-family: 'opensans_regular';
+    src: url('OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenSans-Semibold';
+    src: url('OpenSans-Semibold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('OpenSans-Bold.ttf') format('truetype');
+}
+h3 {
+    font-family: 'OpenSans-Semibold';
+    font-size: 16;
+}
+#label, #payment {
+    font-family: 'opensans_regular';
+    font-size: 16;
+    color: #555B5A;
+}
+#hint {
+    font-family: 'opensans_regular';
+    font-size: 16;
+    color: #000000;
+}
+#ccerrormesages, #cvverrormesages, #cscerrormesages, #nameerrormesages, #errorMessageForAmount {
+    font-family: 'OpenSans-Bold';
+    font-size: 16;
+    color: red;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+table,.separator {
+    border-spacing: 0px;
+}
+
+#errorPayment {
+    font-family: 'OpenSans-Bold';
+    font-size: 16;
+    color: red;
+    text-align: center;
+}
+#currency {
+    font-family: 'OpenSans-Bold';
+    font-size: 16;
+}
+#title {
+    font-family: 'OpenSans-Semibold';
+    font-size: 16;
+}
+#demoPayButton {
+    font-family: 'opensans_regular';
+    font-size: 16;
+}
+
+.image-container {
+    display: flex;
+}
+
+.image-container img {
+    height: 41px;
+    margin-right: 10px;
+}

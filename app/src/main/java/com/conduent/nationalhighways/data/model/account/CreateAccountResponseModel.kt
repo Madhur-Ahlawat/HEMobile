@@ -9,5 +9,6 @@ data class CreateAccountResponseModel(
     val emailStatusCode: String?,
     val message: String?,
     val statusCode: String?,
-    var accountType : String?
+    var accountType : String?,
+    var referenceNumber:String?
 ) : Parcelable
