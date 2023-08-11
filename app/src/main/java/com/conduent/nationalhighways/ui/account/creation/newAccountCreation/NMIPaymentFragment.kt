@@ -427,7 +427,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
-
+//                selectElement.addEventListener("change", (event) => {
+//                    result.textContent = `You like ${event.target.value}`;
+//                });
                 if (flow == Constants.SUSPENDED) {
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
