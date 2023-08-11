@@ -471,7 +471,7 @@
         android:id="@+id/discount_type_fragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.DiscountTypeFragment"
         android:label="DiscountTypeFragment"
-        tools:layout="@layout/fragment_discount_type"></fragment>
+        tools:layout="@layout/fragment_discount_type"/>
     <fragment
         android:id="@+id/resend_code_fragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
