@@ -1277,7 +1277,7 @@
     <string name="str_account_closed">Account Closed</string>
     <string name="resizable_text_read_more">See more</string>
     <string name="resizable_text_read_less">See less</string>
-    <string name="str_telephone_number_optional">Telephone number (optional)</string>
+    <string name="str_telephone_number_optional">Telephone number</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
     <string name="postcode_must_not_contain_special_characters_except_single_hypen">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
     <string name="postcode_must_not_contain_special_characters_except_hyphen">Postcode must only include letters a to z and numbers 0 to 9 and single hyphen</string>

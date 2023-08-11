@@ -120,7 +120,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         if (!isViewCreated){
             observe(viewModel.account, ::handleAccountResponse)
             observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
-
         }
         isViewCreated=true
 

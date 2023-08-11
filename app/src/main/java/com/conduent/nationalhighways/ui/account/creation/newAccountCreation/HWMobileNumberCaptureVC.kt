@@ -82,6 +82,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+        Log.e("TAG", "init: navFlowCall "+navFlowCall )
         when(navFlowCall) {
 
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
@@ -103,6 +104,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 setData()
             }
         }
+
+
     }
 
     private fun setData() {
@@ -127,7 +130,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
         binding.txtBottom.visibility = View.GONE
         requiredMobileNumber = true
-        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+        if(NewCreateAccountRequestModel.prePay){
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+        }else{
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+        }
     }
 
     private fun setMobileView() {
@@ -197,6 +204,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.apply {
                     inputCountry.dataSet.addAll(countriesCodeList)
                     inputCountry.setSelectedValue(Constants.UK_CODE)
+                    requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+                    if (!NewCreateAccountRequestModel.prePay) {
+                        checkButton()
+                    }
                 }
 
             }
@@ -297,7 +308,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
             if (index==0){
-                requiredMobileNumber=true
+                    requiredMobileNumber=true
+
             }
 
 
@@ -342,7 +354,22 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun checkButton() {
-        if (requiredCountryCode && requiredMobileNumber) {
+        Log.e("TAG", "checkButton: requiredCountryCode-> "+requiredCountryCode+" requiredMobileNumber->"+requiredMobileNumber+" isItMobileNumber->"+isItMobileNumber )
+       /* var enableButton: Boolean =false
+
+        enableButton = if (NewCreateAccountRequestModel.prePay) {
+            requiredCountryCode && requiredMobileNumber
+        } else {
+            (isItMobileNumber || requiredMobileNumber) && requiredCountryCode
+        }
+
+        if (enableButton) {
+            binding.btnNext.enable()
+        } else {
+            binding.btnNext.disable()
+        }*/
+
+        if (requiredCountryCode  && requiredMobileNumber) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()
