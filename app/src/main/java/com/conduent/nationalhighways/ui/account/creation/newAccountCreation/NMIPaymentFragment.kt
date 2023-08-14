@@ -69,6 +69,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
+    private var a:Int=0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
