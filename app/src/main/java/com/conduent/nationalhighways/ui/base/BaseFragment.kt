@@ -142,7 +142,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         positiveBtnTxt: String,
         negativeBtnTxt: String,
         pListener: DialogPositiveBtnListener?,
-        nListener: DialogNegativeBtnListener?
+        nListener: DialogNegativeBtnListener?,
+        cancelVisibility : Int = View.VISIBLE
     ) {
 
         val dialog = Dialog(requireActivity())
@@ -154,11 +155,16 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         val textMessage = dialog.findViewById<TextView>(R.id.message)
         val cancel = dialog.findViewById<TextView>(R.id.cancel_btn)
         val ok = dialog.findViewById<TextView>(R.id.ok_btn)
+        val firstView = dialog.findViewById<View>(R.id.firstView)
+        val secondView = dialog.findViewById<View>(R.id.secondView)
 
         title.text = fTitle
         textMessage.text = message
         cancel.text = negativeBtnTxt
         ok.text = positiveBtnTxt
+        cancel.visibility = cancelVisibility
+        firstView.visibility = cancelVisibility
+        secondView.visibility = cancelVisibility
         cancel.setOnClickListener {
             nListener?.negativeBtnClick(dialog)
             dialog.dismiss()
@@ -171,6 +177,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
     }
+
 
 
 }

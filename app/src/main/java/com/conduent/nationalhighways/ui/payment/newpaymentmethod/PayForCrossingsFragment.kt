@@ -37,10 +37,15 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
-            inputCountry.dataSet.addAll(resources.getStringArray(R.array.crossings))
             val charge = data?.chargingRate?.toInt()
             val unSettledTrips = data?.unSettledTrips?.toInt()
             if(unSettledTrips != null && charge != null){
+                val index = emptyList<String>().toMutableList()
+                for (i in 0..unSettledTrips){
+                    index.add(i.toString())
+                }
+                inputCountry.dataSet.addAll(index)
+                inputCountry.setSelectedValue(unSettledTrips.toString())
                 val total = charge*unSettledTrips
                 inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
             }
