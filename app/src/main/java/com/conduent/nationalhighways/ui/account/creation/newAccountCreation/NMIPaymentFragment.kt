@@ -10,7 +10,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -27,7 +26,6 @@ import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.view
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -53,12 +51,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     lateinit var sessionManager: SessionManager
 
 
-    private var loader: LoaderDialog? = null
     val vehicle: ArrayList<VehicleItem> = ArrayList()
     private var expMonth: String = ""
     private var expYear: String = ""
     private var thresholdAmount: String = ""
     private var topUpAmount = ""
+    private var htmlTopUpAmount=""
     private var maskedCardNumber: String = ""
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
@@ -94,8 +92,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         setupWebView()
     }
@@ -117,12 +113,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     override fun observer() {
-        if (!isViewCreated){
+        if (!isViewCreated) {
             observe(viewModel.account, ::handleAccountResponse)
             observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
 
         }
-        isViewCreated=true
+        isViewCreated = true
 
 
     }
@@ -131,19 +127,22 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         hideLoader()
         when (response) {
             is Resource.Success -> {
-                val bundle = Bundle()
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                findNavController().navigate(
-                    R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,
-                    bundle
-                )
+                if (response.data?.statusCode.equals("0")) {
+                    val bundle = Bundle()
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putParcelable(Constants.DATA, response.data)
+
+                    findNavController().navigate(
+                        R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,
+                        bundle
+                    )
+                }
 
 
             }
 
             is Resource.DataError -> {
                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
-                //ErrorUtil.showError(binding.root, response.errorMsg)
             }
 
             else -> {
@@ -165,22 +164,20 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             Log.i("WebView", "postMessage data=$data")
             if (data.isNotEmpty()) {
                 MainScope().launch {
-                    when (data) {
-                        "NMILoaded" -> {
-                            hideLoader()
-                        }
+                    if (data == "NMILoaded") {
+                        hideLoader()
 
-                        "3DStarted" -> {
-                            // showLoader()
-                        }
+                    } else if (data == "3DStarted") {
+                        showLoader()
 
-                        "3DSLoaded" -> {
-                            hideLoader()
-                        }
+                    } else if (data == "3DSLoaded") {
+                        hideLoader()
+                    } else if (data.contains("amounttoIncrease")) {
+                        htmlTopUpAmount = data.replace("amounttoIncrease", "")
 
-                        "true" -> {
-                            checkBox = true
-                        }
+                    } else if (data == "true") {
+                        checkBox = true
+
                     }
 
                     val check: Boolean = "tokenType" in data
@@ -291,17 +288,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-        if (!isViewCreated){
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        binding.progressBar.visibility = View.VISIBLE
 
-        }
-        isViewCreated=true
+
     }
 
     private fun hideLoader() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        binding.progressBar.visibility = View.GONE
+
     }
 
     private fun callAccountCreationApi(
@@ -310,6 +304,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         directoryServerId: String?,
         eci: String?
     ) {
+        showLoader()
         val data = NewCreateAccountRequestModel
         val model = AccountCreationRequest()
         model.stateType = "HE"
@@ -322,14 +317,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
         model.zipCode1 = data.zipCode
-       /* if (NewCreateAccountRequestModel.prePay){
-            model.planType=""
+        if (!NewCreateAccountRequestModel.prePay) {
+            model.planType = "PAYG"
 
-        }else{
-            model.planType="PAYG"
-
-        }*/
-        if (NewCreateAccountRequestModel.country.equals("UK", true)) {
+        }
+        if (NewCreateAccountRequestModel.country.equals(
+                "UK",
+                true
+            ) || NewCreateAccountRequestModel.country.equals("United Kingdom", true)
+        ) {
             model.countryType = "UK"
 
         } else {
@@ -351,8 +347,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cardholderAuth = ""
         }
 
-        model.transactionAmount = "10.00" // html Amount
-        model.thresholdAmount = "10.00" // threshold Amount
+        model.transactionAmount = String.format("%.2f", htmlTopUpAmount.toDouble()) // html Amount
+        model.thresholdAmount =String.format("%.2f", thresholdAmount.toDouble())  // threshold Amount
         model.securityCode = ""
         model.smsReferenceId = ""
         model.securityCd = data.emailSecurityCode   // email security code
@@ -372,16 +368,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.accountType = "PRIVATE"    // private or business
         } else {
             model.accountType = "BUSINESS"
+            model.companyName=NewCreateAccountRequestModel.companyName
         }
 
         model.cardLastName = data.lastName  // model name
         model.lastName = data.lastName
         model.digitPin = "2465"
-        model.correspDeliveryFrequency ="MONTHLY"
+        //model.correspDeliveryFrequency = "MONTHLY"
         model.eci = eci // 3ds eci
-        model.replenishmentAmount = "10.00" // payment amount
+        model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerId = directoryServerId // 3ds serverId
-        model.smsOption="N"
+        model.smsOption = "N"
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
         for (obj in data.vehicleList) {
@@ -427,7 +424,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
-
+//                selectElement.addEventListener("change", (event) => {
+//                    result.textContent = `You like ${event.target.value}`;
+//                });
                 if (flow == Constants.SUSPENDED) {
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")

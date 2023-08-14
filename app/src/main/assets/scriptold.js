@@ -15,9 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
             "box-sizing": "border-box",
             "border": "none",
             "border-bottom-style": "ridge",
+            "font-family": "opensans_regular",
             "font-size": "16px",
-            "font-weight": "400",
-            "line-height": " 1.25",
             "border-radius" : "0px",
             "padding": "1px"
         },
@@ -35,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
             "box-sizing": "border-box",
             "border": "1",
             "border-bottom": "50PX solid red",
-            "line-height": " 1.25",
+            "font-family": "opensans_regular",
+            "font-size": "16px",
             "padding": "1px"
         },
         "focusCss": {
@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
         "placeholderCss": {
             "color": "#555B5A",
             "background-color": "#FFFFFF",
-            "padding": "1px",
-            "font-weight": "400",
-            "line-height": " 1.25"
+            "font-family": "opensans_regular",
+            "font-size": "22",
+            "padding": "1px"
         },
         "fields": {
             "ccnumber": {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "display": "show",
                 "selector": "#name",
                 "title": "Name on Checking Account",
-                "placeholder": "Fred Bloggs"
+                "placeholder": "Name",
             }
         },
         'validationCallback' : function(field, status, message) {
@@ -141,7 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
         "timeoutDuration" : 10000,
         "timeoutCallback" : function () {
             window.appInterface.postMessage("timedOUt");
-            document.getElementById("errorPayment").style.display="none";
+            document.getElementById("errorPayment").style.display="";
+            document.getElementById("errorPayment").innerText="Timed out";
         },
         "fieldsAvailableCallback" : function () {
             window.appInterface.postMessage("NMILoaded");
@@ -149,15 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
         'callback': function(e) {
             window.appInterface.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
-            //invokeCommand(apiResponse)
             window.appInterface.postMessage(apiResponse);
             var card = e.card;
             var amt =  document.getElementById("amount").value;
-            const pattern = /^(\w)[A-Za-z-\s\.']{2,50}$/i;
-            if (pattern.test(e.check.name) == false) {
-                document.getElementById("nameerrormesages").style.display="";
-                document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
-            } else if ((amt < 10) && (amt > 10000)) {
+            if ((amt < 10) && (amt > 10000)) {
                 if (amt < 10) {
                     document.getElementById("errorMessageForAmount").style.display="";
                     document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310 or more";
@@ -167,10 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     document.getElementById("errorMessageForAmount").style.display="none";
                 }
-            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
+            } else if ((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0"))
             {
                 var amt =  document.getElementById("amount").value;
-                window.appInterface.postMessage("amounttoIncrease"+amt);
+                window.appInterface.postMessage("amounttoIncrease"+ amt);
                 window.appInterface.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
@@ -180,10 +176,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 email:  document.getElementById("email").innerText,
                 phone:  document.getElementById("phone").innerText,
                 city: document.getElementById("city").innerText,
+                    //state: '10 address street',
                 address1:  document.getElementById("address1").innerText,
-                country: "GB" /*document.getElementById("country").innerText*/,
-                firstName: e.check.name,
-                lastName:  e.check.name,
+                country:  document.getElementById("country").innerText,
+                firstName:  document.getElementById("name").value,
+                lastName:  document.getElementById("name").value,
                 postalCode:  document.getElementById("postalCode").innerText
                 };
                 window.appInterface.postMessage(options);
@@ -218,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function buttonClicked() {
     window.appInterface.postMessage("3DStarted");
 }
-
 function checkNumber() {
     var amt =  document.getElementById("amount").value;
     if (amt < 10) {
@@ -235,11 +231,3 @@ function checkNumber() {
     }
 }
 
-function saveCardClick() {
-    var checkBox = document.getElementById("cardChecked");
-    invokeCommand(checkBox.checked)
-}
-
-function invokeCommand(params) {
-   window.appInterface.postMessage(params);
-}

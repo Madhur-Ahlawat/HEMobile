@@ -49,6 +49,7 @@ class AccountCreationRequest {
     var directoryServerId: String? = null
     var mfaFlag: String? = null
     var planType:String?=null
+    var companyName:String?=null
 
 }
 

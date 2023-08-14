@@ -147,7 +147,8 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
+            binding.edtEmail.setErrorText(response?.errorMsg.toString().trim())
+//            binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
 
         }
 
