@@ -1384,6 +1384,7 @@
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
+    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
 
 
 </resources>

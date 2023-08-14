@@ -9,7 +9,7 @@ data class CrossingDetailsModelsResponse(
     val customerClass: String?,
     val customerClassRate: String?,
     val chargingRate: String?,
-    val unSettledTrips: String?,
+    var unSettledTrips: String?,
     val unPaidAmt: String?,
     val plateCountry: String?,
     val vehicleMake: String?,

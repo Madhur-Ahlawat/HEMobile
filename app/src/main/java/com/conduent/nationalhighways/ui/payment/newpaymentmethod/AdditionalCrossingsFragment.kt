@@ -1,10 +1,12 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
@@ -13,10 +15,12 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentAdditionalCrossingsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.loader.ErrorDialog
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +56,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 totalAmount.setText(getString(R.string.currency_symbol) + total)
             }
         }
+        displayCustomMessage(getString(R.string.additional_crossings_txt),
+            getString(R.string.only_use_this_option_for_crossings_planned),
+        getString(R.string.str_continue),"",null,null,View.GONE)
 
 
     }
@@ -100,6 +107,31 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             binding.recentCrossing.setText(getString(R.string.currency_symbol)+recent)
             binding.paymentCrossing.setText(getString(R.string.currency_symbol)+additional)
             binding.totalAmount.setText(getString(R.string.currency_symbol)+total)
+        }
+    }
+
+    fun showError(view: View?, message: String?) {
+        try {
+            val dialog = ErrorDialog()
+            val bundle = Bundle()
+            bundle.putString(Constants.DATA, message)
+            dialog.arguments = bundle
+            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+            when (view?.context) {
+                is AppCompatActivity -> dialog.show(
+                    (view.context as AppCompatActivity).supportFragmentManager,
+                    Constants.ERROR_DIALOG
+                )
+                is ContextWrapper -> dialog.show(
+                    (((view.context as ContextWrapper).baseContext)
+                            as AppCompatActivity).supportFragmentManager,
+                    Constants.ERROR_DIALOG
+                )
+            }
+
+        } catch (e: Exception) {
+
         }
     }
 
