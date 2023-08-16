@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_accountSummaryFragment_to_termsConditionFragment"
             app:destination="@id/termsConditionFragment"/>
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment"/>
     </fragment>
 
     <!-- BUSINESS ACCOUNT -->

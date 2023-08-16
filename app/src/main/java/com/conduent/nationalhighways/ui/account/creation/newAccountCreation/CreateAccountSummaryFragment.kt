@@ -65,12 +65,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
 
-        binding.mobileNumber.text = dataModel.countryCode?.let { getRequiredText(it) } +" "+dataModel.mobileNumber
-        if(dataModel.personalAccount){
+        binding.mobileNumber.text =
+            dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+        if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
-            if(NewCreateAccountRequestModel.prePay) {
+            if (NewCreateAccountRequestModel.prePay) {
                 binding.txtSubAccountType.text = getString(R.string.str_prepay)
-            }else{
+            } else {
                 binding.txtSubAccountType.text = getString(R.string.pay_as_you_go)
             }
 
@@ -106,17 +107,21 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
 
             }
-            val bundle=Bundle()
-            bundle.putString(Constants.TERMSCONDITIONURL,url)
-            findNavController().navigate(R.id.action_accountSummaryFragment_to_termsConditionFragment,bundle)
-          /*  val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)*/
+            val bundle = Bundle()
+            bundle.putString(Constants.TERMSCONDITIONURL, url)
+            findNavController().navigate(
+                R.id.action_accountSummaryFragment_to_termsConditionFragment,
+                bundle
+            )
+            /*  val i = Intent(Intent.ACTION_VIEW)
+              i.data = Uri.parse(url)
+              startActivity(i)*/
 
 
         }))
 
     }
+
     fun getRequiredText(text: String) = text.substringAfter(' ')
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
@@ -130,46 +135,93 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         when (v?.id) {
 
             R.id.btnNext -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
-            }
-            R.id.editFullName -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_personalInfoFragment,enableEditMode())
-            }
-            R.id.editAddress -> {
-                if(NewCreateAccountRequestModel.isManualAddress) {
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_manualAddressFragment,enableEditMode())
-                }else{
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_postCodeFragment,enableEditMode())
+                if (!NewCreateAccountRequestModel.prePay) {
+                    val bundle=Bundle()
+
+                    bundle.putDouble(Constants.DATA, 0.00)
+                    bundle.putDouble(Constants.THRESHOLD_AMOUNT, 0.00)
+                    bundle.putString(NAV_FLOW_KEY, Constants.NOTSUSPENDED)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, 0)
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_nmiPaymentFragment,bundle)
+
+                } else {
+                    findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
+
                 }
             }
+
+            R.id.editFullName -> {
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_personalInfoFragment,
+                    enableEditMode()
+                )
+            }
+
+            R.id.editAddress -> {
+                if (NewCreateAccountRequestModel.isManualAddress) {
+                    findNavController().navigate(
+                        R.id.action_accountSummaryFragment_to_manualAddressFragment,
+                        enableEditMode()
+                    )
+                } else {
+                    findNavController().navigate(
+                        R.id.action_accountSummaryFragment_to_postCodeFragment,
+                        enableEditMode()
+                    )
+                }
+            }
+
             R.id.editEmailAddress -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_emailAddressFragment,enableEditMode())
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_emailAddressFragment,
+                    enableEditMode()
+                )
             }
+
             R.id.editMobileNumber -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_mobileNumberFragment,enableEditMode())
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_mobileNumberFragment,
+                    enableEditMode()
+                )
             }
+
             R.id.editAccountType -> {
                 val bundle = Bundle()
-                bundle.putString(NAV_FLOW_KEY,EDIT_SUMMARY)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_typeAccountFragment,bundle)
+                bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_typeAccountFragment,
+                    bundle
+                )
             }
+
             R.id.editSubAccountType -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_createAccountTypesFragment,enableEditMode())
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
+                    enableEditMode()
+                )
             }
+
             R.id.editCommunications -> {
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_communicationFragment,enableEditMode())
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_communicationFragment,
+                    enableEditMode()
+                )
             }
+
             R.id.editTwoStepVerification -> {
 
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,enableEditMode())
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,
+                    enableEditMode()
+                )
             }
         }
     }
 
-    private fun enableEditMode() : Bundle {
+    private fun enableEditMode(): Bundle {
         val bundle = Bundle()
-        bundle.putString(NAV_FLOW_KEY,EDIT_SUMMARY)
+        bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
         return bundle
     }
 
@@ -188,20 +240,23 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         } else {
             val bundle = Bundle()
 
-            if(isDblaAvailable == true) {
+            if (isDblaAvailable == true) {
                 bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,
                     bundle
                 )
-            }else{
+            } else {
                 bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 if (isDblaAvailable != null) {
                     bundle.putBoolean(Constants.IS_DBLA_AVAILABLE, isDblaAvailable)
                 }
-                findNavController().navigate(R.id.action_accountSummaryFragment_to_addNewVehicleDetailsFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_addNewVehicleDetailsFragment,
+                    bundle
+                )
             }
         }
 
