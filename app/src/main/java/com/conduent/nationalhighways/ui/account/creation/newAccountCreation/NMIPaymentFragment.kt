@@ -56,7 +56,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var expYear: String = ""
     private var thresholdAmount: String = ""
     private var topUpAmount = ""
-    private var htmlTopUpAmount=""
+    private var htmlTopUpAmount = ""
     private var maskedCardNumber: String = ""
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
@@ -69,6 +69,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
+    private var a:Int=0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -127,6 +128,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         when (response) {
             is Resource.Success -> {
                 if (response.data?.statusCode.equals("0")) {
+                    clearSingletonData()
                     val bundle = Bundle()
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putParcelable(Constants.DATA, response.data)
@@ -150,6 +152,41 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
         }
+    }
+
+    private fun clearSingletonData() {
+        NewCreateAccountRequestModel.referenceId = ""
+        NewCreateAccountRequestModel.emailAddress = ""
+        NewCreateAccountRequestModel.mobileNumber = ""
+        NewCreateAccountRequestModel.countryCode = ""
+        NewCreateAccountRequestModel.communicationTextMessage = false
+        NewCreateAccountRequestModel.termsCondition = false
+        NewCreateAccountRequestModel.twoStepVerification = false
+        NewCreateAccountRequestModel.personalAccount = false
+        NewCreateAccountRequestModel.firstName = ""
+        NewCreateAccountRequestModel.lastName = ""
+        NewCreateAccountRequestModel.companyName = ""
+        NewCreateAccountRequestModel.addressline1 = ""
+        NewCreateAccountRequestModel.addressline2 = ""
+        NewCreateAccountRequestModel.townCity = ""
+        NewCreateAccountRequestModel.state = ""
+        NewCreateAccountRequestModel.country = ""
+        NewCreateAccountRequestModel.zipCode = ""
+        NewCreateAccountRequestModel.prePay = false
+        NewCreateAccountRequestModel.plateCountry = ""
+        NewCreateAccountRequestModel.plateNumber = ""
+        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
+        NewCreateAccountRequestModel.vehicleList.clear()
+        NewCreateAccountRequestModel.addedVehicleList.clear()
+        NewCreateAccountRequestModel.isRucEligible = false
+        NewCreateAccountRequestModel.isExempted = false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = false
+        NewCreateAccountRequestModel.isMaxVehicleAdded = false
+        NewCreateAccountRequestModel.isManualAddress = false
+        NewCreateAccountRequestModel.emailSecurityCode = ""
+        NewCreateAccountRequestModel.smsSecurityCode = ""
+        NewCreateAccountRequestModel.password = ""
     }
 
     override fun onClick(v: View?) {
@@ -347,7 +384,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         }
 
         model.transactionAmount = String.format("%.2f", htmlTopUpAmount.toDouble()) // html Amount
-        model.thresholdAmount =String.format("%.2f", thresholdAmount.toDouble())  // threshold Amount
+        model.thresholdAmount =
+            String.format("%.2f", thresholdAmount.toDouble())  // threshold Amount
         model.securityCode = ""
         model.smsReferenceId = ""
         model.securityCd = data.emailSecurityCode   // email security code
@@ -367,7 +405,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.accountType = "PRIVATE"    // private or business
         } else {
             model.accountType = "BUSINESS"
-            model.companyName=NewCreateAccountRequestModel.companyName
+            model.companyName = NewCreateAccountRequestModel.companyName
         }
 
         model.cardLastName = data.lastName  // model name
@@ -419,13 +457,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                val amount = arguments?.getDouble(Constants.DATA)
+                val amount: Double = if (!NewCreateAccountRequestModel.prePay){
+                    0.00
+
+                }else{
+                    arguments?.getDouble(Constants.DATA)?:0.00
+
+                }
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
-//                selectElement.addEventListener("change", (event) => {
-//                    result.textContent = `You like ${event.target.value}`;
-//                });
+//
                 if (flow == Constants.SUSPENDED) {
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
@@ -460,6 +502,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
 
                 } else {
+                    if (!NewCreateAccountRequestModel.prePay) {
+                        view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+
+                    }
                     view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
