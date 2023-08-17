@@ -7,21 +7,29 @@ import android.text.InputFilter.LengthFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.DATA
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,8 +54,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var makeInputCheck: Boolean = false
     private var modelInputCheck: Boolean = false
     private var colourInputCheck: Boolean = false
-
-
+    private val viewModel: MakeOneOfPaymentViewModel by viewModels()
+    private var loader: LoaderDialog? = null
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -57,7 +65,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         container: ViewGroup?
     ) = FragmentNewAddVehicleDetailsBinding.inflate(inflater, container, false)
 
-    override fun observer() {}
+    override fun observer() {
+        observe(viewModel.getCrossingDetails, ::getUnSettledCrossings)
+    }
 
     override fun init() {
         typeOfVehicle.clear()
@@ -148,6 +158,40 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         binding.nextBtn.setOnClickListener(this)
+
+    }
+
+    private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    it.let {
+                        val unSettledTrips = it.unSettledTrips?.toInt()
+                        if (unSettledTrips != null) {
+                            val bundle = Bundle()
+                            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                            bundle.putParcelable(Constants.NAV_DATA_KEY,resource.data)
+                            if(unSettledTrips>0){
+
+                                findNavController().navigate(R.id.action_addVehicleDetailFragment_to_pay_for_crossingFragment,bundle)
+
+                            }else{
+                                findNavController().navigate(R.id.action_addVehicleDetailFragment_to_additional_crossingFragment,bundle)
+                            }
+                        }
+
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+            else -> {
+            }
+        }
 
     }
 
@@ -331,12 +375,16 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         )
                     } else {
                         it.isUK = binding.radioButtonYes.isChecked
-                        vehicleList?.add(it)
-                        if(editCall){
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment)
-                        }else {
-                            findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
-                        }
+                        it.vehicleMake =
+                            binding.makeInputLayout.getText().toString()
+                        it.vehicleModel =
+                            binding.modelInputLayout.getText().toString()
+                        it.vehicleColor =
+                            binding.colorInputLayout.getText().toString()
+                        it.vehicleClass =
+                            Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
+                        checkRUC(it)
+
                     }
                     return
                 }
@@ -417,12 +465,29 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             )
 
         }else{
-            vehicleList?.add(newVehicleInfoDetails)
-            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
-            if(editCall){
-                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment,bundle)
-            }else {
-                findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
+            when(navFlowCall) {
+
+                Constants.PAY_FOR_CROSSINGS -> {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    val model = CrossingDetailsModelsRequest(
+                        newVehicleInfoDetails.plateNumber,
+                        newVehicleInfoDetails.vehicleClass,
+                        "UK",
+                        newVehicleInfoDetails.vehicleMake,
+                        newVehicleInfoDetails.vehicleModel
+                    )
+
+                    viewModel.getCrossingDetails(model)
+                }
+                else -> {
+                    vehicleList?.add(newVehicleInfoDetails)
+                    val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+                    if(editCall){
+                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment,bundle)
+                    }else {
+                        findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,bundle)
+                    }
+                }
             }
         }
     }
