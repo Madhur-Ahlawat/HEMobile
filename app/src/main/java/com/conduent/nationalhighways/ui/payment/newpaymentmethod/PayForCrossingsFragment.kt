@@ -78,7 +78,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 bundle.putDouble(Constants.DATA,binding.inputTotalAmount.getText().toString().replace(getString(R.string.currency_symbol),"").toDouble())
-                findNavController().navigate(R.id.action_additionalCrossingsFragment_to_nmiPaymentFragment,bundle)
+                findNavController().navigate(R.id.action_payCrossingsFragment_to_crossingRecieptFragment,bundle)
             }
         }
     }

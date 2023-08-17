@@ -431,6 +431,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                if(status.errorModel?.errorCode?.toString().equals("2051")){
+                    binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                }
+                else{
+                    binding.edtOtp.setErrorText(status.errorMsg)
+
+                }
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
                 AdobeAnalytics.setActionTrack1(
@@ -495,7 +502,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
         when (resource) {
             is Resource.Success -> {
-
 
                 val bundle = Bundle()
 
@@ -567,9 +573,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             else -> {
                                 NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
                                 findNavController().navigate(
-                                R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                                bundle
-                            )}
+                                    R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                                    bundle
+                                )}
 
                         }
                     }

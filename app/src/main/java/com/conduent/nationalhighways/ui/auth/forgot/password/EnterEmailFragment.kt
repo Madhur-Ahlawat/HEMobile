@@ -17,7 +17,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPM
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
-import com.conduent.nationalhighways.databinding.ForgotpasswordChangesBinding
+import com.conduent.nationalhighways.databinding.FragmentEnterEmailBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), View.OnClickListener {
+class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnClickListener {
 
     private var commaSeperatedString: String? = null
     private var filterTextForSpecialChars: String? = null
@@ -63,7 +63,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = ForgotpasswordChangesBinding.inflate(inflater, container, false)
+    ) = FragmentEnterEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
         sessionManager.clearAll()
@@ -125,30 +125,32 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
     override fun observer() {
         lifecycleScope.launch {
             observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
-        }
-        if (!isViewCreated) {
-            observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
-            observe(viewModelEmail.userNameAvailabilityCheck, :: handleEmailCheck)
+            if (!isViewCreated) {
+                observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+                observe(viewModelEmail.userNameAvailabilityCheck, ::handleEmailCheck)
 
+            }
         }
+
 
         isViewCreated = true
     }
 
-    private fun handleEmailCheck(response : Resource<Boolean?>?){
+    private fun handleEmailCheck(response: Resource<Boolean?>?) {
 
-        if(response?.data == true){
+        if (response?.data == true) {
             val request = EmailVerificationRequest(
                 Constants.EMAIL,
                 binding.edtEmail.getText().toString().trim()
             )
             createAccountViewModel.emailVerificationApi(request)
-        }else{
+        } else {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            binding.edtEmail.setErrorText(response?.errorMsg.toString().trim())
-//            binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
+            if(navFlowCall==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+                binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
+            }
 
         }
 
@@ -162,7 +164,9 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.statusCode?.equals("1054") == true) {
-                        status.data.message?.let { binding.edtEmail.setErrorText(it) }
+                        if(navFlowCall==FORGOT_PASSWORD_FLOW){
+                            status.data.message?.let { binding.edtEmail.setErrorText(getString(R.string.incorrect_email_try_again)) }
+                        }
                     } else {
                         binding.root.post {
                             val bundle = Bundle()
@@ -277,9 +281,13 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                         )
                         sessionManager.saveAccountNumber(emailText)
                         isCalled = true
-                        viewModel.confirmOptionForForgot(emailText)}
-                    else -> {NewCreateAccountRequestModel.emailAddress = emailText
-                        checkEmailAddress()}
+                        viewModel.confirmOptionForForgot(emailText)
+                    }
+
+                    else -> {
+                        NewCreateAccountRequestModel.emailAddress = emailText
+                        checkEmailAddress()
+                    }
 
                 }
             }
@@ -288,7 +296,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
 
     private fun handleEditNavigation(emailText: String) {
         if (emailText == NewCreateAccountRequestModel.emailAddress) {
-                findNavController().popBackStack()
+            findNavController().popBackStack()
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
             checkEmailAddress()
@@ -317,14 +325,16 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
         btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().length > 0) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
                 false
-            }
-            else {
-                if(binding.edtEmail.editText.getText().toString().length>100){
+            } else {
+                if (binding.edtEmail.editText.getText().toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
-                }
-                else{
-                    if ( !Utils.isLastCharOfStringACharacter(binding.edtEmail.editText.getText().toString().trim()) || Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')>1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                } else {
+                    if (!Utils.isLastCharOfStringACharacter(
+                            binding.edtEmail.editText.getText().toString().trim()
+                        ) || Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
                         ) || (binding.edtEmail.editText.getText().toString().trim().last()
                             .toString().equals(".") || binding.edtEmail.editText.getText()
@@ -332,11 +342,15 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                         || (binding.edtEmail.editText.getText().toString().trim().last().toString()
                             .equals("-") || binding.edtEmail.editText.getText().toString().first()
                             .toString().equals("-"))
-                        || (Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'.')<1) || (Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')<1)) {
+                        || (Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '.'
+                        ) < 1) || (Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                        ) < 1)
+                    ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
-                    }
-                    else {
+                    } else {
                         if (Utils.hasSpecialCharacters(
                                 binding.edtEmail.editText.getText().toString().trim(),
                                 splCharEmailCode
@@ -377,12 +391,15 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        }
-                        else if(!(Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')>0 && Utils.countOccurenceOfChar(binding.edtEmail.editText.getText().toString().trim(),'@')<2)){
+                        } else if (!(Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                            ) > 0 && Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                            ) < 2)
+                        ) {
                             binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                             false
-                        }
-                        else {
+                        } else {
                             binding.edtEmail.removeError()
                             true
                         }
