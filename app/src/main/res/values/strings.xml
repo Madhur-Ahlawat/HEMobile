@@ -1361,8 +1361,8 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an account to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
-        \n<font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
+        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
     <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
@@ -1391,7 +1391,13 @@
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>
     <string name="str_time_date">Time and  Date</string>
-
+    <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
+    <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
+    <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
+    <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text\nmessage.</string>
+    <string name="email_optional">Email (optional)</string>
+    <string name="text_message_optional">Text message (optional)</string>
+    <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
 
 </resources>
 

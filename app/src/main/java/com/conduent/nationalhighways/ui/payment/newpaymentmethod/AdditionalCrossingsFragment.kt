@@ -43,10 +43,10 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
             numberAdditionalCrossings.setSelectedValue("1")
-            val charge = data?.chargingRate?.toInt()
+            val charge = data?.chargingRate?.replace("£","")?.replace("$","")?.toDouble()
             if(charge != null) {
                 val unSettledTrips = data?.unSettledTrips?.toInt()
-                var recent = 0
+                var recent = 0.0
                 if (unSettledTrips != null && unSettledTrips != 0) {
                     recent = charge * unSettledTrips
                 }
@@ -93,12 +93,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-        val charge = data?.chargingRate?.toInt()
+        val charge = data?.chargingRate?.toDouble()
         if(charge != null){
 //            val total = charge*selectedItem.toInt()
 //            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+total)
             val unSettledTrips = data?.unSettledTrips?.toInt()
-            var recent = 0
+            var recent = 0.0
             if(unSettledTrips != null){
                  recent = charge*unSettledTrips
             }

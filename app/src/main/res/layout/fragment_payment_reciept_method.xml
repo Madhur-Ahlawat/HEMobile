@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/_26dp"
+    android:paddingTop="@dimen/_24dp">
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/lable_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@string/open_sans"
+        android:text="@string/how_do_you_want_to_receive_your_payment_receipt"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sp"
+        app:fontFamily="@string/open_sans_semi_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/lable_header2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30dp"
+        android:fontFamily="@string/open_sans"
+        android:text="@string/we_can_send_you_a_receipt_by_email_and_text_message"
+        android:textColor="@color/grayColorIcon"
+        android:textSize="@dimen/_14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lable_header"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lable_header2">
+
+        <CheckBox
+            android:id="@+id/selectEmail"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:buttonTint="@color/color_E0E0E0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/label_email"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_22_5dp"
+            android:text="@string/email_optional"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/_14dp"
+            app:layout_constraintBottom_toBottomOf="@id/selectEmail"
+            app:layout_constraintStart_toEndOf="@id/selectEmail"
+            app:layout_constraintTop_toTopOf="@id/selectEmail" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/edt_email"
+            style="@style/input_text"
+            android:layout_width="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:visibility="gone"
+            app:imeOptions="actionDone"
+            app:inputType="text"
+            app:labelText="@string/global_email_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/label_email"
+            app:layout_constraintTop_toBottomOf="@id/label_email"
+            app:maxLength="100" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_email">
+
+        <CheckBox
+            android:id="@+id/selectTextMessage"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:buttonTint="@color/color_E0E0E0"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/label_text_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_22_5dp"
+            android:text="@string/text_message_optional"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/_14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/selectTextMessage"
+            app:layout_constraintStart_toEndOf="@+id/selectTextMessage"
+            app:layout_constraintTop_toTopOf="@id/selectTextMessage" />
+
+
+        <com.conduent.apollo.ui.CMDropDownView
+            android:id="@+id/inputCountry"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_11dp"
+            android:padding="0dp"
+            android:textColor="@color/black"
+            app:inputType="number"
+            app:labelText="Country code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/label_text_message"
+            app:layout_constraintTop_toBottomOf="@id/label_text_message" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/inputMobileNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:maxLength="15"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            app:imeOptions="actionNext"
+            app:inputType="phone"
+            app:labelText="Mobile number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/inputCountry"
+            app:layout_constraintTop_toBottomOf="@+id/inputCountry"
+            app:maxLength="15" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnContinue"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_86dp"
+            android:enabled="false"
+            android:text="@string/str_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber"
+            app:radius="@dimen/margin_5dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
