@@ -111,11 +111,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
         when (view?.id) {
             R.id.confirmBtn -> {
-
+                val accountData = NewCreateAccountRequestModel
+                val vehicleList = accountData.vehicleList
                 when(navFlowCall) {
 
                     Constants.PAY_FOR_CROSSINGS -> {
-
+                        nonUKVehicleModel?.let { vehicleList.add(it) }
                         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                         val model = CrossingDetailsModelsRequest(
                             nonUKVehicleModel?.plateNumber,
@@ -129,8 +130,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     }
 
                     else -> {
-                        val accountData = NewCreateAccountRequestModel
-                        val vehicleList = accountData.vehicleList
+
                         val oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER,"").toString()
                         if (oldPlateNumber.isNotEmpty()) {
                             val index = arguments?.getInt(Constants.VEHICLE_INDEX)

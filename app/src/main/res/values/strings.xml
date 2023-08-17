@@ -1062,6 +1062,7 @@
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is exempt from Dart Charge payment</string>
     <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
@@ -1386,6 +1387,7 @@
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
+    <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
 
 </resources>

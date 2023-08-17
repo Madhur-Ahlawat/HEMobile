@@ -524,6 +524,10 @@
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_maximumFragment_to_addVehicleFragment"
+            app:destination="@+id/addNewVehicleDetailsFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />

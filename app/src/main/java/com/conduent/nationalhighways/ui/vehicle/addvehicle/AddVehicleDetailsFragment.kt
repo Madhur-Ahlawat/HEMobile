@@ -30,6 +30,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -58,7 +59,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var loader: LoaderDialog? = null
     @Inject
     lateinit var sessionManager: SessionManager
-
+    private var isViewCreated = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -66,7 +67,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     ) = FragmentNewAddVehicleDetailsBinding.inflate(inflater, container, false)
 
     override fun observer() {
+        if (!isViewCreated) {
         observe(viewModel.getCrossingDetails, ::getUnSettledCrossings)
+        }
+        isViewCreated = true
     }
 
     override fun init() {
@@ -158,6 +162,23 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         binding.nextBtn.setOnClickListener(this)
+
+        when(navFlowCall) {
+
+            Constants.PAY_FOR_CROSSINGS -> {
+                binding.makeInputLayout.invisible()
+                binding.modelInputLayout.invisible()
+                binding.colorInputLayout.invisible()
+
+                binding.vehicleRegisteredLayout.visibility = View.GONE
+
+                radioButtonChecked = true
+                makeInputCheck = true
+                modelInputCheck = true
+                colourInputCheck = true
+                checkValidation()
+            }
+        }
 
     }
 
@@ -465,6 +486,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             )
 
         }else{
+            vehicleList?.add(newVehicleInfoDetails)
             when(navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
@@ -480,7 +502,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     viewModel.getCrossingDetails(model)
                 }
                 else -> {
-                    vehicleList?.add(newVehicleInfoDetails)
                     val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
                     if(editCall){
                         findNavController().navigate(R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment,bundle)
