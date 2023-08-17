@@ -129,42 +129,30 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
 
 
-//        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-//        binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
 
         /* binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
          binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 */
         setFragmentResultListener(Constants.LOW_BALANCE) { _, bundle ->
-
-
-            if (bundle.getString(Constants.LOW_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
-
-
+            if (bundle.getString(Constants.LOW_BALANCE_AMOUNT) != null) {
+                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE_AMOUNT))
             }
             if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-
                 binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
             }
-
             if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
                 binding.topUpBtn.isEnabled=true
             }
         }
 
         setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-
-            if (bundle.getString(Constants.LOW_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE))
-
-
+            if (bundle.getString(Constants.LOW_BALANCE_AMOUNT) != null) {
+                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE_AMOUNT))
             }
-
-
             if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
                 binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-
             }
             if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
                 binding.topUpBtn.isEnabled=true
