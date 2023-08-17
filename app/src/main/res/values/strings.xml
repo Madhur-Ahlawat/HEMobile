@@ -1387,7 +1387,9 @@
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
 
-
+    <string name="incorrect_email">Incorrect email. Try again.</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="payment_incorrect">Payment method is incorrect</string>
 </resources>
 
 

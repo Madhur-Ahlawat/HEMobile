@@ -162,7 +162,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotpasswordChangesBinding>(), Vie
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.statusCode?.equals("1054") == true) {
-                        status.data.message?.let { binding.edtEmail.setErrorText(it) }
+                        status.data.message?.let { binding.edtEmail.setErrorText(resources.getString(R.string.incorrect_email)) }
                     } else {
                         binding.root.post {
                             val bundle = Bundle()

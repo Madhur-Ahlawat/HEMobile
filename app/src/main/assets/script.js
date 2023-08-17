@@ -147,16 +147,22 @@ document.addEventListener('DOMContentLoaded', function () {
             window.appInterface.postMessage("NMILoaded");
         },
         'callback': function(e) {
-            window.appInterface.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
             //invokeCommand(apiResponse)
             window.appInterface.postMessage(apiResponse);
             var card = e.card;
             var amt =  document.getElementById("amount").value;
             const pattern = /^(\w)[A-Za-z-\s\.']{2,50}$/i;
+
+          /*  if(e.check.name === null){
+                document.getElementById("nameerrormesages").style.display="";
+                document.getElementById("nameerrormesages").innerText = "Enter the name on card";
+                window.appInterface.postMessage("ValidationFailed");
+            } else*/
             if (pattern.test(e.check.name) == false) {
                 document.getElementById("nameerrormesages").style.display="";
                 document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
+                window.appInterface.postMessage("ValidationFailed");
             } else if ((amt < 10) && (amt > 10000)) {
                 if (amt < 10) {
                     document.getElementById("errorMessageForAmount").style.display="";
@@ -167,8 +173,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     document.getElementById("errorMessageForAmount").style.display="none";
                 }
-            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
-            {
+            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name))){
+                window.appInterface.postMessage("3DSLoaded");
                 var amt =  document.getElementById("amount").value;
                 window.appInterface.postMessage("amounttoIncrease"+amt);
                 window.appInterface.postMessage("3DStarted");

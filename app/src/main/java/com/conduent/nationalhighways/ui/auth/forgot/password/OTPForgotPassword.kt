@@ -444,7 +444,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     sessionManager.getLoggedInUser()
                 )
 
+                when (status.errorModel?.errorCode) {
+                    2051 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
 
+                    }
+                }
             }
 
             else -> {
