@@ -247,33 +247,36 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btn_submit -> {
+            R.id.btnContinue -> {
 
-                    /* AdobeAnalytics.setActionTrack(
-                         "submit",
-                         "login:forgot password:choose options:otp:new password set:password reset success",
-                         "forgot password",
-                         "english",
-                         "login",
-                         (requireActivity() as AuthActivity).previousScreen,
-                         sessionManager.getLoggedInUser()
-                     )*/
+                /* AdobeAnalytics.setActionTrack(
+                     "submit",
+                     "login:forgot password:choose options:otp:new password set:password reset success",
+                     "forgot password",
+                     "english",
+                     "login",
+                     (requireActivity() as AuthActivity).previousScreen,
+                     sessionManager.getLoggedInUser()
+                 )*/
 
-//                val bundle = Bundle()
-//                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-//                NewCreateAccountRequestModel.password =
-//                    binding.edtNewPassword.getText().toString().trim()
-//                findNavController().navigate(
-//                    R.id.action_createPasswordFragment_to_optForSmsFragment,
-//                    bundle
-//                )
-
-                    requireActivity().startNormalActivity(LoginActivity::class.java)
-                    requireActivity().finish()
-
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                if (binding?.selectEmail!!.isChecked) {
+                    bundle.putString(Constants.DATA, binding.edtEmail.getText().toString().trim())
+                } else {
+                    bundle.putString(
+                        Constants.DATA,
+                        binding.inputMobileNumber.getText().toString().trim()
+                    )
                 }
+                findNavController().navigate(
+                    R.id.action_crossingRecieptFragment_to_nmiPaymentFragment,
+                    bundle
+                )
 
             }
+
+        }
     }
 
     private fun getSpannedText(text: String): Spanned? {

@@ -198,8 +198,8 @@
         tools:layout="@layout/fragment_additional_crossings">
 
         <action
-            android:id="@+id/action_additionalCrossingsFragment_to_nmiPaymentFragment"
-            app:destination="@id/nmiPaymentFragment" />
+            android:id="@+id/action_additionalCrossingsFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
     </fragment>
 
     <fragment
@@ -211,6 +211,9 @@
         <action
             android:id="@+id/action_payCrossingsFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
 
     </fragment>
 
@@ -227,6 +230,16 @@
         <action
             android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingRecieptFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentRecieptFragment"
+        android:label="crossingRecieptFragment"
+        tools:layout="@layout/fragment_payment_reciept_method">
+
+        <action
+            android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
     </fragment>
 
     <fragment
