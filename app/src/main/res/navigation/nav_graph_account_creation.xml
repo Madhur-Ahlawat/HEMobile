@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite">
+    app:startDestination="@id/topUpFragment">
 
     <!-- Step 5 -->
 
@@ -90,10 +90,10 @@
             app:destination="@id/twoStepVerificationFragment" />
         <action
             android:id="@+id/action_accountSummaryFragment_to_termsConditionFragment"
-            app:destination="@id/termsConditionFragment"/>
+            app:destination="@id/termsConditionFragment" />
         <action
             android:id="@+id/action_accountSummaryFragment_to_nmiPaymentFragment"
-            app:destination="@id/nmiPaymentFragment"/>
+            app:destination="@id/nmiPaymentFragment" />
     </fragment>
 
     <!-- BUSINESS ACCOUNT -->
@@ -307,8 +307,8 @@
         <action
             android:id="@+id/action_selectaddressfragment_to_resetForgotPassword"
             app:destination="@id/resetFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/removeVehicleFragment"/>
+            app:popUpTo="@id/removeVehicleFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
@@ -408,7 +408,7 @@
             app:destination="@id/HWMobileNumberCaptureVC" />
         <action
             android:id="@+id/action_optForSmsFragment_to_termsConditionFragment"
-            app:destination="@id/termsConditionFragment"/>
+            app:destination="@id/termsConditionFragment" />
     </fragment>
     <fragment
         android:id="@+id/twoStepVerificationFragment"
@@ -474,7 +474,7 @@
         android:id="@+id/discount_type_fragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.DiscountTypeFragment"
         android:label="DiscountTypeFragment"
-        tools:layout="@layout/fragment_discount_type"/>
+        tools:layout="@layout/fragment_discount_type" />
     <fragment
         android:id="@+id/resend_code_fragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
@@ -602,7 +602,7 @@
             app:destination="@id/successfullyFragment" />
         <action
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
-            app:destination="@id/tryPaymentAgainFragment"/>
+            app:destination="@id/tryPaymentAgainFragment" />
 
     </fragment>
 
@@ -626,8 +626,7 @@
         android:id="@+id/termsConditionFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TermsConditionFragment"
         android:label="TermsConditionFragment"
-        tools:layout="@layout/fragment_terms_condition"
-        />
+        tools:layout="@layout/fragment_terms_condition" />
 
     <fragment
         android:id="@+id/crossingCheck"
@@ -638,6 +637,19 @@
             android:id="@+id/action_crossingCheck_to_checkChargesOption"
             app:destination="@id/checkChargesOption" />
 
+
+    </fragment>
+    <fragment
+        android:id="@+id/make_one_off_payment_successfully"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.MakeOneOffPaymentSuccessfullyFragment"
+        android:label="make one  off payment successfully"
+        tools:layout="@layout/fragment_make_one_off_payment_successfully">
+
+        <action
+            android:id="@+id/action_make_one_off_payment_successfully_to_createAccountPrerequisite"
+            app:destination="@id/createAccountPrerequisite"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 
