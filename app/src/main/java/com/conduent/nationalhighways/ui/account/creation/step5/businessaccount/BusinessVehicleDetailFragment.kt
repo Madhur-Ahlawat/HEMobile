@@ -78,7 +78,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         }
         when (resource) {
             is Resource.Success -> {
-                resource.data?.unSettledTrips = "5"
                 resource.data?.let {
                     it.let {
                         val unSettledTrips = it.unSettledTrips?.toInt()

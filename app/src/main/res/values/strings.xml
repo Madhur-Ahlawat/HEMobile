@@ -1362,7 +1362,8 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an account to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000" >\u25CF</font> pay for crossings you’ve made since yesterday \n<font color="#000000" >\u25CF</font> pay for future crossings</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
+        \n<font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
     <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
@@ -1386,6 +1387,11 @@
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
+    <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
+    <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
+    <string name="str_payment_successfully">Payment Successful</string>
+    <string name="str_amount_paid">Amount Paid</string>
+    <string name="str_time_date">Time and  Date</string>
 
     <string name="incorrect_email">Incorrect email. Try again.</string>
     <string name="payment_failed">Payment failed</string>
