@@ -117,8 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(message.localeCompare('Field is empty') == "0") {
                         errorMessage = "Enter an expiry date";
                     } else if(message.localeCompare('Expiration date must be a present or future month and year') == "0") {
-                        errorMessage = "Expiry date cannot be in the past";
-                        
+//                        errorMessage = "Expiry date cannot be in the past";
+                        errorMessage = "Invalid date format";
+
                     } else {
                         errorMessage = message;
                     }
