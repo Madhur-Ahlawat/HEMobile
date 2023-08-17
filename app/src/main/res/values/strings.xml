@@ -1386,6 +1386,11 @@
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
+    <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
+    <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
+    <string name="str_payment_successfully">Payment Successful</string>
+    <string name="str_amount_paid">Amount Paid</string>
+    <string name="str_time_date">Time and  Date</string>
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
     <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
     <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
