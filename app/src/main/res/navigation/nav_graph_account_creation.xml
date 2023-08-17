@@ -361,9 +361,9 @@
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.EnterEmailFragment"
         android:label="CreateEmailAddress"
-        tools:layout="@layout/forgotpassword_changes">
+        tools:layout="@layout/fragment_enter_email">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_forgotOtpFragment"
             app:destination="@id/forgotOtpFragment" />

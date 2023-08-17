@@ -43,7 +43,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
             numberAdditionalCrossings.setSelectedValue("1")
-            val charge = data?.chargingRate?.toInt()
+            val charge = data?.chargingRate?.replace("£","")?.replace("$","")?.toInt()
             if(charge != null) {
                 val unSettledTrips = data?.unSettledTrips?.toInt()
                 var recent = 0
