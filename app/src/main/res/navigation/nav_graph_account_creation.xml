@@ -236,9 +236,20 @@
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentRecieptFragment"
         android:label="crossingRecieptFragment"
         tools:layout="@layout/fragment_payment_reciept_method">
-
+        <action
+            android:id="@+id/action_crossingRecieptFragment_to_crossingCheckAnswersFragment"
+            app:destination="@id/crossingCheckAnswersFragment" />
         <action
             android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingCheckAnswersFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSummaryFragment"
+        android:label="crossingCheckAnswersFragment"
+        tools:layout="@layout/fragment_payment_summary">
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
     </fragment>
 
