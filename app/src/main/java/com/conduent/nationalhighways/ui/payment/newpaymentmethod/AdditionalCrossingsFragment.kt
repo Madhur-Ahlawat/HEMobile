@@ -1,11 +1,14 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.content.ContextWrapper
+import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -13,14 +16,11 @@ import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentAdditionalCrossingsBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,11 +35,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
-        data = navData as CrossingDetailsModelsResponse?
+        data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
             numberAdditionalCrossings.setSelectedValue("1")
@@ -54,6 +55,11 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 recentCrossing.setText(getString(R.string.currency_symbol) + recent)
                 paymentCrossing.setText(getString(R.string.currency_symbol) + charge)
                 totalAmount.setText(getString(R.string.currency_symbol) + total)
+                val additional = charge*numberAdditionalCrossings.selectedItemValue!!.toInt()
+                data?.totalAmount=total
+                data?.additionalCrossingCount = numberAdditionalCrossings.selectedItemValue!!.toInt()
+                data?.additionalCharge=additional
+
             }
         }
         displayCustomMessage(getString(R.string.additional_crossings_txt),
@@ -79,6 +85,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                 bundle.putDouble(Constants.DATA,binding.totalAmount.getText().toString().replace(getString(R.string.currency_symbol),"").toDouble())
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data as Parcelable?)
                 findNavController().navigate(R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,bundle)
             }
         }
@@ -104,9 +111,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             }
             val additional = charge*selectedItem.toInt()
             val total = recent+additional
+            data?.totalAmount=total
+            data?.additionalCharge=additional
+            data?.additionalCrossingCount = selectedItem.toInt()
             binding.recentCrossing.setText(getString(R.string.currency_symbol)+recent)
             binding.paymentCrossing.setText(getString(R.string.currency_symbol)+additional)
-            binding.totalAmount.setText(getString(R.string.currency_symbol)+total)
+            binding.totalAmount.setText(getString(R.string.currency_symbol)+data?.totalAmount)
         }
     }
 

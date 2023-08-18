@@ -11,10 +11,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|top"
-            android:orientation="vertical"
+            android:layout_margin="@dimen/_24dp"
             android:layout_marginHorizontal="@dimen/_2dp"
-            android:layout_margin="@dimen/_24dp">
+            android:gravity="start|top"
+            android:orientation="vertical">
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -35,39 +35,39 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutVehicleRegistration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/layoutVehicleRegistration"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtVehicleRegistration"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/vehicle_registration_number_plate"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:text="AJ66 MHA"
                         android:id="@+id/vehicleRegisration"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="AJ66 MHA"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+
                     <ImageView
+                        android:id="@+id/editFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editFullName"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -76,29 +76,28 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/companyNameCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:id="@+id/companyNameCard"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:visibility="gone"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layerCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/layerCompanyName"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtCompanyFullName"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/company_name"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,15 +108,16 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
+
                     <ImageView
+                        android:id="@+id/editCompanyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editCompanyName"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -133,8 +133,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -144,27 +143,28 @@
                     <TextView
                         android:id="@+id/txtRecentCrossings"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/recent_crossings"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/recentCrossings"
                         style="@style/RegularTextBlack"
-                        android:text="3"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
+
                     <ImageView
+                        android:id="@+id/editAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editAddress"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,8 +181,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -192,31 +191,32 @@
                     <TextView
                         android:id="@+id/txtCreditAdditionalCrossings"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/credit_for_additional_crossings"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:gravity="left|center"
-                        android:text="1"
-                        android:layout_height="wrap_content"
                         android:id="@+id/creditAdditionalCrossings"
                         style="@style/RegularTextBlack"
-                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        android:text="1"
+                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings" />
+
                     <ImageView
+                        android:id="@+id/editEmailAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editEmailAddress"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -225,7 +225,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/paymentAmount"
+                android:id="@+id/labelPaymentAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -233,8 +233,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -244,31 +243,32 @@
                     <TextView
                         android:id="@+id/txtPaymentAmount"
                         style="@style/MediumTextBlack"
+                        android:text="@string/payment_amount"
                         android:textSize="15sp"
-                        android:text="@string/credit_for_additional_crossings"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/paymentAmount"
+                        style="@style/RegularTextBlack"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
                         android:text="£10.00"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/PaymentAmount"
-                        style="@style/RegularTextBlack"
                         app:layout_constraintEnd_toStartOf="@+id/editPaymentAmount"
-                        android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
+
                     <ImageView
+                        android:id="@+id/editPaymentAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editPaymentAmount"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,8 +283,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_55dp"
-                android:text="@string/pay"
                 android:layout_marginBottom="@dimen/_50sdp"
+                android:text="@string/pay"
                 app:radius="5dp" />
 
         </LinearLayout>

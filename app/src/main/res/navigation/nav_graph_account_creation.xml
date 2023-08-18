@@ -249,6 +249,9 @@
         android:label="crossingCheckAnswersFragment"
         tools:layout="@layout/fragment_payment_summary">
         <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_personalInfoFragment"
+            app:destination="@id/createAccountPersonalInfo" />
+        <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
     </fragment>

@@ -16,6 +16,11 @@ data class CrossingDetailsModelsResponse(
     val vehicleModel: String?,
     val vehicleYear: String?,
     val accountNumber: String?,
-    val dvlaclass: String?
+    val dvlaclass: String?,
+    var recieptMode:String?,
+    var crossingCount:Int,
+    var additionalCrossingCount:Int,
+    var totalAmount:Double,
+    var additionalCharge:Double
 ) : Parcelable
 
