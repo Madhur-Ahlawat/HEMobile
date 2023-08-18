@@ -72,7 +72,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                     bundle.putString(NAV_FLOW_KEY, Constants.NOTSUSPENDED)
                     bundle.putInt(Constants.PAYMENT_METHOD_SIZE, 0)
                     findNavController().navigate(
-                        R.id.action_accountSummaryFragment_to_nmiPaymentFragment,
+                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
                         bundle
                     )
 

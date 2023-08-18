@@ -270,7 +270,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     )
                 }
                 findNavController().navigate(
-                    R.id.action_crossingRecieptFragment_to_nmiPaymentFragment,
+                    R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
                     bundle
                 )
 
