@@ -33,7 +33,6 @@
             android:textSize="@dimen/font_16sp"
             app:imeOptions="actionDone"
             app:inputType="numberDecimal"
-            app:drawableRight="@drawable/edit"
             app:labelText="@string/str_payment_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -123,25 +123,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-        //binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
-        binding.lowBalance.editText.setOnTouchListener { _, event ->
-            if (MotionEvent.ACTION_UP == event.action) {
-                val bundle = Bundle()
-
-                bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
-                bundle.putString(
-                    Constants.TOP_UP_AMOUNT,
-                    binding.lowBalance.editText.text.toString()
-                )
-
-                findNavController().navigate(
-                    R.id.action_accountSuspendedFinalPayFragment_to_amountKeyPadFragment,
-                    bundle
-                )
-            }
-            true
-        }
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
         if (paymentList?.isNotEmpty() == true) {
             if (paymentList?.get(position)?.cardType.equals("visa", true)) {
@@ -161,38 +144,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         }
 
-        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-
-
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-
-
-            }
-
-
-        }
     }
-/*
-    override fun onResume() {
-        if (PaymentSingletonClass.topUpBalance.isNotEmpty()) {
-            val tBalance = PaymentSingletonClass.topUpBalance
-            var fBalance: String = ""
-            fBalance = if (tBalance.contains("$")) {
-                tBalance.replace("$", "")
-            } else {
-                tBalance.replace("£", "").toString()
-            }
-            binding.lowBalance.editText.setText(
-                (String.format(
-                    "%.2f",
-                    fBalance.toDouble()
-                ))
-            )
-        }
-        super.onResume()
-    }
-*/
+
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
             val text = binding.lowBalance.getText().toString().trim()

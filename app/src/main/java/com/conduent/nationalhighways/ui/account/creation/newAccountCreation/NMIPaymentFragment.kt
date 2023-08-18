@@ -374,6 +374,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
+
     private fun saveNewCard(
         responseModel: CardResponseModel?,
         paymentSuccessResponse: PaymentSuccessResponse?,

@@ -74,39 +74,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
-        //  binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+          binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
 
-        binding.lowBalance.editText.setOnTouchListener { _, event ->
-            if (MotionEvent.ACTION_UP == event.action) {
-                val bundle = Bundle()
 
-                bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
-
-                bundle.putString(
-                    Constants.TOP_UP_AMOUNT,
-                    binding.lowBalance.editText.text.toString()
-                )
-
-                findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_amountKeyPadFragment,
-                    bundle
-                )
-            }
-            true
-        }
-
-        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-
-
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-
-
-            }
-
-
-        }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
