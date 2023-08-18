@@ -263,20 +263,20 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             Log.i("WebView", "postMessage data=$data")
             if (data.isNotEmpty()) {
                 MainScope().launch {
-                    if (data == "NMILoaded") {
-                        hideLoader()
+                    when (data) {
+                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
 
-                    } else if (data == "3DStarted") {
-                        showLoader()
+                        "3DStarted" -> showLoader()
+                        "3DSNotIntiated" -> showErrorPopup(resources.getString(R.string.payment_failed))
+                        "cardtypeerror" -> showErrorPopup(resources.getString(R.string.payment_incorrect))
 
-                    } else if (data == "3DSLoaded") {
-                        hideLoader()
-                    } else if (data.contains("amounttoIncrease")) {
-                        htmlTopUpAmount = data.replace("amounttoIncrease", "")
-
-                    } else if (data == "true") {
-                        checkBox = true
-
+                        else -> {
+                            if (data.startsWith("amounttoIncrease")) {
+                                htmlTopUpAmount = data.replace("amounttoIncrease", "")
+                            } else if (data == "true") {
+                                checkBox = true
+                            }
+                        }
                     }
 
                     val check: Boolean = "tokenType" in data
@@ -367,6 +367,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         val ftVehicleList = FtVehicleList(NewCreateAccountRequestModel.vehicleList as ArrayList<NewVehicleInfoDetails>)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
+    }
+
+    private fun showErrorPopup(errorMsg:String) {
+        ErrorUtil.showError(binding.root, errorMsg)
+
     }
 
     private fun saveNewCard(

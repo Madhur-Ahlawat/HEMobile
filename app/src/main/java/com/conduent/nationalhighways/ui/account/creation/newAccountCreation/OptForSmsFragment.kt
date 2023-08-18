@@ -47,6 +47,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     ): FragmentOptForSmsBinding = FragmentOptForSmsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        NewCreateAccountRequestModel.communicationTextMessage=false
 
         binding.switchCommunication.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){

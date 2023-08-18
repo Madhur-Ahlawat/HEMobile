@@ -113,7 +113,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
                         setFragmentResult(
                             Constants.LOW_BALANCE,
                             bundleOf(
-                                Constants.LOW_BALANCE to binding.txtPaymentAmount.getText().toString().replace("$", "").replace("£", "")
+                                Constants.LOW_BALANCE_AMOUNT to binding.txtPaymentAmount.getText().toString().replace("$", "").replace("£", "")
                                     .trim(),
                                 Constants.TOP_UP_BALANCE to topUpAmount
                             )
@@ -137,7 +137,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
                             bundleOf(
                                 Constants.TOP_UP_BALANCE to binding.txtPaymentAmount.text.toString()
                                     .trim(),
-                                Constants.LOW_BALANCE to lowBalanceAmount
+                                Constants.LOW_BALANCE_AMOUNT to lowBalanceAmount
                             )
                         )
                         findNavController().popBackStack()

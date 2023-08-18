@@ -74,48 +74,59 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             setTelephoneView()
-
         } else {
-
             setMobileView()
-
         }
 
         binding.btnNext.setOnClickListener(this)
-        when(navFlowCall) {
-
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
-                NewCreateAccountRequestModel.mobileNumber?.let { binding.inputMobileNumber.setText(it) }
-                NewCreateAccountRequestModel.countryCode?.let { binding.inputCountry.setSelectedValue(it) }
+        when (navFlowCall) {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+                NewCreateAccountRequestModel.mobileNumber?.let {
+                    binding.inputMobileNumber.setText(
+                        it
+                    )
+                }
+                NewCreateAccountRequestModel.countryCode?.let {
+                    binding.inputCountry.setSelectedValue(
+                        it
+                    )
+                }
                 requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                 checkButton()
             }
-            PROFILE_MANAGEMENT_COMMUNICATION_CHANGED ->{
+
+            PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 setMobileView()
             }
 
-            PROFILE_MANAGEMENT,PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+            PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_mobile_number)
                 setMobileView()
                 setData()
             }
         }
+
+
     }
 
     private fun setData() {
         val data = navData as ProfileDetailModel?
-        if(data != null){
-            if(data.personalInformation?.phoneCell.isNullOrEmpty().not()){
+        if (data != null) {
+            if (data.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                 setMobileView()
                 data.personalInformation?.phoneCell?.let { binding.inputMobileNumber.setText(it) }
-            }else if(data.personalInformation?.phoneDay.isNullOrEmpty().not()){
+            } else if (data.personalInformation?.phoneDay.isNullOrEmpty().not()) {
                 setTelephoneView()
                 data.personalInformation?.phoneDay?.let { binding.inputMobileNumber.setText(it) }
             }
-            data.personalInformation?.phoneCellCountryCode?.let { binding.inputCountry.setSelectedValue(it) }
+            data.personalInformation?.phoneCellCountryCode?.let {
+                binding.inputCountry.setSelectedValue(
+                    it
+                )
+            }
             requiredCountryCode = true
             checkButton()
         }
@@ -127,7 +138,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
         binding.txtBottom.visibility = View.GONE
         requiredMobileNumber = true
-        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+        if (NewCreateAccountRequestModel.prePay) {
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+        } else {
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+        }
     }
 
     private fun setMobileView() {
@@ -164,13 +179,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
-                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_resetFragment,bundle)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
+                findNavController().navigate(
+                    R.id.action_HWMobileNumberCaptureVC_to_resetFragment,
+                    bundle
+                )
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -197,6 +217,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.apply {
                     inputCountry.dataSet.addAll(countriesCodeList)
                     inputCountry.setSelectedValue(Constants.UK_CODE)
+                    requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+                    if (!NewCreateAccountRequestModel.prePay) {
+                        checkButton()
+                    }
                 }
 
             }
@@ -218,39 +242,60 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
                 val countryCode = binding.inputCountry.selectedItemDescription.toString()
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                when(navFlowCall){
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        val noChanges = countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
-                        if(noChanges){
-                            findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,bundle)
-                        }else{
-                            val res : Int = R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
-                            handleNavFlow(mobileNumber,countryCode,bundle,res)
+                        val noChanges =
+                            countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
+                        if (noChanges) {
+                            findNavController().navigate(
+                                R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
+                                bundle
+                            )
+                        } else {
+                            val res: Int =
+                                R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
+                            handleNavFlow(mobileNumber, countryCode, bundle, res)
                         }
                     }
-                    EDIT_ACCOUNT_TYPE -> {findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment,bundle)}
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE,PROFILE_MANAGEMENT -> {
+                    EDIT_ACCOUNT_TYPE -> {
+                        findNavController().navigate(
+                            R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                            bundle
+                        )
+                    }
+
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT -> {
                         val data = navData as ProfileDetailModel?
-                        if(data != null){
-                            if(isItMobileNumber){
+                        if (data != null) {
+                            if (isItMobileNumber) {
                                 val phone = data.personalInformation?.phoneCell
-                                if(phone.isNullOrEmpty().not() && phone.equals(binding.inputMobileNumber.getText().toString().trim(),true)){
+                                if (phone.isNullOrEmpty().not() && phone.equals(
+                                        binding.inputMobileNumber.getText().toString().trim(), true
+                                    )
+                                ) {
                                     findNavController().popBackStack()
-                                }else{
+                                } else {
                                     hitApi()
                                 }
-                            }else{
+                            } else {
                                 val landline = data.personalInformation?.phoneDay
-                                if(landline.isNullOrEmpty().not() && landline.equals(binding.inputMobileNumber.getText().toString().trim(),true)){
+                                if (landline.isNullOrEmpty().not() && landline.equals(
+                                        binding.inputMobileNumber.getText().toString().trim(), true
+                                    )
+                                ) {
                                     findNavController().popBackStack()
-                                }else{
+                                } else {
                                     val data = navData as ProfileDetailModel?
-                                    if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                                    if (data?.accountInformation?.accountType.equals(
+                                            Constants.PERSONAL_ACCOUNT,
+                                            true
+                                        )
+                                    ) {
                                         updateStandardUserProfile(data)
-                                    }else{
+                                    } else {
                                         updateBusinessUserProfile(data)
                                     }
                                 }
@@ -258,11 +303,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                         }
                     }
-                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED ->{
-                        hitApi()}
+
+                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        hitApi()
+                    }
+
                     else -> {
-                        val res : Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
-                        handleNavFlow(mobileNumber,countryCode,bundle,res)
+                        val res: Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                        handleNavFlow(mobileNumber, countryCode, bundle, res)
                     }
                 }
             }
@@ -273,7 +321,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         NewCreateAccountRequestModel.mobileNumber = mobileNumber
         NewCreateAccountRequestModel.countryCode = countryCode
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-            findNavController().navigate(res,bundle)
+            findNavController().navigate(res, bundle)
         } else {
             hitApi()
         }
@@ -293,17 +341,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         override fun onTextChanged(
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-
             requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
-            if (index==0){
-                requiredMobileNumber=true
-            }
-
-
-            if (index == 1) {
+            if (charSequence.toString().isEmpty()) {
+                if (index == 0) {
+                    requiredMobileNumber = true
+                } else {
+                    requiredMobileNumber = false
+                }
+            } else {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (binding.inputCountry.getSelectedDescription().equals("UK +44", true)) {
+                if (isItMobileNumber && binding.inputCountry.getSelectedDescription()
+                        .equals("UK +44", true)
+                ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
                             binding.inputMobileNumber.removeError()
@@ -322,7 +372,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             binding.inputMobileNumber.removeError()
                             true
                         } else {
-                            binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                            if (isItMobileNumber) {
+                                binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                            } else {
+                                binding.inputMobileNumber.setErrorText(getString(R.string.telephone_error_message))
+                            }
                             false
                         }
                     } else {
@@ -331,15 +385,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
             }
-
             checkButton()
-
         }
 
         override fun afterTextChanged(editable: Editable?) {
 
         }
     }
+
 
     private fun checkButton() {
         if (requiredCountryCode && requiredMobileNumber) {
@@ -380,30 +433,38 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 )
 
-                when(navFlowCall) {
+                when (navFlowCall) {
 
 
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            arguments?.getParcelable(Constants.NAV_DATA_KEY, CommunicationPrefsRequestModel::class.java)
+                            arguments?.getParcelable(
+                                Constants.NAV_DATA_KEY,
+                                CommunicationPrefsRequestModel::class.java
+                            )
                         } else {
                             arguments?.getParcelable(Constants.NAV_DATA_KEY)
                         }
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
+
                     PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
-                    else ->{
+
+                    else -> {
                         bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_MOBILE_FLOW)
                         bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                     }
                 }
 
-                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
+                    bundle
+                )
             }
 
             is Resource.DataError -> {
@@ -421,7 +482,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-
+       binding.inputMobileNumber.setText("")
+        binding.inputMobileNumber.removeError()
     }
 
     private fun updateBusinessUserProfile(
