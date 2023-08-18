@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(message.localeCompare('Field is empty') == "0") {
                         errorMessage = "Enter an expiry date";
                     } else if(message.localeCompare('Expiration date must be a present or future month and year') == "0") {
-//                        errorMessage = "Expiry date cannot be in the past";
-                        errorMessage = "Invalid date format";
+                        errorMessage = "Expiry date cannot be in the past";
+//                        errorMessage = "Invalid date format";
 
                     } else {
                         errorMessage = message;
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         errorMessage = "Name on card should be at least 3 characters";
                     } else {
                         errorMessage = message;
-                    }
+                    }0
                     document.getElementById("nameerrormesages").style.display = "";
                     document.getElementById("nameerrormesages").innerText = errorMessage;
                 }
