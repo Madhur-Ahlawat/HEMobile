@@ -397,16 +397,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                   /* if (twoFAEnable) {
+                    if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                         startActivity(intent)
                     } else {
                         dashboardViewModel.getAccountDetailsData()
 
-                    }*/
+                    }
 
-                     startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                 }
             })

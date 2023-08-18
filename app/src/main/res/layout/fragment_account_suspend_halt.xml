@@ -46,7 +46,6 @@
                 app:imeOptions="actionDone"
                 app:inputType="numberDecimal"
                 app:labelText="@string/str_payment_amount"
-                app:drawableRight="@drawable/edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_enter_amount"

@@ -75,89 +75,21 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
         binding.topUpBtn.setOnClickListener(this)
 
-        //  binding.lowBalance.editText.setOnClickListener(this)
-        binding.lowBalance.editText.isFocusable = false
-        binding.lowBalance.editText.isClickable = true
 
-        //binding.top.editText.setOnClickListener(this)
-        binding.top.editText.isFocusable = false
-        binding.top.editText.isClickable = true
 
 
 
         binding.top.setOnClickListener(this)
 
-        binding.lowBalance.editText.setOnTouchListener { _, event ->
-            if (MotionEvent.ACTION_UP == event.action) {
-                val bundle = Bundle()
-
-                bundle.putString(Constants.LOW_BALANCE, Constants.LOW_BALANCE)
-                bundle.putString(Constants.TOP_UP_AMOUNT, binding.top.editText.getText().toString())
-                bundle.putString(
-                    Constants.LOW_BALANCE_AMOUNT,
-                    binding.lowBalance.editText.getText().toString()
-                )
-
-
-                findNavController().navigate(
-                    R.id.action_topUpFragment_to_amountKeyPadFragment,
-                    bundle
-                )
-            }
-            true
-        }
-
-
-        binding.top.editText.setOnTouchListener { _, event ->
-            if (MotionEvent.ACTION_UP == event.action) {
-                val bundle = Bundle()
-
-                bundle.putString(Constants.LOW_BALANCE, Constants.TOP_UP_BALANCE)
-                bundle.putString(
-                    Constants.LOW_BALANCE_AMOUNT,
-                    binding.lowBalance.editText.getText().toString()
-                )
-                bundle.putString(Constants.TOP_UP_AMOUNT, binding.top.editText.getText().toString())
-
-
-                findNavController().navigate(
-                    R.id.action_topUpFragment_to_amountKeyPadFragment,
-                    bundle
-                )
-            }
-            true
-        }
 
 
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
 
-        /* binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
+         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
          binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
-*/
-        setFragmentResultListener(Constants.LOW_BALANCE) { _, bundle ->
-            if (bundle.getString(Constants.LOW_BALANCE_AMOUNT) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE_AMOUNT))
-            }
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-            }
-            if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
-                binding.topUpBtn.isEnabled=true
-            }
-        }
 
-        setFragmentResultListener(Constants.TOP_UP_BALANCE) { _, bundle ->
-            if (bundle.getString(Constants.LOW_BALANCE_AMOUNT) != null) {
-                binding.lowBalance.editText.setText(bundle.getString(Constants.LOW_BALANCE_AMOUNT))
-            }
-            if (bundle.getString(Constants.TOP_UP_BALANCE) != null) {
-                binding.top.editText.setText(bundle.getString(Constants.TOP_UP_BALANCE))
-            }
-            if(!binding.lowBalance.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty() && !binding.top.editText.getText().toString().trim().replace("$", "").replace("£", "").isNullOrEmpty()){
-                binding.topUpBtn.isEnabled=true
-            }
-        }
+
 
     }
 
