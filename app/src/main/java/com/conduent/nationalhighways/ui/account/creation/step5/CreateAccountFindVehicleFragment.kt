@@ -223,7 +223,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         if(vehicleList.contains(apiData[0])){
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                            bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                             apiData[0].let {  bundleData.putString(Constants.PLATE_NUMBER, it?.plateNumber) }
                             findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
                             return
@@ -333,8 +333,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 val numberPlate = binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-","")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
                 NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
-
-                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
             }
 
             else -> {
