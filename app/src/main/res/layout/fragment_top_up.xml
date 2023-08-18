@@ -57,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:maxLength="50"
+            app:inputType="numberDecimal"
+            app:imeOptions="actionNext"
             app:labelText="@string/str_low_balance"
 
 

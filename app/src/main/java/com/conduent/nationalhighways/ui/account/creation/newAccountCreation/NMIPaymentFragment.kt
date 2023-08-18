@@ -263,20 +263,20 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             Log.i("WebView", "postMessage data=$data")
             if (data.isNotEmpty()) {
                 MainScope().launch {
-                    if (data == "NMILoaded") {
-                        hideLoader()
+                    when (data) {
+                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
 
-                    } else if (data == "3DStarted") {
-                        showLoader()
+                        "3DStarted" -> showLoader()
+                        "3DSNotIntiated" -> showErrorPopup(resources.getString(R.string.payment_failed))
+                        "cardtypeerror" -> showErrorPopup(resources.getString(R.string.payment_incorrect))
 
-                    } else if (data == "3DSLoaded") {
-                        hideLoader()
-                    } else if (data.contains("amounttoIncrease")) {
-                        htmlTopUpAmount = data.replace("amounttoIncrease", "")
-
-                    } else if (data == "true") {
-                        checkBox = true
-
+                        else -> {
+                            if (data.startsWith("amounttoIncrease")) {
+                                htmlTopUpAmount = data.replace("amounttoIncrease", "")
+                            } else if (data == "true") {
+                                checkBox = true
+                            }
+                        }
                     }
 
                     val check: Boolean = "tokenType" in data
@@ -369,6 +369,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
+    private fun showErrorPopup(errorMsg:String) {
+        ErrorUtil.showError(binding.root, errorMsg)
+
+    }
+
     private fun saveNewCard(
         responseModel: CardResponseModel?,
         paymentSuccessResponse: PaymentSuccessResponse?,
@@ -382,7 +387,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             cardNumber = responseModel?.token,
             cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
             city = personalInformation?.city,
-            country = "GB",
+            country = "UK",
             cvv = "",
             easyPay = "N",
             expMonth = responseModel?.card?.exp?.substring(0, 2),
@@ -552,8 +557,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     arguments?.getDouble(Constants.DATA)?:0.00
 
                 }
+                val doubleAmount=String.format("%.2f", amount)
                 hideLoader()
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 //
                 if (flow == Constants.SUSPENDED) {

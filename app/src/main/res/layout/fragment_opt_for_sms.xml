@@ -68,7 +68,6 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:layout_marginTop="@dimen/_50sdp"
             android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"

@@ -41,6 +41,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 //        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        NewCreateAccountRequestModel.twoStepVerification=false
+
         binding.twoFactor.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
                 NewCreateAccountRequestModel.twoStepVerification=true
