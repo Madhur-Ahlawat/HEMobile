@@ -1062,6 +1062,7 @@
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is exempt from Dart Charge payment</string>
     <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
@@ -1362,8 +1363,8 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an account to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
-        \n<font color="#000000" >\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
+        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
     <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
@@ -1387,6 +1388,8 @@
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
+    <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
+
     <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
     <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
@@ -1396,6 +1399,14 @@
     <string name="incorrect_email">Incorrect email. Try again.</string>
     <string name="payment_failed">Payment failed</string>
     <string name="payment_incorrect">Payment method is incorrect</string>
+    <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
+    <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
+    <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
+    <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text\nmessage.</string>
+    <string name="email_optional">Email (optional)</string>
+    <string name="text_message_optional">Text message (optional)</string>
+    <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
+
 </resources>
 
 

@@ -14,10 +14,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
+import com.conduent.nationalhighways.data.model.makeoneofpayment.FtVehicleList
+import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelRequest
+import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelResponse
+import com.conduent.nationalhighways.data.model.makeoneofpayment.PaymentTypeInfo
+import com.conduent.nationalhighways.data.model.makeoneofpayment.VehicleList
 import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -26,6 +32,8 @@ import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.view
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
+import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -46,6 +54,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
+    private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -117,6 +127,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         if (!isViewCreated) {
             observe(viewModel.account, ::handleAccountResponse)
             observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
+            observe(oneOfPaymentViewModel.oneOfPaymentsPay, ::oneOfPaymentPay)
+
         }
         isViewCreated = true
 
@@ -194,6 +206,57 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
+    private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
+       hideLoader()
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    it.let {
+                        val mBundle = Bundle()
+                        mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
+                       // mBundle.putString(Constants.EMAIL, mEmail)
+                        mBundle.putString(
+                            Constants.OPTIONS_TYPE,
+                            arguments?.getString(Constants.OPTIONS_TYPE)
+                        )
+                       // mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
+                        AdobeAnalytics.setActionTrackPaymentMethodOrderId( "Confirm ",
+                            " one of payment: payment confirm",
+                            "payment ",
+                            "english",
+                            " one of payment",
+                            "home",
+                            "success","card",it.refrenceNumber!!,"1",sessionManager.getLoggedInUser()
+                        )
+
+                        findNavController().navigate(
+                            R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
+                            mBundle
+                        )
+
+                    }
+                }
+            }
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+
+                AdobeAnalytics.setActionTrackPaymentMethod( "Confirm ",
+                    " one of payment: payment confirm",
+                    "payment ",
+                    "english",
+                    " one of payment",
+                    "home",
+                    resource.errorMsg,"card",sessionManager.getLoggedInUser()
+                )
+
+            }
+            else -> {
+            }
+        }
+
+    }
+
+
     inner class JsObject {
         @JavascriptInterface
         fun postMessage(data: String) {
@@ -255,6 +318,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                                 }
 
+                            }else if (flow==Constants.PAY_FOR_CROSSINGS){
+
+                                makeOneOffPaymentApi(responseModel,paymentSuccessResponse)
                             } else {
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.DATA, responseModel)
@@ -284,6 +350,28 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private fun showErrorPopup(errorMsg:String) {
         ErrorUtil.showError(binding.root, errorMsg)
 
+    }
+
+    private fun makeOneOffPaymentApi(
+        responseModel: CardResponseModel?,
+        paymentSuccessResponse: PaymentSuccessResponse
+    ) {
+        val paymentTypeInfo = PaymentTypeInfo(
+            responseModel?.card?.type?.uppercase(Locale.ROOT),
+            responseModel?.card?.number,
+            responseModel?.token,
+            responseModel?.card?.exp?.subSequence(0, 2).toString(),
+            "20${responseModel?.card?.exp?.subSequence(2, 4)}",
+            htmlTopUpAmount,
+            responseModel?.check?.name,
+            "",
+            NewCreateAccountRequestModel.emailAddress,
+            NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
+        )
+
+        val ftVehicleList = FtVehicleList(NewCreateAccountRequestModel.vehicleList as ArrayList<NewVehicleInfoDetails>)
+        val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
+        oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
     private fun saveNewCard(

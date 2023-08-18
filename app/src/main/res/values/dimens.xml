@@ -153,5 +153,7 @@
     <dimen name="_26_7dp">26.7dp</dimen>
     <dimen name="_50dp">50dp</dimen>
     <dimen name="_6_5dp">6.5dp</dimen>
+    <dimen name="_22_5dp">22.5dp</dimen>
+    <dimen name="_86dp">86dp</dimen>
     />
 </resources>

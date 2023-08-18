@@ -198,8 +198,8 @@
         tools:layout="@layout/fragment_additional_crossings">
 
         <action
-            android:id="@+id/action_additionalCrossingsFragment_to_nmiPaymentFragment"
-            app:destination="@id/nmiPaymentFragment" />
+            android:id="@+id/action_additionalCrossingsFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
     </fragment>
 
     <fragment
@@ -211,6 +211,9 @@
         <action
             android:id="@+id/action_payCrossingsFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
 
     </fragment>
 
@@ -227,6 +230,27 @@
         <action
             android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingRecieptFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentRecieptFragment"
+        android:label="crossingRecieptFragment"
+        tools:layout="@layout/fragment_payment_reciept_method">
+        <action
+            android:id="@+id/action_crossingRecieptFragment_to_crossingCheckAnswersFragment"
+            app:destination="@id/crossingCheckAnswersFragment" />
+        <action
+            android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crossingCheckAnswersFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSummaryFragment"
+        android:label="crossingCheckAnswersFragment"
+        tools:layout="@layout/fragment_payment_summary">
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
     </fragment>
 
     <fragment
@@ -361,9 +385,9 @@
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ForgotPasswordFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.EnterEmailFragment"
         android:label="CreateEmailAddress"
-        tools:layout="@layout/forgotpassword_changes">
+        tools:layout="@layout/fragment_enter_email">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_forgotOtpFragment"
             app:destination="@id/forgotOtpFragment" />
@@ -524,6 +548,10 @@
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment" />
+
+        <action
+            android:id="@+id/action_maximumFragment_to_addVehicleFragment"
+            app:destination="@+id/addNewVehicleDetailsFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />
