@@ -387,7 +387,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             cardNumber = responseModel?.token,
             cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
             city = personalInformation?.city,
-            country = "GB",
+            country = "UK",
             cvv = "",
             easyPay = "N",
             expMonth = responseModel?.card?.exp?.substring(0, 2),
@@ -557,8 +557,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     arguments?.getDouble(Constants.DATA)?:0.00
 
                 }
+                val doubleAmount=String.format("%.2f", amount)
                 hideLoader()
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$amount';})()")
+                view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 //
                 if (flow == Constants.SUSPENDED) {
