@@ -45,6 +45,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         title= requireActivity().findViewById(R.id.title_txt)
         when(navFlowCall) {
 
+            Constants.FORGOT_PASSWORD_FLOW->{
+                binding.subTitle.gone()
+            }
             REMOVE_VEHICLE -> {
                 binding.subTitle.gone()
                 binding.title.text = getString(R.string.vehicle_deleted)
