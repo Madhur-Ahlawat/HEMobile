@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.Html
 import android.text.InputType
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -19,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountryCodes
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
@@ -72,9 +75,11 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     @Inject
     lateinit var sessionManager: SessionManager
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
+        navData=arguments?.getParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java)
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
         binding.inputCountry.dropDownItemSelectListener = this
@@ -262,13 +267,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 if (binding?.selectEmail!!.isChecked) {
-                    bundle.putString(Constants.DATA, binding.edtEmail.getText().toString().trim())
+                    (navData as CrossingDetailsModelsResponse).recieptMode=binding.edtEmail.getText().toString().trim()
                 } else {
-                    bundle.putString(
-                        Constants.DATA,
-                        binding.inputMobileNumber.getText().toString().trim()
-                    )
+                    (navData as CrossingDetailsModelsResponse).recieptMode=binding.inputMobileNumber.editText.getText().toString().trim()
                 }
+                bundle.putParcelable(Constants.NAV_DATA_KEY, (navData as CrossingDetailsModelsResponse) as Parcelable?)
+
                 findNavController().navigate(
                     R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
                     bundle

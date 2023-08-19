@@ -118,7 +118,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         errorMessage = "Enter an expiry date";
                     } else if(message.localeCompare('Expiration date must be a present or future month and year') == "0") {
                         errorMessage = "Expiry date cannot be in the past";
-                        
+//                        errorMessage = "Invalid date format";
+
                     } else {
                         errorMessage = message;
                     }
@@ -131,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         errorMessage = "Name on card should be at least 3 characters";
                     } else {
                         errorMessage = message;
-                    }
+                    }0
                     document.getElementById("nameerrormesages").style.display = "";
                     document.getElementById("nameerrormesages").innerText = errorMessage;
                 }
@@ -147,16 +148,22 @@ document.addEventListener('DOMContentLoaded', function () {
             window.appInterface.postMessage("NMILoaded");
         },
         'callback': function(e) {
-            window.appInterface.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
             //invokeCommand(apiResponse)
             window.appInterface.postMessage(apiResponse);
             var card = e.card;
             var amt =  document.getElementById("amount").value;
             const pattern = /^(\w)[A-Za-z-\s\.']{2,50}$/i;
+
+          /*  if(e.check.name === null){
+                document.getElementById("nameerrormesages").style.display="";
+                document.getElementById("nameerrormesages").innerText = "Enter the name on card";
+                window.appInterface.postMessage("ValidationFailed");
+            } else*/
             if (pattern.test(e.check.name) == false) {
                 document.getElementById("nameerrormesages").style.display="";
                 document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
+                window.appInterface.postMessage("ValidationFailed");
             } else if ((amt < 10) && (amt > 10000)) {
                 if (amt < 10) {
                     document.getElementById("errorMessageForAmount").style.display="";
@@ -167,8 +174,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     document.getElementById("errorMessageForAmount").style.display="none";
                 }
-            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
-            {
+            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name))){
+                window.appInterface.postMessage("3DSLoaded");
                 var amt =  document.getElementById("amount").value;
                 window.appInterface.postMessage("amounttoIncrease"+amt);
                 window.appInterface.postMessage("3DStarted");

@@ -75,7 +75,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         )
 
         if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_continue)
+//            binding.btnSubmit.text = getString(R.string.str_continue)
             /* AdobeAnalytics.setScreenTrack(
                  "createAccount:email_setPassword",
                  "set password",
@@ -86,7 +86,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                  sessionManager.getLoggedInUser()
              )*/
         } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_submit)
+//            binding.btnSubmit.text = getString(R.string.str_submit)
 
             /* AdobeAnalytics.setScreenTrack(
                  "login:forgot password:choose options:otp:new password set",

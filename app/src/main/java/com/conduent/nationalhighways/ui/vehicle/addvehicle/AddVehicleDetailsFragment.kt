@@ -103,7 +103,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.typeVehicle.dropDownItemSelectListener = this
 
         binding.model = false
-        mVehicleDetails = arguments?.getParcelable(DATA) as? VehicleResponse?
+        mVehicleDetails = arguments?.getParcelable(Constants.NAV_DATA_KEY) as? VehicleResponse?
 
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it

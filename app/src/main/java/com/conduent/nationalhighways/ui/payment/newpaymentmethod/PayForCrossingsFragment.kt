@@ -54,7 +54,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
             }
 
-
         }
 
 
@@ -100,6 +99,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                     bundle.putDouble(Constants.DATA,binding.inputTotalAmount.getText().toString().replace(getString(R.string.currency_symbol),"").toDouble())
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
                     findNavController().navigate(R.id.action_payCrossingsFragment_to_crossingRecieptFragment,bundle)
                 }
 
@@ -121,6 +121,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toInt()
         if(charge != null){
             val total = charge*selectedItem.toInt()
+            data?.crossingCount=selectedItem.toInt()
             binding.inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
         }
     }

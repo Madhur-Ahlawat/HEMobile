@@ -1123,6 +1123,7 @@
     <string name="str_phoneNumber_error_message">Enter your mobile phone number</string>
     <string name="str_uk_phoneNumber_error_message">The UK mobile phone number entered is invalid, please try again</string>
     <string name="str_non_uk_phoneNumber_error_message">The non-UK phone number entered must be between 8 and 15 digits</string>
+    <string name="telephone_error_message">Enter a telephone number that is between 8 and 15 digits</string>
     <string name="maximum_number_of_vehicles_have_been_registered_against_the_account">Maximum number of vehicles have been registered against the account</string>
     <string name="you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
     <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
@@ -1278,7 +1279,7 @@
     <string name="str_account_closed">Account Closed</string>
     <string name="resizable_text_read_more">See more</string>
     <string name="resizable_text_read_less">See less</string>
-    <string name="str_telephone_number_optional">Telephone number (optional)</string>
+    <string name="str_telephone_number_optional">Telephone number</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
     <string name="postcode_must_not_contain_special_characters_except_single_hypen">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
     <string name="postcode_must_not_contain_special_characters_except_hyphen">Postcode must only include letters a to z and numbers 0 to 9 and single hyphen</string>
@@ -1408,6 +1409,10 @@
     <string name="purchase_no_crossings">Purchase No Crossings</string>
     <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
 
+
+    <string name="incorrect_email">Incorrect email. Try again.</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="payment_incorrect">Payment method is incorrect</string>
 </resources>
 
 
