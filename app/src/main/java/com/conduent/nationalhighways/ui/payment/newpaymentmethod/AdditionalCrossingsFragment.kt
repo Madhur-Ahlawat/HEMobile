@@ -55,6 +55,10 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 paymentCrossing.setText(getString(R.string.currency_symbol) + charge)
                 totalAmount.setText(getString(R.string.currency_symbol) + total)
             }
+            recentCrossing.isEnabled = false
+            paymentCrossing.isEnabled = false
+            totalAmount.isEnabled = false
+
         }
         displayCustomMessage(getString(R.string.additional_crossings_txt),
             getString(R.string.only_use_this_option_for_crossings_planned),

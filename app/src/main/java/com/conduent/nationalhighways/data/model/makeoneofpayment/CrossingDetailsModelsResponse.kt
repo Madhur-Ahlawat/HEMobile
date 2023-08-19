@@ -7,8 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class CrossingDetailsModelsResponse(
     val plateNumber: String?,
     val customerClass: String?,
-    val customerClassRate: String?,
-    val chargingRate: String?,
+    var customerClassRate: String?,
+    var chargingRate: String?,
     var unSettledTrips: String?,
     val unPaidAmt: String?,
     val plateCountry: String?,

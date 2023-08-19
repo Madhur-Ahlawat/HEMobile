@@ -166,17 +166,28 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         when(navFlowCall) {
 
             Constants.PAY_FOR_CROSSINGS -> {
-                binding.makeInputLayout.invisible()
-                binding.modelInputLayout.invisible()
-                binding.colorInputLayout.invisible()
+                typeOfVehicle.clear()
+                typeOfVehicle.add("Car, van or minibus < 8 seats")
+                typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
+                typeOfVehicle.add("Vehicle with more than 2 axles")
+                binding.apply {
+                    typeVehicle.dataSet.clear()
+                    typeVehicle.dataSet.addAll(typeOfVehicle)
+                }
+                if (NewCreateAccountRequestModel.isExempted) {
+                    binding.makeInputLayout.invisible()
+                    binding.modelInputLayout.invisible()
+                    binding.colorInputLayout.invisible()
 
-                binding.vehicleRegisteredLayout.visibility = View.GONE
+                    binding.vehicleRegisteredLayout.visibility = View.GONE
 
-                radioButtonChecked = true
-                makeInputCheck = true
-                modelInputCheck = true
-                colourInputCheck = true
-                checkValidation()
+                    radioButtonChecked = true
+                    makeInputCheck = true
+                    modelInputCheck = true
+                    colourInputCheck = true
+
+                    checkValidation()
+                }
             }
         }
 

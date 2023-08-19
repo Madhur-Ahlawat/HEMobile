@@ -150,10 +150,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         when (v?.id) {
             R.id.findVehicle -> {
 
+
+
                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+                val crossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS,true)
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim()){
+                if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim() && crossingCall.not()){
                     if(editCall){
                         findNavController().navigate(R.id.action_findVehicleFragment_to_accountSummaryFragment,bundle)
                     }else {
