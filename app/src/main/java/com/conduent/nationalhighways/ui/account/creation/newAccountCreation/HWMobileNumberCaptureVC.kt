@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
@@ -44,6 +45,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -60,6 +62,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var isItMobileNumber = true
     private val viewModelProfile: ProfileViewModel by viewModels()
+    private var countriesList: MutableList<String> = ArrayList()
+    private var countriesModel:List<CountriesModel?>? = ArrayList()
+    private var fullCountryNameWithCode:MutableList<String> = ArrayList()
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
@@ -159,8 +165,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun observer() {
         if (!isViewCreated) {
+            viewModel.getCountries()
 
-            viewModel.getCountryCodesList()
+
+            observe(viewModel.countriesList, ::getCountriesList)
+
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
             observe(viewModel.countriesCodeList, ::getCountryCodesList)
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
@@ -203,20 +212,29 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
+                for(i in 0..(countriesModel?.size?.minus(1)?:0)){
+                    for (j in 0..(response.data?.size?.minus(1) ?: 0)){
+                        if (countriesModel?.get(i)?.id== response.data?.get(j)?.id){
+                            fullCountryNameWithCode.add(countriesModel?.get(i)?.countryName+" "+"("+response.data?.get(j)?.key+")")
+                        }
+                    }
+
+                }
+                Log.d("fullCountryWithCode",Gson().toJson(fullCountryNameWithCode))
                 response.data?.forEach {
                     it?.value?.let { it1 -> countriesCodeList.add(it1) }
                 }
-                countriesCodeList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
+                fullCountryNameWithCode.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
 
-                if (countriesCodeList.contains(Constants.UK_CODE)) {
-                    countriesCodeList.remove(Constants.UK_CODE)
-                    countriesCodeList.add(0, Constants.UK_CODE)
+                if (fullCountryNameWithCode.contains(Constants.UNITED_KINGDOM)) {
+                    fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
+                    fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
                 }
 
                 binding.apply {
-                    inputCountry.dataSet.addAll(countriesCodeList)
-                    inputCountry.setSelectedValue(Constants.UK_CODE)
+                    inputCountry.dataSet.addAll(fullCountryNameWithCode)
+                    inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                     requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                     if (!NewCreateAccountRequestModel.prePay) {
                         checkButton()
@@ -331,6 +349,42 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun onRetryClick() {
 
     }
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (response) {
+            is Resource.Success -> {
+                countriesList.clear()
+                countriesModel=response.data
+                viewModel.getCountryCodesList()
+
+                response.data?.forEach {
+                    it?.countryName?.let { it1 -> countriesList.add(it1) }
+                }
+                countriesList.sortWith(
+                    compareBy(String.CASE_INSENSITIVE_ORDER) { it }
+                )
+
+
+                if (countriesList.contains(Constants.UK_COUNTRY)) {
+                    countriesList.remove(Constants.UK_COUNTRY)
+                    countriesList.add(0, Constants.UK_COUNTRY)
+                }
+
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, response.errorMsg)
+            }
+
+            else -> {
+            }
+
+        }
+    }
+
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
         override fun beforeTextChanged(
@@ -344,15 +398,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
             if (charSequence.toString().isEmpty()) {
-                if (index == 0) {
-                    requiredMobileNumber = true
-                } else {
-                    requiredMobileNumber = false
-                }
+                requiredMobileNumber = index == 0
             } else {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
                 if (isItMobileNumber && binding.inputCountry.getSelectedDescription()
-                        .equals("UK +44", true)
+                        .equals("UK +44", true)||binding.inputCountry.getSelectedDescription()
+                        .equals(Constants.UNITED_KINGDOM, true)
                 ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {

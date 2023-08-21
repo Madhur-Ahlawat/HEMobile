@@ -205,26 +205,27 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
-       hideLoader()
+        hideLoader()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
                     it.let {
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
-                       // mBundle.putString(Constants.EMAIL, mEmail)
-                        mBundle.putString(
-                            Constants.OPTIONS_TYPE,
-                            arguments?.getString(Constants.OPTIONS_TYPE)
-                        )
-                       // mBundle.putParcelableArrayList(Constants.DATA, ArrayList(list))
-                        AdobeAnalytics.setActionTrackPaymentMethodOrderId( "Confirm ",
+                        mBundle.putString(Constants.DATA,htmlTopUpAmount)
+
+                        AdobeAnalytics.setActionTrackPaymentMethodOrderId(
+                            "Confirm ",
                             " one of payment: payment confirm",
                             "payment ",
                             "english",
                             " one of payment",
                             "home",
-                            "success","card",it.refrenceNumber!!,"1",sessionManager.getLoggedInUser()
+                            "success",
+                            "card",
+                            it.refrenceNumber!!,
+                            "1",
+                            sessionManager.getLoggedInUser()
                         )
 
                         findNavController().navigate(
@@ -235,19 +236,22 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                AdobeAnalytics.setActionTrackPaymentMethod( "Confirm ",
+                AdobeAnalytics.setActionTrackPaymentMethod(
+                    "Confirm ",
                     " one of payment: payment confirm",
                     "payment ",
                     "english",
                     " one of payment",
                     "home",
-                    resource.errorMsg,"card",sessionManager.getLoggedInUser()
+                    resource.errorMsg, "card", sessionManager.getLoggedInUser()
                 )
 
             }
+
             else -> {
             }
         }
@@ -316,9 +320,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                                 }
 
-                            }else if (flow==Constants.PAY_FOR_CROSSINGS){
+                            } else if (flow == Constants.PAY_FOR_CROSSINGS) {
 
-                                makeOneOffPaymentApi(responseModel,paymentSuccessResponse)
+                                makeOneOffPaymentApi(responseModel, paymentSuccessResponse)
                             } else {
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.DATA, responseModel)
@@ -362,12 +366,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
         )
 
-        val ftVehicleList = FtVehicleList(NewCreateAccountRequestModel.vehicleList as ArrayList<NewVehicleInfoDetails>)
+        val ftVehicleList =
+            FtVehicleList(NewCreateAccountRequestModel.vehicleList as ArrayList<NewVehicleInfoDetails>)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
-    private fun showErrorPopup(errorMsg:String) {
+    private fun showErrorPopup(errorMsg: String) {
         ErrorUtil.showError(binding.root, errorMsg)
 
     }
@@ -548,14 +553,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                val amount: Double = if (!NewCreateAccountRequestModel.prePay){
+                val amount: Double = if (!NewCreateAccountRequestModel.prePay) {
                     0.00
 
-                }else{
-                    arguments?.getDouble(Constants.DATA)?:0.00
+                } else {
+                    arguments?.getDouble(Constants.DATA) ?: 0.00
 
                 }
-                val doubleAmount=String.format("%.2f", amount)
+                val doubleAmount = String.format("%.2f", amount)
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
@@ -577,6 +582,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                     }
+
                     Constants.ADD_PAYMENT_METHOD, Constants.PAYMENT_TOP_UP -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
@@ -596,6 +602,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
 
                     }
+
                     else -> {
                         if (!NewCreateAccountRequestModel.prePay) {
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")

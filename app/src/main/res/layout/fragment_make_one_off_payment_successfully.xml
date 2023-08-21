@@ -118,7 +118,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/paymentReferenceNumber"
+                        android:id="@+id/vechicleRegistration"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,16 +230,18 @@
                 android:text="@string/create_account"
                 android:id="@+id/createAccount"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.conduent.apollo.ui.CMButton
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                style="@style/secondaryButton"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:textColor="@color/new_btn_color"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textSize="14sp"
-                android:text="@string/feed_back_to_improve_service"
-                android:visibility="gone"/>
+                android:text="@string/back_to_main_menu"
+                android:visibility="visible"
+                android:id="@+id/backToMainMenu"/>
 
 
         </LinearLayout>
