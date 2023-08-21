@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,10 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
+import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 
 class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
@@ -47,8 +51,10 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     private fun setData() {
         binding?.apply {
             vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
-            recentCrossings.text = (navData as CrossingDetailsModelsResponse).crossingCount.toString()
-            creditAdditionalCrossings.text = (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
+            recentCrossings.text =
+                (navData as CrossingDetailsModelsResponse).crossingCount.toString()
+            creditAdditionalCrossings.text =
+                (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
             paymentAmount.text = (navData as CrossingDetailsModelsResponse).totalAmount.toString()
         }
     }
@@ -56,9 +62,10 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     private fun setClickListeners() {
         binding?.apply {
             btnNext.setOnClickListener(this@PaymentSummaryFragment)
-            editFullName.setOnClickListener(this@PaymentSummaryFragment)
-            editAddress.setOnClickListener(this@PaymentSummaryFragment)
-            editEmailAddress.setOnClickListener(this@PaymentSummaryFragment)
+            editRegistrationNumber.setOnClickListener(this@PaymentSummaryFragment)
+            editRecentCrossings.setOnClickListener(this@PaymentSummaryFragment)
+            editCreditForAdditionalCrossings.setOnClickListener(this@PaymentSummaryFragment)
+            editPaymentAmount.setOnClickListener(this@PaymentSummaryFragment)
         }
     }
 
@@ -95,69 +102,31 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 }
             }
 
-            R.id.editFullName -> {
+            R.id.editRegistrationNumber -> {
                 findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_personalInfoFragment,
+                    R.id.action_crossingCheckAnswersFragment_to_findYourVehicleFragment,
                     enableEditMode()
                 )
             }
 
-            R.id.editAddress -> {
-                if (NewCreateAccountRequestModel.isManualAddress) {
-                    findNavController().navigate(
-                        R.id.action_accountSummaryFragment_to_manualAddressFragment,
-                        enableEditMode()
-                    )
-                } else {
-                    findNavController().navigate(
-                        R.id.action_accountSummaryFragment_to_postCodeFragment,
-                        enableEditMode()
-                    )
-                }
+            R.id.editRecentCrossings -> {
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
+                    enableEditMode()
+                )
+
             }
 
-            R.id.editEmailAddress -> {
+            R.id.editCreditForAdditionalCrossings -> {
                 findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_emailAddressFragment,
+                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
                     enableEditMode()
                 )
             }
 
-            R.id.editMobileNumber -> {
+            R.id.editPaymentAmount -> {
                 findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_mobileNumberFragment,
-                    enableEditMode()
-                )
-            }
-
-            R.id.editAccountType -> {
-                val bundle = Bundle()
-                bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_typeAccountFragment,
-                    bundle
-                )
-            }
-
-            R.id.editSubAccountType -> {
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
-                    enableEditMode()
-                )
-            }
-
-            R.id.editCommunications -> {
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_communicationFragment,
-                    enableEditMode()
-                )
-            }
-
-            R.id.editTwoStepVerification -> {
-
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,
+                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
                     enableEditMode()
                 )
             }
@@ -166,7 +135,9 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
-        bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+        bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNumber?.trim())
+        bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }
 

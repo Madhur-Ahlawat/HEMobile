@@ -283,11 +283,14 @@
         android:label="crossingCheckAnswersFragment"
         tools:layout="@layout/fragment_payment_summary">
         <action
-            android:id="@+id/action_crossingCheckAnswersFragment_to_personalInfoFragment"
-            app:destination="@id/createAccountPersonalInfo" />
+            android:id="@+id/action_accountSummaryFragment_to_PayForCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
         <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
     </fragment>
 
     <fragment
