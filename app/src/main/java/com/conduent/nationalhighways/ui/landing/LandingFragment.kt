@@ -1,3 +1,6 @@
+
+
+
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
@@ -65,7 +68,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
-        var backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
+        val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
 
         backButton?.visibility = View.GONE
 
