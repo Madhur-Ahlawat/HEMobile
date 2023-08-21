@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/topUpFragment"
-    >
+    app:startDestination="@id/HWMobileNumberCaptureVC">
 
     <!-- Step 5 -->
 
@@ -678,7 +677,7 @@
 
         <action
             android:id="@+id/action_nmiPaymentFragment_to_make_one_off_payment_successfully"
-            app:destination="@+id/make_one_off_payment_successfully"/>
+            app:destination="@+id/make_one_off_payment_successfully" />
 
     </fragment>
 
@@ -725,7 +724,11 @@
             android:id="@+id/action_make_one_off_payment_successfully_to_createAccountPrerequisite"
             app:destination="@id/createAccountPrerequisite"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_make_one_off_payment_successfully_to_landingFragment"
+            app:destination="@+id/landingFragment" />
 
     </fragment>
 

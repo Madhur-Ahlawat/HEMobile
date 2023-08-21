@@ -576,6 +576,15 @@ object Utils {
         return dateFormat.format(cal.time)
     }
 
+    fun currentDate():String{
+        return SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(Date())
+
+    }
+    fun currentTime():String{
+        return SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
+
+    }
+
 
     private const val DOC = "application/msword"
     private const val DOCX =
