@@ -188,8 +188,27 @@
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_additional_crossingFragment"
             app:destination="@+id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_deletePaymentMethodFragment"
+            app:destination="@+id/deletePaymentMethodFragment" />
 
+    </fragment>
 
+    <fragment
+        android:id="@+id/deletePaymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodFragment"
+        android:label="DeletePaymentMethod"
+        tools:layout="@layout/fragment_delete_payment_method">
+
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment"
+            app:destination="@id/deletePaymentMethodSuccessFragment" />
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_pay_for_crossingFragment"
+            app:destination="@+id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_additional_crossingFragment"
+            app:destination="@+id/additionalCrossingsFragment" />
     </fragment>
 
     <fragment
@@ -210,12 +229,26 @@
         tools:layout="@layout/fragment_pay_for_crossings">
 
         <action
-            android:id="@+id/action_payCrossingsFragment_to_nmiPaymentFragment"
-            app:destination="@id/nmiPaymentFragment" />
+            android:id="@+id/action_payCrossingsFragment_to_additionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
         <action
             android:id="@+id/action_payCrossingsFragment_to_crossingRecieptFragment"
             app:destination="@id/crossingRecieptFragment" />
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_landingFragment"
+            app:destination="@+id/landingFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
+        android:label="@string/str_landing_screen"
+        tools:layout="@layout/fragment_landing">
+
+        <action
+            android:id="@+id/action_landingFragment_to_startNow"
+            app:destination="@id/startNow" />
     </fragment>
 
     <fragment
@@ -249,6 +282,9 @@
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSummaryFragment"
         android:label="crossingCheckAnswersFragment"
         tools:layout="@layout/fragment_payment_summary">
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_personalInfoFragment"
+            app:destination="@id/createAccountPersonalInfo" />
         <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
