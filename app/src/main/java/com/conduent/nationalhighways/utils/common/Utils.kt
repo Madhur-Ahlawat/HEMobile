@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R

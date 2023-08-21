@@ -235,6 +235,7 @@
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
+    <string name="type_of_vehicle">Type of vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">Pre-Pay</string>
