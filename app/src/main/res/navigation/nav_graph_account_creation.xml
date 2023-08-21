@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite"
+    app:startDestination="@id/topUpFragment"
     >
 
     <!-- Step 5 -->
@@ -639,6 +639,10 @@
         <action
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
+
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_make_one_off_payment_successfully"
+            app:destination="@+id/make_one_off_payment_successfully"/>
 
     </fragment>
 

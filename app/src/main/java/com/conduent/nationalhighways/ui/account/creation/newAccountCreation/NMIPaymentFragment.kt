@@ -23,7 +23,6 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.FtVehicleList
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.conduent.nationalhighways.data.model.makeoneofpayment.PaymentTypeInfo
-import com.conduent.nationalhighways.data.model.makeoneofpayment.VehicleList
 import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -79,7 +78,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
-    private var a:Int=0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -230,7 +228,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         )
 
                         findNavController().navigate(
-                            R.id.action_makeOffPaymentConfirmationFragment_to_makeOffPaymentSuccessfulFragment,
+                            R.id.action_nmiPaymentFragment_to_make_one_off_payment_successfully,
                             mBundle
                         )
 
@@ -562,57 +560,61 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 //
-                if (flow == Constants.SUSPENDED) {
-                    view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
-
-
-                } else if (flow == Constants.ADD_PAYMENT_METHOD || flow == Constants.PAYMENT_TOP_UP) {
-                    view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
-                    if (paymentListSize == 0 || paymentListSize == 2) {
-                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
-                    }
-                    view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
-
-                } else {
-                    if (!NewCreateAccountRequestModel.prePay) {
+                when (flow) {
+                    Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+
 
                     }
-                    view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
+                    Constants.ADD_PAYMENT_METHOD, Constants.PAYMENT_TOP_UP -> {
+                        view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                        if (paymentListSize == 0 || paymentListSize == 2) {
+                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
+                        }
+                        view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+
+                    }
+                    else -> {
+                        if (!NewCreateAccountRequestModel.prePay) {
+                            view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+
+                        }
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
 
 
+                    }
                 }
 
 
