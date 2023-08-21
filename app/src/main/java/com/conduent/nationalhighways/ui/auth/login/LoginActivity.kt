@@ -147,7 +147,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             is Resource.Success -> {
                 resource.data?.let {
                     navigateWithCrossing(it.transactionList?.count?:0)
-
                  /*   it.transactionList?.count?.let { count ->
                         navigateWithCrossing(count)
                     }*/
