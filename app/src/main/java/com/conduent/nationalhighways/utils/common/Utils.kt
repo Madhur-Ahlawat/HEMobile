@@ -117,6 +117,27 @@ object Utils {
         }
         return res
     }
+    fun hiddenEmailText(email:String): String {
+        var indexOfAtSymbol = email.indexOf('@')
+        var indexOfDot=email.indexOf('.')
+        var hiddenEmailText = ""
+
+        email.forEachIndexed { index, c ->
+            if(index==0){
+                hiddenEmailText=hiddenEmailText+c.toString()
+            }
+            else if(index>0){
+                if(index<indexOfAtSymbol || (index > (indexOfAtSymbol+1) && index < indexOfDot)){
+                    hiddenEmailText = hiddenEmailText+"*"
+
+                }
+                else if((index == indexOfAtSymbol) || (index == indexOfAtSymbol+1) || (index >= indexOfDot)){
+                    hiddenEmailText=hiddenEmailText+c.toString()
+                }
+            }
+        }
+        return hiddenEmailText
+    }
 
     fun isLastCharOfStringACharacter(input: String): Boolean {
         var isAlphabet = false

@@ -1305,7 +1305,7 @@
     <string name="str_email_address">Email address</string>
     <string name="this_will_be_your_username_when_you_log_in_to_your_account">This will be your username when you log in to your account.</string>
     <string name="check_your_email_for_a_security_code">Check your email for a security code.</string>
-    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to j*****@e****.com.</string>
+    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to</string>
     <string name="str_code">Code</string>
     <string name="check_the_email_for_6_digit_security_code_this_code_will_expire_after_15_minutes_your_email_might_take_a_few_minutes_to_arrive_if_you_do_not_get_an_email_check_your_spam_folder">Check the email for 6-digit security code. This code will expire after 15 minutes.\n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
