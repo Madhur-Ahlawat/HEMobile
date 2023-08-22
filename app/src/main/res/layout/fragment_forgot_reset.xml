@@ -96,7 +96,7 @@
                 android:layout_marginTop="@dimen/_50sdp"
                 android:layout_marginBottom="@dimen/_30sdp"
                 android:gravity="center"
-                android:text="@string/sign_in" />
+                android:text="@string/str_continue_login" />
 
     </LinearLayout>
 

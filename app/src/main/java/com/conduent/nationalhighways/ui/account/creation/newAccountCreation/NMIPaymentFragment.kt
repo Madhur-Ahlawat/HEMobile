@@ -349,6 +349,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
+    private fun showErrorPopup(errorMsg:String) {
+        ErrorUtil.showError(binding.root, errorMsg)
+
+    }
+
     private fun makeOneOffPaymentApi(
         responseModel: CardResponseModel?,
         paymentSuccessResponse: PaymentSuccessResponse
