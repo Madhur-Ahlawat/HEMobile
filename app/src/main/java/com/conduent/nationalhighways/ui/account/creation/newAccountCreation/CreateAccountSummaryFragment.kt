@@ -21,7 +21,9 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
+import com.conduent.nationalhighways.utils.extn.visible
 import com.google.gson.Gson
 
 
@@ -64,9 +66,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.address.text =
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
-
-        binding.mobileNumber.text =
-            dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+        if (dataModel.mobileNumber?.isEmpty() ?: true) {
+            binding.phoneCard.gone()
+        } else {
+            binding.phoneCard.visible()
+            binding.mobileNumber.text =
+                dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+        }
         if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -92,7 +98,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 binding.btnNext.disable()
             }
         }
-        if (NewCreateAccountRequestModel.communicationTextMessage && NewCreateAccountRequestModel.twoStepVerification) {
+        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
         } else {
             binding.txtMobileNumber.text = getString(R.string.telephone_number)
@@ -136,13 +142,16 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
             R.id.btnNext -> {
                 if (!NewCreateAccountRequestModel.prePay) {
-                    val bundle=Bundle()
+                    val bundle = Bundle()
 
                     bundle.putDouble(Constants.DATA, 0.00)
                     bundle.putDouble(Constants.THRESHOLD_AMOUNT, 0.00)
                     bundle.putString(NAV_FLOW_KEY, Constants.NOTSUSPENDED)
                     bundle.putInt(Constants.PAYMENT_METHOD_SIZE, 0)
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_nmiPaymentFragment,bundle)
+                    findNavController().navigate(
+                        R.id.action_accountSummaryFragment_to_nmiPaymentFragment,
+                        bundle
+                    )
 
                 } else {
                     findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)

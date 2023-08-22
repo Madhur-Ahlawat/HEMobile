@@ -47,8 +47,32 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     ): FragmentOptForSmsBinding = FragmentOptForSmsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        NewCreateAccountRequestModel.communicationTextMessage=false
+        when (navFlowCall){
+            EDIT_SUMMARY ->{
+                binding.switchCommunication.isChecked=NewCreateAccountRequestModel.communicationTextMessage
+                binding.checkBoxTerms.visibility = View.GONE
+                binding.btnNext.enable()
 
+            }
+            else ->{
+                NewCreateAccountRequestModel.communicationTextMessage=false
+            }
+        }
+
+        binding.switchCommunication.setOnClickListener {
+            if(binding.switchCommunication.isChecked){
+                binding.checkBoxTerms.visibility = View.VISIBLE
+                binding.btnNext.disable()
+                binding.checkBoxTerms.isChecked = false
+                NewCreateAccountRequestModel.communicationTextMessage=true
+            }else{
+                NewCreateAccountRequestModel.communicationTextMessage=false
+                binding.checkBoxTerms.visibility = View.GONE
+                binding.btnNext.enable()
+            }
+        }
+
+/*
         binding.switchCommunication.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
                 binding.checkBoxTerms.visibility = View.VISIBLE
@@ -62,6 +86,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
         }
+*/
 
 //        binding.pushCommunication.setOnCheckedChangeListener { _, isChecked ->
 //

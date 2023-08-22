@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_FROM_POST_CODE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -108,6 +109,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                     val data = navData as ProfileDetailModel?
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                 }
+                bundle.putString(Constants.NAV_FLOW_FROM, EDIT_FROM_POST_CODE)
                 findNavController().navigate(
                     R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle
                 )
@@ -129,6 +131,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else if (finalString.length < 4 || finalString.length > 10) {
                 binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
             } else {
+                if (NewCreateAccountRequestModel.zipCode != binding.inputPostCode.getText()
+                        .toString()
+                ) {
+                    NewCreateAccountRequestModel.selectedAddressId = -1
+                }
                 NewCreateAccountRequestModel.zipCode = binding.inputPostCode.getText().toString()
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -173,15 +180,20 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else {
                 val string = binding.inputPostCode.getText().toString().trim()
                 val finalString = string.replace(" ", "")
-                if (!(hasLowerCase(binding.inputPostCode.editText.getText().toString().trim()) || hasUpperCase(binding.inputPostCode.editText.getText().toString().trim())) || !hasDigits(binding.inputPostCode.editText.getText().toString().trim()) || hasSpecialCharacters(
+                if (!(hasLowerCase(
+                        binding.inputPostCode.editText.getText().toString().trim()
+                    ) || hasUpperCase(
+                        binding.inputPostCode.editText.getText().toString().trim()
+                    )) || !hasDigits(
+                        binding.inputPostCode.editText.getText().toString().trim()
+                    ) || hasSpecialCharacters(
                         binding.inputPostCode.getText().toString().trim(),
                         ""
                     )
                 ) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
                     false
-                }
-                else if (finalString.length < 4 || finalString.length > 10) {
+                } else if (finalString.length < 4 || finalString.length > 10) {
                     binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
                     false
                 } else {

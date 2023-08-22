@@ -29,6 +29,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_FROM_POST_CODE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -377,7 +378,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
             if (!(Utils.hasLowerCase(
                     binding.postCode.editText.getText().toString().trim()
-                ) || Utils.hasUpperCase(binding.postCode.editText.getText().toString().trim())) || !hasDigits(binding.postCode.editText.getText().toString().trim()) || Utils.hasSpecialCharacters(
+                ) || Utils.hasUpperCase(
+                    binding.postCode.editText.getText().toString().trim()
+                )) || !hasDigits(
+                    binding.postCode.editText.getText().toString().trim()
+                ) || Utils.hasSpecialCharacters(
                     binding.postCode.getText().toString().trim(),
                     splCharPostCode
                 )
@@ -464,7 +469,15 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     when (navFlowCall) {
 
                         EDIT_SUMMARY -> {
-                            findNavController().popBackStack()
+                            if (navFlowFrom.equals(EDIT_FROM_POST_CODE)) {
+                                findNavController().navigate(
+                                    R.id.action_manualaddressfragment_to_createAccountSummary,
+                                    bundle()
+                                )
+                            } else {
+                                findNavController().popBackStack()
+                            }
+
                         }
 
                         else -> {
