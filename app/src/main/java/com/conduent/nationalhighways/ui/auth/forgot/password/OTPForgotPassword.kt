@@ -380,7 +380,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             is Resource.Success -> {
                 val bundle = Bundle()
 
-                if (navFlowCall == Constants.TWOFA) {
+                if (navFlowCall ==TWOFA) {
                     if (accountInformation?.status.equals(Constants.SUSPENDED)) {
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
