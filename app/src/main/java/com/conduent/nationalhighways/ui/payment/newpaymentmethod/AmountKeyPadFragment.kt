@@ -103,7 +103,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
                 if (lowBalanceClick == Constants.LOW_BALANCE) {
 
-                    if (updatedText.replace("$", "").replace("£", "").toDouble() < 5) {
+                    if (updatedText.replace("$", "").replace("£", "").replace(",","").toDouble() < 5) {
                         ErrorUtil.showError(
                             binding.root,
                             getString(R.string.str_low_balance_must_be_more)
@@ -125,7 +125,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
 
                 } else {
-                    if (updatedText.replace("$", "").replace("£", "").toDouble() < 10) {
+                    if (updatedText.replace("$", "").replace("£", "").replace(",","").toDouble() < 10) {
                         ErrorUtil.showError(
                             binding.root,
                             getString(R.string.str_top_up_amount_must_be_more)

@@ -235,6 +235,7 @@
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
+    <string name="type_of_vehicle">Type of vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">Pre-Pay</string>
@@ -1395,6 +1396,8 @@
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>
     <string name="str_time_date">Time and  Date</string>
+
+
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
     <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
     <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>

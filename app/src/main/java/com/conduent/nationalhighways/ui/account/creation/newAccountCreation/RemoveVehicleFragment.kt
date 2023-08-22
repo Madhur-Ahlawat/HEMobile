@@ -77,7 +77,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
 
     private fun setData() {
         vehicleDetails = arguments?.getParcelable(Constants.DATA)
-        binding.typeOfVehicle.text = Utils.getVehicleType(vehicleDetails?.plateInfo?.type ?: "")
+        binding.typeOfVehicle.text = Utils.getVehicleType(vehicleDetails?.vehicleInfo?.vehicleClassDesc ?: "")
         binding.vehicleMake.text = vehicleDetails?.vehicleInfo?.make ?: ""
         binding.vehicleModel.text = vehicleDetails?.vehicleInfo?.model ?: ""
         binding.vehicleColor.text = vehicleDetails?.vehicleInfo?.color ?: ""
