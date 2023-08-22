@@ -166,7 +166,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun clearSingletonData() {
         NewCreateAccountRequestModel.referenceId = ""
-        NewCreateAccountRequestModel.emailAddress = ""
         NewCreateAccountRequestModel.mobileNumber = ""
         NewCreateAccountRequestModel.countryCode = ""
         NewCreateAccountRequestModel.communicationTextMessage = false
@@ -645,7 +644,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.webViewClient = webViewClient
     }
 
-    private fun getRequiredText(text: String) = text.substringAfter(' ')
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")","")
 
     private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()

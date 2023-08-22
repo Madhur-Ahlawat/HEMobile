@@ -86,7 +86,7 @@
                 android:layout_marginTop="15dp"
                 android:id="@+id/pay_as_go_text"
                 android:visibility="gone"
-                android:text="@string/we_sent_confirmation_email" />
+                android:text="@string/str_your_pay_as_you_go" />
 
 
             <androidx.cardview.widget.CardView

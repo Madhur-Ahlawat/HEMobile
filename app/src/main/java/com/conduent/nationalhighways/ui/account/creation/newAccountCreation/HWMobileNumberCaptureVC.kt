@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -63,16 +64,15 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var isItMobileNumber = true
     private val viewModelProfile: ProfileViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
-    private var countriesModel:List<CountriesModel?>? = ArrayList()
-    private var fullCountryNameWithCode:MutableList<String> = ArrayList()
+    private var countriesModel: List<CountriesModel?>? = ArrayList()
+    private var fullCountryNameWithCode: MutableList<String> = ArrayList()
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
@@ -165,6 +165,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun observer() {
         if (!isViewCreated) {
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
             viewModel.getCountries()
 
 
@@ -179,7 +183,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+
+        }
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
@@ -212,15 +219,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
-                for(i in 0..(countriesModel?.size?.minus(1)?:0)){
-                    for (j in 0..(response.data?.size?.minus(1) ?: 0)){
-                        if (countriesModel?.get(i)?.id== response.data?.get(j)?.id){
-                            fullCountryNameWithCode.add(countriesModel?.get(i)?.countryName+" "+"("+response.data?.get(j)?.key+")")
+                for (i in 0..(countriesModel?.size?.minus(1) ?: 0)) {
+                    for (j in 0..(response.data?.size?.minus(1) ?: 0)) {
+                        if (countriesModel?.get(i)?.id == response.data?.get(j)?.id) {
+                            fullCountryNameWithCode.add(
+                                countriesModel?.get(i)?.countryName + " " + "(" + response.data?.get(
+                                    j
+                                )?.key + ")"
+                            )
                         }
                     }
 
                 }
-                Log.d("fullCountryWithCode",Gson().toJson(fullCountryNameWithCode))
+                Log.d("fullCountryWithCode", Gson().toJson(fullCountryNameWithCode))
                 response.data?.forEach {
                     it?.value?.let { it1 -> countriesCodeList.add(it1) }
                 }
@@ -335,6 +346,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
+
     private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
         NewCreateAccountRequestModel.mobileNumber = mobileNumber
         NewCreateAccountRequestModel.countryCode = countryCode
@@ -349,14 +361,15 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     override fun onRetryClick() {
 
     }
+
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        /* if (loader?.isVisible == true) {
+             loader?.dismiss()
+         }*/
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
-                countriesModel=response.data
+                countriesModel = response.data
                 viewModel.getCountryCodesList()
 
                 response.data?.forEach {
@@ -402,7 +415,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             } else {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
                 if (isItMobileNumber && binding.inputCountry.getSelectedDescription()
-                        .equals("UK +44", true)||binding.inputCountry.getSelectedDescription()
+                        .equals("UK +44", true) || binding.inputCountry.getSelectedDescription()
                         .equals(Constants.UNITED_KINGDOM, true)
                 ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
@@ -533,7 +546,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-       binding.inputMobileNumber.setText("")
+        binding.inputMobileNumber.setText("")
         binding.inputMobileNumber.removeError()
     }
 

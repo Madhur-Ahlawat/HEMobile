@@ -564,6 +564,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         response?.code = binding.edtOtp.getText().toString()
                         bundle.putParcelable("data", response)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
 
                         when(navFlowCall){
 
@@ -576,7 +577,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 bundle
                             )}
                             else -> {
-                                NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
                                 findNavController().navigate(
                                     R.id.action_forgotOtpFragment_to_createPasswordFragment,
                                     bundle
