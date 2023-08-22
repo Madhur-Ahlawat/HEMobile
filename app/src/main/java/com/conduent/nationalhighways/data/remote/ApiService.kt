@@ -386,7 +386,7 @@ interface ApiService {
     ): Response<String?>?
 
     @POST(LRDS_ELIGIBILITY_CHECK)
-    suspend fun LrdsEligibityCheck(@Body request: LrdsEligibiltyRequest):Response<LrdsEligibilityResponse?>
+    suspend fun lrdsEligibilityCheck(@Body request: LrdsEligibiltyRequest):Response<LrdsEligibilityResponse?>
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateAccountSettingPrefs(

@@ -46,7 +46,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnClickListener {
 
-    private var commaSeperatedString: String? = null
+    private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
 
     @Inject
@@ -148,7 +148,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            if(navFlowCall==Constants.ACCOUNT_CREATION_EMAIL_FLOW){
+            if(navFlowCall==ACCOUNT_CREATION_EMAIL_FLOW){
                 binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 
@@ -212,49 +212,6 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
         }
     }
 
-    private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
-
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-
-        when (status) {
-            is Resource.Success -> {
-                val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.email))
-
-                bundle.putParcelable("response", status.data)
-
-
-                bundle.putString(Constants.NAV_FLOW_KEY, ACCOUNT_CREATION_EMAIL_FLOW)
-                bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
-                findNavController().navigate(
-                    R.id.action_forgotPasswordFragment_to_otpFragment,
-                    bundle
-                )
-
-                AdobeAnalytics.setActionTrack2(
-                    "continue",
-                    "login:forgot password:choose options",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, Constants.EMAIL,
-                    sessionManager.getLoggedInUser()
-                )
-
-
-            }
-
-            is Resource.DataError -> {
-                binding.edtEmail.setErrorText(status.errorMsg)
-            }
-
-            else -> {
-            }
-
-        }
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -322,37 +279,36 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
 
     private fun isEnable() {
-        btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().length > 0) {
-            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+        btnEnabled = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
+            if (binding.edtEmail.editText.text.toString().trim().length < 8) {
                 false
             } else {
-                if (binding.edtEmail.editText.getText().toString().length > 100) {
+                if (binding.edtEmail.editText.text.toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
                 } else {
                     if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.getText().toString().trim()
+                            binding.edtEmail.editText.text.toString().trim()
                         ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                            binding.edtEmail.editText.text.toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
-                            .toString().equals(".") || binding.edtEmail.editText.getText()
-                            .toString().first().toString().equals("."))
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString()
-                            .equals("-") || binding.edtEmail.editText.getText().toString().first()
-                            .toString().equals("-"))
+                        ) || (binding.edtEmail.editText.text.toString().trim().last()
+                            .toString() == "." || binding.edtEmail.editText.text
+                            .toString().first().toString() == ".")
+                        || (binding.edtEmail.editText.text.toString().trim().last().toString() == "-" || binding.edtEmail.editText.text.toString().first()
+                            .toString() == "-")
                         || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '.'
+                            binding.edtEmail.editText.text.toString().trim(), '.'
                         ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                            binding.edtEmail.editText.text.toString().trim(), '@'
                         ) < 1)
                     ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     } else {
                         if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.getText().toString().trim(),
+                                binding.edtEmail.editText.text.toString().trim(),
                                 splCharEmailCode
                             )
                         ) {
@@ -372,14 +328,14 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                                 ALLOWED_CHARS_EMAIL,
                                 binding.edtEmail.getText().toString().trim()
                             )
-                            commaSeperatedString =
+                            commaSeparatedString =
                                 Utils.makeCommaSeperatedStringForPassword(
                                     Utils.removeAllCharacters(
                                         ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
                                     )
                                 )
-                            if (filterTextForSpecialChars!!.length > 0) {
-                                binding.edtEmail.setErrorText("Email address must not include $commaSeperatedString")
+                            if (filterTextForSpecialChars!!.isNotEmpty()) {
+                                binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
                                 false
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(
                                     binding.edtEmail.getText().toString()
@@ -391,11 +347,9 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else if (!(Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.getText().toString().trim(), '@'
-                            ) > 0 && Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.getText().toString().trim(), '@'
-                            ) < 2)
+                        } else if (Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.text.toString().trim(), '@'
+                            ) !in (1..1)
                         ) {
                             binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                             false
@@ -435,20 +389,9 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable(
-                    "data",
-                    RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim())
-                )
+                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim()))
 
-                bundle.putParcelable(
-                    "response",
-                    SecurityCodeResponseModel(
-                        resource.data?.emailStatusCode,
-                        0L,
-                        resource.data?.referenceId,
-                        true
-                    )
-                )
+                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true))
 
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
