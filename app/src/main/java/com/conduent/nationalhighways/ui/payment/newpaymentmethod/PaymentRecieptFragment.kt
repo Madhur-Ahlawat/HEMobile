@@ -79,12 +79,31 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
-        navData=arguments?.getParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java)
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
         binding.inputCountry.dropDownItemSelectListener = this
         binding.edtEmail.editText.addTextChangedListener {
             isEnable()
+        }
+        navData?.let {
+            if ((navData as CrossingDetailsModelsResponse).recieptMode.equals("")) {
+            } else if ((navData as CrossingDetailsModelsResponse).recieptMode!!.contains("@") && (navData as CrossingDetailsModelsResponse).recieptMode!!.contains(
+                    "."
+                )
+            ) {
+                binding?.apply {
+                    selectEmail.isChecked = true
+                    edtEmail.visible()
+                    edtEmail.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
+                }
+            } else {
+                binding?.apply {
+                    selectTextMessage.isChecked = true
+                    edtEmail.visible()
+                    inputCountry.setSelectedValue((navData as CrossingDetailsModelsResponse).countryCode!!)
+                    inputMobileNumber.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
+                }
+            }
         }
     }
 
@@ -180,7 +199,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         checkButtonEmail()
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
+        navData = arguments?.getParcelable(
+            Constants.NAV_DATA_KEY,
+            CrossingDetailsModelsResponse::class.java
+        )
         binding?.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
@@ -267,11 +291,16 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 if (binding?.selectEmail!!.isChecked) {
-                    (navData as CrossingDetailsModelsResponse).recieptMode=binding.edtEmail.getText().toString().trim()
+                    (navData as CrossingDetailsModelsResponse).recieptMode =
+                        binding.edtEmail.getText().toString().trim()
                 } else {
-                    (navData as CrossingDetailsModelsResponse).recieptMode=binding.inputMobileNumber.editText.getText().toString().trim()
+                    (navData as CrossingDetailsModelsResponse).recieptMode =
+                        binding.inputMobileNumber.editText.getText().toString().trim()
                 }
-                bundle.putParcelable(Constants.NAV_DATA_KEY, (navData as CrossingDetailsModelsResponse) as Parcelable?)
+                bundle.putParcelable(
+                    Constants.NAV_DATA_KEY,
+                    (navData as CrossingDetailsModelsResponse) as Parcelable?
+                )
 
                 findNavController().navigate(
                     R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
@@ -288,11 +317,11 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     override fun onHashMapItemSelected(key: String?, value: Any?) {
-        TODO("Not yet implemented")
+        (navData as CrossingDetailsModelsResponse).countryCode = key
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-        TODO("Not yet implemented")
+        (navData as CrossingDetailsModelsResponse).countryCode = selectedItem
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
