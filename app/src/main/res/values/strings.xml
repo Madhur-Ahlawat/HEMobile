@@ -1397,8 +1397,7 @@
     <string name="str_amount_paid">Amount Paid</string>
     <string name="str_time_date">Time and  Date</string>
 
-    <string name="payment_failed">Payment failed</string>
-    <string name="payment_incorrect">Payment method is incorrect</string>
+
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
     <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
     <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>

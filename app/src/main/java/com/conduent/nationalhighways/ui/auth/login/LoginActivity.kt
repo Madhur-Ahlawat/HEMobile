@@ -146,10 +146,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    navigateWithCrossing(it.transactionList?.count?:0)
-                 /*   it.transactionList?.count?.let { count ->
-                        navigateWithCrossing(count)
-                    }*/
+                    if (it.transactionList!=null){
+                        navigateWithCrossing(it.transactionList.count?:0)
+
+                    }else{
+                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+
                 }
             }
 
@@ -543,12 +547,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    private fun navigateHomeActivity() {
-        startActivity(
-            Intent(this, HomeActivityMain::class.java)
-        )
-        finish()
-    }
 }
 
 
