@@ -60,57 +60,7 @@
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
 
                     <ImageView
-                        android:id="@+id/editFullName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
-                        android:src="@drawable/edit"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/companyNameCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                android:visibility="gone"
-                app:cardCornerRadius="5dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layerCompanyName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
-
-                    <TextView
-                        android:id="@+id/txtCompanyFullName"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/company_name"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/companyName"
-                        style="@style/RegularTextBlack"
-
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
-
-                    <ImageView
-                        android:id="@+id/editCompanyName"
+                        android:id="@+id/editRegistrationNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_20dp"
@@ -157,7 +107,7 @@
                         app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
 
                     <ImageView
-                        android:id="@+id/editAddress"
+                        android:id="@+id/editRecentCrossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_20dp"
@@ -209,7 +159,7 @@
                         app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings" />
 
                     <ImageView
-                        android:id="@+id/editEmailAddress"
+                        android:id="@+id/editCreditForAdditionalCrossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_20dp"
