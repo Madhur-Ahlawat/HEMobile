@@ -110,7 +110,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             var url =""
             url = if (NewCreateAccountRequestModel.prePay){
                 "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-
             }else{
                 "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
             }
