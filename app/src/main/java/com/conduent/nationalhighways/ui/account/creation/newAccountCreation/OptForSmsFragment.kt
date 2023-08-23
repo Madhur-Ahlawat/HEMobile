@@ -113,7 +113,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
             }else{
                 "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-
             }
             val bundle=Bundle()
             bundle.putString(Constants.TERMSCONDITIONURL,url)
