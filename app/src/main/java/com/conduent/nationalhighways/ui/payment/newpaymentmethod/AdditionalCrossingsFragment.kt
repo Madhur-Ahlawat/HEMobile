@@ -40,7 +40,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
-        data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
+        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
+        }
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
             numberAdditionalCrossings.setSelectedValue("1")

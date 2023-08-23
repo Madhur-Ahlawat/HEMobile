@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite">
+    app:startDestination="@id/findYourVehicleFragment">
 
     <!-- Step 5 -->
 
@@ -370,7 +370,10 @@
             app:destination="@id/createAccountEligibleLRDS" />
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountSummary"
-            app:destination="@id/createAccountSummaryFragment" />
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/createAccountPostCodeNew"
+            app:popUpToInclusive="true"/>
+            />
         <action
             android:id="@+id/action_selectaddressfragment_to_createAccountTypesFragment"
             app:destination="@+id/createAccountTypes" />
@@ -445,7 +448,14 @@
         tools:layout="@layout/fragment_forgot_otpchanges">
         <action
             android:id="@+id/action_forgotOtpFragment_to_createAccountSummaryFragment"
-            app:destination="@id/createAccountSummaryFragment" />
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/HWMobileNumberCaptureVC"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_email_forgotOtpFragment_to_createAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/forgotPasswordFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
@@ -540,6 +550,12 @@
         <action
             android:id="@+id/action_manualaddressfragment_to_forgotPasswordFragment"
             app:destination="@+id/forgotPasswordFragment" />
+
+        <action
+            android:id="@+id/action_manualaddressfragment_to_createAccountSummary"
+            app:destination="@+id/createAccountSummaryFragment"
+            app:popUpTo="@id/createAccountPostCodeNew"
+            app:popUpToInclusive="true"/>
 
 
     </fragment>
