@@ -288,7 +288,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
                     }
                 }
-
                 val bundle = Bundle()
                 bundle.putParcelable("data", data)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
