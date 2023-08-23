@@ -38,7 +38,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        binding.titleText2.text =
+            Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
             inputTotalAmount.isEnabled = false
