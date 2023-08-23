@@ -14,15 +14,12 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentPayForCrossingsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 
 @AndroidEntryPoint
@@ -30,34 +27,35 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
 
     private var loader: LoaderDialog? = null
-    private var data : CrossingDetailsModelsResponse? = null
+    private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentPayForCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
+        binding.titleText2.text =
+            Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
             inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toInt()
             val unSettledTrips = data?.unSettledTrips?.toInt()
-            if(unSettledTrips != null && charge != null){
+            if (unSettledTrips != null && charge != null) {
                 val index = emptyList<String>().toMutableList()
-                for (i in 0..unSettledTrips){
+                for (i in 0..unSettledTrips) {
                     index.add(i.toString())
                 }
                 inputCountry.dataSet.addAll(index)
                 inputCountry.setSelectedValue(unSettledTrips.toString())
-                val total = charge*unSettledTrips
-                inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
+                val total = charge * unSettledTrips
+                inputTotalAmount.setText(getString(R.string.currency_symbol) + total)
             }
 
         }
 
-
-
+        (navData as CrossingDetailsModelsResponse).recentCrossingCount =
+            binding.inputCountry.getSelectedValue()!!.toInt()
     }
 
     override fun initCtrl() {
@@ -74,13 +72,17 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         when (v?.id) {
             R.id.btnAdditionalCrossing -> {
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                findNavController().navigate(R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,bundle)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                findNavController().navigate(
+                    R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,
+                    bundle
+                )
             }
+
             R.id.btnNext -> {
                 val crossings = binding.inputCountry.selectedItemDescription?.toInt()
-                if(crossings == 0){
+                if (crossings == 0) {
                     displayCustomMessage(getString(R.string.purchase_no_crossings),
                         getString(R.string.to_continue_you_must_pay_for_at_least_one_recent_additional_crossing),
                         getString(R.string.str_continue),
@@ -95,18 +97,24 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                             override fun negativeBtnClick(dialog: DialogInterface) {
                             }
                         })
-                }else{
+                } else {
                     val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                    bundle.putDouble(Constants.DATA,binding.inputTotalAmount.getText().toString().replace(getString(R.string.currency_symbol),"").toDouble())
-                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                    findNavController().navigate(R.id.action_payCrossingsFragment_to_crossingRecieptFragment,bundle)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putDouble(
+                        Constants.DATA,
+                        binding.inputTotalAmount.getText().toString()
+                            .replace(getString(R.string.currency_symbol), "").toDouble()
+                    )
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    findNavController().navigate(
+                        R.id.action_payCrossingsFragment_to_crossingRecieptFragment,
+                        bundle
+                    )
                 }
 
             }
         }
     }
-
 
 
     override fun onRetryClick() {
@@ -119,10 +127,10 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     override fun onItemSlected(position: Int, selectedItem: String) {
 
         val charge = data?.chargingRate?.toInt()
-        if(charge != null){
-            val total = charge*selectedItem.toInt()
-            data?.crossingCount=selectedItem.toInt()
-            binding.inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
+        if (charge != null) {
+            val total = charge * selectedItem.toInt()
+            data?.recentCrossingCount = selectedItem.toInt()
+            binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + total)
         }
     }
 }

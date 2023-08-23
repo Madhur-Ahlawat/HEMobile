@@ -21,7 +21,7 @@ data class CrossingDetailsModelsResponse(
     var dvlaclass: String?="",
     var recieptMode:String?="",
     var countryCode:String?="",
-    var crossingCount:Int=0,
+    var recentCrossingCount:Int=0,
     var additionalCrossingCount:Int=0,
     var totalAmount:Double=0.0,
     var additionalCharge:Double=0.0,

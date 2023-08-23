@@ -290,6 +290,9 @@
         <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_additionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
     </fragment>
 
     <fragment

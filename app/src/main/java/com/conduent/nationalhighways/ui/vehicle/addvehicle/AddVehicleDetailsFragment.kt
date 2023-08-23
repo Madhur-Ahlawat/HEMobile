@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.vehicle.addvehicle
 
-import android.R.attr.maxLength
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -24,7 +23,6 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -135,6 +133,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
             checkBoxChecked = isChecked
+            validateAllFields()
             checkButton()
         }
 
@@ -315,6 +314,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.makeInputLayout.setErrorText(getString(R.string.str_make_error_message))
                     false
                 } else {
+                    validateAllFields()
                     binding.makeInputLayout.removeError()
                     (navData as CrossingDetailsModelsResponse).vehicleMake =
                         binding.makeInputLayout.editText.getText().toString().trim()
@@ -340,6 +340,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.modelInputLayout.setErrorText(getString(R.string.str_model_error_message))
                     false
                 } else {
+                    validateAllFields()
                     binding.modelInputLayout.removeError()
                     (navData as CrossingDetailsModelsResponse).vehicleModel =
                         binding.modelInputLayout.editText.getText().toString().trim()
@@ -359,6 +360,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
                 } else {
+                    validateAllFields()
                     binding.colorInputLayout.removeError()
                     (navData as CrossingDetailsModelsResponse).vehicleColor =
                         binding.colorInputLayout.editText.getText().toString().trim()
@@ -672,6 +674,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         typeOfVehicleChecked = true
         vehicleClassSelected = selectedItem
         (navData as CrossingDetailsModelsResponse).vehicleType = position
+        validateAllFields()
         checkButton()
     }
 

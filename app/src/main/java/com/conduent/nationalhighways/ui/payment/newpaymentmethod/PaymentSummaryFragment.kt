@@ -12,14 +12,14 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 
 class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
@@ -52,10 +52,16 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         binding?.apply {
             vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
             recentCrossings.text =
-                (navData as CrossingDetailsModelsResponse).crossingCount.toString()
+                (navData as CrossingDetailsModelsResponse).recentCrossingCount.toString()
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
             paymentAmount.text = (navData as CrossingDetailsModelsResponse).totalAmount.toString()
+            if((navData as CrossingDetailsModelsResponse).recentCrossingCount>0){
+                binding.cardRecentCrossings.visible()
+            }
+            else{
+                binding.cardRecentCrossings.gone()
+            }
         }
     }
 
@@ -111,7 +117,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
             R.id.editCreditForAdditionalCrossings -> {
                 findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
+                    R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
                     enableEditMode()
                 )
             }
