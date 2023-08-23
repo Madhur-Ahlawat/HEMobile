@@ -84,22 +84,14 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         when (v?.id) {
 
             R.id.btnNext -> {
-                if (!NewCreateAccountRequestModel.prePay) {
                     val bundle = Bundle()
-
-                    bundle.putDouble(Constants.DATA, 0.00)
-                    bundle.putDouble(Constants.THRESHOLD_AMOUNT, 0.00)
-                    bundle.putString(NAV_FLOW_KEY, Constants.NOTSUSPENDED)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, 0)
+                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount)
+                    bundle.putString(NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
+                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                     findNavController().navigate(
                         R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
                         bundle
                     )
-
-                } else {
-                    findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
-
-                }
             }
 
             R.id.editRegistrationNumber -> {

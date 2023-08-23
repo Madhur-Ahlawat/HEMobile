@@ -166,7 +166,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun clearSingletonData() {
         NewCreateAccountRequestModel.referenceId = ""
-        NewCreateAccountRequestModel.emailAddress = ""
         NewCreateAccountRequestModel.mobileNumber = ""
         NewCreateAccountRequestModel.countryCode = ""
         NewCreateAccountRequestModel.communicationTextMessage = false
@@ -349,6 +348,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
+    private fun showErrorPopup(errorMsg:String) {
+        ErrorUtil.showError(binding.root, errorMsg)
+
+    }
+
     private fun makeOneOffPaymentApi(
         responseModel: CardResponseModel?,
         paymentSuccessResponse: PaymentSuccessResponse
@@ -372,10 +376,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
-    private fun showErrorPopup(errorMsg: String) {
-        ErrorUtil.showError(binding.root, errorMsg)
-
-    }
 
     private fun saveNewCard(
         responseModel: CardResponseModel?,
@@ -444,7 +444,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "N"
         model.emailPreference = "Y"
-        model.mfaFlag = "N"
+        if (NewCreateAccountRequestModel.twoStepVerification){
+            model.mfaFlag = "Y"
+
+        }else{
+            model.mfaFlag = "N"
+
+        }
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
@@ -511,7 +517,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerId = directoryServerId // 3ds serverId
-        model.smsOption = "N"
+        if (NewCreateAccountRequestModel.communicationTextMessage){
+            model.smsOption = "Y"
+
+        }else{
+            model.smsOption = "N"
+
+        }
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
         for (obj in data.vehicleList) {
@@ -632,7 +644,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.webViewClient = webViewClient
     }
 
-    private fun getRequiredText(text: String) = text.substringAfter(' ')
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")","")
 
     private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()

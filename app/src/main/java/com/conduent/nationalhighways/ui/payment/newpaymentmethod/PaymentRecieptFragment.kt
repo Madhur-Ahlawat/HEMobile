@@ -293,9 +293,11 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 if (binding?.selectEmail!!.isChecked) {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
                         binding.edtEmail.getText().toString().trim()
+                    NewCreateAccountRequestModel.emailAddress=binding.edtEmail.editText.getText().toString().trim()
                 } else {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
                         binding.inputMobileNumber.editText.getText().toString().trim()
+                    NewCreateAccountRequestModel.mobileNumber=binding.inputMobileNumber.editText.getText().toString().trim()
                 }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
