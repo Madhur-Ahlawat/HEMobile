@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -37,7 +38,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
+
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
             inputTotalAmount.isEnabled = false
@@ -53,7 +54,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 val total = charge*unSettledTrips
                 inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
             }
-
+            binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,data?.chargingRate,
+                data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
 
 

@@ -1369,7 +1369,7 @@
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
     <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> Recent crossings include all northbound and southbound crossings made yesterday and today
-        <br><br><font color="#000000" >\u25CF</font> It costs £{x} per crossing for a {type of vehicle}
+        <br><br><font color="#000000" >\u25CF</font> It costs £%s per crossing for a %s
         <br><br><font color="#000000" >\u25CF</font> A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
         <br><br><font color="#000000" >\u25CF</font> A return trip is 2 crossings
         <br><br><font color="#000000" >\u25CF</font> Late payments will be used for future crossings - you may receive a PCN for any late payment]]></string>
@@ -1406,7 +1406,7 @@
     <string name="text_message_optional">Text message (optional)</string>
     <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
-    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the {numberplate} is a {type of vehicle on record} rather than a {type of vehicle entered}. This type of vehicle has a different charge of <amount>.
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of %s.
                     \n\n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
