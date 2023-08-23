@@ -52,11 +52,11 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         binding?.apply {
             vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
             recentCrossings.text =
-                (navData as CrossingDetailsModelsResponse).recentCrossingCount.toString()
+                (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
             paymentAmount.text = (navData as CrossingDetailsModelsResponse).totalAmount.toString()
-            if((navData as CrossingDetailsModelsResponse).recentCrossingCount>0){
+            if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }
             else{
