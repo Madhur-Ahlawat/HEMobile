@@ -11,7 +11,7 @@ data class OneOfPaymentModelRequest(
 ) : Parcelable
 
 @Parcelize
-data class FtVehicleList(val vehicle: ArrayList<NewVehicleInfoDetails>?) : Parcelable
+data class FtVehicleList(val vehicle: ArrayList<VehicleList>?) : Parcelable
 
 @Parcelize
 data class PaymentTypeInfo(
