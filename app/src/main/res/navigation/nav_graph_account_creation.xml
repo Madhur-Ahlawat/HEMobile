@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/createAccountPrerequisite"
-    >
+    app:startDestination="@id/createAccountPrerequisite">
 
     <!-- Step 5 -->
 
@@ -188,8 +187,27 @@
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_additional_crossingFragment"
             app:destination="@+id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_deletePaymentMethodFragment"
+            app:destination="@+id/deletePaymentMethodFragment" />
 
+    </fragment>
 
+    <fragment
+        android:id="@+id/deletePaymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodFragment"
+        android:label="DeletePaymentMethod"
+        tools:layout="@layout/fragment_delete_payment_method">
+
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment"
+            app:destination="@id/deletePaymentMethodSuccessFragment" />
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_pay_for_crossingFragment"
+            app:destination="@+id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_deletePaymentMethodFragment_to_additional_crossingFragment"
+            app:destination="@+id/additionalCrossingsFragment" />
     </fragment>
 
     <fragment
@@ -210,12 +228,26 @@
         tools:layout="@layout/fragment_pay_for_crossings">
 
         <action
-            android:id="@+id/action_payCrossingsFragment_to_nmiPaymentFragment"
-            app:destination="@id/nmiPaymentFragment" />
+            android:id="@+id/action_payCrossingsFragment_to_additionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
         <action
             android:id="@+id/action_payCrossingsFragment_to_crossingRecieptFragment"
             app:destination="@id/crossingRecieptFragment" />
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_landingFragment"
+            app:destination="@+id/landingFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
+        android:label="@string/str_landing_screen"
+        tools:layout="@layout/fragment_landing">
+
+        <action
+            android:id="@+id/action_landingFragment_to_startNow"
+            app:destination="@id/startNow" />
     </fragment>
 
     <fragment
@@ -250,8 +282,14 @@
         android:label="crossingCheckAnswersFragment"
         tools:layout="@layout/fragment_payment_summary">
         <action
+            android:id="@+id/action_accountSummaryFragment_to_PayForCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
+        <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
     </fragment>
 
     <fragment
@@ -656,6 +694,10 @@
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
 
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_make_one_off_payment_successfully"
+            app:destination="@+id/make_one_off_payment_successfully" />
+
     </fragment>
 
     <fragment
@@ -701,7 +743,11 @@
             android:id="@+id/action_make_one_off_payment_successfully_to_createAccountPrerequisite"
             app:destination="@id/createAccountPrerequisite"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_make_one_off_payment_successfully_to_landingFragment"
+            app:destination="@+id/landingFragment" />
 
     </fragment>
 

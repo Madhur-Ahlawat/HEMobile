@@ -1305,7 +1305,7 @@
     <string name="str_email_address">Email address</string>
     <string name="this_will_be_your_username_when_you_log_in_to_your_account">This will be your username when you log in to your account.</string>
     <string name="check_your_email_for_a_security_code">Check your email for a security code.</string>
-    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to j*****@e****.com.</string>
+    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to</string>
     <string name="str_code">Code</string>
     <string name="check_the_email_for_6_digit_security_code_this_code_will_expire_after_15_minutes_your_email_might_take_a_few_minutes_to_arrive_if_you_do_not_get_an_email_check_your_spam_folder">Check the email for 6-digit security code. This code will expire after 15 minutes.\n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
@@ -1363,23 +1363,23 @@
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
-    <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an account to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for crossings you’ve made since yesterday
-        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;pay for future crossings</string>
+    <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
+        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
-    <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> recent crossings include all northbound and southbound crossings made yesterday and today
-        <br><br><font color="#000000" >\u25CF</font> it costs £{x} per crossing for a {type of vehicle}
-        <br><br><font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
-        <br><br><font color="#000000" >\u25CF</font> a return trip is 2 crossings
-        <br><br><font color="#000000" >\u25CF</font> late payments will be used for future crossings - you may receive a PCN for any late payment]]></string>
+    <string name="recent_crossings_txt"><![CDATA[<font color="#000000" >\u25CF</font> Recent crossings include all northbound and southbound crossings made yesterday and today
+        <br><br><font color="#000000" >\u25CF</font> It costs £%s per crossing for a %s
+        <br><br><font color="#000000" >\u25CF</font> A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
+        <br><br><font color="#000000" >\u25CF</font> A return trip is 2 crossings
+        <br><br><font color="#000000" >\u25CF</font> Late payments will be used for future crossings - you may receive a PCN for any late payment]]></string>
     <string name="additional_crossings">+ ADDITIONAL CROSSINGS</string>
     <string name="additional_crossings_txt">Additional Crossings</string>
     <string name="number_of_additional_crossings">Number of additional crossings</string>
     <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for ?</string>
-    <string name="a_crossing_is_a_single_journey"><![CDATA[<font color="#000000" >\u25CF</font> a crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
-        <br><br><font color="#000000" >\u25CF</font>a return trip is 2 crossings
-        <br><br><font color="#000000" >\u25CF</font>these payments are valid up to 12 months or till they are used]]></string>
+    <string name="a_crossing_is_a_single_journey"><![CDATA[<font color="#000000" >\u25CF</font> A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound)
+        <br><br><font color="#000000" >\u25CF</font>A return trip is 2 crossings
+        <br><br><font color="#000000" >\u25CF</font>These payments are valid up to 12 months or till they are used]]></string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="transactions">Transactions</string>
@@ -1397,8 +1397,7 @@
     <string name="str_amount_paid">Amount Paid</string>
     <string name="str_time_date">Time and  Date</string>
 
-    <string name="payment_failed">Payment failed</string>
-    <string name="payment_incorrect">Payment method is incorrect</string>
+
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
     <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
     <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
@@ -1406,7 +1405,19 @@
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
     <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
+    <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of %s.
+                    \n\n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
+    <string name="pay_new_amount">PAY NEW AMOUNT</string>
+    <string name="purchase_no_crossings">Purchase No Crossings</string>
+    <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
 
+
+    <string name="incorrect_email">Incorrect email. Try again.</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="payment_incorrect">Payment method is incorrect</string>
+    <string name="str_on">on</string>
+    <string name="back_to_main_menu">BACK TO MAIN MENU</string>
 </resources>
 
 

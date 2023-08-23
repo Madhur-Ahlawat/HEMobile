@@ -51,6 +51,15 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editTwoStepVerification.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
+        if(!dataModel.personalAccount){
+            binding.companyNameCard.visible()
+            binding.companyName.text = dataModel.companyName
+            binding.editCompanyName.setOnClickListener(this)
+        }
+        else{
+            binding.companyNameCard.gone()
+
+        }
         if (dataModel.communicationTextMessage) {
             binding.communications.text = getString(R.string.yes)
         } else {
@@ -165,6 +174,12 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                     enableEditMode()
                 )
             }
+            R.id.editCompanyName -> {
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_personalInfoFragment,
+                    enableEditMode()
+                )
+            }
 
             R.id.editAddress -> {
                 if (NewCreateAccountRequestModel.isManualAddress) {
@@ -231,6 +246,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+
         return bundle
     }
 

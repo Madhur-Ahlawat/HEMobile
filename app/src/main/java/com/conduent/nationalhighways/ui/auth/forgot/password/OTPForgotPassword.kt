@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -288,6 +289,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
                     }
                 }
+
                 val bundle = Bundle()
                 bundle.putParcelable("data", data)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -379,13 +381,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             is Resource.Success -> {
                 val bundle = Bundle()
 
-                if (navFlowCall == Constants.TWOFA) {
+                if (navFlowCall ==TWOFA) {
                     if (accountInformation?.status.equals(Constants.SUSPENDED)) {
-                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
-                        bundle.putString(
+                        val intent = Intent(requireContext(), AuthActivity::class.java)
+                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                        intent.putExtra(
                             Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                         )
+                        startActivity(intent)
+                        requireActivity().finish()
+
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
 
@@ -536,7 +543,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun otpSuceessRedirection() {
 
-        val bundle = Bundle()
+                val bundle = Bundle()
 
         when(navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {

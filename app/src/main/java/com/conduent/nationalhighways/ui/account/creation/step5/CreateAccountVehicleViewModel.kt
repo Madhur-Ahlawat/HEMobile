@@ -33,7 +33,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {
-                findVehicleMutData.setValue(
+                findVehicleMutData.postValue(
                     ResponseHandler.success(
                         repo.getVehicleDetail(
                             vehicleNumber,
@@ -42,7 +42,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                findVehicleMutData.setValue(ResponseHandler.failure(e))
+                findVehicleMutData.postValue(ResponseHandler.failure(e))
             }
         }
     }
@@ -50,7 +50,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
     fun getNewVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {
-                findNewVehicleMutData.setValue(
+                findNewVehicleMutData.postValue(
                     ResponseHandler.success(
                         repo.getNewVehicleDetail(
                             vehicleNumber,
@@ -59,7 +59,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                findNewVehicleMutData.setValue(ResponseHandler.failure(e))
+                findNewVehicleMutData.postValue(ResponseHandler.failure(e))
             }
         }
     }
@@ -68,7 +68,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                validVehicleMutData.setValue(
+                validVehicleMutData.postValue(
                     ResponseHandler.success(
                         repo.validVehicleCheck(
                             vehicleValidReqModel, agencyId
@@ -77,7 +77,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
                 )
 
             } catch (e: Exception) {
-                validVehicleMutData.setValue(ResponseHandler.failure(e))
+                validVehicleMutData.postValue(ResponseHandler.failure(e))
             }
         }
 

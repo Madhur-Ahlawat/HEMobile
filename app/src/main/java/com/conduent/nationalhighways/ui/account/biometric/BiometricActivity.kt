@@ -106,7 +106,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         binding.switchFingerprintLogin.isChecked = sessionManager.fetchTouchIdEnabled()
 
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
-            binding.btnSave.isEnabled=true
+            binding.btnSave.isEnabled = true
 
             if (isChecked) {
                 val biometricManager = BiometricManager.from(this)
@@ -359,13 +359,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    it.transactionList?.count?.let { count ->
+                    if (it.transactionList != null) {
+                        navigateWithCrossing(it.transactionList.count ?: 0)
 
-
-                        navigateWithCrossing(count)
-
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                     }
+
                 }
             }
 

@@ -89,10 +89,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         }else{
             if (data?.optionType==Constants.EMAIL){
-                binding.subTitle.text=getString(R.string.resend_code,data?.optionValue)
+                binding.subTitle.text=getString(R.string.resend_code,Utils.hiddenEmailText(data?.optionValue!!))
 
             }else{
-                binding.subTitle.text=getString(R.string.resend_code_text,data?.optionValue)
+                binding.subTitle.text=getString(R.string.resend_code_text,Utils.hiddenEmailText(data?.optionValue!!))
 
             }
 
@@ -100,7 +100,6 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
         binding.apply {
             btnVerify.setOnClickListener(this@ResendCodeFragment)
         }
-
     }
 
     override fun observer() {

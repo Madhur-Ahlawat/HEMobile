@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.step5
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -16,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -39,6 +42,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var isObserverBack = false
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
+    private var isCrossingCall = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -48,9 +52,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         isObserverBack = true
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
+        isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS,true)
         arguments?.getString(Constants.PLATE_NUMBER,"").toString().let { plateNumber = it.replace("null","") }
-
+        navData=arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
         binding.editNumberPlate.setText(plateNumber.trim().replace(" ","").replace("-",""))
         val filter = InputFilter.AllCaps()
         binding.editNumberPlate.editText.filters =  arrayOf( filter)
@@ -150,10 +156,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         when (v?.id) {
             R.id.findVehicle -> {
 
+
+
                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
+
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim()){
+                if(plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText().toString().trim() && isCrossingCall.not()){
                     if(editCall){
                         findNavController().navigate(R.id.action_findVehicleFragment_to_accountSummaryFragment,bundle)
                     }else {
@@ -195,7 +204,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
                     }else {
                         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                        checkForDuplicateVehicle(numberPlate)
+                        if(isCrossingCall){
+                            viewModel.getNewVehicleData(
+                                binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-",""),
+                                Constants.AGENCY_ID.toInt()
+                            )
+                        }else {
+                            checkForDuplicateVehicle(numberPlate)
+                        }
                     }
                 }
 
@@ -220,7 +236,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         Log.d("responseData", Gson().toJson(apiData))
 
 
-                        if(vehicleList.contains(apiData[0])){
+                        if(vehicleList.contains(apiData[0]) && isCrossingCall.not()){
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
                             bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -278,16 +294,21 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             isVehicleExist = true
                         }
                     }
-
+                    val bundle = Bundle()
+                    if(navData==null){
+                        navData=CrossingDetailsModelsResponse(plateNumber=numberPlate)
+                    }
+                    (navData as CrossingDetailsModelsResponse).plateNumber=numberPlate
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,
+                        navData as CrossingDetailsModelsResponse
+                    )
                     if(isVehicleExist){
                         accountData.isVehicleAlreadyAddedLocal = true
-                        val bundleData = Bundle()
-                        bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
-                        findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundleData)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                        findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
                     }else{
                         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                        val bundle = Bundle()
                         bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
@@ -329,13 +350,20 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-//                binding.editNumberPlate.setErrorText(resource.errorMsg)
-                val numberPlate = binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-","")
-                NewCreateAccountRequestModel.plateNumber = numberPlate
-                NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                findNavController().navigate(R.id.action_findVehicleFragment_to_maximumVehicleFragment,bundle)
+
+
+                    val numberPlate =
+                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    NewCreateAccountRequestModel.plateNumber = numberPlate
+                    NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                        bundle
+                    )
+
             }
 
             else -> {

@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -53,6 +54,7 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
             response = arguments?.getParcelable("response")
             binding.data = data
         }
+        binding.labelWeHaveSentAnEmail.text = resources.getString(R.string.we_ve_sent_an_email_to_j_e_com) + " " + Utils.hiddenEmailText(binding.data?.emailAddress.toString())+"."
         binding.tvMsg.text = getString(R.string.send_security_code_msg, binding.data?.emailAddress)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

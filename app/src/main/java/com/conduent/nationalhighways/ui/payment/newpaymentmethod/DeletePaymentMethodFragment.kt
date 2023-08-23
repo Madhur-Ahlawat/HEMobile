@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -30,7 +31,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
-    private var flow: String = ""
+    private var data : CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -45,8 +46,6 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        flow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
-
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
 
@@ -54,11 +53,21 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
             paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
 
         }
-        if (flow==Constants.PAYG){
-            binding.textMaximumVehicle.text=getString(R.string.payg_delete_description)
-        }else if (flow==Constants.PRE_PAY_ACCOUNT){
-            binding.textMaximumVehicle.text=getString(R.string.str_your_balance_will_no_longer_available)
 
+        when(navFlowCall) {
+
+            Constants.PAY_FOR_CROSSINGS -> {
+
+                binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
+                binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate)
+                binding.btnContinue.text = getString(R.string.pay_new_amount)
+            }
+            Constants.PAYG -> {
+                binding.textMaximumVehicle.text=getString(R.string.payg_delete_description)
+            }
+            Constants.PRE_PAY_ACCOUNT -> {
+                binding.textMaximumVehicle.text=getString(R.string.str_your_balance_will_no_longer_available)
+            }
         }
 
     }
@@ -106,15 +115,60 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         when (v?.id) {
 
             R.id.btnContinue -> {
-                viewModel.deletePrimaryCard()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                when(navFlowCall) {
+
+                    Constants.PAY_FOR_CROSSINGS -> {
+                            handleFlow(true)
+                    }
+
+                    else ->{
+                        viewModel.deletePrimaryCard()
+                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    }
+                }
+
 
             }
 
             R.id.cancel_btn -> {
-                findNavController().popBackStack()
+                when(navFlowCall) {
+
+                    Constants.PAY_FOR_CROSSINGS -> {
+                        handleFlow(false)
+
+                    }
+                    else ->{
+                        findNavController().popBackStack()
+                    }
+                }
+
             }
 
+        }
+    }
+
+    private fun handleFlow(goWithNewAmount: Boolean) {
+        data = navData as CrossingDetailsModelsResponse?
+        val unSettledTrips = data?.unSettledTrips?.toInt()
+        if(goWithNewAmount){
+            data?.chargingRate = data?.customerClassRate
+        }
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+
+        if (unSettledTrips != null && unSettledTrips > 0) {
+
+            findNavController().navigate(
+                R.id.action_deletePaymentMethodFragment_to_pay_for_crossingFragment,
+                bundle
+            )
+
+        } else {
+            findNavController().navigate(
+                R.id.action_deletePaymentMethodFragment_to_additional_crossingFragment,
+                bundle
+            )
         }
     }
 
