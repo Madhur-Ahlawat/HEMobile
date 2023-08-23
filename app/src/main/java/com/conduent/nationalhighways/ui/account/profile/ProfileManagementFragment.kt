@@ -52,7 +52,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.accountCard.gone()
         binding.emailCard.gone()
         binding.title.gone()
-        binding.subType.gone()
         binding.communicationCard.gone()
         binding.vehicleHeading.invisible()
         binding.recyclerView.gone()

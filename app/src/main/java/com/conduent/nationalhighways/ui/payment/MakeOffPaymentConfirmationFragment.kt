@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.makeoneofpayment.*
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
@@ -149,7 +148,7 @@ class MakeOffPaymentConfirmationFragment :
             R.id.btnPayNow -> {
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
-                val vehicleList = NewVehicleInfoDetails(
+                val vehicleList = VehicleList(
                     list[0].newPlateInfo?.number,
                     list[0].vehicleInfo?.make,
                     list[0].vehicleInfo?.model,
@@ -161,9 +160,13 @@ class MakeOffPaymentConfirmationFragment :
                         list[0].futureQuantity?.toDouble()
                             ?.times(it)
                     }).toString(),
-                    false,
-                    isUK = false,
-
+                    list[0].vehicleInfo?.color,
+                    list[0].classRate.toString(),
+                    list[0].vehicleInfo?.vehicleClassDesc,
+                    list[0].classRate.toString(),
+                    "",
+                    list[0].pastQuantity.toString(),
+                    list[0].classRate.toString()
                 )
 
                 if (mOptionsType.equals("Email", true)) {
@@ -183,7 +186,7 @@ class MakeOffPaymentConfirmationFragment :
                     mail,
                     number, "", "", "", "", "", "", ""
                 )
-                val mVehicleList = ArrayList<NewVehicleInfoDetails>()
+                val mVehicleList = ArrayList<VehicleList>()
                 mVehicleList.clear()
                 mVehicleList.add(vehicleList)
                 val ftVehicleList = FtVehicleList(mVehicleList)

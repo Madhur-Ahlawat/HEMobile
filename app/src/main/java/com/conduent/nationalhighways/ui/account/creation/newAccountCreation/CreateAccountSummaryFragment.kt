@@ -46,7 +46,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editEmailAddress.setOnClickListener(this)
         binding.editMobileNumber.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
-        binding.editSubAccountType.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
@@ -81,14 +80,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
-                binding.txtSubAccountType.text = getString(R.string.str_prepay)
+                binding.txtAccountType.text = getString(R.string.str_prepay)
             } else {
-                binding.txtSubAccountType.text = getString(R.string.pay_as_you_go)
+                binding.txtAccountType.text = getString(R.string.pay_as_you_go)
             }
 
         } else {
             binding.accountType.text = getString(R.string.business)
-            binding.subType.visibility = View.GONE
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -209,13 +207,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_typeAccountFragment,
                     bundle
-                )
-            }
-
-            R.id.editSubAccountType -> {
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
-                    enableEditMode()
                 )
             }
 
