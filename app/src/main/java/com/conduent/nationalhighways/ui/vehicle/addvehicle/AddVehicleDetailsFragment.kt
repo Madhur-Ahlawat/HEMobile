@@ -92,10 +92,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            navData = arguments?.getParcelable(
+                Constants.NAV_DATA_KEY,
+                CrossingDetailsModelsResponse::class.java
+            )
+        }
         accountData = NewCreateAccountRequestModel
         vehicleList = accountData?.vehicleList
         if (oldPlateNumber.isNotEmpty()) {
@@ -112,12 +114,16 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.typeVehicle.dropDownItemSelectListener = this
         binding.model = false
         try {
-            mVehicleDetails = arguments?.getParcelable(Constants.NAV_DATA_KEY) as? VehicleResponse?
+            if(arguments?.getParcelable<VehicleResponse>(Constants.NAV_DATA_KEY)!=null) {
+                mVehicleDetails = arguments?.getParcelable(Constants.NAV_DATA_KEY) as? VehicleResponse?
+            }
         } catch (e: Exception) {
-            navData = arguments?.getParcelable(
-                Constants.NAV_DATA_KEY,
-                CrossingDetailsModelsResponse::class.java
-            )
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null) {
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                    CrossingDetailsModelsResponse::class.java
+                )
+            }
         } finally {
 
         }
@@ -213,7 +219,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun setPreSelectedVehicleType() {
         if (typeOfVehicle.size > 0 && navData != null && navData is CrossingDetailsModelsResponse) {
-            binding.typeVehicle.setSelection((navData as CrossingDetailsModelsResponse).vehicleType)
+            binding.typeVehicle.setSelection((navData as CrossingDetailsModelsResponse).vehicleType?:0)
             typeOfVehicleChecked=true
         }
     }

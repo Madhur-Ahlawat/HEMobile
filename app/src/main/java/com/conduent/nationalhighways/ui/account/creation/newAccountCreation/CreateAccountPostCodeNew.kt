@@ -51,6 +51,9 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)
+                if(NewCreateAccountRequestModel.personalAccount){
+                    setPersonalView()
+                }
             }
 
             PROFILE_MANAGEMENT -> {

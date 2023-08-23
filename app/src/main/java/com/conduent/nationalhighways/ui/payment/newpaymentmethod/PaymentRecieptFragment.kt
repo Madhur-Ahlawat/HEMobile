@@ -201,10 +201,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null) {
+            navData = arguments?.getParcelable(
+                Constants.NAV_DATA_KEY,
+                CrossingDetailsModelsResponse::class.java
+            )
+        }
         binding?.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {

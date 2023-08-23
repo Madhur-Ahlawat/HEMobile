@@ -106,6 +106,9 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
                 requiredCountry = true
                 checkButton()
+                if(NewCreateAccountRequestModel.personalAccount){
+                    setPersonalView()
+                }
             }
 
             Constants.PROFILE_MANAGEMENT -> {
