@@ -111,6 +111,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.model = false
         try {
             mVehicleDetails = arguments?.getParcelable(Constants.NAV_DATA_KEY) as? VehicleResponse?
+            navData = CrossingDetailsModelsResponse()
         } catch (e: Exception) {
             navData = arguments?.getParcelable(
                 Constants.NAV_DATA_KEY,
