@@ -80,9 +80,9 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
-                binding.txtAccountType.text = getString(R.string.str_prepay)
+                binding.accountType.text = getString(R.string.str_prepay)
             } else {
-                binding.txtAccountType.text = getString(R.string.pay_as_you_go)
+                binding.accountType.text = getString(R.string.pay_as_you_go)
             }
 
         } else {

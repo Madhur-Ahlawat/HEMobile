@@ -622,7 +622,7 @@
     <string name="select_account_type">Please select account type</string>
     <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
-    <string name="pay_as_you_go">Personal -Pay as you go</string>
+    <string name="pay_as_you_go">Personal - Pay as you go</string>
     <string name="change">Change</string>
     <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
