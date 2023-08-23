@@ -42,7 +42,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
             inputTotalAmount.isEnabled = false
-            val charge = data?.chargingRate?.toInt()
+            val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unSettledTrips?.toInt()
             if(unSettledTrips != null && charge != null){
                 val index = emptyList<String>().toMutableList()
