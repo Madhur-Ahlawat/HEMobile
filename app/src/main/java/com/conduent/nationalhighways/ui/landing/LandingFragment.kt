@@ -37,12 +37,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var isChecked = true
+    private var isChecked =false
     private var isPushNotificationChecked = true
     private var count = 1
 
-    private var navFlow: String = Constants.ACCOUNT_CREATION_MOBILE_FLOW
-    private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
 
 
     @Inject
@@ -61,10 +59,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if (isChecked) {
+        if (!isChecked) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             webServiceViewModel.checkServiceStatus()
         }
+        isChecked=true
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
@@ -201,7 +200,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
-        if (isChecked) {
+
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
@@ -238,8 +237,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                     // do nothing
                 }
             }
-            isChecked = false
-        }
+
 
     }
 

@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -19,10 +20,12 @@ import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.makeoneofpayment.FtVehicleList
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.conduent.nationalhighways.data.model.makeoneofpayment.PaymentTypeInfo
+import com.conduent.nationalhighways.data.model.makeoneofpayment.VehicleList
 import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -54,6 +57,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
     private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
+    private var crossingDetailModelResponse: CrossingDetailsModelsResponse? = null
 
 
     @Inject
@@ -92,6 +96,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
+        }
+
+        if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
+            crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
@@ -211,7 +219,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     it.let {
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
-                        mBundle.putString(Constants.DATA,htmlTopUpAmount)
+                        mBundle.putString(Constants.DATA, htmlTopUpAmount)
 
                         AdobeAnalytics.setActionTrackPaymentMethodOrderId(
                             "Confirm ",
@@ -237,7 +245,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
+              //  ErrorUtil.showError(binding.root, resource.errorMsg)
 
                 AdobeAnalytics.setActionTrackPaymentMethod(
                     "Confirm ",
@@ -252,6 +262,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             else -> {
+                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
             }
         }
 
@@ -348,7 +360,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
-    private fun showErrorPopup(errorMsg:String) {
+    private fun showErrorPopup(errorMsg: String) {
         ErrorUtil.showError(binding.root, errorMsg)
 
     }
@@ -359,7 +371,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     ) {
         val paymentTypeInfo = PaymentTypeInfo(
             responseModel?.card?.type?.uppercase(Locale.ROOT),
-            responseModel?.card?.number,
+            Utils.maskCardNumber(responseModel?.card?.number?:""),
             responseModel?.token,
             responseModel?.card?.exp?.subSequence(0, 2).toString(),
             "20${responseModel?.card?.exp?.subSequence(2, 4)}",
@@ -369,9 +381,32 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.emailAddress,
             NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
         )
-
-        val ftVehicleList =
-            FtVehicleList(NewCreateAccountRequestModel.vehicleList as ArrayList<NewVehicleInfoDetails>)
+        /* pending dues =recent crossing selected * charging Rate
+            pendingTxnCount=recent crossing selected
+            futureTollCount =Additional crossing selected
+            future toll payment =Additional Crossing Selected * Charging Rate
+        * */
+        val vehicleList = VehicleList(
+            crossingDetailModelResponse?.plateNumber,
+            crossingDetailModelResponse?.vehicleMake,
+            crossingDetailModelResponse?.vehicleModel,
+            crossingDetailModelResponse?.dvlaclass,
+            "UK",
+            "0.00",
+            "2",
+            "5.00",
+            crossingDetailModelResponse?.vehicleColor,
+            crossingDetailModelResponse?.chargingRate,
+            crossingDetailModelResponse?.customerClass,
+            crossingDetailModelResponse?.customerClassRate,
+            crossingDetailModelResponse?.accountNumber,
+            "",
+            crossingDetailModelResponse?.chargingRate
+        )
+        val mVehicleList = ArrayList<VehicleList>()
+        mVehicleList.clear()
+        mVehicleList.add(vehicleList)
+        val ftVehicleList = FtVehicleList(mVehicleList)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
@@ -444,10 +479,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "N"
         model.emailPreference = "Y"
-        if (NewCreateAccountRequestModel.twoStepVerification){
+        if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
 
-        }else{
+        } else {
             model.mfaFlag = "N"
 
         }
@@ -517,10 +552,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerId = directoryServerId // 3ds serverId
-        if (NewCreateAccountRequestModel.communicationTextMessage){
+        if (NewCreateAccountRequestModel.communicationTextMessage) {
             model.smsOption = "Y"
 
-        }else{
+        } else {
             model.smsOption = "N"
 
         }
@@ -565,13 +600,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                val amount: Double = if (!NewCreateAccountRequestModel.prePay) {
-                    0.00
+                val amount: Double = arguments?.getDouble(Constants.DATA) ?: 0.00
 
-                } else {
-                    arguments?.getDouble(Constants.DATA) ?: 0.00
 
-                }
                 val doubleAmount = String.format("%.2f", amount)
                 hideLoader()
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
@@ -615,6 +646,21 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                     }
 
+                    Constants.PAY_FOR_CROSSINGS -> {
+
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
+
+
+                    }
+
                     else -> {
                         if (!NewCreateAccountRequestModel.prePay) {
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
@@ -644,7 +690,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.webViewClient = webViewClient
     }
 
-    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")","")
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
     private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()
