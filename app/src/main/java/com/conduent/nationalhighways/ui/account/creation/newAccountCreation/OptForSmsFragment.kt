@@ -117,7 +117,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             val bundle=Bundle()
             bundle.putString(Constants.TERMSCONDITIONURL,url)
             findNavController().navigate(R.id.action_optForSmsFragment_to_termsConditionFragment,bundle)
-
         }))
         when(navFlowCall){
 
