@@ -1406,7 +1406,7 @@
     <string name="text_message_optional">Text message (optional)</string>
     <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
-    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of %s.
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
