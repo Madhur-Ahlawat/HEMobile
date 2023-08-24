@@ -40,8 +40,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.titleText2.text =
-            Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
                 navData = arguments?.getParcelable(
@@ -69,9 +67,9 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 inputCountry.dataSet.addAll(index)
                 inputCountry.setSelectedValue(unSettledTrips.toString())
                 val total = charge*unSettledTrips
-                inputTotalAmount.setText(getString(R.string.currency_symbol)+total)
+                inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", total))
             }
-            binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,data?.chargingRate,
+            binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,String.format("%.2f", data?.chargingRate?.toDouble()),
                 data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
 

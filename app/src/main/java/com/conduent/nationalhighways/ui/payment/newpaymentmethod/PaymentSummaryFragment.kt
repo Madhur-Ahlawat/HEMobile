@@ -66,15 +66,22 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
             val charge = (navData as CrossingDetailsModelsResponse)?.chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse)?.unSettledTrips?.toInt()
-            if(unSettledTrips != null && charge != null){
+            val unSettledTrips = (navData as CrossingDetailsModelsResponse)?.unSettledTrips
+            val additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
+            val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
+            if(unSettledTrips != null && unSettledTrips != 0 && charge != null){
                 val index = emptyList<String>().toMutableList()
-                for (i in 0..unSettledTrips){
+                for (i in 0..unSettledTrips!!){
                     index.add(i.toString())
                 }
                 totalAmount = charge*unSettledTrips
             }
-            paymentAmount.text =  String.format("%.2f", totalAmount)
+            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
+
+                totalAmount = totalAmount?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
+            }
+
+            paymentAmount.text =  getString(R.string.currency_symbol)+ String.format("%.2f", totalAmount)
             if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }

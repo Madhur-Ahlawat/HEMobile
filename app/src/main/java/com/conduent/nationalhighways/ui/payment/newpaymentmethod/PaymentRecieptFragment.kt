@@ -78,6 +78,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
         binding.inputCountry.dropDownItemSelectListener = this
