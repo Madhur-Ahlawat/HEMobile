@@ -173,6 +173,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private fun clearSingletonData() {
         NewCreateAccountRequestModel.referenceId = ""
         NewCreateAccountRequestModel.mobileNumber = ""
+        NewCreateAccountRequestModel.telephoneNumber = ""
+        NewCreateAccountRequestModel.telephone_countryCode = ""
         NewCreateAccountRequestModel.countryCode = ""
         NewCreateAccountRequestModel.communicationTextMessage = false
         NewCreateAccountRequestModel.termsCondition = false
@@ -378,7 +380,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             responseModel?.check?.name,
             "",
             NewCreateAccountRequestModel.emailAddress,
-            NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
+            NewCreateAccountRequestModel.mobileNumber,
+            "", "", "", "", "", "", ""
         )
         val pendingDues = (crossingDetailModelResponse?.unSettledTrips?.toDouble())?.times(
             (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)

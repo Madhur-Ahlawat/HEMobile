@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.utils.common
 
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoStepVerificationFragment
+
 object Constants {
 
     const val DIRECT_DEBIT: String="directdebit"
@@ -254,6 +256,8 @@ object Constants {
     const val SHOW_BACK_BUTTON = "showBackButton"
     const val IS_MOBILE_NUMBER= "isMobileNumber"
     const val EDIT_FROM_POST_CODE = "editFromPostCode"
+    const val OPTSMS = "optSms"
+    const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"
     const val PAY_FOR_CROSSINGS = "payForCrossings"
     const val PAID_CROSSINGS = "paidCrossings"

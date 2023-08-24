@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
@@ -74,13 +75,25 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.address.text =
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
-        if (dataModel.mobileNumber?.isEmpty() ?: true) {
-            binding.phoneCard.gone()
-        } else {
-            binding.phoneCard.visible()
-            binding.mobileNumber.text =
-                dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
+            if (dataModel.mobileNumber?.isEmpty() ?: true ) {
+                binding.phoneCard.gone()
+            } else {
+                binding.phoneCard.visible()
+                binding.mobileNumber.text =
+                    dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+            }
+        }else{
+            if (dataModel.telephoneNumber?.isEmpty() ?: true ) {
+                binding.phoneCard.gone()
+            } else {
+                binding.phoneCard.visible()
+                binding.mobileNumber.text =
+                    dataModel.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel.telephoneNumber
+            }
         }
+
+
         if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -237,6 +250,9 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+        bundle.putString(NAV_FLOW_FROM, EDIT_SUMMARY)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
 
         return bundle
     }
