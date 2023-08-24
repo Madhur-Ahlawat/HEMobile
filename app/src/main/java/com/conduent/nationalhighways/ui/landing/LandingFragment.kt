@@ -60,8 +60,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (!isChecked) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            webServiceViewModel.checkServiceStatus()
+           // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+          //  webServiceViewModel.checkServiceStatus()
         }
         isChecked=true
         if (isPushNotificationChecked) {

@@ -206,7 +206,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
-                        android:text="£10.00"
                         app:layout_constraintEnd_toStartOf="@+id/editPaymentAmount"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />

@@ -71,17 +71,18 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
             if(unSettledTrips != null && unSettledTrips != 0 && charge != null){
                 val index = emptyList<String>().toMutableList()
-                for (i in 0..unSettledTrips!!){
+                for (i in 0..unSettledTrips){
                     index.add(i.toString())
                 }
                 totalAmount = charge*unSettledTrips
             }
             if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
 
-                totalAmount = totalAmount?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
+                totalAmount = totalAmount?.plus(additionalCrossings * additionalCrossingsCharge)
             }
 
             paymentAmount.text =  getString(R.string.currency_symbol)+ String.format("%.2f", totalAmount)
+            (navData as CrossingDetailsModelsResponse).totalAmount=paymentAmount.text.toString().replace("£","").toDouble()
             if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }
@@ -116,7 +117,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
             R.id.btnNext -> {
                     val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
+                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount)
                     bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
                     bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                     findNavController().navigate(
