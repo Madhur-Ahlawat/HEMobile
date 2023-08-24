@@ -189,7 +189,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         NewCreateAccountRequestModel.state = ""
         NewCreateAccountRequestModel.country = ""
         NewCreateAccountRequestModel.zipCode = ""
-        NewCreateAccountRequestModel.prePay = false
         NewCreateAccountRequestModel.plateCountry = ""
         NewCreateAccountRequestModel.plateNumber = ""
         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
@@ -381,6 +380,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.emailAddress,
             NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
         )
+/*
+        val pendingDues=(crossingDetailModelResponse?.recentCrossingCount)*(crossingDetailModelResponse?.chargingRate)
+*/
         /* pending dues =recent crossing selected * charging Rate
             pendingTxnCount=recent crossing selected
             futureTollCount =Additional crossing selected
@@ -400,7 +402,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
             crossingDetailModelResponse?.accountNumber,
-            "",
+            "0.00",
             crossingDetailModelResponse?.chargingRate
         )
         val mVehicleList = ArrayList<VehicleList>()
