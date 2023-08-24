@@ -295,6 +295,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val countryCode = binding.inputCountry.selectedItemDescription.toString()
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                Log.e("TAG", "onClick: navFlowCall "+navFlowCall )
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
@@ -319,7 +320,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                     EDIT_ACCOUNT_TYPE -> {
                         findNavController().navigate(
-                            R.id.action_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                            R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
                             bundle
                         )
                     }

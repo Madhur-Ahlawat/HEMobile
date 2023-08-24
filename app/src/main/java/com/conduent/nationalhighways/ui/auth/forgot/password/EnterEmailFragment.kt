@@ -266,7 +266,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun handleAccountEditNavigation(emailText: String) {
-        if (emailText == NewCreateAccountRequestModel.emailAddress) {
+        if (emailText == oldEmail) {
             val bundle = Bundle()
             bundle.putString(
                 Constants.NAV_FLOW_KEY,

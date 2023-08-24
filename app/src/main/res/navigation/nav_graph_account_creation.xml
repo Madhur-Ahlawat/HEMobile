@@ -522,7 +522,15 @@
 
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment" />
+            app:destination="@+id/vehicleListFragment"
+            />
+        <action
+            android:id="@+id/action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpTo="@id/fragment_choose_account_type"
+            app:popUpToInclusive="true"
+            />
+
 
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_forgotOtpFragment"
