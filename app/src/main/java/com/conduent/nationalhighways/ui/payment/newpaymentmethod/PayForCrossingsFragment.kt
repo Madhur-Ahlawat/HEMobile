@@ -59,7 +59,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
 
-        (navData as CrossingDetailsModelsResponse).recentCrossingCount =
+        data?.unSettledTrips =
             binding.inputCountry.getSelectedValue()!!.toInt()
     }
 
@@ -130,7 +130,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toInt()
         if (charge != null) {
             val total = charge * selectedItem.toInt()
-            data?.recentCrossingCount = selectedItem.toInt()
+            data?.unSettledTrips = selectedItem.toInt()
             binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + total)
         }
     }

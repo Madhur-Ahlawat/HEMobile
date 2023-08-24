@@ -39,19 +39,17 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
-        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-            data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
-        }
+        data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
+        navData = data
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
             numberAdditionalCrossings.setSelectedValue("1")
             val charge = data?.chargingRate?.replace("£","")?.replace("$","")?.toDouble()
             if(charge != null) {
-                val unSettledTrips = data?.unSettledTrips?.toInt()
+                val mUnSettledTrips = data?.unSettledTrips?.toInt()
                 var recent = 0.0
-                if (unSettledTrips != null && unSettledTrips != 0) {
-                    recent = charge * unSettledTrips
+                if (mUnSettledTrips != null && mUnSettledTrips != 0) {
+                    recent = charge * mUnSettledTrips
                 }
                 val total = recent + charge
                 recentCrossing.setText(getString(R.string.currency_symbol) + recent)
@@ -66,6 +64,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             recentCrossing.isEnabled = false
             paymentCrossing.isEnabled = false
             totalAmount.isEnabled = false
+            titleText2?.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,charge.toString(),data?.vehicleType), Html.FROM_HTML_MODE_COMPACT)
 
         }
         displayCustomMessage(getString(R.string.additional_crossings_txt),
@@ -90,7 +89,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             R.id.btnNext -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                bundle.putDouble(Constants.DATA,binding.totalAmount.getText().toString().replace(getString(R.string.currency_symbol),"").toDouble())
+                bundle.putDouble(Constants.DATA,binding.totalAmount.getText().toString().trim().replace(getString(R.string.currency_symbol),"").replace(getString(R.string.currency_symbol),"").replace(getString(R.string.currency_symbol),"").replace(" ","").replace(".","").toDouble())
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data as Parcelable?)
                 findNavController().navigate(R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,bundle)
             }
