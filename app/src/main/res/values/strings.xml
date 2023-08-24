@@ -1392,6 +1392,8 @@
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
     <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
+    <string name="str_we_have_sent_confirmation_email">We’ve sent a confirmation email to %s.</string>
+    <string name="str_we_have_sent_confirmation_text_message">We’ve sent a confirmation text message to %s.</string>
     <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>

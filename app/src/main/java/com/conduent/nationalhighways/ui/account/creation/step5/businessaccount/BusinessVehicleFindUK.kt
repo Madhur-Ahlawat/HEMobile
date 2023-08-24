@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.*
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleFindUkBinding
 import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -144,7 +145,10 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
                 isObserverBack = false
-
+                (navData as CrossingDetailsModelsResponse).plateNumber=retrieveVehicle?.plateNumber
+                bundle.putParcelable(Constants.NAV_DATA_KEY,
+                    navData as CrossingDetailsModelsResponse
+                )
                 findNavController().navigate(R.id.action_businessUKListFragment_to_businessVehicleDetailFragment, bundle)
             }
 

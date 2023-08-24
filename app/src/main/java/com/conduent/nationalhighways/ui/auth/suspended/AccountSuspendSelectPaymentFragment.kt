@@ -223,7 +223,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             R.id.btnAddNewPaymentMethod -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(".","").replace("$","")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)

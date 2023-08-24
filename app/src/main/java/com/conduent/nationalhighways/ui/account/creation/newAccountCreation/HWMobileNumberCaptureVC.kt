@@ -162,6 +162,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
+    override fun onResume() {
+        NewCreateAccountRequestModel.mobileNumber?.let {
+            binding.inputMobileNumber.setText(
+                it
+            )
+        }
+        NewCreateAccountRequestModel.countryCode?.let {
+            binding.inputCountry.setSelectedValue(
+                it
+            )
+        }
+        super.onResume()
+    }
+
     private fun setTelephoneView() {
         isItMobileNumber = false
         binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)

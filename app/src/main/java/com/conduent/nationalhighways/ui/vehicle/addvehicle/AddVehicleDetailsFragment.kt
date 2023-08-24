@@ -194,6 +194,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         when (navFlowCall) {
 
             Constants.PAY_FOR_CROSSINGS -> {
+                NewCreateAccountRequestModel.vehicleList.clear()
                 typeOfVehicle.clear()
                 typeOfVehicle.add("Car, van or minibus < 8 seats")
                 typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")

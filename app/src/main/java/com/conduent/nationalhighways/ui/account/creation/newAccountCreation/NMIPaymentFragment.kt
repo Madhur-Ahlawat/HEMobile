@@ -369,6 +369,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         responseModel: CardResponseModel?,
         paymentSuccessResponse: PaymentSuccessResponse
     ) {
+        showLoader()
         val paymentTypeInfo = PaymentTypeInfo(
             responseModel?.card?.type?.uppercase(Locale.ROOT),
             Utils.maskCardNumber(responseModel?.card?.number ?: ""),
