@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
@@ -90,12 +91,21 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-            navData = arguments?.getParcelable(
-                Constants.NAV_DATA_KEY,
-                CrossingDetailsModelsResponse::class.java
-            )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
         }
+
         accountData = NewCreateAccountRequestModel
         vehicleList = accountData?.vehicleList
         if (oldPlateNumber.isNotEmpty()) {
@@ -116,9 +126,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             navData = CrossingDetailsModelsResponse()
         } catch (e: Exception) {
             navData = arguments?.getParcelable(
-                Constants.NAV_DATA_KEY,
-                CrossingDetailsModelsResponse::class.java
-            )
+                Constants.NAV_DATA_KEY)
         } finally {
 
         }

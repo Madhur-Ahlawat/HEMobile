@@ -42,6 +42,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     private var mAccountResp: AccountResponse? = null
     private val mCommunicationsList = ArrayList<CommunicationPrefsModel>()
     private var smsFlag = "N"
+    private var isViewCreated: Boolean = false
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -50,6 +52,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun init() {
         when (navFlowCall) {
             EDIT_SUMMARY , EDIT_ACCOUNT_TYPE-> {
+                if(!isViewCreated){
+                    oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
+                }
+
                 binding.switchCommunication.isChecked =
                     NewCreateAccountRequestModel.communicationTextMessage
                 binding.checkBoxTerms.visibility = View.GONE
@@ -106,7 +112,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                oldCommunicationTextMessage = NewCreateAccountRequestModel.communicationTextMessage
                 binding.switchCommunication.isChecked = oldCommunicationTextMessage
             }
 
@@ -122,6 +127,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
         }
+        isViewCreated=true
+
     }
 
     override fun initCtrl() {
@@ -244,20 +251,22 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        val previousChecked = NewCreateAccountRequestModel.communicationTextMessage
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
-                        if(binding.switchCommunication.isChecked==previousChecked){
+                        if(binding.switchCommunication.isChecked==oldCommunicationTextMessage){
                             findNavController().popBackStack()
-                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
-                            findNavController().popBackStack()
-                        } else if ((!NewCreateAccountRequestModel.communicationTextMessage && !binding.switchCommunication.isChecked) && NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
-                            findNavController().popBackStack()
-                        } else {
+                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
                             findNavController().navigate(
                                 R.id.action_optForSmsFragment_to_mobileVerificationFragment,
                                 bundle()
                             )
+                        } else if ((!NewCreateAccountRequestModel.communicationTextMessage && !binding.switchCommunication.isChecked) && NewCreateAccountRequestModel.telephoneNumber?.isEmpty() == true) {
+                            findNavController().navigate(
+                                R.id.action_optForSmsFragment_to_mobileVerificationFragment,
+                                bundle()
+                            )
+                        } else {
+                            findNavController().popBackStack()
                         }
                     }
 
@@ -330,6 +339,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_FROM, Constants.OPTSMS)
         return bundle
     }
 

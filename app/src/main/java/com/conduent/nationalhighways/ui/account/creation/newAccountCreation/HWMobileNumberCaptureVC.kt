@@ -66,6 +66,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var countriesList: MutableList<String> = ArrayList()
     private var countriesModel: List<CountriesModel?>? = ArrayList()
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
+    private var oldMobileNumber = ""
+    private var oldMobileCountryCode = ""
+    private var oldTelephoneNumber = ""
+    private var oldTelephoneCountryCode = ""
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -86,6 +90,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+                if(!isViewCreated){
+                    oldMobileNumber=NewCreateAccountRequestModel.mobileNumber?:""
+                    oldMobileCountryCode=NewCreateAccountRequestModel.countryCode?:""
+                    oldTelephoneNumber=NewCreateAccountRequestModel.telephoneNumber?:""
+                    oldTelephoneCountryCode=NewCreateAccountRequestModel.telephone_countryCode?:""
+                }
                 if(isItMobileNumber){
                     NewCreateAccountRequestModel.mobileNumber?.let {
                         binding.inputMobileNumber.setText(
@@ -128,6 +138,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         }
 
+        isViewCreated = true
 
     }
 
@@ -191,7 +202,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             observe(viewModel.countriesCodeList, ::getCountryCodesList)
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
         }
-        isViewCreated = true
 
     }
 
@@ -290,9 +300,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     EDIT_SUMMARY -> {
                         var noChanges  = false
                         if(isItMobileNumber){
-                            noChanges= countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
+                            noChanges= countryCode == oldMobileCountryCode && mobileNumber == oldMobileNumber
                         }else{
-                            noChanges= countryCode == NewCreateAccountRequestModel.telephone_countryCode && mobileNumber == NewCreateAccountRequestModel.telephoneNumber
+                            noChanges= countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                         }
 
                         if (noChanges) {
@@ -550,6 +560,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                     }
                 }
+
+                bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
 
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,

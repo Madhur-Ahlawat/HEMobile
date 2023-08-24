@@ -33,16 +33,21 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     private var oldtwoStepVerification = false
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private var isViewCreated: Boolean = false
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentTwoStepVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
+
 //        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         when (navFlowCall) {
             EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
+                if(!isViewCreated){
+                    oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
+                }
                 binding.twoFactor.isChecked = NewCreateAccountRequestModel.twoStepVerification
             }
 
@@ -67,8 +72,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
-                binding.twoFactor.isChecked = oldtwoStepVerification
+                binding.twoFactor.isChecked = NewCreateAccountRequestModel.twoStepVerification
             }
 
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
@@ -81,6 +85,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             }
 
         }
+        isViewCreated=true
+
     }
 
     override fun initCtrl() {
@@ -118,6 +124,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_FROM, Constants.TwoStepVerification)
         return bundle
     }
 
@@ -129,27 +136,30 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        val previousChecked = NewCreateAccountRequestModel.twoStepVerification
-                        NewCreateAccountRequestModel.twoStepVerification =
-                            binding.twoFactor.isChecked
+                        Log.e("TAG", "onClick: oldtwoStepVerification "+oldtwoStepVerification )
+                        Log.e("TAG", "onClick: twoStepVerification "+NewCreateAccountRequestModel.twoStepVerification )
+                        NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
 
-                        if (binding.twoFactor.isChecked == previousChecked) {
+                        if (binding.twoFactor.isChecked == oldtwoStepVerification) {
                             findNavController().popBackStack()
-                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.twoFactor.isChecked) && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
-                            findNavController().popBackStack()
-                        } else if ((!NewCreateAccountRequestModel.communicationTextMessage && !binding.twoFactor.isChecked) && NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
-                            findNavController().popBackStack()
-                        } else {
+                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.twoFactor.isChecked)
+                            && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
                             findNavController().navigate(
                                 R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
                                 bundle()
                             )
+                        } else if ((!NewCreateAccountRequestModel.communicationTextMessage && !binding.twoFactor.isChecked) && NewCreateAccountRequestModel.telephoneNumber?.isEmpty() == true) {
+                            findNavController().navigate(
+                                R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
+                                bundle()
+                            )
+                        } else {
+                            findNavController().popBackStack()
                         }
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                        NewCreateAccountRequestModel.twoStepVerification =
-                            binding.twoFactor.isChecked
+                        NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
                         val data = navData as ProfileDetailModel?
                         if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
                             verifyMobileNumber(data)
