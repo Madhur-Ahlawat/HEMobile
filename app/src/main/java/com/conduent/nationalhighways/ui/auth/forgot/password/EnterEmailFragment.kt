@@ -112,6 +112,11 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun setView() {
+        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty()==true){
+            NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
+
+        }
+
         binding.textUsername.visible()
         binding.enterDetailsTxt.text = getString(R.string.createAccount_email_screenHeading)
         requireActivity().toolbar(getString(R.string.str_create_an_account))
