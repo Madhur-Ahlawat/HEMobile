@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import kotlin.properties.Delegates
@@ -34,6 +35,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
     lateinit var navFlowCall: String
+     var navFlowFrom: String = ""
     var navData: Any? = null
     var backButton : Boolean? = true
 
@@ -44,6 +46,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         binding = getFragmentBinding(inflater, container)
         navFlowCall = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        if(arguments?.containsKey(NAV_FLOW_FROM)==true){
+            navFlowFrom=arguments?.getString(NAV_FLOW_FROM,"").toString()
+        }
         navData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(NAV_DATA_KEY,Any::class.java)
         } else {

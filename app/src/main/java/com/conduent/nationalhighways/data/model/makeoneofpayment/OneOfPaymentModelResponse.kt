@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class OneOfPaymentModelResponse(
     val status: Int?,
-    val refrenceNumber: String?
+    val referenceNumber: String?
 ) : Parcelable

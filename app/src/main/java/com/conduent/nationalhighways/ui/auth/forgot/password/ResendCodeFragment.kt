@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -116,10 +117,14 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_verify->{
+
                 when(navFlowCall){
                     Constants.FORGOT_PASSWORD_FLOW -> {
                         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                         viewModel.requestOTP(data)
+                    }
+                    Constants.EDIT_SUMMARY -> {
+                        hitApi()
                     }
                     Constants.ACCOUNT_CREATION_EMAIL_FLOW -> {
                         hitApi()

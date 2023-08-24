@@ -76,8 +76,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
-
-
+        Log.e("TAG", "init: *communicationTextMessage* "+NewCreateAccountRequestModel.communicationTextMessage+" *twoStepVerification* "+NewCreateAccountRequestModel.twoStepVerification )
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             setTelephoneView()
         } else {
@@ -414,9 +413,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 requiredMobileNumber = index == 0
             } else {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (isItMobileNumber && binding.inputCountry.getSelectedDescription()
+                if (isItMobileNumber &&( binding.inputCountry.getSelectedDescription()
                         .equals("UK +44", true) || binding.inputCountry.getSelectedDescription()
-                        .equals(Constants.UNITED_KINGDOM, true)
+                        .equals(Constants.UNITED_KINGDOM, true))
                 ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {

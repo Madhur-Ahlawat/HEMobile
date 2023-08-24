@@ -42,7 +42,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         }
 
 
-        binding.accountNumber.text=oneOfPaymentResponse?.refrenceNumber
+        binding.accountNumber.text=oneOfPaymentResponse?.referenceNumber
         binding.vechicleRegistration.text=NewCreateAccountRequestModel.plateNumber
         binding.amountPaid.text=amount
         binding.timeDate.text=Utils.currentTime()+" "+getString(R.string.str_on)+" "+Utils.currentDate()
@@ -61,7 +61,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
                 findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_createAccountPrerequisite)
             }
             R.id.backToMainMenu->{
-                findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_createAccountPrerequisite)
+                findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_landingFragment)
             }
         }
     }
