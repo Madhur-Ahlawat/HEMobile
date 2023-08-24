@@ -35,10 +35,12 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null) {
+            navData = arguments?.getParcelable(
+                Constants.NAV_DATA_KEY,
+                CrossingDetailsModelsResponse::class.java
+            )
+        }
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -52,11 +54,11 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         binding?.apply {
             vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
             recentCrossings.text =
-                (navData as CrossingDetailsModelsResponse).recentCrossingCount.toString()
+                (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
             paymentAmount.text = (navData as CrossingDetailsModelsResponse).totalAmount.toString()
-            if((navData as CrossingDetailsModelsResponse).recentCrossingCount>0){
+            if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }
             else{
@@ -91,7 +93,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
             R.id.btnNext -> {
                     val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount)
+                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
                     bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
                     bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                     findNavController().navigate(

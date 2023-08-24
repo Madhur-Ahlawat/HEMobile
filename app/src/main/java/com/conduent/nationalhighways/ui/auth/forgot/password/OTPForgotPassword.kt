@@ -512,88 +512,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
         when (resource) {
-            is Resource.Success -> {
-
-                val bundle = Bundle()
-
-                when(navFlowCall) {
-                    ACCOUNT_CREATION_MOBILE_FLOW -> {
-                        NewCreateAccountRequestModel.smsSecurityCode =
-                            binding.edtOtp.getText().toString().trim()
-                        if (editRequest.equals(EDIT_SUMMARY, true)) {
-                            findNavController().navigate(
-                                R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
-                            )
-                        } else {
-                            findNavController().navigate(
-                                R.id.action_otpForgotFragment_to_createVehicleFragment
-                            )
-                        }
-                    }
-
-                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            arguments?.getParcelable(
-                                Constants.NAV_DATA_KEY,
-                                CommunicationPrefsRequestModel::class.java
-                            )
-                        } else {
-                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
-                        }
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                        if (data != null) {
-                            communicationPrefsViewModel.updateCommunicationPrefs(data)
-                        }
-                    }
-
-                    PROFILE_MANAGEMENT_2FA_CHANGE, Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                        val data = navData as ProfileDetailModel?
-                        if (data?.accountInformation?.accountType.equals(
-                                Constants.PERSONAL_ACCOUNT,
-                                true
-                            )
-                        ) {
-                            updateStandardUserProfile(data)
-                        } else {
-                            updateBusinessUserProfile(data)
-                        }
-                    }
-
-                    else -> {
-                        response?.code = binding.edtOtp.getText().toString()
-                        bundle.putParcelable("data", response)
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
-
-                        when(navFlowCall){
-
-                            EDIT_SUMMARY -> {findNavController().navigate(
-                                R.id.action_forgotOtpFragment_to_createAccountSummaryFragment,
-                                bundle
-                            )}
-                            EDIT_ACCOUNT_TYPE -> {findNavController().navigate(
-                                R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                                bundle
-                            )}
-                            else -> {
-                                findNavController().navigate(
-                                    R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                                    bundle
-                                )}
-
-                        }
-                    }
-                }
-
-
-
+            is Resource.Success  -> {
+                otpSuceessRedirection()
             }
 
             is Resource.DataError -> {
@@ -618,6 +538,90 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             else -> {
             }
         }
+
+    }
+
+    private fun otpSuceessRedirection() {
+
+                val bundle = Bundle()
+
+        when(navFlowCall) {
+            ACCOUNT_CREATION_MOBILE_FLOW -> {
+                NewCreateAccountRequestModel.smsSecurityCode =
+                    binding.edtOtp.getText().toString().trim()
+                if (editRequest.equals(EDIT_SUMMARY, true)) {
+                    findNavController().navigate(
+                        R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
+                    )
+                } else {
+                    findNavController().navigate(
+                        R.id.action_otpForgotFragment_to_createVehicleFragment
+                    )
+                }
+            }
+
+            Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    arguments?.getParcelable(
+                        Constants.NAV_DATA_KEY,
+                        CommunicationPrefsRequestModel::class.java
+                    )
+                } else {
+                    arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                }
+                loader?.show(
+                    requireActivity().supportFragmentManager,
+                    Constants.LOADER_DIALOG
+                )
+                if (data != null) {
+                    communicationPrefsViewModel.updateCommunicationPrefs(data)
+                }
+            }
+
+            PROFILE_MANAGEMENT_2FA_CHANGE, Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                loader?.show(
+                    requireActivity().supportFragmentManager,
+                    Constants.LOADER_DIALOG
+                )
+                val data = navData as ProfileDetailModel?
+                if (data?.accountInformation?.accountType.equals(
+                        Constants.PERSONAL_ACCOUNT,
+                        true
+                    )
+                ) {
+                    updateStandardUserProfile(data)
+                } else {
+                    updateBusinessUserProfile(data)
+                }
+            }
+
+            else -> {
+                response?.code = binding.edtOtp.getText().toString()
+                bundle.putParcelable("data", response)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                NewCreateAccountRequestModel.emailSecurityCode=binding.edtOtp.editText.text.toString()
+
+                when(navFlowCall){
+                    EDIT_SUMMARY -> {
+                        findNavController().navigate(
+                            R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
+                            bundle
+                        )}
+                    EDIT_ACCOUNT_TYPE -> {
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )}
+                    else -> {
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )}
+
+                }
+            }
+        }
+
 
     }
 

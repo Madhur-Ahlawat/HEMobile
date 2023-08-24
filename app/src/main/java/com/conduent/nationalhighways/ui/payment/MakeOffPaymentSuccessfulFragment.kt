@@ -75,7 +75,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
 //        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         binding.tvEmail.text = mEmail
         binding.tvAmount.text = "£ ${list[0].price}"
-        binding.tvReceiptNo.text = mPaymentResp?.refrenceNumber?:""
+        binding.tvReceiptNo.text = mPaymentResp?.referenceNumber?:""
         binding.viewAllVechile.text = list[0].newPlateInfo!!.number
         binding.rbCreateAccount.isChecked = true
         binding.rgOptions.setOnCheckedChangeListener(this)

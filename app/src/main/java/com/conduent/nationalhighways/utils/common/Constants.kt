@@ -248,10 +248,12 @@ object Constants {
 
 
     const val NAV_FLOW_KEY = "navFlowKey"
+    const val NAV_FLOW_FROM = "navFlowFrom"
     const val NAV_DATA_KEY = "navDataKey"
     const val Edit_REQUEST_KEY = "editRequestKey"
     const val SHOW_BACK_BUTTON = "showBackButton"
     const val IS_MOBILE_NUMBER= "isMobileNumber"
+    const val EDIT_FROM_POST_CODE = "editFromPostCode"
     const val EDIT_SUMMARY = "editSummary"
     const val PAY_FOR_CROSSINGS = "payForCrossings"
     const val PAID_CROSSINGS = "paidCrossings"

@@ -38,7 +38,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        binding.titleText2.text =
+            Html.fromHtml(getString(R.string.recent_crossings_txt), Html.FROM_HTML_MODE_COMPACT)
         data = navData as CrossingDetailsModelsResponse?
         binding.apply {
             inputTotalAmount.isEnabled = false
@@ -58,7 +59,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
 
-        (navData as CrossingDetailsModelsResponse).recentCrossingCount =
+        data?.unSettledTrips =
             binding.inputCountry.getSelectedValue()!!.toInt()
     }
 
@@ -129,7 +130,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toInt()
         if (charge != null) {
             val total = charge * selectedItem.toInt()
-            data?.recentCrossingCount = selectedItem.toInt()
+            data?.unSettledTrips = selectedItem.toInt()
             binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + total)
         }
     }

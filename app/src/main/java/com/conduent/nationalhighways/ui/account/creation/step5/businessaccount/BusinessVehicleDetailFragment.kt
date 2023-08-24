@@ -80,6 +80,9 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             is Resource.Success -> {
                 resource.data?.let {
                     it.let {
+                        it.vehicleModel = nonUKVehicleModel?.vehicleModel
+                        it.vehicleMake = nonUKVehicleModel?.vehicleMake
+                        it.vehicleColor= nonUKVehicleModel?.vehicleColor
                         val unSettledTrips = it.unSettledTrips?.toDouble()
                         val chargingRate = it.chargingRate?.toDouble()
                         val customerClassRate = it.customerClassRate?.toDouble()
