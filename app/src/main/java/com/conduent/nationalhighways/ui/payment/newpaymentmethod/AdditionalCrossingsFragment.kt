@@ -35,11 +35,23 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                data = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                data = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         navData = data
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))

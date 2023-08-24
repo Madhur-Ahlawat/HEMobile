@@ -25,6 +25,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
 
+    private var totalAmount: Double?=0.00
     private lateinit var vehicleAdapter: VehicleListAdapter
 
     override fun getFragmentBinding(
@@ -33,12 +34,21 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     ): FragmentPaymentSummaryBinding =
         FragmentPaymentSummaryBinding.inflate(inflater, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -55,7 +65,16 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
-            paymentAmount.text = (navData as CrossingDetailsModelsResponse).totalAmount.toString()
+            val charge = (navData as CrossingDetailsModelsResponse)?.chargingRate?.toDouble()
+            val unSettledTrips = (navData as CrossingDetailsModelsResponse)?.unSettledTrips?.toInt()
+            if(unSettledTrips != null && charge != null){
+                val index = emptyList<String>().toMutableList()
+                for (i in 0..unSettledTrips){
+                    index.add(i.toString())
+                }
+                totalAmount = charge*unSettledTrips
+            }
+            paymentAmount.text =  String.format("%.2f", totalAmount)
             if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }
@@ -77,7 +96,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     fun getRequiredText(text: String) = text.substringAfter(' ')
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
     }

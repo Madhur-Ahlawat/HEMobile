@@ -75,7 +75,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     @Inject
     lateinit var sessionManager: SessionManager
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
@@ -199,12 +198,21 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         checkButtonEmail()
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         binding?.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {

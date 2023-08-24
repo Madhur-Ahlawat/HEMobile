@@ -74,7 +74,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         isViewCreated = true
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         typeOfVehicle.clear()
         typeOfVehicle.add("Motorcycle, moped or quad bike")
@@ -90,10 +89,20 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-        navData = arguments?.getParcelable(
-            Constants.NAV_DATA_KEY,
-            CrossingDetailsModelsResponse::class.java
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         accountData = NewCreateAccountRequestModel
         vehicleList = accountData?.vehicleList
         if (oldPlateNumber.isNotEmpty()) {
