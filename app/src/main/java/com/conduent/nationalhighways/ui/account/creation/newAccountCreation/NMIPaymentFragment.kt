@@ -10,12 +10,10 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
-import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
@@ -219,6 +217,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         val mBundle = Bundle()
                         mBundle.putParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP, it)
                         mBundle.putString(Constants.DATA, htmlTopUpAmount)
+                        mBundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                         AdobeAnalytics.setActionTrackPaymentMethodOrderId(
                             "Confirm ",
@@ -229,7 +228,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             "home",
                             "success",
                             "card",
-                            it.refrenceNumber!!,
+                            it.referenceNumber ?: "",
                             "1",
                             sessionManager.getLoggedInUser()
                         )
@@ -246,7 +245,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             is Resource.DataError -> {
                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
 
-              //  ErrorUtil.showError(binding.root, resource.errorMsg)
+                //  ErrorUtil.showError(binding.root, resource.errorMsg)
 
                 AdobeAnalytics.setActionTrackPaymentMethod(
                     "Confirm ",
@@ -370,7 +369,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     ) {
         val paymentTypeInfo = PaymentTypeInfo(
             responseModel?.card?.type?.uppercase(Locale.ROOT),
-            Utils.maskCardNumber(responseModel?.card?.number?:""),
+            Utils.maskCardNumber(responseModel?.card?.number ?: ""),
             responseModel?.token,
             responseModel?.card?.exp?.subSequence(0, 2).toString(),
             "20${responseModel?.card?.exp?.subSequence(2, 4)}",
@@ -380,9 +379,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.emailAddress,
             NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
         )
-/*
-        val pendingDues=(crossingDetailModelResponse?.recentCrossingCount)*(crossingDetailModelResponse?.chargingRate)
-*/
+        val pendingDues = (crossingDetailModelResponse?.unSettledTrips?.toDouble())?.times(
+            (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
+        )
+        val futureTollPayment =
+            (crossingDetailModelResponse?.additionalCrossingCount?.toDouble())?.times(
+                (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
+            )
+
+
         /* pending dues =recent crossing selected * charging Rate
             pendingTxnCount=recent crossing selected
             futureTollCount =Additional crossing selected
@@ -394,15 +399,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.vehicleModel,
             crossingDetailModelResponse?.dvlaclass,
             "UK",
-            "0.00",
-            "2",
-            "5.00",
+            pendingDues.toString(),
+            crossingDetailModelResponse?.additionalCrossingCount.toString(),
+            futureTollPayment.toString(),
             crossingDetailModelResponse?.vehicleColor,
             crossingDetailModelResponse?.chargingRate,
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
             crossingDetailModelResponse?.accountNumber,
-            "0.00",
+            crossingDetailModelResponse?.unSettledTrips.toString(),
             crossingDetailModelResponse?.chargingRate
         )
         val mVehicleList = ArrayList<VehicleList>()

@@ -113,7 +113,7 @@ class MakeOffPaymentConfirmationFragment :
                             "english",
                             " one of payment",
                             "home",
-                            "success","card",it.refrenceNumber!!,"1",sessionManager.getLoggedInUser()
+                            "success","card",it.referenceNumber!!,"1",sessionManager.getLoggedInUser()
                         )
 
                         findNavController().navigate(

@@ -426,9 +426,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             false
         }
 
-        colourInputCheck = if (binding.colorInputLayout.editText.getText()
-                .toString() != null && binding.colorInputLayout.editText.getText().toString()
-                .trim().length > 0
+        colourInputCheck = if (binding.colorInputLayout.editText.text.toString()
+                .trim().isNotEmpty()
         ) {
             if (hasDigits(
                     binding.colorInputLayout.editText.getText().toString()

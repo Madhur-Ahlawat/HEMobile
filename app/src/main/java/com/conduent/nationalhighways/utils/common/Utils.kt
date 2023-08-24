@@ -599,7 +599,7 @@ object Utils {
     }
 
     fun currentDate():String{
-        return SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("dd-MMMM-yyyy", Locale.getDefault()).format(Date())
 
     }
     fun currentTime():String{
