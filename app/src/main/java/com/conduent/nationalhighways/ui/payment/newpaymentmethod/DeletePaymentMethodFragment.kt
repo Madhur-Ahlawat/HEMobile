@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,9 +58,12 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         when(navFlowCall) {
 
             Constants.PAY_FOR_CROSSINGS -> {
-
+                val data = navData as CrossingDetailsModelsResponse?
                 binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
-                binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate)
+                binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate,
+                    data?.plateNumber, data?.dvlaclass?.let { Utils.getVehicleType(it) },
+                    data?.customerClass?.let { Utils.getVehicleType(it) },
+                    data?.customerClassRate)
                 binding.btnContinue.text = getString(R.string.pay_new_amount)
             }
             Constants.PAYG -> {

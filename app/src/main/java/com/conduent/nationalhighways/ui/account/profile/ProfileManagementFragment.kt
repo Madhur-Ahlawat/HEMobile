@@ -52,13 +52,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.accountCard.gone()
         binding.emailCard.gone()
         binding.title.gone()
-        binding.subType.gone()
         binding.communicationCard.gone()
         binding.vehicleHeading.invisible()
         binding.recyclerView.gone()
         binding.checkBoxTerms.gone()
         binding.btnNext.gone()
-        binding.passwordCard.visible()
         binding.emailCardProfile.visible()
         binding.biometricsCard.visible()
 
@@ -84,7 +82,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editMobileNumber.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
-        binding.editPassword.setOnClickListener(this)
         binding.editEmailAddress.setOnClickListener(this)
         binding.editBiometrics.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
@@ -126,7 +123,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-                        binding.password.text = accountInformation?.password
+//                        binding.password.text = accountInformation?.password
                         binding.emailAddressProfile.text = personalInformation?.emailAddress
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
@@ -202,12 +199,12 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 )
             }
 
-            R.id.editPassword -> {
-                findNavController().navigate(
-                    R.id.action_profileManagementFragment_to_changePassword,
-                    bundle()
-                )
-            }
+//            R.id.editPassword -> {
+//                findNavController().navigate(
+//                    R.id.action_profileManagementFragment_to_changePassword,
+//                    bundle()
+//                )
+//            }
             R.id.editAccountType -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_changePassword,

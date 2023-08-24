@@ -63,6 +63,8 @@ class AccountSuccessfullyCreationFragment :
 
             R.id.signIn -> {
                 NewCreateAccountRequestModel.emailAddress = ""
+                NewCreateAccountRequestModel.prePay = false
+
 
                 requireActivity().startNormalActivityWithFinish(LoginActivity::class.java)
             }
