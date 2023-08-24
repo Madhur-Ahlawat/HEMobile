@@ -175,6 +175,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private fun clearSingletonData() {
         NewCreateAccountRequestModel.referenceId = ""
         NewCreateAccountRequestModel.mobileNumber = ""
+        NewCreateAccountRequestModel.telephoneNumber = ""
+        NewCreateAccountRequestModel.telephone_countryCode = ""
         NewCreateAccountRequestModel.countryCode = ""
         NewCreateAccountRequestModel.communicationTextMessage = false
         NewCreateAccountRequestModel.termsCondition = false
@@ -379,7 +381,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             responseModel?.check?.name,
             "",
             NewCreateAccountRequestModel.emailAddress,
-            NewCreateAccountRequestModel.mobileNumber, "", "", "", "", "", "", ""
+            NewCreateAccountRequestModel.mobileNumber,
+            "", "", "", "", "", "", ""
         )
         /* pending dues =recent crossing selected * charging Rate
             pendingTxnCount=recent crossing selected

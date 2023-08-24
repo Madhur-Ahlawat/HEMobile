@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +39,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     lateinit var navFlowCall: String
      var navFlowFrom: String = ""
     var navData: Any? = null
-    var backButton : Boolean? = true
+    var backButton : Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,15 +56,18 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         } else {
             arguments?.getParcelable(NAV_DATA_KEY)
         }
-        backButton = arguments?.getBoolean(SHOW_BACK_BUTTON,true)
+        if(arguments?.containsKey(SHOW_BACK_BUTTON)==true){
+            backButton = arguments?.getBoolean(SHOW_BACK_BUTTON,true)?:true
+        }
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         observer()
         initCtrl()
         init()
+
+
     }
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
@@ -182,7 +187,5 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
     }
-
-
 
 }

@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,10 +57,18 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     }
 
     private fun handleNavigation() {
+        val bundle=Bundle()
         when(navFlowCall){
 
             EDIT_SUMMARY -> {findNavController().popBackStack()}
-            else -> {val bundle=Bundle()
+            EDIT_ACCOUNT_TYPE ->{
+                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                findNavController().navigate(
+                    R.id.action_createAccountTypes_to_forgotPasswordFragment,
+                    bundle
+                )
+            }
+            else -> {
                 bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(
                     R.id.action_createAccountTypes_to_forgotPasswordFragment,

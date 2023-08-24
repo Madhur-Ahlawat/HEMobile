@@ -42,9 +42,10 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         when (navFlowCall) {
-            EDIT_SUMMARY -> {
+            EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                 binding.twoFactor.isChecked = NewCreateAccountRequestModel.twoStepVerification
             }
+
             else -> {
                 NewCreateAccountRequestModel.twoStepVerification = false
             }
@@ -52,10 +53,10 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         binding.twoFactor.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                NewCreateAccountRequestModel.twoStepVerification = true
+//                NewCreateAccountRequestModel.twoStepVerification = true
                 binding.btnNext.enable()
             } else {
-                NewCreateAccountRequestModel.twoStepVerification = false
+//                NewCreateAccountRequestModel.twoStepVerification = false
                 binding.btnNext.enable()
             }
 
@@ -114,6 +115,12 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         }
     }
 
+    private fun bundle(): Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        return bundle
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnNext -> {
@@ -122,10 +129,27 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        findNavController().popBackStack()
+                        val previousChecked = NewCreateAccountRequestModel.twoStepVerification
+                        NewCreateAccountRequestModel.twoStepVerification =
+                            binding.twoFactor.isChecked
+
+                        if (binding.twoFactor.isChecked == previousChecked) {
+                            findNavController().popBackStack()
+                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.twoFactor.isChecked) && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
+                            findNavController().popBackStack()
+                        } else if ((!NewCreateAccountRequestModel.communicationTextMessage && !binding.twoFactor.isChecked) && NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
+                            findNavController().popBackStack()
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
+                                bundle()
+                            )
+                        }
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                        NewCreateAccountRequestModel.twoStepVerification =
+                            binding.twoFactor.isChecked
                         val data = navData as ProfileDetailModel?
                         if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
                             verifyMobileNumber(data)
@@ -147,7 +171,9 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                     }
 
                     EDIT_ACCOUNT_TYPE -> {
-                        if (NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
+                        NewCreateAccountRequestModel.twoStepVerification =
+                            binding.twoFactor.isChecked
+                        if ((NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) || (NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true)) {
                             bundle.putString(Constants.PLATE_NUMBER, "")
                             bundle.putInt(Constants.VEHICLE_INDEX, 0)
                             findNavController().navigate(
@@ -163,6 +189,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                     }
 
                     else -> {
+                        NewCreateAccountRequestModel.twoStepVerification =
+                            binding.twoFactor.isChecked
                         findNavController().navigate(
                             R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
                             bundle

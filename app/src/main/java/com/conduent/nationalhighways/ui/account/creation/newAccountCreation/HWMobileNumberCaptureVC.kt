@@ -86,16 +86,30 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                NewCreateAccountRequestModel.mobileNumber?.let {
-                    binding.inputMobileNumber.setText(
-                        it
-                    )
+                if(isItMobileNumber){
+                    NewCreateAccountRequestModel.mobileNumber?.let {
+                        binding.inputMobileNumber.setText(
+                            it
+                        )
+                    }
+                    NewCreateAccountRequestModel.countryCode?.let {
+                        binding.inputCountry.setSelectedValue(
+                            it
+                        )
+                    }
+                }else{
+                    NewCreateAccountRequestModel.telephoneNumber?.let {
+                        binding.inputMobileNumber.setText(
+                            it
+                        )
+                    }
+                    NewCreateAccountRequestModel.telephone_countryCode?.let {
+                        binding.inputCountry.setSelectedValue(
+                            it
+                        )
+                    }
                 }
-                NewCreateAccountRequestModel.countryCode?.let {
-                    binding.inputCountry.setSelectedValue(
-                        it
-                    )
-                }
+
                 requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
                 checkButton()
             }
@@ -274,8 +288,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        val noChanges =
-                            countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
+                        var noChanges  = false
+                        if(isItMobileNumber){
+                            noChanges= countryCode == NewCreateAccountRequestModel.countryCode && mobileNumber == NewCreateAccountRequestModel.mobileNumber
+                        }else{
+                            noChanges= countryCode == NewCreateAccountRequestModel.telephone_countryCode && mobileNumber == NewCreateAccountRequestModel.telephoneNumber
+                        }
+
                         if (noChanges) {
                             findNavController().navigate(
                                 R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
@@ -345,10 +364,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
+    fun assignNumbers(mobileNumber: String,countryCode: String){
+        if(isItMobileNumber){
+            NewCreateAccountRequestModel.mobileNumber = mobileNumber
+            NewCreateAccountRequestModel.countryCode = countryCode
+        }else{
+            NewCreateAccountRequestModel.telephoneNumber = mobileNumber
+            NewCreateAccountRequestModel.telephone_countryCode = countryCode
+        }
+    }
 
     private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
-        NewCreateAccountRequestModel.mobileNumber = mobileNumber
-        NewCreateAccountRequestModel.countryCode = countryCode
+        assignNumbers(mobileNumber,countryCode)
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             findNavController().navigate(res, bundle)
         } else {

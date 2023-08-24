@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/findYourVehicleFragment">
+    app:startDestination="@id/createAccountPrerequisite">
 
     <!-- Step 5 -->
 
@@ -498,6 +498,7 @@
         <action
             android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
             app:destination="@id/HWMobileNumberCaptureVC" />
+
 
     </fragment>
     <fragment
