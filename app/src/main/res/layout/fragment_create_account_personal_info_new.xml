@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <data>
 
-        <variable
-            name="userInfoModel"
-            type="com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel.UserInfoModel" />
-
-    </data>
 
     <ScrollView
         android:layout_width="match_parent"
