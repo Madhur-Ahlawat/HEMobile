@@ -554,16 +554,24 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             bundle
                         )
                     } else {
-                        it.isUK = binding.radioButtonYes.isChecked
-                        it.vehicleMake =
+                        val dataModel = NewVehicleInfoDetails()
+                        dataModel.isUK = binding.radioButtonYes.isChecked
+                        dataModel.plateNumber = binding.vehiclePlateNumber.getText().toString()
+                        dataModel.vehicleMake =
                             binding.makeInputLayout.getText().toString()
-                        it.vehicleModel =
+                        dataModel.vehicleModel =
                             binding.modelInputLayout.getText().toString()
-                        it.vehicleColor =
+                        dataModel.vehicleColor =
                             binding.colorInputLayout.getText().toString()
-                        it.vehicleClass =
-                            Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
-                        checkRUC(it)
+                        if(vehicleClassSelected.isNotEmpty()){
+                            dataModel.vehicleClass =
+                                Utils.getManuallyAddedVehicleClass(vehicleClassSelected)
+                        }else{
+                            dataModel.vehicleClass =
+                                it.vehicleClass?.let { it1 -> Utils.getVehicleType(it1) }
+                        }
+
+                        checkRUC(dataModel)
 
                     }
                     return
