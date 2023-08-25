@@ -17,28 +17,35 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
     View.OnClickListener {
 
     private var oldPersonalAccountValue = false
+    private var isViewCreated: Boolean = false
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )= FragmentChooseAccountTypeBinding.inflate(inflater, container, false)
+    ) = FragmentChooseAccountTypeBinding.inflate(inflater, container, false)
 
 
     override fun init() {
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            binding.btnAccountType.isEnabled = R.id.radio_personal_account==checkedId||R.id.radio_business_account==checkedId
+            binding.btnAccountType.isEnabled =
+                R.id.radio_personal_account == checkedId || R.id.radio_business_account == checkedId
         }
 
-        when(navFlowCall){
+        when (navFlowCall) {
 
             EDIT_SUMMARY -> {
-                oldPersonalAccountValue = NewCreateAccountRequestModel.personalAccount
-                if(oldPersonalAccountValue){
+                if (!isViewCreated) {
+                    oldPersonalAccountValue = NewCreateAccountRequestModel.personalAccount
+                }
+                if (oldPersonalAccountValue) {
                     binding.radioPersonalAccount.isChecked = true
-                }else{
+                } else {
                     binding.radioBusinessAccount.isChecked = true
-                }}
-
+                }
+            }
         }
+        isViewCreated = true
+
 
     }
 
@@ -51,31 +58,35 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.btnAccountType->{
+            R.id.btnAccountType -> {
                 val id: Int = binding.radioGroup.checkedRadioButtonId
 
                 if (id == R.id.radio_personal_account) {
                     NewCreateAccountRequestModel.personalAccount = true
-                }else{
+                } else {
                     NewCreateAccountRequestModel.prePay = true
-                    NewCreateAccountRequestModel.personalAccount=false
+                    NewCreateAccountRequestModel.personalAccount = false
                 }
 
-               val editCall = navFlowCall.equals(EDIT_SUMMARY,true)
-                if(editCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
+                val editCall = navFlowCall.equals(EDIT_SUMMARY, true)
+                if (editCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
                     findNavController().popBackStack()
-                }else{
+                } else {
                     val bundle = Bundle()
-                    if(editCall) {
+                    if (editCall) {
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
-                    }else{
-                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_EMAIL_FLOW)
+                    } else {
+                        bundle.putString(
+                            Constants.NAV_FLOW_KEY,
+                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                        )
                     }
 
                     findNavController().navigate(
-                        R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,bundle
+                        R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,
+                        bundle
                     )
                 }
             }

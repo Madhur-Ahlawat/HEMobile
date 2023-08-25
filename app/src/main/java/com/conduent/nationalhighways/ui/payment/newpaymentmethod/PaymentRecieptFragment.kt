@@ -75,10 +75,23 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     @Inject
     lateinit var sessionManager: SessionManager
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
         binding.inputCountry.dropDownItemSelectListener = this
@@ -199,13 +212,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         checkButtonEmail()
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null) {
-            navData = arguments?.getParcelable(
-                Constants.NAV_DATA_KEY,
-                CrossingDetailsModelsResponse::class.java
-            )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                navData = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                navData = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
         }
         binding?.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -292,7 +312,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                if (binding?.selectEmail!!.isChecked) {
+                if (binding?.selectEmail?.isChecked == true) {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
                         binding.edtEmail.getText().toString().trim()
                     NewCreateAccountRequestModel.emailAddress=binding.edtEmail.editText.getText().toString().trim()

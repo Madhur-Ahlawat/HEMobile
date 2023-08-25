@@ -9,6 +9,8 @@ object NewCreateAccountRequestModel{
     var emailAddress: String? = ""
     var mobileNumber: String? = ""
     var countryCode: String? = ""
+    var telephoneNumber: String? = ""
+    var telephone_countryCode: String? = ""
     var communicationTextMessage:Boolean=false
     var termsCondition:Boolean=false
     var twoStepVerification:Boolean=false

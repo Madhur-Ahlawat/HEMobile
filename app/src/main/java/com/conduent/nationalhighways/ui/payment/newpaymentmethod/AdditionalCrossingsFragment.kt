@@ -35,11 +35,23 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        data = arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+                data = arguments?.getParcelable(
+
+                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                )
+            }
+        } else {
+            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+                data = arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                )
+            }
+        }
         navData = data
         binding.apply {
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
@@ -52,9 +64,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                     recent = charge * mUnSettledTrips
                 }
                 val total = recent + charge
-                recentCrossing.setText(getString(R.string.currency_symbol) + recent)
-                paymentCrossing.setText(getString(R.string.currency_symbol) + charge)
-                totalAmount.setText(getString(R.string.currency_symbol) + total)
+                recentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", recent))
+                paymentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", charge))
+                totalAmount.setText(getString(R.string.currency_symbol) +  String.format("%.2f", total))
                 val additional = charge*numberAdditionalCrossings.selectedItemValue!!.toInt()
                 data?.totalAmount=total
                 data?.additionalCrossingCount = numberAdditionalCrossings.selectedItemValue!!.toInt()
@@ -64,7 +76,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             recentCrossing.isEnabled = false
             paymentCrossing.isEnabled = false
             totalAmount.isEnabled = false
-            titleText2?.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,charge.toString(),data?.vehicleType), Html.FROM_HTML_MODE_COMPACT)
+            titleText2?.text =  Html.fromHtml(getString(R.string.recent_crossings_txt, String.format("%.2f", charge),data?.vehicleType), Html.FROM_HTML_MODE_COMPACT)
 
         }
         displayCustomMessage(getString(R.string.additional_crossings_txt),
@@ -89,7 +101,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             R.id.btnNext -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                bundle.putDouble(Constants.DATA,binding.totalAmount.getText().toString().trim().replace(getString(R.string.currency_symbol),"").replace(getString(R.string.currency_symbol),"").replace(getString(R.string.currency_symbol),"").replace(" ","").replace(".","").toDouble())
+                bundle.putDouble(Constants.DATA,binding.totalAmount.getText().toString().trim().replace(getString(R.string.currency_symbol),"").replace("$","").replace(getString(R.string.currency_symbol),"").replace(" ","").replace(".","").toDouble())
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data as Parcelable?)
                 findNavController().navigate(R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,bundle)
             }
@@ -119,9 +131,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             data?.totalAmount=total
             data?.additionalCharge=additional
             data?.additionalCrossingCount = selectedItem.toInt()
-            binding.recentCrossing.setText(getString(R.string.currency_symbol)+recent)
-            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+additional)
-            binding.totalAmount.setText(getString(R.string.currency_symbol)+data?.totalAmount)
+            binding.recentCrossing.setText(getString(R.string.currency_symbol)+ String.format("%.2f", recent))
+            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+ String.format("%.2f", additional))
+            binding.totalAmount.setText(getString(R.string.currency_symbol)+ String.format("%.2f", data?.totalAmount))
         }
     }
 

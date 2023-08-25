@@ -11,13 +11,13 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.currentTime
 
 
 class MakeOneOffPaymentSuccessfullyFragment :
     BaseFragment<FragmentMakeOneOffPaymentSuccessfullyBinding>(), View.OnClickListener {
-    private var oneOfPaymentResponse: OneOfPaymentModelResponse?=null
-    private var amount:String=""
-
+    private var oneOfPaymentResponse: OneOfPaymentModelResponse? = null
+    private var amount: String = ""
 
 
     override fun getFragmentBinding(
@@ -33,20 +33,41 @@ class MakeOneOffPaymentSuccessfullyFragment :
     }
 
     override fun initCtrl() {
-        if (arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP)!=null){
-            oneOfPaymentResponse=arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP)
+        if (arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP) != null) {
+            oneOfPaymentResponse =
+                arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP)
         }
 
-        if (arguments?.getString(Constants.DATA)!=null){
-            amount=arguments?.getString(Constants.DATA)?:""
+        if (arguments?.getString(Constants.DATA) != null) {
+            amount = arguments?.getString(Constants.DATA) ?: ""
         }
 
 
-        binding.accountNumber.text=oneOfPaymentResponse?.referenceNumber
-        binding.vechicleRegistration.text=NewCreateAccountRequestModel.plateNumber
-        binding.amountPaid.text=amount
-        binding.timeDate.text=Utils.currentTime()+" "+getString(R.string.str_on)+" "+Utils.currentDate()
-        binding.emailConformationTxt.text=getString(R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,NewCreateAccountRequestModel.emailAddress,NewCreateAccountRequestModel.mobileNumber)
+        binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
+        binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber
+        binding.amountPaid.text = amount
+        binding.timeDate.text =
+            currentTime() + " " + getString(R.string.str_on) + " " + Utils.currentDate()
+        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
+            binding.emailConformationTxt.text = getString(
+                R.string.str_we_have_sent_confirmation_email,
+                NewCreateAccountRequestModel.emailAddress
+            )
+
+        } else if (NewCreateAccountRequestModel.emailAddress?.isEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
+            binding.emailConformationTxt.text = getString(
+                R.string.str_we_have_sent_confirmation_text_message,
+                NewCreateAccountRequestModel.mobileNumber
+            )
+
+        } else {
+            binding.emailConformationTxt.text = getString(
+                R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,
+                NewCreateAccountRequestModel.emailAddress,
+                NewCreateAccountRequestModel.mobileNumber
+            )
+
+        }
 
 
     }
@@ -60,7 +81,10 @@ class MakeOneOffPaymentSuccessfullyFragment :
             R.id.createAccount -> {
                 findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_createAccountPrerequisite)
             }
-            R.id.backToMainMenu->{
+
+            R.id.backToMainMenu -> {
+                NewCreateAccountRequestModel.emailAddress=""
+                NewCreateAccountRequestModel.mobileNumber=""
                 findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_landingFragment)
             }
         }

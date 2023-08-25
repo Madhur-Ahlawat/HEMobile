@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
+    private var oldEmail :String= ""
 
 
     override fun getFragmentBinding(
@@ -78,10 +80,13 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
         binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
-
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+
+                if(!isViewCreated){
+                    oldEmail=NewCreateAccountRequestModel.emailAddress?:""
+                }
                 NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
                 setView()
             }
@@ -108,10 +113,16 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             "login:forgot password",
             sessionManager.getLoggedInUser()
         )*/
+        isViewCreated = true
 
     }
 
     private fun setView() {
+        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty()==true){
+            NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
+
+        }
+
         binding.textUsername.visible()
         binding.enterDetailsTxt.text = getString(R.string.createAccount_email_screenHeading)
         requireActivity().toolbar(getString(R.string.str_create_an_account))
@@ -133,7 +144,6 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
         }
 
 
-        isViewCreated = true
     }
 
     private fun handleEmailCheck(response: Resource<Boolean?>?) {
@@ -252,7 +262,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun handleEditNavigation(emailText: String) {
-        if (emailText == NewCreateAccountRequestModel.emailAddress) {
+        if (emailText == oldEmail) {
             findNavController().popBackStack()
         } else {
             NewCreateAccountRequestModel.emailAddress = emailText
