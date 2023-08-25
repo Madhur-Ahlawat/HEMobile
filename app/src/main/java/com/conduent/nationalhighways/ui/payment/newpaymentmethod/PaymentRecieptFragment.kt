@@ -312,7 +312,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                if (binding?.selectEmail!!.isChecked) {
+                if (binding?.selectEmail?.isChecked == true) {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
                         binding.edtEmail.getText().toString().trim()
                     NewCreateAccountRequestModel.emailAddress=binding.edtEmail.editText.getText().toString().trim()

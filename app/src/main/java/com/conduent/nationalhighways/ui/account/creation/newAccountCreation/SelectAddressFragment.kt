@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_FROM_POST_CODE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
@@ -118,11 +119,12 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 binding.txtAddressCount.text = "${mainList.size} Addresses Found"
 
                 when (navFlowCall) {
-                    EDIT_SUMMARY -> {
+                    EDIT_SUMMARY , EDIT_ACCOUNT_TYPE -> {
                         mainList.forEach { it?.isSelected = false }
                         if(NewCreateAccountRequestModel.selectedAddressId!=-1){
                             mainList[NewCreateAccountRequestModel.selectedAddressId]?.isSelected = true
                             selectAddressAdapter?.notifyDataSetChanged()
+                            binding.btnNext.isEnabled = true
                         }
                     }
                 }

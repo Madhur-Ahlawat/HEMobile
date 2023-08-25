@@ -457,6 +457,16 @@
             app:popUpTo="@id/forgotPasswordFragment"
             app:popUpToInclusive="true" />
         <action
+            android:id="@+id/action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/twoStepVerificationFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_optSms_forgotOtpFragment_to_createAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/optForSmsFragment"
+            app:popUpToInclusive="true" />
+        <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
             app:destination="@id/createPasswordFragment" />
         <action
@@ -501,6 +511,7 @@
         <action
             android:id="@+id/action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC"
             app:destination="@id/HWMobileNumberCaptureVC" />
+
 
     </fragment>
     <fragment

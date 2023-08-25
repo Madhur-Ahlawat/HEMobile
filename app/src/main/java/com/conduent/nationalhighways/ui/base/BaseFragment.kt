@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -35,9 +39,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     protected lateinit var binding: B
     lateinit var navFlowCall: String
-     var navFlowFrom: String = ""
+    var navFlowFrom: String = ""
     var navData: Any? = null
-    var backButton : Boolean? = true
+    var backButton: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,38 +49,57 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = getFragmentBinding(inflater, container)
-        navFlowCall = arguments?.getString(NAV_FLOW_KEY,"").toString()
-        if(arguments?.containsKey(NAV_FLOW_FROM)==true){
-            navFlowFrom=arguments?.getString(NAV_FLOW_FROM,"").toString()
+        navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
+        if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
+            navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }
         navData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(NAV_DATA_KEY,Any::class.java)
+            arguments?.getParcelable(NAV_DATA_KEY, Any::class.java)
         } else {
             arguments?.getParcelable(NAV_DATA_KEY)
         }
-        backButton = arguments?.getBoolean(SHOW_BACK_BUTTON,true)
+        if (arguments?.containsKey(SHOW_BACK_BUTTON) == true) {
+            backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
+        }
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         observer()
         initCtrl()
         init()
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.e("TAG", "handleOnBackPressed: backButton " + backButton)
+                if (backButton) {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                    // Implement your custom back navigation logic
+                } else {
+
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
     }
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
+
+
     abstract fun initCtrl()
     abstract fun observer()
 
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
-         val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
-        if(backButton == false){
+        val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
+        if (backButton == false) {
             backIcon?.visibility = View.GONE
-        }else{
+        } else {
             backIcon?.visibility = View.VISIBLE
         }
 
@@ -148,7 +171,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         negativeBtnTxt: String,
         pListener: DialogPositiveBtnListener?,
         nListener: DialogNegativeBtnListener?,
-        cancelVisibility : Int = View.VISIBLE
+        cancelVisibility: Int = View.VISIBLE
     ) {
 
         val dialog = Dialog(requireActivity())
@@ -182,7 +205,5 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
 
     }
-
-
 
 }
