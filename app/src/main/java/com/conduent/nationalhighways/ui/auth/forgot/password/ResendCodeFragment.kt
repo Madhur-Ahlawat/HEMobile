@@ -80,7 +80,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         if (navFlowCall==Constants.ACCOUNT_CREATION_EMAIL_FLOW||navFlowCall==Constants.ACCOUNT_CREATION_MOBILE_FLOW){
             if (data?.optionType==Constants.EMAIL){
-                binding.subTitle.text=getString(R.string.resend_code,Utils.maskEmail(data?.optionValue.toString()))
+                binding.subTitle.text=getString(R.string.resend_code,Utils.hiddenEmailText(data?.optionValue.toString()))
 
             }else{
                 binding.subTitle.text=getString(R.string.resend_code_expire,Utils.maskPhoneNumber(data?.optionValue.toString()))
@@ -89,10 +89,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         }else{
             if (data?.optionType==Constants.EMAIL){
-                binding.subTitle.text=getString(R.string.resend_code,Utils.hiddenEmailText(data?.optionValue!!))
+                binding.subTitle.text=getString(R.string.resend_code,Utils.hiddenEmailText(data?.optionValue.toString()))
 
             }else{
-                binding.subTitle.text=getString(R.string.resend_code_text,Utils.hiddenEmailText(data?.optionValue!!))
+                binding.subTitle.text=getString(R.string.resend_code_text,Utils.maskPhoneNumber(data?.optionValue.toString()))
 
             }
 
