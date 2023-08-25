@@ -7,7 +7,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
@@ -16,22 +15,21 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentPayForCrossingsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 
 @AndroidEntryPoint
 class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
-
+    private var totalAmountOfUnsettledTrips: Double?=0.0
+    private var crossingsList: MutableList<String> = mutableListOf()
+    private var totalAmountOfAdditionalCrossings: Double?=0.00
     private var loader: LoaderDialog? = null
     private var data : CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -55,20 +53,27 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             }
         }
         data = navData as CrossingDetailsModelsResponse?
+        val additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
+        val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
         binding.apply {
             inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
-            val unSettledTrips = data?.unSettledTrips?.toInt()
+            val unSettledTrips = data?.unSettledTrips
+            crossingsList = emptyList<String>().toMutableList()
             if(unSettledTrips != null && charge != null){
-                val index = emptyList<String>().toMutableList()
-                for (i in 0..unSettledTrips){
-                    index.add(i.toString())
-                }
-                inputCountry.dataSet.addAll(index)
-                inputCountry.setSelectedValue(unSettledTrips.toString())
-                val total = charge*unSettledTrips
-                inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", total))
+                totalAmountOfUnsettledTrips = charge*unSettledTrips
             }
+
+            if(additionalCrossingsCharge != null){
+                totalAmountOfAdditionalCrossings = additionalCrossingsCharge
+
+            }
+            for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)){
+                crossingsList.add(i.toString())
+            }
+            inputCountry.dataSet.addAll(crossingsList)
+            inputCountry.setSelectedValue(unSettledTrips?.plus(additionalCrossings).toString())
+            inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", totalAmountOfUnsettledTrips!!.plus(totalAmountOfAdditionalCrossings!!)))
             binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,String.format("%.2f", data?.chargingRate?.toDouble()),
                 data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
@@ -145,7 +150,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         if (charge != null) {
             val total = charge * selectedItem.toInt()
             data?.unSettledTrips = selectedItem.toInt()
-            binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + total)
+            binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + String.format("%.2f", total.toDouble()))
         }
     }
 }

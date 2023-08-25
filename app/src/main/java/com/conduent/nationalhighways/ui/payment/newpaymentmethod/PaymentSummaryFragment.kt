@@ -24,7 +24,12 @@ import com.conduent.nationalhighways.utils.extn.visible
 class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
+    private var additionalCrossings: Int? = 0
+    private var additionalCrossingsCharge: Double? = 0.0
+    private var totalAmountOfUnsettledTrips: Double?=0.0
+    private var totalAmountOfAdditionalCrossings: Double?=0.00
 
+    private var crossingsList: MutableList<String>? = mutableListOf()
     private var totalAmount: Double?=0.00
     private lateinit var vehicleAdapter: VehicleListAdapter
 
@@ -49,6 +54,8 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 )
             }
         }
+        additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
+        additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -65,23 +72,26 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
             creditAdditionalCrossings.text =
                 (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
-            val charge = (navData as CrossingDetailsModelsResponse)?.chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse)?.unSettledTrips
-            val additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-            val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
-            if(unSettledTrips != null && unSettledTrips != 0 && charge != null){
-                val index = emptyList<String>().toMutableList()
-                for (i in 0..unSettledTrips!!){
-                    index.add(i.toString())
-                }
-                totalAmount = charge*unSettledTrips
-            }
-            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-
-                totalAmount = totalAmount?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
+            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
+            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
+            crossingsList = emptyList<String>().toMutableList()
+            if(unSettledTrips != null && charge != null){
+                totalAmountOfUnsettledTrips = charge*unSettledTrips
             }
 
-            paymentAmount.text =  getString(R.string.currency_symbol)+ String.format("%.2f", totalAmount)
+//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
+//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
+//
+//            }
+            if(additionalCrossingsCharge != null){
+                totalAmountOfAdditionalCrossings = additionalCrossingsCharge
+
+            }
+            for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)){
+                crossingsList!!.add(i.toString())
+            }
+            paymentAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", totalAmountOfUnsettledTrips!!.plus(totalAmountOfAdditionalCrossings!!)))
+
             if((navData as CrossingDetailsModelsResponse).unSettledTrips>0){
                 binding.cardRecentCrossings.visible()
             }
