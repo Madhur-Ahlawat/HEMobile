@@ -50,6 +50,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         binding = getFragmentBinding(inflater, container)
         navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
+        Log.e("TAG", "onCreateView: navFlowCall --> "+navFlowCall )
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
             navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }

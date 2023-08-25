@@ -256,6 +256,8 @@ object Constants {
     const val SHOW_BACK_BUTTON = "showBackButton"
     const val IS_MOBILE_NUMBER= "isMobileNumber"
     const val EDIT_FROM_POST_CODE = "editFromPostCode"
+    const val AccountType_EMAIL = "AccountType_EMAIL"
+    const val AccountType_MobileNumber = "AccountType_MobileNumber"
     const val OPTSMS = "optSms"
     const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"

@@ -535,6 +535,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+
                 when (resource.errorModel?.errorCode) {
                     1 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
@@ -561,8 +562,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun otpSuceessRedirection() {
 
         val bundle = Bundle()
-        Log.e("TAG", "otpSuceessRedirection: navFlowCall "+navFlowCall )
-        Log.e("TAG", "otpSuceessRedirection: navFlowFrom "+navFlowFrom )
         when (navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {
                 NewCreateAccountRequestModel.smsSecurityCode =
@@ -655,10 +654,24 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     EDIT_ACCOUNT_TYPE -> {
-                        findNavController().navigate(
-                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                            bundle
-                        )
+                        if(navFlowFrom==Constants.AccountType_EMAIL){
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                                bundle
+                            )
+                        }else if(navFlowFrom==Constants.AccountType_MobileNumber){
+                            findNavController().navigate(
+                                R.id.action_AccountChangeType_forgotPassword_to_vehicleListFragment,
+                                bundle
+                            )
+
+                        }else{
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                                bundle
+                            )
+                        }
+
                     }
 
                     else -> {
