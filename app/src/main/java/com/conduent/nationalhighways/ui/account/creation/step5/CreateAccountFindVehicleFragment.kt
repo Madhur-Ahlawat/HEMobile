@@ -86,7 +86,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
             Constants.PAY_FOR_CROSSINGS -> {
                 NewCreateAccountRequestModel.vehicleList.clear()
-                NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                 binding.titleText1.visible()
                 binding.titleText2.visible()
             }
