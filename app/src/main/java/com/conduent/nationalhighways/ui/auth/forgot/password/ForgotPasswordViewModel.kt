@@ -44,9 +44,6 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _resetPassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
     val resetPassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _resetPassword
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _changePassword = MutableLiveData<Resource<ForgotPasswordResponseModel?>?>()
-    val changePassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _changePassword
 
 
     fun confirmOptionForForgot(email:String) {
@@ -117,8 +114,6 @@ class ForgotPasswordViewModel @Inject constructor(
             try {
                 val response = repository.towFAConfirmOption()
                 if (response.isSuccessful) {
-                    val serverToken =
-                        response.headers()["Authorization"]?.split("Bearer ")?.get(1)
                     _confirmOption.postValue(Resource.Success(response.body()))
                 } else {
                     _confirmOption.postValue(
