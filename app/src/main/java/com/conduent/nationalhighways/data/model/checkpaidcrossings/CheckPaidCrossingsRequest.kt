@@ -18,7 +18,9 @@ data class CheckPaidCrossingsResponse(
     val accountStatusCd: String?,
     val plateCountry: String?,
     val unusedTrip: String?,
-    val expirationDate: String?
+    val expirationDate: String?,
+    var referenceNumber: String = "",
+    var plateNumber: String = ""
 ) : Parcelable
 
 @Parcelize
