@@ -1421,7 +1421,11 @@
     <string name="payment_incorrect">Payment method is incorrect</string>
     <string name="str_on">on</string>
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+    <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
+    <string name="your_crossing_details">Your crossing details</string>
     <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_expiry_date">Credit expiry date</string>
+    <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="vehicle_changed">Vehicle changed</string>
 </resources>
