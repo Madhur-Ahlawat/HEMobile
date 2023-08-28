@@ -1044,6 +1044,7 @@
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
     <string name="personal_details">Personal Details</string>
+    <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming\nyour new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
     <string name="type_of_account">Type of account</string>
@@ -1420,6 +1421,9 @@
     <string name="payment_incorrect">Payment method is incorrect</string>
     <string name="str_on">on</string>
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+    <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_will_expire_on">Credit will expire on</string>
+    <string name="vehicle_changed">Vehicle changed</string>
 </resources>
 
 
