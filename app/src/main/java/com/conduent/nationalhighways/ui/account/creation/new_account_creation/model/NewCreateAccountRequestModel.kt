@@ -31,6 +31,7 @@ object NewCreateAccountRequestModel{
     var plateNumberIsNotInDVLA:Boolean=false
     var vehicleList = mutableListOf<NewVehicleInfoDetails>()
     var addedVehicleList = ArrayList<VehicleResponse?>()
+    var addedVehicleList2 = ArrayList<VehicleResponse?>()
     var isRucEligible:Boolean=false
     var isExempted:Boolean=false
     var isVehicleAlreadyAdded:Boolean=false

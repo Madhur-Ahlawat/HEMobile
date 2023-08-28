@@ -6,21 +6,32 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentMaximumVehicleNumberBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.VEHICLE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBinding>(),
     View.OnClickListener {
+    private var mList: ArrayList<VehicleResponse?> = ArrayList()
+    private var totalCount: Int = 0
+    private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
 
 
     private var plateNumber = ""
@@ -121,6 +132,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.btnContinue.text = getString(R.string.str_continue)
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
+        vehicleMgmtViewModel.getVehicleInformationApi("0","20")
     }
 
     override fun initCtrl() {
@@ -131,6 +143,27 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     }
 
     override fun observer() {
+        observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
+    }
+    private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    val response = resource.data
+                    totalCount = response.size
+                    mList.addAll(response)
+                    NewCreateAccountRequestModel.addedVehicleList2=mList
+
+                }
+            }
+            is Resource.DataError -> {
+                if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+            }
+            else -> {
+            }
+        }
     }
 
     override fun onClick(view: View?) {
@@ -198,7 +231,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                             }
 
                             else -> {
-                                if(NewCreateAccountRequestModel.vehicleList.isEmpty()) {
+                                if(NewCreateAccountRequestModel.addedVehicleList2.isEmpty()) {
                                     if(navCall) {
                                         findNavController().popBackStack()
                                     }else{
