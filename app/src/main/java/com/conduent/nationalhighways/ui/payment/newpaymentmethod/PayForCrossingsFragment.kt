@@ -39,45 +39,57 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+            if (arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                    CrossingDetailsModelsResponse::class.java
+                ) != null
+            ) {
                 navData = arguments?.getParcelable(
 
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
                 )
             }
         } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
                 navData = arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
                 )
             }
         }
         data = navData as CrossingDetailsModelsResponse?
-        val additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
+        val additionalCrossings =
+            (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
         val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
         binding.apply {
             inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unSettledTrips
             crossingsList = emptyList<String>().toMutableList()
-            if(unSettledTrips != null && charge != null){
-                totalAmountOfUnsettledTrips = charge*unSettledTrips
+            if (unSettledTrips != null && charge != null) {
+                totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
 
-            if(additionalCrossingsCharge != null){
+            if (additionalCrossingsCharge != null) {
                 totalAmountOfAdditionalCrossings = additionalCrossingsCharge
 
             }
             crossingsList.clear()
-            for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)){
+            for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)) {
                 crossingsList.add(i.toString())
             }
             inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
             inputCountry.setSelectedValue(unSettledTrips.toString())
-            inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", totalAmountOfUnsettledTrips!!))
-            binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,String.format("%.2f", data?.chargingRate?.toDouble()),
-                data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
+            inputTotalAmount.setText(
+                getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    totalAmountOfUnsettledTrips!!
+                )
+            )
+            binding.titleText2.text = Html.fromHtml(getString(R.string.recent_crossings_txt,
+                String.format("%.2f", data?.chargingRate?.toDouble()),
+                data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT
+            )
         }
 
         data?.unSettledTrips =
@@ -98,13 +110,17 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         when (v?.id) {
             R.id.btnAdditionalCrossing -> {
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                findNavController().navigate(R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,bundle)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                findNavController().navigate(
+                    R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,
+                    bundle
+                )
             }
+
             R.id.btnNext -> {
                 val crossings = binding.inputCountry.selectedItemDescription?.toInt()
-                if(crossings == 0){
+                if (crossings == 0) {
                     displayCustomMessage(getString(R.string.purchase_no_crossings),
                         getString(R.string.to_continue_you_must_pay_for_at_least_one_recent_additional_crossing),
                         getString(R.string.str_continue),
@@ -151,7 +167,12 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toInt()
         if (charge != null) {
             val total = data?.unSettledTrips!! * charge
-            binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + String.format("%.2f", total.toDouble()))
+            binding.inputTotalAmount.setText(
+                getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    total.toDouble()
+                )
+            )
         }
     }
 }
