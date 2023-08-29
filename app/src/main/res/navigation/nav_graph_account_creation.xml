@@ -753,6 +753,12 @@
         android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CrossingDetailsFragment"
         tools:layout="@layout/fragment_crossing_details">
         <action
+            android:id="@+id/action_crossing_details_to_tollDetails"
+            app:destination="@id/tollDetails" />
+        <action
+            android:id="@+id/action_crossing_details_to_topUpDetails"
+            app:destination="@id/topUpDetails" />
+        <action
             android:id="@+id/action_crossing_details_to_find_vehicles"
             app:destination="@id/findYourVehicleFragment" />
     </fragment>

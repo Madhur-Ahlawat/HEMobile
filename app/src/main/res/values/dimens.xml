@@ -162,5 +162,6 @@
     <dimen name="margin_42dp">42dp</dimen>
     <dimen name="_16_34dp">16.34dp</dimen>
     <dimen name="margin_36dp">36dp</dimen>
+    <dimen name="_77dp">77dp</dimen>
     />
 </resources>
