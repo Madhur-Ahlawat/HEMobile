@@ -474,7 +474,7 @@
         \n \u25CF Register for a personal account if your company is not registered with Companies house</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_business_account_desc_info">\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
-    <string name="str_prepay">Pre-pay</string>
+    <string name="str_prepay">Pre-Pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
@@ -622,7 +622,7 @@
     <string name="select_account_type">Please select account type</string>
     <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
-    <string name="pay_as_you_go">Personal - Pay as you go</string>
+    <string name="pay_as_you_go">Pay as you go</string>
     <string name="change">Change</string>
     <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>

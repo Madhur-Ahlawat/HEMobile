@@ -275,6 +275,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     countriesCodeList.add(0, Constants.UK_CODE)
                 }
                 binding.apply {
+                    inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(countriesCodeList)
                     inputCountry.setSelectedValue(Constants.UK_CODE)
                 }

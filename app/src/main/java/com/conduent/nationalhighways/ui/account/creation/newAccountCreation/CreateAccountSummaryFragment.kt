@@ -49,6 +49,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editAccountType.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
+        binding.editAccountSubType.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
         if (!dataModel.personalAccount) {
@@ -240,9 +241,17 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
             R.id.editTwoStepVerification -> {
-
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,
+                    enableEditMode()
+                )
+            }
+            R.id.editAccountSubType -> {
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
                     enableEditMode()
                 )
             }

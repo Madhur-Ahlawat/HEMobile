@@ -68,12 +68,14 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 totalAmountOfAdditionalCrossings = additionalCrossingsCharge
 
             }
+            crossingsList.clear()
             for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)){
                 crossingsList.add(i.toString())
             }
+            inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
-            inputCountry.setSelectedValue(unSettledTrips?.plus(additionalCrossings).toString())
-            inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", totalAmountOfUnsettledTrips!!.plus(totalAmountOfAdditionalCrossings!!)))
+            inputCountry.setSelectedValue(unSettledTrips.toString())
+            inputTotalAmount.setText(getString(R.string.currency_symbol)+String.format("%.2f", totalAmountOfUnsettledTrips!!))
             binding.titleText2.text =  Html.fromHtml(getString(R.string.recent_crossings_txt,String.format("%.2f", data?.chargingRate?.toDouble()),
                 data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT)
         }
@@ -145,11 +147,10 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-
+        data?.unSettledTrips = selectedItem.toInt()
         val charge = data?.chargingRate?.toInt()
         if (charge != null) {
-            val total = charge * selectedItem.toInt()
-            data?.unSettledTrips = selectedItem.toInt()
+            val total = data?.unSettledTrips!! * charge
             binding.inputTotalAmount.setText(getString(R.string.currency_symbol) + String.format("%.2f", total.toDouble()))
         }
     }
