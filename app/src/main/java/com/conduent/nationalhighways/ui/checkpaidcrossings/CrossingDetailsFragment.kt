@@ -59,7 +59,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
 
-        data = navData as CheckPaidCrossingsResponse
+
+        navData?.let {
+            data = it as CheckPaidCrossingsResponse
+        }
 
         data.let {
             val crossings = it?.unusedTrip?.toInt()
