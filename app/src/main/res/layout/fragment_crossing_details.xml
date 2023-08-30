@@ -206,6 +206,16 @@
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:nestedScrollingEnabled="true"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:visibility="gone"
+                android:id="@+id/errorTxt"
+                android:textColor="@color/red_color"
+                android:textSize="@dimen/font_16sp" />
+
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnNext"

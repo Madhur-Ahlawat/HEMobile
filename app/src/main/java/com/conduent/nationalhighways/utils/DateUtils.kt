@@ -192,4 +192,15 @@ object DateUtils {
         }
     }
 
+    fun convertDateFormatToDateFormat(date: String): String {
+        val dateFormatter: DateFormat = SimpleDateFormat("yyyy-MM-dd h:mm:ss")
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("dd MMM yyyy")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date
+        }
+    }
+
 }
