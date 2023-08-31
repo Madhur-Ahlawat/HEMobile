@@ -15,7 +15,6 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
-import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
@@ -33,7 +32,9 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -55,41 +56,48 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     ): FragmentCrossingDetailsBinding =
         FragmentCrossingDetailsBinding.inflate(inflater, container, false)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                    CrossingDetailsModelsResponse::class.java
-                ) != null
-            ) {
-                navData = arguments?.getParcelable(
 
-                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
-        }
+
         navData?.let {
             data = it as CheckPaidCrossingsResponse
         }
 
         data.let {
+            val crossings = it?.unusedTrip?.toInt()
             binding.fullName.text = it?.referenceNumber
             binding.companyName.text = it?.plateNumber
-            binding.address.text = it?.unusedTrip + "crossings"
-            binding.emailAddress.text = it?.expirationDate
+            binding.address.text = crossings.toString()+ " crossings"
+            binding.emailAddress.text = it?.expirationDate?.let { it1 ->
+                DateUtils.convertDateFormatToDateFormat(
+                    it1
+                )
+            }
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mm:ss", Locale.ENGLISH)
+            val date = LocalDateTime.parse(it?.expirationDate, formatter)
+            if(date.isBefore(current)){
+                binding.errorTxt.visible()
+                binding.errorTxt.text = getString(R.string.your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make
+                , it?.expirationDate?.let { it1 -> DateUtils.convertDateFormatToDateFormat(it1) })
+            }
+            if(crossings==0){
+                binding.transferBtn.gone()
+                binding.errorTxt.visible()
+                binding.errorTxt.text = getString(R.string.you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make)
+            }
         }
         initLoaderDialog()
         initTransactionsRecyclerView()
         getPaymentHistoryList(startIndex)
     }
 
+
     override fun initCtrl() {
+        binding.btnNext.setOnClickListener(this)
+        binding.transferBtn.setOnClickListener(this)
+        binding.cancelBtn.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -112,6 +120,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
             R.id.cancel_btn -> {
                 findNavController().popBackStack()
+            }
+            R.id.nextBtn -> {
+                findNavController().navigate(
+                    R.id.action_crossing_details_to_create_account
+                )
             }
 
         }

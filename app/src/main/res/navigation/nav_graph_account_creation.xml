@@ -764,6 +764,9 @@
         <action
             android:id="@+id/action_crossing_details_to_find_vehicles"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_crossing_details_to_create_account"
+            app:destination="@id/createAccountPrerequisite" />
     </fragment>
     <fragment
         android:id="@+id/make_one_off_payment_successfully"
