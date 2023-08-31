@@ -1428,6 +1428,10 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="vehicle_changed">Vehicle changed</string>
+    <string name="our_records_show_the_numberplate_is_a_type_nof_vehicle_on_record_rather_than_a_type_of_nvehicle_entered_this_type_of_vehicle_has_a_ndifferent_charge_of_amount"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge of <amount>.]]></string>
+    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from Dart\nCharge payment</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\nContact the Dart Charge contact centre for help.\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
 </resources>
 
 
