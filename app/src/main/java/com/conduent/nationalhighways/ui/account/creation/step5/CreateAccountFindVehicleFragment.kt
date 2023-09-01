@@ -104,7 +104,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 binding.titleText2.visible()
             }
 
-            Constants.PAID_CROSSINGS -> {
+            Constants.TRANSFER_CROSSINGS -> {
                 NewCreateAccountRequestModel.vehicleList.clear()
                 binding.enterDetailsTxt.text =
                     getString(R.string.what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to)
@@ -252,7 +252,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 //                            )
                         } else {
                             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                                BaseApplication.USE_TOKEN = false
                                 viewModel.getVehicleData(numberPlate, Constants.AGENCY_ID.toInt())
                             } else {
                                 checkForDuplicateVehicle(numberPlate)
@@ -267,7 +266,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM1(resource: Resource<VehicleInfoDetails?>?) {
-        BaseApplication.USE_TOKEN = true
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }

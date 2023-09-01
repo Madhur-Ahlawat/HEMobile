@@ -91,8 +91,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 hideKeyboard()
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val checkPaidCrossingReq = CheckPaidCrossingsRequest(
-                    binding.editReferenceNumber.getText().toString(), binding.editNumberPlate.getText().toString())
+                val checkPaidCrossingReq = CheckPaidCrossingsRequest(referenceNumber=
+                    binding.editReferenceNumber.getText().toString(), plateNumber = binding.editNumberPlate.getText().toString())
                 viewModel.checkPaidCrossings(checkPaidCrossingReq)
             }
         }

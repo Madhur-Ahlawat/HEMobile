@@ -35,7 +35,6 @@ class BaseApplication : Application() {
     }
     companion object {
         var INSTANCE: BaseApplication? = null
-        var USE_TOKEN: Boolean? = true
         fun getNewToken(api: ApiService,sessionManager:SessionManager,delegate:()->Unit?) {
             sessionManager.fetchRefreshToken()?.let { refresh ->
                 var responseOK = false

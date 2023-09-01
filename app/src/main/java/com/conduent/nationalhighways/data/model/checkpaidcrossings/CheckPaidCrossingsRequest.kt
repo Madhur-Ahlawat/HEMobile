@@ -68,6 +68,7 @@ data class UsedTollTransactionResponse(
 
 @Parcelize
 data class BalanceTransferRequest(
+    val accountNumber: String?,
     val plateNumber: String?,
     val plateCountry: String?,
     val transferInfo: TransferInfo?

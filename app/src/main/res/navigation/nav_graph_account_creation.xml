@@ -315,7 +315,7 @@
         android:label="confirmNewVehicleDetailsCheckPaidCrossingsFragment"
         tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
         <action
-            android:id="@+id/action_accountSummaryFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
             app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
 
     </fragment>

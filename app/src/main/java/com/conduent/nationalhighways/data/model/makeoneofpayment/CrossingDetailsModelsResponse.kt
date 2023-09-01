@@ -33,6 +33,9 @@ data class CrossingDetailsModelsResponse(
     val accountStatusCd: String="",
     val unusedTrip: String="",
     val expirationDate: String="",
-    var referenceNumber: String = ""
+    var referenceNumber: String = "",
+    val tripCount: String?="0",
+    val plateState: String?="HE",
+    val vehicleClass: String?=""
 ) : Parcelable
 

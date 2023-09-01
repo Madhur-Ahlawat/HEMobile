@@ -109,6 +109,7 @@ object Utils {
         ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE
 //        getSplCharString(ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE)
     }
+
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
         for (i in 0 until s.length) {
@@ -117,22 +118,21 @@ object Utils {
         }
         return res
     }
-    fun hiddenEmailText(email:String): String {
+
+    fun hiddenEmailText(email: String): String {
         var indexOfAtSymbol = email.indexOf('@')
-        var indexOfDot=email.indexOf('.')
+        var indexOfDot = email.indexOf('.')
         var hiddenEmailText = ""
 
         email.forEachIndexed { index, c ->
-            if(index==0){
-                hiddenEmailText=hiddenEmailText+c.toString()
-            }
-            else if(index>0){
-                if(index<indexOfAtSymbol || (index > (indexOfAtSymbol+1) && index < indexOfDot)){
-                    hiddenEmailText = hiddenEmailText+"*"
+            if (index == 0) {
+                hiddenEmailText = hiddenEmailText + c.toString()
+            } else if (index > 0) {
+                if (index < indexOfAtSymbol || (index > (indexOfAtSymbol + 1) && index < indexOfDot)) {
+                    hiddenEmailText = hiddenEmailText + "*"
 
-                }
-                else if((index == indexOfAtSymbol) || (index == indexOfAtSymbol+1) || (index >= indexOfDot)){
-                    hiddenEmailText=hiddenEmailText+c.toString()
+                } else if ((index == indexOfAtSymbol) || (index == indexOfAtSymbol + 1) || (index >= indexOfDot)) {
+                    hiddenEmailText = hiddenEmailText + c.toString()
                 }
             }
         }
@@ -153,6 +153,14 @@ object Utils {
         }
         return isAlphabet
     }
+
+    fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
+        var inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")
+        var date: Date = inputFormat.parse(inputDate);
+        var outputFormat = SimpleDateFormat("dd-MM-yyyy")
+        return outputFormat.format(date);
+    }
+
     fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
         var input = input
         charsToBeRemoved.forEach {
@@ -194,6 +202,7 @@ object Utils {
         }
         return hasSpecialCharacter
     }
+
     fun hasLowerCase(str: String): Boolean {
         var hasSpecialChar = false
         str.forEach { char ->
@@ -598,11 +607,12 @@ object Utils {
         return dateFormat.format(cal.time)
     }
 
-    fun currentDate():String{
+    fun currentDate(): String {
         return SimpleDateFormat("dd-MMMM-yyyy", Locale.getDefault()).format(Date())
 
     }
-    fun currentTime():String{
+
+    fun currentTime(): String {
         return SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
 
     }
@@ -644,7 +654,6 @@ object Utils {
         }
         return "£$balance"
     }
-
 
 
 }
