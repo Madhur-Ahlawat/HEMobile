@@ -55,7 +55,7 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
             binding.data = data
         }
         binding.labelWeHaveSentAnEmail.text = resources.getString(R.string.we_ve_sent_an_email_to_j_e_com) + " " + Utils.hiddenEmailText(binding.data?.emailAddress.toString())+"."
-        binding.tvMsg.text = getString(R.string.send_security_code_msg, binding.data?.emailAddress)
+        binding.tvMsg.text = getString(R.string.send_security_code_msg, Utils.hiddenEmailText(binding.data?.emailAddress.toString()))
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {

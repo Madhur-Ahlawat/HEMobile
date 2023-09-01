@@ -474,7 +474,7 @@
         \n \u25CF Register for a personal account if your company is not registered with Companies house</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_business_account_desc_info">\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
-    <string name="str_prepay">Pre-pay</string>
+    <string name="str_prepay">Pre-Pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
@@ -622,7 +622,7 @@
     <string name="select_account_type">Please select account type</string>
     <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
-    <string name="pay_as_you_go">Personal - Pay as you go</string>
+    <string name="pay_as_you_go">Pay as you go</string>
     <string name="change">Change</string>
     <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
@@ -1044,6 +1044,7 @@
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
     <string name="personal_details">Personal Details</string>
+    <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming\nyour new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
     <string name="type_of_account">Type of account</string>
@@ -1420,6 +1421,20 @@
     <string name="payment_incorrect">Payment method is incorrect</string>
     <string name="str_on">on</string>
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+    <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
+    <string name="your_crossing_details">Your crossing details</string>
+    <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_expiry_date">Credit expiry date</string>
+    <string name="previous_crossings_paid_for">Previous crossings paid for</string>
+    <string name="credit_will_expire_on">Credit will expire on</string>
+    <string name="vehicle_changed">Vehicle changed</string>
+    <string name="our_records_show_the_numberplate_is_a_type_nof_vehicle_on_record_rather_than_a_type_of_nvehicle_entered_this_type_of_vehicle_has_a_ndifferent_charge_of_amount"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge of <amount>.]]></string>
+    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from Dart\nCharge payment</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\nContact the Dart Charge contact centre for help.\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
+    <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
+    <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
+    <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
 </resources>
 
 
